@@ -9,6 +9,7 @@ index.html                  Startseite mit allen Lernpfaden
 fonts/                      Schriften lokal (Lexend, Atkinson Hyperlegible, SIL OFL) – keine Google-Server
 Physik8/
   reflexion-spiegel.html    Reflexion am ebenen Spiegel
+  spiegelbild-uebungen.html Spiegelbild konstruieren · Üben (Lichtwege, Winkelspiegel)
   lichtbrechung-experiment.html  Lichtbrechung 1: Schülerexperiment
   lichtbrechung-theorie.html     Lichtbrechung 2: Theorie
   lichtbrechung-uebungen.html    Lichtbrechung 3: Üben

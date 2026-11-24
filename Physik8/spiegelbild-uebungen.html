@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spiegelbild konstruieren – Üben</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+/* VOICE: freundlich-sachlich, wie ein gutes Arbeitsheft der Physik – du-Ansprache, kurze Aufträge
+   IDEA: Optik-Labor trifft Karoheft – dunkler Versuchsraum oben, kariertes Heftpapier für Konstruktionen
+   PICTURE: Laserstrahl, Spiegel, Kerze und ihr gestricheltes Spiegelbild – überall dieselbe Bildsprache
+   COLOUR and TYPE: Laserrot als Akzent, Spiegelglas-Türkis, Heftblau für Karos; Lexend + Atkinson Hyperlegible
+   LAYOUT: vier Phasen (Wiederholen – Entdecken – Festhalten – Üben), jede mit großer Abbildung und Aufträgen */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--grid:light-dark(#d4e2f2,#232c3b);
+--paper:light-dark(#fdfeff,#151a23);--behind:light-dark(#eef5f8,#17212a);
+--laser:light-dark(#dc2f28,#ff5c50);--laser2:light-dark(#1d62c9,#64a6ff);--mirror:light-dark(#1f8eab,#58c4df);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2815);--lab:#0e131d;--labink:#eef1f7}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700}
+h3{font-size:21px;font-weight:600;margin-top:1.6em}
+h4{font-size:17px;font-weight:600;margin:0 0 .3em}
+p{margin:0 0 .8em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.alt{background:var(--panel)}
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--laser);color:#fff;font-size:13px;margin-right:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.bar{width:140px;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--laser);transition:width .4s}
+/* hero */
+.hero{background:var(--lab);color:var(--labink)}
+.hero p{color:#c6ccd8;max-width:62ch}
+.hero svg{width:100%;height:auto;display:block;margin:18px 0 8px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px}
+.phases a{display:block;padding:14px 16px;border-radius:12px;background:#182031;color:#eef1f7;text-decoration:none;border:1px solid #2a3448}
+.phases a:hover{border-color:#ff5c50}
+.phases b{font-family:Lexend,system-ui,sans-serif;display:block;font-size:17px}
+.phases small{color:#a9b2c4;font-size:14px}
+/* layout pieces */
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;touch-action:none;user-select:none}
+.caption{font-size:14px;color:var(--muted);margin:6px 4px 0}
+@media(min-width:901px){.stick{position:sticky;top:70px}}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.alt @media(min-width:901px){.stick{position:sticky;top:70px}}
+.card{background:var(--paper)}
+.card.done{border-color:var(--ok)}
+.card .tag{font:600 13px Lexend,system-ui,sans-serif;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center}
+.card.done .tag::after{content:"✓ gelöst";color:var(--ok)}
+.stars{color:var(--laser);letter-spacing:2px}
+.intro{max-width:70ch;color:var(--muted)}
+.merke{border:2px solid var(--laser);border-radius:14px;padding:16px 20px;margin:18px 0;background:var(--bg)}
+.merke h4{color:var(--laser)}
+.merke ul{margin:.3em 0;padding-left:1.2em}
+details.reveal{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0}
+details.reveal summary{cursor:pointer;font:600 16px Lexend,system-ui,sans-serif;padding:4px 0}
+/* controls */
+button,.btn{font:600 16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.alt button{background:var(--bg)}
+button:hover{border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--laser2);outline-offset:2px}
+button.primary{background:var(--laser);border-color:var(--laser);color:#fff}
+input[type=number],input[type=text],select{font:16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--laser);min-height:44px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.toggles label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;min-height:44px;font-size:15px}
+.toggles input{width:18px;height:18px;accent-color:var(--laser)}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font-weight:400}
+.mc button.ok,.tf button.ok{background:var(--okbg);border-color:var(--ok)}
+.mc button.bad,.tf button.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1em;margin:8px 0 0;font-size:16px}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb.hint{background:var(--hint);color:var(--ink);padding:8px 12px;border-radius:8px}
+input.ok,select.ok{border-color:var(--ok);background:var(--okbg)}
+input.bad,select.bad{border-color:var(--bad);background:var(--badbg)}
+.scroll{overflow-x:auto}
+table.mess{border-collapse:collapse;font-size:15px}
+table.mess th,table.mess td{border:1px solid var(--line);padding:4px 6px;text-align:center}
+table.mess th{font-weight:600;background:var(--panel);text-align:left;white-space:nowrap}
+table.mess input{width:58px;min-height:38px;text-align:center;padding:4px}
+.messgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.messgrid label{display:grid;gap:2px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;font-size:15px}
+.messgrid label span:first-child{font-weight:700}
+.messgrid input{width:56px;min-height:38px;text-align:center;padding:4px}
+.fig.narrow{max-width:740px}
+.tf .fb:empty{display:none}
+.cloze{line-height:2.4;font-size:17px}
+.cloze select{min-height:38px;padding:2px 6px;margin:0 2px}
+.tf{display:grid;gap:10px}
+.tf .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tf .item .fb{grid-column:1/-1;margin:0}
+.tf .btns{display:flex;gap:6px}
+.numq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.numq input{width:96px;text-align:right}
+.unit{white-space:nowrap}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.steps i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font:600 14px Lexend,system-ui,sans-serif}
+.steps i.on{background:var(--laser);color:#fff;border-color:var(--laser)}
+.steptext{min-height:5.5em}
+.heft{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;border:1px solid var(--line);border-radius:12px;padding:22px clamp(16px,3vw,34px)}
+.heft h3{margin-top:.8em;color:var(--laser)}
+.heft h3:first-child{margin-top:0}
+.heft .box{border:2px solid var(--ink);padding:8px 14px;border-radius:6px;background:var(--paper);display:inline-block}
+.mirrortext{display:inline-block;transform:scaleX(-1);font:700 clamp(24px,5vw,40px) Lexend,system-ui,sans-serif;color:var(--laser);padding:6px 12px;border:2px dashed var(--mirror);border-radius:8px;margin-top:6px;word-break:break-all}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.checks label{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:10px;min-height:44px;cursor:pointer;font:600 16px Lexend,system-ui,sans-serif}
+.checks label.ok{border-color:var(--ok);background:var(--okbg)}.checks label.bad{border-color:var(--bad);background:var(--badbg)}
+.checks input{width:18px;height:18px;accent-color:var(--laser)}
+footer{font-size:14px;color:var(--muted)}
+/* svg classes */
+.gl{stroke:var(--grid);stroke-width:1}
+.mir{stroke:var(--mirror);stroke-width:5;stroke-linecap:round}
+.ray{stroke:var(--laser);stroke-width:2.2;fill:none;stroke-linecap:round}
+.ray2{stroke:var(--laser2);stroke-width:2.2;fill:none;stroke-linecap:round}
+.dash{stroke-dasharray:7 6}
+.fan{fill:var(--laser);opacity:.16}.fan2{fill:var(--laser2);opacity:.16}
+.fanb{fill:var(--laser);opacity:.07}.fanb2{fill:var(--laser2);opacity:.07}
+.aw{fill:var(--laser)}.aw2{fill:var(--laser2)}
+.lot{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 5;fill:none}
+.thin{stroke:var(--ink);stroke-width:1.4;fill:none}
+.tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
+.txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.txb{fill:var(--ink);font:600 16px Lexend,sans-serif}
+.txl{fill:var(--laser);font:600 16px Lexend,sans-serif}
+.txm{fill:var(--mirror);font:600 14px Lexend,sans-serif}
+.okc{fill:var(--ok)}.badc{fill:var(--bad)}
+.oks{stroke:var(--ok)}.bads{stroke:var(--bad)}
+.ghost{opacity:.45}
+.drag{cursor:grab}
+.behind{fill:var(--behind)}
+.wax{fill:light-dark(#f4ead8,#d9cdb7);stroke:var(--ink);stroke-width:1.2}
+.flame{fill:#ffb21a;stroke:#e0641a;stroke-width:1.2}
+.eyew{fill:var(--bg);stroke:var(--ink);stroke-width:1.6}
+.iris{fill:var(--ink)}
+.disk{fill:light-dark(#f7f9fc,#1b2130);stroke:var(--line)}
+.tick{stroke:var(--ink);stroke-width:1}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+@media(max-width:600px){body{font-size:16px}.prog .bar{width:80px}nav a{padding:6px}}
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+.qrbtn:hover{outline:3px solid #ff5c50}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop{background:rgba(8,10,16,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
+@media(max-width:640px){.qrbtn{width:96px}.qrbtn svg{width:80px;height:80px}}
+@media print{nav,.qrbtn{display:none}}
+.part{border-left:4px solid var(--line);padding:4px 0 4px 14px;margin:16px 0}
+.part.done{border-color:var(--ok)}
+.part.done>h4::after{content:"  ✓";color:var(--ok)}
+.tip{margin-top:8px}
+.tip:empty{display:none}
+.method{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0}
+.method div{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--paper)}
+.method b{font-family:Lexend,system-ui,sans-serif;color:var(--laser);display:block}
+.lvl{display:inline-block;font:600 14px Lexend,system-ui,sans-serif;padding:4px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--line);margin-bottom:10px}
+.readout{font:600 18px Lexend,system-ui,sans-serif;color:var(--laser)}
+.src{font-size:14px;color:var(--muted)}
+.handle{cursor:grab;fill:var(--laser);stroke:var(--bg);stroke-width:3}
+.glass{stroke:var(--mirror);stroke-width:4;stroke-linecap:round;opacity:.85}
+.water{fill:var(--mirror);opacity:.14}
+.ground{fill:var(--muted);opacity:.18}
+.wallr{stroke:var(--ink);stroke-width:3;fill:none}
+.door{stroke:var(--laser2);stroke-width:6;stroke-linecap:round}
+.see{stroke:var(--laser);stroke-width:9;stroke-linecap:round;opacity:.35}
+.lamp{fill:#ffcf4a;stroke:#d08a00;stroke-width:1.5}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="currentColor" stroke-width="2" opacity=".45"/></pattern>
+<radialGradient id="glow"><stop offset="0" stop-color="#ffcf4a" stop-opacity=".55"/><stop offset="1" stop-color="#ffcf4a" stop-opacity="0"/></radialGradient>
+</defs></svg>
+
+<nav aria-label="Abschnitte"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#methode"><span>1</span>Methode</a>
+<a href="#grundlagen"><span>2</span>Grundlagen ★</a>
+<a href="#anwenden"><span>3</span>Anwenden ★★</a>
+<a href="#knobeln"><span>4</span>Knobeln ★★★</a>
+<div class="prog"><span id="progtxt">0 / 0 gelöst</span><div class="bar"><i id="progbar"></i></div></div>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Spiegelbild konstruieren – Üben</h1>
+<p>Mit einem einzigen Trick löst du fast jede Spiegelaufgabe: <b>Erst das Spiegelbild konstruieren, dann vom Bild aus geradeaus zum Auge.</b> Hier übst du diesen Trick: vom einfachen Bildpunkt über die Spiegelposition für eine neugierige Nachbarin bis zum Doppelfenster und zum 60°-Winkelspiegel.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik8/spiegelbild-uebungen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h1m2 0h2m2 0h1m1 0h1m1 0h1m2 0h1m4 0h1m1 0h7m-37 1h1m5 0h1m2 0h1m1 0h2m1 0h1m2 0h3m2 0h1m2 0h1m1 0h1m2 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h7m1 0h1m1 0h4m4 0h3m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h2m1 0h1m1 0h2m2 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h5m3 0h2m2 0h1m4 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h9m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m5 0h1m5 0h2m1 0h2m2 0h1m-28 1h1m1 0h5m7 0h2m2 0h1m1 0h2m2 0h2m1 0h1m2 0h5m-35 1h1m1 0h1m1 0h2m3 0h1m1 0h1m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h3m-36 1h1m2 0h1m2 0h3m2 0h2m1 0h1m2 0h2m1 0h3m2 0h5m1 0h1m3 0h2m-36 1h3m1 0h1m4 0h5m1 0h1m4 0h3m3 0h1m2 0h1m1 0h1m3 0h1m-36 1h4m1 0h1m2 0h1m1 0h2m1 0h1m2 0h2m3 0h1m2 0h2m1 0h3m1 0h5m-37 1h2m1 0h1m4 0h1m1 0h1m3 0h1m1 0h6m1 0h1m1 0h1m2 0h1m2 0h1m-31 1h7m5 0h3m1 0h1m2 0h2m4 0h2m1 0h5m1 0h2m-36 1h2m2 0h1m1 0h1m2 0h3m2 0h1m1 0h3m1 0h1m4 0h2m1 0h4m2 0h1m-31 1h2m1 0h2m1 0h1m1 0h4m2 0h1m1 0h1m2 0h4m1 0h2m1 0h1m1 0h1m1 0h1m-37 1h4m3 0h2m1 0h1m1 0h4m1 0h2m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m1 0h3m-36 1h3m1 0h1m1 0h1m1 0h1m2 0h1m3 0h3m1 0h1m2 0h1m1 0h4m1 0h2m3 0h3m-35 1h3m2 0h3m5 0h1m2 0h4m1 0h1m2 0h1m2 0h2m2 0h1m2 0h1m-36 1h1m2 0h3m1 0h1m1 0h1m1 0h1m1 0h4m1 0h1m3 0h8m1 0h1m1 0h1m-35 1h1m1 0h1m2 0h1m1 0h4m1 0h1m1 0h3m1 0h3m2 0h1m2 0h1m1 0h2m3 0h1m1 0h1m-36 1h2m1 0h1m1 0h5m1 0h6m1 0h1m3 0h1m1 0h1m1 0h8m1 0h2m-37 1h1m1 0h1m1 0h1m2 0h1m2 0h1m2 0h2m1 0h1m2 0h1m6 0h2m1 0h1m1 0h2m2 0h2m-37 1h2m1 0h1m2 0h2m1 0h2m2 0h1m4 0h1m1 0h8m1 0h4m1 0h1m-35 1h3m2 0h1m1 0h2m1 0h1m3 0h3m6 0h1m4 0h1m2 0h1m1 0h2m-35 1h1m1 0h1m3 0h1m1 0h1m1 0h3m7 0h1m1 0h1m2 0h1m1 0h1m2 0h4m1 0h2m-37 1h1m1 0h1m7 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m4 0h3m4 0h1m2 0h1m-37 1h1m2 0h1m2 0h5m1 0h1m4 0h1m2 0h1m1 0h1m1 0h3m1 0h9m-29 1h5m1 0h1m2 0h7m2 0h3m3 0h2m1 0h1m-36 1h7m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m4 0h1m1 0h1m1 0h1m1 0h1m1 0h3m-37 1h1m5 0h1m1 0h2m2 0h1m3 0h7m3 0h1m1 0h1m3 0h2m2 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m3 0h4m2 0h1m1 0h1m1 0h1m1 0h8m1 0h1m-35 1h1m1 0h3m1 0h1m1 0h2m2 0h1m2 0h1m2 0h1m1 0h4m3 0h4m1 0h1m1 0h1m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m5 0h3m-37 1h1m5 0h1m3 0h1m3 0h2m3 0h6m2 0h4m1 0h1m3 0h1m-37 1h7m1 0h1m1 0h3m2 0h3m1 0h1m2 0h1m1 0h2m3 0h2m1 0h1m1 0h3"/></svg>QR groß zeigen</button></div>
+<svg viewBox="0 0 900 230" role="img" aria-label="Kerze in einem 60°-Winkelspiegel mit fünf Spiegelbildern auf einem Kreis">
+<g id="heroScene"></g>
+</svg>
+<div class="phases">
+<a href="#methode"><b>1 · Methode</b><small>Lichtweg übers Spiegelbild – Schritt für Schritt</small></a>
+<a href="#grundlagen"><b>2 · Grundlagen ★</b><small>Bildpunkte, Spiegelbild im See, schräger Spiegel</small></a>
+<a href="#anwenden"><b>3 · Anwenden ★★</b><small>Spiegelposition, Spiegelaufhängung, Doppelfenster</small></a>
+<a href="#knobeln"><b>4 · Knobeln ★★★</b><small>60°-Winkelspiegel und wie viele Bilder?</small></a>
+</div>
+</div></header>
+
+<!-- ============ 1 METHODE ============ -->
+<section class="band" id="methode"><div class="wrap">
+<h2>1 · Die Methode: Lichtweg übers Spiegelbild</h2>
+<p class="intro">Licht von der Flamme F wird am Spiegel reflektiert und gelangt ins Auge. Aber <i>wo</i> trifft es den Spiegel? Statt mit Winkeln zu probieren, nutzt du das Spiegelbild: Für das Auge kommt das Licht geradlinig vom Bild F'. Klicke dich durch die Schritte.</p>
+<div class="two">
+<div class="fig"><svg id="demo" viewBox="0 0 660 390" role="img" aria-label="Konstruktion des Lichtwegs von einer Kerzenflamme über einen Spiegel ins Auge"></svg></div>
+<div>
+<div class="steps" id="demoSteps"></div>
+<div class="card"><p class="steptext" id="demoText"></p>
+<div class="row"><button id="demoBack">← Zurück</button><button class="primary" id="demoNext">Weiter →</button></div></div>
+<div class="merke"><h4>Merke: Lichtweg-Konstruktion</h4>
+<ul><li><b>Bildpunkt:</b> Lot vom Gegenstand auf den Spiegel fällen, gleich weit dahinter abtragen.</li>
+<li><b>Verbinden:</b> Bildpunkt geradlinig mit dem Auge verbinden. Hinter dem Spiegel <i>gestrichelt</i> (dort ist kein Licht!).</li>
+<li><b>Reflexionspunkt:</b> Wo diese Linie den Spiegel schneidet, wird das Licht reflektiert.</li>
+<li><b>Lichtweg:</b> Gegenstand → Reflexionspunkt → Auge, durchgezogen mit Pfeilen.</li></ul>
+<p style="margin:0">Mehrere Spiegel? Dann spiegelst du das <i>Bild</i> noch einmal am nächsten Spiegel.</p></div>
+</div>
+</div>
+</div></section>
+
+<!-- ============ 2 GRUNDLAGEN ============ -->
+<section class="band alt" id="grundlagen"><div class="wrap">
+<span class="lvl"><span class="stars">★</span> Grundlagen</span>
+<h2>2 · Bildpunkte und Lichtwege</h2>
+
+<div class="card" data-task="g1">
+<div class="tag"><span class="stars">★</span> Aufgabe 1 · Das Fähnchen</div>
+<p>Konstruiere das Spiegelbild des Fähnchens. Klicke nacheinander auf die Kreuzungspunkte, an denen A', B', C' und D' liegen.</p>
+<div class="fig narrow"><svg id="g1" viewBox="0 0 660 390" role="img" aria-label="Karopapier mit senkrechtem Spiegel und einem Fähnchen ABCD"></svg></div>
+<p class="fb" id="g1Fb"></p><p class="fb hint tip" id="g1Tip"></p>
+<div class="row"><button data-hint="g1">Tipp</button><button data-reset="g1">Neu starten</button><button data-solve="g1">Lösung zeigen</button></div>
+</div>
+
+<div class="card" data-task="g2">
+<div class="tag"><span class="stars">★</span> Aufgabe 2 · Die Laterne im See</div>
+<p>Am anderen Ufer steht eine Laterne. Die ruhige Wasseroberfläche wirkt wie ein waagrechter Spiegel. Konstruiere den Lichtweg von der Lampe L über die Wasseroberfläche in das Auge.</p>
+<div class="two">
+<div class="fig"><svg id="g2" viewBox="0 0 660 480" role="img" aria-label="See als waagrechter Spiegel, Laterne am rechten Ufer, Auge am linken Ufer"></svg></div>
+<div><div class="steps" id="g2Steps"></div><p class="fb hint" id="g2Fb"></p><p class="fb hint tip" id="g2Tip"></p>
+<div class="row"><button data-hint="g2">Tipp</button><button data-reset="g2">Neu starten</button><button data-solve="g2">Lösung zeigen</button></div>
+<div class="part" data-task="g2b"><h4>Und jetzt du: Was fällt am Spiegelbild der Laterne auf?</h4>
+<div class="mc" data-correct="b" data-task="g2b">
+<button data-k="a" data-fb="Nein. Ein Spiegel verkleinert nicht – das Bild ist gleich groß wie die Laterne.">Es ist kleiner als die Laterne.</button>
+<button data-k="b" data-fb="Genau! Der Spiegel vertauscht vorne und hinten – also die Richtung senkrecht zum Spiegel. Beim waagrechten Spiegel ist das oben und unten.">Es steht auf dem Kopf, weil ein waagrechter Spiegel oben und unten vertauscht.</button>
+<button data-k="c" data-fb="Nein. Das Bild liegt so weit unter der Wasseroberfläche, wie die Lampe darüber ist.">Es liegt direkt auf der Wasseroberfläche.</button>
+<p class="fb"></p></div></div>
+</div>
+</div>
+</div>
+
+<div class="card" data-task="g3">
+<div class="tag"><span class="stars">★★</span> Aufgabe 3 · Schräger Spiegel</div>
+<p>Konstruiere das Spiegelbild des Dreiecks PQR. Der Spiegel steht schräg – das Lot steht senkrecht auf dem <i>Spiegel</i>, nicht auf den Karolinien.</p>
+<div class="fig narrow"><svg id="g3" viewBox="0 0 660 390" role="img" aria-label="Karopapier mit schrägem Spiegel und Dreieck PQR"></svg></div>
+<p class="fb" id="g3Fb"></p><p class="fb hint tip" id="g3Tip"></p>
+<div class="row"><button data-hint="g3">Tipp</button><button data-reset="g3">Neu starten</button><button data-solve="g3">Lösung zeigen</button></div>
+</div>
+</div></section>
+
+<!-- ============ 3 ANWENDEN ============ -->
+<section class="band" id="anwenden"><div class="wrap">
+<span class="lvl"><span class="stars">★★</span> Anwenden</span>
+<h2>3 · Spiegel im Alltag</h2>
+
+<div class="card" data-task="a1">
+<div class="tag"><span class="stars">★★</span> Aufgabe 4 · Konstruktion der Spiegelposition</div>
+<p>Die neugierige Frau Spieker sitzt in ihrem Zimmer hinter einem Raumteiler. Sie möchte über einen Spiegel an der Wand W die Tür T <b>vollständig</b> beobachten können. Wo muss der Spiegel hängen und wie groß muss er mindestens sein?</p>
+<p class="caption">Ziehe die beiden roten Griffe auf der Wand W. Der rote Streifen an der rechten Wand zeigt, was Frau Spieker im Spiegel sieht.</p>
+<div class="two">
+<div class="fig"><svg id="a1" viewBox="0 0 660 510" role="img" aria-label="Grundriss: Zimmer mit Raumteiler, Frau Spieker, Tür T an der rechten Wand, Wand W unten"></svg></div>
+<div>
+<p>Spiegel von Kästchen <span class="readout" id="a1From">–</span> bis <span class="readout" id="a1To">–</span> &nbsp;·&nbsp; Länge <span class="readout" id="a1Len">–</span> Kästchen</p>
+<div class="row"><button class="primary" id="a1Check">Prüfen</button><button data-hint="a1">Tipp</button><button id="a1Solve">Lösung zeigen</button></div>
+<p class="fb" id="a1Fb"></p><p class="fb hint tip" id="a1Tip"></p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="tag"><span class="stars">★★</span> Aufgabe 5 · Richtige Spiegelaufhängung</div>
+<p>Der Mann möchte an der Wand einen Spiegel so aufhängen, dass er sich ganz darin sieht – von den Schuhen bis zur Hutspitze. Drücke die gesuchten Längen durch die <b>Körperlänge K</b> (Boden bis Hutspitze) und die <b>Augenhöhe H</b> aus.</p>
+<div class="fig"><svg id="a2" viewBox="0 0 900 410" role="img" aria-label="Mann mit Hut vor einem Wandspiegel, Spiegelbild hinter der Wand, Lichtwege von Hutspitze und Füßen ins Auge"></svg></div>
+<div class="row" style="gap:18px">
+<label style="flex:1 1 240px"><b>Abstand zur Wand: <span id="a2dV">1,20</span> m</b><input type="range" id="a2d" min="0.4" max="2.6" step="0.05" value="1.2"></label>
+<label style="flex:1 1 240px"><b>Körperlänge K: <span id="a2kV">1,90</span> m</b><input type="range" id="a2k" min="1.5" max="2.0" step="0.01" value="1.9"></label>
+<div class="toggles" style="margin:0"><label><input type="checkbox" id="a2show">Konstruktion zeigen</label></div>
+</div>
+<p class="caption">Ohne „Konstruktion zeigen“ siehst du nur den Mann und die Wand – überlege erst selbst!</p>
+<div class="part" data-task="a2a"><h4>a) Wie hoch muss der Spiegel mindestens sein?</h4>
+<div class="mc" data-correct="c" data-task="a2a">
+<button data-k="a">genauso hoch wie die Körperlänge K</button>
+<button data-k="b">halb so hoch wie die Augenhöhe: H/2</button>
+<button data-k="c" data-fb="Richtig: Spiegelhöhe = K/2. Die Wand liegt genau in der Mitte zwischen Mann und Spiegelbild – deshalb halbiert sich alles.">halb so hoch wie die Körperlänge: K/2</button>
+<button data-k="d">K − H</button>
+<p class="fb"></p></div></div>
+<div class="part" data-task="a2b"><h4>b) Wie hoch über dem Boden muss die Unterkante des Spiegels sein?</h4>
+<div class="mc" data-correct="a" data-task="a2b">
+<button data-k="a" data-fb="Richtig: Unterkante = H/2. Der Strahl von den Füßen zum Auge wird auf halber Augenhöhe reflektiert.">bei H/2 – der halben Augenhöhe</button>
+<button data-k="b">bei K/2 – der halben Körperlänge</button>
+<button data-k="c">direkt am Boden</button>
+<button data-k="d">bei (K − H)/2</button>
+<p class="fb"></p></div></div>
+<div class="part" data-task="a2c"><h4>c) Der Mann geht auf den Spiegel zu. Was muss man an Lage und Höhe des Spiegels ändern?</h4>
+<div class="mc" data-correct="b" data-task="a2c">
+<button data-k="a">Der Spiegel muss größer werden, weil das Bild näher kommt.</button>
+<button data-k="b" data-fb="Richtig! Lage und Höhe hängen nur von K und H ab, nicht vom Abstand. Probier es mit dem Schieberegler aus.">Nichts – Lage und Höhe des Spiegels hängen nicht vom Abstand ab.</button>
+<button data-k="c">Der Spiegel darf kleiner werden, muss aber tiefer hängen.</button>
+<p class="fb"></p></div></div>
+<div class="part" data-task="a2d"><h4>d) Rechne: K = 1,90 m, H = 1,66 m</h4>
+<div class="numq"><span>Spiegelhöhe</span><span class="unit"><input type="text" inputmode="decimal" id="a2n1" data-a="0.95" aria-label="Spiegelhöhe in m"> m</span></div>
+<div class="numq"><span>Höhe der Unterkante über dem Boden</span><span class="unit"><input type="text" inputmode="decimal" id="a2n2" data-a="0.83" aria-label="Unterkante in m"> m</span></div>
+<div class="numq"><span>Höhe der Oberkante über dem Boden</span><span class="unit"><input type="text" inputmode="decimal" id="a2n3" data-a="1.78" aria-label="Oberkante in m"> m</span></div>
+<div class="row"><button class="primary" id="a2Check">Prüfen</button><button data-hint="a2">Tipp</button></div>
+<p class="fb" id="a2Fb"></p><p class="fb hint tip" id="a2Tip"></p></div>
+</div>
+
+<div class="card">
+<div class="tag"><span class="stars">★★</span> Aufgabe 6 · Das Doppelfenster</div>
+<p>Fenster haben oft Doppelscheiben. Bei modernen Fenstern ist der Raum zwischen den Scheiben sogar luftleer (evakuiert).</p>
+<div class="part" data-task="a3a"><h4>a) Welchen Zweck erfüllen die Doppelscheiben?</h4>
+<div class="mc" data-correct="b" data-task="a3a">
+<button data-k="a" data-fb="Nein – die zweite Scheibe macht im Gegenteil ein zusätzliches, störendes Spiegelbild.">Sie spiegeln besser, damit man abends mehr sieht.</button>
+<button data-k="b" data-fb="Richtig! Luft und erst recht ein Vakuum leiten Wärme (und Schall) sehr schlecht. Die Doppelscheibe dämmt also Wärme und Lärm.">Sie dämmen Wärme (und Schall): Die Luft- bzw. Vakuumschicht dazwischen leitet Wärme sehr schlecht.</button>
+<button data-k="c" data-fb="Nein – eine einzelne dickere Scheibe wäre stabiler.">Sie machen das Fenster bruchsicherer.</button>
+<p class="fb"></p></div></div>
+<div class="part" data-task="a3b"><h4>b) Abends siehst du das Bild einer Lampe L zweimal. Begründe mit einer Konstruktion.</h4>
+<p>Jede Scheibe wirkt wie ein (schwacher) Spiegel. Konstruiere die beiden Bilder L₁' und L₂' und die zwei Lichtwege in verschiedenen Farben. Die Scheiben sind sehr dünn, Mehrfachreflexionen spielen keine Rolle.</p>
+<div class="two">
+<div class="fig"><svg id="a3" viewBox="0 0 660 390" role="img" aria-label="Zwei schräge parallele Glasscheiben, eine Lampe L und ein Auge davor"></svg></div>
+<div><div class="steps" id="a3Steps"></div><p class="fb hint" id="a3Fb"></p><p class="fb hint tip" id="a3Tip"></p>
+<div class="row"><button data-hint="a3">Tipp</button><button data-reset="a3">Neu starten</button><button data-solve="a3">Lösung zeigen</button></div></div>
+</div></div>
+<div class="part" data-task="a3c"><h4>c) Berechne den Abstand der beiden Bilder.</h4>
+<p>Die Lampe steht a = 2,5 m vor der ersten Scheibe, die Scheiben haben den Abstand d = 16 mm.</p>
+<div class="numq"><span>Abstand des Bildes L₁' von der 1. Scheibe</span><span class="unit"><input type="text" inputmode="decimal" id="a3n1" data-a="2.5" aria-label="Abstand L1' in m"> m</span></div>
+<div class="numq"><span>Abstand des Bildes L₂' von der 2. Scheibe</span><span class="unit"><input type="text" inputmode="decimal" id="a3n2" data-a="2.516" aria-label="Abstand L2' in m"> m</span></div>
+<div class="numq"><span>Abstand der beiden Bilder voneinander</span><span class="unit"><input type="text" inputmode="decimal" id="a3n3" data-a="32" aria-label="Bildabstand in mm"> mm</span></div>
+<div class="row"><button class="primary" id="a3Check">Prüfen</button><button data-hint="a3c">Tipp</button></div>
+<p class="fb" id="a3cFb"></p><p class="fb hint tip" id="a3cTip"></p></div>
+</div>
+</div></section>
+
+<!-- ============ 4 KNOBELN ============ -->
+<section class="band alt" id="knobeln"><div class="wrap">
+<span class="lvl"><span class="stars">★★★</span> Knobeln</span>
+<h2>4 · Der Winkelspiegel</h2>
+
+<div class="card">
+<div class="tag"><span class="stars">★★★</span> Aufgabe 7 · Der 60°-Winkelspiegel</div>
+<p>Zwei Spiegel bilden einen Winkel von 60°. Licht der Kerze K läuft zuerst zu Spiegel 1, dann zu Spiegel 2 und gelangt schließlich ins Auge A.</p>
+<div class="part" data-task="k1a"><h4>a) Konstruiere den Lichtweg K → Spiegel 1 → Spiegel 2 → A.</h4>
+<div class="two">
+<div class="fig"><svg id="k1" viewBox="0 0 660 560" role="img" aria-label="60°-Winkelspiegel mit Kerze K und Auge A"></svg></div>
+<div><div class="steps" id="k1Steps"></div><p class="fb hint" id="k1Fb"></p><p class="fb hint tip" id="k1Tip"></p>
+<div class="row"><button data-hint="k1">Tipp</button><button data-reset="k1">Neu starten</button><button data-solve="k1">Lösung zeigen</button></div></div>
+</div></div>
+<div class="part" data-task="k1b"><h4>b) Um welchen Winkel δ wird das Licht insgesamt abgelenkt?</h4>
+<p>Gesucht ist der Winkel, den der von K ausgehende Strahl mit dem bei A ankommenden Strahl bildet (Hinweis: Winkelsumme im Dreieck).</p>
+<div class="numq"><span>δ =</span><span class="unit"><input type="number" id="k1n" aria-label="Ablenkwinkel in Grad"> °</span></div>
+<div class="row"><button class="primary" id="k1Check">Prüfen</button><button data-hint="k1b">Tipp</button><button id="k1Sim">Ablenkungs-Labor öffnen</button></div>
+<p class="fb" id="k1bFb"></p><p class="fb hint tip" id="k1bTip"></p>
+<div id="k1SimBox" hidden>
+<div class="fig narrow"><svg id="k1s" viewBox="0 0 660 560" role="img" aria-label="Ablenkungs-Labor: Lichtstrahl im Winkelspiegel mit verschiebbarem Auftreffpunkt"></svg></div>
+<p>Ziehe den roten Punkt auf Spiegel 1. &nbsp;Ablenkung: <span class="readout" id="k1sOut">–</span></p>
+<p class="caption">Egal wo der Strahl auftrifft: Nach zwei Reflexionen ist er immer um denselben Winkel gedreht – nämlich um 2 · 60°.</p>
+</div>
+<details class="reveal"><summary>Rechenweg anzeigen</summary>
+<p>Der Strahl trifft Spiegel 1 mit dem Einfallswinkel α und Spiegel 2 mit β. Im Dreieck aus Scheitel S und den beiden Reflexionspunkten gilt: 60° + (90° − α) + (90° − β) = 180°, also <b>α + β = 60°</b>.</p>
+<p>Im Dreieck aus den beiden Reflexionspunkten und dem Schnittpunkt der Strahlen gilt: γ + 2α + 2β = 180°, also γ = 180° − 2 · 60° = 60°.</p>
+<p>δ ist der Nebenwinkel von γ: <b>δ = 180° − 60° = 120°</b> = 2 · 60°.</p>
+</details>
+</div>
+</div>
+
+<div class="card" data-task="k2">
+<div class="tag"><span class="stars">★★★</span> Aufgabe 8 · Wie viele Bilder?</div>
+<p>Schaust du in einen Winkelspiegel, siehst du die Kerze mehrfach: Jedes Spiegelbild wird am anderen Spiegel noch einmal gespiegelt. Wie viele Spiegelbilder entstehen beim 60°-Winkelspiegel?</p>
+<div class="two">
+<div class="fig narrow"><svg id="k2" viewBox="0 0 440 440" role="img" aria-label="Winkelspiegel von oben mit Kerze und ihren Spiegelbildern"></svg></div>
+<div>
+<div class="row"><select id="k2Sel" aria-label="Anzahl Spiegelbilder"><option value="">bitte wählen</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><button class="primary" id="k2Check">Prüfen</button><button data-hint="k2">Tipp</button></div>
+<p class="fb" id="k2Fb"></p><p class="fb hint tip" id="k2Tip"></p>
+<div id="k2Ex" hidden>
+<p><b>Erkunde:</b> Öffnungswinkel α =
+<select id="k2Ang" aria-label="Öffnungswinkel"><option>90</option><option selected>60</option><option>45</option><option>36</option><option>30</option></select> °</p>
+<p>Anzahl Bilder: <span class="readout" id="k2Out"></span></p>
+<div class="merke"><h4>Regel</h4><p style="margin:0">Passt der Winkel α ganzzahlig in 360°, entstehen <b>n = 360° : α − 1</b> Spiegelbilder.</p></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row" style="margin-top:24px"><button id="resetAll">Fortschritt zurücksetzen</button><a class="btn" href="/Physik8/reflexion-spiegel" style="text-decoration:none;display:inline-flex;align-items:center">↩ Zum Lernpfad „Reflexion am ebenen Spiegel“</a></div>
+</div></section>
+
+<footer class="band"><div class="wrap">Lernpfad „Spiegelbild konstruieren – Üben“ · Physik, Technisches Gymnasium · Aufgabenideen nach LEIFIphysik (Spiegelbild – Fortführung). Dein Fortschritt wird nur in deinem Browser gespeichert.</div></footer>
+
+<script>
+{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=(v,n=2)=>v.toFixed(n).replace('.',',');
+/* ---------- Fortschritt ---------- */
+const KEY='spiegelbild-ueben-done';
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+const tasks=[...new Set($$('[data-task]').map(e=>e.dataset.task))];
+function save(){try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}}
+function updProg(){const n=tasks.filter(t=>done.has(t)).length;$('#progtxt').textContent=n+' / '+tasks.length+' gelöst';$('#progbar').style.width=(100*n/tasks.length)+'%';
+ $$('[data-task]').forEach(e=>e.classList.toggle('done',done.has(e.dataset.task)))}
+function mark(id){done.add(id);save();updProg()}
+$('#resetAll').onclick=()=>{done.clear();save();location.reload()};
+updProg();
+
+/* ---------- SVG-Helfer ---------- */
+function svgPt(svg,ev){const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+const L=(a,b,c,d,cls,ex='')=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="${cls}" ${ex}/>`;
+const C=(x,y,r,cls,ex='')=>`<circle cx="${x}" cy="${y}" r="${r}" class="${cls}" ${ex}/>`;
+const T=(x,y,t,cls,ex='')=>`<text x="${x}" y="${y}" class="${cls}" ${ex}>${t}</text>`;
+const P=(pts,cls,ex='')=>`<polygon points="${pts.map(p=>p[0]+','+p[1]).join(' ')}" class="${cls}" ${ex}/>`;
+function arrow(ax,ay,bx,by,cls,f=.5){const mx=ax+(bx-ax)*f,my=ay+(by-ay)*f,l=Math.hypot(bx-ax,by-ay)||1,ux=(bx-ax)/l,uy=(by-ay)/l;
+ return P([[mx+ux*7,my+uy*7],[mx-ux*6-uy*5,my-uy*6+ux*5],[mx-ux*6+uy*5,my-uy*6-ux*5]],cls)}
+function ray(a,b,cls,arr=true){return L(a[0],a[1],b[0],b[1],cls)+(arr?arrow(a[0],a[1],b[0],b[1],cls==='ray'?'aw':'aw2'):'')}
+function candle(x,y,h,cls=''){const b=h-18;return `<g class="${cls}"><rect x="${x-9}" y="${y-b}" width="18" height="${b}" class="wax"/>${L(x,y-b,x,y-b-5,'thin')}<path d="M${x} ${y-h-14} C${x+9} ${y-h-2} ${x+8} ${y-h+9} ${x} ${y-h+11} C${x-8} ${y-h+9} ${x-9} ${y-h-2} ${x} ${y-h-14}Z" class="flame"/></g>`}
+function eye(x,y,ang=0){return `<g transform="translate(${x},${y}) rotate(${ang})"><path d="M-15 0 Q0 -13 15 0 Q0 13 -15 0Z" class="eyew"/>${C(4,0,5.5,'iris')}</g>`}
+function grid(w,h,c){let s='';for(let x=0;x<=w;x+=c)s+=L(x,0,x,h,'gl');for(let y=0;y<=h;y+=c)s+=L(0,y,w,y,'gl');return s}
+function mirrorV(x,y1,y2){return `<rect x="${x}" y="${y1}" width="9" height="${y2-y1}" fill="url(#hatch)" style="color:var(--mirror)"/>`+L(x,y1,x,y2,'mir')}
+const X=p=>p?`<path d="M${p[0]-7} ${p[1]-7} l14 14 m0 -14 l-14 14" style="stroke:var(--bad)" stroke-width="3"/>`:'';
+/* Spiegelung an der Geraden durch a,b */
+function refl(p,a,b){const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy),ux=dx/l,uy=dy/l,t=(p[0]-a[0])*ux+(p[1]-a[1])*uy,fx=a[0]+t*ux,fy=a[1]+t*uy;return [2*fx-p[0],2*fy-p[1]]}
+/* Schnittpunkt der Geraden p1p2 und p3p4 */
+function inter(p1,p2,p3,p4){const d=(p1[0]-p2[0])*(p3[1]-p4[1])-(p1[1]-p2[1])*(p3[0]-p4[0]);if(Math.abs(d)<1e-9)return null;
+ const t=((p1[0]-p3[0])*(p3[1]-p4[1])-(p1[1]-p3[1])*(p3[0]-p4[0]))/d;return [p1[0]+t*(p2[0]-p1[0]),p1[1]+t*(p2[1]-p1[1])]}
+const angOf=(a,b)=>Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;
+
+const tasksCfg={};
+/* Tipps: data-hint="id" zeigt nacheinander die Tipps aus hints[id] */
+const hints={};
+$$('[data-hint]').forEach(b=>{let h=0;b.onclick=()=>{const id=b.dataset.hint,arr=hints[id]||[],el=$('#'+id+'Tip');if(!arr.length)return;el.textContent='Tipp '+(h%arr.length+1)+' von '+arr.length+': '+arr[h%arr.length];h++}});
+
+/* ---------- Multiple Choice ---------- */
+$$('.mc[data-correct]').forEach(box=>{const fb=box.querySelector('.fb');
+ box.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
+  box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');
+  fb.className='fb '+(ok?'ok':'bad');fb.textContent=b.dataset.fb&&ok?b.dataset.fb:(ok?'Richtig!':(b.dataset.fb||'Noch nicht – probier es nochmal.'));if(ok)mark(box.dataset.task)})});
+
+/* ---------- Zahleneingaben ---------- */
+const num=v=>parseFloat(String(v).replace(',','.').replace(/\s/g,''));
+function numCheck(btn,ids,fbId,task,okText,tol=0.011){$(btn).onclick=()=>{let ok=0;ids.forEach(id=>{const i=$(id),v=num(i.value),a=+i.dataset.a,g=Math.abs(v-a)<=Math.max(tol,Math.abs(a)*0.002);i.className=i.value===''?'':(g?'ok':'bad');if(g)ok++});
+ const fb=$(fbId);if(ok===ids.length){fb.className='fb ok';fb.textContent=okText;mark(task)}else{fb.className='fb bad';fb.textContent=ok+' von '+ids.length+' richtig. Hol dir einen Tipp, wenn du nicht weiterkommst.'}}}
+
+/* ---------- Schritt-Konstruktionen ---------- */
+function stepTask(id,cfg){const svg=$('#'+id),fb=$('#'+id+'Fb'),st=$('#'+id+'Steps');let k=0,wrong=null,cheat=false;
+ st.innerHTML=cfg.steps.map((_,i)=>`<i>${i+1}</i>`).join('');
+ function draw(){svg.innerHTML=cfg.draw(k)+X(wrong);$$('#'+id+'Steps i').forEach((e,i)=>e.classList.toggle('on',i<k));
+  if(k<cfg.steps.length){if(!wrong){fb.className='fb hint';fb.textContent='Schritt '+(k+1)+': '+cfg.steps[k].t}}
+  else{fb.className='fb ok';fb.textContent=(cheat?'Musterlösung: ':'Super! ')+cfg.done;if(!cheat)mark(cfg.task||id)}}
+ svg.addEventListener('click',ev=>{if(k>=cfg.steps.length)return;const p=svgPt(svg,ev),s=cfg.steps[k];
+  if(Math.hypot(p.x-s.at[0],p.y-s.at[1])<=(s.r||16)){k++;wrong=null;draw()}else{wrong=[p.x,p.y];draw();fb.className='fb bad';fb.textContent=s.bad||'Nicht ganz – versuch es noch einmal oder hol dir einen Tipp.'}});
+ tasksCfg[id]={reset:()=>{k=0;wrong=null;cheat=false;draw()},solve:()=>{k=cfg.steps.length;wrong=null;cheat=true;draw()}};draw()}
+
+/* ---------- Bildpunkte auf Karopapier ---------- */
+const c=30;
+function gridTask(id,cfg){const svg=$('#'+id),fb=$('#'+id+'Fb');let found=[],wrong=null,tries=0;
+ const imgs=cfg.pts.map(p=>refl([p.x,p.y],cfg.mirror[0],cfg.mirror[1]).map(Math.round));
+ function draw(){let o=grid(660,390,c);const [a,b]=cfg.mirror;o+=L(a[0]*c,a[1]*c,b[0]*c,b[1]*c,'mir')+T(b[0]*c+(cfg.lab||[8,16])[0],b[1]*c+(cfg.lab||[8,16])[1],'Spiegel','txm');
+  const pts=cfg.pts.map(p=>[p.x*c,p.y*c]);o+=P(pts,'','style="fill:var(--laser2);fill-opacity:.14;stroke:var(--laser2)" stroke-width="2"');
+  cfg.pts.forEach(p=>{o+=C(p.x*c,p.y*c,5,'aw2')+T(p.x*c+(p.dx||-22),p.y*c+(p.dy||-8),p.n,'txb')});
+  found.forEach(i=>{const [x,y]=imgs[i],p=cfg.pts[i];o+=L(p.x*c,p.y*c,x*c,y*c,'lot')+C(x*c,y*c,5,'okc')+T(x*c+8,y*c-8,p.n+"'",'txl')});
+  if(found.length===cfg.pts.length)o+=P(imgs.map(p=>[p[0]*c,p[1]*c]),'','style="fill:var(--laser);fill-opacity:.14;stroke:var(--laser)" stroke-width="2"');
+  if(wrong)o+=X([wrong[0]*c,wrong[1]*c]);svg.innerHTML=o}
+ function next(){const i=found.length;if(i<cfg.pts.length){fb.className='fb hint';fb.textContent='Wo liegt '+cfg.pts[i].n+"'? Klicke auf den Kreuzungspunkt."}}
+ svg.addEventListener('click',ev=>{if(found.length===cfg.pts.length)return;const p=svgPt(svg,ev),gx=Math.round(p.x/c),gy=Math.round(p.y/c),i=found.length,[ex,ey]=imgs[i];
+  if(gx===ex&&gy===ey){found.push(i);wrong=null;tries=0;if(found.length===cfg.pts.length){fb.className='fb ok';fb.textContent=cfg.done;mark(id)}else next()}
+  else{wrong=[gx,gy];tries++;fb.className='fb bad';fb.textContent=tries>=2?cfg.hint2:cfg.hint1}draw()});
+ tasksCfg[id]={reset:()=>{found=[];wrong=null;tries=0;draw();next()},solve:()=>{found=cfg.pts.map((_,i)=>i);wrong=null;draw();fb.className='fb';fb.textContent='Musterlösung: Die gepunkteten Linien sind die Lote auf den Spiegel.'}};
+ draw();next()}
+
+/* ---------- Hero: 60°-Winkelspiegel mit fünf Bildern ---------- */
+function images(V,K,a1,a2){/* alle Bilder von K bei Spiegelgeraden durch V mit Winkeln a1,a2 (Grad) */
+ const r=Math.hypot(K[0]-V[0],K[1]-V[1]),f0=angOf(V,K),norm=a=>((a%360)+360)%360;let seen=[norm(f0)],q=[f0];
+ while(q.length&&seen.length<30){const f=q.shift();[a1,a2].forEach(t=>{const g=norm(2*t-f);if(!seen.some(s=>Math.abs(s-g)<0.01||Math.abs(Math.abs(s-g)-360)<0.01)){seen.push(g);q.push(g)}})}
+ return seen.slice(1).map(g=>[V[0]+r*Math.cos(g*Math.PI/180),V[1]+r*Math.sin(g*Math.PI/180)])}
+{const V=[450,112],K=[V[0]+86*Math.cos(68*Math.PI/180),V[1]+86*Math.sin(68*Math.PI/180)];let s='';
+ s+=`<circle cx="${V[0]}" cy="${V[1]}" r="86" fill="none" stroke="#3a4558" stroke-dasharray="4 6"/>`;
+ images(V,K,90,30).forEach((p,i)=>{s+=`<circle cx="${p[0]}" cy="${p[1]}" r="9" fill="#ffcf4a" opacity=".35"/><text x="${p[0]+12}" y="${p[1]+5}" fill="#7f8aa3" font-size="13" font-family="Lexend,sans-serif">${i+1}</text>`});
+ s+=`<circle cx="${K[0]}" cy="${K[1]}" r="26" fill="url(#glow)"/><circle cx="${K[0]}" cy="${K[1]}" r="9" fill="#ffcf4a"/><text x="${K[0]+14}" y="${K[1]+20}" fill="#eef1f7" font-size="15" font-family="Lexend,sans-serif">K</text>`;
+ s+=`<line x1="${V[0]}" y1="${V[1]}" x2="${V[0]}" y2="${V[1]+112}" stroke="#58c4df" stroke-width="6" stroke-linecap="round"/>`;
+ s+=`<line x1="${V[0]}" y1="${V[1]}" x2="${V[0]+200*Math.cos(Math.PI/6)}" y2="${V[1]+200*Math.sin(Math.PI/6)}" stroke="#58c4df" stroke-width="6" stroke-linecap="round"/>`;
+ s+=`<text x="40" y="200" fill="#c6ccd8" font-size="16" font-family="Lexend,sans-serif">60°-Winkelspiegel: 1 Kerze, 5 Spiegelbilder</text>`;
+ $('#heroScene').innerHTML=s}
+
+/* ---------- 1 Methode: Demo ---------- */
+{const M=11,F=[6,5],B=[6,10],E=[2,3],Fi=[16,5],R=[M,E[1]+(F[1]-E[1])*(M-E[0])/(Fi[0]-E[0])];
+ const txt=['Ausgangslage: Die Kerzenflamme F leuchtet in alle Richtungen. Nur ein schmales Bündel gelangt über den Spiegel ins Auge. Wo trifft es den Spiegel?',
+  'Schritt 1 – Lot: Zeichne vom Punkt F eine Linie senkrecht zum Spiegel (Lot). F ist 5 Kästchen vom Spiegel entfernt.',
+  "Schritt 2 – Bildpunkt: Trage den gleichen Abstand hinter dem Spiegel ab. Dort liegt das Bild F'. (Gegenstandsweite = Bildweite)",
+  "Schritt 3 – Verbinden: Verbinde F' geradlinig mit dem Auge. Hinter dem Spiegel zeichnest du gestrichelt, denn dorthin gelangt kein Licht.",
+  'Schritt 4 – Reflexionspunkt: Der Schnittpunkt R mit dem Spiegel ist der Punkt, an dem das Licht reflektiert wird.',
+  'Schritt 5 – Lichtweg: Zeichne F → R → Auge mit Pfeilen. Das Auge verlängert das Licht geradlinig nach hinten – deshalb „sieht“ es die Flamme bei F\'. Probe: Einfallswinkel = Reflexionswinkel am Lot in R!'];
+ let k=0;$('#demoSteps').innerHTML=txt.map((_,i)=>`<i>${i}</i>`).join('');
+ function draw(){let o=grid(660,390,c)+mirrorV(M*c,0,390)+T(M*c+14,20,'Spiegel','txm')+candle(F[0]*c,B[1]*c,(B[1]-F[1])*c)+T(F[0]*c-30,F[1]*c+5,'F','txb')+eye(E[0]*c,E[1]*c,15)+T(E[0]*c-20,E[1]*c-20,'Auge','txs');
+  if(k>=1)o+=L(F[0]*c,F[1]*c,M*c,F[1]*c,'lot')+T((F[0]+2)*c,F[1]*c-8,'5 Kästchen','txs');
+  if(k>=2)o+=L(M*c,F[1]*c,Fi[0]*c,Fi[1]*c,'lot')+T((M+1.5)*c,F[1]*c-8,'5 Kästchen','txs')+C(Fi[0]*c,Fi[1]*c,5,'aw')+T(Fi[0]*c+8,Fi[1]*c-8,"F'",'txl')+`<g class="ghost">${candle(Fi[0]*c,B[1]*c,(B[1]-F[1])*c)}</g>`;
+  if(k>=3)o+=L(Fi[0]*c,Fi[1]*c,M*c,R[1]*c,'ray dash','stroke-width="1.6"')+L(M*c,R[1]*c,E[0]*c+8,E[1]*c,'thin');
+  if(k>=4)o+=C(M*c,R[1]*c,6,'aw')+T(M*c-24,R[1]*c-10,'R','txl');
+  if(k>=5)o+=ray([F[0]*c,F[1]*c],[M*c,R[1]*c],'ray')+ray([M*c,R[1]*c],[E[0]*c+8,E[1]*c],'ray')+L(M*c-80,R[1]*c,M*c,R[1]*c,'lot');
+  $('#demo').innerHTML=o;$('#demoText').textContent=txt[k];$$('#demoSteps i').forEach((e,i)=>e.classList.toggle('on',i<=k));
+  $('#demoBack').disabled=k===0;$('#demoNext').disabled=k===txt.length-1}
+ $('#demoNext').onclick=()=>{k=Math.min(k+1,txt.length-1);draw()};$('#demoBack').onclick=()=>{k=Math.max(k-1,0);draw()};draw()}
+
+/* ---------- 2.1 Fähnchen ---------- */
+gridTask('g1',{mirror:[[11,0],[11,13]],pts:[{n:'A',x:3,y:11},{n:'B',x:3,y:2},{n:'C',x:8,y:4},{n:'D',x:3,y:6}],
+ hint1:'Nicht ganz. Zähle die Kästchen vom Punkt waagrecht bis zum Spiegel.',hint2:'Gehe vom Punkt waagrecht (senkrecht zum Spiegel) bis zum Spiegel und dann gleich viele Kästchen weiter.',
+ done:'Prima! Das Fähnchen im Spiegel zeigt nach links: Der Spiegel vertauscht vorne und hinten (hier: links und rechts), oben bleibt oben.'});
+hints.g1=['Der Spiegel steht senkrecht. Das Lot verläuft deshalb waagrecht entlang einer Karolinie.','A liegt 8 Kästchen links vom Spiegel. Also liegt A\' 8 Kästchen rechts vom Spiegel – in derselben Höhe.','Punkte direkt auf dem Spiegel wären ihr eigenes Bild. Je weiter weg vom Spiegel, desto weiter liegt das Bild dahinter.'];
+
+/* ---------- 2.2 Laterne im See ---------- */
+{const S=8,Lp=[16,3],E=[3,5],Li=[16,2*S-3],R=[E[0]+(Li[0]-E[0])*(S-E[1])/(Li[1]-E[1]),S];
+ const q=p=>[p[0]*c,p[1]*c];
+ stepTask('g2',{steps:[{t:"Klicke dorthin, wo das Bild L' der Lampe liegt.",at:q(Li),r:18,bad:"Nicht ganz. Die Wasseroberfläche ist der Spiegel: Das Lot verläuft senkrecht nach unten. Zähle die Kästchen!"},
+  {t:"Verbinde L' mit dem Auge: Klicke auf das Auge.",at:q(E),r:28,bad:'Klicke direkt auf das Auge.'},
+  {t:'Klicke auf den Reflexionspunkt R, an dem die Linie die Wasseroberfläche schneidet.',at:q(R),r:16,bad:'Klicke genau auf den Schnittpunkt der Linie mit der Wasseroberfläche.'}],
+  done:"Das Licht der Lampe wird bei R an der Wasseroberfläche reflektiert. Für das Auge scheint es von L' zu kommen – 5 Kästchen unter der Wasseroberfläche.",
+  draw:k=>{let o=`<rect x="0" y="${S*c}" width="660" height="${480-S*c}" class="behind"/>`+grid(660,480,c);
+   o+=`<rect x="0" y="${S*c}" width="${5*c}" height="16" class="ground"/><rect x="${14*c}" y="${S*c}" width="${8*c}" height="16" class="ground"/><rect x="${5*c}" y="${S*c}" width="${9*c}" height="${480-S*c}" class="water"/>`;
+   o+=L(5*c,S*c,14*c,S*c,'mir')+T(10*c,S*c+24,'Wasseroberfläche','txm')+T(14*c+6,S*c+34,'Ufer','txs')+T(8,S*c+34,'Ufer','txs');
+   o+=L(Lp[0]*c,Lp[1]*c,Lp[0]*c,S*c,'thin','stroke-width="4"')+C(Lp[0]*c,Lp[1]*c,22,'','fill="url(#glow)"')+C(Lp[0]*c,Lp[1]*c,8,'lamp')+T(Lp[0]*c+14,Lp[1]*c-8,'L','txb');
+   o+=L(E[0]*c,E[1]*c+12,E[0]*c,S*c,'thin','stroke-width="3"')+eye(E[0]*c,E[1]*c,20)+T(E[0]*c-26,E[1]*c-18,'Auge','txs');
+   if(k>=1)o+=L(Lp[0]*c,Lp[1]*c,Li[0]*c,Li[1]*c,'lot')+`<g class="ghost">${L(Lp[0]*c,Li[1]*c,Lp[0]*c,S*c,'thin','stroke-width="4"')+C(Li[0]*c,Li[1]*c,8,'lamp')}</g>`+T(Li[0]*c+14,Li[1]*c+6,"L'",'txl')+T(Lp[0]*c+8,(S-2.5)*c,'5','txs')+T(Lp[0]*c+8,(S+2.5)*c,'5','txs');
+   if(k>=2)o+=L(Li[0]*c,Li[1]*c,R[0]*c,R[1]*c,'ray dash','stroke-width="1.6"')+L(R[0]*c,R[1]*c,E[0]*c+8,E[1]*c,'thin');
+   if(k>=3)o+=ray(q(Lp),q(R),'ray')+ray(q(R),[E[0]*c+8,E[1]*c],'ray')+C(R[0]*c,R[1]*c,5,'aw')+T(R[0]*c-8,R[1]*c+24,'R','txl');
+   return o}});
+ hints.g2=['Die Wasseroberfläche liegt waagrecht. Das Lot von L auf den Spiegel verläuft also senkrecht nach unten.','L liegt 5 Kästchen über der Wasseroberfläche – L\' liegt 5 Kästchen darunter.','Verbinde dann L\' mit dem Auge. Der Schnittpunkt mit der Wasseroberfläche ist R.']}
+
+/* ---------- 2.3 Schräger Spiegel ---------- */
+gridTask('g3',{mirror:[[2,13],[15,0]],lab:[10,22],pts:[{n:'P',x:3,y:2},{n:'Q',x:7,y:2,dx:6,dy:-8},{n:'R',x:4,y:6,dx:-24,dy:14}],
+ hint1:'Nicht ganz. Das Lot muss senkrecht zum schrägen Spiegel stehen.',hint2:'Der Spiegel verläuft diagonal. Das Lot verläuft dann auch diagonal: ein Kästchen nach rechts und gleichzeitig eines nach unten.',
+ done:'Klasse! Auch beim schrägen Spiegel gilt: Lot fällen, gleicher Abstand dahinter.'});
+hints.g3=['Der Spiegel geht von links unten nach rechts oben (45°). Senkrecht dazu geht es „ein Kästchen nach rechts, ein Kästchen nach unten“.','Wandere von P diagonal nach rechts unten, bis du den Spiegel triffst. Zähle die Diagonalschritte – und mache genauso viele weiter.','P braucht 5 Diagonalschritte bis zum Spiegel. Also liegt P\' 10 Diagonalschritte von P entfernt: 10 nach rechts, 10 nach unten.'];
+
+/* ---------- 3.1 Frau Spieker ---------- */
+{const svg=$('#a1'),W=10,X0=1,X1=16,E=[2,4],D=[4,8],RT=[6,1,5.5],Ei=[E[0],2*W-E[1]],sol=[9,12.5];
+ let m=[3,5],show=false,drag=null;
+ /* wo trifft der Sehstrahl über Spiegelpunkt x die rechte Wand? */
+ const hit=x=>{if(x<=Ei[0]+0.01)return NaN;const t=(X1-Ei[0])/(x-Ei[0]);return Ei[1]+t*(W-Ei[1])};
+ const blocked=(a,b)=>{/* kreuzt Strecke a-b den Raumteiler? */if((a[0]-RT[0])*(b[0]-RT[0])>0)return false;const y=a[1]+(RT[0]-a[0])/(b[0]-a[0])*(b[1]-a[1]);return y>=RT[1]&&y<=RT[2]};
+ function draw(){let o=`<rect x="0" y="${W*c}" width="660" height="${510-W*c}" class="behind"/>`+grid(660,510,c);
+  o+=`<rect x="${X0*c}" y="${c}" width="${(X1-X0)*c}" height="${(W-1)*c}" class="wallr"/>`+L(X0*c,W*c,X1*c,W*c,'','style="stroke:#b04cc8" stroke-width="4"')+T(4*c,W*c+24,'Wand W','','style="fill:#b04cc8;font:600 15px Lexend,sans-serif"');
+  o+=L(RT[0]*c,RT[1]*c,RT[0]*c,RT[2]*c,'','style="stroke:var(--ink)" stroke-width="9"')+T(RT[0]*c+8,RT[1]*c+22,'Raumteiler','txs');
+  o+=L(X1*c,D[0]*c,X1*c,D[1]*c,'door')+T(X1*c+10,(D[0]+D[1])/2*c+5,'Tür T','','style="fill:var(--laser2);font:600 16px Lexend,sans-serif"');
+  o+=`<path d="M${E[0]*c-8} ${E[1]*c-8} l16 16 m0 -16 l-16 16" style="stroke:#e8891a" stroke-width="3"/>`+T(E[0]*c-14,E[1]*c-14,'Fr. Spieker','','style="fill:#e8891a;font:600 14px Lexend,sans-serif"');
+  if(show){const Di=[[X1,2*W-D[0]],[X1,2*W-D[1]]];
+   o+=L(X1*c,D[0]*c,X1*c,Di[0][1]*c,'lot')+C(X1*c,Di[0][1]*c,5,'aw2')+C(X1*c,Di[1][1]*c,5,'aw2')+L(X1*c,Di[0][1]*c,X1*c,Di[1][1]*c,'door','style="opacity:.45"')+T(X1*c+10,Di[0][1]*c+5,"T₁'",'txb')+T(X1*c+10,Di[1][1]*c+5,"T₂'",'txb');
+   [[sol[0],Di[0],D[0]],[sol[1],Di[1],D[1]]].forEach(([x,ti,yd])=>{o+=L(x*c,W*c,ti[0]*c,ti[1]*c,'ray dash','stroke-width="1.5"')+ray([X1*c,yd*c],[x*c,W*c],'ray')+ray([x*c,W*c],[E[0]*c,E[1]*c],'ray')})}
+  /* Sichtbereich */
+  const ys=[hit(m[0]),hit(m[1])].sort((a,b)=>a-b),y1=Math.max(ys[0],1),y2=Math.min(ys[1],W);
+  if(y2>y1)o+=L(X1*c+6,y1*c,X1*c+6,y2*c,'see');
+  [m[0],m[1]].forEach(x=>{const h=[X1,hit(x)],bl=blocked([x,W],E)||blocked([x,W],h);o+=L(E[0]*c,E[1]*c,x*c,W*c,'thin','stroke-dasharray="3 4" opacity=".6"')+(h[1]>=1&&h[1]<=W?L(x*c,W*c,h[0]*c,h[1]*c,'thin','stroke-dasharray="3 4" opacity=".6"'):'')+(bl?T(x*c-30,W*c-10,'verdeckt!','txs','style="fill:var(--bad)"'):'')});
+  o+=L(m[0]*c,W*c,m[1]*c,W*c,'mir','stroke-width="8"');
+  m.forEach((x,i)=>o+=C(x*c,W*c,11,'handle','data-h="'+i+'"'));
+  svg.innerHTML=o;const a=Math.min(...m),b=Math.max(...m);$('#a1From').textContent=fmt(a-X0,2).replace(/,?0+$/,'').replace(/,$/,'');$('#a1To').textContent=fmt(b-X0,2).replace(/,?0+$/,'').replace(/,$/,'');$('#a1Len').textContent=fmt(b-a,2).replace(/,?0+$/,'').replace(/,$/,'')||'0'}
+ const snap=v=>Math.min(X1-0.25,Math.max(X0+0.25,Math.round(v*4)/4));
+ svg.addEventListener('pointerdown',ev=>{const p=svgPt(svg,ev),x=p.x/c;let best=null,bd=1.2;m.forEach((v,i)=>{const d=Math.abs(v-x);if(d<bd&&Math.abs(p.y/c-W)<1.5){bd=d;best=i}});if(best!==null){drag=best;svg.setPointerCapture(ev.pointerId);ev.preventDefault()}});
+ svg.addEventListener('pointermove',ev=>{if(drag===null)return;m[drag]=snap(svgPt(svg,ev).x/c);draw()});
+ svg.addEventListener('pointerup',()=>{drag=null});
+ $('#a1Check').onclick=()=>{const a=Math.min(...m),b=Math.max(...m),fb=$('#a1Fb');
+  if(Math.abs(a-sol[0])<=0.25&&Math.abs(b-sol[1])<=0.25){fb.className='fb ok';fb.textContent='Perfekt! Der Spiegel reicht von Kästchen 8 bis 11,5 der Wand – er muss mindestens 3,5 Kästchen lang sein. Frau Spieker sieht die ganze Tür, und der Raumteiler ist nicht im Weg.';mark('a1');show=true;draw()}
+  else if(a<=sol[0]+0.25&&b>=sol[1]-0.25){fb.className='fb bad';fb.textContent='Frau Spieker sieht die ganze Tür – aber der Spiegel ist größer als nötig. Gesucht ist die Mindestgröße.'}
+  else{fb.className='fb bad';fb.textContent='Noch nicht: Der rote Streifen muss die ganze Tür abdecken. Nutze die Tipps oder konstruiere wie im Tipp beschrieben.'}};
+ $('#a1Solve').onclick=()=>{show=!show;$('#a1Solve').textContent=show?'Lösung ausblenden':'Lösung zeigen';if(show){m=[...sol]}draw()};
+ hints.a1=['Spiegle die beiden Enden der Tür an der Wand W. Du erhältst T₁\' und T₂\' unterhalb der Wand.','Verbinde Frau Spiekers Auge geradlinig mit T₁\' und mit T₂\'. Wo diese Linien die Wand W schneiden, liegen die Enden des Spiegels.','Kontrolliere zum Schluss: Wird eine der Linien vom Raumteiler verdeckt?'];
+ draw()}
+
+/* ---------- 3.2 Spiegelaufhängung ---------- */
+{const svg=$('#a2'),Wx=450,fl=380,s=150;
+ function man(x,K,H,dir,cls){const top=fl-K*s,eyeY=fl-H*s,u=K*s/28.5;let g=`<g class="${cls}">`;
+  g+=`<rect x="${x-13*u/10}" y="${top}" width="${26*u/10}" height="${22*u/10}" rx="2" fill="var(--ink)"/><rect x="${x-24*u/10}" y="${top+20*u/10}" width="${48*u/10}" height="${5*u/10}" rx="2" fill="var(--ink)"/>`;
+  g+=`<circle cx="${x}" cy="${eyeY+4*u/10}" r="${15*u/10}" fill="var(--ink)"/>`;
+  g+=`<rect x="${x-16*u/10}" y="${eyeY+22*u/10}" width="${32*u/10}" height="${(fl-eyeY)*0.55-22*u/10}" rx="8" fill="var(--ink)"/>`;
+  g+=`<rect x="${x-12*u/10}" y="${eyeY+(fl-eyeY)*0.52}" width="${10*u/10}" height="${(fl-eyeY)*0.48-4}" fill="var(--ink)"/><rect x="${x+2*u/10}" y="${eyeY+(fl-eyeY)*0.52}" width="${10*u/10}" height="${(fl-eyeY)*0.48-4}" fill="var(--ink)"/>`;
+  g+=`<rect x="${x-14*u/10+(dir>0?0:-6)}" y="${fl-7}" width="${34*u/10}" height="7" rx="3" fill="var(--ink)"/>`;
+  g+=C(x+dir*8*u/10,eyeY,3.5,'','fill="var(--bg)"')+'</g>';return g}
+ function draw(){const d=+$('#a2d').value,K=+$('#a2k').value,H=K-0.24,show=$('#a2show').checked,mx=Wx-d*s,ix=Wx+d*s,eye=[mx+8,fl-H*s];
+  $('#a2dV').textContent=fmt(d);$('#a2kV').textContent=fmt(K);
+  let o=`<rect x="${Wx}" y="0" width="${900-Wx}" height="${fl}" class="behind"/>`+L(0,fl,900,fl,'thin','stroke-width="2"');
+  for(let h=0;h<=2;h+=0.5){o+=L(Wx-16,fl-h*s,Wx-8,fl-h*s,'tick')+T(Wx-56,fl-h*s+5,fmt(h,1)+' m','txs')}
+  o+=L(Wx,10,Wx,fl,'thin','stroke-width="2"')+T(Wx+10,24,'Wand','txs');
+  o+=man(mx,K,H,1,'');
+  o+=T(mx-60,fl-K*s-10,'K = '+fmt(K)+' m','txs')+T(mx-110,fl-H*s+5,'H = '+fmt(H)+' m','txs')+L(mx-30,fl-H*s,mx-6,fl-H*s,'lot');
+  if(show){const u=(fl-H*s/2),ob=fl-(H+(K-H)/2)*s;
+   o+=`<g class="ghost">${man(ix,K,H,-1,'')}</g>`+T(ix-34,fl+22,'Spiegelbild','txs');
+   o+=L(eye[0],eye[1],ix,fl,'ray2 dash','stroke-width="1.4"')+L(eye[0],eye[1],ix,fl-K*s,'ray dash','stroke-width="1.4"');
+   o+=ray([mx,fl-3],[Wx,u],'ray2')+ray([Wx,u],eye,'ray2')+ray([mx,fl-K*s],[Wx,ob],'ray')+ray([Wx,ob],eye,'ray');
+   o+=mirrorV(Wx,ob,u)+L(Wx+14,ob,Wx+60,ob,'lot')+L(Wx+14,u,Wx+60,u,'lot');
+   const lx=Math.min(ix+40,700);o+=L(Wx+60,ob,lx-4,ob,'lot')+L(Wx+60,u,lx-4,u,'lot')+T(lx,ob+5,'Oberkante '+fmt(H+(K-H)/2)+' m','txl')+T(lx,u+5,'Unterkante '+fmt(H/2)+' m','txb')+T(lx,(ob+u)/2+5,'Spiegel: '+fmt(K/2)+' m','txm')}
+  svg.innerHTML=o}
+ ['#a2d','#a2k','#a2show'].forEach(s=>$(s).addEventListener('input',draw));draw();
+ numCheck('#a2Check',['#a2n1','#a2n2','#a2n3'],'#a2Fb','a2d','Richtig! Spiegelhöhe K/2 = 0,95 m, Unterkante H/2 = 0,83 m, Oberkante 0,83 m + 0,95 m = 1,78 m. Kontrolliere mit der Simulation (K = 1,90 m).');
+ hints.a2=['Spiegelhöhe = K/2 – die halbe Körperlänge.','Unterkante = H/2 – die halbe Augenhöhe.','Oberkante = Unterkante + Spiegelhöhe. Oder: H + (K − H)/2, also auf halbem Weg zwischen Auge und Hutspitze.']}
+
+/* ---------- 3.3 Doppelfenster ---------- */
+{const c1=6,c2=8,E=[3,6],Lm=[9,12],rf=(p,cc)=>[p[1]+cc,p[0]-cc],L1=rf(Lm,c1),L2=rf(Lm,c2);
+ const onPane=(cc,a,b)=>{/* Schnitt Strecke a-b mit Gerade x-y=cc */const fa=a[0]-a[1]-cc,fb=b[0]-b[1]-cc,t=fa/(fa-fb);return [a[0]+t*(b[0]-a[0]),a[1]+t*(b[1]-a[1])]};
+ const R1=onPane(c1,E,L1),R2=onPane(c2,E,L2),q=p=>[p[0]*c,p[1]*c],ft=[Lm[0]+4.5,Lm[1]-4.5];
+ stepTask('a3',{task:'a3b',steps:[{t:"Klicke auf den Ort des Bildes L₁' (Spiegelung an der 1. Scheibe).",at:q(L1),r:18,bad:'Nicht ganz. Das Lot auf die schräge Scheibe verläuft diagonal: ein Kästchen nach rechts, eines nach oben.'},
+  {t:"Klicke auf den Ort des Bildes L₂' (Spiegelung an der 2. Scheibe).",at:q(L2),r:18,bad:'Nicht ganz. Die 2. Scheibe ist etwas weiter weg – das Bild liegt deshalb weiter hinten.'},
+  {t:"Verbinde L₁' mit dem Auge. Klicke auf den Punkt, an dem diese Linie die 1. Scheibe schneidet.",at:q(R1),r:16,bad:'Klicke genau auf den Schnittpunkt mit der 1. Scheibe.'},
+  {t:"Verbinde L₂' mit dem Auge. Klicke auf den Punkt, an dem diese Linie die 2. Scheibe schneidet.",at:q(R2),r:16,bad:'Klicke genau auf den Schnittpunkt mit der 2. Scheibe.'}],
+  done:"Von jeder Scheibe gelangt ein Bündel ins Auge (rot und blau). Das Auge sieht deshalb zwei Bilder L₁' und L₂', die leicht versetzt hintereinander liegen.",
+  draw:k=>{let o=grid(660,390,c);
+   o+=L(c1*c,0,(c1+13)*c,13*c,'glass')+L(c2*c,0,(c2+13)*c,13*c,'glass')+T((c1+0.3)*c-90,0.7*c,'1. Scheibe','txm')+T((c2+1.3)*c,0.7*c,'2. Scheibe','txm');
+   o+=L(q(Lm)[0],q(Lm)[1],q(ft)[0],q(ft)[1],'thin','stroke-dasharray="2 4"')+T(q(ft)[0]-40,q(ft)[1]+28,'a','txs');
+   o+=C(Lm[0]*c,Lm[1]*c,22,'','fill="url(#glow)"')+C(Lm[0]*c,Lm[1]*c,8,'lamp')+T(Lm[0]*c-26,Lm[1]*c+6,'L','txb');
+   o+=eye(E[0]*c,E[1]*c,-15)+T(E[0]*c-24,E[1]*c+30,'Auge','txs');
+   if(k>=1)o+=L(Lm[0]*c,Lm[1]*c,L1[0]*c,L1[1]*c,'lot')+C(L1[0]*c,L1[1]*c,7,'lamp','opacity=".6"')+T(L1[0]*c+10,L1[1]*c+18,"L₁'",'txl');
+   if(k>=2)o+=L(L1[0]*c,L1[1]*c,L2[0]*c,L2[1]*c,'lot')+C(L2[0]*c,L2[1]*c,7,'lamp','opacity=".6"')+T(L2[0]*c+10,L2[1]*c-6,"L₂'",'txb');
+   if(k>=3)o+=L(L1[0]*c,L1[1]*c,R1[0]*c,R1[1]*c,'ray dash','stroke-width="1.5"')+ray(q(Lm),q(R1),'ray')+ray(q(R1),[E[0]*c+8,E[1]*c],'ray');
+   if(k>=4)o+=L(L2[0]*c,L2[1]*c,R2[0]*c,R2[1]*c,'ray2 dash','stroke-width="1.5"')+ray(q(Lm),q(R2),'ray2')+ray(q(R2),[E[0]*c+8,E[1]*c],'ray2');
+   return o}});
+ hints.a3=['Jede Scheibe ist ein eigener Spiegel. Spiegle L zuerst an der 1. Scheibe, dann (unabhängig davon) an der 2. Scheibe.','Die Scheiben verlaufen diagonal von links oben nach rechts unten. Das Lot verläuft deshalb von links unten nach rechts oben – je ein Kästchen nach rechts und nach oben.','L ist 4,5 Diagonalschritte von der 1. Scheibe entfernt: L₁\' liegt 9 Diagonalschritte von L entfernt. Für die 2. Scheibe kommt ein Schritt dazu (5,5 → 11 Schritte).'];
+ numCheck('#a3Check',['#a3n1','#a3n2','#a3n3'],'#a3cFb','a3c','Richtig! L₁\' liegt 2,5 m hinter der 1. Scheibe, L₂\' liegt 2,516 m hinter der 2. Scheibe – also 2 · 16 mm = 32 mm hinter L₁\'. Der Bildabstand ist immer 2d, egal wo die Lampe steht.',0.0015);
+ hints.a3c=['Bildweite = Gegenstandsweite. Wie weit ist die Lampe von der 2. Scheibe entfernt?','Die Lampe ist a + d = 2,5 m + 0,016 m = 2,516 m von der 2. Scheibe entfernt.','Abstand der Bilder: L₂\' liegt (a + d) + d hinter der 1. Scheibe, L₁\' liegt a dahinter. Differenz: 2d.']}
+
+/* ---------- 4.1 60°-Winkelspiegel ---------- */
+const WV=[200,190],Wu=[Math.cos(Math.PI/6),Math.sin(Math.PI/6)],W1b=[200,540],W2b=[WV[0]+500*Wu[0],WV[1]+500*Wu[1]],WK=[260,400],WA=[420,370];
+function wedge(){const a=[WV[0],WV[1]+60],b=[WV[0]+60*Wu[0],WV[1]+60*Wu[1]];
+ return `<path d="M${a[0]} ${a[1]} A60 60 0 0 0 ${b[0]} ${b[1]}" class="thin"/>`+T(WV[0]+16,WV[1]+48,'60°','txb')+L(WV[0],WV[1],W1b[0],W1b[1],'mir')+L(WV[0],WV[1],W2b[0],W2b[1],'mir')+T(210,530,'Spiegel 1','txm')+T(W2b[0]-90,W2b[1]+30,'Spiegel 2','txm')}
+{const K1=refl(WK,WV,W1b),K2=refl(K1,WV,W2b),R2=inter(WA,K2,WV,W2b),R1=inter(R2,K1,WV,W1b);
+ stepTask('k1',{task:'k1a',steps:[{t:'Konstruiere das Bild K₁ der Kerze an Spiegel 1. Klicke auf seinen Ort.',at:K1,r:18,bad:'Nicht ganz. Lot von K auf Spiegel 1 (waagrecht), gleich weit dahinter.'},
+  {t:'Spiegle jetzt das Bild K₁ an Spiegel 2 (bzw. seiner Verlängerung). Klicke auf den Ort von K₂.',at:K2,r:20,bad:'Nicht ganz. Das Lot von K₁ steht senkrecht auf der Verlängerung von Spiegel 2 – gleich weit dahinter liegt K₂.'},
+  {t:'Verbinde K₂ mit dem Auge A. Klicke auf den Punkt, an dem diese Linie Spiegel 2 trifft.',at:R2,r:16,bad:'Klicke genau auf den Schnittpunkt der Linie K₂A mit Spiegel 2.'},
+  {t:'Verbinde diesen Punkt mit K₁. Klicke auf den Schnittpunkt mit Spiegel 1.',at:R1,r:16,bad:'Klicke genau auf den Schnittpunkt der Linie mit Spiegel 1.'}],
+  done:'Das Licht läuft K → Spiegel 1 → Spiegel 2 → A. Für das Auge kommt es geradlinig vom Bild K₂.',
+  draw:k=>{let o=`<rect x="0" y="0" width="660" height="560" class="behind"/>`+P([WV,[WV[0],560],[660,560],[660,WV[1]+(660-WV[0])*Wu[1]/Wu[0]]],'','style="fill:var(--paper)"')+wedge();
+   o+=C(WK[0],WK[1],18,'','fill="url(#glow)"')+C(WK[0],WK[1],7,'lamp')+T(WK[0]-6,WK[1]+28,'K','txb')+eye(WA[0],WA[1],angOf(WA,R2))+T(WA[0]+18,WA[1]+20,'A','txb');
+   if(k>=1)o+=L(WK[0],WK[1],K1[0],K1[1],'lot')+C(K1[0],K1[1],6,'lamp','opacity=".6"')+T(K1[0]-30,K1[1]+6,'K₁','txl');
+   if(k>=2){const ext=[WV[0]-200*Wu[0],WV[1]-200*Wu[1]];o+=L(WV[0],WV[1],ext[0],ext[1],'thin','stroke-dasharray="3 5"')+L(K1[0],K1[1],K2[0],K2[1],'lot')+C(K2[0],K2[1],6,'lamp','opacity=".6"')+T(K2[0]+10,K2[1]+5,'K₂','txl')}
+   if(k>=3)o+=L(K2[0],K2[1],R2[0],R2[1],'ray dash','stroke-width="1.4"')+L(R2[0],R2[1],WA[0],WA[1],'thin');
+   if(k>=4)o+=L(K1[0],K1[1],R1[0],R1[1],'ray dash','stroke-width="1.4"')+ray(WK,R1,'ray')+ray(R1,R2,'ray')+ray(R2,WA,'ray')+C(R1[0],R1[1],4.5,'aw')+C(R2[0],R2[1],4.5,'aw');
+   return o}});
+ hints.k1=['Arbeite rückwärts vom Auge aus: Das Auge sieht nach der zweiten Reflexion ein Bild vom Bild.','K₁ = Bild von K an Spiegel 1. K₂ = Bild von K₁ an Spiegel 2. Verlängere Spiegel 2 gestrichelt über den Scheitel hinaus, damit du das Lot fällen kannst.','Die Linie K₂ → A liefert den Punkt auf Spiegel 2. Von dort zielst du auf K₁ und bekommst den Punkt auf Spiegel 1.']}
+$('#k1Check').onclick=()=>{const v=num($('#k1n').value),fb=$('#k1bFb'),ok=Math.abs(v-120)<0.5;$('#k1n').className=ok?'ok':'bad';
+ if(ok){fb.className='fb ok';fb.textContent='Richtig! δ = 120° = 2 · 60°. Das gilt für jeden Strahl, der beide Spiegel trifft – teste es im Ablenkungs-Labor.';mark('k1b')}
+ else if(Math.abs(v-60)<0.5){fb.className='fb bad';fb.textContent='60° ist der Winkel γ zwischen den Strahlen im Dreieck. Gesucht ist sein Nebenwinkel.'}
+ else{fb.className='fb bad';fb.textContent='Noch nicht. Nutze die Tipps oder das Ablenkungs-Labor.'}};
+hints.k1b=['Zeichne das Dreieck aus Scheitel S, Reflexionspunkt 1 und Reflexionspunkt 2. Die Winkel zwischen Strahl und Spiegel sind 90° − α und 90° − β.','Winkelsumme: 60° + (90° − α) + (90° − β) = 180°. Daraus folgt α + β = 60°.','Im Dreieck aus beiden Reflexionspunkten und dem Schnittpunkt der Strahlen: γ = 180° − 2α − 2β. δ ist der Nebenwinkel von γ.'];
+{const svg=$('#k1s');let py=380,drag=false;
+ function draw(){const P1=[WV[0],py],d0=[P1[0]-WK[0],P1[1]-WK[1]],l0=Math.hypot(...d0),din=[d0[0]/l0,d0[1]/l0],d1=[-din[0],din[1]];
+  let o=`<rect x="0" y="0" width="660" height="560" class="behind"/>`+P([WV,[WV[0],560],[660,560],[660,WV[1]+(660-WV[0])*Wu[1]/Wu[0]]],'','style="fill:var(--paper)"')+wedge()+C(WK[0],WK[1],7,'lamp')+T(WK[0]-6,WK[1]+28,'K','txb');
+  o+=ray(WK,P1,'ray');
+  const Q=inter(P1,[P1[0]+d1[0],P1[1]+d1[1]],WV,W2b),t=Q?((Q[0]-WV[0])*Wu[0]+(Q[1]-WV[1])*Wu[1]):-1,fwd=Q?((Q[0]-P1[0])*d1[0]+(Q[1]-P1[1])*d1[1]):-1;
+  if(Q&&t>0&&t<500&&fwd>0){const n=[-Wu[1],Wu[0]],dn=d1[0]*n[0]+d1[1]*n[1],d2=[d1[0]-2*dn*n[0],d1[1]-2*dn*n[1]],end0=[Q[0]+d2[0]*400,Q[1]+d2[1]*400],hit1=d2[0]<0?inter(Q,end0,WV,W1b):null,end=hit1&&hit1[1]>WV[1]&&hit1[1]<560?hit1:end0;
+   o+=ray(P1,Q,'ray')+ray(Q,end,'ray');
+   const S=inter(WK,P1,Q,end);if(S)o+=L(P1[0],P1[1],S[0],S[1],'ray dash','stroke-width="1.2" opacity=".6"')+L(Q[0],Q[1],S[0],S[1],'ray dash','stroke-width="1.2" opacity=".6"')+C(S[0],S[1],4,'aw');
+   const ang=Math.acos(Math.max(-1,Math.min(1,din[0]*d2[0]+din[1]*d2[1])))*180/Math.PI;$('#k1sOut').textContent='δ = '+Math.round(ang)+'°'}
+  else{o+=ray(P1,[P1[0]+d1[0]*300,P1[1]+d1[1]*300],'ray');$('#k1sOut').textContent='trifft Spiegel 2 nicht'}
+  o+=C(P1[0],P1[1],11,'handle');svg.innerHTML=o}
+ svg.addEventListener('pointerdown',ev=>{const p=svgPt(svg,ev);if(Math.hypot(p.x-WV[0],p.y-py)<30){drag=true;svg.setPointerCapture(ev.pointerId);ev.preventDefault()}});
+ svg.addEventListener('pointermove',ev=>{if(!drag)return;py=Math.max(WV[1]+15,Math.min(530,svgPt(svg,ev).y));draw()});
+ svg.addEventListener('pointerup',()=>drag=false);
+ $('#k1Sim').onclick=()=>{$('#k1SimBox').hidden=false;draw()}}
+
+/* ---------- 4.2 Wie viele Bilder? ---------- */
+{const svg=$('#k2'),V=[220,220];
+ function draw(alpha,show){const a1=90,a2=90-alpha,R=170,K=[V[0]+120*Math.cos((90-alpha*0.35)*Math.PI/180),V[1]+120*Math.sin((90-alpha*0.35)*Math.PI/180)];
+  let o=C(V[0],V[1],120,'','fill="none" style="stroke:var(--line)" stroke-dasharray="4 6"');
+  o+=P([V,[V[0]+R*Math.cos(a1*Math.PI/180),V[1]+R*Math.sin(a1*Math.PI/180)],[V[0]+R*Math.cos(a2*Math.PI/180),V[1]+R*Math.sin(a2*Math.PI/180)]],'','style="fill:var(--laser);opacity:.06"');
+  if(show){images(V,K,a1,a2).forEach((p,i)=>{o+=L(V[0],V[1],p[0],p[1],'thin','opacity=".15"')+C(p[0],p[1],9,'lamp','opacity=".45"')+T(p[0]+11,p[1]-9,String(i+1),'txs')})}
+  [a1,a2].forEach(t=>o+=L(V[0],V[1],V[0]+R*Math.cos(t*Math.PI/180),V[1]+R*Math.sin(t*Math.PI/180),'mir'));
+  o+=C(K[0],K[1],18,'','fill="url(#glow)"')+C(K[0],K[1],9,'lamp')+T(K[0]+12,K[1]+20,'K','txb')+T(12,24,'Blick von oben · α = '+alpha+'°','txs');
+  svg.innerHTML=o;return images(V,K,a1,a2).length}
+ draw(60,false);
+ $('#k2Check').onclick=()=>{const v=$('#k2Sel').value,fb=$('#k2Fb');
+  if(v==='5'){fb.className='fb ok';fb.textContent='Richtig: 5 Bilder. Zusammen mit der Kerze selbst sind es 6 Kerzen – sie liegen gleichmäßig verteilt auf einem Kreis um den Scheitel.';mark('k2');draw(60,true);$('#k2Ex').hidden=false;$('#k2Out').textContent='5'}
+  else{fb.className='fb bad';fb.textContent='Noch nicht. Konstruiere schrittweise: K an Spiegel 1, das Bild an Spiegel 2, dessen Bild wieder an Spiegel 1 … bis ein Bild auf ein schon vorhandenes fällt.'}};
+ $('#k2Ang').onchange=()=>{const a=+$('#k2Ang').value,n=draw(a,true);$('#k2Out').textContent=n+'  (360° : '+a+'° − 1 = '+(360/a-1)+')'};
+ hints.k2=['Beim 90°-Winkelspiegel (Spiegelecke) siehst du 3 Bilder: je eines in jedem Spiegel und eines in der Ecke.','Alle Bilder liegen gleich weit vom Scheitel entfernt – also auf einem Kreis um den Scheitel.','Die Spiegel teilen den Vollkreis in Sektoren von 60°. In jedem Sektor außer dem der Kerze liegt genau ein Bild.']}
+
+$$('[data-reset]').forEach(b=>b.onclick=()=>tasksCfg[b.dataset.reset].reset());
+$$('[data-solve]').forEach(b=>b.onclick=()=>tasksCfg[b.dataset.solve].solve());
+}
+</script>
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Lernpfad"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik8/spiegelbild-uebungen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h1m2 0h2m2 0h1m1 0h1m1 0h1m2 0h1m4 0h1m1 0h7m-37 1h1m5 0h1m2 0h1m1 0h2m1 0h1m2 0h3m2 0h1m2 0h1m1 0h1m2 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h7m1 0h1m1 0h4m4 0h3m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h2m1 0h1m1 0h2m2 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h5m3 0h2m2 0h1m4 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h9m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m5 0h1m5 0h2m1 0h2m2 0h1m-28 1h1m1 0h5m7 0h2m2 0h1m1 0h2m2 0h2m1 0h1m2 0h5m-35 1h1m1 0h1m1 0h2m3 0h1m1 0h1m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h3m-36 1h1m2 0h1m2 0h3m2 0h2m1 0h1m2 0h2m1 0h3m2 0h5m1 0h1m3 0h2m-36 1h3m1 0h1m4 0h5m1 0h1m4 0h3m3 0h1m2 0h1m1 0h1m3 0h1m-36 1h4m1 0h1m2 0h1m1 0h2m1 0h1m2 0h2m3 0h1m2 0h2m1 0h3m1 0h5m-37 1h2m1 0h1m4 0h1m1 0h1m3 0h1m1 0h6m1 0h1m1 0h1m2 0h1m2 0h1m-31 1h7m5 0h3m1 0h1m2 0h2m4 0h2m1 0h5m1 0h2m-36 1h2m2 0h1m1 0h1m2 0h3m2 0h1m1 0h3m1 0h1m4 0h2m1 0h4m2 0h1m-31 1h2m1 0h2m1 0h1m1 0h4m2 0h1m1 0h1m2 0h4m1 0h2m1 0h1m1 0h1m1 0h1m-37 1h4m3 0h2m1 0h1m1 0h4m1 0h2m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m1 0h3m-36 1h3m1 0h1m1 0h1m1 0h1m2 0h1m3 0h3m1 0h1m2 0h1m1 0h4m1 0h2m3 0h3m-35 1h3m2 0h3m5 0h1m2 0h4m1 0h1m2 0h1m2 0h2m2 0h1m2 0h1m-36 1h1m2 0h3m1 0h1m1 0h1m1 0h1m1 0h4m1 0h1m3 0h8m1 0h1m1 0h1m-35 1h1m1 0h1m2 0h1m1 0h4m1 0h1m1 0h3m1 0h3m2 0h1m2 0h1m1 0h2m3 0h1m1 0h1m-36 1h2m1 0h1m1 0h5m1 0h6m1 0h1m3 0h1m1 0h1m1 0h8m1 0h2m-37 1h1m1 0h1m1 0h1m2 0h1m2 0h1m2 0h2m1 0h1m2 0h1m6 0h2m1 0h1m1 0h2m2 0h2m-37 1h2m1 0h1m2 0h2m1 0h2m2 0h1m4 0h1m1 0h8m1 0h4m1 0h1m-35 1h3m2 0h1m1 0h2m1 0h1m3 0h3m6 0h1m4 0h1m2 0h1m1 0h2m-35 1h1m1 0h1m3 0h1m1 0h1m1 0h3m7 0h1m1 0h1m2 0h1m1 0h1m2 0h4m1 0h2m-37 1h1m1 0h1m7 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m4 0h3m4 0h1m2 0h1m-37 1h1m2 0h1m2 0h5m1 0h1m4 0h1m2 0h1m1 0h1m1 0h3m1 0h9m-29 1h5m1 0h1m2 0h7m2 0h3m3 0h2m1 0h1m-36 1h7m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m4 0h1m1 0h1m1 0h1m1 0h1m1 0h3m-37 1h1m5 0h1m1 0h2m2 0h1m3 0h7m3 0h1m1 0h1m3 0h2m2 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m3 0h4m2 0h1m1 0h1m1 0h1m1 0h8m1 0h1m-35 1h1m1 0h3m1 0h1m1 0h2m2 0h1m2 0h1m2 0h1m1 0h4m3 0h4m1 0h1m1 0h1m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m5 0h3m-37 1h1m5 0h1m3 0h1m3 0h2m3 0h6m2 0h4m1 0h1m3 0h1m-37 1h7m1 0h1m1 0h3m2 0h3m1 0h1m2 0h1m1 0h2m3 0h2m1 0h1m1 0h3"/></svg><p>lernapps.gst-lernen.workers.dev/Physik8/spiegelbild-uebungen</p><button id="qrClose">Schließen</button></dialog>
+<script>
+{const d=document.getElementById('qrDlg');document.getElementById('qrOpen').onclick=()=>d.showModal();document.getElementById('qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
+</script>
+</body>
+</html>

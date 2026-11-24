@@ -50,6 +50,7 @@ dialog.qrdlg button{font:600 16px Lexend,sans-serif;min-height:44px;padding:8px 
 const KURSE=[
  {ordner:'Physik8',name:'Physik 8',seiten:[
   {datei:'reflexion-spiegel',titel:'Reflexion am ebenen Spiegel',info:'Reflexionsgesetz, Eigenschaften des Spiegelbilds, Konstruktion und Übungen',bild:'spiegel'},
+  {datei:'spiegelbild-uebungen',titel:'Spiegelbild konstruieren · Üben',info:'Lichtweg übers Spiegelbild, Spiegelposition, Spiegelaufhängung, Doppelfenster, 60°-Winkelspiegel',bild:'spiegelUeb'},
   {datei:'lichtbrechung-experiment',titel:'Lichtbrechung 1 · Schülerexperiment',info:'Begleitung zum Arbeitsblatt: Aufbau, Messwerte, Diagramm, Auswertung',bild:'brechExp'},
   {datei:'lichtbrechung-theorie',titel:'Lichtbrechung 2 · Theorie',info:'Ursache der Brechung, Brechungs-Labor, geknickter Stab, Heftaufschrieb',bild:'brechTheo'},
   {datei:'lichtbrechung-uebungen',titel:'Lichtbrechung 3 · Üben',info:'Strahlenverläufe, Brechungsdiagramm, Konstruktionen, Fisch harpunieren',bild:'brechUeb'}
@@ -60,6 +61,11 @@ const KURSE=[
 ];
 /* Vorschaubilder (Name in KURSE unter bild:) – Format 320 × 140 */
 const BILDER={
+ spiegelUeb:`<svg viewBox="0 0 320 140" aria-hidden="true"><circle cx="150" cy="58" r="44" fill="none" stroke="#3a4558" stroke-dasharray="4 5"/>
+  <g fill="#ffcf4a" opacity=".35"><circle cx="134" cy="99" r="6"/><circle cx="194" cy="51" r="6"/><circle cx="178" cy="24" r="6"/><circle cx="106" cy="51" r="6"/><circle cx="122" cy="24" r="6"/></g>
+  <circle cx="166" cy="99" r="16" fill="#ffcf4a" opacity=".2"/><circle cx="166" cy="99" r="6" fill="#ffcf4a"/>
+  <line x1="150" y1="58" x2="150" y2="132" stroke="#58c4df" stroke-width="5" stroke-linecap="round"/><line x1="150" y1="58" x2="262" y2="122" stroke="#58c4df" stroke-width="5" stroke-linecap="round"/>
+  <text x="18" y="30" fill="#ff5c50" font-family="Lexend,sans-serif" font-size="22" font-weight="700">★★★</text></svg>`,
  spiegel:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect x="170" width="150" height="140" fill="#141c2a"/>
   <circle cx="80" cy="62" r="26" fill="#ffcf4a" opacity=".18"/><rect x="72" y="72" width="16" height="44" fill="#f4ead8"/><path d="M80 48 C88 58 87 66 80 68 C73 66 72 58 80 48Z" fill="#ffb21a"/>
   <g opacity=".4"><rect x="252" y="72" width="16" height="44" fill="#f4ead8"/><path d="M260 48 C268 58 267 66 260 68 C253 66 252 58 260 48Z" fill="#ffb21a"/></g>
