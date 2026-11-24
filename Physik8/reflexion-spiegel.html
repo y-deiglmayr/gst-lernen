@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reflexion am ebenen Spiegel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE: freundlich-sachlich, wie ein gutes Arbeitsheft der Physik – du-Ansprache, kurze Aufträge
+   IDEA: Optik-Labor trifft Karoheft – dunkler Versuchsraum oben, kariertes Heftpapier für Konstruktionen
+   PICTURE: Laserstrahl, Spiegel, Kerze und ihr gestricheltes Spiegelbild – überall dieselbe Bildsprache
+   COLOUR and TYPE: Laserrot als Akzent, Spiegelglas-Türkis, Heftblau für Karos; Lexend + Atkinson Hyperlegible
+   LAYOUT: vier Phasen (Wiederholen – Entdecken – Festhalten – Üben), jede mit großer Abbildung und Aufträgen */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--grid:light-dark(#d4e2f2,#232c3b);
+--paper:light-dark(#fdfeff,#151a23);--behind:light-dark(#eef5f8,#17212a);
+--laser:light-dark(#dc2f28,#ff5c50);--laser2:light-dark(#1d62c9,#64a6ff);--mirror:light-dark(#1f8eab,#58c4df);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2815);--lab:#0e131d;--labink:#eef1f7}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700}
+h3{font-size:21px;font-weight:600;margin-top:1.6em}
+h4{font-size:17px;font-weight:600;margin:0 0 .3em}
+p{margin:0 0 .8em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.alt{background:var(--panel)}
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--laser);color:#fff;font-size:13px;margin-right:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.bar{width:140px;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--laser);transition:width .4s}
+/* hero */
+.hero{background:var(--lab);color:var(--labink)}
+.hero p{color:#c6ccd8;max-width:62ch}
+.hero svg{width:100%;height:auto;display:block;margin:18px 0 8px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px}
+.phases a{display:block;padding:14px 16px;border-radius:12px;background:#182031;color:#eef1f7;text-decoration:none;border:1px solid #2a3448}
+.phases a:hover{border-color:#ff5c50}
+.phases b{font-family:Lexend,system-ui,sans-serif;display:block;font-size:17px}
+.phases small{color:#a9b2c4;font-size:14px}
+/* layout pieces */
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;touch-action:none;user-select:none}
+.caption{font-size:14px;color:var(--muted);margin:6px 4px 0}
+@media(min-width:901px){.stick{position:sticky;top:70px}}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.alt @media(min-width:901px){.stick{position:sticky;top:70px}}
+.card{background:var(--paper)}
+.card.done{border-color:var(--ok)}
+.card .tag{font:600 13px Lexend,system-ui,sans-serif;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center}
+.card.done .tag::after{content:"✓ gelöst";color:var(--ok)}
+.stars{color:var(--laser);letter-spacing:2px}
+.intro{max-width:70ch;color:var(--muted)}
+.merke{border:2px solid var(--laser);border-radius:14px;padding:16px 20px;margin:18px 0;background:var(--bg)}
+.merke h4{color:var(--laser)}
+.merke ul{margin:.3em 0;padding-left:1.2em}
+details.reveal{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0}
+details.reveal summary{cursor:pointer;font:600 16px Lexend,system-ui,sans-serif;padding:4px 0}
+/* controls */
+button,.btn{font:600 16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.alt button{background:var(--bg)}
+button:hover{border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--laser2);outline-offset:2px}
+button.primary{background:var(--laser);border-color:var(--laser);color:#fff}
+input[type=number],input[type=text],select{font:16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--laser);min-height:44px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.toggles label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;min-height:44px;font-size:15px}
+.toggles input{width:18px;height:18px;accent-color:var(--laser)}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font-weight:400}
+.mc button.ok,.tf button.ok{background:var(--okbg);border-color:var(--ok)}
+.mc button.bad,.tf button.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1em;margin:8px 0 0;font-size:16px}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb.hint{background:var(--hint);color:var(--ink);padding:8px 12px;border-radius:8px}
+input.ok,select.ok{border-color:var(--ok);background:var(--okbg)}
+input.bad,select.bad{border-color:var(--bad);background:var(--badbg)}
+.scroll{overflow-x:auto}
+table.mess{border-collapse:collapse;font-size:15px}
+table.mess th,table.mess td{border:1px solid var(--line);padding:4px 6px;text-align:center}
+table.mess th{font-weight:600;background:var(--panel);text-align:left;white-space:nowrap}
+table.mess input{width:58px;min-height:38px;text-align:center;padding:4px}
+.messgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.messgrid label{display:grid;gap:2px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;font-size:15px}
+.messgrid label span:first-child{font-weight:700}
+.messgrid input{width:56px;min-height:38px;text-align:center;padding:4px}
+.fig.narrow{max-width:740px}
+.tf .fb:empty{display:none}
+.cloze{line-height:2.4;font-size:17px}
+.cloze select{min-height:38px;padding:2px 6px;margin:0 2px}
+.tf{display:grid;gap:10px}
+.tf .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tf .item .fb{grid-column:1/-1;margin:0}
+.tf .btns{display:flex;gap:6px}
+.numq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.numq input{width:96px;text-align:right}
+.unit{white-space:nowrap}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.steps i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font:600 14px Lexend,system-ui,sans-serif}
+.steps i.on{background:var(--laser);color:#fff;border-color:var(--laser)}
+.steptext{min-height:5.5em}
+.heft{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;border:1px solid var(--line);border-radius:12px;padding:22px clamp(16px,3vw,34px)}
+.heft h3{margin-top:.8em;color:var(--laser)}
+.heft h3:first-child{margin-top:0}
+.heft .box{border:2px solid var(--ink);padding:8px 14px;border-radius:6px;background:var(--paper);display:inline-block}
+.mirrortext{display:inline-block;transform:scaleX(-1);font:700 clamp(24px,5vw,40px) Lexend,system-ui,sans-serif;color:var(--laser);padding:6px 12px;border:2px dashed var(--mirror);border-radius:8px;margin-top:6px;word-break:break-all}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.checks label{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:10px;min-height:44px;cursor:pointer;font:600 16px Lexend,system-ui,sans-serif}
+.checks label.ok{border-color:var(--ok);background:var(--okbg)}.checks label.bad{border-color:var(--bad);background:var(--badbg)}
+.checks input{width:18px;height:18px;accent-color:var(--laser)}
+footer{font-size:14px;color:var(--muted)}
+/* svg classes */
+.gl{stroke:var(--grid);stroke-width:1}
+.mir{stroke:var(--mirror);stroke-width:5;stroke-linecap:round}
+.ray{stroke:var(--laser);stroke-width:2.2;fill:none;stroke-linecap:round}
+.ray2{stroke:var(--laser2);stroke-width:2.2;fill:none;stroke-linecap:round}
+.dash{stroke-dasharray:7 6}
+.fan{fill:var(--laser);opacity:.16}.fan2{fill:var(--laser2);opacity:.16}
+.fanb{fill:var(--laser);opacity:.07}.fanb2{fill:var(--laser2);opacity:.07}
+.aw{fill:var(--laser)}.aw2{fill:var(--laser2)}
+.lot{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 5;fill:none}
+.thin{stroke:var(--ink);stroke-width:1.4;fill:none}
+.tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
+.txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.txb{fill:var(--ink);font:600 16px Lexend,sans-serif}
+.txl{fill:var(--laser);font:600 16px Lexend,sans-serif}
+.txm{fill:var(--mirror);font:600 14px Lexend,sans-serif}
+.okc{fill:var(--ok)}.badc{fill:var(--bad)}
+.oks{stroke:var(--ok)}.bads{stroke:var(--bad)}
+.ghost{opacity:.45}
+.drag{cursor:grab}
+.behind{fill:var(--behind)}
+.wax{fill:light-dark(#f4ead8,#d9cdb7);stroke:var(--ink);stroke-width:1.2}
+.flame{fill:#ffb21a;stroke:#e0641a;stroke-width:1.2}
+.eyew{fill:var(--bg);stroke:var(--ink);stroke-width:1.6}
+.iris{fill:var(--ink)}
+.disk{fill:light-dark(#f7f9fc,#1b2130);stroke:var(--line)}
+.tick{stroke:var(--ink);stroke-width:1}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+@media(max-width:600px){body{font-size:16px}.prog .bar{width:80px}nav a{padding:6px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="currentColor" stroke-width="2" opacity=".45"/></pattern>
+<radialGradient id="glow"><stop offset="0" stop-color="#ffcf4a" stop-opacity=".55"/><stop offset="1" stop-color="#ffcf4a" stop-opacity="0"/></radialGradient>
+</defs></svg>
+
+<nav aria-label="Phasen"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#wiederholen"><span>1</span>Wiederholen</a>
+<a href="#entdecken"><span>2</span>Entdecken</a>
+<a href="#festhalten"><span>3</span>Festhalten</a>
+<a href="#ueben"><span>4</span>Üben</a>
+<div class="prog"><span id="progtxt">0 / 0 gelöst</span><div class="bar"><i id="progbar"></i></div></div>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<h1>Reflexion am ebenen Spiegel</h1>
+<p>Warum siehst du dich <em>hinter</em> dem Spiegel, obwohl dort nur eine Wand ist? In diesem Lernpfad findest du es selbst heraus: Du wiederholst das Reflexionsgesetz, entdeckst im Spiegel-Labor die Eigenschaften des Spiegelbilds, hältst alles im Heft fest und übst dann von leicht bis knifflig.</p>
+<svg viewBox="0 0 900 230" role="img" aria-label="Licht einer Kerze wird am Spiegel reflektiert und gelangt ins Auge; das Gehirn verlängert die Strahlen nach hinten zum Spiegelbild.">
+<rect x="470" y="0" width="430" height="230" fill="#141c2a"/>
+<text x="490" y="26" fill="#7f8aa3" font-family="Lexend,system-ui,sans-serif" font-size="14">hinter dem Spiegel</text>
+<text x="20" y="26" fill="#7f8aa3" font-family="Lexend,system-ui,sans-serif" font-size="14">vor dem Spiegel</text>
+<g id="heroScene"></g>
+<line x1="465" y1="6" x2="465" y2="224" stroke="#58c4df" stroke-width="6" stroke-linecap="round"/>
+<rect x="468" y="6" width="9" height="218" fill="url(#hatch)" color="#58c4df"/>
+</svg>
+<div class="phases">
+<a href="#wiederholen"><b>1 · Wiederholen</b><small>Reflexionsgesetz an der virtuellen Winkelscheibe</small></a>
+<a href="#entdecken"><b>2 · Entdecken</b><small>Spiegel-Labor: Wo und wie entsteht das Bild?</small></a>
+<a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext, Musterkonstruktion, Heftaufschrieb</small></a>
+<a href="#ueben"><b>4 · Üben</b><small>7 Aufgaben von ★ bis ★★★</small></a>
+</div>
+</div></header>
+
+<!-- ================= PHASE 1 ================= -->
+<section class="band" id="wiederholen"><div class="wrap">
+<h2>1 · Wiederholen: Das Reflexionsgesetz</h2>
+<p class="intro">Bevor wir uns das Spiegelbild anschauen, frischen wir auf, wie ein einzelner Lichtstrahl am Spiegel reflektiert wird. Das ist der Versuch mit Laserbox, Winkelscheibe und Spiegel – hier virtuell.</p>
+<div class="two">
+<div>
+<div class="fig">
+<svg id="ws" viewBox="0 0 600 330" role="img" aria-label="Winkelscheibe mit Spiegel, Einfallslot und Laserstrahl"></svg>
+</div>
+<div class="row"><label for="alpha" style="font-weight:700;white-space:nowrap">Einfallswinkel α = <span id="alphaVal">30</span>°</label></div>
+<input type="range" id="alpha" min="0" max="80" step="1" value="30" aria-label="Einfallswinkel">
+<p class="caption">Stelle mit dem Regler den Einfallswinkel ein. Den Reflexionswinkel β liest du selbst an der Skala ab – genau wie im echten Versuch.</p>
+</div>
+<div>
+<div class="card" data-task="r1">
+<div class="tag">Auftrag 1 · Messen</div>
+<p>Stelle nacheinander α = 0°, 10°, …, 80° ein. Lies jeweils β an der Winkelscheibe ab und trage ihn ein.</p>
+<div class="messgrid" id="messTab"></div>
+<div class="row"><button class="primary" id="messCheck">Messwerte prüfen</button></div>
+<p class="fb" id="messFb"></p>
+</div>
+<div class="card mc" data-task="r2" data-correct="b">
+<div class="tag">Auftrag 2 · Ergebnis formulieren</div>
+<p>Welcher Satz beschreibt dein Messergebnis?</p>
+<button data-k="a" data-fb="Schau in deine Tabelle: Bei α = 30° hast du nicht 60° gemessen.">Der Reflexionswinkel ist doppelt so groß wie der Einfallswinkel.</button>
+<button data-k="b" data-fb="Genau! Das ist das Reflexionsgesetz: α = β.">Einfallswinkel und Reflexionswinkel sind immer gleich groß.</button>
+<button data-k="c" data-fb="Dann wäre β bei α = 0° gleich 90°. Das passt nicht zu deiner Messung.">Einfallswinkel und Reflexionswinkel ergeben zusammen 90°.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="r3" data-correct="a">
+<div class="tag">Auftrag 3 · Aufgepasst!</div>
+<p>Von wo aus werden α und β gemessen?</p>
+<button data-k="a" data-fb="Richtig. Das Einfallslot ist die Senkrechte zum Spiegel im Auftreffpunkt.">Vom Einfallslot (Senkrechte auf dem Spiegel) aus.</button>
+<button data-k="b" data-fb="Häufiger Fehler! Gemessen wird immer zum Lot – das ist die gestrichelte Linie in der Abbildung.">Von der Spiegeloberfläche aus.</button>
+<p class="fb"></p>
+</div>
+</div>
+</div>
+
+<details class="reveal"><summary>Aufdecken, wenn du fertig bist: Merkkasten Reflexionsgesetz</summary>
+<div class="merke"><h4>Das Reflexionsgesetz</h4>
+<ul>
+<li>Einfallender Strahl, Einfallslot und reflektierter Strahl liegen in einer Ebene.</li>
+<li>Einfallswinkel und Reflexionswinkel sind gleich groß: <b>α = β</b>. Beide werden zum Einfallslot gemessen.</li>
+<li>Der Lichtweg ist umkehrbar.</li>
+</ul>
+<p style="margin:0">Ein glatter Spiegel reflektiert Licht <b>gerichtet</b> (alle parallelen Strahlen in dieselbe Richtung). Raue Oberflächen wie Papier streuen das Licht in alle Richtungen (<b>diffuse Reflexion</b>) – deshalb siehst du in einem Blatt Papier kein Spiegelbild.</p>
+</div>
+</details>
+</div></section>
+
+<!-- ================= PHASE 2 ================= -->
+<section class="band alt" id="entdecken"><div class="wrap">
+<h2>2 · Entdecken: Wie entsteht das Spiegelbild?</h2>
+<p class="intro">Im Spiegel-Labor kannst du die <b>Kerze</b> und das <b>Auge</b> mit der Maus oder dem Finger verschieben. Von der Flamme geht ein Lichtbündel aus, wird am Spiegel reflektiert und gelangt ins Auge. Bearbeite die Aufträge rechts der Reihe nach und nutze dafür die Schalter.</p>
+<div class="two">
+<div class="stick">
+<div class="fig"><svg id="lab" viewBox="0 0 800 460" role="img" aria-label="Spiegel-Labor: Kerze, Spiegel, Auge und Lichtbündel"></svg></div>
+<div class="toggles" id="labToggles">
+<label><input type="checkbox" data-t="back">Rückverlängerung</label>
+<label><input type="checkbox" data-t="two">2. Beobachter</label>
+<label><input type="checkbox" data-t="dist">Abstände g und b</label>
+<label><input type="checkbox" data-t="conn">Verbindungslinie</label>
+<label><input type="checkbox" data-t="img">Spiegelbild zeigen</label>
+<label><input type="checkbox" data-t="screen">Schirm aufstellen</label>
+</div>
+<p class="caption" id="labMsg">Tipp: Ziehe an der Kerze oder am Auge.</p>
+</div>
+<div>
+<div class="card mc" data-task="e1" data-correct="c">
+<div class="tag">Auftrag 1 · Woher kommt das Licht scheinbar?</div>
+<p>Schalte die <b>Rückverlängerung</b> ein. Unser Auge „weiß“ nicht, dass das Licht am Spiegel abgeknickt wurde – das Gehirn verlängert die Strahlen geradlinig nach hinten. Von wo scheint das Licht zu kommen?</p>
+<button data-k="a" data-fb="Die Kerze ist die echte Lichtquelle – aber ins Auge fällt das Licht aus Richtung Spiegel.">Direkt von der Kerze.</button>
+<button data-k="b" data-fb="Schau genau hin: Die gestrichelten Linien laufen erst hinter der Spiegelfläche zusammen.">Von einem Punkt auf der Spiegeloberfläche.</button>
+<button data-k="c" data-fb="Richtig! Die rückverlängerten Strahlen schneiden sich in einem Punkt hinter dem Spiegel. Dort sehen wir das Bild der Flamme.">Von einem Punkt hinter dem Spiegel.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e2" data-correct="b">
+<div class="tag">Auftrag 2 · Zwei Beobachter</div>
+<p>Schalte den <b>2. Beobachter</b> ein und verschiebe beide Augen. Was stellst du fest?</p>
+<button data-k="a" data-fb="Bewege die Augen und beobachte den Schnittpunkt der gestrichelten Linien – er wandert nicht.">Jeder Beobachter sieht das Bild an einer anderen Stelle.</button>
+<button data-k="b" data-fb="Genau. Die Lage des Spiegelbilds hängt nicht vom Beobachter ab – nur die Stelle auf dem Spiegel, an der reflektiert wird, ist verschieden.">Beide sehen das Bild an derselben Stelle.</button>
+<button data-k="c" data-fb="Beide Augen bekommen ein Lichtbündel ab – beide sehen also das Bild.">Nur einer der beiden sieht ein Bild.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e3" data-correct="a">
+<div class="tag">Auftrag 3 · Abstände</div>
+<p>Schalte <b>Abstände g und b</b> ein. g ist der Abstand Gegenstand–Spiegel (Gegenstandsweite), b der Abstand Bild–Spiegel (Bildweite). Verschiebe die Kerze. Was gilt?</p>
+<button data-k="a" data-fb="Richtig: b = g. Das Bild liegt genauso weit hinter dem Spiegel wie der Gegenstand davor.">Bildweite und Gegenstandsweite sind immer gleich: b = g.</button>
+<button data-k="b" data-fb="Vergleiche die Zahlen noch einmal bei verschiedenen Positionen.">Die Bildweite ist immer doppelt so groß: b = 2·g.</button>
+<button data-k="c" data-fb="Bewege das Auge – die Werte für g und b ändern sich dabei gar nicht.">Das hängt davon ab, wo das Auge ist.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e4" data-correct="c">
+<div class="tag">Auftrag 4 · Lage des Bildes</div>
+<p>Schalte die <b>Verbindungslinie</b> zwischen Flamme und Bild der Flamme ein. Wie verläuft sie?</p>
+<button data-k="a" data-fb="Sie läuft nicht parallel zum Spiegel, sondern durch ihn hindurch.">Parallel zum Spiegel.</button>
+<button data-k="b" data-fb="Verschiebe die Kerze nach oben und unten: Der Winkel zum Spiegel bleibt immer gleich.">Je nach Lage der Kerze schräg.</button>
+<button data-k="c" data-fb="Richtig! Gegenstand und Bild liegen symmetrisch zum Spiegel – wie bei einer Achsenspiegelung in Mathe.">Immer senkrecht zum Spiegel.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e5" data-correct="b">
+<div class="tag">Auftrag 5 · Größe</div>
+<p>Schalte <b>Spiegelbild zeigen</b> ein. Jeder Punkt der Kerze wird so gespiegelt. Wie ist das Bild im Vergleich zur Kerze?</p>
+<button data-k="a" data-fb="Verschiebe die Kerze weit weg vom Spiegel: Das Bild bleibt genauso groß. Es wirkt nur aus der Ferne kleiner – wie jeder Gegenstand.">Kleiner, wenn die Kerze weiter weg steht.</button>
+<button data-k="b" data-fb="Richtig. Das Spiegelbild ist gleich groß und aufrecht (nicht auf dem Kopf).">Gleich groß und aufrecht.</button>
+<button data-k="c" data-fb="Oben bleibt oben – die Flamme ist auch im Spiegelbild oben.">Gleich groß, aber auf dem Kopf.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e6" data-correct="b">
+<div class="tag">Auftrag 6 · Ein Bild, das es nicht gibt?</div>
+<p>Schalte <b>Schirm aufstellen</b> ein: Ein Schirm steht genau dort, wo das Bild liegt. Kann man das Spiegelbild darauf auffangen?</p>
+<button data-k="a" data-fb="Hinter dem Spiegel kommt gar kein Licht an – der Schirm bleibt dunkel.">Ja, die Flamme erscheint auf dem Schirm.</button>
+<button data-k="b" data-fb="Richtig. Dort laufen keine echten Lichtstrahlen zusammen, nur die gedachten Rückverlängerungen. So ein Bild heißt virtuelles Bild (Scheinbild).">Nein – das Bild existiert nur scheinbar.</button>
+<p class="fb"></p>
+</div>
+</div>
+</div>
+
+<h3>Vertauscht der Spiegel links und rechts?</h3>
+<div class="two">
+<div>
+<div class="fig"><svg id="top" viewBox="0 0 600 340" role="img" aria-label="Draufsicht: Person vor einem Spiegel mit erhobener rechter Hand und ihr Spiegelbild"></svg></div>
+<div class="toggles"><label><input type="checkbox" id="topImg">Spiegelbild von oben zeigen</label></div>
+<p class="caption">Draufsicht (von oben): Du stehst vor dem Spiegel und hebst die <b style="color:var(--laser)">rechte Hand</b>. Die Fensterseite des Raums ist rechts.</p>
+</div>
+<div>
+<div class="card mc" data-task="e7" data-correct="a">
+<div class="tag">Auftrag 7 · Welche Seite?</div>
+<p>Schalte das Spiegelbild ein. Auf welcher Seite des Raums ist die erhobene Hand des Spiegelbilds?</p>
+<button data-k="a" data-fb="Richtig! Die Hand bleibt auf der Fensterseite. Für das Spiegelbild selbst ist das allerdings seine linke Hand, weil es dich anschaut.">Auch auf der Fensterseite.</button>
+<button data-k="b" data-fb="Schau in die Draufsicht: Die rote Hand liegt in beiden Fällen rechts im Bild.">Auf der Türseite.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e8" data-correct="c">
+<div class="tag">Auftrag 8 · Was wird wirklich vertauscht?</div>
+<p>Vergleiche die Nasen: Du schaust zum Spiegel hin, dein Spiegelbild schaut zu dir her. Was vertauscht der Spiegel also?</p>
+<button data-k="a" data-fb="Fensterseite bleibt Fensterseite – links und rechts im Raum bleiben gleich.">Links und rechts.</button>
+<button data-k="b" data-fb="Kopf bleibt oben, Füße bleiben unten.">Oben und unten.</button>
+<button data-k="c" data-fb="Genau! Der Spiegel vertauscht vorne und hinten (die Richtung senkrecht zum Spiegel). Weil das Bild uns dadurch anschaut, erscheint es uns seitenverkehrt.">Vorne und hinten.</button>
+<p class="fb"></p>
+</div>
+<div class="card">
+<div class="tag">Ausprobieren · Spiegelschrift</div>
+<p>Schreibe ein Wort. So sieht es im Spiegel aus:</p>
+<input type="text" id="mirIn" value="AMBULANZ" aria-label="Wort für Spiegelschrift" style="width:100%">
+<div class="mirrortext" id="mirOut">AMBULANZ</div>
+<p class="caption">Auf Rettungswagen steht „AMBULANZ“ vorne in Spiegelschrift. Überlege: Warum?</p>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- ================= PHASE 3 ================= -->
+<section class="band" id="festhalten"><div class="wrap">
+<h2>3 · Festhalten</h2>
+<p class="intro">Fasse zusammen, was du entdeckt hast. Danach siehst du an einem einfachen Beispiel, wie man ein Spiegelbild konstruiert. Zum Schluss übernimmst du den Heftaufschrieb.</p>
+
+<div class="card" data-task="f1">
+<div class="tag">Schritt 1 · Lückentext</div>
+<div class="cloze" id="cloze">
+Ein ebener Spiegel reflektiert Licht <select data-ans="gerichtet"><option value="">…</option><option>gestreut</option><option>gerichtet</option></select>. Dabei gilt: Einfallswinkel und Reflexionswinkel sind <select data-ans="gleich groß"><option value="">…</option><option>verschieden</option><option>gleich groß</option></select>; beide werden zum <select data-ans="Einfallslot"><option value="">…</option><option>Einfallslot</option><option>Spiegel</option></select> gemessen.
+Das Licht vom Gegenstand wird am Spiegel reflektiert und gelangt ins Auge. Unser Gehirn verlängert die Strahlen <select data-ans="geradlinig nach hinten"><option value="">…</option><option>geradlinig nach hinten</option><option>bis zur Kerze</option></select>. Deshalb sehen wir das Bild <select data-ans="hinter"><option value="">…</option><option>vor</option><option>auf</option><option>hinter</option></select> dem Spiegel.
+Das Spiegelbild ist <select data-ans="gleich groß"><option value="">…</option><option>kleiner</option><option>gleich groß</option><option>größer</option></select> wie der Gegenstand und <select data-ans="aufrecht"><option value="">…</option><option>aufrecht</option><option>umgekehrt</option></select>. Die Bildweite b ist <select data-ans="gleich"><option value="">…</option><option>gleich</option><option>doppelt so groß wie</option></select> der Gegenstandsweite g. Die Verbindungslinie Gegenstand–Bild steht <select data-ans="senkrecht"><option value="">…</option><option>parallel</option><option>senkrecht</option></select> auf dem Spiegel. Weil man es nicht auf einem Schirm auffangen kann, ist es ein <select data-ans="virtuelles"><option value="">…</option><option>reelles</option><option>virtuelles</option></select> Bild. Der Spiegel vertauscht <select data-ans="vorne und hinten"><option value="">…</option><option>links und rechts</option><option>oben und unten</option><option>vorne und hinten</option></select>.
+</div>
+<div class="row"><button class="primary" id="clozeCheck">Prüfen</button></div>
+<p class="fb" id="clozeFb"></p>
+</div>
+
+<h3>Schritt 2 · Musterbeispiel: Konstruktion eines Spiegelbilds</h3>
+<p>Die Augen sehen die Kerzenflamme G im Spiegel. Wir konstruieren das Bild G' und den Lichtweg von G ins Auge. Klicke dich Schritt für Schritt durch und zeichne parallel in dein Heft.</p>
+<div class="two">
+<div class="fig"><svg id="cons" viewBox="0 0 660 390" role="img" aria-label="Schrittweise Konstruktion des Spiegelbilds einer Kerze auf Karopapier"></svg></div>
+<div>
+<div class="steps" id="consSteps"></div>
+<div class="card steptext"><h4 id="consH"></h4><p id="consP" style="margin:0"></p></div>
+<div class="row"><button id="consPrev">Zurück</button><button class="primary" id="consNext">Weiter</button></div>
+</div>
+</div>
+
+<h3>Schritt 3 · Heftaufschrieb</h3>
+<p>Schreibe zuerst selbst einen Heftaufschrieb mit Überschrift, Skizze und den Eigenschaften des Spiegelbilds. Vergleiche danach mit der Musterlösung und ergänze.</p>
+<details class="reveal" id="heftDet"><summary>Musterlösung Heftaufschrieb anzeigen</summary>
+<div class="heft" id="heft">
+<h3>2.3.1 Reflexion am ebenen Spiegel – das Spiegelbild</h3>
+<p><b>Reflexionsgesetz:</b> Einfallender Strahl, Einfallslot und reflektierter Strahl liegen in einer Ebene. Es gilt <span class="box">α = β</span> (Winkel zum Lot gemessen). Der Lichtweg ist umkehrbar.</p>
+<p><b>Entstehung des Spiegelbilds:</b> Licht vom Gegenstand wird am Spiegel reflektiert und gelangt ins Auge. Das Gehirn nimmt an, dass Licht geradlinig ins Auge fällt, und verlängert die Strahlen nach hinten. Wo sich die Rückverlängerungen schneiden, sehen wir das Bild – hinter dem Spiegel.</p>
+<svg viewBox="0 0 660 300" style="width:100%;max-width:620px;display:block;margin:6px 0 10px" id="heftFig" role="img" aria-label="Skizze: Kerze, Spiegel, Spiegelbild und Lichtweg ins Auge"></svg>
+<p><b>Eigenschaften des Spiegelbilds:</b></p>
+<ul>
+<li>Es liegt <b>hinter</b> dem Spiegel, und zwar für jeden Beobachter an derselben Stelle.</li>
+<li><b>Bildweite = Gegenstandsweite</b> (b = g); die Verbindungslinie Gegenstand–Bild steht senkrecht auf dem Spiegel (Achsenspiegelung).</li>
+<li>Es ist <b>gleich groß</b> wie der Gegenstand und <b>aufrecht</b>.</li>
+<li>Es ist <b>virtuell</b> (Scheinbild): Man kann es nicht auf einem Schirm auffangen.</li>
+<li>Es ist <b>spiegelverkehrt</b>: Der Spiegel vertauscht vorne und hinten.</li>
+</ul>
+<p><b>Konstruktion:</b> ① Gegenstandspunkt G senkrecht zum Spiegel im gleichen Abstand spiegeln → Bildpunkt G'. ② G' mit dem Auge verbinden (hinter dem Spiegel gestrichelt) → Schnittpunkt mit dem Spiegel ist der Reflexionspunkt R. ③ G mit R verbinden: Lichtweg G → R → Auge (Pfeile!).</p>
+</div>
+<div class="row"><button id="heftCopy">Text kopieren</button><span class="caption" id="heftCopyMsg"></span></div>
+</details>
+</div></section>
+
+<!-- ================= PHASE 4 ================= -->
+<section class="band alt" id="ueben"><div class="wrap">
+<h2>4 · Üben</h2>
+<p class="intro">Die Aufgaben werden schwieriger: ★ Grundlagen, ★★ Konstruieren, ★★★ Anwenden und Knobeln.</p>
+
+<div class="card" data-task="u1">
+<div class="tag"><span class="stars">★</span> Übung 1 · Richtig oder falsch?</div>
+<div class="tf" id="tf"></div>
+</div>
+
+<div class="card" data-task="u2">
+<div class="tag"><span class="stars">★</span> Übung 2 · Winkel am Spiegel</div>
+<p>Fertige zu jeder Teilaufgabe eine kleine Skizze mit Spiegel und Lot an.</p>
+<div id="u2"></div>
+<div class="row"><button class="primary" id="u2Check">Prüfen</button><button id="u2Hint">Tipp</button></div>
+<p class="fb" id="u2Fb"></p>
+</div>
+
+<div class="card" data-task="u3a">
+<div class="tag"><span class="stars">★★</span> Übung 3a · Spiegelbild eines Dreiecks</div>
+<p>Konstruiere die Bildpunkte A', B' und C' des Dreiecks. Klicke nacheinander auf die Kreuzungspunkte, an denen die Bildpunkte liegen. Zähle die Kästchen!</p>
+<div class="fig narrow"><svg id="u3a" viewBox="0 0 660 390" role="img" aria-label="Karopapier mit Spiegel und Dreieck ABC"></svg></div>
+<p class="fb" id="u3aFb"></p>
+<div class="row"><button data-reset="u3a">Neu starten</button><button data-solve="u3a">Lösung zeigen</button></div>
+</div>
+
+<div class="card" data-task="u3b">
+<div class="tag"><span class="stars">★★★</span> Übung 3b · Schräger Spiegel</div>
+<p>Jetzt steht der Spiegel schräg. Konstruiere die Bilder P' und Q' der Strecke PQ. Denk dran: Das Lot steht senkrecht auf dem <i>Spiegel</i> – nicht auf den Karolinien.</p>
+<div class="fig narrow"><svg id="u3b" viewBox="0 0 660 390" role="img" aria-label="Karopapier mit schrägem Spiegel und Strecke PQ"></svg></div>
+<p class="fb" id="u3bFb"></p>
+<div class="row"><button data-reset="u3b">Neu starten</button><button data-solve="u3b">Lösung zeigen</button></div>
+</div>
+
+<div class="card" data-task="u4">
+<div class="tag"><span class="stars">★★</span> Übung 4 · Petra und die Kerze</div>
+<p>Petra betrachtet die Kerze im Spiegel. Konstruiere das Spiegelbild der Kerze und die Lichtwege, die von der Flamme und vom Fuß der Kerze in Petras Auge gelangen. Folge den Anweisungen.</p>
+<div class="two">
+<div class="fig narrow"><svg id="u4" viewBox="0 0 660 390" role="img" aria-label="Karopapier mit Kerze, Spiegel und Auge"></svg></div>
+<div><div class="steps" id="u4Steps"></div><p class="fb hint" id="u4Fb"></p>
+<div class="row"><button data-reset="u4">Neu starten</button><button data-solve="u4">Lösung zeigen</button></div></div>
+</div>
+</div>
+
+<div class="card" data-task="u5">
+<div class="tag"><span class="stars">★★</span> Übung 5 · Was sieht das Auge im Spiegel?</div>
+<p>Der Spiegel ist nur kurz. Welche der Gegenstände A bis F kann das Auge im Spiegel sehen? Tipp: Konstruiere zu jedem Gegenstand den Bildpunkt und prüfe, ob die Verbindungslinie zum Auge den Spiegel trifft.</p>
+<div class="two">
+<div class="fig narrow"><svg id="u5" viewBox="0 0 660 390" role="img" aria-label="Kurzer Spiegel, Auge und sechs Gegenstände A bis F"></svg></div>
+<div>
+<div class="checks" id="u5Checks"></div>
+<div class="row"><button class="primary" id="u5Check">Prüfen</button><button id="u5Solve">Sichtbereich zeigen</button></div>
+<p class="fb" id="u5Fb"></p>
+</div>
+</div>
+</div>
+
+<div class="card" data-task="u6">
+<div class="tag"><span class="stars">★★★</span> Übung 6 · Peter und der Ganzkörperspiegel</div>
+<p>Peter (Größe 1,70 m, Augenhöhe 1,60 m) will an einer Wand einen Spiegel so anbringen, dass er sich darin gerade in voller Größe sieht. Wie hoch muss der Spiegel sein und wo genau muss er an der Wand hängen? Welchen Einfluss hat Peters Abstand zur Wand?</p>
+<p class="caption">Vorgehen: Zeichne in dein Heft die Lichtwege vom Scheitel und von den Füßen über den Spiegel ins Auge. Wo treffen sie auf die Wand?</p>
+<div id="u6q"></div>
+<div class="mc" data-correct="a" id="u6mc" style="margin-top:12px">
+<p style="margin:0"><b>d)</b> Welchen Einfluss hat Peters Abstand zur Wand?</p>
+<button data-k="a">Keinen – Größe und Lage des Spiegels bleiben gleich.</button>
+<button data-k="b">Je weiter weg, desto kleiner darf der Spiegel sein.</button>
+<button data-k="c">Je weiter weg, desto größer muss der Spiegel sein.</button>
+</div>
+<div class="row"><button class="primary" id="u6Check">Prüfen</button><button id="u6Hint">Tipp</button><button id="u6Sim">Simulation öffnen</button></div>
+<p class="fb" id="u6Fb"></p>
+<div id="u6SimBox" hidden>
+<div class="fig"><svg id="peter" viewBox="0 0 900 390" role="img" aria-label="Peter vor einem Wandspiegel mit Lichtwegen von Kopf und Füßen"></svg></div>
+<label for="dist" style="font-weight:700">Abstand Peter–Wand d = <span id="distVal">1,20</span> m</label>
+<input type="range" id="dist" min="0.3" max="2.5" step="0.05" value="1.2">
+<p class="caption">Verändere den Abstand und beobachte den benötigten Spiegelbereich (dick markiert).</p>
+</div>
+</div>
+
+<div class="card" data-task="u7">
+<div class="tag"><span class="stars">★★★</span> Übung 7 · Knobelaufgaben</div>
+<div class="two">
+<div>
+<h4>a) Die Uhr im Spiegel</h4>
+<p>Du siehst eine Uhr ohne Ziffern im Spiegel (die Markierung oben zeigt die 12). Wie spät ist es wirklich?</p>
+<svg id="clock" viewBox="0 0 200 200" style="width:180px;display:block" role="img" aria-label="Spiegelbild einer Uhr"></svg>
+<div class="row"><input type="text" id="clockIn" placeholder="hh:mm" aria-label="Uhrzeit" style="width:110px"><span class="fb" id="clockFb" style="margin:0"></span></div>
+</div>
+<div>
+<h4>b) Auf den Spiegel zu</h4>
+<p>Du gehst mit 1,5 m/s senkrecht auf einen großen Spiegel zu.</p>
+<div class="numq"><span>Wie schnell nähert sich dein Spiegelbild dem Spiegel?</span><span class="unit"><input type="number" step="0.1" id="v1" aria-label="Geschwindigkeit Bild zu Spiegel"> m/s</span></div>
+<div class="numq"><span>Wie schnell nähert sich dein Spiegelbild <i>dir</i>?</span><span class="unit"><input type="number" step="0.1" id="v2" aria-label="Geschwindigkeit Bild zu dir"> m/s</span></div>
+<h4 style="margin-top:14px">c) Winkelspiegel</h4>
+<p>Zwei Spiegel stehen im rechten Winkel zueinander, davor eine Kerze. Wie viele Spiegelbilder der Kerze siehst du?</p>
+<select id="wink" aria-label="Anzahl Spiegelbilder"><option value="">bitte wählen</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+</div>
+</div>
+<div class="row"><button class="primary" id="u7Check">Prüfen</button><button id="u7Hint">Tipps</button></div>
+<p class="fb" id="u7Fb"></p>
+</div>
+
+<div class="row" style="margin-top:24px"><button id="resetAll">Fortschritt zurücksetzen</button></div>
+</div></section>
+
+<footer class="band"><div class="wrap">Lernpfad „Reflexion am ebenen Spiegel“ · Physik, Technisches Gymnasium · Grundlage: Arbeitsblätter 2.3 Reflexionsgesetz und Übungsblatt 6.</div></footer>
+
+<script>
+{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const R2=v=>Math.round(v*10)/10;
+const fmt=v=>String(v).replace('.',',');
+/* ---------- Fortschritt ---------- */
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem('spiegel-done')||'[]'))}catch(e){}
+const tasks=[...new Set($$('[data-task]').map(e=>e.dataset.task))];
+function save(){try{localStorage.setItem('spiegel-done',JSON.stringify([...done]))}catch(e){}}
+function updProg(){const n=tasks.filter(t=>done.has(t)).length;$('#progtxt').textContent=n+' / '+tasks.length+' gelöst';$('#progbar').style.width=(100*n/tasks.length)+'%';
+ $$('[data-task]').forEach(e=>e.classList.toggle('done',done.has(e.dataset.task)))}
+function mark(id){done.add(id);save();updProg()}
+$('#resetAll').onclick=()=>{done.clear();save();location.reload()};
+
+/* ---------- SVG-Helfer ---------- */
+function svgPt(svg,ev){const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+const L=(a,b,c,d,cls,ex='')=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="${cls}" ${ex}/>`;
+const C=(x,y,r,cls,ex='')=>`<circle cx="${x}" cy="${y}" r="${r}" class="${cls}" ${ex}/>`;
+const T=(x,y,t,cls,ex='')=>`<text x="${x}" y="${y}" class="${cls}" ${ex}>${t}</text>`;
+const P=(pts,cls)=>`<polygon points="${pts.map(p=>p[0]+','+p[1]).join(' ')}" class="${cls}"/>`;
+function arrow(ax,ay,bx,by,cls,f=.5){const mx=ax+(bx-ax)*f,my=ay+(by-ay)*f,l=Math.hypot(bx-ax,by-ay)||1,ux=(bx-ax)/l,uy=(by-ay)/l;
+ return P([[mx+ux*7,my+uy*7],[mx-ux*6-uy*5,my-uy*6+ux*5],[mx-ux*6+uy*5,my-uy*6-ux*5]],cls)}
+function candle(x,y,h,cls=''){ // y = Fuß, h = Höhe bis Flammenmitte
+ const b=h-18;return `<g class="${cls}"><rect x="${x-9}" y="${y-b}" width="18" height="${b}" class="wax"/>${L(x,y-b,x,y-b-5,'thin')}<path d="M${x} ${y-h-14} C${x+9} ${y-h-2} ${x+8} ${y-h+9} ${x} ${y-h+11} C${x-8} ${y-h+9} ${x-9} ${y-h-2} ${x} ${y-h-14}Z" class="flame"/></g>`}
+function eye(x,y,ex=''){return `<g ${ex}><path d="M${x-15} ${y} Q${x} ${y-13} ${x+15} ${y} Q${x} ${y+13} ${x-15} ${y}Z" class="eyew"/>${C(x+4,y,5.5,'iris')}</g>`}
+function grid(w,h,c){let s='';for(let x=0;x<=w;x+=c)s+=L(x,0,x,h,'gl');for(let y=0;y<=h;y+=c)s+=L(0,y,w,y,'gl');return s}
+function mirrorV(x,y1,y2){return `<rect x="${x}" y="${y1}" width="9" height="${y2-y1}" fill="url(#hatch)" style="color:var(--mirror)"/>`+L(x,y1,x,y2,'mir')}
+
+/* ---------- Hero ---------- */
+{const M=465,F={x:210,y:120},I={x:2*M-F.x,y:F.y},E={x:90,y:60};let s='<circle cx="210" cy="120" r="60" fill="url(#glow)"/>'+candle(210,205,85)+`<g opacity=".4">${candle(I.x,205,85)}</g>`;
+ [[E.x+6,E.y-6],[E.x+6,E.y+6]].forEach(p=>{const t=(M-I.x)/(p[0]-I.x),ry=I.y+t*(p[1]-I.y);s+=L(F.x,F.y,M,ry,'','stroke="#ff5c50" stroke-width="2.4"')+L(M,ry,p[0],p[1],'','stroke="#ff5c50" stroke-width="2.4"')+L(M,ry,I.x,I.y,'','stroke="#ff8a80" stroke-width="1.6" stroke-dasharray="7 6"')});
+ s+=`<g transform="translate(${E.x},${E.y})"><path d="M-15 0 Q0 -13 15 0 Q0 13 -15 0Z" fill="#eef1f7"/><circle cx="4" r="5.5" fill="#0e131d"/></g>`;
+ s+=`<text x="${I.x+22}" y="${I.y+4}" fill="#c6ccd8" font-size="15" font-family="Atkinson Hyperlegible,system-ui,sans-serif">Spiegelbild?</text>`;
+ $('#heroScene').innerHTML=s}
+
+/* ---------- Multiple Choice ---------- */
+$$('.mc[data-correct]').forEach(box=>{if(box.id==='u6mc')return;const fb=box.querySelector('.fb');
+ box.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
+  box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');
+  fb.className='fb '+(ok?'ok':'bad');fb.textContent=b.dataset.fb||(ok?'Richtig!':'Noch nicht – probier es nochmal.');if(ok)mark(box.dataset.task)})});
+
+/* ---------- Phase 1: Winkelscheibe ---------- */
+{const svg=$('#ws'),Cx=300,Cy=300,R=230;let st='';
+ st+=`<path d="M${Cx-R} ${Cy} A${R} ${R} 0 0 1 ${Cx+R} ${Cy}Z" class="disk"/>`;
+ for(let t=-89;t<=89;t++){const r=t%10===0?R-16:t%5===0?R-10:R-5,a=t*Math.PI/180;st+=L(Cx+R*Math.sin(a),Cy-R*Math.cos(a),Cx+r*Math.sin(a),Cy-r*Math.cos(a),'tick');
+  if(t%10===0){const rr=R-30;st+=T(Cx+rr*Math.sin(a),Cy-rr*Math.cos(a)+5,Math.abs(t),'txs','text-anchor="middle"')}}
+ st+=L(Cx,Cy,Cx,Cy-R,'lot')+T(Cx+6,Cy-R+52,'Lot','txs');
+ st+=`<rect x="70" y="${Cy}" width="460" height="10" fill="url(#hatch)" style="color:var(--mirror)"/>`+L(70,Cy,530,Cy,'mir')+T(470,Cy+26,'Spiegel','txm');
+ svg.innerHTML=st+'<g id="wsDyn"></g>';
+ function draw(){const al=+$('#alpha').value,a=al*Math.PI/180;$('#alphaVal').textContent=al;
+  const sx=Cx-R*Math.sin(a),sy=Cy-R*Math.cos(a),ex=Cx+R*Math.sin(a),ey=Cy-R*Math.cos(a),bx=Cx-(R+6)*Math.sin(a),by=Cy-(R+6)*Math.cos(a);
+  const deg=Math.atan2(Math.cos(a),Math.sin(a))*180/Math.PI;
+  let s=L(sx,sy,Cx,Cy,'ray','stroke-width="3"')+L(Cx,Cy,ex,ey,'ray','stroke-width="3"')+arrow(sx,sy,Cx,Cy,'aw',.55)+arrow(Cx,Cy,ex,ey,'aw',.45);
+  s+=`<g transform="translate(${bx},${by}) rotate(${deg})"><rect x="-52" y="-11" width="52" height="22" rx="4" fill="#2b3140"/><rect x="-6" y="-4" width="6" height="8" fill="#dc2f28"/></g>`;
+  if(al>2){const r=48;s+=`<path d="M${Cx} ${Cy-r} A${r} ${r} 0 0 0 ${Cx-r*Math.sin(a)} ${Cy-r*Math.cos(a)}" class="thin"/><path d="M${Cx} ${Cy-r} A${r} ${r} 0 0 1 ${Cx+r*Math.sin(a)} ${Cy-r*Math.cos(a)}" class="thin"/>`;
+   s+=T(Cx-64*Math.sin(a/2)-5,Cy-64*Math.cos(a/2)+5,'α','txb')+T(Cx+64*Math.sin(a/2)-5,Cy-64*Math.cos(a/2)+5,'β','txb')}
+  $('#wsDyn').innerHTML=s}
+ $('#alpha').oninput=draw;draw();
+ const vals=[0,10,20,30,40,50,60,70,80];
+ $('#messTab').innerHTML=vals.map(v=>`<label><span>α = ${v}°</span><span class="unit">β = <input type="number" data-a="${v}" aria-label="β bei α=${v}°">°</span></label>`).join('');
+ $('#messCheck').onclick=()=>{let ok=0,empty=0;$$('#messTab input').forEach(i=>{if(i.value===''){empty++;i.className='';return}const g=Math.abs(+i.value-+i.dataset.a)<=1;i.className=g?'ok':'bad';if(g)ok++});
+  const fb=$('#messFb');if(ok===9){fb.className='fb ok';fb.textContent='Alle Messwerte stimmen. Fällt dir ein Zusammenhang auf?';mark('r1')}
+  else{fb.className='fb bad';fb.textContent=(empty?empty+' Felder sind noch leer. ':'')+(9-ok-empty?'Rot markierte Werte noch einmal ablesen – genau auf die kleinen Striche achten.':'')}}}
+
+/* ---------- Phase 2: Spiegel-Labor ---------- */
+{const svg=$('#lab'),M=420;const s={cx:200,cy:400,e1:{x:90,y:110},e2:{x:290,y:230},back:false,two:false,dist:false,conn:false,img:false,screen:false};
+ const stat=`<rect x="${M}" y="0" width="${800-M}" height="460" class="behind"/>`+T(M+16,26,'hinter dem Spiegel','txs')+T(16,26,'vor dem Spiegel','txs')+L(0,440,M,440,'thin');
+ function refl(F,p){const Ix=2*M-F.x,t=(M-Ix)/(p[0]-Ix);return F.y+t*(p[1]-F.y)}
+ function bundle(F,E,k){const I={x:2*M-F.x,y:F.y},p1=[E.x+6,E.y-6],p2=[E.x+6,E.y+6],r1=refl(F,p1),r2=refl(F,p2),rc=refl(F,[E.x+6,E.y]),c=k?'2':'';
+  let o=P([[F.x,F.y],[M,r1],[M,r2]],'fan'+c)+P([[M,r1],p1,p2,[M,r2]],'fan'+c);
+  o+=L(F.x,F.y,M,r1,'ray'+c)+L(M,r1,p1[0],p1[1],'ray'+c)+L(F.x,F.y,M,r2,'ray'+c)+L(M,r2,p2[0],p2[1],'ray'+c);
+  o+=arrow(F.x,F.y,M,rc,'aw'+c)+arrow(M,rc,E.x+6,E.y,'aw'+c);
+  if(s.back)o+=P([[M,r1],[I.x,I.y],[M,r2]],'fanb'+c)+L(M,r1,I.x,I.y,'ray'+c+' dash','stroke-width="1.6"')+L(M,r2,I.x,I.y,'ray'+c+' dash','stroke-width="1.6"');
+  return o}
+ function draw(){const F={x:s.cx,y:s.cy-70},Ix=2*M-s.cx;let o=stat;
+  if(s.screen)o+=`<rect x="${Ix-5}" y="${F.y-90}" width="10" height="170" fill="#2b3140"/>`+T(Ix+12,F.y-70,'Schirm:','tx')+T(Ix+12,F.y-50,'bleibt dunkel','tx');
+  if(s.img)o+=`<g class="ghost">${candle(Ix,s.cy,70)}</g>`+T(Ix-30,s.cy+18,'Spiegelbild','txs');
+  if(s.conn){o+=L(F.x,F.y,Ix,F.y,'thin','stroke-dasharray="2 4"')+`<path d="M${M-12} ${F.y} V${F.y-12} H${M}" class="thin"/>`}
+  o+=bundle(F,s.e1,0);if(s.two)o+=bundle(F,s.e2,1);
+  if(s.back||s.img)o+=C(Ix,F.y,4,'aw');
+  if(s.dist){const y=s.cy+22,g=Math.round((M-s.cx)/8);o+=L(s.cx,y,M,y,'thin')+L(M,y,Ix,y,'thin')+L(s.cx,y-6,s.cx,y+6,'thin')+L(Ix,y-6,Ix,y+6,'thin')+L(M,y-6,M,y+6,'thin');
+   o+=`<rect x="${(s.cx+M)/2-38}" y="${y-22}" width="76" height="18" rx="4" style="fill:var(--paper)"/>`+T((s.cx+M)/2,y-8,'g = '+g+' cm','txb','text-anchor="middle"');
+   o+=`<rect x="${(Ix+M)/2-38}" y="${y-22}" width="76" height="18" rx="4" style="fill:var(--behind)"/>`+T((Ix+M)/2,y-8,'b = '+g+' cm','txb','text-anchor="middle"')}
+  o+=mirrorV(M,10,450)+T(M-60,452,'Spiegel','txm');
+  o+=`<g class="drag" data-d="candle"><rect x="${s.cx-22}" y="${s.cy-100}" width="44" height="104" fill="transparent"/>${candle(s.cx,s.cy,70)}</g>`+T(s.cx+16,s.cy-4,'Kerze','txs');
+  o+=eye(s.e1.x,s.e1.y,'class="drag" data-d="e1"')+(s.two?eye(s.e2.x,s.e2.y,'class="drag" data-d="e2"'):'');
+  svg.innerHTML=o}
+ let drag=null,off={x:0,y:0};
+ svg.addEventListener('pointerdown',ev=>{const g=ev.target.closest('[data-d]');if(!g)return;drag=g.dataset.d;const p=svgPt(svg,ev);
+  const o=drag==='candle'?{x:s.cx,y:s.cy}:s[drag];off={x:p.x-o.x,y:p.y-o.y};svg.setPointerCapture(ev.pointerId);ev.preventDefault()});
+ svg.addEventListener('pointermove',ev=>{if(!drag)return;const p=svgPt(svg,ev),x=p.x-off.x,y=p.y-off.y;
+  if(drag==='candle'){s.cx=Math.max(40,Math.min(M-40,x));s.cy=Math.max(170,Math.min(440,y))}else{s[drag].x=Math.max(25,Math.min(M-30,x));s[drag].y=Math.max(25,Math.min(440,y))}draw()});
+ svg.addEventListener('pointerup',()=>drag=null);svg.addEventListener('pointercancel',()=>drag=null);
+ $$('#labToggles input').forEach(i=>i.onchange=()=>{s[i.dataset.t]=i.checked;draw();
+  const m={back:'Die gestrichelten Linien sind gedacht – dort läuft kein echtes Licht.',screen:'Der Schirm bleibt dunkel: Hinter den Spiegel gelangt kein Licht.',two:'Verschiebe beide Augen und beobachte den Schnittpunkt.',dist:'Verschiebe die Kerze und vergleiche g und b.'}[i.dataset.t];if(i.checked&&m)$('#labMsg').textContent=m});
+ draw();
+ /* Draufsicht */
+ const top=$('#top');function person(cx,cy,up,img){const n=up?-1:1;let o=`<ellipse cx="${cx}" cy="${cy}" rx="52" ry="18" style="fill:var(--panel);stroke:var(--ink)" stroke-width="1.4"/>`;
+  const skin='style="fill:light-dark(#f2d2b6,#c9a688);stroke:var(--ink)" stroke-width="1.4"';o+=`<polygon points="${cx-7},${cy+n*16} ${cx+7},${cy+n*16} ${cx},${cy+n*30}" ${skin}/>`+C(cx,cy,20,'',skin);
+  o+=C(cx+62,cy+n*6,10,'aw')+C(cx-62,cy,10,'','style="fill:var(--bg);stroke:var(--ink)"');return o}
+ function drawTop(){const show=$('#topImg').checked;let o=`<rect x="0" y="0" width="600" height="160" class="behind"/>`+T(14,22,'hinter dem Spiegel','txs');
+  o+=`<rect x="40" y="160" width="520" height="9" fill="url(#hatch)" style="color:var(--mirror)"/>`+L(40,160,560,160,'mir');
+  o+=T(10,330,'◀ Türseite','txs')+T(590,330,'Fensterseite ▶','txs','text-anchor="end"');
+  o+=person(300,260,true)+T(372,272,'rechte Hand','txl')+T(300,312,'du (Nase zum Spiegel)','txs','text-anchor="middle"');
+  if(show){o+=`<g opacity=".75">${person(300,80,false)}</g>`+T(372,78,'erhobene Hand','txl')+T(300,40,'Spiegelbild (Nase zu dir)','txs','text-anchor="middle"');
+   o+=L(130,230,130,110,'thin')+arrow(130,230,130,110,'aw',1)+T(140,120,'vorne/hinten','txs')+T(140,136,'vertauscht','txs')}
+  top.innerHTML=o}
+ $('#topImg').onchange=drawTop;drawTop();
+ const mi=$('#mirIn');mi.oninput=()=>{$('#mirOut').textContent=mi.value||' '}}
+
+/* ---------- Phase 3: Lückentext ---------- */
+$('#clozeCheck').onclick=()=>{let ok=0,all=$$('#cloze select');all.forEach(s=>{const g=s.value===s.dataset.ans;s.className=s.value?(g?'ok':'bad'):'';if(g)ok++});
+ const fb=$('#clozeFb');if(ok===all.length){fb.className='fb ok';fb.textContent='Alles richtig! Jetzt kannst du den Heftaufschrieb angehen.';mark('f1')}else{fb.className='fb bad';fb.textContent=ok+' von '+all.length+' Lücken richtig. Schau dir die rot markierten noch einmal im Spiegel-Labor an.'}};
+
+/* ---------- Phase 3: Musterkonstruktion ---------- */
+{const c=30,svg=$('#cons'),M=13*c,G={x:8*c,y:6*c},B={x:8*c,y:10*c},A={x:3*c,y:3*c},Gi={x:18*c,y:6*c},Bi={x:18*c,y:10*c},Rg={x:M,y:5*c};
+ const ry=Bi.y+(M-Bi.x)/(A.x-Bi.x)*(A.y-Bi.y),Rb={x:M,y:ry};
+ const steps=[['Ausgangssituation','Gegeben sind der Spiegel, die Kerze mit der Flamme G und das Auge. Gesucht: das Bild G\' der Flamme und der Weg des Lichts von G ins Auge.'],
+ ['① Bildpunkt konstruieren','Zeichne von G aus das Lot auf den Spiegel (rechter Winkel!). Verlängere es hinter den Spiegel um die gleiche Länge: G liegt 5 Kästchen vor dem Spiegel, also liegt G\' 5 Kästchen dahinter.'],
+ ['② Bildpunkt mit dem Auge verbinden','Verbinde G\' geradlinig mit dem Auge. Hinter dem Spiegel zeichnest du diese Linie gestrichelt – dort läuft kein echtes Licht. Der Schnittpunkt mit dem Spiegel ist der Reflexionspunkt R.'],
+ ['③ Lichtweg einzeichnen','Verbinde G mit R. Der echte Lichtweg ist G → R → Auge. Vergiss die Pfeile in Lichtrichtung nicht!'],
+ ['Kontrolle mit dem Reflexionsgesetz','Zeichne in R das Einfallslot ein. Einfallswinkel α und Reflexionswinkel β sind gleich groß – die Konstruktion stimmt also mit dem Reflexionsgesetz überein.'],
+ ['Ganze Kerze spiegeln','Spiegelst du auch den Fußpunkt der Kerze, erhältst du das ganze Spiegelbild: gleich groß, aufrecht, gleich weit hinter dem Spiegel. Auch vom Fuß kommt Licht über einen eigenen Reflexionspunkt ins Auge.']];
+ let k=0;$('#consSteps').innerHTML=steps.map((_,i)=>`<i>${i}</i>`).join('');
+ function draw(){let o=grid(660,390,c)+`<rect x="${M}" y="0" width="${660-M}" height="390" class="behind" opacity=".55"/>`+mirrorV(M,0,390)+T(M+14,20,'Spiegel','txm');
+  o+=candle(G.x,B.y,B.y-G.y)+T(G.x-28,G.y+5,'G','txb')+eye(A.x,A.y)+T(A.x-14,A.y-20,'Auge','txs');
+  if(k>=1){o+=L(G.x,G.y,Gi.x,Gi.y,'thin','stroke-dasharray="3 4"')+`<path d="M${M-12} ${G.y} V${G.y-12} H${M}" class="thin"/>`+C(Gi.x,Gi.y,4,'aw')+T(Gi.x+10,Gi.y-8,"G'",'txl');
+   o+=T((G.x+M)/2,G.y+20,'5 Kästchen','txs','text-anchor="middle"')+T((Gi.x+M)/2,G.y+20,'5 Kästchen','txs','text-anchor="middle"')}
+  if(k>=2){o+=L(Gi.x,Gi.y,Rg.x,Rg.y,'ray dash','stroke-width="1.8"')+L(Rg.x,Rg.y,A.x+6,A.y,k>=3?'ray':'thin')+C(Rg.x,Rg.y,4.5,'aw')+T(Rg.x+8,Rg.y-10,'R','txl')}
+  if(k>=3){o+=L(G.x,G.y,Rg.x,Rg.y,'ray')+arrow(G.x,G.y,Rg.x,Rg.y,'aw')+arrow(Rg.x,Rg.y,A.x+6,A.y,'aw')}
+  if(k>=4){o+=L(Rg.x,Rg.y,Rg.x-110,Rg.y,'lot');const r=40,a1=Math.atan2(G.y-Rg.y,G.x-Rg.x),a2=Math.atan2(A.y-Rg.y,A.x-Rg.x);
+   o+=`<path d="M${Rg.x-r} ${Rg.y} A${r} ${r} 0 0 0 ${Rg.x+r*Math.cos(a1)} ${Rg.y+r*Math.sin(a1)}" class="thin"/><path d="M${Rg.x-r} ${Rg.y} A${r} ${r} 0 0 1 ${Rg.x+r*Math.cos(a2)} ${Rg.y+r*Math.sin(a2)}" class="thin"/>`;
+   o+=T(Rg.x-62,Rg.y+22,'α','txb')+T(Rg.x-62,Rg.y-10,'β','txb')}
+  if(k>=5){o+=`<g class="ghost">${candle(Gi.x,Bi.y,Bi.y-Gi.y)}</g>`+L(B.x,B.y,Bi.x,Bi.y,'thin','stroke-dasharray="3 4"')+L(Bi.x,Bi.y,M,Rb.y,'ray2 dash','stroke-width="1.6"')+L(B.x,B.y,M,Rb.y,'ray2')+L(M,Rb.y,A.x+6,A.y,'ray2')+arrow(B.x,B.y,M,Rb.y,'aw2')+arrow(M,Rb.y,A.x+6,A.y,'aw2')+T(Bi.x+10,Bi.y+4,"Bild der Kerze",'txs')}
+  svg.innerHTML=o;$('#consH').textContent=steps[k][0];$('#consP').textContent=steps[k][1];
+  $$('#consSteps i').forEach((e,i)=>e.classList.toggle('on',i<=k));$('#consPrev').disabled=k===0;$('#consNext').disabled=k===steps.length-1}
+ $('#consNext').onclick=()=>{k=Math.min(steps.length-1,k+1);draw()};$('#consPrev').onclick=()=>{k=Math.max(0,k-1);draw()};draw();
+ /* Heft-Skizze */
+ const hc=25,hM=12*hc,hG={x:6*hc,y:5*hc},hB={x:6*hc,y:10*hc},hA={x:2*hc,y:2*hc},hGi={x:18*hc,y:5*hc},hR={x:hM,y:hGi.y+(hM-hGi.x)/(hA.x-hGi.x)*(hA.y-hGi.y)};
+ let h=`<rect x="${hM}" y="0" width="${660-hM}" height="300" class="behind" opacity=".5"/>`+mirrorV(hM,0,300)+candle(hG.x,hB.y,hB.y-hG.y)+`<g class="ghost">${candle(hGi.x,hB.y,hB.y-hG.y)}</g>`+eye(hA.x,hA.y);
+ h+=L(hG.x,hG.y,hGi.x,hGi.y,'thin','stroke-dasharray="3 4"')+L(hG.x,hR.y,hR.x,hR.y,'')+L(hGi.x,hGi.y,hR.x,hR.y,'ray dash','stroke-width="1.7"')+L(hG.x,hG.y,hR.x,hR.y,'ray')+L(hR.x,hR.y,hA.x+6,hA.y,'ray')+arrow(hG.x,hG.y,hR.x,hR.y,'aw')+arrow(hR.x,hR.y,hA.x+6,hA.y,'aw');
+ h+=L(hR.x,hR.y,hR.x-80,hR.y,'lot')+T(hR.x-70,hR.y+20,'α','txb')+T(hR.x-70,hR.y-8,'β','txb')+T(hG.x-24,hG.y+5,'G','txb')+T(hGi.x+12,hGi.y+5,"G'",'txl')+T(hR.x+8,hR.y-8,'R','txl');
+ h+=L(hG.x,hB.y+18,hM,hB.y+18,'thin')+L(hM,hB.y+18,hGi.x,hB.y+18,'thin')+T((hG.x+hM)/2,hB.y+38,'g','txb','text-anchor="middle"')+T((hGi.x+hM)/2,hB.y+38,'b','txb','text-anchor="middle"')+T(hGi.x+18,hB.y-8,'virtuelles Bild','txs')+T(hM+12,18,'Spiegel','txm');
+ $('#heftFig').innerHTML=h;
+ $('#heftCopy').onclick=async()=>{const t=$('#heft').innerText;try{await navigator.clipboard.writeText(t);$('#heftCopyMsg').textContent='Kopiert.'}catch(e){$('#heftCopyMsg').textContent='Kopieren wurde vom Browser blockiert – markiere den Text von Hand.'}}}
+
+/* ---------- Übung 1: Richtig/Falsch ---------- */
+{const it=[['Das Spiegelbild entsteht auf der Spiegeloberfläche.',false,'Es liegt hinter dem Spiegel – so weit dahinter, wie der Gegenstand davor steht.'],
+ ['Gehst du 1 m vom Spiegel weg, entfernt sich auch dein Spiegelbild um 1 m vom Spiegel.',true,'Es gilt immer b = g.'],
+ ['Je weiter du vom Spiegel weg stehst, desto kleiner ist dein Spiegelbild.',false,'Das Bild ist immer gleich groß. Es wirkt nur kleiner, weil es weiter von dir entfernt ist – wie jeder Gegenstand in der Ferne.'],
+ ['Ein Schirm hinter dem Spiegel fängt das Spiegelbild auf.',false,'Hinter den Spiegel gelangt kein Licht. Das Bild ist virtuell.'],
+ ['Wenn du jemanden im Spiegel siehst, kann diese Person auch dich im Spiegel sehen.',true,'Der Lichtweg ist umkehrbar.'],
+ ['Ein Spiegel vertauscht oben und unten.',false,'Er vertauscht vorne und hinten – Kopf bleibt oben.']];
+ const box=$('#tf');box.innerHTML=it.map((x,i)=>`<div class="item" data-i="${i}"><span>${x[0]}</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p></div>`).join('');
+ const solved=new Set();box.querySelectorAll('.item').forEach(row=>{const i=+row.dataset.i;row.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=(b.dataset.v==='1')===it[i][1];
+  row.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');const fb=row.querySelector('.fb');fb.className='fb '+(ok?'ok':'bad');fb.textContent=(ok?'Stimmt. ':'Nein. ')+it[i][2];
+  if(ok)solved.add(i);if(solved.size===it.length)mark('u1')})})}
+
+/* ---------- Übung 2: Winkel ---------- */
+{const q=[['a) Ein Lichtstrahl trifft mit dem Einfallswinkel α = 35° auf einen Spiegel. Wie groß ist der Reflexionswinkel β?',35],
+ ['b) Ein Lichtstrahl schließt mit der Spiegeloberfläche einen Winkel von 25° ein. Wie groß ist der Einfallswinkel α?',65],
+ ['c) Einfallender und reflektierter Strahl schließen zusammen einen Winkel von 110° ein. Wie groß ist α?',55],
+ ['d) Ein Lichtstrahl trifft senkrecht auf den Spiegel. Wie groß ist β?',0],
+ ['e) Der Spiegel aus b) wird um 10° so gedreht, dass der Strahl steiler auftrifft (Winkel zur Oberfläche jetzt 35°). Um wie viel Grad ändert sich die Richtung des reflektierten Strahls?',20]];
+ $('#u2').innerHTML=q.map((x,i)=>`<div class="numq"><span>${x[0]}</span><span class="unit"><input type="number" data-a="${x[1]}" aria-label="Antwort ${i+1}"> °</span></div>`).join('');
+ let h=0;const hints=['Tipp 1: Winkel werden immer zum Lot gemessen. Lot und Spiegel stehen senkrecht aufeinander (90°).','Tipp 2: Zwischen einfallendem und reflektiertem Strahl liegen α + β = 2α.','Tipp 3 zu e): Berechne β vorher und nachher. Der Strahl ändert seine Richtung um 2 · (Änderung von α).'];
+ $('#u2Hint').onclick=()=>{const fb=$('#u2Fb');fb.className='fb hint';fb.textContent=hints[h%hints.length];h++};
+ $('#u2Check').onclick=()=>{let ok=0;$$('#u2 input').forEach(i=>{const g=i.value!==''&&Math.abs(+i.value-+i.dataset.a)<0.5;i.className=i.value===''?'':(g?'ok':'bad');if(g)ok++});
+  const fb=$('#u2Fb');if(ok===q.length){fb.className='fb ok';fb.textContent='Alles richtig! Bei e) hast du etwas Wichtiges entdeckt: Dreht man den Spiegel um 10°, dreht sich der reflektierte Strahl um 20°.';mark('u2')}else{fb.className='fb bad';fb.textContent=ok+' von '+q.length+' richtig. Nutze die Tipps, wenn du nicht weiterkommst.'}}}
+
+/* ---------- Übung 3: Bildpunkte setzen ---------- */
+const c=30;
+function reflectPt(p,m){const [a,b]=m,dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy),ux=dx/l,uy=dy/l,t=(p[0]-a[0])*ux+(p[1]-a[1])*uy,fx=a[0]+t*ux,fy=a[1]+t*uy;return [Math.round(2*fx-p[0]),Math.round(2*fy-p[1])]}
+function gridTask(id,cfg){const svg=$('#'+id),fb=$('#'+id+'Fb');let found=[],wrong=null,tries=0;
+ const imgs=cfg.pts.map(p=>reflectPt([p.x,p.y],cfg.mirror));
+ function draw(sol){let o=grid(660,390,c);const [a,b]=cfg.mirror;o+=`<line x1="${a[0]*c}" y1="${a[1]*c}" x2="${b[0]*c}" y2="${b[1]*c}" class="mir"/>`+T(b[0]*c+(cfg.lab||[8,16])[0],b[1]*c+(cfg.lab||[8,16])[1],'Spiegel','txm');
+  const pts=cfg.pts.map(p=>[p.x*c,p.y*c]);o+=`<polygon points="${pts.map(p=>p.join(',')).join(' ')}" style="fill:var(--laser2);fill-opacity:.12;stroke:var(--laser2)" stroke-width="2"/>`;
+  cfg.pts.forEach(p=>{o+=C(p.x*c,p.y*c,5,'aw2')+T(p.x*c-20,p.y*c-8,p.n,'txb')});
+  found.forEach(i=>{const [x,y]=imgs[i],p=cfg.pts[i];o+=L(p.x*c,p.y*c,x*c,y*c,'lot')+C(x*c,y*c,5,'okc')+T(x*c+8,y*c-8,p.n+"'",'txl')});
+  if(found.length===cfg.pts.length){const ip=imgs.map(p=>[p[0]*c,p[1]*c]);o+=`<polygon points="${ip.map(p=>p.join(',')).join(' ')}" style="fill:var(--laser);fill-opacity:.12;stroke:var(--laser)" stroke-width="2"/>`}
+  if(wrong)o+=`<path d="M${wrong[0]*c-7} ${wrong[1]*c-7} l14 14 m0 -14 l-14 14" style="stroke:var(--bad)" stroke-width="3"/>`;
+  svg.innerHTML=o}
+ function next(){const i=found.length;if(i<cfg.pts.length){fb.className='fb hint';fb.textContent='Wo liegt '+cfg.pts[i].n+"'? Klicke auf den Kreuzungspunkt."}}
+ svg.addEventListener('click',ev=>{if(found.length===cfg.pts.length)return;const p=svgPt(svg,ev),gx=Math.round(p.x/c),gy=Math.round(p.y/c),i=found.length,[ex,ey]=imgs[i];
+  if(gx===ex&&gy===ey){found.push(i);wrong=null;tries=0;if(found.length===cfg.pts.length){fb.className='fb ok';fb.textContent=cfg.done;mark(id)}else next()}
+  else{wrong=[gx,gy];tries++;fb.className='fb bad';fb.textContent=tries>=2?cfg.hint2:cfg.hint1}draw()});
+ cfg.reset=()=>{found=[];wrong=null;tries=0;draw();next()};cfg.solve=()=>{found=cfg.pts.map((_,i)=>i);wrong=null;draw();fb.className='fb';fb.textContent='Musterlösung: Die gepunkteten Linien sind die Lote auf den Spiegel.'};
+ tasksCfg[id]=cfg;draw();next()}
+const tasksCfg={};
+gridTask('u3a',{mirror:[[11,0],[11,13]],pts:[{n:'A',x:4,y:3},{n:'B',x:8,y:5},{n:'C',x:5,y:10}],hint1:'Nicht ganz. Zähle die Kästchen vom Punkt bis zum Spiegel.',hint2:'Tipp: Gehe vom Punkt waagrecht (senkrecht zum Spiegel) zum Spiegel und dann gleich viele Kästchen weiter.',done:'Super! Das Bilddreieck ist gleich groß und liegt genauso weit hinter dem Spiegel. Beachte: Der Umlaufsinn ist vertauscht.'});
+gridTask('u3b',{mirror:[[3,13],[16,0]],lab:[14,30],pts:[{n:'P',x:4,y:5},{n:'Q',x:7,y:3}],hint1:'Nicht ganz. Das Lot muss senkrecht zum schrägen Spiegel stehen.',hint2:'Tipp: Der Spiegel verläuft diagonal. Das Lot verläuft dann ebenfalls diagonal – nur in die andere Richtung (ein Kästchen nach rechts, ein Kästchen nach unten …).',done:'Klasse! Auch beim schrägen Spiegel gilt: Lot fällen, gleicher Abstand dahinter.'});
+
+/* ---------- Übung 4: Petra und die Kerze ---------- */
+{const svg=$('#u4'),fb=$('#u4Fb'),M=13,F=[7,5],B=[7,10],A=[2,2],Fi=[19,5],Bi=[19,10];
+ const rY=(I)=>I[1]+(M-I[0])/(A[0]-I[0])*(A[1]-I[1]),rF=rY(Fi),rB=rY(Bi);
+ const steps=[{t:"Klicke dorthin, wo das Bild F' der Flamme liegt.",k:'pt',e:Fi},{t:"Verbinde F' mit dem Auge: Klicke auf Petras Auge.",k:'eye'},{t:'Klicke auf den Reflexionspunkt R₁ (Schnittpunkt der Linie mit dem Spiegel).',k:'mir',e:rF},
+  {t:"Klicke dorthin, wo das Bild K' des Kerzenfußes liegt.",k:'pt',e:Bi},{t:"Verbinde K' mit dem Auge: Klicke auf Petras Auge.",k:'eye'},{t:'Klicke auf den Reflexionspunkt R₂.',k:'mir',e:rB}];
+ let k=0,wrong=null,cheat=false;$('#u4Steps').innerHTML=steps.map((_,i)=>`<i>${i+1}</i>`).join('');
+ function draw(){let o=grid(660,390,c)+mirrorV(M*c,0,390)+T(M*c+14,20,'Spiegel','txm')+candle(F[0]*c,B[1]*c,(B[1]-F[1])*c)+T(F[0]*c-30,F[1]*c+5,'F','txb')+T(B[0]*c-30,B[1]*c,'K','txb')+eye(A[0]*c,A[1]*c)+T(A[0]*c-20,A[1]*c-20,'Petra','txs');
+  const ax=A[0]*c+6,ay=A[1]*c;
+  if(k>=1)o+=L(F[0]*c,F[1]*c,Fi[0]*c,Fi[1]*c,'lot')+C(Fi[0]*c,Fi[1]*c,5,'aw')+T(Fi[0]*c+8,Fi[1]*c-8,"F'",'txl');
+  if(k>=2)o+=L(Fi[0]*c,Fi[1]*c,M*c,rF*c,'ray dash','stroke-width="1.6"')+L(M*c,rF*c,ax,ay,'thin');
+  if(k>=3)o+=L(F[0]*c,F[1]*c,M*c,rF*c,'ray')+L(M*c,rF*c,ax,ay,'ray')+arrow(F[0]*c,F[1]*c,M*c,rF*c,'aw')+arrow(M*c,rF*c,ax,ay,'aw')+C(M*c,rF*c,4.5,'aw')+T(M*c+8,rF*c-8,'R₁','txl');
+  if(k>=4)o+=L(B[0]*c,B[1]*c,Bi[0]*c,Bi[1]*c,'lot')+C(Bi[0]*c,Bi[1]*c,5,'aw2')+T(Bi[0]*c+8,Bi[1]*c-8,"K'",'txb')+`<g class="ghost">${candle(Fi[0]*c,Bi[1]*c,(Bi[1]-Fi[1])*c)}</g>`;
+  if(k>=5)o+=L(Bi[0]*c,Bi[1]*c,M*c,rB*c,'ray2 dash','stroke-width="1.6"')+L(M*c,rB*c,ax,ay,'thin');
+  if(k>=6)o+=L(B[0]*c,B[1]*c,M*c,rB*c,'ray2')+L(M*c,rB*c,ax,ay,'ray2')+arrow(B[0]*c,B[1]*c,M*c,rB*c,'aw2')+arrow(M*c,rB*c,ax,ay,'aw2')+C(M*c,rB*c,4.5,'aw2')+T(M*c+8,rB*c+18,'R₂','txb');
+  if(wrong)o+=`<path d="M${wrong[0]-7} ${wrong[1]-7} l14 14 m0 -14 l-14 14" style="stroke:var(--bad)" stroke-width="3"/>`;
+  svg.innerHTML=o;$$('#u4Steps i').forEach((e,i)=>e.classList.toggle('on',i<k));
+  if(k<steps.length){fb.className='fb hint';fb.textContent='Schritt '+(k+1)+': '+steps[k].t}else{fb.className='fb ok';fb.textContent=(cheat?'Musterlösung: ':'Fertig! ')+'Das Spiegelbild der Kerze ist gleich groß und liegt 6 Kästchen hinter dem Spiegel. Beide Bündel gelangen über verschiedene Punkte des Spiegels in Petras Auge.';if(!cheat)mark('u4')}}
+ svg.addEventListener('click',ev=>{if(k>=steps.length)return;const p=svgPt(svg,ev),s=steps[k];let ok=false;
+  if(s.k==='pt')ok=Math.round(p.x/c)===s.e[0]&&Math.round(p.y/c)===s.e[1];
+  if(s.k==='eye')ok=Math.hypot(p.x-A[0]*c,p.y-A[1]*c)<30;
+  if(s.k==='mir')ok=Math.abs(p.x-M*c)<18&&Math.abs(p.y-s.e*c)<14;
+  if(ok){k++;wrong=null;draw()}else{wrong=[p.x,p.y];draw();fb.className='fb bad';fb.textContent=s.k==='pt'?'Nicht ganz – Lot zum Spiegel, gleicher Abstand dahinter. Zähle die Kästchen!':s.k==='eye'?'Klicke direkt auf das Auge.':'Klicke genau auf den Schnittpunkt der Linie mit dem Spiegel.'}});
+ tasksCfg.u4={reset:()=>{k=0;wrong=null;cheat=false;draw()},solve:()=>{k=steps.length;wrong=null;cheat=true;draw()}};draw()}
+$$('[data-reset]').forEach(b=>b.onclick=()=>tasksCfg[b.dataset.reset].reset());
+$$('[data-solve]').forEach(b=>b.onclick=()=>tasksCfg[b.dataset.solve].solve());
+
+/* ---------- Übung 5: Sichtbereich ---------- */
+{const svg=$('#u5'),M=11,m1=4,m2=7,E=[5,10],obj=[['A',3,1],['B',7,2],['C',2,4],['D',9,3],['E',6,6],['F',8,9]];
+ const vis=o=>{const Ix=2*M-o[1],t=(M-Ix)/(E[0]-Ix),y=o[2]+t*(E[1]-o[2]);return y>m1&&y<m2};
+ let show=false;
+ function draw(){let o=grid(660,390,c);
+  if(show){const far=40,dT=[-(M-E[0]),m1-E[1]],dU=[-(M-E[0]),m2-E[1]];
+   o+=P([[M*c,m1*c],[(M+dT[0]*far)*c,(m1+dT[1]*far)*c],[(M+dU[0]*far)*c,(m2+dU[1]*far)*c],[M*c,m2*c]],'fan');
+   o+=L(E[0]*c,E[1]*c,M*c,m1*c,'ray dash','stroke-width="1.5"')+L(E[0]*c,E[1]*c,M*c,m2*c,'ray dash','stroke-width="1.5"');
+   o+=L(M*c,m1*c,(M+dT[0]*far)*c,(m1+dT[1]*far)*c,'ray','stroke-width="1.5"')+L(M*c,m2*c,(M+dU[0]*far)*c,(m2+dU[1]*far)*c,'ray','stroke-width="1.5"');
+   o+=T(14,380,'rot: Sichtbereich des Auges im Spiegel','txs')}
+  o+=L(M*c,0,M*c,390,'thin','stroke-dasharray="2 6"')+mirrorV(M*c,m1*c,m2*c)+T(M*c+14,m1*c+20,'Spiegel','txm');
+  obj.forEach(x=>{o+=`<rect x="${x[1]*c-7}" y="${x[2]*c-7}" width="14" height="14" rx="3" style="fill:var(--laser2)"/>`+T(x[1]*c+11,x[2]*c-6,x[0],'txb')});
+  o+=eye(E[0]*c,E[1]*c)+T(E[0]*c-18,E[1]*c+30,'Auge','txs');svg.innerHTML=o}
+ $('#u5Checks').innerHTML=obj.map(x=>`<label><input type="checkbox" value="${x[0]}">${x[0]}</label>`).join('');
+ $('#u5Check').onclick=()=>{let ok=0;$$('#u5Checks label').forEach((l,i)=>{const ch=l.querySelector('input').checked,g=ch===vis(obj[i]);l.className=g?'ok':'bad';if(g)ok++});
+  const fb=$('#u5Fb');if(ok===obj.length){fb.className='fb ok';fb.textContent='Richtig: A, B und D sind sichtbar. Überraschend: E steht direkt vor dem Spiegel und ist trotzdem nicht zu sehen! Was du siehst, hängt vom Ort des Auges ab.';mark('u5')}
+  else{fb.className='fb bad';fb.textContent=(obj.length-ok)+' Auswahl(en) stimmen noch nicht. Konstruiere für die markierten Gegenstände den Bildpunkt und verbinde ihn mit dem Auge.'}};
+ $('#u5Solve').onclick=()=>{show=!show;$('#u5Solve').textContent=show?'Sichtbereich ausblenden':'Sichtbereich zeigen';draw()};draw()}
+
+/* ---------- Übung 6: Peter ---------- */
+{const q=[['a) Wie hoch muss der Spiegel mindestens sein?',0.85],['b) In welcher Höhe über dem Boden muss die Unterkante des Spiegels sein?',0.80],['c) In welcher Höhe muss die Oberkante sein?',1.65]];
+ $('#u6q').innerHTML=q.map((x,i)=>`<div class="numq"><span>${x[0]}</span><span class="unit"><input type="number" step="0.01" data-a="${x[1]}" aria-label="Antwort ${'abc'[i]}"> m</span></div>`).join('');
+ let mcPick=null;$$('#u6mc button').forEach(b=>b.onclick=()=>{mcPick=b.dataset.k;$$('#u6mc button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add('ok');b.style.background='var(--panel)'});
+ let h=0;const hints=['Tipp 1: Zeichne Peter, die Wand und Peters Spiegelbild (gleich weit hinter der Wand). Verbinde das Auge mit den Füßen und dem Scheitel des Spiegelbilds.','Tipp 2: Die Wand liegt genau in der Mitte zwischen Peter und seinem Bild. Deshalb trifft die Linie Auge → Bild der Füße die Wand auf halber Augenhöhe.','Tipp 3: Unterkante = 1,60 m : 2. Oberkante = Augenhöhe + halber Abstand Auge–Scheitel = 1,60 m + 0,10 m : 2.'];
+ $('#u6Hint').onclick=()=>{const fb=$('#u6Fb');fb.className='fb hint';fb.textContent=hints[h%hints.length];h++};
+ $('#u6Check').onclick=()=>{let ok=0;$$('#u6q input').forEach(i=>{const v=parseFloat(String(i.value).replace(',','.')),g=Math.abs(v-+i.dataset.a)<0.006;i.className=i.value===''?'':(g?'ok':'bad');if(g)ok++});
+  $$('#u6mc button').forEach(b=>{b.style.background='';b.classList.remove('ok','bad');if(b.dataset.k===mcPick)b.classList.add(mcPick==='a'?'ok':'bad')});if(mcPick==='a')ok++;
+  const fb=$('#u6Fb');if(ok===4){fb.className='fb ok';fb.textContent='Perfekt! Der Spiegel muss halb so groß sein wie Peter (0,85 m) und von 0,80 m bis 1,65 m reichen – egal wie weit Peter entfernt steht. Überprüfe es mit der Simulation.';mark('u6');$('#u6SimBox').hidden=false;drawP()}
+  else{fb.className='fb bad';fb.textContent=ok+' von 4 richtig. Hol dir einen Tipp oder überprüfe deine Überlegung mit der Simulation.'}};
+ $('#u6Sim').onclick=()=>{$('#u6SimBox').hidden=false;drawP()};
+ const svg=$('#peter'),W=470,fl=350,sc=170;
+ function fig(x,dir,cls){const hy=fl-1.6*sc;return `<g class="${cls}" style="stroke:var(--ink);fill:none" stroke-width="3" stroke-linecap="round">`+`<circle cx="${x}" cy="${hy}" r="17"/>`+L(x,hy+17,x,fl-0.9*sc,'')+L(x,fl-0.9*sc,x-12,fl,'')+L(x,fl-0.9*sc,x+12,fl,'')+L(x,fl-1.38*sc,x+dir*22,fl-1.0*sc,'')+L(x,fl-1.38*sc,x-dir*14,fl-1.0*sc,'')+`</g>`+C(x+dir*7,hy,3,'iris')}
+ function drawP(){const d=+$('#dist').value;$('#distVal').textContent=d.toFixed(2).replace('.',',');const x=W-d*sc,xi=W+d*sc,ey=fl-1.6*sc,hd=fl-1.7*sc,mF=fl-0.8*sc,mH=fl-1.65*sc;
+  let o=`<rect x="${W}" y="0" width="${900-W}" height="${fl}" class="behind"/>`+L(0,fl,900,fl,'thin')+L(W,0,W,fl,'thin','stroke-width="3"')+T(W+10,20,'Wand','txs');
+  o+=`<g class="ghost">${fig(xi,-1,'')}</g>`;
+  o+=L(x,ey,xi,fl,'ray dash','stroke-width="1.4"')+L(x,ey,xi,hd,'ray2 dash','stroke-width="1.4"');
+  o+=L(x,fl,W,mF,'ray')+L(W,mF,x,ey,'ray')+arrow(x,fl,W,mF,'aw')+arrow(W,mF,x,ey,'aw');
+  o+=L(x,hd,W,mH,'ray2')+L(W,mH,x,ey,'ray2')+arrow(x,hd,W,mH,'aw2')+arrow(W,mH,x,ey,'aw2');
+  o+=fig(x,1,'');
+  o+=L(W,mF,W,mH,'mir','stroke-width="8"')+T(W+12,mH-12,'Oberkante 1,65 m','txm')+T(W+12,mF+20,'Unterkante 0,80 m','txm')+T(W+12,(mF+mH)/2+5,'Spiegel: 0,85 m','txb');
+  o+=L(x,fl+18,W,fl+18,'thin')+T((x+W)/2,fl+34,'d = '+d.toFixed(2).replace('.',',')+' m','txs','text-anchor="middle"');
+  svg.innerHTML=o}
+ $('#dist').oninput=drawP}
+
+/* ---------- Übung 7: Knobeln ---------- */
+{const cl=$('#clock');let o='<circle cx="100" cy="100" r="88" style="fill:var(--bg);stroke:var(--ink)" stroke-width="4"/>';
+ for(let i=0;i<12;i++){const a=i*Math.PI/6;o+=L(100+74*Math.sin(a),100-74*Math.cos(a),100+84*Math.sin(a),100-84*Math.cos(a),'','style="stroke:var(--ink)" stroke-width="'+(i%3?2:4)+'"')}
+ o+='<polygon points="100,22 94,10 106,10" style="fill:var(--laser)"/>';
+ const hand=(deg,len,w)=>{const a=deg*Math.PI/180;return L(100,100,100+len*Math.sin(a),100-len*Math.cos(a),'',`style="stroke:var(--ink)" stroke-width="${w}" stroke-linecap="round"`)};
+ o+=hand(360-310,46,7)+hand(360-120,68,4)+'<circle cx="100" cy="100" r="5" style="fill:var(--ink)"/>';cl.innerHTML=o;
+ let h=0;const hints=['Tipp a): Stell dir die Zeiger an der senkrechten Achse gespiegelt vor – oder halte die Seite vor einen echten Spiegel!','Tipp b): Der Abstand Bild–Spiegel ist immer gleich dem Abstand du–Spiegel. Und der Abstand du–Bild ist doppelt so groß.','Tipp c): Jeder Spiegel erzeugt ein Bild – und das Bild im einen Spiegel wird vom anderen Spiegel noch einmal gespiegelt.'];
+ $('#u7Hint').onclick=()=>{const fb=$('#u7Fb');fb.className='fb hint';fb.textContent=hints[h%hints.length];h++};
+ $('#u7Check').onclick=()=>{let ok=0;const t=$('#clockIn').value.trim().replace(/[.,h ]/,':'),cOk=/^(10|22):20$/.test(t);$('#clockIn').className=t?(cOk?'ok':'bad'):'';if(cOk)ok++;
+  const v1=$('#v1'),v2=$('#v2'),g1=Math.abs(+v1.value-1.5)<.05&&v1.value!=='',g2=Math.abs(+v2.value-3)<.05&&v2.value!=='';v1.className=v1.value?(g1?'ok':'bad'):'';v2.className=v2.value?(g2?'ok':'bad'):'';ok+=g1+g2;
+  const w=$('#wink'),g3=w.value==='3';w.className=w.value?(g3?'ok':'bad'):'';if(g3)ok++;
+  const fb=$('#u7Fb');if(ok===4){fb.className='fb ok';fb.textContent='Alles gelöst! Die Uhr zeigt 10:20 Uhr (Spiegelbild 1:40 – beide ergeben zusammen 12 Stunden). Dein Bild kommt mit 3 m/s auf dich zu. Im Winkelspiegel siehst du 3 Bilder: je eines in jedem Spiegel und eines, das zweimal gespiegelt wurde.';mark('u7')}
+  else{fb.className='fb bad';fb.textContent=ok+' von 4 richtig. Hol dir Tipps!'}}}
+
+updProg();
+}
+</script>
+</body>
+</html>

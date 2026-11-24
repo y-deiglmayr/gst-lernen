@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GST Lernpfade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#fff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--accent:light-dark(#dc2f28,#ff5c50)}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif}
+header{background:#0e131d;color:#eef1f7;padding:clamp(32px,5vw,64px) max(5vw,16px)}
+h1,h2{font-family:Lexend,system-ui,sans-serif;line-height:1.15;margin:0 0 .4em}
+h1{font-size:clamp(32px,5vw,48px)}
+h2{font-size:22px;margin-top:1.6em}
+header p{color:#c6ccd8;max-width:60ch;margin:0}
+main{max-width:1100px;margin:0 auto;padding:8px max(5vw,16px) 48px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+a.card{display:block;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);text-decoration:none;min-height:44px}
+a.card:hover,a.card:focus-visible{border-color:var(--accent)}
+a.card b{font-family:Lexend,system-ui,sans-serif;font-size:18px;display:block}
+a.card small{color:var(--muted);font-size:15px}
+footer{color:var(--muted);font-size:14px;padding:0 max(5vw,16px) 32px;max-width:1100px;margin:0 auto}
+</style>
+</head>
+<body>
+<header>
+<h1>GST Lernpfade</h1>
+<p>Interaktive Lerninhalte für den Unterricht. Wähle dein Fach und deinen Lernpfad.</p>
+</header>
+<main id="list"></main>
+<footer>Neue Lernpfade werden in der Liste unten im Quelltext (<code>KURSE</code>) eingetragen.</footer>
+<script>
+{
+/* Neue Lernpfade hier eintragen: Ordner = Klasse/Fach, Datei ohne .html */
+const KURSE=[
+ {ordner:'Physik8',name:'Physik 8',seiten:[
+  {datei:'reflexion-spiegel',titel:'Reflexion am ebenen Spiegel',info:'Reflexionsgesetz, Eigenschaften des Spiegelbilds, Konstruktion und Übungen'}
+ ]}
+];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+document.getElementById('list').innerHTML=KURSE.map(k=>`<h2>${esc(k.name)}</h2><div class="grid">`+
+ k.seiten.map(s=>`<a class="card" href="/${esc(k.ordner)}/${esc(s.datei)}"><b>${esc(s.titel)}</b><small>${esc(s.info)}</small></a>`).join('')+'</div>').join('');
+}
+</script>
+</body>
+</html>
