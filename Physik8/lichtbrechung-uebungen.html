@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lichtbrechung 3 · Üben</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--grid:light-dark(#d4e2f2,#232c3b);
+--paper:light-dark(#fdfeff,#151a23);--behind:light-dark(#eef5f8,#17212a);
+--laser:light-dark(#dc2f28,#ff5c50);--laser2:light-dark(#1d62c9,#64a6ff);--mirror:light-dark(#1f8eab,#58c4df);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2815);--lab:#0e131d;--labink:#eef1f7}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700}
+h3{font-size:21px;font-weight:600;margin-top:1.6em}
+h4{font-size:17px;font-weight:600;margin:0 0 .3em}
+p{margin:0 0 .8em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.alt{background:var(--panel)}
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--laser);color:#fff;font-size:13px;margin-right:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.bar{width:140px;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--laser);transition:width .4s}
+/* hero */
+.hero{background:var(--lab);color:var(--labink)}
+.hero p{color:#c6ccd8;max-width:62ch}
+.hero svg{width:100%;height:auto;display:block;margin:18px 0 8px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px}
+.phases a{display:block;padding:14px 16px;border-radius:12px;background:#182031;color:#eef1f7;text-decoration:none;border:1px solid #2a3448}
+.phases a:hover{border-color:#ff5c50}
+.phases b{font-family:Lexend,system-ui,sans-serif;display:block;font-size:17px}
+.phases small{color:#a9b2c4;font-size:14px}
+/* layout pieces */
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;touch-action:none;user-select:none}
+.caption{font-size:14px;color:var(--muted);margin:6px 4px 0}
+@media(min-width:901px){.stick{position:sticky;top:70px}}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.alt @media(min-width:901px){.stick{position:sticky;top:70px}}
+.card{background:var(--paper)}
+.card.done{border-color:var(--ok)}
+.card .tag{font:600 13px Lexend,system-ui,sans-serif;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center}
+.card.done .tag::after{content:"✓ gelöst";color:var(--ok)}
+.stars{color:var(--laser);letter-spacing:2px}
+.intro{max-width:70ch;color:var(--muted)}
+.merke{border:2px solid var(--laser);border-radius:14px;padding:16px 20px;margin:18px 0;background:var(--bg)}
+.merke h4{color:var(--laser)}
+.merke ul{margin:.3em 0;padding-left:1.2em}
+details.reveal{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0}
+details.reveal summary{cursor:pointer;font:600 16px Lexend,system-ui,sans-serif;padding:4px 0}
+/* controls */
+button,.btn{font:600 16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.alt button{background:var(--bg)}
+button:hover{border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--laser2);outline-offset:2px}
+button.primary{background:var(--laser);border-color:var(--laser);color:#fff}
+input[type=number],input[type=text],select{font:16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--laser);min-height:44px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.toggles label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;min-height:44px;font-size:15px}
+.toggles input{width:18px;height:18px;accent-color:var(--laser)}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font-weight:400}
+.mc button.ok,.tf button.ok{background:var(--okbg);border-color:var(--ok)}
+.mc button.bad,.tf button.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1em;margin:8px 0 0;font-size:16px}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb.hint{background:var(--hint);color:var(--ink);padding:8px 12px;border-radius:8px}
+input.ok,select.ok{border-color:var(--ok);background:var(--okbg)}
+input.bad,select.bad{border-color:var(--bad);background:var(--badbg)}
+.scroll{overflow-x:auto}
+table.mess{border-collapse:collapse;font-size:15px}
+table.mess th,table.mess td{border:1px solid var(--line);padding:4px 6px;text-align:center}
+table.mess th{font-weight:600;background:var(--panel);text-align:left;white-space:nowrap}
+table.mess input{width:58px;min-height:38px;text-align:center;padding:4px}
+.messgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.messgrid label{display:grid;gap:2px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;font-size:15px}
+.messgrid label span:first-child{font-weight:700}
+.messgrid input{width:56px;min-height:38px;text-align:center;padding:4px}
+.fig.narrow{max-width:740px}
+.tf .fb:empty{display:none}
+.cloze{line-height:2.4;font-size:17px}
+.cloze select{min-height:38px;padding:2px 6px;margin:0 2px}
+.tf{display:grid;gap:10px}
+.tf .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tf .item .fb{grid-column:1/-1;margin:0}
+.tf .btns{display:flex;gap:6px}
+.numq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.numq input{width:96px;text-align:right}
+.unit{white-space:nowrap}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.steps i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font:600 14px Lexend,system-ui,sans-serif}
+.steps i.on{background:var(--laser);color:#fff;border-color:var(--laser)}
+.steptext{min-height:5.5em}
+.heft{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;border:1px solid var(--line);border-radius:12px;padding:22px clamp(16px,3vw,34px)}
+.heft h3{margin-top:.8em;color:var(--laser)}
+.heft h3:first-child{margin-top:0}
+.heft .box{border:2px solid var(--ink);padding:8px 14px;border-radius:6px;background:var(--paper);display:inline-block}
+.mirrortext{display:inline-block;transform:scaleX(-1);font:700 clamp(24px,5vw,40px) Lexend,system-ui,sans-serif;color:var(--laser);padding:6px 12px;border:2px dashed var(--mirror);border-radius:8px;margin-top:6px;word-break:break-all}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.checks label{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:10px;min-height:44px;cursor:pointer;font:600 16px Lexend,system-ui,sans-serif}
+.checks label.ok{border-color:var(--ok);background:var(--okbg)}.checks label.bad{border-color:var(--bad);background:var(--badbg)}
+.checks input{width:18px;height:18px;accent-color:var(--laser)}
+footer{font-size:14px;color:var(--muted)}
+/* svg classes */
+.gl{stroke:var(--grid);stroke-width:1}
+.mir{stroke:var(--mirror);stroke-width:5;stroke-linecap:round}
+.ray{stroke:var(--laser);stroke-width:2.2;fill:none;stroke-linecap:round}
+.ray2{stroke:var(--laser2);stroke-width:2.2;fill:none;stroke-linecap:round}
+.dash{stroke-dasharray:7 6}
+.fan{fill:var(--laser);opacity:.16}.fan2{fill:var(--laser2);opacity:.16}
+.fanb{fill:var(--laser);opacity:.07}.fanb2{fill:var(--laser2);opacity:.07}
+.aw{fill:var(--laser)}.aw2{fill:var(--laser2)}
+.lot{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 5;fill:none}
+.thin{stroke:var(--ink);stroke-width:1.4;fill:none}
+.tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
+.txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.txb{fill:var(--ink);font:600 16px Lexend,sans-serif}
+.txl{fill:var(--laser);font:600 16px Lexend,sans-serif}
+.txm{fill:var(--mirror);font:600 14px Lexend,sans-serif}
+.okc{fill:var(--ok)}.badc{fill:var(--bad)}
+.oks{stroke:var(--ok)}.bads{stroke:var(--bad)}
+.ghost{opacity:.45}
+.drag{cursor:grab}
+.behind{fill:var(--behind)}
+.wax{fill:light-dark(#f4ead8,#d9cdb7);stroke:var(--ink);stroke-width:1.2}
+.flame{fill:#ffb21a;stroke:#e0641a;stroke-width:1.2}
+.eyew{fill:var(--bg);stroke:var(--ink);stroke-width:1.6}
+.iris{fill:var(--ink)}
+.disk{fill:light-dark(#f7f9fc,#1b2130);stroke:var(--line)}
+.tick{stroke:var(--ink);stroke-width:1}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+@media(max-width:600px){body{font-size:16px}.prog .bar{width:80px}nav a{padding:6px}}
+/* Ergänzungen Lichtbrechung */
+:root{--glass:light-dark(#d9eef5,#1b3140);--glassline:light-dark(#5fa9c2,#58c4df);--water:light-dark(#d5e7fb,#162a44);--waterline:light-dark(#3f7fd0,#64a6ff);--warn:light-dark(#a35b00,#ffb64d);--warnbg:light-dark(#fff1dc,#33260f)}
+.glass{fill:var(--glass);stroke:var(--glassline);stroke-width:1.6}
+.water{fill:var(--water)}
+.surf{stroke:var(--waterline);stroke-width:2.2}
+.rayr{stroke:var(--laser);stroke-width:2;fill:none;stroke-linecap:round}
+.arc{stroke:var(--ink);stroke-width:1.4;fill:none}
+.medlab{fill:var(--muted);font:600 14px Lexend,sans-serif}
+input.warn{border-color:var(--warn);background:var(--warnbg)}
+.fb.warn{color:var(--warn)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted);margin:6px 4px 0}
+.legend i{display:inline-block;width:22px;height:3px;vertical-align:middle;margin-right:6px;border-radius:2px}
+.material{display:flex;flex-wrap:wrap;gap:6px 18px;margin:4px 0 10px;padding:0;list-style:none}
+.material li::before{content:"▸ ";color:var(--laser)}
+.checklist{display:grid;gap:8px;margin:8px 0}
+.checklist label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--bg)}
+.checklist input{width:20px;height:20px;margin-top:2px;accent-color:var(--ok);flex:none}
+.checklist label:has(input:checked){border-color:var(--ok);background:var(--okbg)}
+.safety{border-left:5px solid var(--warn);background:var(--warnbg);padding:12px 16px;border-radius:8px;margin:14px 0}
+textarea{font:16px/1.5 "Atkinson Hyperlegible",sans-serif;width:100%;min-height:96px;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chips button{min-height:38px;padding:4px 12px;font-weight:400;font-size:15px;border-radius:20px}
+.label-q{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 12px;align-items:center;margin:6px 0}
+.label-q b{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--laser);color:#fff;font:600 14px Lexend,sans-serif}
+.num{fill:var(--laser)}.numt{fill:#fff;font:600 13px Lexend,sans-serif}
+.nextlp{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.nextlp a{display:block;padding:14px 18px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);text-decoration:none;font:600 17px Lexend,sans-serif}
+.nextlp a:hover{border-color:var(--laser)}
+.nextlp small{display:block;font:400 14px "Atkinson Hyperlegible",sans-serif;color:var(--muted)}
+.speeds{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.speeds div{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--bg)}
+.speeds b{font-family:Lexend,sans-serif;display:block}
+.speeds i{display:block;height:8px;border-radius:4px;background:var(--laser);margin-top:6px}
+.figs6{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.figs6 .cell{border:1px solid var(--line);border-radius:12px;padding:8px;background:var(--bg)}
+.figs6 svg{width:100%;height:auto;display:block}
+.figs6 .btns{display:flex;gap:6px;margin-top:6px}
+.figs6 .btns button{flex:1;min-height:40px;padding:4px 8px;font-size:15px}
+.figs6 .fb{font-size:15px}
+.cons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0}
+.cons-grid button.on{border-color:var(--laser);background:var(--hint)}
+.cons-grid button.solved::after{content:" ✓";color:var(--ok)}
+.score{font:600 18px Lexend,sans-serif}
+
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+.qrbtn:hover{outline:3px solid #ff5c50}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop{background:rgba(8,10,16,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
+@media(max-width:640px){.qrbtn{width:96px}.qrbtn svg{width:80px;height:80px}}
+@media print{nav,.qrbtn{display:none}}
+</style>
+</head>
+<body data-key="lichtbrechung-ueb">
+<nav aria-label="Abschnitte"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a><a href="#grund"><span>1</span>★</a><a href="#diagramm"><span>2</span>★★</a><a href="#anwenden"><span>3</span>★★★</a>
+<div class="prog"><span id="progtxt">0 / 0 gelöst</span><div class="bar"><i id="progbar"></i></div></div>
+</div></nav>
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Lichtbrechung · Teil 3: Üben</h1>
+<p>Jetzt wendest du an, was du im Experiment und in der Theorie gelernt hast: Strahlenverläufe beurteilen, Werte aus dem Brechungsdiagramm ablesen, Brechung konstruieren – und zum Schluss mit der Harpune auf Fischjagd gehen.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik8/lichtbrechung-uebungen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m1 0h5m5 0h2m1 0h1m1 0h1m1 0h1m1 0h2m1 0h7m-37 1h1m5 0h1m2 0h1m2 0h4m1 0h2m1 0h3m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m3 0h1m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h5m1 0h3m4 0h1m4 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h5m1 0h1m1 0h1m6 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h2m1 0h3m4 0h2m1 0h2m1 0h2m4 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h2m4 0h3m-29 1h1m3 0h1m1 0h3m3 0h2m4 0h2m1 0h2m1 0h1m4 0h5m2 0h1m-36 1h4m3 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h1m2 0h3m3 0h1m1 0h2m-32 1h6m1 0h1m1 0h2m1 0h1m3 0h2m1 0h5m2 0h3m1 0h1m-35 1h3m2 0h1m2 0h1m1 0h1m2 0h1m3 0h2m2 0h1m1 0h2m3 0h2m4 0h2m-35 1h6m1 0h1m2 0h1m2 0h2m1 0h6m5 0h4m2 0h3m-37 1h1m1 0h1m1 0h1m3 0h2m1 0h8m4 0h1m2 0h3m3 0h2m-32 1h3m1 0h1m1 0h1m4 0h1m1 0h2m1 0h1m1 0h2m1 0h12m-34 1h1m10 0h1m1 0h3m2 0h1m1 0h1m1 0h2m2 0h3m1 0h2m1 0h1m1 0h1m-37 1h2m2 0h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h1m3 0h3m6 0h3m1 0h2m1 0h1m-37 1h1m3 0h2m1 0h3m2 0h1m1 0h1m2 0h3m1 0h1m1 0h1m1 0h5m2 0h1m1 0h2m-36 1h1m1 0h1m2 0h2m2 0h7m2 0h2m3 0h1m1 0h3m3 0h1m-32 1h2m6 0h2m1 0h1m2 0h4m1 0h4m3 0h2m4 0h4m-36 1h1m1 0h2m1 0h3m2 0h2m4 0h2m2 0h2m2 0h1m3 0h4m1 0h2m-34 1h1m2 0h1m2 0h1m3 0h4m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h2m2 0h1m-36 1h1m1 0h7m3 0h2m1 0h1m1 0h1m5 0h1m1 0h3m3 0h4m-33 1h1m1 0h2m1 0h3m2 0h3m2 0h3m1 0h4m1 0h4m1 0h2m1 0h1m-35 1h1m3 0h1m1 0h3m2 0h1m1 0h1m1 0h1m2 0h2m3 0h2m1 0h1m2 0h3m1 0h2m-35 1h1m1 0h2m1 0h1m1 0h1m2 0h2m4 0h1m2 0h3m1 0h1m1 0h4m3 0h1m1 0h1m-32 1h1m1 0h2m2 0h4m3 0h3m1 0h1m2 0h3m1 0h3m3 0h2m-33 1h2m1 0h1m4 0h5m2 0h1m3 0h4m1 0h1m1 0h9m-37 1h2m2 0h5m1 0h1m4 0h1m1 0h1m1 0h1m1 0h2m1 0h1m3 0h5m1 0h3m-29 1h2m1 0h3m1 0h1m1 0h2m3 0h2m4 0h1m3 0h1m2 0h1m-36 1h7m1 0h1m1 0h4m1 0h2m1 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m2 0h1m1 0h2m1 0h1m4 0h6m1 0h1m1 0h1m3 0h4m-36 1h1m1 0h3m1 0h1m1 0h1m3 0h1m3 0h1m3 0h1m2 0h2m3 0h7m-35 1h1m1 0h3m1 0h1m3 0h1m1 0h2m4 0h2m3 0h1m1 0h1m2 0h4m1 0h2m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h3m2 0h1m1 0h3m3 0h2m1 0h1m2 0h2m-31 1h1m5 0h1m2 0h2m4 0h7m1 0h2m4 0h1m2 0h1m1 0h2m-36 1h7m1 0h1m1 0h3m3 0h2m2 0h3m1 0h1m1 0h2m3 0h1m2 0h3"/></svg>QR groß zeigen</button></div>
+<svg viewBox="0 0 900 180" role="img" aria-label="Ein Fisch im Wasser und sein scheinbares Bild weiter oben"><g id="heroScene"></g></svg>
+<div class="phases">
+<a href="#grund"><b>★ Grundlagen</b><small>Richtig oder falsch, Strahlenverläufe prüfen</small></a>
+<a href="#diagramm"><b>★★ Diagramm &amp; Konstruktion</b><small>Messreihe, Brechungsdiagramm, Konstruieren</small></a>
+<a href="#anwenden"><b>★★★ Anwenden</b><small>Fisch harpunieren, Knobelaufgaben</small></a>
+</div>
+</div></header>
+
+<section class="band" id="grund"><div class="wrap">
+<h2>★ Grundlagen</h2>
+<div class="card" data-task="u1">
+<div class="tag"><span class="stars">★</span> Übung 1 · Richtig oder falsch?</div>
+<div class="tf" id="tf"></div>
+</div>
+<div class="card" data-task="u2">
+<div class="tag"><span class="stars">★</span> Übung 2 · Welche Strahlenverläufe sind möglich?</div>
+<p>Der hellblaue Körper ist aus <b>Glas</b>, drum herum ist <b>Luft</b>. Einige Strahlenverläufe sind so nicht möglich. Entscheide zuerst allein, besprich dann mit deinem Partner die Begründung.</p>
+<div class="figs6" id="figs6"></div>
+</div>
+</div></section>
+
+<section class="band alt" id="diagramm"><div class="wrap">
+<h2>★★ Diagramm &amp; Konstruktion</h2>
+
+<div class="card" data-task="u3">
+<div class="tag"><span class="stars">★★</span> Übung 3 · Messreihe Wasser → Glas</div>
+<p>In einem Versuch geht ein schmales Lichtbündel von Wasser in Glas über. Die Messwerte:</p>
+<div class="scroll"><table class="mess"><tr><th>Einfallswinkel α</th><td>0°</td><td>10°</td><td>20°</td><td>40°</td><td>60°</td><td>70°</td><td>80°</td></tr><tr><th>Brechungswinkel β</th><td>0°</td><td>9°</td><td>20°</td><td>35°</td><td>49°</td><td>57°</td><td>59°</td></tr></table></div>
+<div class="mc" data-correct="b" id="u3a" style="margin-top:12px">
+<p style="margin:0"><b>a)</b> Mit welchem Aufbau kann man diese Messungen durchführen?</p>
+<button data-k="a" data-fb="Dann ginge das Licht von Luft in Glas über – gesucht ist aber Wasser → Glas.">Halbzylinder aus Glas auf der Winkelscheibe, Licht kommt aus der Luft.</button>
+<button data-k="b" data-fb="Richtig: Der Glas-Halbzylinder liegt im Wasser, das Lichtbündel kommt aus dem Wasser und trifft auf die Mitte der geraden Fläche.">Halbzylinder aus Glas liegt auf einer Winkelscheibe in einem Wasserbecken; das Licht kommt aus dem Wasser.</button>
+<button data-k="c" data-fb="Ein Spiegel zeigt Reflexion, keine Brechung.">Ein Spiegel liegt im Wasser.</button>
+<p class="fb"></p>
+</div>
+<p style="margin-top:14px"><b>b)</b> Trage die Messwerte ins Diagramm ein: Klicke nacheinander an die richtigen Stellen (x-Achse α, y-Achse β).</p>
+<div class="fig narrow"><svg id="u3svg" viewBox="0 0 560 400" role="img" aria-label="Leeres Diagramm Brechungswinkel über Einfallswinkel zum Eintragen der Messwerte"></svg></div>
+<p class="fb hint" id="u3Fb"></p>
+<div class="numq"><span><b>c)</b> Aus dem Wasser trifft Licht unter α = 45° auf Glas. Lies den Brechungswinkel an der Kurve ab.</span><span class="unit">β ≈ <input type="number" id="u3c" aria-label="Brechungswinkel bei 45 Grad"> °</span></div>
+<div class="row"><button class="primary" id="u3Check">Prüfen</button><button id="u3Reset">Neu starten</button></div>
+<p class="fb" id="u3cFb"></p>
+</div>
+
+<div class="card" data-task="u4">
+<div class="tag"><span class="stars">★★</span> Übung 4 · Werte aus dem Brechungsdiagramm ablesen</div>
+<p>Das Diagramm zeigt den Brechungswinkel β in Abhängigkeit vom Einfallswinkel α für verschiedene Übergänge. Fahre mit der Maus oder dem Finger darüber – die Hilfslinien helfen beim Ablesen. Ablesegenauigkeit: ±2°.</p>
+<div class="fig"><svg id="bd" viewBox="0 0 790 470" role="img" aria-label="Brechungsdiagramm mit sechs Kurven: Wasser nach Glas, Luft nach Wasser, Luft nach Glas, Glas nach Diamant, Wasser nach Diamant, Luft nach Diamant"></svg></div>
+<div id="u4q"></div>
+<div class="row"><button class="primary" id="u4Check">Prüfen</button><button id="u4Hint">Tipp</button></div>
+<p class="fb" id="u4Fb"></p>
+</div>
+
+<div class="card" data-task="u5">
+<div class="tag"><span class="stars">★★</span> Übung 5 · Reflektierten und gebrochenen Strahl konstruieren</div>
+<p>Konstruiere in allen vier Abbildungen den <b>reflektierten</b> und den <b>gebrochenen</b> Lichtstrahl. Den Brechungswinkel liest du im Brechungsdiagramm (Übung 4) ab.</p>
+<div class="cons-grid" id="consTabs"></div>
+<div class="two">
+<div class="fig"><svg id="cons" viewBox="0 0 600 390" role="img" aria-label="Karopapier mit Grenzfläche zweier Stoffe und einfallendem Lichtstrahl"></svg></div>
+<div>
+<p class="fb hint" id="consStep"></p>
+<div class="numq" id="consBeta" hidden><span>Brechungswinkel aus dem Diagramm:</span><span class="unit">β = <input type="number" id="consB" aria-label="Brechungswinkel"> °</span></div>
+<div class="row"><button class="primary" id="consCheck">Prüfen</button><button id="consReset">Neu starten</button><button id="consSolve">Lösung zeigen</button></div>
+<p class="fb" id="consFb"></p>
+</div>
+</div>
+</div>
+</div></section>
+
+<section class="band" id="anwenden"><div class="wrap">
+<h2>★★★ Anwenden</h2>
+<div class="card" data-task="u6">
+<div class="tag"><span class="stars">★★★</span> Übung 6 · Fisch harpunieren</div>
+<p>Du stehst im Boot und siehst einen Fisch. Die Harpune fliegt geradeaus – sie wird nicht gebrochen. Klicke ins Wasser, um dorthin zu zielen. Triff <b>3 Fische</b>!</p>
+<div class="fig"><svg id="fish" viewBox="0 0 700 420" role="img" aria-label="Boot mit Beobachter, Wasser mit einem Fisch; Klick ins Wasser schießt die Harpune"></svg></div>
+<div class="row"><span class="score" id="fishScore">Treffer: 0 / 3</span><button class="primary" id="fishNew">Neuer Fisch</button><label class="toggles" style="margin:0"><input type="checkbox" id="fishHelp">Lichtweg nach dem Schuss zeigen</label></div>
+<p class="fb hint" id="fishFb">Ziele auf den Fisch …</p>
+</div>
+
+<div class="card" data-task="u7">
+<div class="tag"><span class="stars">★★★</span> Übung 7 · Knobelaufgaben</div>
+<div class="two">
+<div class="mc" data-correct="c" id="k1">
+<h4>a) Die verschwundene Münze</h4>
+<p>Eine Münze liegt in einer leeren Tasse. Du schaust so über den Rand, dass du die Münze gerade nicht mehr siehst. Jemand gießt vorsichtig Wasser ein – plötzlich ist die Münze zu sehen. Warum?</p>
+<button data-k="a" data-fb="Die Münze bleibt am Boden liegen – es liegt am Licht.">Das Wasser hebt die Münze an.</button>
+<button data-k="b" data-fb="Dann würde das Licht noch steiler laufen und erst recht nicht über den Rand kommen.">Das Licht wird an der Wasseroberfläche zum Lot hin gebrochen.</button>
+<button data-k="c" data-fb="Richtig! Licht von der Münze wird beim Austritt aus dem Wasser vom Lot weg (flacher) gebrochen und gelangt so über den Tassenrand in dein Auge.">Das Licht der Münze wird beim Austritt vom Lot weg gebrochen und kommt so über den Rand ins Auge.</button>
+<p class="fb"></p>
+</div>
+<div class="mc" data-correct="a" id="k2">
+<h4>b) Der Fisch schaut zurück</h4>
+<p>Ein Fisch schaut schräg nach oben zu einem Angler am Ufer. Wo sieht der Fisch den Kopf des Anglers?</p>
+<button data-k="a" data-fb="Richtig! Licht vom Angler wird beim Eintritt ins Wasser zum Lot hin gebrochen, kommt also steiler beim Fisch an. Der Fisch verlängert geradlinig zurück – der Angler erscheint höher. Darum ducken sich erfahrene Angler!">Höher, als er wirklich ist.</button>
+<button data-k="b" data-fb="Zeichne den Lichtweg: Luft → Wasser, zum Lot hin. Wohin führt die Rückverlängerung?">Tiefer, als er wirklich ist.</button>
+<button data-k="c" data-fb="Nur bei senkrechtem Blick wäre die Richtung gleich.">Genau dort, wo er ist.</button>
+<p class="fb"></p>
+</div>
+</div>
+</div>
+
+<div class="nextlp">
+<a href="/Physik8/lichtbrechung-experiment">← Teil 1: Experiment<small>Messwerte und Auswertung</small></a>
+<a href="/Physik8/lichtbrechung-theorie">← Teil 2: Theorie<small>Brechungs-Labor und Heftaufschrieb</small></a>
+</div>
+<div class="row" style="margin-top:24px"><button id="resetAll">Fortschritt zurücksetzen</button></div>
+</div></section>
+
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Lernpfad"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik8/lichtbrechung-uebungen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m1 0h5m5 0h2m1 0h1m1 0h1m1 0h1m1 0h2m1 0h7m-37 1h1m5 0h1m2 0h1m2 0h4m1 0h2m1 0h3m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m3 0h1m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h5m1 0h3m4 0h1m4 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h5m1 0h1m1 0h1m6 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h2m1 0h3m4 0h2m1 0h2m1 0h2m4 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h2m4 0h3m-29 1h1m3 0h1m1 0h3m3 0h2m4 0h2m1 0h2m1 0h1m4 0h5m2 0h1m-36 1h4m3 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h1m2 0h3m3 0h1m1 0h2m-32 1h6m1 0h1m1 0h2m1 0h1m3 0h2m1 0h5m2 0h3m1 0h1m-35 1h3m2 0h1m2 0h1m1 0h1m2 0h1m3 0h2m2 0h1m1 0h2m3 0h2m4 0h2m-35 1h6m1 0h1m2 0h1m2 0h2m1 0h6m5 0h4m2 0h3m-37 1h1m1 0h1m1 0h1m3 0h2m1 0h8m4 0h1m2 0h3m3 0h2m-32 1h3m1 0h1m1 0h1m4 0h1m1 0h2m1 0h1m1 0h2m1 0h12m-34 1h1m10 0h1m1 0h3m2 0h1m1 0h1m1 0h2m2 0h3m1 0h2m1 0h1m1 0h1m-37 1h2m2 0h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h1m3 0h3m6 0h3m1 0h2m1 0h1m-37 1h1m3 0h2m1 0h3m2 0h1m1 0h1m2 0h3m1 0h1m1 0h1m1 0h5m2 0h1m1 0h2m-36 1h1m1 0h1m2 0h2m2 0h7m2 0h2m3 0h1m1 0h3m3 0h1m-32 1h2m6 0h2m1 0h1m2 0h4m1 0h4m3 0h2m4 0h4m-36 1h1m1 0h2m1 0h3m2 0h2m4 0h2m2 0h2m2 0h1m3 0h4m1 0h2m-34 1h1m2 0h1m2 0h1m3 0h4m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h2m2 0h1m-36 1h1m1 0h7m3 0h2m1 0h1m1 0h1m5 0h1m1 0h3m3 0h4m-33 1h1m1 0h2m1 0h3m2 0h3m2 0h3m1 0h4m1 0h4m1 0h2m1 0h1m-35 1h1m3 0h1m1 0h3m2 0h1m1 0h1m1 0h1m2 0h2m3 0h2m1 0h1m2 0h3m1 0h2m-35 1h1m1 0h2m1 0h1m1 0h1m2 0h2m4 0h1m2 0h3m1 0h1m1 0h4m3 0h1m1 0h1m-32 1h1m1 0h2m2 0h4m3 0h3m1 0h1m2 0h3m1 0h3m3 0h2m-33 1h2m1 0h1m4 0h5m2 0h1m3 0h4m1 0h1m1 0h9m-37 1h2m2 0h5m1 0h1m4 0h1m1 0h1m1 0h1m1 0h2m1 0h1m3 0h5m1 0h3m-29 1h2m1 0h3m1 0h1m1 0h2m3 0h2m4 0h1m3 0h1m2 0h1m-36 1h7m1 0h1m1 0h4m1 0h2m1 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m2 0h1m1 0h2m1 0h1m4 0h6m1 0h1m1 0h1m3 0h4m-36 1h1m1 0h3m1 0h1m1 0h1m3 0h1m3 0h1m3 0h1m2 0h2m3 0h7m-35 1h1m1 0h3m1 0h1m3 0h1m1 0h2m4 0h2m3 0h1m1 0h1m2 0h4m1 0h2m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h3m2 0h1m1 0h3m3 0h2m1 0h1m2 0h2m-31 1h1m5 0h1m2 0h2m4 0h7m1 0h2m4 0h1m2 0h1m1 0h2m-36 1h7m1 0h1m1 0h3m3 0h2m2 0h3m1 0h1m1 0h2m3 0h1m2 0h3"/></svg><p>lernapps.gst-lernen.workers.dev/Physik8/lichtbrechung-uebungen</p><button id="qrClose">Schließen</button></dialog>
+<footer class="band"><div class="wrap">Lernpfad „Lichtbrechung – Teil 3: Üben“ · Physik, Technisches Gymnasium · Grundlage: Übungsblätter 7, 7.1, 7.2 und 8. Dein Fortschritt wird nur in diesem Browser gespeichert.</div></footer>
+<script>
+{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=(v,d=1)=>(Math.round(v*10**d)/10**d).toString().replace('.',',');
+const KEY=document.body.dataset.key;
+/* ---------- Fortschritt (nur im Browser) ---------- */
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+const tasks=[...new Set($$('[data-task]').map(e=>e.dataset.task))];
+function save(){try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}}
+function updProg(){const n=tasks.filter(t=>done.has(t)).length;$('#progtxt').textContent=n+' / '+tasks.length+' gelöst';$('#progbar').style.width=(100*n/tasks.length)+'%';
+ $$('[data-task]').forEach(e=>e.classList.toggle('done',done.has(e.dataset.task)))}
+function mark(id){done.add(id);save();updProg()}
+function store(k,v){try{localStorage.setItem(KEY+'-'+k,JSON.stringify(v))}catch(e){}}
+function load(k,d){try{const v=localStorage.getItem(KEY+'-'+k);return v===null?d:JSON.parse(v)}catch(e){return d}}
+if($('#resetAll'))$('#resetAll').onclick=()=>{done.clear();save();try{Object.keys(localStorage).filter(k=>k.startsWith(KEY+'-')).forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()};
+
+/* ---------- SVG-Helfer ---------- */
+function svgPt(svg,ev){const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+const L=(a,b,c,d,cls,ex='')=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="${cls}" ${ex}/>`;
+const C=(x,y,r,cls,ex='')=>`<circle cx="${x}" cy="${y}" r="${r}" class="${cls}" ${ex}/>`;
+const T=(x,y,t,cls,ex='')=>`<text x="${x}" y="${y}" class="${cls}" ${ex}>${t}</text>`;
+const P=(pts,cls,ex='')=>`<polygon points="${pts.map(p=>p[0]+','+p[1]).join(' ')}" class="${cls}" ${ex}/>`;
+function arrow(ax,ay,bx,by,cls,f=.5,ex=''){const mx=ax+(bx-ax)*f,my=ay+(by-ay)*f,l=Math.hypot(bx-ax,by-ay)||1,ux=(bx-ax)/l,uy=(by-ay)/l;
+ return P([[mx+ux*7,my+uy*7],[mx-ux*6-uy*5,my-uy*6+ux*5],[mx-ux*6+uy*5,my-uy*6-ux*5]],cls,ex)}
+function grid(w,h,c){let s='';for(let x=0;x<=w;x+=c)s+=L(x,0,x,h,'gl');for(let y=0;y<=h;y+=c)s+=L(0,y,w,y,'gl');return s}
+function eye(x,y,ex='',dir=1){return `<g ${ex}><path d="M${x-15} ${y} Q${x} ${y-13} ${x+15} ${y} Q${x} ${y+13} ${x-15} ${y}Z" class="eyew"/>${C(x+4*dir,y,5.5,'iris')}</g>`}
+/* Winkelbogen um (cx,cy) von Richtung a1 bis a2 (Grad, 0 = rechts, im Uhrzeigersinn wie SVG) */
+function arcPath(cx,cy,r,a1,a2,cls='arc'){const p=a=>[cx+r*Math.cos(a*Math.PI/180),cy+r*Math.sin(a*Math.PI/180)];let d=a2-a1;while(d>180)d-=360;while(d<-180)d+=360;
+ const [x1,y1]=p(a1),[x2,y2]=p(a1+d);return `<path d="M${x1} ${y1} A${r} ${r} 0 0 ${d>0?1:0} ${x2} ${y2}" class="${cls}"/>`}
+
+/* ---------- Physik ---------- */
+const N={Luft:1.00,Wasser:1.33,Glas:1.50,Diamant:2.42};
+const V={Luft:300000,Wasser:225000,Glas:200000,Diamant:124000};
+const rad=d=>d*Math.PI/180,deg=r=>r*180/Math.PI;
+function brech(a,n1,n2){const s=n1*Math.sin(rad(a))/n2;return s>1?null:deg(Math.asin(s))}
+/* Anteil des reflektierten Lichts (Fresnel, unpolarisiert) */
+function refl(a,n1,n2){const b=brech(a,n1,n2);if(b===null)return 1;const ci=Math.cos(rad(a)),ct=Math.cos(rad(b));
+ const rs=((n1*ci-n2*ct)/(n1*ci+n2*ct))**2,rp=((n1*ct-n2*ci)/(n1*ct+n2*ci))**2;return (rs+rp)/2}
+/* Scheinbare Lage eines Punktes Pt unter Wasser (Oberfläche y=ys) für ein Auge E: Rückverlängerung durch den Brechungspunkt, geschnitten mit der Senkrechten durch Pt */
+function apparent(Pt,E,ys,n){let lo=Math.min(Pt.x,E.x),hi=Math.max(Pt.x,E.x);
+ const f=x=>n*Math.sin(Math.atan2(Math.abs(x-Pt.x),Pt.y-ys))-Math.sin(Math.atan2(Math.abs(E.x-x),ys-E.y));
+ if(Math.abs(hi-lo)<0.5)return {S:{x:Pt.x,y:ys},A:{x:Pt.x,y:ys+(Pt.y-ys)/n}};
+ let flo=f(lo);for(let i=0;i<60;i++){const m=(lo+hi)/2,fm=f(m);if((fm>0)===(flo>0)){lo=m;flo=fm}else hi=m}
+ const S={x:(lo+hi)/2,y:ys},dx=S.x-E.x,dy=S.y-E.y;if(Math.abs(Pt.x-S.x)<0.5)return {S,A:{x:Pt.x,y:ys+(Pt.y-ys)/n}};
+ const t=(Pt.x-E.x)/dx;return {S,A:{x:Pt.x,y:E.y+t*dy}}}
+
+/* ---------- Multiple Choice ---------- */
+$$('.mc[data-correct]').forEach(box=>{const fb=box.querySelector('.fb');
+ box.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const ok=box.dataset.correct.split(',').includes(b.dataset.k);
+  box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');
+  fb.className='fb '+(ok?'ok':'bad');fb.textContent=b.dataset.fb||(ok?'Richtig!':'Noch nicht – probier es nochmal.');if(ok&&box.dataset.task)mark(box.dataset.task)})});
+/* ---------- Richtig/Falsch-Liste ---------- */
+function tfList(boxId,it,task){const box=$('#'+boxId);box.innerHTML=it.map((x,i)=>`<div class="item" data-i="${i}"><span>${x[0]}</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p></div>`).join('');
+ const solved=new Set();box.querySelectorAll('.item').forEach(row=>{const i=+row.dataset.i;row.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=(b.dataset.v==='1')===it[i][1];
+  row.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');const fb=row.querySelector('.fb');fb.className='fb '+(ok?'ok':'bad');fb.textContent=(ok?'Stimmt. ':'Nein. ')+it[i][2];
+  if(ok)solved.add(i);if(solved.size===it.length)mark(task)})})}
+/* ---------- Lückentext ---------- */
+function cloze(boxId,btnId,fbId,task,okMsg){$('#'+btnId).onclick=()=>{let ok=0;const all=$$('#'+boxId+' select');all.forEach(s=>{const g=s.value===s.dataset.ans;s.className=s.value?(g?'ok':'bad'):'';if(g)ok++});
+ const fb=$('#'+fbId);if(ok===all.length){fb.className='fb ok';fb.textContent=okMsg;mark(task)}else{fb.className='fb bad';fb.textContent=ok+' von '+all.length+' Lücken richtig. Schau dir die rot markierten noch einmal an.'}}}
+function copyBtn(btn,src,msg){$(btn).onclick=async()=>{try{await navigator.clipboard.writeText($(src).innerText);$(msg).textContent='Kopiert.'}catch(e){$(msg).textContent='Kopieren wurde vom Browser blockiert – markiere den Text von Hand.'}}}
+
+function fishSVG(x,y,cls='',ex=''){return `<g class="${cls}" ${ex}><path d="M${x-22} ${y} Q${x-4} ${y-14} ${x+18} ${y} Q${x-4} ${y+14} ${x-22} ${y}Z" style="fill:#f2a33a;stroke:#b5651d" stroke-width="1.4"/><path d="M${x+16} ${y} L${x+30} ${y-10} L${x+30} ${y+10}Z" style="fill:#f2a33a;stroke:#b5651d" stroke-width="1.4"/><circle cx="${x-12}" cy="${y-3}" r="2.4" fill="#0e131d"/></g>`}
+
+/* ---------- Hero ---------- */
+{const ys=60,E={x:120,y:20},F={x:560,y:150},ap=apparent(F,E,ys,1.33);let s=`<rect x="0" y="${ys}" width="900" height="120" fill="#162a44"/><line x1="0" y1="${ys}" x2="900" y2="${ys}" stroke="#64a6ff" stroke-width="2"/>`;
+ s+=`<line x1="${F.x}" y1="${F.y}" x2="${ap.S.x}" y2="${ys}" stroke="#ff5c50" stroke-width="2.4"/><line x1="${ap.S.x}" y1="${ys}" x2="${E.x}" y2="${E.y}" stroke="#ff5c50" stroke-width="2.4"/><line x1="${ap.S.x}" y1="${ys}" x2="${ap.A.x}" y2="${ap.A.y}" stroke="#ff8a80" stroke-dasharray="6 5" stroke-width="1.6"/>`;
+ s+=fishSVG(F.x,F.y)+`<g opacity=".4">${fishSVG(ap.A.x,ap.A.y)}</g><g transform="translate(${E.x},${E.y})"><path d="M-15 0 Q0 -13 15 0 Q0 13 -15 0Z" fill="#eef1f7"/><circle cx="4" r="5.5" fill="#0e131d"/></g>`;
+ s+=`<text x="${ap.A.x+40}" y="${ap.A.y+4}" fill="#c6ccd8" font-size="14" font-family="Atkinson Hyperlegible,system-ui,sans-serif">hier sieht man ihn …</text><text x="${F.x+40}" y="${F.y+5}" fill="#c6ccd8" font-size="14" font-family="Atkinson Hyperlegible,system-ui,sans-serif">… hier ist er wirklich</text>`;
+ $('#heroScene').innerHTML=s}
+
+/* ---------- Übung 1 ---------- */
+tfList('tf',[['Licht wird beim Übergang von Luft in Glas zum Lot hin gebrochen.',true,'Luft ist optisch dünner als Glas.'],
+ ['Licht wird beim Übergang von Wasser in Luft zum Lot hin gebrochen.',false,'Vom optisch dichteren in den optisch dünneren Stoff wird es vom Lot weg gebrochen.'],
+ ['Trifft Licht senkrecht auf eine Glasscheibe, wird es nicht gebrochen.',true,'Bei α = 0° ist auch β = 0°.'],
+ ['Der Brechungswinkel ist der Winkel zwischen gebrochenem Strahl und Grenzfläche.',false,'Er wird zwischen gebrochenem Strahl und Einfallslot gemessen.'],
+ ['In einem optisch dichteren Stoff ist das Licht schneller.',false,'Es ist langsamer – genau das macht einen Stoff optisch dichter.'],
+ ['An der Grenzfläche wird immer auch ein Teil des Lichts reflektiert.',true,'Das ist die Teilreflexion.'],
+ ['Verdoppelt man den Einfallswinkel, verdoppelt sich auch der Brechungswinkel.',false,'β ist nicht proportional zu α – die Kurve im Brechungsdiagramm wird flacher.']],'u1');
+
+/* ---------- Übung 2: Strahlenverläufe ---------- */
+{/* [Name, Einfallswinkel, Winkel im Glas (Vorzeichen: + = nach rechts), Austrittswinkel, möglich?, Erklärung] */
+ const b50=brech(50,1,1.5),b25=brech(25,1,1.5);
+ const F=[['A',50,b50,50,true,'Möglich: Beim Eintritt zum Lot hin, beim Austritt vom Lot weg. Der austretende Strahl ist parallel zum einfallenden.'],
+  ['B',50,60,50,false,'Unmöglich: Beim Übergang Luft → Glas muss das Licht zum Lot hin gebrochen werden. Hier wird es vom Lot weg gebrochen.'],
+  ['C',25,b25,25,true,'Möglich: Auch bei kleinem Einfallswinkel wird das Licht zum Lot hin und beim Austritt wieder vom Lot weg gebrochen.'],
+  ['D',50,b50,b50,false,'Unmöglich: Beim Austritt Glas → Luft muss das Licht vom Lot weg gebrochen werden. Hier läuft es ohne Knick weiter.'],
+  ['E',0,0,0,true,'Möglich: Senkrecht einfallendes Licht wird nicht gebrochen.'],
+  ['F',40,-brech(40,1,1.5),-40,false,'Unmöglich: Das gebrochene Licht bleibt immer auf der anderen Seite des Lots als das einfallende. Es kann nicht „zurückknicken“.']];
+ const fig=f=>{const P={x:110,y:60},h=50,tin=Math.tan(rad(f[2])),Q={x:P.x+h*tin,y:P.y+h},r=60;let s=`<rect x="20" y="60" width="200" height="${h}" class="glass"/>`;
+  s+=L(P.x,P.y-r*Math.cos(rad(f[1])),P.x,P.y,'','')+'';
+  s+=L(P.x-r*Math.sin(rad(f[1])),P.y-r*Math.cos(rad(f[1])),P.x,P.y,'ray','stroke-width="2.6"')+L(P.x,P.y,Q.x,Q.y,'ray','stroke-width="2.6"')+L(Q.x,Q.y,Q.x+r*Math.sin(rad(f[3])),Q.y+r*Math.cos(rad(f[3])),'ray','stroke-width="2.6"');
+  s+=arrow(P.x-r*Math.sin(rad(f[1])),P.y-r*Math.cos(rad(f[1])),P.x,P.y,'aw')+T(12,22,f[0],'txb');
+  return `<svg viewBox="0 0 240 175" role="img" aria-label="Strahlenverlauf ${f[0]}">${s}</svg>`};
+ $('#figs6').innerHTML=F.map((f,i)=>`<div class="cell" data-i="${i}">${fig(f)}<div class="btns"><button data-v="1">möglich</button><button data-v="0">unmöglich</button></div><p class="fb"></p></div>`).join('');
+ const solved=new Set();$$('#figs6 .cell').forEach(c=>{const f=F[+c.dataset.i];c.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=(b.dataset.v==='1')===f[4];
+  c.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');const fb=c.querySelector('.fb');fb.className='fb '+(ok?'ok':'bad');
+  fb.textContent=ok?f[5]:'Überlege noch einmal: Wie wird beim Eintritt ins Glas und beim Austritt in die Luft gebrochen? Zeichne das Lot ein!';if(ok)solved.add(f[0]);if(solved.size===F.length)mark('u2')})})}
+
+/* ---------- Übung 3: Messreihe ---------- */
+{const D=[[0,0],[10,9],[20,20],[40,35],[60,49],[70,57],[80,59]],svg=$('#u3svg'),x0=60,y0=350,sx=460/90,sy=300/70,X=a=>x0+a*sx,Y=b=>y0-b*sy;
+ let k=0,wrong=null,aOk=false;const curve=a=>brech(a,1.33,1.5);
+ function draw(){let s='';for(let a=0;a<=90;a+=5){s+=L(X(a),Y(0),X(a),Y(70),'gl',a%10?'opacity=".5"':'');if(a%10===0)s+=T(X(a),y0+20,a+'°','txs','text-anchor="middle"')}
+  for(let b=0;b<=70;b+=5){s+=L(X(0),Y(b),X(90),Y(b),'gl',b%10?'opacity=".5"':'');if(b%10===0)s+=T(x0-8,Y(b)+4,b+'°','txs','text-anchor="end"')}
+  s+=L(X(0),Y(0),X(90),Y(0),'thin')+L(X(0),Y(0),X(0),Y(70),'thin')+T(X(90),y0+40,'α (im Wasser)','txs','text-anchor="end"')+T(12,Y(70)-16,'β (im Glas)','txs');
+  if(k>=D.length){let d='';for(let a=0;a<=90;a++)d+=(a?'L':'M')+X(a)+' '+Y(curve(a));s+=`<path d="${d}" style="stroke:var(--laser2);fill:none" stroke-width="2.4"/>`}
+  D.slice(0,k).forEach(p=>s+=C(X(p[0]),Y(p[1]),6,'aw'));
+  if(wrong)s+=`<path d="M${wrong[0]-7} ${wrong[1]-7} l14 14 m0 -14 l-14 14" style="stroke:var(--bad)" stroke-width="3"/>`;
+  svg.innerHTML=s;const fb=$('#u3Fb');if(k<D.length){fb.className='fb hint';fb.textContent='Punkt '+(k+1)+' von '+D.length+': α = '+D[k][0]+'°, β = '+D[k][1]+'°'}
+  else{fb.className='fb ok';fb.textContent='Alle Punkte eingetragen. Die blaue Ausgleichskurve verläuft zwischen den Messpunkten und wird bis 90° verlängert.'}}
+ svg.addEventListener('click',ev=>{if(k>=D.length)return;const p=svgPt(svg,ev),a=(p.x-x0)/sx,b=(y0-p.y)/sy;
+  if(Math.abs(a-D[k][0])<=2.5&&Math.abs(b-D[k][1])<=2.5){k++;wrong=null;draw()}else{wrong=[p.x,p.y];draw();$('#u3Fb').className='fb bad';$('#u3Fb').textContent='Nicht ganz. Suche zuerst α auf der x-Achse, gehe dann senkrecht nach oben bis zur Höhe β. (α = '+D[k][0]+'°, β = '+D[k][1]+'°)'}});
+ $$('#u3a button').forEach(b=>b.addEventListener('click',()=>{aOk=b.dataset.k==='b'}));
+ $('#u3Reset').onclick=()=>{k=0;wrong=null;draw()};
+ $('#u3Check').onclick=()=>{const i=$('#u3c'),v=+i.value,g=i.value!==''&&Math.abs(v-39)<=2;i.className=i.value?(g?'ok':'bad'):'';const fb=$('#u3cFb');
+  if(!aOk){fb.className='fb bad';fb.textContent='Beantworte zuerst Teil a).';return}
+  if(k<D.length){fb.className='fb bad';fb.textContent='Trage zuerst alle Messpunkte ins Diagramm ein (Teil b).';return}
+  if(g){fb.className='fb ok';fb.textContent='Richtig, β ≈ 39°. Auch beim Übergang Wasser → Glas wird das Licht zum Lot hin gebrochen – aber schwächer als bei Luft → Glas, weil Wasser und Glas optisch ähnlich dicht sind.';mark('u3')}
+  else{fb.className='fb bad';fb.textContent='Gehe bei α = 45° senkrecht nach oben bis zur blauen Kurve und dann waagrecht zur β-Achse.'}};
+ draw()}
+
+/* ---------- Übung 4: Brechungsdiagramm ---------- */
+const CURVES=[['Wasser','Glas','#1d62c9'],['Luft','Wasser','#dc2f28'],['Luft','Glas','#d4a20b'],['Glas','Diamant','#7b3fc4'],['Wasser','Diamant','#13867a'],['Luft','Diamant','#2f8a2f']];
+{const svg=$('#bd'),x0=60,y0=420,sx=600/90,sy=380/65,X=a=>x0+a*sx,Y=b=>y0-b*sy;
+ let base='';for(let a=0;a<=90;a+=5){base+=L(X(a),Y(0),X(a),Y(65),'gl',a%10?'opacity=".55"':'')+T(X(a),y0+20,a+'°','txs','text-anchor="middle"')}
+ for(let b=0;b<=65;b+=5)base+=L(X(0),Y(b),X(90),Y(b),'gl')+T(x0-8,Y(b)+4,b+'°','txs','text-anchor="end"');
+ base+=L(X(0),Y(0),X(90),Y(0),'thin')+L(X(0),Y(0),X(0),Y(65),'thin')+T(X(90),y0+42,'Einfallswinkel α','txs','text-anchor="end"')+T(12,Y(65)-10,'Brechungswinkel β','txs');
+ CURVES.forEach(c=>{let d='';for(let a=0;a<=90;a++)d+=(a?'L':'M')+X(a)+' '+Y(brech(a,N[c[0]],N[c[1]]));const yE=Y(brech(90,N[c[0]],N[c[1]]));
+  base+=`<path d="${d}" fill="none" stroke="${c[2]}" stroke-width="2.4"/><text x="${X(90)+6}" y="${yE+4}" fill="${c[2]}" font-family="Lexend,sans-serif" font-size="12" font-weight="600">${c[0]}→${c[1]}</text>`});
+ svg.innerHTML=base+'<g id="bdX"></g>';
+ svg.addEventListener('pointermove',ev=>{const p=svgPt(svg,ev);if(p.x<x0||p.x>X(90)||p.y>y0||p.y<Y(65)){$('#bdX').innerHTML='';return}
+  $('#bdX').innerHTML=L(p.x,y0,p.x,Y(65),'','style="stroke:var(--ink)" stroke-dasharray="3 4" opacity=".7"')+L(x0,p.y,X(90),p.y,'','style="stroke:var(--ink)" stroke-dasharray="3 4" opacity=".7"')});
+ svg.addEventListener('pointerleave',()=>$('#bdX').innerHTML='');
+ const tr=CURVES.map(c=>c[0]+' → '+c[1]),sel=(id,opts)=>`<select id="${id}"><option value="">bitte wählen</option>${opts.map(o=>`<option>${o}</option>`).join('')}</select>`;
+ const Q=[['a','Ein Lichtstrahl trifft unter 47° zum Einfallslot aus Luft auf einen Diamanten. Bestimme den Brechungswinkel.','n',18],
+  ['b','Beim Übergang Luft → Wasser beträgt der Brechungswinkel 18°. Bestimme den Einfallswinkel.','n',24],
+  ['c','Bei einem Einfallswinkel von 30° beträgt der Brechungswinkel 22°. Um welchen Übergang handelt es sich?','s','Luft → Wasser',tr],
+  ['d','Ein Diamant liegt in einem Wasserbecken. Ein Lichtstrahl trifft unter 75° auf den Diamanten. Unter welchem Winkel läuft er im Diamanten weiter?','n',32],
+  ['e','Ein Lichtstrahl fällt unter 35° auf eine Grenzfläche und wird unter 26° gebrochen. Welche Stoffe treffen hier aufeinander?','s','Luft → Wasser',tr],
+  ['f','Licht fällt aus Wasser unter 45° auf einen durchsichtigen Stoff und wird unter 23° gebrochen. Um welchen Stoff handelt es sich?','s','Diamant',['Luft','Glas','Diamant']],
+  ['g1','Licht trifft unter 50° aus Luft auf eine trockene Glasscheibe. Bestimme den Brechungswinkel im Glas.','n',31],
+  ['g2','Bei einem Regenschauer bildet sich eine Wasserschicht auf der Scheibe. Bestimme jetzt den Winkel zwischen Lichtstrahl im Glas und Lot. (Erst Luft → Wasser, dann Wasser → Glas!)','n',31]];
+ $('#u4q').innerHTML=Q.map(q=>`<div class="numq"><span><b>${q[0].replace(/\d/,'')})</b> ${q[1]}</span><span class="unit">${q[2]==='n'?`<input type="number" id="q${q[0]}" aria-label="Antwort ${q[0]}"> °`:sel('q'+q[0],q[4])}</span></div>`).join('');
+ let h=0;const hints=['Tipp: Suche zuerst die richtige Kurve. Gehe dann bei α senkrecht nach oben bis zur Kurve und waagrecht nach links zur β-Achse.','Tipp zu b): Hier ist β gegeben – gehe von der β-Achse waagrecht zur Kurve Luft → Wasser und dann senkrecht nach unten.','Tipp zu c) und e): Suche den Punkt (α | β) im Diagramm. Welche Kurve geht (ungefähr) durch ihn?','Tipp zu g): Erst Luft → Wasser mit α = 50° ablesen. Dieser Winkel ist dann der Einfallswinkel für Wasser → Glas.'];
+ $('#u4Hint').onclick=()=>{const fb=$('#u4Fb');fb.className='fb hint';fb.textContent=hints[h%hints.length];h++};
+ $('#u4Check').onclick=()=>{let ok=0;Q.forEach(q=>{const i=$('#q'+q[0]);let g;if(q[2]==='n')g=i.value!==''&&Math.abs(+i.value-q[3])<=2;else g=i.value===q[3];i.className=i.value?(g?'ok':'bad'):'';if(g)ok++});
+  const fb=$('#u4Fb');if(ok===Q.length){fb.className='fb ok';fb.textContent='Alles richtig! Ist dir bei g) etwas aufgefallen? Mit und ohne Wasserschicht ist der Winkel im Glas gleich (≈ 31°). Die Wasserschicht verschiebt den Strahl nur ein bisschen.';mark('u4')}
+  else{fb.className='fb bad';fb.textContent=ok+' von '+Q.length+' richtig. Hol dir einen Tipp!'}}}
+
+/* ---------- Übung 5: Konstruktion ---------- */
+{const CASES=[['Luft','Diamant',45],['Wasser','Glas',70],['Luft','Glas',45],['Luft','Wasser',70]],svg=$('#cons'),c=30,O={x:300,y:180},R=145;
+ let ci=0,st,solved=new Set(load('cons',[]));
+ function reset(){st={lot:false,bOk:false,refl:15,brec:65,show:false,drag:null};$('#consB').value='';$('#consB').className='';$('#consBeta').hidden=true;$('#consFb').textContent='';draw()}
+ function tabs(){$('#consTabs').innerHTML=CASES.map((k,i)=>`<button class="${i===ci?'on':''} ${solved.has(i)?'solved':''}" data-i="${i}">${i+1}: ${k[0]} → ${k[1]}</button>`).join('');
+  $$('#consTabs button').forEach(b=>b.onclick=()=>{ci=+b.dataset.i;tabs();reset()})}
+ function draw(){const [m1,m2,a]=CASES[ci],b=brech(a,N[m1],N[m2]);let s=grid(600,390,c)+`<rect x="0" y="${O.y}" width="600" height="${390-O.y}" style="fill:${m2==='Diamant'?'light-dark(#ece6fb,#2a2440)':m2==='Glas'?'var(--glass)':'var(--water)'}" opacity=".75"/>`;
+  if(m1==='Wasser')s+=`<rect x="0" y="0" width="600" height="${O.y}" style="fill:var(--water)" opacity=".75"/>`;
+  s+=L(0,O.y,600,O.y,'','style="stroke:var(--ink)" stroke-width="2"')+T(590,O.y-10,m1,'medlab','text-anchor="end"')+T(590,O.y+22,m2,'medlab','text-anchor="end"');
+  const S={x:O.x-R*Math.sin(rad(a)),y:O.y-R*Math.cos(rad(a))};s+=L(S.x,S.y,O.x,O.y,'ray','stroke-width="3"')+arrow(S.x,S.y,O.x,O.y,'aw')+T(S.x-6,S.y-10,'α = '+a+'°','txl');
+  if(st.lot)s+=L(O.x,10,O.x,380,'lot','style="stroke:var(--ink)"')+arcPath(O.x,O.y,46,-90,-90-a);
+  const handle=(ang,up,cls)=>{const E={x:O.x+R*Math.sin(rad(ang)),y:O.y+(up?-1:1)*R*Math.cos(rad(ang))};
+   return L(O.x,O.y,E.x,E.y,cls,'stroke-width="3"')+arrow(O.x,O.y,E.x,E.y,cls==='ray2'?'aw2':'aw')+(st.lot?arcPath(O.x,O.y,up?62:70,up?-90:90,up?-90+ang:90-ang)+T(E.x+10,E.y+(up?-4:16),Math.round(Math.abs(ang))+'°',cls==='ray2'?'txb':'txl'):'')+`<g class="drag" data-h="${up?'refl':'brec'}">${C(E.x,E.y,16,'','style="fill:var(--laser2);fill-opacity:.25;stroke:var(--laser2)" stroke-width="2"')}</g>`};
+  if(st.bOk||st.show){const r=st.show?a:st.refl,q=st.show?b:st.brec;s+=handle(r,true,'ray2')+handle(q,false,'ray')}
+  svg.innerHTML=s;const sp=$('#consStep');
+  if(st.show){sp.className='fb';sp.textContent='Musterlösung: Reflexionswinkel = '+a+'°, Brechungswinkel β ≈ '+Math.round(b)+'°.';return}
+  if(!st.lot){sp.className='fb hint';sp.textContent='Schritt 1: Zeichne das Einfallslot ein – klicke auf die Stelle, an der es durch den Auftreffpunkt verläuft.'}
+  else if(!st.bOk){sp.className='fb hint';sp.textContent='Schritt 2: Lies im Brechungsdiagramm (Übung 4) den Brechungswinkel für '+m1+' → '+m2+' bei α = '+a+'° ab und trage ihn ein.'}
+  else{sp.className='fb hint';sp.textContent='Schritt 3: Ziehe die beiden Kreise, bis der reflektierte (blau) und der gebrochene Strahl (rot) die richtigen Winkel zum Lot haben. Dann „Prüfen“.'}}
+ svg.addEventListener('pointerdown',ev=>{const h=ev.target.closest('[data-h]');if(h){st.drag=h.dataset.h;svg.setPointerCapture(ev.pointerId);ev.preventDefault();return}
+  if(!st.lot){const p=svgPt(svg,ev);if(Math.abs(p.x-O.x)<14&&Math.abs(p.y-O.y)>12){st.lot=true;$('#consBeta').hidden=false;draw()}else{$('#consFb').className='fb bad';$('#consFb').textContent='Das Lot steht senkrecht auf der Grenzfläche – genau im Auftreffpunkt des Strahls.'}}});
+ svg.addEventListener('pointermove',ev=>{if(!st.drag)return;const p=svgPt(svg,ev);let ang=st.drag==='refl'?deg(Math.atan2(p.x-O.x,O.y-p.y)):deg(Math.atan2(p.x-O.x,p.y-O.y));ang=Math.max(-89,Math.min(89,ang));st[st.drag]=Math.round(ang);draw()});
+ svg.addEventListener('pointerup',()=>st.drag=null);svg.addEventListener('pointercancel',()=>st.drag=null);
+ $('#consCheck').onclick=()=>{const [m1,m2,a]=CASES[ci],b=brech(a,N[m1],N[m2]),fb=$('#consFb');
+  if(!st.lot){fb.className='fb bad';fb.textContent='Zeichne zuerst das Lot ein.';return}
+  if(!st.bOk){const i=$('#consB'),g=i.value!==''&&Math.abs(+i.value-b)<=2;i.className=g?'ok':'bad';if(g){st.bOk=true;fb.className='fb ok';fb.textContent='Richtig abgelesen!';draw()}else{fb.className='fb bad';fb.textContent='Lies noch einmal ab: Kurve '+m1+' → '+m2+', bei α = '+a+'° senkrecht nach oben.'}return}
+  const r=Math.abs(st.refl-a)<=2,q=Math.abs(st.brec-b)<=2.5;
+  if(r&&q){fb.className='fb ok';fb.textContent='Super konstruiert! '+(N[m2]>N[m1]?'Das Licht wird zum Lot hin gebrochen.':'');solved.add(ci);store('cons',[...solved]);tabs();if(solved.size===CASES.length){mark('u5');fb.textContent+=' Alle vier Konstruktionen geschafft!'}}
+  else{fb.className='fb bad';fb.textContent=(r?'':'Reflexion: Der Reflexionswinkel muss gleich dem Einfallswinkel sein (auf der anderen Seite des Lots). ')+(q?'':'Brechung: Der gebrochene Strahl liegt auf der anderen Seite des Lots und hat den abgelesenen Winkel β.')}};
+ $('#consReset').onclick=reset;$('#consSolve').onclick=()=>{st.lot=true;st.show=true;draw()};
+ tabs();reset()}
+
+/* ---------- Übung 6: Fisch harpunieren ---------- */
+{const svg=$('#fish'),ys=150,E={x:110,y:70};let F,hits=Math.min(3,load('hits',0)),shot=null;
+ function newFish(){F={x:380+Math.random()*260,y:240+Math.random()*140};shot=null;draw();$('#fishFb').className='fb hint';$('#fishFb').textContent='Ziele auf den Fisch …'}
+ function draw(){const ap=apparent(F,E,ys,1.33);let s=`<rect x="0" y="${ys}" width="700" height="${420-ys}" class="water"/>`+L(0,ys,700,ys,'surf');
+  s+=`<path d="M40 ${ys} L60 ${ys+22} L190 ${ys+22} L210 ${ys}Z" style="fill:light-dark(#9a7a4f,#7a5c3a)"/>`+`<rect x="100" y="${E.y}" width="22" height="${ys-E.y}" rx="6" style="fill:var(--laser2)" opacity=".85"/>`+C(E.x+1,E.y-4,14,'','style="fill:light-dark(#f2d2b6,#c9a688);stroke:var(--ink)"')+eye(E.x+8,E.y-6,'transform="scale(1)"');
+  s+=fishSVG(ap.A.x,ap.A.y,'',shot?'opacity=".45"':'');
+  if(shot){s+=fishSVG(F.x,F.y);
+   s+=`<line x1="${E.x+10}" y1="${E.y}" x2="${shot.hx}" y2="${shot.hy}" style="stroke:var(--ink)" stroke-width="3"/>`+C(shot.hx,shot.hy,5,'','style="fill:var(--ink)"');
+   if($('#fishHelp').checked)s+=L(F.x,F.y,ap.S.x,ys,'ray','stroke-width="2.2"')+L(ap.S.x,ys,E.x+8,E.y-6,'ray','stroke-width="2.2"')+L(ap.S.x,ys,ap.A.x,ap.A.y,'ray dash','stroke-width="1.6"')+L(ap.S.x,ys-60,ap.S.x,ys+60,'lot');}
+  svg.innerHTML=s;$('#fishScore').textContent='Treffer: '+hits+' / 3'}
+ svg.addEventListener('click',ev=>{if(shot)return;const p=svgPt(svg,ev);if(p.y<=ys){$('#fishFb').className='fb bad';$('#fishFb').textContent='Klicke ins Wasser.';return}
+  const S={x:E.x+10,y:E.y},d={x:p.x-S.x,y:p.y-S.y},l=Math.hypot(d.x,d.y),u={x:d.x/l,y:d.y/l};
+  const t=(F.x-S.x)*u.x+(F.y-S.y)*u.y,cx=S.x+t*u.x,cy=S.y+t*u.y,dist=Math.hypot(F.x-cx,F.y-cy),hit=dist<16;
+  const tEnd=hit?t:Math.min((420-S.y)/u.y,(700-S.x)/(u.x||1e-6));shot={hit,hx:S.x+tEnd*u.x,hy:S.y+tEnd*u.y};
+  const fb=$('#fishFb');if(hit){hits++;store('hits',hits);fb.className='fb ok';fb.textContent=hits>=3?'Treffer! Du hast 3 Fische erwischt – du hast verstanden: unter das Bild des Fisches zielen!':'Treffer! Klicke auf „Neuer Fisch“.';if(hits>=3)mark('u6')}
+  else{const above=cy<F.y&&Math.abs(cx-F.x)<200;fb.className='fb bad';fb.textContent='Daneben! Der echte Fisch ist jetzt zu sehen. '+(above?'Du hast über den Fisch gezielt – er liegt tiefer, als er aussieht.':'Ziele unter das Bild des Fisches.')+' Neuer Versuch mit „Neuer Fisch“.'}
+  draw()});
+ $('#fishNew').onclick=newFish;$('#fishHelp').onchange=()=>{if(shot)draw()};newFish()}
+
+/* ---------- Übung 7 ---------- */
+{const st={k1:false,k2:false};['k1','k2'].forEach(id=>$$('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{st[id]=$('#'+id).dataset.correct===b.dataset.k;if(st.k1&&st.k2)mark('u7')})))}
+
+$('#qrOpen').onclick=()=>$('#qrDlg').showModal();$('#qrClose').onclick=()=>$('#qrDlg').close();
+$('#qrDlg').addEventListener('click',e=>{if(e.target.id==='qrDlg')$('#qrDlg').close()});
+updProg();
+}
+</script>
+</body>
+</html>

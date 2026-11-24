@@ -38,7 +38,10 @@ footer{color:var(--muted);font-size:14px;padding:0 max(5vw,16px) 32px;max-width:
 /* Neue Lernpfade hier eintragen: Ordner = Klasse/Fach, Datei ohne .html */
 const KURSE=[
  {ordner:'Physik8',name:'Physik 8',seiten:[
-  {datei:'reflexion-spiegel',titel:'Reflexion am ebenen Spiegel',info:'Reflexionsgesetz, Eigenschaften des Spiegelbilds, Konstruktion und Übungen',bild:'spiegel'}
+  {datei:'reflexion-spiegel',titel:'Reflexion am ebenen Spiegel',info:'Reflexionsgesetz, Eigenschaften des Spiegelbilds, Konstruktion und Übungen',bild:'spiegel'},
+  {datei:'lichtbrechung-experiment',titel:'Lichtbrechung 1 · Schülerexperiment',info:'Begleitung zum Arbeitsblatt: Aufbau, Messwerte, Diagramm, Auswertung',bild:'brechExp'},
+  {datei:'lichtbrechung-theorie',titel:'Lichtbrechung 2 · Theorie',info:'Ursache der Brechung, Brechungs-Labor, geknickter Stab, Heftaufschrieb',bild:'brechTheo'},
+  {datei:'lichtbrechung-uebungen',titel:'Lichtbrechung 3 · Üben',info:'Strahlenverläufe, Brechungsdiagramm, Konstruktionen, Fisch harpunieren',bild:'brechUeb'}
  ]},
  {ordner:'Physik9',name:'Physik 9',seiten:[
   {datei:'energieerhaltung',titel:'Energieerhaltung und Energieentwertung',info:'Pendel- und Flummi-Labor, Energieumwandlungen, thermische Energie, 13 Übungen',bild:'energie'}
@@ -52,6 +55,18 @@ const BILDER={
   <path d="M80 60 L170 82 L40 108" fill="none" stroke="#ff5c50" stroke-width="2.5"/><path d="M170 82 L260 60" stroke="#ff8a80" stroke-width="1.6" stroke-dasharray="6 5"/>
   <path d="M25 108 Q40 98 55 108 Q40 118 25 108Z" fill="#eef1f7"/><circle cx="44" cy="108" r="4" fill="#0e131d"/>
   <line x1="170" y1="8" x2="170" y2="132" stroke="#58c4df" stroke-width="5" stroke-linecap="round"/></svg>`,
+ brechExp:`<svg viewBox="0 0 320 140" aria-hidden="true"><circle cx="190" cy="70" r="62" fill="#1b2130" stroke="#3a4558"/>
+  <path d="M190 8 A62 62 0 0 1 190 132Z" fill="#1b3140" stroke="#58c4df" stroke-width="1.5"/><line x1="128" y1="70" x2="252" y2="70" stroke="#a9b2c4" stroke-dasharray="4 4"/>
+  <line x1="60" y1="20" x2="190" y2="70" stroke="#ff5c50" stroke-width="3"/><line x1="190" y1="70" x2="246" y2="92" stroke="#ff5c50" stroke-width="3"/>
+  <g transform="translate(60,20) rotate(21)"><rect x="-36" y="-10" width="36" height="20" rx="4" fill="#2b3a52"/></g></svg>`,
+ brechTheo:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect y="70" width="320" height="70" fill="#1b3140"/><line x1="0" y1="70" x2="320" y2="70" stroke="#58c4df" stroke-width="2"/>
+  <g stroke="#64a6ff" stroke-width="1.6" opacity=".7"><line x1="40" y1="0" x2="110" y2="70"/><line x1="0" y1="10" x2="60" y2="70"/><line x1="90" y1="0" x2="160" y2="70"/><line x1="140" y1="0" x2="210" y2="70"/><line x1="190" y1="0" x2="260" y2="70"/>
+  <line x1="110" y1="70" x2="60" y2="140"/><line x1="160" y1="70" x2="110" y2="140"/><line x1="210" y1="70" x2="160" y2="140"/><line x1="260" y1="70" x2="210" y2="140"/></g>
+  <line x1="160" y1="8" x2="160" y2="132" stroke="#a9b2c4" stroke-dasharray="4 4"/><line x1="105" y1="15" x2="160" y2="70" stroke="#ff5c50" stroke-width="3"/><line x1="160" y1="70" x2="192" y2="132" stroke="#ff5c50" stroke-width="3"/></svg>`,
+ brechUeb:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect y="50" width="320" height="90" fill="#162a44"/><line x1="0" y1="50" x2="320" y2="50" stroke="#64a6ff" stroke-width="2"/>
+  <path d="M40 20 Q55 8 70 20 Q55 32 40 20Z" fill="#eef1f7"/><circle cx="59" cy="20" r="4" fill="#0e131d"/>
+  <line x1="62" y1="22" x2="180" y2="50" stroke="#ff5c50" stroke-width="2.4"/><line x1="180" y1="50" x2="226" y2="112" stroke="#ff5c50" stroke-width="2.4"/><line x1="180" y1="50" x2="236" y2="76" stroke="#ff8a80" stroke-dasharray="5 4"/>
+  <g opacity=".45"><path d="M222 78 Q238 66 256 78 Q238 90 222 78Z" fill="#f2a33a"/></g><path d="M212 112 Q228 100 246 112 Q228 124 212 112Z" fill="#f2a33a"/><path d="M244 112 L256 103 L256 121Z" fill="#f2a33a"/></svg>`,
  energie:`<svg viewBox="0 0 320 140" aria-hidden="true"><line x1="60" y1="14" x2="160" y2="14" stroke="#7f8aa3" stroke-width="4"/>
   <path d="M52 92 A100 100 0 0 0 168 92" fill="none" stroke="#7f8aa3" stroke-dasharray="4 5"/>
   <line x1="110" y1="14" x2="52" y2="92" stroke="#a9b2c4" opacity=".5"/><line x1="110" y1="14" x2="110" y2="114" stroke="#a9b2c4"/>

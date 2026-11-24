@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lichtbrechung 2 · Theorie</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--grid:light-dark(#d4e2f2,#232c3b);
+--paper:light-dark(#fdfeff,#151a23);--behind:light-dark(#eef5f8,#17212a);
+--laser:light-dark(#dc2f28,#ff5c50);--laser2:light-dark(#1d62c9,#64a6ff);--mirror:light-dark(#1f8eab,#58c4df);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2815);--lab:#0e131d;--labink:#eef1f7}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700}
+h3{font-size:21px;font-weight:600;margin-top:1.6em}
+h4{font-size:17px;font-weight:600;margin:0 0 .3em}
+p{margin:0 0 .8em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.alt{background:var(--panel)}
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--laser);color:#fff;font-size:13px;margin-right:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.bar{width:140px;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--laser);transition:width .4s}
+/* hero */
+.hero{background:var(--lab);color:var(--labink)}
+.hero p{color:#c6ccd8;max-width:62ch}
+.hero svg{width:100%;height:auto;display:block;margin:18px 0 8px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px}
+.phases a{display:block;padding:14px 16px;border-radius:12px;background:#182031;color:#eef1f7;text-decoration:none;border:1px solid #2a3448}
+.phases a:hover{border-color:#ff5c50}
+.phases b{font-family:Lexend,system-ui,sans-serif;display:block;font-size:17px}
+.phases small{color:#a9b2c4;font-size:14px}
+/* layout pieces */
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;touch-action:none;user-select:none}
+.caption{font-size:14px;color:var(--muted);margin:6px 4px 0}
+@media(min-width:901px){.stick{position:sticky;top:70px}}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.alt @media(min-width:901px){.stick{position:sticky;top:70px}}
+.card{background:var(--paper)}
+.card.done{border-color:var(--ok)}
+.card .tag{font:600 13px Lexend,system-ui,sans-serif;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center}
+.card.done .tag::after{content:"✓ gelöst";color:var(--ok)}
+.stars{color:var(--laser);letter-spacing:2px}
+.intro{max-width:70ch;color:var(--muted)}
+.merke{border:2px solid var(--laser);border-radius:14px;padding:16px 20px;margin:18px 0;background:var(--bg)}
+.merke h4{color:var(--laser)}
+.merke ul{margin:.3em 0;padding-left:1.2em}
+details.reveal{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0}
+details.reveal summary{cursor:pointer;font:600 16px Lexend,system-ui,sans-serif;padding:4px 0}
+/* controls */
+button,.btn{font:600 16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.alt button{background:var(--bg)}
+button:hover{border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--laser2);outline-offset:2px}
+button.primary{background:var(--laser);border-color:var(--laser);color:#fff}
+input[type=number],input[type=text],select{font:16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--laser);min-height:44px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.toggles label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;min-height:44px;font-size:15px}
+.toggles input{width:18px;height:18px;accent-color:var(--laser)}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font-weight:400}
+.mc button.ok,.tf button.ok{background:var(--okbg);border-color:var(--ok)}
+.mc button.bad,.tf button.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1em;margin:8px 0 0;font-size:16px}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb.hint{background:var(--hint);color:var(--ink);padding:8px 12px;border-radius:8px}
+input.ok,select.ok{border-color:var(--ok);background:var(--okbg)}
+input.bad,select.bad{border-color:var(--bad);background:var(--badbg)}
+.scroll{overflow-x:auto}
+table.mess{border-collapse:collapse;font-size:15px}
+table.mess th,table.mess td{border:1px solid var(--line);padding:4px 6px;text-align:center}
+table.mess th{font-weight:600;background:var(--panel);text-align:left;white-space:nowrap}
+table.mess input{width:58px;min-height:38px;text-align:center;padding:4px}
+.messgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.messgrid label{display:grid;gap:2px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;font-size:15px}
+.messgrid label span:first-child{font-weight:700}
+.messgrid input{width:56px;min-height:38px;text-align:center;padding:4px}
+.fig.narrow{max-width:740px}
+.tf .fb:empty{display:none}
+.cloze{line-height:2.4;font-size:17px}
+.cloze select{min-height:38px;padding:2px 6px;margin:0 2px}
+.tf{display:grid;gap:10px}
+.tf .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tf .item .fb{grid-column:1/-1;margin:0}
+.tf .btns{display:flex;gap:6px}
+.numq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.numq input{width:96px;text-align:right}
+.unit{white-space:nowrap}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.steps i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font:600 14px Lexend,system-ui,sans-serif}
+.steps i.on{background:var(--laser);color:#fff;border-color:var(--laser)}
+.steptext{min-height:5.5em}
+.heft{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;border:1px solid var(--line);border-radius:12px;padding:22px clamp(16px,3vw,34px)}
+.heft h3{margin-top:.8em;color:var(--laser)}
+.heft h3:first-child{margin-top:0}
+.heft .box{border:2px solid var(--ink);padding:8px 14px;border-radius:6px;background:var(--paper);display:inline-block}
+.mirrortext{display:inline-block;transform:scaleX(-1);font:700 clamp(24px,5vw,40px) Lexend,system-ui,sans-serif;color:var(--laser);padding:6px 12px;border:2px dashed var(--mirror);border-radius:8px;margin-top:6px;word-break:break-all}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.checks label{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:10px;min-height:44px;cursor:pointer;font:600 16px Lexend,system-ui,sans-serif}
+.checks label.ok{border-color:var(--ok);background:var(--okbg)}.checks label.bad{border-color:var(--bad);background:var(--badbg)}
+.checks input{width:18px;height:18px;accent-color:var(--laser)}
+footer{font-size:14px;color:var(--muted)}
+/* svg classes */
+.gl{stroke:var(--grid);stroke-width:1}
+.mir{stroke:var(--mirror);stroke-width:5;stroke-linecap:round}
+.ray{stroke:var(--laser);stroke-width:2.2;fill:none;stroke-linecap:round}
+.ray2{stroke:var(--laser2);stroke-width:2.2;fill:none;stroke-linecap:round}
+.dash{stroke-dasharray:7 6}
+.fan{fill:var(--laser);opacity:.16}.fan2{fill:var(--laser2);opacity:.16}
+.fanb{fill:var(--laser);opacity:.07}.fanb2{fill:var(--laser2);opacity:.07}
+.aw{fill:var(--laser)}.aw2{fill:var(--laser2)}
+.lot{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 5;fill:none}
+.thin{stroke:var(--ink);stroke-width:1.4;fill:none}
+.tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
+.txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.txb{fill:var(--ink);font:600 16px Lexend,sans-serif}
+.txl{fill:var(--laser);font:600 16px Lexend,sans-serif}
+.txm{fill:var(--mirror);font:600 14px Lexend,sans-serif}
+.okc{fill:var(--ok)}.badc{fill:var(--bad)}
+.oks{stroke:var(--ok)}.bads{stroke:var(--bad)}
+.ghost{opacity:.45}
+.drag{cursor:grab}
+.behind{fill:var(--behind)}
+.wax{fill:light-dark(#f4ead8,#d9cdb7);stroke:var(--ink);stroke-width:1.2}
+.flame{fill:#ffb21a;stroke:#e0641a;stroke-width:1.2}
+.eyew{fill:var(--bg);stroke:var(--ink);stroke-width:1.6}
+.iris{fill:var(--ink)}
+.disk{fill:light-dark(#f7f9fc,#1b2130);stroke:var(--line)}
+.tick{stroke:var(--ink);stroke-width:1}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+@media(max-width:600px){body{font-size:16px}.prog .bar{width:80px}nav a{padding:6px}}
+/* Ergänzungen Lichtbrechung */
+:root{--glass:light-dark(#d9eef5,#1b3140);--glassline:light-dark(#5fa9c2,#58c4df);--water:light-dark(#d5e7fb,#162a44);--waterline:light-dark(#3f7fd0,#64a6ff);--warn:light-dark(#a35b00,#ffb64d);--warnbg:light-dark(#fff1dc,#33260f)}
+.glass{fill:var(--glass);stroke:var(--glassline);stroke-width:1.6}
+.water{fill:var(--water)}
+.surf{stroke:var(--waterline);stroke-width:2.2}
+.rayr{stroke:var(--laser);stroke-width:2;fill:none;stroke-linecap:round}
+.arc{stroke:var(--ink);stroke-width:1.4;fill:none}
+.medlab{fill:var(--muted);font:600 14px Lexend,sans-serif}
+input.warn{border-color:var(--warn);background:var(--warnbg)}
+.fb.warn{color:var(--warn)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted);margin:6px 4px 0}
+.legend i{display:inline-block;width:22px;height:3px;vertical-align:middle;margin-right:6px;border-radius:2px}
+.material{display:flex;flex-wrap:wrap;gap:6px 18px;margin:4px 0 10px;padding:0;list-style:none}
+.material li::before{content:"▸ ";color:var(--laser)}
+.checklist{display:grid;gap:8px;margin:8px 0}
+.checklist label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--bg)}
+.checklist input{width:20px;height:20px;margin-top:2px;accent-color:var(--ok);flex:none}
+.checklist label:has(input:checked){border-color:var(--ok);background:var(--okbg)}
+.safety{border-left:5px solid var(--warn);background:var(--warnbg);padding:12px 16px;border-radius:8px;margin:14px 0}
+textarea{font:16px/1.5 "Atkinson Hyperlegible",sans-serif;width:100%;min-height:96px;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chips button{min-height:38px;padding:4px 12px;font-weight:400;font-size:15px;border-radius:20px}
+.label-q{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 12px;align-items:center;margin:6px 0}
+.label-q b{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--laser);color:#fff;font:600 14px Lexend,sans-serif}
+.num{fill:var(--laser)}.numt{fill:#fff;font:600 13px Lexend,sans-serif}
+.nextlp{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.nextlp a{display:block;padding:14px 18px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);text-decoration:none;font:600 17px Lexend,sans-serif}
+.nextlp a:hover{border-color:var(--laser)}
+.nextlp small{display:block;font:400 14px "Atkinson Hyperlegible",sans-serif;color:var(--muted)}
+.speeds{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.speeds div{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--bg)}
+.speeds b{font-family:Lexend,sans-serif;display:block}
+.speeds i{display:block;height:8px;border-radius:4px;background:var(--laser);margin-top:6px}
+.figs6{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.figs6 .cell{border:1px solid var(--line);border-radius:12px;padding:8px;background:var(--bg)}
+.figs6 svg{width:100%;height:auto;display:block}
+.figs6 .btns{display:flex;gap:6px;margin-top:6px}
+.figs6 .btns button{flex:1;min-height:40px;padding:4px 8px;font-size:15px}
+.figs6 .fb{font-size:15px}
+.cons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0}
+.cons-grid button.on{border-color:var(--laser);background:var(--hint)}
+.cons-grid button.solved::after{content:" ✓";color:var(--ok)}
+.score{font:600 18px Lexend,sans-serif}
+
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+.qrbtn:hover{outline:3px solid #ff5c50}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop{background:rgba(8,10,16,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
+@media(max-width:640px){.qrbtn{width:96px}.qrbtn svg{width:80px;height:80px}}
+@media print{nav,.qrbtn{display:none}}
+</style>
+</head>
+<body data-key="lichtbrechung-theo">
+<nav aria-label="Abschnitte"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a><a href="#ursache"><span>1</span>Ursache</a><a href="#labor"><span>2</span>Labor</a><a href="#alltag"><span>3</span>Alltag</a><a href="#festhalten"><span>4</span>Festhalten</a>
+<div class="prog"><span id="progtxt">0 / 0 gelöst</span><div class="bar"><i id="progbar"></i></div></div>
+</div></nav>
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Lichtbrechung · Teil 2: Theorie</h1>
+<p>Im Experiment habt ihr gesehen: Licht knickt an der Grenzfläche zwischen Luft und Glas ab. Aber <em>warum</em>? Und wohin knickt es, wenn es aus dem Glas wieder herauskommt? Hier findest du es heraus und erklärst damit Alltagsphänomene.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik8/lichtbrechung-theorie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m1 0h2m2 0h2m1 0h2m2 0h3m1 0h1m1 0h1m1 0h2m1 0h7m-37 1h1m5 0h1m3 0h3m4 0h3m1 0h2m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m2 0h7m1 0h1m3 0h2m3 0h3m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h3m1 0h4m2 0h1m1 0h1m2 0h1m1 0h1m4 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h2m3 0h1m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h4m1 0h2m2 0h1m1 0h1m4 0h2m4 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m1 0h3m1 0h3m3 0h2m4 0h3m-29 1h1m3 0h1m1 0h3m6 0h2m2 0h4m6 0h5m2 0h1m-37 1h2m2 0h1m2 0h1m1 0h1m2 0h2m4 0h2m3 0h1m2 0h3m3 0h1m1 0h2m-35 1h1m2 0h3m2 0h1m4 0h2m3 0h1m1 0h1m1 0h5m2 0h3m1 0h1m-35 1h2m1 0h1m6 0h2m1 0h1m1 0h7m2 0h1m3 0h2m4 0h2m-36 1h1m1 0h1m2 0h3m1 0h2m2 0h2m2 0h2m1 0h4m4 0h4m2 0h3m-34 1h1m4 0h1m1 0h1m3 0h3m1 0h1m4 0h1m2 0h3m3 0h2m-33 1h1m2 0h1m1 0h1m1 0h10m2 0h2m1 0h12m-34 1h3m1 0h1m1 0h1m1 0h3m1 0h7m1 0h1m1 0h2m2 0h3m1 0h2m1 0h1m1 0h1m-36 1h1m3 0h5m2 0h1m5 0h1m5 0h1m4 0h3m1 0h2m1 0h1m-37 1h1m2 0h2m6 0h4m1 0h2m1 0h3m1 0h1m1 0h5m2 0h1m1 0h2m-36 1h3m3 0h1m3 0h1m1 0h2m2 0h1m1 0h1m1 0h1m2 0h5m3 0h1m-31 1h3m1 0h1m2 0h2m2 0h1m1 0h1m2 0h1m3 0h4m1 0h2m4 0h4m-34 1h2m2 0h3m5 0h4m1 0h3m2 0h1m3 0h4m1 0h2m-33 1h1m8 0h1m1 0h2m1 0h3m4 0h1m1 0h1m1 0h3m1 0h2m2 0h1m-35 1h1m1 0h7m2 0h1m2 0h1m2 0h1m2 0h3m1 0h3m3 0h4m-35 1h1m1 0h4m2 0h1m2 0h1m2 0h1m4 0h1m1 0h4m1 0h4m1 0h2m1 0h1m-34 1h2m1 0h3m1 0h4m2 0h3m2 0h2m2 0h2m1 0h1m2 0h3m1 0h2m-35 1h1m1 0h1m2 0h1m1 0h2m2 0h1m1 0h2m3 0h2m1 0h1m1 0h1m1 0h4m3 0h1m1 0h1m-33 1h1m1 0h3m1 0h3m1 0h1m1 0h2m1 0h3m3 0h1m1 0h1m1 0h3m3 0h2m-31 1h1m3 0h1m1 0h1m1 0h1m1 0h4m1 0h5m2 0h1m1 0h7m-35 1h10m1 0h2m4 0h1m3 0h4m3 0h5m1 0h3m-29 1h1m1 0h1m1 0h1m1 0h2m2 0h1m2 0h3m4 0h1m3 0h1m2 0h1m-36 1h7m1 0h1m2 0h2m1 0h4m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m6 0h2m2 0h4m1 0h3m1 0h1m1 0h1m3 0h4m-36 1h1m1 0h3m1 0h1m1 0h4m1 0h2m3 0h1m3 0h3m3 0h7m-35 1h1m1 0h3m1 0h1m2 0h2m1 0h3m1 0h1m2 0h2m2 0h1m1 0h1m2 0h4m1 0h2m1 0h1m-37 1h1m1 0h3m1 0h1m4 0h1m1 0h1m2 0h3m1 0h1m2 0h1m2 0h1m2 0h2m-31 1h1m5 0h1m3 0h2m1 0h1m3 0h2m2 0h1m1 0h2m4 0h1m2 0h1m1 0h2m-36 1h7m1 0h1m1 0h2m2 0h4m1 0h4m1 0h1m1 0h2m3 0h1m2 0h3"/></svg>QR groß zeigen</button></div>
+<svg viewBox="0 0 900 200" role="img" aria-label="Wellenfronten laufen schräg auf eine Grenzfläche zu und schwenken im langsameren Medium zum Lot hin."><g id="heroScene"></g></svg>
+<div class="phases">
+<a href="#ursache"><b>1 · Ursache</b><small>Licht ist nicht überall gleich schnell</small></a>
+<a href="#labor"><b>2 · Brechungs-Labor</b><small>Luft, Wasser, Glas, Diamant – zum Lot hin oder weg?</small></a>
+<a href="#alltag"><b>3 · Alltag</b><small>Geknickter Stab, flacher Teich, Fische</small></a>
+<a href="#festhalten"><b>4 · Festhalten</b><small>Lückentext und Heftaufschrieb</small></a>
+</div>
+</div></header>
+
+<!-- ================= PHASE 1 ================= -->
+<section class="band" id="ursache"><div class="wrap">
+<h2>1 · Warum wird Licht gebrochen?</h2>
+<p class="intro">Die Ursache der Brechung ist die <b>unterschiedliche Geschwindigkeit</b>, mit der sich Licht in verschiedenen Stoffen ausbreitet:</p>
+<div class="speeds" id="speeds"></div>
+<p class="intro">Einen Stoff, in dem das Licht <b>langsamer</b> ist, nennt man <b>optisch dichter</b>. Einen Stoff, in dem es schneller ist, nennt man <b>optisch dünner</b>.</p>
+
+<div class="two">
+<div>
+<div class="fig"><svg id="wave" viewBox="0 0 600 360" role="img" aria-label="Animation: Wellenfronten des Lichts laufen schräg auf eine Grenzfläche zu und werden im unteren Stoff langsamer"></svg></div>
+<div class="row"><button id="wavePlay" class="primary">▶ Abspielen</button>
+<label>unten: <select id="waveMed"><option>Wasser</option><option selected>Glas</option><option>Diamant</option></select></label></div>
+<label for="waveA" style="font-weight:700">Einfallswinkel α = <span id="waveAV">45</span>°</label>
+<input type="range" id="waveA" min="0" max="75" value="45">
+<p class="caption">Die Linien sind <b>Wellenfronten</b> – stell sie dir wie Reihen einer Marschkapelle vor, die schräg von einer Straße auf einen schlammigen Acker marschiert. Der rote Pfeil zeigt die Ausbreitungsrichtung.</p>
+</div>
+<div>
+<div class="card mc" data-task="t1" data-correct="a">
+<div class="tag">Auftrag 1 · Wer wird zuerst langsamer?</div>
+<p>Schau dir eine einzelne Wellenfront (eine Reihe der Marschkapelle) an, während sie die Grenzfläche überquert. Welcher Teil der Reihe wird zuerst langsamer?</p>
+<button data-k="a" data-fb="Richtig. Das Ende der Reihe, das zuerst die Grenzfläche erreicht, ist schon im langsamen Stoff, während der Rest noch schnell läuft.">Der Teil, der zuerst auf die Grenzfläche trifft.</button>
+<button data-k="b" data-fb="Beobachte die Animation genau: Ein Ende der Reihe erreicht die Grenzfläche früher als das andere.">Alle Teile gleichzeitig.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="t2" data-correct="b">
+<div class="tag">Auftrag 2 · Und deshalb …</div>
+<p>Der eine Teil ist schon langsam, der andere noch schnell. Was passiert dadurch mit der Laufrichtung?</p>
+<button data-k="a" data-fb="Stell α = 45° ein und vergleiche den Pfeil oben und unten: Unten ist er steiler.">Die Reihe schwenkt vom Lot weg.</button>
+<button data-k="b" data-fb="Genau! Die Reihe schwenkt – die Richtung knickt beim Übergang in den langsameren (optisch dichteren) Stoff zum Lot hin.">Die Reihe schwenkt, die Richtung knickt zum Lot hin.</button>
+<button data-k="c" data-fb="Die Richtung ändert sich – nur bei α = 0° nicht.">Die Richtung bleibt gleich, die Reihe wird nur langsamer.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="t3" data-correct="b">
+<div class="tag">Auftrag 3 · Optisch dichter?</div>
+<p>Welcher Stoff ist optisch dichter – Wasser oder Glas?</p>
+<button data-k="a" data-fb="Schau in die Tabelle oben: In welchem Stoff ist das Licht langsamer?">Wasser</button>
+<button data-k="b" data-fb="Richtig – in Glas ist das Licht mit 200 000 km/s langsamer als in Wasser (225 000 km/s). Übrigens: „Optisch dicht“ hat nichts mit dem Gewicht zu tun. Speiseöl ist leichter als Wasser, aber optisch dichter.">Glas</button>
+<button data-k="c" data-fb="Nein, Licht ist in beiden unterschiedlich schnell.">Beide gleich</button>
+<p class="fb"></p>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- ================= PHASE 2 ================= -->
+<section class="band alt" id="labor"><div class="wrap">
+<h2>2 · Das Brechungs-Labor</h2>
+<p class="intro">Wähle die Stoffe <b>oben</b> (aus diesem Stoff kommt das Licht) und <b>unten</b> (in diesen Stoff tritt es ein). Ziehe die Lampe oder nutze den Regler. Bearbeite die Aufträge rechts.</p>
+<div class="two">
+<div class="stick">
+<div class="fig"><svg id="lab" viewBox="0 0 700 440" role="img" aria-label="Brechungs-Labor: Lampe, Grenzfläche zwischen zwei Stoffen, einfallender, reflektierter und gebrochener Strahl"></svg></div>
+<div class="row">
+<label>oben: <select id="m1"><option selected>Luft</option><option>Wasser</option><option>Glas</option><option>Diamant</option></select></label>
+<label>unten: <select id="m2"><option>Luft</option><option>Wasser</option><option selected>Glas</option><option>Diamant</option></select></label>
+<button id="swap">⇅ tauschen</button>
+</div>
+<label for="la" style="font-weight:700">Einfallswinkel α = <span id="laV">40</span>°</label>
+<input type="range" id="la" min="0" max="89" value="40">
+<div class="toggles" id="labT">
+<label><input type="checkbox" data-t="num" checked>Winkel anzeigen</label>
+<label><input type="checkbox" data-t="ref" checked>reflektierter Strahl</label>
+<label><input type="checkbox" data-t="orig">ursprüngliche Richtung</label>
+</div>
+</div>
+<div>
+<div class="card mc" data-task="e1" data-correct="a">
+<div class="tag">Auftrag 1 · Luft → Glas</div>
+<p>Stelle oben <b>Luft</b>, unten <b>Glas</b> ein. Verändere α. Wie wird das Licht gebrochen?</p>
+<button data-k="a" data-fb="Richtig – das passt zu eurem Experiment: β < α.">Zum Lot hin.</button>
+<button data-k="b" data-fb="Vergleiche die Winkelangaben: β ist kleiner als α.">Vom Lot weg.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e2" data-correct="b">
+<div class="tag">Auftrag 2 · Glas → Luft</div>
+<p>Tausche die Stoffe (⇅). Jetzt kommt das Licht aus dem Glas. Wie wird es gebrochen? (Bleib bei α unter 40°.)</p>
+<button data-k="a" data-fb="Schau auf die Zahlen: β ist jetzt größer als α.">Zum Lot hin.</button>
+<button data-k="b" data-fb="Richtig. Beim Übergang vom optisch dichteren in den optisch dünneren Stoff wird das Licht vom Lot weg gebrochen.">Vom Lot weg.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e3" data-correct="c">
+<div class="tag">Auftrag 3 · Senkrechter Einfall</div>
+<p>Stelle α = 0° ein und probiere verschiedene Stoffe. Was passiert?</p>
+<button data-k="a" data-fb="Probiere es aus – bei α = 0° ist auch β = 0°.">Das Licht wird immer zum Lot hin gebrochen.</button>
+<button data-k="b" data-fb="Nein – auch bei Luft → Diamant läuft es geradeaus.">Es hängt von den Stoffen ab.</button>
+<button data-k="c" data-fb="Richtig: Senkrecht einfallendes Licht wird nicht gebrochen. Das habt ihr im Versuch bei der Kontrolle genutzt.">Das Licht geht ohne Knick weiter.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e4" data-correct="c">
+<div class="tag">Auftrag 4 · Wer bricht am stärksten?</div>
+<p>Oben <b>Luft</b>, α = 50°. Probiere unten Wasser, Glas und Diamant. In welchem Stoff wird das Licht am stärksten zum Lot hin gebrochen?</p>
+<button data-k="a" data-fb="Wasser bricht am schwächsten: β ist dort am größten.">Wasser</button>
+<button data-k="b" data-fb="Glas liegt in der Mitte.">Glas</button>
+<button data-k="c" data-fb="Richtig! Je optisch dichter der Stoff (je langsamer das Licht), desto stärker wird es zum Lot hin gebrochen. Deshalb funkeln Diamanten so.">Diamant</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e5" data-correct="a">
+<div class="tag">Auftrag 5 · Rückwärts</div>
+<p>Stelle Luft → Glas mit α = 40° ein und merke dir β. Tausche dann die Stoffe und stelle als Einfallswinkel genau diesen Wert für β ein (ungefähr). Welcher Brechungswinkel kommt jetzt heraus?</p>
+<button data-k="a" data-fb="Richtig! Der Lichtweg ist umkehrbar – wie bei der Reflexion. Licht läuft vorwärts und rückwärts denselben Weg.">Etwa 40° – der alte Einfallswinkel.</button>
+<button data-k="b" data-fb="Probiere es aus: Stell Glas → Luft mit α ≈ 25° ein.">Etwa 16°.</button>
+<button data-k="c" data-fb="Probiere es aus: Stell Glas → Luft mit α ≈ 25° ein.">Etwa 60°.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e6" data-correct="b">
+<div class="tag">Auftrag 6 · Teilreflexion</div>
+<p>Ein Teil des Lichts wird immer reflektiert. Beobachte, wie hell der reflektierte Strahl ist, wenn du α vergrößerst (Luft → Wasser).</p>
+<button data-k="a" data-fb="Stelle α = 85° ein: Der reflektierte Strahl wird deutlich heller.">Er bleibt immer gleich schwach.</button>
+<button data-k="b" data-fb="Richtig. Bei flachem Einfall wird viel Licht reflektiert – deshalb blendet die Sonne bei Sonnenuntergang auf dem See, und ihr seht euer Spiegelbild im Fenster.">Er wird heller, je flacher das Licht auftrifft.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e7" data-correct="c">
+<div class="tag"><span class="stars">★</span> Auftrag 7 · Ausblick</div>
+<p>Oben <b>Glas</b>, unten <b>Luft</b>. Erhöhe α langsam über 40°. Was passiert?</p>
+<button data-k="a" data-fb="Schau genau hin: Ab etwa 42° gibt es unten gar keinen Strahl mehr.">Das Licht wird immer stärker zum Lot hin gebrochen.</button>
+<button data-k="b" data-fb="Fast – aber ab einem bestimmten Winkel ist der gebrochene Strahl ganz verschwunden.">Der gebrochene Strahl wird immer heller.</button>
+<button data-k="c" data-fb="Genau! Ab dem Grenzwinkel (bei Glas → Luft ca. 42°) tritt kein Licht mehr aus, alles wird reflektiert: Totalreflexion. Darum geht es im nächsten Thema.">Ab ca. 42° tritt kein Licht mehr aus – alles wird reflektiert.</button>
+<p class="fb"></p>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- ================= PHASE 3 ================= -->
+<section class="band" id="alltag"><div class="wrap">
+<h2>3 · Lichtbrechung im Alltag</h2>
+<p class="intro">Unser Gehirn „weiß“ nichts von Brechung. Es nimmt an, dass Licht immer geradlinig ins Auge kommt, und verlängert die Strahlen geradlinig nach hinten. So sieht das Auge den Stab. Ziehe das Auge an eine andere Stelle und schalte die Hilfen ein und aus.</p>
+<div class="two">
+<div class="stick">
+<div class="fig"><svg id="stab" viewBox="0 0 640 420" role="img" aria-label="Ein Stab steckt schräg im Wasser; Lichtweg von der Stabspitze ins Auge"></svg></div>
+<div class="toggles" id="stabT">
+<label><input type="checkbox" data-t="path">Lichtweg von der Spitze</label>
+<label><input type="checkbox" data-t="back">Rückverlängerung</label>
+<label><input type="checkbox" data-t="seen">So sieht es das Auge</label>
+<label><input type="checkbox" data-t="hide">echten Stab unter Wasser ausblenden</label>
+</div>
+</div>
+<div>
+<div class="card mc" data-task="al1" data-correct="b">
+<div class="tag">Auftrag 1 · Der geknickte Stab</div>
+<p>Schalte nacheinander alle Hilfen ein. Warum erscheint ein in Wasser eingetauchter Stab abgeknickt?</p>
+<button data-k="a" data-fb="Der Stab ist natürlich gerade – es liegt am Licht.">Das Wasser drückt den Stab nach oben.</button>
+<button data-k="b" data-fb="Richtig! Das Licht von der Spitze wird beim Übergang Wasser → Luft vom Lot weg gebrochen. Das Gehirn verlängert den Strahl geradlinig zurück – so scheint die Spitze höher zu liegen. Unser Auge kennt keine krummen Lichtstrahlen.">Das Licht wird an der Wasseroberfläche vom Lot weg gebrochen; das Gehirn verlängert den Strahl geradlinig zurück.</button>
+<button data-k="c" data-fb="Dann würde die Spitze tiefer erscheinen. Schalte die Rückverlängerung ein.">Das Licht wird an der Oberfläche zum Lot hin gebrochen.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="al2" data-correct="a">
+<div class="tag">Auftrag 2 · Wo sieht das Auge die Spitze?</div>
+<p>Wo genau sieht das Auge die Spitze des Stabes?</p>
+<button data-k="a" data-fb="Genau – dort, wo die gerade verlängerten Lichtstrahlen sich schneiden, liegt die scheinbare (virtuelle) Spitze. Sie liegt höher als die echte.">Dort, wo die rückverlängerten Strahlen sich treffen – höher als die echte Spitze.</button>
+<button data-k="b" data-fb="Schalte die Rückverlängerung ein – sie endet über der echten Spitze.">Genau an der echten Spitze.</button>
+<button data-k="c" data-fb="Die Rückverlängerung endet über, nicht unter der Spitze.">Tiefer als die echte Spitze.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="al3" data-correct="c">
+<div class="tag">Auftrag 3 · Vorsicht am Teich!</div>
+<p>Was folgt daraus für einen Teich oder ein Schwimmbecken?</p>
+<button data-k="a" data-fb="Es ist andersherum: Der Boden erscheint angehoben.">Das Wasser wirkt tiefer, als es ist.</button>
+<button data-k="b" data-fb="Doch – wegen der Brechung sieht der Boden angehoben aus.">Man schätzt die Tiefe immer richtig ein.</button>
+<button data-k="c" data-fb="Richtig. Gegenstände unter Wasser scheinen höher zu liegen, der Boden wirkt angehoben. Ein Teich ist tiefer, als er aussieht – Vorsicht beim Hineinspringen!">Das Wasser wirkt flacher, als es tatsächlich ist.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="al4" data-correct="b">
+<div class="tag">Auftrag 4 · Fischen mit der Harpune</div>
+<p>Muss man über oder unter die Stelle zielen, an der man einen Fisch vom Boot aus sieht, um ihn zu treffen?</p>
+<button data-k="a" data-fb="Der Fisch liegt tatsächlich tiefer, als man ihn sieht.">Über den Fisch zielen.</button>
+<button data-k="b" data-fb="Richtig! Man sieht den Fisch höher, als er wirklich ist – also muss man unter das Bild des Fisches zielen. Probier es im Teil 3 im Harpunen-Spiel aus!">Unter den Fisch zielen.</button>
+<button data-k="c" data-fb="Das klappt nur, wenn man senkrecht von oben zielt.">Genau auf den Fisch zielen.</button>
+<p class="fb"></p>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- ================= PHASE 4 ================= -->
+<section class="band alt" id="festhalten"><div class="wrap">
+<h2>4 · Festhalten</h2>
+<div class="card" data-task="f1">
+<div class="tag">Schritt 1 · Lückentext</div>
+<div class="cloze" id="cloze">
+Ein Lichtstrahl wird beim Übergang von Luft in Wasser zum Einfallslot hin <select data-ans="gebrochen"><option value="">…</option><option>reflektiert</option><option>gebrochen</option><option>gestreut</option></select>. Je flacher der Strahl auf die Grenzfläche trifft, desto <select data-ans="stärker"><option value="">…</option><option>stärker</option><option>schwächer</option></select> wird er gebrochen. Ein Teil des Lichts wird <select data-ans="reflektiert"><option value="">…</option><option>reflektiert</option><option>verschluckt</option></select>. Ein senkrecht auf die Grenzfläche fallender Strahl wird <select data-ans="nicht gebrochen"><option value="">…</option><option>stark gebrochen</option><option>nicht gebrochen</option></select>. Einfallswinkel und Brechungswinkel werden zum <select data-ans="Einfallslot"><option value="">…</option><option>Einfallslot</option><option>Grenzfläche</option></select> gemessen.
+Die Ursache der Brechung ist, dass Licht im Wasser <select data-ans="langsamer"><option value="">…</option><option>schneller</option><option>langsamer</option></select> ist als in Luft. Wasser ist also optisch <select data-ans="dichter"><option value="">…</option><option>dünner</option><option>dichter</option></select> als Luft. Beim Übergang von Wasser in Luft wird das Licht <select data-ans="vom Lot weg"><option value="">…</option><option>zum Lot hin</option><option>vom Lot weg</option></select> gebrochen. Der Lichtweg ist <select data-ans="umkehrbar"><option value="">…</option><option>umkehrbar</option><option>nicht umkehrbar</option></select>.
+Gegenstände, die teilweise unter Wasser sind, scheinen an der Wasseroberfläche <select data-ans="geknickt"><option value="">…</option><option>geknickt</option><option>verdoppelt</option></select> zu sein. Blickt man auf eine Wasseroberfläche, scheinen Gegenstände <select data-ans="höher"><option value="">…</option><option>höher</option><option>tiefer</option></select> zu liegen, als sie es tatsächlich sind. Wegen der teilweisen Reflexion <select data-ans="spiegeln"><option value="">…</option><option>spiegeln</option><option>verstecken</option></select> sich Gegenstände im Wasser.
+</div>
+<div class="row"><button class="primary" id="clozeCheck">Prüfen</button></div>
+<p class="fb" id="clozeFb"></p>
+</div>
+
+<h3>Schritt 2 · Heftaufschrieb</h3>
+<p>Schreibe zuerst selbst einen Heftaufschrieb mit Überschrift, zwei Skizzen (Luft → Glas und Glas → Luft) und dem Merksatz. Vergleiche danach mit der Musterlösung.</p>
+<details class="reveal"><summary>Musterlösung Heftaufschrieb anzeigen</summary>
+<div class="heft" id="heft">
+<h3>2.4 Lichtbrechung</h3>
+<p><b>Ursache:</b> Licht breitet sich in verschiedenen Stoffen unterschiedlich schnell aus (Luft ≈ 300 000 km/s, Wasser ≈ 225 000 km/s, Glas ≈ 200 000 km/s). Stoffe, in denen Licht langsamer ist, heißen <b>optisch dichter</b>.</p>
+<svg viewBox="0 0 640 255" style="width:100%;max-width:620px;display:block;margin:6px 0 10px" id="heftFig" role="img" aria-label="Zwei Skizzen: links Luft nach Glas, zum Lot hin gebrochen; rechts Glas nach Luft, vom Lot weg gebrochen"></svg>
+<p><b>Merke:</b></p>
+<ul>
+<li>Beim Übergang vom optisch <b>dünneren</b> in den optisch <b>dichteren</b> Stoff (z. B. Luft → Glas) wird das Licht <b>zum Lot hin</b> gebrochen: <span class="box">β &lt; α</span></li>
+<li>Beim Übergang vom optisch <b>dichteren</b> in den optisch <b>dünneren</b> Stoff (z. B. Glas → Luft) wird das Licht <b>vom Lot weg</b> gebrochen: <span class="box">β &gt; α</span></li>
+<li>Senkrecht einfallendes Licht (α = 0°) wird nicht gebrochen.</li>
+<li>Ein Teil des Lichts wird an der Grenzfläche immer reflektiert (Teilreflexion).</li>
+<li>Der Lichtweg ist umkehrbar.</li>
+</ul>
+<p><b>Anwendung:</b> Gegenstände unter Wasser erscheinen höher, als sie sind (geknickter Stab, flacher wirkender Teich), weil das Gehirn die gebrochenen Strahlen geradlinig zurückverlängert.</p>
+</div>
+<div class="row"><button id="heftCopy">Text kopieren</button><span class="caption" id="heftCopyMsg"></span></div>
+</details>
+<div class="nextlp">
+<a href="/Physik8/lichtbrechung-uebungen">Weiter mit Teil 3: Üben →<small>Brechungsdiagramm, Konstruktionen, Fisch harpunieren</small></a>
+<a href="/Physik8/lichtbrechung-experiment">← Teil 1: Experiment<small>Messwerte und Auswertung</small></a>
+</div>
+<div class="row" style="margin-top:24px"><button id="resetAll">Fortschritt zurücksetzen</button></div>
+</div></section>
+
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Lernpfad"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik8/lichtbrechung-theorie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m1 0h2m2 0h2m1 0h2m2 0h3m1 0h1m1 0h1m1 0h2m1 0h7m-37 1h1m5 0h1m3 0h3m4 0h3m1 0h2m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m2 0h7m1 0h1m3 0h2m3 0h3m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h3m1 0h4m2 0h1m1 0h1m2 0h1m1 0h1m4 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h2m3 0h1m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h4m1 0h2m2 0h1m1 0h1m4 0h2m4 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m1 0h3m1 0h3m3 0h2m4 0h3m-29 1h1m3 0h1m1 0h3m6 0h2m2 0h4m6 0h5m2 0h1m-37 1h2m2 0h1m2 0h1m1 0h1m2 0h2m4 0h2m3 0h1m2 0h3m3 0h1m1 0h2m-35 1h1m2 0h3m2 0h1m4 0h2m3 0h1m1 0h1m1 0h5m2 0h3m1 0h1m-35 1h2m1 0h1m6 0h2m1 0h1m1 0h7m2 0h1m3 0h2m4 0h2m-36 1h1m1 0h1m2 0h3m1 0h2m2 0h2m2 0h2m1 0h4m4 0h4m2 0h3m-34 1h1m4 0h1m1 0h1m3 0h3m1 0h1m4 0h1m2 0h3m3 0h2m-33 1h1m2 0h1m1 0h1m1 0h10m2 0h2m1 0h12m-34 1h3m1 0h1m1 0h1m1 0h3m1 0h7m1 0h1m1 0h2m2 0h3m1 0h2m1 0h1m1 0h1m-36 1h1m3 0h5m2 0h1m5 0h1m5 0h1m4 0h3m1 0h2m1 0h1m-37 1h1m2 0h2m6 0h4m1 0h2m1 0h3m1 0h1m1 0h5m2 0h1m1 0h2m-36 1h3m3 0h1m3 0h1m1 0h2m2 0h1m1 0h1m1 0h1m2 0h5m3 0h1m-31 1h3m1 0h1m2 0h2m2 0h1m1 0h1m2 0h1m3 0h4m1 0h2m4 0h4m-34 1h2m2 0h3m5 0h4m1 0h3m2 0h1m3 0h4m1 0h2m-33 1h1m8 0h1m1 0h2m1 0h3m4 0h1m1 0h1m1 0h3m1 0h2m2 0h1m-35 1h1m1 0h7m2 0h1m2 0h1m2 0h1m2 0h3m1 0h3m3 0h4m-35 1h1m1 0h4m2 0h1m2 0h1m2 0h1m4 0h1m1 0h4m1 0h4m1 0h2m1 0h1m-34 1h2m1 0h3m1 0h4m2 0h3m2 0h2m2 0h2m1 0h1m2 0h3m1 0h2m-35 1h1m1 0h1m2 0h1m1 0h2m2 0h1m1 0h2m3 0h2m1 0h1m1 0h1m1 0h4m3 0h1m1 0h1m-33 1h1m1 0h3m1 0h3m1 0h1m1 0h2m1 0h3m3 0h1m1 0h1m1 0h3m3 0h2m-31 1h1m3 0h1m1 0h1m1 0h1m1 0h4m1 0h5m2 0h1m1 0h7m-35 1h10m1 0h2m4 0h1m3 0h4m3 0h5m1 0h3m-29 1h1m1 0h1m1 0h1m1 0h2m2 0h1m2 0h3m4 0h1m3 0h1m2 0h1m-36 1h7m1 0h1m2 0h2m1 0h4m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m6 0h2m2 0h4m1 0h3m1 0h1m1 0h1m3 0h4m-36 1h1m1 0h3m1 0h1m1 0h4m1 0h2m3 0h1m3 0h3m3 0h7m-35 1h1m1 0h3m1 0h1m2 0h2m1 0h3m1 0h1m2 0h2m2 0h1m1 0h1m2 0h4m1 0h2m1 0h1m-37 1h1m1 0h3m1 0h1m4 0h1m1 0h1m2 0h3m1 0h1m2 0h1m2 0h1m2 0h2m-31 1h1m5 0h1m3 0h2m1 0h1m3 0h2m2 0h1m1 0h2m4 0h1m2 0h1m1 0h2m-36 1h7m1 0h1m1 0h2m2 0h4m1 0h4m1 0h1m1 0h2m3 0h1m2 0h3"/></svg><p>lernapps.gst-lernen.workers.dev/Physik8/lichtbrechung-theorie</p><button id="qrClose">Schließen</button></dialog>
+<footer class="band"><div class="wrap">Lernpfad „Lichtbrechung – Teil 2: Theorie“ · Physik, Technisches Gymnasium · Grundlage: 2.4 Lichtbrechung, Lückentext 1.4, Übungsblatt 7. Dein Fortschritt wird nur in diesem Browser gespeichert.</div></footer>
+<script>
+{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=(v,d=1)=>(Math.round(v*10**d)/10**d).toString().replace('.',',');
+const KEY=document.body.dataset.key;
+/* ---------- Fortschritt (nur im Browser) ---------- */
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+const tasks=[...new Set($$('[data-task]').map(e=>e.dataset.task))];
+function save(){try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}}
+function updProg(){const n=tasks.filter(t=>done.has(t)).length;$('#progtxt').textContent=n+' / '+tasks.length+' gelöst';$('#progbar').style.width=(100*n/tasks.length)+'%';
+ $$('[data-task]').forEach(e=>e.classList.toggle('done',done.has(e.dataset.task)))}
+function mark(id){done.add(id);save();updProg()}
+function store(k,v){try{localStorage.setItem(KEY+'-'+k,JSON.stringify(v))}catch(e){}}
+function load(k,d){try{const v=localStorage.getItem(KEY+'-'+k);return v===null?d:JSON.parse(v)}catch(e){return d}}
+if($('#resetAll'))$('#resetAll').onclick=()=>{done.clear();save();try{Object.keys(localStorage).filter(k=>k.startsWith(KEY+'-')).forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()};
+
+/* ---------- SVG-Helfer ---------- */
+function svgPt(svg,ev){const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+const L=(a,b,c,d,cls,ex='')=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="${cls}" ${ex}/>`;
+const C=(x,y,r,cls,ex='')=>`<circle cx="${x}" cy="${y}" r="${r}" class="${cls}" ${ex}/>`;
+const T=(x,y,t,cls,ex='')=>`<text x="${x}" y="${y}" class="${cls}" ${ex}>${t}</text>`;
+const P=(pts,cls,ex='')=>`<polygon points="${pts.map(p=>p[0]+','+p[1]).join(' ')}" class="${cls}" ${ex}/>`;
+function arrow(ax,ay,bx,by,cls,f=.5,ex=''){const mx=ax+(bx-ax)*f,my=ay+(by-ay)*f,l=Math.hypot(bx-ax,by-ay)||1,ux=(bx-ax)/l,uy=(by-ay)/l;
+ return P([[mx+ux*7,my+uy*7],[mx-ux*6-uy*5,my-uy*6+ux*5],[mx-ux*6+uy*5,my-uy*6-ux*5]],cls,ex)}
+function grid(w,h,c){let s='';for(let x=0;x<=w;x+=c)s+=L(x,0,x,h,'gl');for(let y=0;y<=h;y+=c)s+=L(0,y,w,y,'gl');return s}
+function eye(x,y,ex='',dir=1){return `<g ${ex}><path d="M${x-15} ${y} Q${x} ${y-13} ${x+15} ${y} Q${x} ${y+13} ${x-15} ${y}Z" class="eyew"/>${C(x+4*dir,y,5.5,'iris')}</g>`}
+/* Winkelbogen um (cx,cy) von Richtung a1 bis a2 (Grad, 0 = rechts, im Uhrzeigersinn wie SVG) */
+function arcPath(cx,cy,r,a1,a2,cls='arc'){const p=a=>[cx+r*Math.cos(a*Math.PI/180),cy+r*Math.sin(a*Math.PI/180)];let d=a2-a1;while(d>180)d-=360;while(d<-180)d+=360;
+ const [x1,y1]=p(a1),[x2,y2]=p(a1+d);return `<path d="M${x1} ${y1} A${r} ${r} 0 0 ${d>0?1:0} ${x2} ${y2}" class="${cls}"/>`}
+
+/* ---------- Physik ---------- */
+const N={Luft:1.00,Wasser:1.33,Glas:1.50,Diamant:2.42};
+const V={Luft:300000,Wasser:225000,Glas:200000,Diamant:124000};
+const rad=d=>d*Math.PI/180,deg=r=>r*180/Math.PI;
+function brech(a,n1,n2){const s=n1*Math.sin(rad(a))/n2;return s>1?null:deg(Math.asin(s))}
+/* Anteil des reflektierten Lichts (Fresnel, unpolarisiert) */
+function refl(a,n1,n2){const b=brech(a,n1,n2);if(b===null)return 1;const ci=Math.cos(rad(a)),ct=Math.cos(rad(b));
+ const rs=((n1*ci-n2*ct)/(n1*ci+n2*ct))**2,rp=((n1*ct-n2*ci)/(n1*ct+n2*ci))**2;return (rs+rp)/2}
+/* Scheinbare Lage eines Punktes Pt unter Wasser (Oberfläche y=ys) für ein Auge E: Rückverlängerung durch den Brechungspunkt, geschnitten mit der Senkrechten durch Pt */
+function apparent(Pt,E,ys,n){let lo=Math.min(Pt.x,E.x),hi=Math.max(Pt.x,E.x);
+ const f=x=>n*Math.sin(Math.atan2(Math.abs(x-Pt.x),Pt.y-ys))-Math.sin(Math.atan2(Math.abs(E.x-x),ys-E.y));
+ if(Math.abs(hi-lo)<0.5)return {S:{x:Pt.x,y:ys},A:{x:Pt.x,y:ys+(Pt.y-ys)/n}};
+ let flo=f(lo);for(let i=0;i<60;i++){const m=(lo+hi)/2,fm=f(m);if((fm>0)===(flo>0)){lo=m;flo=fm}else hi=m}
+ const S={x:(lo+hi)/2,y:ys},dx=S.x-E.x,dy=S.y-E.y;if(Math.abs(Pt.x-S.x)<0.5)return {S,A:{x:Pt.x,y:ys+(Pt.y-ys)/n}};
+ const t=(Pt.x-E.x)/dx;return {S,A:{x:Pt.x,y:E.y+t*dy}}}
+
+/* ---------- Multiple Choice ---------- */
+$$('.mc[data-correct]').forEach(box=>{const fb=box.querySelector('.fb');
+ box.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const ok=box.dataset.correct.split(',').includes(b.dataset.k);
+  box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');
+  fb.className='fb '+(ok?'ok':'bad');fb.textContent=b.dataset.fb||(ok?'Richtig!':'Noch nicht – probier es nochmal.');if(ok&&box.dataset.task)mark(box.dataset.task)})});
+/* ---------- Richtig/Falsch-Liste ---------- */
+function tfList(boxId,it,task){const box=$('#'+boxId);box.innerHTML=it.map((x,i)=>`<div class="item" data-i="${i}"><span>${x[0]}</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p></div>`).join('');
+ const solved=new Set();box.querySelectorAll('.item').forEach(row=>{const i=+row.dataset.i;row.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=(b.dataset.v==='1')===it[i][1];
+  row.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');const fb=row.querySelector('.fb');fb.className='fb '+(ok?'ok':'bad');fb.textContent=(ok?'Stimmt. ':'Nein. ')+it[i][2];
+  if(ok)solved.add(i);if(solved.size===it.length)mark(task)})})}
+/* ---------- Lückentext ---------- */
+function cloze(boxId,btnId,fbId,task,okMsg){$('#'+btnId).onclick=()=>{let ok=0;const all=$$('#'+boxId+' select');all.forEach(s=>{const g=s.value===s.dataset.ans;s.className=s.value?(g?'ok':'bad'):'';if(g)ok++});
+ const fb=$('#'+fbId);if(ok===all.length){fb.className='fb ok';fb.textContent=okMsg;mark(task)}else{fb.className='fb bad';fb.textContent=ok+' von '+all.length+' Lücken richtig. Schau dir die rot markierten noch einmal an.'}}}
+function copyBtn(btn,src,msg){$(btn).onclick=async()=>{try{await navigator.clipboard.writeText($(src).innerText);$(msg).textContent='Kopiert.'}catch(e){$(msg).textContent='Kopieren wurde vom Browser blockiert – markiere den Text von Hand.'}}}
+
+const FILL={Luft:'transparent',Wasser:'var(--water)',Glas:'var(--glass)',Diamant:'light-dark(#ece6fb,#2a2440)'};
+/* ---------- Geschwindigkeiten ---------- */
+$('#speeds').innerHTML=Object.keys(V).map(k=>`<div><b>${k}</b>${V[k].toLocaleString('de-DE')} km/s<i style="width:${V[k]/3000}%"></i></div>`).join('');
+
+/* ---------- Wellenfronten ---------- */
+function waves(W,H,a,n,phase,id,o={}){const O={x:W/2,y:H/2},lam=o.lam||38,b=brech(a,1,n),k1=[Math.sin(rad(a)),Math.cos(rad(a))],k2=[Math.sin(rad(b)),Math.cos(rad(b))];
+ const ext=W+H;let s=`<defs><clipPath id="${id}t"><rect x="0" y="0" width="${W}" height="${O.y}"/></clipPath><clipPath id="${id}b"><rect x="0" y="${O.y}" width="${W}" height="${H-O.y}"/></clipPath></defs>`;
+ s+=`<rect x="0" y="${O.y}" width="${W}" height="${H-O.y}" style="${o.lowFill||'fill:var(--glass)'}"/>`;
+ const line=(k,d)=>{const p=[O.x+k[0]*d,O.y+k[1]*d],u=[-k[1],k[0]];return `<line x1="${p[0]-u[0]*ext}" y1="${p[1]-u[1]*ext}" x2="${p[0]+u[0]*ext}" y2="${p[1]+u[1]*ext}"/>`};
+ let t='',bo='';for(let j=-40;j<=40;j++){const d=phase+lam*j;t+=line(k1,d);bo+=line(k2,d/n)}
+ s+=`<g clip-path="url(#${id}t)" style="stroke:${o.wc||'var(--laser2)'}" stroke-width="2" opacity=".75">${t}</g><g clip-path="url(#${id}b)" style="stroke:${o.wc||'var(--laser2)'}" stroke-width="2" opacity=".75">${bo}</g>`;
+ s+=`<line x1="0" y1="${O.y}" x2="${W}" y2="${O.y}" style="stroke:${o.lc||'var(--glassline)'}" stroke-width="2"/><line x1="${O.x}" y1="0" x2="${O.x}" y2="${H}" style="stroke:${o.lot||'var(--muted)'}" stroke-dasharray="4 5" stroke-width="1.5"/>`;
+ const r=Math.min(W,H)*.42,ac=o.ac||'var(--laser)';s+=`<line x1="${O.x-k1[0]*r}" y1="${O.y-k1[1]*r}" x2="${O.x}" y2="${O.y}" style="stroke:${ac}" stroke-width="3.5"/><line x1="${O.x}" y1="${O.y}" x2="${O.x+k2[0]*r}" y2="${O.y+k2[1]*r}" style="stroke:${ac}" stroke-width="3.5"/>`;
+ s+=arrow(O.x-k1[0]*r,O.y-k1[1]*r,O.x,O.y,'',.6,`style="fill:${ac}"`)+arrow(O.x,O.y,O.x+k2[0]*r,O.y+k2[1]*r,'',.7,`style="fill:${ac}"`);
+ return s}
+$('#heroScene').innerHTML=waves(900,200,50,1.5,0,'hw',{lowFill:'fill:#1b3140',wc:'#64a6ff',lc:'#58c4df',lot:'#7f8aa3',ac:'#ff5c50',lam:30})+'<text x="16" y="24" fill="#7f8aa3" font-family="Lexend,system-ui,sans-serif" font-size="14">Luft: schnell</text><text x="16" y="186" fill="#7fb9cc" font-family="Lexend,system-ui,sans-serif" font-size="14">Glas: langsamer</text>';
+{const svg=$('#wave');let ph=0,play=false,last=0;
+ function draw(){const a=+$('#waveA').value,m=$('#waveMed').value;$('#waveAV').textContent=a;
+  svg.innerHTML=waves(600,360,a,N[m],ph,'wv',{lowFill:'fill:'+FILL[m]})+T(12,22,'Luft · 300 000 km/s','medlab')+T(12,348,m+' · '+V[m].toLocaleString('de-DE')+' km/s','medlab')}
+ function step(t){if(!play)return;if(last)ph=(ph+(t-last)*0.03)%38;last=t;draw();requestAnimationFrame(step)}
+ $('#wavePlay').onclick=()=>{play=!play;last=0;$('#wavePlay').textContent=play?'❚❚ Pause':'▶ Abspielen';if(play)requestAnimationFrame(step)};
+ $('#waveA').oninput=draw;$('#waveMed').onchange=draw;draw()}
+
+/* ---------- Brechungs-Labor ---------- */
+{const svg=$('#lab'),O={x:350,y:220},R=190,st={num:true,ref:true,orig:false};
+ function draw(){const a=+$('#la').value,m1=$('#m1').value,m2=$('#m2').value,n1=N[m1],n2=N[m2],b=brech(a,n1,n2),Rf=refl(a,n1,n2);$('#laV').textContent=a;
+  let s=`<rect x="0" y="0" width="700" height="220" style="fill:${FILL[m1]}"/><rect x="0" y="220" width="700" height="220" style="fill:${FILL[m2]}"/>`;
+  s+=L(0,220,700,220,'','style="stroke:var(--glassline)" stroke-width="2"')+L(O.x,20,O.x,420,'lot')+T(O.x+6,34,'Lot','txs');
+  s+=T(14,26,m1+' · v = '+V[m1].toLocaleString('de-DE')+' km/s','medlab')+T(14,428,m2+' · v = '+V[m2].toLocaleString('de-DE')+' km/s','medlab');
+  if(m1!==m2)s+=T(686,26,n1<n2?'optisch dünner':'optisch dichter','medlab','text-anchor="end"')+T(686,428,n1<n2?'optisch dichter':'optisch dünner','medlab','text-anchor="end"');
+  const S={x:O.x-R*Math.sin(rad(a)),y:O.y-R*Math.cos(rad(a))};
+  if(st.orig)s+=L(O.x,O.y,O.x+R*Math.sin(rad(a)),O.y+R*Math.cos(rad(a)),'ray dash','stroke-width="1.5" opacity=".5"');
+  if(st.ref){const Q={x:O.x+R*Math.sin(rad(a)),y:O.y-R*Math.cos(rad(a))};s+=L(O.x,O.y,Q.x,Q.y,'ray',`stroke-width="3" opacity="${Math.min(1,.1+Rf*2.2)}"`)+arrow(O.x,O.y,Q.x,Q.y,'aw',.6,`opacity="${Math.min(1,.1+Rf*2.2)}"`)}
+  s+=L(S.x,S.y,O.x,O.y,'ray','stroke-width="3.5"')+arrow(S.x,S.y,O.x,O.y,'aw',.6);
+  if(b!==null){const E={x:O.x+R*Math.sin(rad(b)),y:O.y+R*Math.cos(rad(b))};s+=L(O.x,O.y,E.x,E.y,'ray',`stroke-width="3.5" opacity="${Math.max(.3,1-Rf)}"`)+arrow(O.x,O.y,E.x,E.y,'aw',.6);
+   if(a>0)s+=arcPath(O.x,O.y,54,90,90-b);if(st.num)s+=T(O.x+16,O.y+86,'β = '+fmt(b)+'°','txl')}
+  else s+=T(O.x+20,O.y+60,'Kein Licht tritt aus – Totalreflexion!','txl');
+  if(a>0)s+=arcPath(O.x,O.y,54,-90,-90-a);if(st.num)s+=T(O.x-110,O.y-70,'α = '+a+'°','txl');
+  s+=`<g class="drag" data-d="1">${C(S.x,S.y,26,'','fill="transparent"')}${lamp2(S.x,S.y,deg(Math.atan2(O.y-S.y,O.x-S.x)))}</g>`;
+  svg.innerHTML=s}
+ function lamp2(x,y,d){return `<g transform="translate(${x},${y}) rotate(${d})"><rect x="-40" y="-12" width="40" height="24" rx="5" fill="#2b3140"/><rect x="-3" y="-8" width="5" height="16" fill="#ffcf4a"/></g>`}
+ let drag=false;svg.addEventListener('pointerdown',ev=>{if(!ev.target.closest('[data-d]'))return;drag=true;svg.setPointerCapture(ev.pointerId);ev.preventDefault()});
+ svg.addEventListener('pointermove',ev=>{if(!drag)return;const p=svgPt(svg,ev);let a=Math.round(deg(Math.atan2(O.x-p.x,O.y-p.y)));a=Math.max(0,Math.min(89,a));$('#la').value=a;draw()});
+ svg.addEventListener('pointerup',()=>drag=false);svg.addEventListener('pointercancel',()=>drag=false);
+ $('#la').oninput=draw;$('#m1').onchange=draw;$('#m2').onchange=draw;
+ $('#swap').onclick=()=>{const t=$('#m1').value;$('#m1').value=$('#m2').value;$('#m2').value=t;draw()};
+ $$('#labT input').forEach(i=>i.onchange=()=>{st[i.dataset.t]=i.checked;draw()});draw()}
+
+/* ---------- Stab im Wasser ---------- */
+{const svg=$('#stab'),ys=150,A={x:150,y:30},B={x:330,y:370},E={x:560,y:60},st={seen:true,hide:true};
+ const tw=(ys-A.y)/(B.y-A.y),W={x:A.x+tw*(B.x-A.x),y:ys};
+ function draw(){const ap=apparent(B,E,ys,1.33),S=ap.S,Ap=ap.A;let s=`<rect x="0" y="${ys}" width="640" height="${420-ys}" class="water"/>`+L(0,ys,640,ys,'surf')+T(12,ys-10,'Luft','medlab')+T(12,ys+24,'Wasser','medlab');
+  const stick=(x1,y1,x2,y2,ex='')=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" style="stroke:light-dark(#9a7a4f,#d9cdb7)" stroke-width="9" stroke-linecap="round" ${ex}/>`;
+  s+=stick(A.x,A.y,W.x,W.y);
+  if(!st.hide)s+=stick(W.x,W.y,B.x,B.y,st.seen?'opacity=".35"':'')+(st.seen?T(B.x+14,B.y,'wirkliche Lage','txs'):'');
+  if(st.seen){const pts=[];for(let i=0;i<=20;i++){const t=i/20,P0={x:W.x+t*(B.x-W.x),y:W.y+t*(B.y-W.y)};pts.push(i===0?P0:apparent(P0,E,ys,1.33).A)}
+   s+=`<polyline points="${pts.map(p=>p.x+','+p.y).join(' ')}" style="stroke:light-dark(#9a7a4f,#d9cdb7);fill:none" stroke-width="9" stroke-linecap="round"/>`+T(Ap.x+16,Ap.y-6,'so sieht es aus','txl')}
+  if(st.path){s+=L(S.x,ys-80,S.x,ys+80,'lot')+L(B.x,B.y,S.x,S.y,'ray','stroke-width="2.6"')+L(S.x,S.y,E.x-12,E.y,'ray','stroke-width="2.6"')+arrow(B.x,B.y,S.x,S.y,'aw')+arrow(S.x,S.y,E.x,E.y,'aw')}
+  if(st.back){s+=L(S.x,S.y,Ap.x,Ap.y,'ray dash','stroke-width="1.8"')+C(Ap.x,Ap.y,5,'aw')}
+  s+=C(B.x,B.y,4.5,'','style="fill:var(--ink)"');
+  s+=`<g class="drag" data-d="1">${C(E.x,E.y,24,'','fill="transparent"')}${eye(E.x,E.y,'',-1)}</g>`+T(E.x-16,E.y-22,'Auge','txs');
+  svg.innerHTML=s}
+ let drag=false;svg.addEventListener('pointerdown',ev=>{if(!ev.target.closest('[data-d]'))return;drag=true;svg.setPointerCapture(ev.pointerId);ev.preventDefault()});
+ svg.addEventListener('pointermove',ev=>{if(!drag)return;const p=svgPt(svg,ev);E.x=Math.max(360,Math.min(620,p.x));E.y=Math.max(20,Math.min(ys-25,p.y));draw()});
+ svg.addEventListener('pointerup',()=>drag=false);svg.addEventListener('pointercancel',()=>drag=false);
+ $$('#stabT input').forEach(i=>i.checked=!!st[i.dataset.t]);$$('#stabT input').forEach(i=>i.onchange=()=>{st[i.dataset.t]=i.checked;draw()});draw()}
+
+/* ---------- Festhalten ---------- */
+cloze('cloze','clozeCheck','clozeFb','f1','Alles richtig! Jetzt kannst du den Heftaufschrieb angehen.');
+{function sk(ox,top,lab1,n1,n2){const O={x:ox+150,y:115},a=35,b=brech(a,n1,n2),r=95;let s='';
+  s+=`<rect x="${ox+10}" y="${top?15:115}" width="280" height="100" class="glass"/>`+T(ox+18,top?34:212,'Glas','medlab')+T(ox+18,top?212:34,'Luft','medlab');
+  s+=L(O.x,20,O.x,210,'lot')+T(O.x+6,30,'Einfallslot','txs');
+  const S={x:O.x-r*Math.sin(rad(a)),y:O.y-r*Math.cos(rad(a))},E={x:O.x+r*Math.sin(rad(b)),y:O.y+r*Math.cos(rad(b))};
+  s+=L(S.x,S.y,O.x,O.y,'ray')+L(O.x,O.y,E.x,E.y,'ray')+arrow(S.x,S.y,O.x,O.y,'aw')+arrow(O.x,O.y,E.x,E.y,'aw')+arcPath(O.x,O.y,40,-90,-90-a)+arcPath(O.x,O.y,40,90,90-b);
+  s+=T(O.x-58*Math.sin(rad(a/2))-5,O.y-58*Math.cos(rad(a/2))+5,'α','txb')+T(O.x+58*Math.sin(rad(b/2))-4,O.y+58*Math.cos(rad(b/2))+6,'β','txb')+T(ox+150,246,lab1,'txl','text-anchor="middle"');return s}
+ $('#heftFig').innerHTML=sk(0,false,'Luft → Glas: zum Lot hin',1,1.5)+sk(330,true,'Glas → Luft: vom Lot weg',1.5,1);
+ copyBtn('#heftCopy','#heft','#heftCopyMsg')}
+
+$('#qrOpen').onclick=()=>$('#qrDlg').showModal();$('#qrClose').onclick=()=>$('#qrDlg').close();
+$('#qrDlg').addEventListener('click',e=>{if(e.target.id==='qrDlg')$('#qrDlg').close()});
+updProg();
+}
+</script>
+</body>
+</html>
