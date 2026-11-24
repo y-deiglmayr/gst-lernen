@@ -17,10 +17,12 @@ h2{font-size:22px;margin-top:1.6em}
 header p{color:#c6ccd8;max-width:60ch;margin:0}
 main{max-width:1100px;margin:0 auto;padding:8px max(5vw,16px) 48px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-a.card{display:block;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);text-decoration:none;min-height:44px}
+a.card{display:flex;flex-direction:column;gap:6px;padding:0 0 16px;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);text-decoration:none;min-height:44px}
 a.card:hover,a.card:focus-visible{border-color:var(--accent)}
-a.card b{font-family:Lexend,system-ui,sans-serif;font-size:18px;display:block}
-a.card small{color:var(--muted);font-size:15px}
+a.card b{font-family:Lexend,system-ui,sans-serif;font-size:18px;display:block;padding:4px 18px 0}
+a.card small{color:var(--muted);font-size:15px;padding:0 18px}
+.thumb{display:block;aspect-ratio:16/7;background:#0e131d;border-bottom:1px solid var(--line)}
+.thumb svg{display:block;width:100%;height:100%}
 footer{color:var(--muted);font-size:14px;padding:0 max(5vw,16px) 32px;max-width:1100px;margin:0 auto}
 </style>
 </head>
@@ -36,15 +38,30 @@ footer{color:var(--muted);font-size:14px;padding:0 max(5vw,16px) 32px;max-width:
 /* Neue Lernpfade hier eintragen: Ordner = Klasse/Fach, Datei ohne .html */
 const KURSE=[
  {ordner:'Physik8',name:'Physik 8',seiten:[
-  {datei:'reflexion-spiegel',titel:'Reflexion am ebenen Spiegel',info:'Reflexionsgesetz, Eigenschaften des Spiegelbilds, Konstruktion und Übungen'}
+  {datei:'reflexion-spiegel',titel:'Reflexion am ebenen Spiegel',info:'Reflexionsgesetz, Eigenschaften des Spiegelbilds, Konstruktion und Übungen',bild:'spiegel'}
  ]},
  {ordner:'Physik9',name:'Physik 9',seiten:[
-  {datei:'energieerhaltung',titel:'Energieerhaltung und Energieentwertung',info:'Pendel- und Flummi-Labor, Energieumwandlungen, thermische Energie, 13 Übungen'}
+  {datei:'energieerhaltung',titel:'Energieerhaltung und Energieentwertung',info:'Pendel- und Flummi-Labor, Energieumwandlungen, thermische Energie, 13 Übungen',bild:'energie'}
  ]}
 ];
+/* Vorschaubilder (Name in KURSE unter bild:) – Format 320 × 140 */
+const BILDER={
+ spiegel:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect x="170" width="150" height="140" fill="#141c2a"/>
+  <circle cx="80" cy="62" r="26" fill="#ffcf4a" opacity=".18"/><rect x="72" y="72" width="16" height="44" fill="#f4ead8"/><path d="M80 48 C88 58 87 66 80 68 C73 66 72 58 80 48Z" fill="#ffb21a"/>
+  <g opacity=".4"><rect x="252" y="72" width="16" height="44" fill="#f4ead8"/><path d="M260 48 C268 58 267 66 260 68 C253 66 252 58 260 48Z" fill="#ffb21a"/></g>
+  <path d="M80 60 L170 82 L40 108" fill="none" stroke="#ff5c50" stroke-width="2.5"/><path d="M170 82 L260 60" stroke="#ff8a80" stroke-width="1.6" stroke-dasharray="6 5"/>
+  <path d="M25 108 Q40 98 55 108 Q40 118 25 108Z" fill="#eef1f7"/><circle cx="44" cy="108" r="4" fill="#0e131d"/>
+  <line x1="170" y1="8" x2="170" y2="132" stroke="#58c4df" stroke-width="5" stroke-linecap="round"/></svg>`,
+ energie:`<svg viewBox="0 0 320 140" aria-hidden="true"><line x1="60" y1="14" x2="160" y2="14" stroke="#7f8aa3" stroke-width="4"/>
+  <path d="M52 92 A100 100 0 0 0 168 92" fill="none" stroke="#7f8aa3" stroke-dasharray="4 5"/>
+  <line x1="110" y1="14" x2="52" y2="92" stroke="#a9b2c4" opacity=".5"/><line x1="110" y1="14" x2="110" y2="114" stroke="#a9b2c4"/>
+  <circle cx="52" cy="92" r="10" fill="#f2b632" opacity=".55"/><circle cx="110" cy="114" r="11" fill="#f2b632"/>
+  <rect x="210" y="40" width="22" height="80" rx="2" fill="#6aa5ff"/><rect x="238" y="70" width="22" height="50" rx="2" fill="#4fd27f"/><rect x="266" y="100" width="22" height="20" rx="2" fill="#ff7a5c"/>
+  <rect x="210" y="40" width="78" height="80" fill="none" stroke="#eef1f7" stroke-dasharray="4 4" opacity=".5"/><line x1="202" y1="120" x2="296" y2="120" stroke="#a9b2c4"/></svg>`
+};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 document.getElementById('list').innerHTML=KURSE.map(k=>`<h2>${esc(k.name)}</h2><div class="grid">`+
- k.seiten.map(s=>`<a class="card" href="/${esc(k.ordner)}/${esc(s.datei)}"><b>${esc(s.titel)}</b><small>${esc(s.info)}</small></a>`).join('')+'</div>').join('');
+ k.seiten.map(s=>`<a class="card" href="/${esc(k.ordner)}/${esc(s.datei)}">${BILDER[s.bild]?`<span class="thumb">${BILDER[s.bild]}</span>`:''}<b>${esc(s.titel)}</b><small>${esc(s.info)}</small></a>`).join('')+'</div>').join('');
 }
 </script>
 </body>

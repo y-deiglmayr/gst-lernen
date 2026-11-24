@@ -19,7 +19,7 @@ z. B. `/Physik8/reflexion-spiegel`. Groß- und Kleinschreibung der Ordner gehör
 ## Neuen Lernpfad hinzufügen
 
 1. HTML-Datei in den passenden Ordner legen (Ordner bei Bedarf neu anlegen).
-2. In `index.html` in der Liste `KURSE` einen Eintrag ergänzen.
+2. In `index.html` in der Liste `KURSE` einen Eintrag ergänzen. Für ein Vorschaubild im Objekt `BILDER` ein kleines SVG (320 × 140) anlegen und im Eintrag mit `bild:'name'` verknüpfen.
 3. Committen und pushen – Cloudflare veröffentlicht automatisch.
 
 ## Cloudflare-Pages-Einstellungen
