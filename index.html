@@ -24,13 +24,24 @@ a.card small{color:var(--muted);font-size:15px;padding:0 18px}
 .thumb{display:block;aspect-ratio:16/7;background:#0e131d;border-bottom:1px solid var(--line)}
 .thumb svg{display:block;width:100%;height:100%}
 footer{color:var(--muted);font-size:14px;padding:0 max(5vw,16px) 32px;max-width:1100px;margin:0 auto}
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+.qrbtn:hover,.qrbtn:focus-visible{outline:3px solid #ff5c50}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop{background:rgba(8,10,16,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+dialog.qrdlg button{font:600 16px Lexend,sans-serif;min-height:44px;padding:8px 18px;border-radius:10px;border:1px solid #d6dde8;background:#f3f6fa;color:#1b1e27;cursor:pointer}
+@media(max-width:640px){.qrbtn{width:96px}.qrbtn svg{width:80px;height:80px}}
 </style>
 </head>
 <body>
-<header>
+<header><div class="herohead"><div>
 <h1>GST Lernpfade</h1>
 <p>Interaktive Lerninhalte für den Unterricht. Wähle dein Fach und deinen Lernpfad.</p>
-</header>
+</div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h2m1 0h1m1 0h2m2 0h2m2 0h7m-29 1h1m5 0h1m2 0h1m4 0h5m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m3 0h1m3 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h3m6 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h2m3 0h1m1 0h3m1 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-18 1h2m1 0h1m1 0h2m2 0h1m-21 1h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h2m4 0h1m1 0h1m1 0h1m-24 1h4m3 0h2m2 0h1m1 0h2m1 0h1m4 0h2m2 0h1m2 0h1m-29 1h3m3 0h1m10 0h1m1 0h2m4 0h3m-28 1h3m2 0h1m1 0h2m1 0h1m1 0h3m4 0h1m3 0h2m1 0h2m-28 1h2m2 0h1m1 0h1m1 0h3m2 0h2m2 0h1m3 0h2m2 0h1m1 0h2m-26 1h1m1 0h1m1 0h2m2 0h1m1 0h1m3 0h1m1 0h2m-21 1h2m1 0h2m1 0h2m5 0h2m2 0h1m2 0h1m1 0h2m1 0h4m-22 1h3m3 0h6m2 0h1m1 0h1m1 0h1m1 0h1m-24 1h4m1 0h3m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m-27 1h3m4 0h7m1 0h2m4 0h2m1 0h1m2 0h1m-29 1h1m4 0h3m3 0h2m1 0h1m2 0h1m4 0h3m2 0h2m-27 1h1m1 0h1m4 0h1m6 0h2m1 0h4m4 0h2m-29 1h1m2 0h5m3 0h2m2 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m7 0h1m2 0h2m3 0h1m1 0h3m-29 1h7m2 0h1m1 0h1m5 0h1m2 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h2m1 0h2m1 0h1m5 0h1m3 0h4m-28 1h1m1 0h3m1 0h1m2 0h3m5 0h1m2 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h3m4 0h2m1 0h1m1 0h6m-28 1h1m1 0h3m1 0h1m2 0h1m2 0h2m5 0h3m2 0h3m1 0h1m-29 1h1m5 0h1m3 0h1m1 0h1m3 0h6m1 0h1m3 0h1m-28 1h7m1 0h3m1 0h1m1 0h2m1 0h1m1 0h5m1 0h1m1 0h1"/></svg>QR groß zeigen</button></div></header>
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zur Übersicht"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h2m1 0h1m1 0h2m2 0h2m2 0h7m-29 1h1m5 0h1m2 0h1m4 0h5m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m3 0h1m3 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h3m6 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h2m3 0h1m1 0h3m1 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-18 1h2m1 0h1m1 0h2m2 0h1m-21 1h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h2m4 0h1m1 0h1m1 0h1m-24 1h4m3 0h2m2 0h1m1 0h2m1 0h1m4 0h2m2 0h1m2 0h1m-29 1h3m3 0h1m10 0h1m1 0h2m4 0h3m-28 1h3m2 0h1m1 0h2m1 0h1m1 0h3m4 0h1m3 0h2m1 0h2m-28 1h2m2 0h1m1 0h1m1 0h3m2 0h2m2 0h1m3 0h2m2 0h1m1 0h2m-26 1h1m1 0h1m1 0h2m2 0h1m1 0h1m3 0h1m1 0h2m-21 1h2m1 0h2m1 0h2m5 0h2m2 0h1m2 0h1m1 0h2m1 0h4m-22 1h3m3 0h6m2 0h1m1 0h1m1 0h1m1 0h1m-24 1h4m1 0h3m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m-27 1h3m4 0h7m1 0h2m4 0h2m1 0h1m2 0h1m-29 1h1m4 0h3m3 0h2m1 0h1m2 0h1m4 0h3m2 0h2m-27 1h1m1 0h1m4 0h1m6 0h2m1 0h4m4 0h2m-29 1h1m2 0h5m3 0h2m2 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m7 0h1m2 0h2m3 0h1m1 0h3m-29 1h7m2 0h1m1 0h1m5 0h1m2 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h2m1 0h2m1 0h1m5 0h1m3 0h4m-28 1h1m1 0h3m1 0h1m2 0h3m5 0h1m2 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h3m4 0h2m1 0h1m1 0h6m-28 1h1m1 0h3m1 0h1m2 0h1m2 0h2m5 0h3m2 0h3m1 0h1m-29 1h1m5 0h1m3 0h1m1 0h1m3 0h6m1 0h1m3 0h1m-28 1h7m1 0h3m1 0h1m1 0h2m1 0h1m1 0h5m1 0h1m1 0h1"/></svg><p>lernapps.gst-lernen.workers.dev</p><button id="qrClose">Schließen</button></dialog>
 <main id="list"></main>
 <footer>Neue Lernpfade werden in der Liste unten im Quelltext (<code>KURSE</code>) eingetragen.</footer>
 <script>
@@ -78,6 +89,9 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 document.getElementById('list').innerHTML=KURSE.map(k=>`<h2>${esc(k.name)}</h2><div class="grid">`+
  k.seiten.map(s=>`<a class="card" href="/${esc(k.ordner)}/${esc(s.datei)}">${BILDER[s.bild]?`<span class="thumb">${BILDER[s.bild]}</span>`:''}<b>${esc(s.titel)}</b><small>${esc(s.info)}</small></a>`).join('')+'</div>').join('');
 }
+</script>
+<script>
+{const d=document.getElementById('qrDlg');document.getElementById('qrOpen').onclick=()=>d.showModal();document.getElementById('qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
 </script>
 </body>
 </html>
