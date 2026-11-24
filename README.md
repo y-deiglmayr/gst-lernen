@@ -9,6 +9,8 @@ index.html                  Startseite mit allen Lernpfaden
 fonts/                      Schriften lokal (Lexend, Atkinson Hyperlegible, SIL OFL) – keine Google-Server
 Physik8/
   reflexion-spiegel.html    Reflexion am ebenen Spiegel
+Physik9/
+  energieerhaltung.html     Energieerhaltung und Energieentwertung
 ```
 
 Jede Klasse bzw. jedes Fach bekommt einen eigenen Ordner. Die Adresse einer Seite ist der Pfad ohne `.html`,

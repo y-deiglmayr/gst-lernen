@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Energieerhaltung und Energieentwertung</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+/* VOICE: freundlich-sachlich wie ein gutes Arbeitsheft – du-Ansprache, kurze Aufträge
+   IDEA: Energie-Labor trifft Karoheft – dunkler Versuchsraum oben, Säulendiagramme als durchgehende Bildsprache
+   COLOUR: E_L Blau, E_B Grün, E_therm Rot (wie im Unterrichtsmaterial), Akzent Orange; Lexend + Atkinson Hyperlegible
+   LAYOUT: vier Phasen (Wiederholen – Entdecken – Festhalten – Üben) */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--grid:light-dark(#d4e2f2,#232c3b);
+--paper:light-dark(#fdfeff,#151a23);
+--acc:light-dark(#c2410c,#ff9a4d);--acc2:light-dark(#1d62c9,#64a6ff);
+--el:light-dark(#2563c9,#6aa5ff);--eb:light-dark(#1d8a4a,#4fd27f);--eth:light-dark(#d4381e,#ff7a5c);--esp:light-dark(#8a3fc4,#c08cff);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2815);--lab:#0e131d;--labink:#eef1f7}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700}
+h3{font-size:21px;font-weight:600;margin-top:1.6em}
+h4{font-size:17px;font-weight:600;margin:0 0 .3em}
+p{margin:0 0 .8em}
+sub{font-size:.72em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.alt{background:var(--panel)}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#fff;font-size:13px;margin-right:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.bar{width:140px;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .4s}
+.hero{background:var(--lab);color:var(--labink)}
+.hero p{color:#c6ccd8;max-width:64ch}
+.hero svg{width:100%;height:auto;display:block;margin:18px 0 8px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px}
+.phases a{display:block;padding:14px 16px;border-radius:12px;background:#182031;color:#eef1f7;text-decoration:none;border:1px solid #2a3448}
+.phases a:hover{border-color:#ff9a4d}
+.phases b{font-family:Lexend,system-ui,sans-serif;display:block;font-size:17px}
+.phases small{color:#a9b2c4;font-size:14px}
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+@media(min-width:901px){.stick{position:sticky;top:70px}}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;touch-action:manipulation;user-select:none}
+.caption{font-size:14px;color:var(--muted);margin:6px 4px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card.done{border-color:var(--ok)}
+.card .tag{font:600 13px Lexend,system-ui,sans-serif;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.card.done>.tag::after{content:"✓ gelöst";color:var(--ok)}
+.stars{color:var(--acc);letter-spacing:2px}
+.intro{max-width:72ch;color:var(--muted)}
+.merke{border:2px solid var(--acc);border-radius:14px;padding:16px 20px;margin:18px 0;background:var(--bg)}
+.merke h4{color:var(--acc)}
+.merke ul{margin:.3em 0;padding-left:1.2em}
+details.reveal{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0;background:var(--bg)}
+details.reveal summary{cursor:pointer;font:600 16px Lexend,system-ui,sans-serif;padding:4px 0}
+button{font:600 16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.alt button{background:var(--bg)}
+button:hover{border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+button.primary{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11141b)}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+input[type=text],select{font:16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--acc);min-height:36px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 18px;margin-top:8px}
+.ctrl label{font-weight:700;font-size:15px}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.toggles label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;min-height:44px;font-size:15px}
+.toggles input{width:18px;height:18px;accent-color:var(--acc)}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font-weight:400}
+.mc button.ok,.tf button.ok{background:var(--okbg);border-color:var(--ok)}
+.mc button.bad,.tf button.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1em;margin:8px 0 0;font-size:16px}
+.fb:empty{display:none}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb.hint{background:var(--hint);color:var(--ink);padding:8px 12px;border-radius:8px}
+input.ok,select.ok{border-color:var(--ok);background:var(--okbg)}
+input.bad,select.bad{border-color:var(--bad);background:var(--badbg)}
+.cloze{line-height:2.5;font-size:17px}
+.cloze select{min-height:38px;padding:2px 6px;margin:0 2px}
+.tf{display:grid;gap:4px}
+.tf .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tf .item .fb{grid-column:1/-1;margin:0}
+.tf .btns{display:flex;gap:6px}
+.numq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.numq input{width:110px;text-align:right}
+.numq .mcq{grid-column:1/-1}
+.unit{white-space:nowrap}
+.sol{background:var(--panel);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:16px}
+.sol p{margin:.3em 0}
+.calc{font-family:"Atkinson Hyperlegible",sans-serif;background:var(--bg);border-left:4px solid var(--acc);padding:6px 12px;margin:6px 0;border-radius:4px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.steps i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font:600 14px Lexend,system-ui,sans-serif}
+.steps i.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.steptext{min-height:7em}
+.heft{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;border:1px solid var(--line);border-radius:12px;padding:22px clamp(16px,3vw,34px)}
+.heft h3{margin-top:.8em;color:var(--acc)}
+.heft h3:first-child{margin-top:0}
+.heft .box{border:2px solid var(--ink);padding:8px 14px;border-radius:6px;background:var(--paper);display:inline-block}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.checks label{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:10px;min-height:44px;cursor:pointer;font-size:16px;background:var(--bg)}
+.checks label.ok{border-color:var(--ok);background:var(--okbg)}.checks label.bad{border-color:var(--bad);background:var(--badbg)}
+.checks input{width:18px;height:18px;accent-color:var(--acc)}
+.chain{display:grid;grid-template-columns:minmax(0,1.3fr) auto auto auto;gap:6px 10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+@media(max-width:640px){.chain{grid-template-columns:auto auto auto}.chain>span:first-child{grid-column:1/-1}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted);margin:6px 4px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.given{background:var(--panel);border-radius:10px;padding:8px 14px;font-size:15px;margin:8px 0}
+footer{font-size:14px;color:var(--muted)}
+/* svg */
+.gl{stroke:var(--grid);stroke-width:1}
+.thin{stroke:var(--ink);stroke-width:1.4;fill:none}
+.dashl{stroke:var(--muted);stroke-width:1.4;stroke-dasharray:6 5;fill:none}
+.tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
+.txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.txb{fill:var(--ink);font:600 15px Lexend,sans-serif}
+.fel{fill:var(--el)}.feb{fill:var(--eb)}.feth{fill:var(--eth)}.fesp{fill:var(--esp)}
+.tel{fill:var(--el);font:600 14px Lexend,sans-serif}.teb{fill:var(--eb);font:600 14px Lexend,sans-serif}.teth{fill:var(--eth);font:600 14px Lexend,sans-serif}
+.ges{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 4}
+.ball{fill:light-dark(#f2b632,#f2b632);stroke:var(--ink);stroke-width:1.5}
+.ghost{opacity:.35}
+.ground{fill:light-dark(#e9edf3,#202736)}
+.track{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.hit{fill:transparent;cursor:pointer}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+@media(max-width:600px){body{font-size:16px}.prog .bar{width:80px}nav a{padding:6px}}
+</style>
+</head>
+<body>
+
+<nav aria-label="Phasen"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#wiederholen"><span>1</span>Wiederholen</a>
+<a href="#entdecken"><span>2</span>Entdecken</a>
+<a href="#festhalten"><span>3</span>Festhalten</a>
+<a href="#ueben"><span>4</span>Üben</a>
+<div class="prog"><span id="progtxt">0 / 0 gelöst</span><div class="bar"><i id="progbar"></i></div></div>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<h1>Energieerhaltung und Energieentwertung</h1>
+<p>Ein Pendel schwingt hin und her – und bleibt irgendwann stehen. Ist seine Energie dann weg? In diesem Lernpfad findest du heraus, was mit Energie bei Umwandlungen passiert. Du wiederholst die Lageenergie, untersuchst im Pendel- und im Flummi-Labor, wie sich Energie umwandelt, hältst die Merksätze fest und übst dann von leicht bis knifflig.</p>
+<svg id="hero" viewBox="0 0 900 250" role="img" aria-label="Pendel an drei Stellen mit Säulen für Lageenergie und Bewegungsenergie: oben nur Lageenergie, unten nur Bewegungsenergie."></svg>
+<div class="phases">
+<a href="#wiederholen"><b>1 · Wiederholen</b><small>Energieformen und Lageenergie berechnen</small></a>
+<a href="#entdecken"><b>2 · Entdecken</b><small>Pendel-Labor und Flummi-Labor</small></a>
+<a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext, Musterbeispiel, Heftaufschrieb</small></a>
+<a href="#ueben"><b>4 · Üben</b><small>13 Aufgaben von ★ bis ★★★</small></a>
+</div>
+</div></header>
+
+<!-- ================= PHASE 1 ================= -->
+<section class="band" id="wiederholen"><div class="wrap">
+<h2>1 · Wiederholen: Energieformen und Lageenergie</h2>
+<p class="intro">Für diesen Lernpfad brauchst du zwei Dinge aus dem Unterricht: die verschiedenen Energieformen und die Formel für die Lageenergie. Rechne in diesem Lernpfad immer mit <b>g = 9,81 N/kg</b>.</p>
+<div class="two">
+<div>
+<div class="card" data-task="w1">
+<div class="tag">Auftrag 1 · Welche Energieform steckt darin?</div>
+<p>Ordne jeder Situation die passende Energieform zu.</p>
+<div id="w1"></div>
+<div class="row"><button class="primary" id="w1Check">Prüfen</button></div>
+<p class="fb" id="w1Fb"></p>
+</div>
+<div class="merke"><h4>Lageenergie</h4>
+<p style="margin:0">Ein Körper der Masse <i>m</i> in der Höhe <i>h</i> über dem Nullniveau besitzt die Lageenergie</p>
+<p style="font-size:22px;margin:.3em 0;font-family:Lexend,sans-serif">E<sub>L</sub> = m · g · h</p>
+<p style="margin:0">Einheiten: E<sub>L</sub> in Joule (J), m in kg, g in N/kg, h in m. Es gilt 1 J = 1 N · m. <br>Umgestellt: m = E<sub>L</sub> / (g · h) und h = E<sub>L</sub> / (m · g).</p>
+</div>
+</div>
+<div>
+<div class="card" data-task="w2" data-num="w2">
+<div class="tag">Auftrag 2 · Schnell gerechnet</div>
+<p>Berechne. Gib Dezimalzahlen mit Komma ein, z. B. 47,1.</p>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- ================= PHASE 2 ================= -->
+<section class="band alt" id="entdecken"><div class="wrap">
+<h2>2 · Entdecken: Was passiert mit der Energie?</h2>
+<p class="intro">Im <b>Pendel-Labor</b> schwingt eine Kugel an einem 1 m langen Faden. Rechts siehst du in einem Säulendiagramm, wie viel Lageenergie E<sub>L</sub>, Bewegungsenergie E<sub>B</sub> und thermische Energie E<sub>therm</sub> gerade vorhanden ist. Die gestrichelte Säule zeigt die Summe. Das Nullniveau ist der tiefste Punkt der Kugel.</p>
+
+<h3>A · Das Pendel-Labor</h3>
+<div class="two">
+<div class="stick">
+<div class="fig"><svg id="pend" viewBox="0 0 760 380" role="img" aria-label="Fadenpendel mit Säulendiagramm der Energien"></svg></div>
+<div class="legend"><span><i style="background:var(--el)"></i>Lageenergie E<sub>L</sub></span><span><i style="background:var(--eb)"></i>Bewegungsenergie E<sub>B</sub></span><span><i style="background:var(--eth)"></i>thermische Energie E<sub>therm</sub></span><span><i style="border:2px dashed var(--ink)"></i>Summe</span></div>
+<div class="row"><button class="primary" id="pRun">▶ Start</button><button id="pReset">↺ Zurück zum Start</button></div>
+<div class="toggles"><label><input type="checkbox" id="pSlow">Zeitlupe</label><label><input type="checkbox" id="pFric">Reibung (reales Pendel)</label></div>
+<div class="ctrl">
+<div><label for="pH">Starthöhe h = <span id="pHv">20</span> cm</label><input type="range" id="pH" min="5" max="40" step="1" value="20"></div>
+<div><label for="pM">Masse m = <span id="pMv">1,0</span> kg</label><input type="range" id="pM" min="0.2" max="2" step="0.1" value="1"></div>
+</div>
+<p class="caption">Tipp: Mit „Start“ hältst du das Pendel auch an – so kannst du die Werte an jeder Stelle genau ablesen.</p>
+</div>
+<div>
+<div class="card mc" data-task="e1" data-correct="b">
+<div class="tag">Auftrag 1 · Umkehrpunkt</div>
+<p>Starte das Pendel ohne Reibung und halte es an einem <b>Umkehrpunkt</b> (ganz außen) an. Welche Energie hat die Kugel dort?</p>
+<button data-k="a" data-fb="Schau auf die grüne Säule: Am Umkehrpunkt ist die Kugel kurz in Ruhe.">Nur Bewegungsenergie.</button>
+<button data-k="b" data-fb="Richtig. Am Umkehrpunkt ist die Kugel am höchsten und kurz in Ruhe: Es gibt nur Lageenergie.">Nur Lageenergie.</button>
+<button data-k="c" data-fb="Halte genau am äußersten Punkt an – dort ist eine der beiden Säulen leer.">Lage- und Bewegungsenergie gleich viel.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e2" data-correct="c">
+<div class="tag">Auftrag 2 · Tiefster Punkt</div>
+<p>Halte das Pendel möglichst genau am <b>tiefsten Punkt</b> an. Was stellst du fest?</p>
+<button data-k="a" data-fb="Nein – die Kugel ist dort am schnellsten! Schau auf die grüne Säule.">Die Kugel hat dort gar keine Energie mehr.</button>
+<button data-k="b" data-fb="Die blaue Säule ist am tiefsten Punkt leer, denn dort liegt das Nullniveau (h = 0).">Dort ist die Lageenergie am größten.</button>
+<button data-k="c" data-fb="Genau. Am tiefsten Punkt ist h = 0, also E_L = 0. Die gesamte Energie steckt jetzt als Bewegungsenergie in der Kugel – sie ist am schnellsten.">Die Lageenergie ist null, die Bewegungsenergie ist am größten.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e3" data-correct="a">
+<div class="tag">Auftrag 3 · Die Summe</div>
+<p>Beobachte die gestrichelte Säule (Summe) während der Schwingung. Was gilt für das ideale Pendel?</p>
+<button data-k="a" data-fb="Richtig! Was an Lageenergie abnimmt, kommt als Bewegungsenergie dazu – und umgekehrt. E_L + E_B = konstant.">Die Summe aus E<sub>L</sub> und E<sub>B</sub> bleibt immer gleich.</button>
+<button data-k="b" data-fb="Beobachte noch einmal genau: Die gestrichelte Säule bewegt sich nicht.">Die Summe ist am tiefsten Punkt am größten.</button>
+<button data-k="c" data-fb="Beim idealen Pendel (ohne Reibung) ändert sich die Summe nicht.">Die Summe wird mit jeder Schwingung kleiner.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e4" data-correct="b">
+<div class="tag">Auftrag 4 · Wie hoch auf der anderen Seite?</div>
+<p>Das ideale Pendel startet links auf 20 cm Höhe. Wie hoch kommt es auf der rechten Seite? Überprüfe mit der gestrichelten Linie.</p>
+<button data-k="a" data-fb="Dann wäre Energie dazugekommen – woher sollte sie stammen?">Höher als 20 cm, weil es unten Schwung geholt hat.</button>
+<button data-k="b" data-fb="Richtig. Die gesamte Bewegungsenergie wird wieder in Lageenergie umgewandelt – das Pendel erreicht genau die Starthöhe.">Genau 20 cm.</button>
+<button data-k="c" data-fb="Beim idealen Pendel geht keine Energie in andere Formen über. Es erreicht deshalb wieder genau die Starthöhe.">Etwas weniger als 20 cm.</button>
+<p class="fb"></p>
+</div>
+<div class="card" data-task="e5" data-num="e5">
+<div class="tag">Auftrag 5 · Nachrechnen</div>
+<p>Stelle <b>m = 1,0 kg</b> und <b>h = 20 cm</b> ein (ohne Reibung). Berechne zuerst, dann kontrollierst du mit dem Labor, indem du anhältst.</p>
+</div>
+<div class="card mc" data-task="e6" data-correct="c">
+<div class="tag">Auftrag 6 · Das reale Pendel</div>
+<p>Schalte jetzt <b>Reibung</b> ein und starte. Ein echtes Pendel schwingt immer weniger hoch. Wo bleibt die Energie?</p>
+<button data-k="a" data-fb="Beobachte die gestrichelte Säule: Die Summe bleibt gleich groß. Es verschwindet also keine Energie.">Sie verschwindet einfach.</button>
+<button data-k="b" data-fb="Die grüne Säule wird mit der Zeit auch kleiner. Schau auf die rote Säule!">Sie bleibt als Bewegungsenergie im Pendel.</button>
+<button data-k="c" data-fb="Richtig. Durch Reibung an der Aufhängung und mit der Luft wird Energie in thermische Energie umgewandelt. Pendel, Luft und Umgebung werden (minimal) wärmer.">Sie wird durch Reibung in thermische Energie umgewandelt.</button>
+<p class="fb"></p>
+</div>
+<div class="card mc" data-task="e7" data-correct="a">
+<div class="tag">Auftrag 7 · Kann man die Wärme zurückholen?</div>
+<p>Wenn das reale Pendel stehen bleibt, ist die gesamte Energie als thermische Energie in der Umgebung verteilt. Kann sie das Pendel von selbst wieder anstoßen?</p>
+<button data-k="a" data-fb="Genau. Die Wärme ist in Luft und Aufhängung verteilt und kann praktisch nicht mehr genutzt werden. Man sagt: Die Energie ist entwertet.">Nein – die verteilte Wärme lässt sich praktisch nicht mehr nutzen.</button>
+<button data-k="b" data-fb="Hast du schon einmal ein Pendel gesehen, das von selbst wieder anfängt zu schwingen? Die Wärme ist in der Umgebung verteilt.">Ja, sobald sich die Luft abkühlt.</button>
+<p class="fb"></p>
+</div>
+</div>
+</div>
+
+<h3>B · Das Flummi-Labor</h3>
+<p class="intro">Lass einen Ball aus einer bestimmten Höhe auf den Boden fallen. Nach jedem Aufprall wird die erreichte Höhe markiert. Vergleiche Flummi, Tennisball und Knetkugel.</p>
+<div class="two">
+<div class="stick">
+<div class="fig"><svg id="flum" viewBox="0 0 760 380" role="img" aria-label="Fallender Ball mit Höhenmarken und Säulendiagramm der Energien"></svg></div>
+<div class="row"><button class="primary" id="fRun">▶ Fallen lassen</button><button id="fReset">↺ Zurück</button>
+<select id="fType" aria-label="Ball wählen"><option value="flummi">Flummi (30 g)</option><option value="tennis">Tennisball (58 g)</option><option value="knete">Knetkugel (50 g)</option></select></div>
+<div class="toggles"><label><input type="checkbox" id="fSlow" checked>Zeitlupe</label></div>
+<div class="ctrl"><div><label for="fH">Starthöhe h = <span id="fHv">1,50</span> m</label><input type="range" id="fH" min="0.5" max="2" step="0.1" value="1.5"></div></div>
+</div>
+<div>
+<div class="card mc" data-task="f1" data-correct="b">
+<div class="tag">Auftrag 8 · Warum springt der Ball nicht wieder gleich hoch?</div>
+<p>Lass den Flummi fallen. Nach jedem Aufprall erreicht er eine geringere Höhe. Was passiert beim Aufprall?</p>
+<button data-k="a" data-fb="Schau auf die gestrichelte Säule. Die Summe bleibt gleich – es geht nichts verloren.">Ein Teil der Energie wird beim Aufprall vernichtet.</button>
+<button data-k="b" data-fb="Richtig. Beim Aufprall wird der Ball verformt; ein Teil der Energie wird in thermische Energie umgewandelt (Ball und Boden werden etwas wärmer, auch Schall entsteht).">Ein Teil der Energie wird in thermische Energie umgewandelt.</button>
+<button data-k="c" data-fb="Die Erdanziehung (Ortsfaktor g) ist bei jedem Sprung gleich groß.">Die Erde zieht den Ball nach jedem Aufprall stärker an.</button>
+<p class="fb"></p>
+</div>
+<div class="card" data-task="f2" data-num="f2">
+<div class="tag">Auftrag 9 · Wie viel Energie wurde entwertet?</div>
+<p>Der <b>Flummi (m = 30 g = 0,030 kg)</b> fällt aus <b>1,50 m</b> Höhe und springt danach nur noch <b>1,20 m</b> hoch. Überprüfe die Höhe im Labor.</p>
+</div>
+<div class="card mc" data-task="f3" data-correct="c">
+<div class="tag">Auftrag 10 · Die Knetkugel</div>
+<p>Lass die Knetkugel fallen. Was passiert mit ihrer Energie beim Aufprall?</p>
+<button data-k="a" data-fb="Die Knetkugel bleibt liegen – sie hat danach weder Lage- noch Bewegungsenergie. Die Energie muss aber irgendwo sein.">Sie verschwindet vollständig.</button>
+<button data-k="b" data-fb="Die Knetkugel springt nicht zurück, also wird keine Lageenergie zurückgewonnen.">Sie wird wieder in Lageenergie umgewandelt.</button>
+<button data-k="c" data-fb="Richtig: E_L → E_B → E_therm. Die gesamte Energie wird beim Aufprall in thermische Energie umgewandelt (Kugel und Boden erwärmen sich). Genau das habt ihr im Unterricht als Beispiel kennengelernt.">Sie wird vollständig in thermische Energie umgewandelt.</button>
+<p class="fb"></p>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- ================= PHASE 3 ================= -->
+<section class="band" id="festhalten"><div class="wrap">
+<h2>3 · Festhalten</h2>
+<div class="two">
+<div>
+<div class="card" data-task="h1">
+<div class="tag">Lückentext · Die zwei wichtigsten Merksätze</div>
+<div class="cloze" id="cloze"></div>
+<div class="row"><button class="primary" id="clozeCheck">Prüfen</button></div>
+<p class="fb" id="clozeFb"></p>
+</div>
+<h3>Energieflussdiagramm</h3>
+<p>Energieumwandlungen kann man übersichtlich als <b>Energieflussdiagramm</b> zeichnen. Die Breite eines Pfeils zeigt, wie viel Energie fließt. Das Beispiel zeigt eine Pendelschwingung, bei der 2,0 J Lageenergie umgewandelt werden.</p>
+<div class="fig"><svg id="sankey" viewBox="0 0 640 250" role="img" aria-label="Energieflussdiagramm: 2,0 J Lageenergie werden zu 1,6 J Bewegungsenergie und 0,4 J thermischer Energie."></svg></div>
+<p class="caption">Die Pfeilbreiten zusammen ergeben wieder den Anfangspfeil: 1,6 J + 0,4 J = 2,0 J. Energie geht nicht verloren – sie wird nur teilweise entwertet.</p>
+</div>
+<div>
+<div class="card" data-task="h2">
+<div class="tag">Musterbeispiel · Schritt für Schritt</div>
+<p><b>Aufgabe:</b> Ein Ball (m = 0,20 kg) fällt aus 1,5 m Höhe auf den Boden und springt danach nur noch 1,2 m hoch. Wie viel Energie wurde beim Aufprall in thermische Energie umgewandelt?</p>
+<div class="steps" id="msSteps"></div>
+<div class="steptext" id="msText"></div>
+<div class="row"><button id="msPrev">← Zurück</button><button class="primary" id="msNext">Weiter →</button></div>
+</div>
+</div>
+</div>
+
+<details class="reveal"><summary>Heftaufschrieb zum Abschreiben (Musterlösung aufklappen)</summary>
+<div class="heft">
+<h3>1.3 Energieerhaltung und Energieentwertung</h3>
+<p><b>1. Das Fadenpendel</b><br>Eine ausgelenkte Pendelkugel schwingt hin und her. Dabei wird Lageenergie E<sub>L</sub> in Bewegungsenergie E<sub>B</sub> umgewandelt – und wieder zurück.</p>
+<ul>
+<li><b>Umkehrpunkt (oben):</b> h maximal, Kugel kurz in Ruhe → nur E<sub>L</sub></li>
+<li><b>Tiefster Punkt:</b> h = 0, Geschwindigkeit maximal → nur E<sub>B</sub></li>
+<li><b>Dazwischen:</b> E<sub>L</sub> und E<sub>B</sub> – die Summe bleibt immer gleich: <span class="box">E<sub>L</sub> + E<sub>B</sub> = konstant</span></li>
+</ul>
+<div class="merke"><h4>Merke: Prinzip der Energieerhaltung</h4><p style="margin:0">Energie kann weder erzeugt noch vernichtet werden. Sie wird nur von einer Energieform in andere Energieformen umgewandelt. Die Gesamtenergie bleibt immer gleich.</p></div>
+<p><b>2. Das reale Pendel – thermische Energie</b><br>Ein echtes Pendel schwingt immer weniger hoch und bleibt irgendwann stehen. Grund ist die <b>Reibung</b> an der Aufhängung und mit der Luft. Bei jeder Umwandlung wird ein Teil der Energie in <b>thermische Energie E<sub>therm</sub></b> umgewandelt – Pendel, Luft und Umgebung werden (minimal) <b>wärmer</b>.</p>
+<p><span class="box">E<sub>L</sub> + E<sub>B</sub> + E<sub>therm</sub> = konstant</span></p>
+<div class="merke"><h4>Merke: Energieentwertung</h4><p style="margin:0">Bei jeder Energieumwandlung wird ein Teil der Energie in thermische Energie der Umgebung umgewandelt. Diese verteilte Wärme kann man kaum noch nutzen – die Energie ist entwertet. Im Alltag spricht man (physikalisch ungenau) von „Energieverlust“.</p></div>
+<p><b>Beispiel:</b> Fallende Knetkugel: E<sub>L</sub> → E<sub>B</sub> → E<sub>therm</sub> (Kugel und Boden erwärmen sich beim Aufprall).</p>
+<p><b>Rechnen mit der Energieerhaltung:</b> Entwertete Energie = Energie vorher − nutzbare Energie nachher, z. B. E<sub>therm</sub> = m · g · h<sub>vorher</sub> − m · g · h<sub>nachher</sub></p>
+</div>
+</details>
+</div></section>
+
+<!-- ================= PHASE 4 ================= -->
+<section class="band alt" id="ueben"><div class="wrap">
+<h2>4 · Üben</h2>
+<p class="intro">Die Aufgaben werden schwieriger: ★ Grundlagen, ★★ Rechnen mit der Energieerhaltung, ★★★ Anwenden und Knobeln. Rechne mit g = 9,81 N/kg und notiere im Heft immer <i>Gegeben – Gesucht – Rechnung – Antwort</i>. Bei jeder Aufgabe kannst du dir Tipps holen.</p>
+
+<div class="card" data-task="u1">
+<div class="tag"><span class="stars">★</span> Übung 1 · Richtig oder falsch?</div>
+<div class="tf" id="tf"></div>
+</div>
+
+<div class="card" data-task="u2">
+<div class="tag"><span class="stars">★</span> Übung 2 · Energieumwandlungen erkennen</div>
+<p>Welche Energieform wird in welche umgewandelt? Wähle jeweils die <b>hauptsächliche</b> Umwandlung.</p>
+<div id="u2"></div>
+<div class="row"><button class="primary" id="u2Check">Prüfen</button></div>
+<p class="fb" id="u2Fb"></p>
+</div>
+
+<div class="card" data-task="u3">
+<div class="tag"><span class="stars">★</span> Übung 3 · Wo wird Energie spürbar entwertet?</div>
+<p>Kreuze alle Situationen an, in denen ein merklicher Teil der Energie in thermische Energie der Umgebung umgewandelt wird.</p>
+<div class="checks" id="u3"></div>
+<div class="row"><button class="primary" id="u3Check">Prüfen</button></div>
+<p class="fb" id="u3Fb"></p>
+</div>
+
+<div class="card" data-task="u4">
+<div class="tag"><span class="stars">★</span> Übung 4 · Säulendiagramm einer Achterbahn</div>
+<p>Ein Achterbahnwagen startet im Punkt A in 28 m Höhe aus der Ruhe und rollt <b>ohne Reibung</b> durch die Bahn. Die Lageenergie (blau) ist schon eingezeichnet. Ergänze die Bewegungsenergie (grün): <b>Klicke in die grüne Spalte</b> auf die passende Höhe.</p>
+<div class="fig"><svg id="u4track" viewBox="0 0 640 175" role="img" aria-label="Achterbahnstrecke mit den Punkten A (28 m), B (10 m), C (0 m) und D (20 m)"></svg></div>
+<div class="fig" style="margin-top:8px"><svg id="u4" viewBox="0 0 640 320" role="img" aria-label="Säulendiagramm mit Lageenergie und anklickbarer Bewegungsenergie in den Punkten A bis D"></svg></div>
+<div class="row"><button class="primary" id="u4Check">Prüfen</button><button id="u4Hint">Tipp</button><button id="u4Solve">Lösung zeigen</button></div>
+<p class="fb" id="u4Fb"></p>
+</div>
+
+<div class="card" data-task="u5" data-num="u5">
+<div class="tag"><span class="stars">★★</span> Übung 5 · Die Achterbahn in Zahlen</div>
+<p>Der Wagen aus Übung 4 hat mit Fahrgästen eine Masse von <b>2000 kg</b>. Er startet in <b>28 m</b> Höhe aus der Ruhe. Reibung wird vernachlässigt. Das Nullniveau ist der Boden (Punkt C).</p>
+</div>
+
+<div class="card" data-task="u6" data-num="u6">
+<div class="tag"><span class="stars">★★</span> Übung 6 · Das Fadenpendel</div>
+<p>Eine Pendelkugel (<b>m = 2,0 kg</b>) wird so ausgelenkt, dass sie <b>45 cm</b> über ihrem tiefsten Punkt ist, und dann losgelassen.</p>
+</div>
+
+<div class="card" data-task="u7" data-num="u7">
+<div class="tag"><span class="stars">★★</span> Übung 7 · Der Basketball</div>
+<p>Ein Basketball (<b>m = 0,60 kg</b>) fällt aus <b>2,0 m</b> Höhe auf den Hallenboden und springt danach nur noch <b>1,3 m</b> hoch.</p>
+</div>
+
+<div class="card" data-task="u8" data-num="u8">
+<div class="tag"><span class="stars">★★</span> Übung 8 · Flache oder steile Rampe?</div>
+<p>Beim Fassrollen auf dem Dorffest wird ein Fass (<b>m = 60 kg</b>) über eine Rampe auf eine <b>1,2 m</b> hohe Ladefläche gerollt. Es gibt eine flache, lange Rampe und eine steile, kurze Rampe.</p>
+</div>
+
+<div class="card" data-task="u9" data-num="u9">
+<div class="tag"><span class="stars">★★</span> Übung 9 · Wie hoch fliegt der Ball?</div>
+<p>Du wirfst einen Ball (<b>m = 0,40 kg</b>) senkrecht nach oben. Beim Verlassen der Hand hat er eine Bewegungsenergie von <b>E<sub>B</sub> = 12 J</b>. Die Höhe der Hand ist das Nullniveau.</p>
+</div>
+
+<div class="card" data-task="u10" data-num="u10">
+<div class="tag"><span class="stars">★★★</span> Übung 10 · Auf dem Trampolin</div>
+<p>Lena (<b>m = 50 kg</b>) springt auf einem Trampolin. Am höchsten Punkt ist sie <b>1,8 m</b> über dem ruhenden Sprungtuch. Beim Landen drückt sie das Tuch <b>0,60 m</b> nach unten. Lege das Nullniveau an den <b>tiefsten Punkt</b> und vernachlässige die Reibung.</p>
+</div>
+
+<div class="card" data-task="u11" data-num="u11">
+<div class="tag"><span class="stars">★★★</span> Übung 11 · Pumpspeicherwerk Wendefurth</div>
+<p>Erinnerst du dich an das Speicherkraftwerk im Harz? Das Oberbecken fasst etwa <b>2 Millionen m³</b> Wasser, der Höhenunterschied beträgt <b>126 m</b>. 1 m³ Wasser hat eine Masse von 1000 kg. Bei Volllast liefert das Kraftwerk etwa 6,5 Stunden lang elektrische Energie – insgesamt rund <b>520 MWh</b>.</p>
+<div class="given">Umrechnung: 1 MWh (Megawattstunde) = 3 600 000 000 J = 3,6 · 10<sup>9</sup> J</div>
+</div>
+
+<div class="card" data-task="u12" data-num="u12">
+<div class="tag"><span class="stars">★★★</span> Übung 12 · Skaten in der Halfpipe</div>
+<p>Tom (<b>m = 55 kg</b>, mit Board) startet ohne Anschwung am Rand einer Halfpipe in <b>3,0 m</b> Höhe. Auf der anderen Seite kommt er nur bis <b>2,7 m</b> Höhe. Er stößt sich nicht ab.</p>
+</div>
+
+<div class="card" data-task="u13" data-num="u13">
+<div class="tag"><span class="stars">★★★</span> Übung 13 · Die Wundermaschine</div>
+<p>Ein Erfinder stellt seine Maschine vor: Wasser aus einem hohen Becken treibt ein Wasserrad an. Das Wasserrad treibt eine Pumpe, die das Wasser wieder ins hohe Becken pumpt. „Die Maschine läuft ewig – und nebenbei kann ich noch eine Lampe betreiben!“ Eine solche Maschine nennt man <b>Perpetuum mobile</b>.</p>
+</div>
+
+<div class="row"><button id="resetAll">Fortschritt zurücksetzen</button></div>
+</div></section>
+
+<footer class="band"><div class="wrap">
+<p>Lernpfad Physik TG9 · Mechanik II: Energie. Dein Fortschritt wird nur in diesem Browser gespeichert, es werden keine Daten übertragen. Rechne immer mit g = 9,81 N/kg.</p>
+</div></footer>
+
+<script>
+{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const G=9.81;
+const fmt=(v,d=2)=>{const r=Number(v.toFixed(d));return r.toLocaleString('de-DE',{maximumFractionDigits:d})};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- Fortschritt ---------- */
+const KEY='energie-tg9-done';
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+const tasks=[...new Set($$('[data-task]').map(e=>e.dataset.task))];
+function save(){try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}}
+function updProg(){const n=tasks.filter(t=>done.has(t)).length;$('#progtxt').textContent=n+' / '+tasks.length+' gelöst';$('#progbar').style.width=(100*n/tasks.length)+'%';
+ $$('[data-task]').forEach(e=>e.classList.toggle('done',done.has(e.dataset.task)))}
+function mark(id){done.add(id);save();updProg()}
+$('#resetAll').onclick=()=>{done.clear();save();location.reload()};
+
+/* ---------- SVG-Helfer ---------- */
+const L=(a,b,c,d,cls,ex='')=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="${cls}" ${ex}/>`;
+const C=(x,y,r,cls,ex='')=>`<circle cx="${x}" cy="${y}" r="${r}" class="${cls}" ${ex}/>`;
+const T=(x,y,t,cls,ex='')=>`<text x="${x}" y="${y}" class="${cls}" ${ex}>${t}</text>`;
+const R=(x,y,w,h,cls,ex='')=>`<rect x="${x}" y="${y}" width="${w}" height="${Math.max(0,h)}" class="${cls}" ${ex}/>`;
+const sub=(a,b)=>`${a}<tspan font-size="70%" dy="4">${b}</tspan>`;
+/* Säulendiagramm: x0..x0+w, Grundlinie y0, Höhe hmax */
+function bars(x0,y0,hmax,vals,max,unit='J'){
+ const keys=[['L','fel','tel'],['B','feb','teb'],['therm','feth','teth']];let s='';
+ const bw=46,gap=14,sum=vals.reduce((a,b)=>a+b,0);
+ keys.forEach((k,i)=>{const v=vals[i],h=max>0?hmax*v/max:0,x=x0+i*(bw+gap);
+  s+=R(x,y0-h,bw,h,k[1],'rx="3"')+T(x+bw/2,y0+20,sub('E',k[0]),k[2],'text-anchor="middle"')+T(x+bw/2,y0-h-6,fmt(v,2)+' '+unit,'txs','text-anchor="middle"')});
+ const x=x0+3*(bw+gap),h=max>0?hmax*sum/max:0;
+ s+=R(x,y0-h,bw,h,'ges','rx="3"')+T(x+bw/2,y0+20,'Summe','txs','text-anchor="middle"')+T(x+bw/2,y0-h-6,fmt(sum,2)+' '+unit,'txs','text-anchor="middle"');
+ s+=L(x0-8,y0,x0+4*(bw+gap),y0,'thin');return s}
+
+/* ---------- Hero ---------- */
+{const P={x:260,y:20},len=175,amp=0.62;let s=`<line x1="190" y1="20" x2="330" y2="20" stroke="#7f8aa3" stroke-width="4"/>`;
+ const pos=[-amp,0,amp].map(a=>({x:P.x+len*Math.sin(a),y:P.y+len*Math.cos(a),a}));
+ const low=P.y+len;
+ s+=`<path d="M${pos[0].x} ${pos[0].y} A${len} ${len} 0 0 0 ${pos[2].x} ${pos[2].y}" fill="none" stroke="#7f8aa3" stroke-dasharray="5 6"/>`;
+ pos.forEach((p,i)=>{s+=`<line x1="${P.x}" y1="${P.y}" x2="${p.x}" y2="${p.y}" stroke="#a9b2c4" stroke-width="1.5" ${i!==1?'opacity=".55"':''}/>`;
+  s+=`<circle cx="${p.x}" cy="${p.y}" r="14" fill="#f2b632" stroke="#0e131d" stroke-width="1.5" ${i!==1?'opacity=".9"':''}/>`});
+ const hgt=low-pos[0].y;
+ const mini=(x,el,eb,lab)=>{let o='';const H=90,y0=175;o+=`<rect x="${x}" y="${y0-H*el}" width="22" height="${H*el}" fill="#6aa5ff" rx="2"/><rect x="${x+28}" y="${y0-H*eb}" width="22" height="${H*eb}" fill="#4fd27f" rx="2"/>`;
+  o+=`<text x="${x+11}" y="${y0+15}" fill="#6aa5ff" font-size="13" text-anchor="middle" font-family="Lexend,system-ui,sans-serif">E<tspan font-size="70%" dy="3">L</tspan></text><text x="${x+39}" y="${y0+15}" fill="#4fd27f" font-size="13" text-anchor="middle" font-family="Lexend,system-ui,sans-serif">E<tspan font-size="70%" dy="3">B</tspan></text><line x1="${x-4}" y1="${y0}" x2="${x+54}" y2="${y0}" stroke="#a9b2c4"/><text x="${x+25}" y="${y0-H-8}" fill="#c6ccd8" font-size="13" text-anchor="middle" font-family="Atkinson Hyperlegible,system-ui,sans-serif">${lab}</text>`;return o};
+ s+=mini(540,1,0,'Umkehrpunkt')+mini(670,.5,.5,'dazwischen')+mini(800,0,1,'tiefster Punkt');
+ s+=`<text x="695" y="236" fill="#ff9a4d" font-size="16" text-anchor="middle" font-family="Lexend,system-ui,sans-serif">E<tspan font-size="70%" dy="4">L</tspan><tspan dy="-4"> + E</tspan><tspan font-size="70%" dy="4">B</tspan><tspan dy="-4"> = konstant?</tspan></text>`;
+ $('#hero').innerHTML=s}
+
+/* ---------- Multiple Choice ---------- */
+$$('.mc[data-correct]').forEach(box=>{const fb=box.querySelector(':scope>.fb');
+ box.querySelectorAll(':scope>button[data-k]').forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
+  box.querySelectorAll(':scope>button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');
+  fb.className='fb '+(ok?'ok':'bad');fb.textContent=b.dataset.fb||(ok?'Richtig!':'Noch nicht – probier es nochmal.');if(ok)mark(box.dataset.task)})});
+
+/* ---------- Zahlenaufgaben (generisch) ---------- */
+function parseNum(s){s=String(s).trim().replace(/\s/g,'');if(!s)return NaN;
+ if(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(s))s=s.replace(/\./g,'');
+ return parseFloat(s.replace(',','.'))}
+function judge(v,p){if(isNaN(v))return 'empty';const a=p.a,tol=p.tol??0.015,abs=p.abs??0;
+ if(Math.abs(v-a)<=Math.max(Math.abs(a)*tol,abs))return 'ok';
+ if(p.g!==false&&a!==0&&Math.abs(v-a*10/G)<=Math.abs(a)*0.012)return 'g10';
+ if(p.k&&Math.abs(v-a*1000)<=Math.abs(a*1000)*tol)return 'k';
+ if(p.k===false&&Math.abs(v-a/1000)<=Math.abs(a/1000)*tol)return 'k';
+ return 'bad'}
+const NUM={
+ w2:{parts:[
+  {q:'a) Eine Schultasche (6,0 kg) steht auf einem 0,80 m hohen Tisch. Lageenergie gegenüber dem Boden?',u:'J',a:47.088,k:false},
+  {q:'b) Eine Kletterin (70 kg) ist 12 m über dem Boden. Lageenergie in kJ?',u:'kJ',a:8.2404,k:true},
+  {q:'c) Eine Kiste wird 3,0 m hoch gehoben. Ihre Lageenergie nimmt um 588,6 J zu. Masse der Kiste?',u:'kg',a:20}],
+  hints:['a) Setze ein: E<sub>L</sub> = m · g · h = 6,0 kg · 9,81 N/kg · 0,80 m.','b) Rechne zuerst in J und teile dann durch 1000, denn 1 kJ = 1000 J.','c) Stelle um: m = E<sub>L</sub> / (g · h).'],
+  sol:`<p>a) E<sub>L</sub> = 6,0 kg · 9,81 N/kg · 0,80 m ≈ <b>47,1 J</b></p><p>b) E<sub>L</sub> = 70 kg · 9,81 N/kg · 12 m = 8240 J ≈ <b>8,24 kJ</b></p><p>c) m = 588,6 J / (9,81 N/kg · 3,0 m) = <b>20 kg</b></p>`},
+ e5:{parts:[
+  {q:'a) Gesamtenergie des Pendels (= Lageenergie am Start)',u:'J',a:1.962},
+  {q:'b) Bewegungsenergie am tiefsten Punkt',u:'J',a:1.962},
+  {q:'c) Bewegungsenergie, wenn die Kugel noch 5 cm hoch ist',u:'J',a:1.4715}],
+  hints:['a) E<sub>L</sub> = m · g · h mit h = 0,20 m (Zentimeter in Meter umrechnen!).','b) Am tiefsten Punkt ist E<sub>L</sub> = 0. Die gesamte Energie ist jetzt Bewegungsenergie.','c) Berechne die Lageenergie bei h = 0,05 m. Der Rest der Gesamtenergie ist Bewegungsenergie: E<sub>B</sub> = E<sub>ges</sub> − E<sub>L</sub>.'],
+  sol:`<p>a) E<sub>ges</sub> = E<sub>L</sub> = 1,0 kg · 9,81 N/kg · 0,20 m ≈ <b>1,96 J</b></p><p>b) E<sub>B</sub> = E<sub>ges</sub> ≈ <b>1,96 J</b> (Energieerhaltung, E<sub>L</sub> = 0)</p><p>c) E<sub>L</sub> = 1,0 kg · 9,81 N/kg · 0,05 m ≈ 0,49 J → E<sub>B</sub> = 1,96 J − 0,49 J ≈ <b>1,47 J</b></p>`},
+ f2:{parts:[
+  {q:'a) Lageenergie vor dem Fallen (1,50 m)',u:'J',a:0.44145},
+  {q:'b) Lageenergie am höchsten Punkt nach dem Aufprall (1,20 m)',u:'J',a:0.35316},
+  {q:'c) In thermische Energie umgewandelt',u:'J',a:0.08829,tol:.03}],
+  hints:['Masse in kg: 30 g = 0,030 kg.','Berechne E<sub>L</sub> = m · g · h für beide Höhen.','Die Differenz der beiden Lageenergien wurde beim Aufprall in thermische Energie umgewandelt.'],
+  sol:`<p>a) E<sub>L1</sub> = 0,030 kg · 9,81 N/kg · 1,50 m ≈ <b>0,441 J</b></p><p>b) E<sub>L2</sub> = 0,030 kg · 9,81 N/kg · 1,20 m ≈ <b>0,353 J</b></p><p>c) E<sub>therm</sub> = 0,441 J − 0,353 J ≈ <b>0,088 J</b> (das sind 20 % der Energie)</p>`},
+ u5:{parts:[
+  {q:'a) Gesamtenergie des Wagens am Start A (in kJ)',u:'kJ',a:549.36,k:true},
+  {q:'b) Bewegungsenergie im Punkt B (10 m Höhe)',u:'kJ',a:353.16,k:true},
+  {q:'c) Bewegungsenergie im tiefsten Punkt C',u:'kJ',a:549.36,k:true},
+  {q:'d) Bewegungsenergie im Punkt D (20 m Höhe)',u:'kJ',a:156.96,k:true},
+  {mc:'e) Hinter D folgt ein Hügel mit 30 m Höhe. Was passiert?',opts:['Der Wagen kommt knapp darüber, weil er unten viel Schwung hatte.','Der Wagen kommt nicht hinauf, weil er höchstens wieder 28 m erreichen kann.','Das hängt nur von der Masse des Wagens ab.'],c:1,
+   fb:['Schwung ist Bewegungsenergie – und die stammt aus der Lageenergie am Start. Mehr als die Startenergie hat der Wagen nie.','Richtig! Ohne Antrieb kann der Wagen höchstens die Starthöhe von 28 m erreichen. In Wirklichkeit wegen Reibung sogar weniger.','Die Masse kürzt sich heraus: Jeder Wagen erreicht ohne Reibung genau die Starthöhe.']}],
+  hints:['a) E<sub>ges</sub> = E<sub>L</sub> am Start = m · g · h mit h = 28 m. Ergebnis in J durch 1000 teilen.','b) Berechne E<sub>L</sub> in 10 m Höhe. Dann E<sub>B</sub> = E<sub>ges</sub> − E<sub>L</sub>. Kurzer Weg: E<sub>B</sub> = m · g · (28 m − 10 m).','c) In C ist h = 0. Dort ist die gesamte Energie Bewegungsenergie.','d) Wie bei b): E<sub>B</sub> = m · g · (28 m − 20 m).'],
+  sol:`<p>a) E<sub>ges</sub> = 2000 kg · 9,81 N/kg · 28 m = 549 360 J ≈ <b>549 kJ</b></p><p>b) E<sub>L,B</sub> = 2000 kg · 9,81 N/kg · 10 m = 196 200 J → E<sub>B</sub> = 549 360 J − 196 200 J = 353 160 J ≈ <b>353 kJ</b></p><p>c) E<sub>B</sub> = E<sub>ges</sub> ≈ <b>549 kJ</b></p><p>d) E<sub>B</sub> = 2000 kg · 9,81 N/kg · 8 m ≈ <b>157 kJ</b></p><p>e) Für 30 m bräuchte der Wagen 2000 kg · 9,81 N/kg · 30 m ≈ 589 kJ – er hat aber nur 549 kJ. Er kommt nicht hinauf.</p>`},
+ u6:{parts:[
+  {q:'a) Lageenergie der Kugel vor dem Loslassen',u:'J',a:8.829},
+  {q:'b) Bewegungsenergie am tiefsten Punkt (ohne Reibung)',u:'J',a:8.829},
+  {q:'c) In welcher Höhe sind Lageenergie und Bewegungsenergie gleich groß?',u:'cm',a:22.5,g:false},
+  {q:'d) Nach einigen Schwingungen erreicht die Kugel nur noch 30 cm. Wie viel Energie wurde bis dahin entwertet?',u:'J',a:2.943}],
+  hints:['a) 45 cm = 0,45 m. E<sub>L</sub> = m · g · h.','b) Energieerhaltung: Unten ist alles Bewegungsenergie.','c) Wenn E<sub>L</sub> = E<sub>B</sub> ist, dann ist jede der beiden genau die Hälfte der Gesamtenergie. Bei welcher Höhe ist die Lageenergie halb so groß?','d) Berechne die Lageenergie bei 30 cm. Die Differenz zu a) ist in thermische Energie umgewandelt worden.'],
+  sol:`<p>a) E<sub>L</sub> = 2,0 kg · 9,81 N/kg · 0,45 m ≈ <b>8,83 J</b></p><p>b) E<sub>B</sub> ≈ <b>8,83 J</b></p><p>c) E<sub>L</sub> = ½ · 8,83 J. Die Lageenergie ist proportional zur Höhe – halbe Energie heißt halbe Höhe: h = 45 cm / 2 = <b>22,5 cm</b></p><p>d) E<sub>L,neu</sub> = 2,0 kg · 9,81 N/kg · 0,30 m ≈ 5,89 J → E<sub>therm</sub> = 8,83 J − 5,89 J ≈ <b>2,94 J</b></p>`},
+ u7:{parts:[
+  {q:'a) Beim Aufprall in thermische Energie umgewandelt',u:'J',a:4.1202},
+  {q:'b) Welcher Anteil der Energie wurde entwertet?',u:'%',a:35,abs:.6,g:false},
+  {q:'c) Beim nächsten Aufprall wird wieder derselbe Anteil entwertet. Wie hoch springt der Ball danach?',u:'m',a:0.845,tol:.02,g:false}],
+  hints:['a) E<sub>therm</sub> = m · g · h<sub>vorher</sub> − m · g · h<sub>nachher</sub> = m · g · (2,0 m − 1,3 m).','b) Anteil = E<sub>therm</sub> / E<sub>vorher</sub> · 100 %. Tipp: Weil m und g gleich bleiben, reicht auch 0,7 m / 2,0 m.','c) Es bleiben 65 % der Energie übrig – also erreicht der Ball 65 % von 1,3 m.'],
+  sol:`<p>a) E<sub>therm</sub> = 0,60 kg · 9,81 N/kg · 0,7 m ≈ <b>4,12 J</b></p><p>b) E<sub>vorher</sub> = 0,60 kg · 9,81 N/kg · 2,0 m ≈ 11,77 J → 4,12 J / 11,77 J = 0,35 = <b>35 %</b></p><p>c) Es bleiben 65 %: h = 0,65 · 1,3 m ≈ <b>0,85 m</b></p>`},
+ u8:{parts:[
+  {q:'a) Um wie viel nimmt die Lageenergie des Fasses zu?',u:'J',a:706.32},
+  {mc:'b) Wie viel Energie braucht man mindestens – ohne Reibung – auf den beiden Rampen?',opts:['Auf der steilen Rampe mehr, weil es anstrengender ist.','Auf beiden gleich viel, weil das Fass dieselbe Höhe erreicht.','Auf der flachen Rampe mehr, weil der Weg länger ist.'],c:1,
+   fb:['Es fühlt sich anstrengender an, weil man stärker drücken muss. Die Energie hängt aber nur von m und h ab.','Richtig! Die Lageenergie hängt nur von der Masse und der Höhe ab, nicht vom Weg. Auf der flachen Rampe braucht man weniger Kraft, dafür einen längeren Weg.','Ohne Reibung zählt nur der Höhenunterschied. Der Weg spielt keine Rolle.']},
+  {mc:'c) In Wirklichkeit gibt es Reibung. Was stimmt dann?',opts:['Auf der langen, flachen Rampe wird insgesamt etwas mehr Energie entwertet, weil die Reibung über einen längeren Weg wirkt.','Mit Reibung braucht man auf beiden Rampen weniger Energie.','Reibung wandelt Energie in Lageenergie um.'],c:0,
+   fb:['Richtig. Je länger der Weg, desto mehr Energie wird durch Reibung in thermische Energie umgewandelt.','Reibung sorgt immer dafür, dass man mehr Energie aufwenden muss – ein Teil wird ja in thermische Energie umgewandelt.','Reibung wandelt Energie in thermische Energie um.']}],
+  hints:['a) E<sub>L</sub> = m · g · h mit h = 1,2 m.','b) Welche Größen stehen in der Formel E<sub>L</sub> = m · g · h? Kommt die Länge der Rampe darin vor?'],
+  sol:`<p>a) E<sub>L</sub> = 60 kg · 9,81 N/kg · 1,2 m ≈ <b>706 J</b></p><p>b) Auf beiden Rampen gleich viel, denn E<sub>L</sub> hängt nur von m, g und h ab. Die flache Rampe braucht weniger Kraft, aber einen längeren Weg.</p><p>c) Mit Reibung wird auf der längeren, flachen Rampe insgesamt etwas mehr Energie entwertet.</p>`},
+ u9:{parts:[
+  {q:'a) Wie hoch fliegt der Ball, wenn man den Luftwiderstand vernachlässigt?',u:'m',a:3.0581,tol:.02},
+  {q:'b) Durch Luftreibung werden auf dem Weg nach oben 1,5 J entwertet. Wie hoch fliegt der Ball jetzt?',u:'m',a:2.6758,tol:.02},
+  {mc:'c) Kommt der Ball wieder mit 12 J Bewegungsenergie in der Hand an?',opts:['Ja, Energie bleibt ja erhalten.','Nein, weniger, denn auch auf dem Rückweg wird Energie durch Luftreibung entwertet.','Nein, mehr, weil er beim Fallen schneller wird.'],c:1,
+   fb:['Die Gesamtenergie bleibt erhalten – aber ein Teil ist schon als thermische Energie in der Luft verteilt.','Richtig. Auf dem Hin- und Rückweg wird Energie entwertet. In der Hand kommen weniger als 12 J Bewegungsenergie an.','Er wird beim Fallen schneller, aber mehr Energie als am Anfang kann er nie haben.']}],
+  hints:['a) Am höchsten Punkt ist die gesamte Bewegungsenergie in Lageenergie umgewandelt: m · g · h = 12 J. Stelle nach h um.','b) Jetzt wird nur noch 12 J − 1,5 J = 10,5 J in Lageenergie umgewandelt.'],
+  sol:`<p>a) h = E / (m · g) = 12 J / (0,40 kg · 9,81 N/kg) ≈ <b>3,06 m</b></p><p>b) h = 10,5 J / (0,40 kg · 9,81 N/kg) ≈ <b>2,68 m</b></p><p>c) Nein. Auch auf dem Rückweg wird Energie entwertet, der Ball kommt mit weniger als 12 J an.</p>`},
+ u10:{parts:[
+  {q:'a) Lageenergie von Lena am höchsten Punkt (bezogen auf den tiefsten Punkt)',u:'J',a:1177.2,k:false},
+  {q:'b) Wie viel Spannenergie steckt im Sprungtuch, wenn Lena am tiefsten Punkt ist?',u:'J',a:1177.2,k:false},
+  {mc:'c) Lena muss bei jedem Sprung mit den Beinen etwas mitdrücken, sonst springt sie immer niedriger. Warum?',opts:['Weil das Trampolin bei jedem Sprung Spannenergie vernichtet.','Weil bei jeder Umwandlung ein Teil der Energie in thermische Energie umgewandelt wird (Tuch, Federn, Luft). Diesen Teil muss Lena mit ihren Muskeln ersetzen.','Weil ihre Masse mit jedem Sprung zunimmt.'],c:1,
+   fb:['Energie wird nicht vernichtet. Sie wird in eine andere Form umgewandelt – welche?','Richtig. Lena ersetzt die entwertete Energie aus der chemischen Energie ihrer Muskeln.','Ihre Masse bleibt gleich.']}],
+  hints:['a) Achtung beim Nullniveau: Der höchste Punkt liegt 1,8 m + 0,60 m = 2,4 m über dem tiefsten Punkt.','b) Am tiefsten Punkt ist Lena kurz in Ruhe und h = 0. Wo steckt jetzt die gesamte Energie?'],
+  sol:`<p>a) h = 1,8 m + 0,60 m = 2,4 m → E<sub>L</sub> = 50 kg · 9,81 N/kg · 2,4 m ≈ <b>1177 J</b></p><p>b) Am tiefsten Punkt gilt E<sub>L</sub> = 0 und E<sub>B</sub> = 0 → die gesamte Energie steckt im Tuch: E<sub>Spann</sub> ≈ <b>1177 J</b></p><p>c) Bei jeder Umwandlung wird Energie entwertet. Lena ersetzt sie mit der Energie aus ihren Muskeln.</p>`},
+ u11:{parts:[
+  {q:'a) Wie groß ist die Masse des Wassers im vollen Oberbecken? (in Millionen kg)',u:'Mio. kg',a:2000,g:false},
+  {q:'b) Wie viel Lageenergie ist im vollen Oberbecken gespeichert? (in MWh)',u:'MWh',a:686.7,tol:.02},
+  {q:'c) Wie viel dieser Energie wird bei der Umwandlung in elektrische Energie entwertet?',u:'MWh',a:166.7,tol:.03},
+  {q:'d) Welcher Anteil der gespeicherten Energie wird als elektrische Energie genutzt?',u:'%',a:75.7,abs:1.2,g:false}],
+  hints:['a) 2 Millionen m³ · 1000 kg/m³ = 2 000 000 000 kg = 2000 Millionen kg.','b) Berechne E<sub>L</sub> = m · g · h in J (sehr große Zahl!). Teile dann durch 3 600 000 000, um MWh zu erhalten. Mit dem Taschenrechner: 2·10<sup>9</sup> · 9,81 · 126 / (3,6·10<sup>9</sup>).','c) Entwertet = gespeicherte Lageenergie − gelieferte elektrische Energie (520 MWh).','d) Anteil = 520 MWh / gespeicherte Energie · 100 %.'],
+  sol:`<p>a) m = 2 000 000 m³ · 1000 kg/m³ = 2 000 000 000 kg = <b>2000 Mio. kg</b></p><p>b) E<sub>L</sub> = 2·10<sup>9</sup> kg · 9,81 N/kg · 126 m ≈ 2,47·10<sup>12</sup> J → 2,47·10<sup>12</sup> J / 3,6·10<sup>9</sup> J ≈ <b>687 MWh</b></p><p>c) 687 MWh − 520 MWh ≈ <b>167 MWh</b> werden entwertet (Reibung in Rohren und Turbinen, Erwärmung von Generator und Leitungen).</p><p>d) 520 / 687 ≈ 0,76 → etwa <b>76 %</b>. Rund ein Viertel der gespeicherten Energie wird entwertet.</p>`},
+ u12:{parts:[
+  {q:'a) Wie viel Energie wird bei einem Durchgang durch die Halfpipe entwertet?',u:'J',a:161.865},
+  {q:'b) Angenommen, bei jedem Durchgang wird gleich viel Energie entwertet. Nach wie vielen Durchgängen erreicht Tom nur noch 1,5 m Höhe?',u:'Durchgänge',a:5,tol:0,abs:0,g:false},
+  {q:'c) Wie viel Energie muss Tom mit seinen Beinen zuführen, um von 1,5 m wieder auf 3,0 m zu kommen?',u:'J',a:809.325}],
+  hints:['a) Der Höhenunterschied pro Durchgang beträgt 3,0 m − 2,7 m = 0,3 m. E<sub>therm</sub> = m · g · 0,3 m.','b) Wenn jedes Mal gleich viel Energie entwertet wird, verliert Tom jedes Mal 0,3 m Höhe. Wie oft passen 0,3 m in 3,0 m − 1,5 m?','c) Die fehlende Lageenergie: m · g · (3,0 m − 1,5 m).'],
+  sol:`<p>a) E<sub>therm</sub> = 55 kg · 9,81 N/kg · 0,3 m ≈ <b>162 J</b></p><p>b) Pro Durchgang 0,3 m weniger: 1,5 m / 0,3 m = <b>5 Durchgänge</b> (3,0 → 2,7 → 2,4 → 2,1 → 1,8 → 1,5 m)</p><p>c) E = 55 kg · 9,81 N/kg · 1,5 m ≈ <b>809 J</b></p>`},
+ u13:{parts:[
+  {mc:'a) Warum kann diese Maschine nicht funktionieren?',opts:['Weil Wasserräder grundsätzlich keine Energie umwandeln können.','Weil bei jeder Umwandlung Energie entwertet wird. Die Pumpe bekommt weniger Energie, als nötig ist, um das ganze Wasser wieder hochzupumpen.','Weil das Wasser unten im Becken keine Masse mehr hat.'],c:1,
+   fb:['Wasserräder wandeln sehr wohl Energie um – das macht jedes Wasserkraftwerk.','Richtig. Selbst ohne Lampe bleibt die Maschine stehen, weil durch Reibung Energie entwertet wird. Mit Lampe erst recht.','Die Masse des Wassers bleibt natürlich gleich.']},
+  {mc:'b) Gegen welches Prinzip verstößt der Erfinder, wenn er zusätzlich eine Lampe betreiben will?',opts:['Energieerhaltung: Die Maschine müsste mehr Energie abgeben, als in ihr steckt – Energie kann aber nicht erzeugt werden.','Gegen gar keins, das ist nur eine technische Frage.'],c:0,
+   fb:['Genau. Ein Perpetuum mobile müsste Energie aus dem Nichts erzeugen. Das ist nach dem Energieerhaltungssatz unmöglich.','Doch – Energie aus dem Nichts widerspricht dem Prinzip der Energieerhaltung.']},
+  {q:'c) Das Wasserrad bekommt 1000 J Lageenergie vom Wasser. Durch Reibung werden 150 J entwertet, die Pumpe braucht für das Hochpumpen des Wassers wieder 1000 J. Wie viel Energie fehlt jeder Runde?',u:'J',a:150,g:false}],
+  hints:['Denk an das reale Pendel: Bleibt es von selbst in Bewegung?','c) Die Pumpe bekommt nur 1000 J − 150 J. Wie viel fehlt bis 1000 J?'],
+  sol:`<p>a) Bei jeder Umwandlung (Wasserrad, Pumpe) wird ein Teil der Energie in thermische Energie umgewandelt. Die Pumpe kann nie alles Wasser wieder hochpumpen.</p><p>b) Energie kann weder erzeugt noch vernichtet werden (Energieerhaltung). Eine Lampe zusätzlich zu betreiben hieße, Energie aus dem Nichts zu gewinnen.</p><p>c) Es fehlen <b>150 J</b> pro Runde – die Maschine bleibt stehen.</p>`}
+};
+$$('[data-num]').forEach(card=>{const id=card.dataset.num,spec=NUM[id];if(!spec)return;
+ const box=document.createElement('div');let h='';
+ spec.parts.forEach((p,i)=>{if(p.mc){h+=`<div class="numq"><div class="mcq"><p style="margin:.2em 0 .4em"><b>${p.mc}</b></p><div class="mc" data-i="${i}">${p.opts.map((o,j)=>`<button data-j="${j}">${o}</button>`).join('')}</div><p class="fb"></p></div></div>`}
+  else h+=`<div class="numq"><label for="${id}_${i}">${p.q}</label><span class="unit"><input type="text" inputmode="decimal" id="${id}_${i}" data-i="${i}" autocomplete="off"> ${p.u}</span></div>`});
+ h+=`<div class="row"><button class="primary" data-act="check">Prüfen</button><button data-act="hint">Tipp</button><button data-act="sol">Lösung zeigen</button></div><p class="fb"></p><div class="sol" hidden>${spec.sol}</div>`;
+ box.innerHTML=h;card.appendChild(box);
+ const st=spec.parts.map(p=>false),fb=box.querySelector(':scope>.fb'),sol=box.querySelector('.sol');let hi=0;
+ box.querySelectorAll('.mc[data-i]').forEach(m=>{const i=+m.dataset.i,p=spec.parts[i],f=m.parentNode.querySelector('.fb');
+  m.querySelectorAll('button').forEach(b=>b.onclick=()=>{const j=+b.dataset.j,ok=j===p.c;m.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');
+   f.className='fb '+(ok?'ok':'bad');f.textContent=p.fb[j];st[i]=ok;finish()})});
+ function finish(){if(st.every(Boolean)){fb.className='fb ok';fb.textContent='Alles richtig – stark! Vergleiche deinen Rechenweg mit der Lösung.';mark(card.dataset.task)}}
+ box.querySelector('[data-act=check]').onclick=()=>{let msgs=[],empty=0;
+  spec.parts.forEach((p,i)=>{if(p.mc)return;const inp=box.querySelector(`input[data-i="${i}"]`),r=judge(parseNum(inp.value),p);
+   inp.className=r==='ok'?'ok':r==='empty'?'':'bad';st[i]=r==='ok';
+   if(r==='empty')empty++;if(r==='g10')msgs.push('Rechnest du mit g = 10 N/kg? Nimm g = 9,81 N/kg.');if(r==='k')msgs.push('Prüfe die Einheit: Steht dort J oder kJ?')});
+  const mcOpen=spec.parts.some((p,i)=>p.mc&&!st[i]);
+  if(st.every(Boolean))return finish();
+  fb.className='fb bad';fb.textContent=(empty?`${empty} Feld${empty>1?'er sind':' ist'} noch leer. `:'')+([...new Set(msgs)].join(' ')||'')+(mcOpen?' Beantworte auch die Auswahlfrage.':'')+(!msgs.length&&!empty&&!mcOpen?'Rot markierte Werte stimmen noch nicht. Hol dir einen Tipp!':'')};
+ box.querySelector('[data-act=hint]').onclick=()=>{fb.className='fb hint';fb.innerHTML='💡 '+spec.hints[hi%spec.hints.length]+(spec.hints.length>1?` <small>(Tipp ${hi%spec.hints.length+1}/${spec.hints.length})</small>`:'');hi++};
+ box.querySelector('[data-act=sol]').onclick=()=>{sol.hidden=!sol.hidden}});
+
+/* ---------- Phase 1: Energieformen ---------- */
+{const FORMS=['Lageenergie','Bewegungsenergie','Spannenergie','thermische Energie','chemische Energie','elektrische Energie'];
+ const ITEMS=[['Ein Gewicht liegt oben auf einem Schrank.',0],['Ein Wagen fährt über den Tisch.',1],['Ein gespanntes Gummiband.',2],['Heißer Tee in einer Tasse.',3],['Ein Energieriegel bzw. eine volle Batterie.',4],['Der Strom aus der Steckdose.',5]];
+ $('#w1').innerHTML=ITEMS.map((it,i)=>`<div class="numq"><label for="w1_${i}">${it[0]}</label><select id="w1_${i}" data-a="${it[1]}"><option value="">– wählen –</option>${FORMS.map((f,j)=>`<option value="${j}">${f}</option>`).join('')}</select></div>`).join('');
+ $('#w1Check').onclick=()=>{let ok=0;$$('#w1 select').forEach(s=>{const g=s.value===s.dataset.a;s.className=s.value===''?'':g?'ok':'bad';if(g)ok++});
+  const fb=$('#w1Fb');if(ok===ITEMS.length){fb.className='fb ok';fb.textContent='Alles richtig!';mark('w1')}else{fb.className='fb bad';fb.textContent=`${ok} von ${ITEMS.length} richtig. Prüfe die rot markierten noch einmal.`}}}
+
+/* ---------- Phase 2A: Pendel-Labor ---------- */
+{const svg=$('#pend'),PV={x:235,y:30},LPX=290,LM=1.0,B=0.25;
+ const s={m:1,h:0.20,fric:false,slow:false,run:false,th:0,om:0,E0:0,maxR:0};
+ function reset(){s.h=+$('#pH').value/100;s.m=+$('#pM').value;s.th=-Math.acos(1-s.h/LM);s.om=0;s.E0=s.m*G*s.h;s.maxR=0;s.run=false;$('#pRun').textContent='▶ Start';draw()}
+ function energies(){const EL=s.m*G*LM*(1-Math.cos(s.th));let EB,Eth;
+  if(!s.fric){EB=Math.max(0,s.E0-EL);Eth=0}else{EB=0.5*s.m*(LM*s.om)**2;Eth=Math.max(0,s.E0-EL-EB)}return [EL,EB,Eth]}
+ function draw(){const bx=PV.x+LPX*Math.sin(s.th),by=PV.y+LPX*Math.cos(s.th),low=PV.y+LPX,th0=Math.acos(1-s.h/LM);
+  const hy=low-s.h*LPX/LM; let o='';
+  o+=R(0,low+18,470,60,'ground')+L(20,low,460,low,'dashl')+T(456,low-6,'Nullniveau (h = 0)','txs','text-anchor="end"');
+  o+=L(20,hy,460,hy,'dashl','stroke="var(--el)"')+T(456,hy-6,'Starthöhe '+fmt(s.h*100,0)+' cm','tel','text-anchor="end"');
+  o+=`<path d="M${PV.x-LPX*Math.sin(th0)} ${PV.y+LPX*Math.cos(th0)} A${LPX} ${LPX} 0 0 0 ${PV.x+LPX*Math.sin(th0)} ${PV.y+LPX*Math.cos(th0)}" fill="none" class="gl" stroke-width="2"/>`;
+  o+=`<g class="ghost">${C(PV.x-LPX*Math.sin(th0),PV.y+LPX*Math.cos(th0),10+5*s.m,'ball')}</g>`;
+  o+=L(PV.x-60,PV.y,PV.x+60,PV.y,'thin','stroke-width="5"')+L(PV.x,PV.y,bx,by,'thin');
+  const curH=(LM*(1-Math.cos(s.th)));
+  o+=L(bx+24,by,bx+24,low,'thin','stroke="var(--el)" stroke-width="2"')+T(bx+30,(by+low)/2+5,'h = '+fmt(curH*100,1)+' cm','tel');
+  o+=C(bx,by,10+5*s.m,'ball');
+  o+=T(500,28,'Energie in Joule','txb');
+  const [EL,EB,Eth]=energies();o+=bars(500,330,250,[EL,EB,Eth],s.E0);
+  svg.innerHTML=o}
+ let last=0;
+ function loop(t){if(!s.run)return;const dt=Math.min(0.05,(t-last)/1000)*(s.slow?0.25:1);last=t;
+  const n=Math.ceil(dt/0.001),h=dt/n;for(let i=0;i<n;i++){s.om+=(-(G/LM)*Math.sin(s.th)-(s.fric?B*s.om:0))*h;s.th+=s.om*h}
+  if(s.fric&&s.m*G*LM*(1-Math.cos(s.th))+0.5*s.m*(LM*s.om)**2<s.E0*0.002){s.th=0;s.om=0;s.run=false;$('#pRun').textContent='▶ Start'}
+  draw();if(s.run)requestAnimationFrame(loop)}
+ $('#pRun').onclick=()=>{s.run=!s.run;$('#pRun').textContent=s.run?'⏸ Anhalten':'▶ Weiter';if(s.run){last=performance.now();requestAnimationFrame(loop)}};
+ $('#pReset').onclick=reset;
+ $('#pH').oninput=()=>{$('#pHv').textContent=$('#pH').value;reset()};
+ $('#pM').oninput=()=>{$('#pMv').textContent=fmt(+$('#pM').value,1);reset()};
+ $('#pFric').onchange=()=>{s.fric=$('#pFric').checked;reset()};
+ $('#pSlow').onchange=()=>{s.slow=$('#pSlow').checked};
+ reset()}
+
+/* ---------- Phase 2B: Flummi-Labor ---------- */
+{const svg=$('#flum'),FL=350,SC=140,BX=250,TYPES={flummi:{m:.030,k:.8,r:11},tennis:{m:.058,k:.55,r:14},knete:{m:.050,k:0,r:13}};
+ const s={type:'flummi',H0:1.5,H:1.5,t:0,tA:0,run:false,slow:true,marks:[],stopped:false,squash:false};
+ function reset(){s.type=$('#fType').value;s.H0=+$('#fH').value;s.H=s.H0;s.tA=Math.sqrt(2*s.H/G);s.t=s.tA;s.marks=[];s.run=false;s.stopped=false;s.squash=false;$('#fRun').textContent='▶ Fallen lassen';draw()}
+ function y(){return s.stopped?0:Math.max(0,s.H-0.5*G*(s.t-s.tA)**2)}
+ function draw(){const ty=TYPES[s.type],yy=y(),m=ty.m;let o='';
+  o+=R(0,FL,470,30,'ground')+L(0,FL,470,FL,'thin');
+  for(let i=0;i<=20;i++){const py=FL-i*0.1*SC;o+=L(70,py,i%5===0?88:80,py,'thin');if(i%5===0)o+=T(62,py+5,fmt(i/10,1)+' m','txs','text-anchor="end"')}
+  o+=L(70,FL,70,FL-2*SC,'thin');
+  const sy=FL-s.H0*SC;o+=L(110,sy,380,sy,'dashl','stroke="var(--el)"')+T(385,sy+5,'Start '+s.H0.toFixed(2).replace('.',',')+' m','tel');
+  s.marks.forEach((h,i)=>{const py=FL-h*SC;o+=L(170,py,330,py,'dashl');if(i<4)o+=T(335,py+5,h.toFixed(2).replace('.',',')+' m','txs')});
+  const cy=FL-yy*SC-ty.r;
+  o+=s.squash?`<ellipse cx="${BX}" cy="${FL-6}" rx="${ty.r*1.6}" ry="6" class="ball"/>`:C(BX,cy,ty.r,'ball');
+  const EL=m*G*yy,EB=s.stopped?0:m*G*(s.H-yy),Eth=m*G*(s.H0-s.H)+(s.stopped?m*G*s.H:0);
+  o+=T(500,28,'Energie in Joule','txb')+bars(500,330,250,[EL,EB,Eth],m*G*s.H0);
+  svg.innerHTML=o}
+ let last=0;
+ function loop(t){if(!s.run)return;const dt=Math.min(0.05,(t-last)/1000)*(s.slow?0.3:1);last=t;const ty=TYPES[s.type];
+  const before=s.t;s.t+=dt;
+  if(before<s.tA&&s.t>=s.tA&&s.marks.length<12&&s.H<s.H0)s.marks.push(s.H);
+  if(s.t>=2*s.tA){ // Aufprall
+   const Hn=ty.k*s.H;
+   if(ty.k===0){s.squash=true;s.stopped=true;s.run=false;$('#fRun').textContent='▶ Fallen lassen'}
+   else if(Hn<0.01){s.H=Hn;s.stopped=true;s.run=false;$('#fRun').textContent='▶ Fallen lassen'}
+   else{const over=s.t-2*s.tA;s.H=Hn;s.tA=Math.sqrt(2*s.H/G);s.t=over}}
+  draw();if(s.run)requestAnimationFrame(loop)}
+ $('#fRun').onclick=()=>{if(s.stopped)reset();s.run=!s.run;$('#fRun').textContent=s.run?'⏸ Anhalten':'▶ Weiter';if(s.run){last=performance.now();requestAnimationFrame(loop)}};
+ $('#fReset').onclick=reset;$('#fType').onchange=reset;
+ $('#fH').oninput=()=>{$('#fHv').textContent=(+$('#fH').value).toFixed(2).replace('.',',');reset()};
+ $('#fSlow').onchange=()=>{s.slow=$('#fSlow').checked};
+ reset()}
+
+/* ---------- Phase 3: Lückentext ---------- */
+{const W=['erzeugt','vernichtet','umgewandelt','Gesamtenergie','Reibung','thermische Energie','wärmer','nutzen','entwertet','Energieverlust'];
+ const txt=`Energie kann weder {erzeugt} noch {vernichtet} werden. Sie wird nur von einer Energieform in andere Energieformen {umgewandelt}. Die {Gesamtenergie} bleibt immer gleich.<br><br>Ein echtes Pendel bleibt irgendwann stehen. Grund ist die {Reibung} an der Aufhängung und mit der Luft. Bei jeder Energieumwandlung wird ein Teil der Energie in {thermische Energie} der Umgebung umgewandelt – die Umgebung wird minimal {wärmer}. Diese verteilte Wärme kann man kaum noch {nutzen} – die Energie ist {entwertet}. Im Alltag spricht man (physikalisch ungenau) von „{Energieverlust}“.`;
+ const sorted=[...W].sort((a,b)=>a.localeCompare(b,'de'));let i=0;
+ $('#cloze').innerHTML=txt.replace(/\{([^}]+)\}/g,(m,w)=>`<select data-a="${esc(w)}" aria-label="Lücke ${++i}"><option value="">…</option>${sorted.map(x=>`<option>${esc(x)}</option>`).join('')}</select>`);
+ $('#clozeCheck').onclick=()=>{let ok=0,all=$$('#cloze select');all.forEach(s=>{const g=s.value===s.dataset.a;s.className=s.value===''?'':g?'ok':'bad';if(g)ok++});
+  const fb=$('#clozeFb');if(ok===all.length){fb.className='fb ok';fb.textContent='Perfekt! Diese beiden Merksätze gehören in dein Heft.';mark('h1')}else{fb.className='fb bad';fb.textContent=`${ok} von ${all.length} Lücken richtig.`}}}
+
+/* ---------- Phase 3: Energieflussdiagramm ---------- */
+{const k=50;let o='';const y0=60;
+ o+=`<path d="M20 ${y0} H230 L250 ${y0+k} L230 ${y0+2*k} H20 Z" class="fel" opacity=".9"/>`+T(30,y0+k-6,'Lageenergie','tx','fill="#fff" style="fill:#fff;font-weight:700"')+T(30,y0+k+14,'2,0 J','tx','style="fill:#fff"');
+ o+=`<path d="M250 ${y0} H520 L545 ${y0+0.8*k} L520 ${y0+1.6*k} H250 L270 ${y0+0.8*k} Z" class="feb" opacity=".9"/>`+T(290,y0+0.8*k-4,'Bewegungsenergie','tx','style="fill:#fff;font-weight:700"')+T(290,y0+0.8*k+16,'1,6 J','tx','style="fill:#fff"');
+ o+=`<path d="M250 ${y0+1.6*k} H290 C330 ${y0+1.6*k} 340 ${y0+2*k+20} 340 ${y0+2*k+60} L325 ${y0+2*k+60} L345 ${y0+2*k+80} L365 ${y0+2*k+60} L350 ${y0+2*k+60} C350 ${y0+2*k+20} 330 ${y0+2*k} 290 ${y0+2*k} H250 Z" class="feth" opacity=".9"/>`;
+ o+=T(375,y0+2*k+50,'thermische Energie 0,4 J','teth')+T(375,y0+2*k+68,'(Umgebung wird wärmer – entwertet)','txs');
+ o+=T(20,30,'Reales Pendel: vom Umkehrpunkt zum tiefsten Punkt','txb');
+ $('#sankey').innerHTML=o}
+
+/* ---------- Phase 3: Musterbeispiel ---------- */
+{const S=[
+ `<p><b>1 · Gegeben und gesucht notieren</b></p><p>Gegeben: m = 0,20 kg; h<sub>1</sub> = 1,5 m; h<sub>2</sub> = 1,2 m; g = 9,81 N/kg<br>Gesucht: E<sub>therm</sub></p><p>Nullniveau: der Boden.</p>`,
+ `<p><b>2 · Energie am Anfang</b></p><p>Der Ball ist in Ruhe, er hat nur Lageenergie:</p><div class="calc">E<sub>L1</sub> = m · g · h<sub>1</sub> = 0,20 kg · 9,81 N/kg · 1,5 m = 2,943 J</div>`,
+ `<p><b>3 · Kurz vor dem Aufprall</b></p><p>h = 0, also E<sub>L</sub> = 0. Nach der Energieerhaltung steckt die gesamte Energie jetzt als Bewegungsenergie im Ball:</p><div class="calc">E<sub>B</sub> = 2,943 J</div><p>Beim Aufprall wird der Ball verformt – hier wird ein Teil der Energie entwertet.</p>`,
+ `<p><b>4 · Energie am höchsten Punkt nach dem Sprung</b></p><p>Dort ist der Ball wieder kurz in Ruhe und hat nur Lageenergie:</p><div class="calc">E<sub>L2</sub> = m · g · h<sub>2</sub> = 0,20 kg · 9,81 N/kg · 1,2 m = 2,354 J</div>`,
+ `<p><b>5 · Differenz bilden und antworten</b></p><div class="calc">E<sub>therm</sub> = E<sub>L1</sub> − E<sub>L2</sub> = 2,943 J − 2,354 J ≈ 0,59 J</div><p><b>Antwort:</b> Beim Aufprall werden etwa 0,59 J in thermische Energie umgewandelt. Das sind 20 % der Anfangsenergie. Ball und Boden werden minimal wärmer.</p>`];
+ let i=0;$('#msSteps').innerHTML=S.map((_,k)=>`<i>${k+1}</i>`).join('');
+ function show(){$('#msText').innerHTML=S[i];$$('#msSteps i').forEach((e,k)=>e.classList.toggle('on',k<=i));$('#msPrev').disabled=i===0;$('#msNext').textContent=i===S.length-1?'Fertig ✓':'Weiter →';}
+ $('#msPrev').onclick=()=>{if(i>0){i--;show()}};$('#msNext').onclick=()=>{if(i<S.length-1){i++;show()}else mark('h2')};show()}
+
+/* ---------- Übung 1: Richtig/falsch ---------- */
+{const TF=[
+ ['Am tiefsten Punkt hat ein Pendel keine Energie mehr.',0,'Falsch: Dort ist die Lageenergie null, aber die Bewegungsenergie am größten.'],
+ ['Bei einem idealen Pendel (ohne Reibung) bleibt die Summe aus Lage- und Bewegungsenergie immer gleich.',1,'Richtig: E_L + E_B = konstant.'],
+ ['Bei der Energieentwertung wird Energie vernichtet.',0,'Falsch: Die Energie wird in thermische Energie der Umgebung umgewandelt. Sie ist noch da, aber kaum nutzbar.'],
+ ['Ein reales Pendel bleibt stehen, weil seine Energie durch Reibung in thermische Energie umgewandelt wurde.',1,'Richtig.'],
+ ['Ein fallen gelassener Ball kann ohne zusätzlichen Antrieb höher springen als seine Starthöhe.',0,'Falsch: Dafür bräuchte er mehr Energie, als er am Anfang hatte.'],
+ ['In einem Pumpspeicherkraftwerk wird Energie als Lageenergie des Wassers gespeichert.',1,'Richtig.'],
+ ['Thermische Energie, die in der Umgebung verteilt ist, lässt sich leicht wieder nutzen.',0,'Falsch: Genau deshalb spricht man von Entwertung.'],
+ ['Wenn man sagt „Energie geht verloren“, meint man physikalisch: Sie wird in eine Form umgewandelt, die man nicht mehr nutzen kann.',1,'Richtig: „Energieverlust“ ist ein ungenauer Alltagsbegriff für Energieentwertung.']];
+ const st=TF.map(()=>false);
+ $('#tf').innerHTML=TF.map((t,i)=>`<div class="item" data-i="${i}"><span>${t[0]}</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p></div>`).join('');
+ $$('#tf .item').forEach(it=>{const i=+it.dataset.i;it.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=+b.dataset.v===TF[i][1];
+  it.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');const f=it.querySelector('.fb');f.className='fb '+(ok?'ok':'bad');
+  f.textContent=ok?TF[i][2].replace(/E_L/g,'E_L').replace(/E_B/g,'E_B'):'Nicht ganz – überleg noch einmal.';st[i]=ok;if(st.every(Boolean))mark('u1')})})}
+
+/* ---------- Übung 2: Umwandlungen ---------- */
+{const F=['Lageenergie','Bewegungsenergie','Spannenergie','thermische Energie','chemische Energie','elektrische Energie'];
+ const IT=[['Eine Pendelkugel schwingt vom Umkehrpunkt nach unten.',0,1],['Ein Fahrrad bremst, die Bremsen werden heiß.',1,3],['Ein Elektromotor hebt eine Tafel Schokolade an.',5,0],['Ein Bogenschütze lässt die gespannte Sehne los, der Pfeil fliegt.',2,1],['Ein Trampolinspringer sinkt ins Sprungtuch ein.',1,2],['Wasser im Pumpspeicherkraftwerk wird nach oben gepumpt.',5,0],['Ein Mensch steigt mit Hilfe seiner Muskeln eine Treppe hinauf.',4,0]];
+ const sel=(id,a)=>`<select id="${id}" data-a="${a}" aria-label="Energieform"><option value="">– wählen –</option>${F.map((f,j)=>`<option value="${j}">${f}</option>`).join('')}</select>`;
+ $('#u2').innerHTML=IT.map((t,i)=>`<div class="chain"><span>${t[0]}</span>${sel('u2a'+i,t[1])}<span aria-hidden="true">→</span>${sel('u2b'+i,t[2])}</div>`).join('');
+ $('#u2Check').onclick=()=>{let ok=0,all=$$('#u2 select');all.forEach(s=>{const g=s.value===s.dataset.a;s.className=s.value===''?'':g?'ok':'bad';if(g)ok++});
+  const fb=$('#u2Fb');if(ok===all.length){fb.className='fb ok';fb.textContent='Alles richtig!';mark('u2')}else{fb.className='fb bad';fb.textContent=`${ok} von ${all.length} Feldern richtig. Frage dich jeweils: Was ist am Anfang da – und was am Ende?`}}}
+
+/* ---------- Übung 3: Entwertung erkennen ---------- */
+{const IT=[['Ein Auto bremst an der Ampel.',1],['Ein Laptop wird beim Arbeiten warm.',1],['Ein ideales Pendel im luftleeren Raum ohne Reibung.',0],['Du rutschst eine lange Rutsche herunter, deine Hose wird warm.',1],['Eine Glühlampe leuchtet und wird heiß.',1],['Ein Buch liegt ruhig auf dem Regal.',0],['Du reibst dir im Winter die Hände.',1],['Ein Handy-Ladegerät wird beim Laden warm.',1]];
+ $('#u3').innerHTML=IT.map((t,i)=>`<label><input type="checkbox" data-a="${t[1]}">${t[0]}</label>`).join('');
+ $('#u3Check').onclick=()=>{let ok=0;$$('#u3 input').forEach(c=>{const g=(c.checked?1:0)===+c.dataset.a;c.parentNode.className=g?'ok':'bad';if(g)ok++});
+  const fb=$('#u3Fb');if(ok===IT.length){fb.className='fb ok';fb.textContent='Richtig! Beim ruhenden Buch findet keine Umwandlung statt, beim idealen Pendel gibt es keine Reibung. Überall sonst wird Energie entwertet.';mark('u3')}
+  else{fb.className='fb bad';fb.textContent=`${ok} von ${IT.length} richtig eingeschätzt. Tipp: Wo entsteht Reibung oder wird etwas warm?`}}}
+
+/* ---------- Übung 4: Achterbahn-Säulen ---------- */
+{const P=[['A',28],['B',10],['C',0],['D',20]],UNIT=14,Y0=270,PX=16,xs=[110,250,390,530];const user=[null,null,null,null];
+ // Strecke
+ {let o='';const sx=[60,230,380,560],sy=h=>155-h*3.6;
+  o+=`<path d="M20 ${sy(28)} L${sx[0]} ${sy(28)} C110 ${sy(28)} 150 ${sy(10)} ${sx[1]} ${sy(10)} C290 ${sy(10)} 310 ${sy(0)} ${sx[2]} ${sy(0)} C440 ${sy(0)} 480 ${sy(20)} ${sx[3]} ${sy(20)} C590 ${sy(20)} 600 ${sy(14)} 625 ${sy(8)}" class="track"/>`;
+  o+=L(10,sy(0)+3,630,sy(0)+3,'dashl');
+  P.forEach((p,i)=>{o+=C(sx[i],sy(p[1])-8,7,'ball')+T(sx[i],sy(p[1])-22,p[0]+' ('+p[1]+' m)','txb','text-anchor="middle"')});
+  $('#u4track').innerHTML=o}
+ const svg=$('#u4');
+ function draw(sol){let o='';
+  for(let u=0;u<=UNIT;u++){const y=Y0-u*PX;o+=L(50,y,620,y,'gl')}
+  o+=L(50,Y0-UNIT*PX,620,Y0-UNIT*PX,'dashl')+T(52,Y0-UNIT*PX-6,'Gesamtenergie (ohne Reibung)','txs');
+  P.forEach((p,i)=>{const x=xs[i],el=p[1]/2,eb=sol?UNIT-el:user[i];
+   o+=R(x-44,Y0-el*PX,40,el*PX,'fel','rx="2"');
+   o+=`<rect x="${x+4}" y="${Y0-UNIT*PX}" width="40" height="${UNIT*PX}" fill="none" stroke="var(--eb)" stroke-dasharray="3 4" rx="3"/>`;
+   if(eb!=null)o+=R(x+4,Y0-eb*PX,40,eb*PX,'feb','rx="2"')+(eb===0?T(x+24,Y0-6,'0','teb','text-anchor="middle"'):'');
+   o+=T(x,Y0+22,p[0],'txb','text-anchor="middle"')+T(x-24,Y0+40,sub('E','L'),'tel','text-anchor="middle"')+T(x+24,Y0+40,sub('E','B'),'teb','text-anchor="middle"')});
+  o+=L(50,Y0,620,Y0,'thin');P.forEach((p,i)=>{o+=`<rect x="${xs[i]+2}" y="${Y0-UNIT*PX-8}" width="44" height="${UNIT*PX+16}" class="hit" data-i="${i}"><title>Bewegungsenergie in ${p[0]} festlegen</title></rect>`});svg.innerHTML=o;
+  svg.querySelectorAll('.hit').forEach(h=>h.onclick=ev=>{const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;const q=p.matrixTransform(svg.getScreenCTM().inverse());
+   user[+h.dataset.i]=Math.max(0,Math.min(UNIT,Math.round((Y0-q.y)/PX)));draw(false)})}
+ draw(false);
+ $('#u4Check').onclick=()=>{const fb=$('#u4Fb');if(user.some(v=>v==null)){fb.className='fb bad';fb.textContent='Zeichne in allen vier Punkten die Bewegungsenergie ein.';return}
+  const wrong=P.filter((p,i)=>user[i]!==UNIT-p[1]/2).map(p=>p[0]);
+  if(!wrong.length){fb.className='fb ok';fb.textContent='Richtig! In jedem Punkt ergeben die blaue und die grüne Säule zusammen die Gesamtenergie.';mark('u4')}
+  else{fb.className='fb bad';fb.textContent='Noch nicht richtig bei: '+wrong.join(', ')+'. Blau + Grün muss jeweils bis zur gestrichelten Linie reichen.'}};
+ $('#u4Hint').onclick=()=>{const fb=$('#u4Fb');fb.className='fb hint';fb.innerHTML='💡 Ohne Reibung gilt E<sub>L</sub> + E<sub>B</sub> = konstant. In A ist der Wagen in Ruhe – die gesamte Energie ist dort Lageenergie. Je tiefer der Wagen, desto mehr Bewegungsenergie.'};
+ $('#u4Solve').onclick=()=>draw(true)}
+
+updProg();
+}
+</script>
+</body>
+</html>
