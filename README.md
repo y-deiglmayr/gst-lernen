@@ -6,6 +6,7 @@ Interaktive HTML-Lerninhalte für den Unterricht, veröffentlicht über Cloudfla
 
 ```
 index.html                  Startseite mit allen Lernpfaden
+fonts/                      Schriften lokal (Lexend, Atkinson Hyperlegible, SIL OFL) – keine Google-Server
 Physik8/
   reflexion-spiegel.html    Reflexion am ebenen Spiegel
 ```
@@ -24,3 +25,7 @@ z. B. `/Physik8/reflexion-spiegel`. Groß- und Kleinschreibung der Ordner gehör
 - Framework preset: None
 - Build command: (leer)
 - Build output directory: `/`
+
+## Schriften
+
+Neue Seiten binden die Schriften mit `<link rel="stylesheet" href="/fonts/fonts.css">` ein – nicht über Google Fonts.
