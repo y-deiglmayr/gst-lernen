@@ -238,6 +238,23 @@ nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
 .lab-tbl td.sum{font-weight:700}
 .seg{display:inline-flex;flex-wrap:wrap;gap:6px}
 .tc1{color:var(--f1)}.tc2{color:var(--f2)}.tcg{color:var(--pg)}
+.ctrl{grid-template-columns:repeat(2,minmax(0,1fr))}
+/* Handy: Navigation in einer Zeile, Simulation mit Reglern auf einen Bildschirm */
+@media(max-width:600px){
+ nav .wrap{flex-wrap:nowrap;gap:0 2px;padding:6px 8px}
+ nav a{font-size:0;padding:6px 3px;white-space:nowrap}
+ nav a span{font-size:13px;margin-right:0}
+ nav a[href="/"]{font-size:0;gap:0}
+ nav .prog{margin-left:auto;font-size:13px;white-space:nowrap}nav .prog .bar{width:56px}
+ .hero>.wrap>svg,.hero .phases{display:none}
+ .ctrl{grid-template-columns:1fr 1fr;gap:0 12px}
+ .ctrl label{font-size:13px}
+ .ctrl input[type=range]{min-height:30px}
+ .toggles{gap:6px;margin:6px 0}.toggles label{min-height:36px;padding:4px 10px;font-size:14px}
+ .stick .row{margin:6px 0;gap:6px}.stick .row button{padding:6px 10px;min-height:38px;font-size:14px}
+ .fig svg:not(.board) .txb{font-size:21px}.fig svg:not(.board):not(#ramp) .txs{font-size:18px}
+ .sim-read{grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}.sim-read div{font-size:13px;padding:4px 8px}.sim-read b{font-size:16px}
+}
 
 .ftarea{fill:color-mix(in srgb,var(--f1) 22%,transparent);stroke:var(--f1);stroke-width:2.5}
 </style>
