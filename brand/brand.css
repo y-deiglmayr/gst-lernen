@@ -73,3 +73,22 @@ nav .theme-btn{margin-left:4px}
 :root{--behind:light-dark(#edf3f4,#212b2d)}
 .ground{fill:light-dark(#e3e8e9,#2c3537)}
 .disk{fill:light-dark(#f6f8f8,#252d2f)}
+/* ===== Heftaufschrieb: deutlich grün hervorgehoben (alle Lernpfade, hell und dunkel) ===== */
+:root{--gst-heft:light-dark(#2b7a4b,#6cc591);--gst-heft-bg:light-dark(#eef7f1,#1c2b23);--gst-on-heft:light-dark(#ffffff,#10201a)}
+.heft{--grid:light-dark(#d3e8da,#294034);border:3px solid var(--gst-heft);box-shadow:0 0 0 4px color-mix(in srgb,var(--gst-heft) 14%,transparent)}
+.heft h3,.heft h4{color:var(--gst-heft)}
+.heft h3::before{background:var(--gst-heft)}
+/* Heftaufschrieb-Kästen (z. B. Impuls): grüner Rahmen und grüne Kopfzeile */
+.heftbox{border:3px solid var(--gst-heft);box-shadow:0 0 0 4px color-mix(in srgb,var(--gst-heft) 14%,transparent)}
+.heftbox .heft{border:0;box-shadow:none}
+.hb-head{background:var(--gst-heft);color:var(--gst-on-heft)}
+.hb-foot{background:var(--gst-heft-bg)}
+/* Aufklappbare Musterlösung „Heftaufschrieb …“ */
+details.reveal:has(>.heft){border:2px solid var(--gst-heft);border-style:solid;background:var(--gst-heft-bg)}
+details.reveal:has(>.heft)>summary{color:var(--gst-heft);font-weight:700}
+details.reveal:has(>.heft)>summary::after{content:" ✎ Heftaufschrieb";font:700 12px "Source Sans 3",sans-serif;letter-spacing:.04em;text-transform:uppercase;margin-left:8px;padding:2px 8px;border-radius:20px;background:var(--gst-heft);color:var(--gst-on-heft);vertical-align:2px}
+/* Hinweise und Sprungmarken „ins Heft“ */
+.insheft{border-color:var(--gst-heft);color:var(--gst-heft);background:var(--gst-heft-bg)}
+.insheft::before{background:var(--gst-heft)}
+nav a.heftlink span,a.heftlink span{background:var(--gst-heft);color:var(--gst-on-heft)}
+.heft .calc{border-left-color:var(--gst-heft)}
