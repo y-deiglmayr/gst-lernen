@@ -7,7 +7,7 @@ h1{font-weight:700;letter-spacing:-.01em}
 h2,h3{font-weight:700}
 /* Kopfbereich: Schiefer mit Pixel-Mosaik und Farbleiste wie in der Vorlage */
 .hero{background:var(--gst-slate) url(/brand/mosaik-links.svg) no-repeat left top/auto 54px;border-bottom:8px solid;
- border-image:linear-gradient(90deg,#323d3e 0 26%,var(--gst-slate2) 26% 30%,var(--gst-green) 30% 34%,var(--gst-blue) 34% 38%,var(--gst-grey) 38% 42%,var(--gst-light) 42%) 1}
+ border-image:linear-gradient(90deg,#323d3e 0 26%,var(--gst-slate2) 26% 30%,var(--gst-green) 30% 34%,var(--gst-blue) 34% 38%,var(--gst-grey) 38% 42%,light-dark(var(--gst-light),#3a4547) 42%) 1}
 .hero h1::before{content:"";display:inline-block;width:.32em;height:.32em;background:var(--gst-yellow);margin-right:.18em;vertical-align:baseline}
 .phases a{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18)}
 .phases a:hover,.phases a:focus-visible{border-color:var(--gst-yellow)}
@@ -24,3 +24,52 @@ footer .wrap::before{content:"";display:block;width:40px;height:33px;margin-bott
 /* Formelsatz (KaTeX): etwas kleiner als Standard, damit Formeln zum Fließtext passen */
 f-m .katex{font-size:1.07em}
 .formula f-m .katex{font-size:1em}
+
+/* ===== Einheitliches Farbsystem (hell und dunkel) =====
+   Grundfarben aus der Schul-CI, Dunkelmodus in Schiefer-Tönen statt Dunkelblau.
+   Umschalten: /brand/theme.js setzt data-theme="light|dark" auf <html> (sonst folgt die Seite dem Gerät).
+   Fachliche Farben (Laser, Energieformen, Kräfte …) werden hier NICHT verändert. */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#1b2122);--ink:light-dark(#232b2c,#e9edee);--muted:light-dark(#566467,#a9b6b9);
+--panel:light-dark(#f2f4f5,#232b2d);--paper:light-dark(#fcfdfd,#1f2627);--line:light-dark(#cfd7d9,#3a4547);
+--grid:light-dark(#dde5e7,#2b3436);--hint:light-dark(#fff5d6,#33301c);
+--gst-acc:light-dark(#3f6267,#a3c3c8);--gst-on-acc:light-dark(#ffffff,#162021);
+--gst-mark:#FCBE00;--gst-gold:light-dark(#9a7000,#FCBE00);
+--lab:light-dark(#3E4B4C,#2a3536);--labink:#f1f4f4}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+/* Kopf */
+.hero p{color:#d3dcde}
+.phases a{color:#f1f4f4}
+.phases small{color:#b9c6c9}
+/* Navigation und Fortschritt */
+nav a span{background:var(--gst-acc);color:var(--gst-on-acc)}
+.bar i{background:var(--gst-mark)}
+.prog .bar{background:var(--line)}
+/* Bedienelemente: ruhig in Graugrün, Gelb nur als Markierung */
+button.primary,a.lnk.nx{background:var(--gst-acc);border-color:var(--gst-acc);color:var(--gst-on-acc)}
+button.primary:hover,a.lnk.nx:hover{filter:brightness(1.08)}
+.steps i.on{background:var(--gst-acc);border-color:var(--gst-acc);color:var(--gst-on-acc)}
+input[type=range],.toggles input,.checks input,input[type=checkbox],input[type=radio]{accent-color:var(--gst-acc)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible,textarea:focus-visible,svg.board:focus-visible{outline:3px solid var(--gst-mark);outline-offset:2px}
+.stars{color:var(--gst-gold)}
+/* Merksätze und Heftaufschrieb */
+.merke{border-color:var(--gst-acc);border-left-width:6px}
+.merke h4{color:var(--gst-acc)}
+.merke h4::before,.heft h3::before{content:"";display:inline-block;width:.42em;height:.42em;background:var(--gst-mark);margin-right:.35em;vertical-align:.08em}
+.heft h3{color:var(--gst-acc)}
+.calc{border-left-color:var(--gst-acc)}
+details.exp summary,.exp h4{color:var(--gst-acc)}
+/* Schalter für hell/dunkel (von theme.js eingefügt) */
+.theme-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;min-width:40px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink);font:600 14px "Source Sans 3",system-ui,sans-serif;cursor:pointer}
+.theme-btn:hover{background:var(--panel);border-color:var(--muted)}
+.theme-btn svg{width:18px;height:18px;flex:none}
+nav .theme-btn{margin-left:4px}
+@media print{.theme-btn{display:none}}
+.theme-switch{display:inline-flex;gap:4px;padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.theme-switch .theme-btn{border-color:transparent;min-height:36px}
+.theme-switch .theme-btn[aria-pressed=true]{background:var(--bg);border-color:var(--line);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+@media(max-width:480px){.theme-switch .theme-btn span{display:none}}
+/* Neutrale Flächen in den Grafiken (Boden, Scheiben, Raum hinter dem Spiegel) an die Grautöne anpassen */
+:root{--behind:light-dark(#edf3f4,#212b2d)}
+.ground{fill:light-dark(#e3e8e9,#2c3537)}
+.disk{fill:light-dark(#f6f8f8,#252d2f)}

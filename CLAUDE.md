@@ -18,6 +18,8 @@ Details zu Aufbau, Branding und Formeln: `README.md`.
 - Schulfarben: Schiefer #3E4B4C, #5F6F74, Graugrün #76989D, #ACBDC3, #C9D2D3, Hellgrau #E4E7E9, Akzentgelb #FCBE00.
   Keine eigenen Dunkelblau-Töne für Kopf oder Vorschaubilder (Vorschaubild-Grund: #3E4B4C bzw. #2f393a).
 - Fachliche Farben bleiben (Optik: Laserrot; Energie: E_L blau, E_B grün, E_therm rot …).
+- Farbsystem und Darkmode stehen zentral in `brand/brand.css` (Grundflächen, Text, Linien hell/dunkel in Schiefer-Tönen; Bedienelemente, Merke, Heft-Überschriften in dunklem Graugrün `--gst-acc`; Akzentgelb `--gst-mark` nur als Markierung: Fortschritt, Fokus, kleine Quadrate). Keine eigenen Akzentfarben (Orange, Laserrot) für Navigation, Knöpfe, Merke oder Heft.
+- Darkmode: `<script src="/brand/theme.js"></script>` direkt nach `/fonts/fonts.css` im `<head>` (ohne defer). Es setzt `data-theme` auf `<html>` (localStorage `gst-theme`) und fügt in Lernpfaden einen Hell/Dunkel-Knopf in `nav .wrap` ein; auf der Startseite steht die Auswahl Automatisch/Hell/Dunkel im Platzhalter `data-theme-switch`. Farben in Lernpfaden immer mit `light-dark(hell,dunkel)`, dunkle Werte in Schiefer-Tönen (z. B. #1b2122, #232b2d), kein Dunkelblau.
 - Schriften nur lokal über `/fonts/fonts.css` (Überschriften Source Sans 3 kommt über brand.css), keine Google Fonts, keine externen Dienste.
 - QR-Code der eigenen Live-Adresse im Kopf (Python `segno`), Startseite-Eintrag in `KURSE` + Vorschaubild in `BILDER`, README-Liste ergänzen.
 

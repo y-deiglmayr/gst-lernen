@@ -49,10 +49,12 @@ Neue Seiten binden die Schriften mit `<link rel="stylesheet" href="/fonts/fonts.
 Farben, Logo und Mosaik stammen aus der PowerPoint-Vorlage der Schule und liegen in `brand/`:
 
 - `brand/brand.css` – gemeinsames Branding für alle Lernpfade (Kopf in Schiefergrau mit Pixel-Mosaik, Farbleiste, Logo in Navigation und Fuß, Überschriften in Source Sans 3)
+- `brand/theme.js` – Hell/Dunkel-Umschaltung (Wahl auf der Startseite oder per Knopf in der Navigation, gilt für alle Seiten, gespeichert nur im Browser)
 - `brand/logo.svg`, `brand/mosaik-links.svg`, `brand/mosaik-rechts.svg`
 - Farben: Schiefer #3E4B4C, #5F6F74, Graugrün #76989D, #ACBDC3, #C9D2D3, Hellgrau #E4E7E9, Akzentgelb #FCBE00
 
-Neue Lernpfade binden nach ihrem `<style>`-Block ein: `<link rel="stylesheet" href="/brand/brand.css">`.
+Neue Lernpfade binden im `<head>` nach `/fonts/fonts.css` `<script src="/brand/theme.js"></script>` ein und nach ihrem `<style>`-Block `<link rel="stylesheet" href="/brand/brand.css">`.
+`brand.css` legt das gemeinsame Farbsystem für hell und dunkel fest (Schiefer-Grautöne, dunkles Graugrün für Bedienelemente, Merke und Heftaufschrieb, Akzentgelb nur als Markierung).
 Die fachlichen Farben der Lernpfade (z. B. Laserrot, Energie-Farben) bleiben bewusst erhalten.
 Schrift: Source Sans 3 (SIL OFL) als freie Alternative zur Hausschrift Myriad Pro.
 
