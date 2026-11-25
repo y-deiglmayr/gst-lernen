@@ -109,3 +109,6 @@ nav a.heftlink span,a.heftlink span{background:var(--gst-heft);color:var(--gst-o
  table.mess,.lab-tbl,.heft table{font-size:13px}
  table.mess th,table.mess td,.lab-tbl th,.lab-tbl td,.heft td,.heft th{padding:4px 5px}
 }
+/* Dezenter Link zu Impressum und Datenschutz im Fuß */
+footer .rechtl{font-size:13px;margin:.8em 0 0;color:var(--muted)}
+footer .rechtl a{color:inherit}

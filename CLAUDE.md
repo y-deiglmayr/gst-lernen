@@ -22,6 +22,7 @@ Details zu Aufbau, Branding und Formeln: `README.md`.
 - Heftaufschriebe sind überall deutlich grün (`--gst-heft`, zentral in brand.css): `.heft`, Kästen `.heftbox` mit Kopf `.hb-head`, aufklappbare Musterlösung `details.reveal` mit `.heft` darin, `.insheft`, `a.heftlink`. Keine eigenen Farben dafür in den Seiten.
 - Darkmode: `<script src="/brand/theme.js"></script>` direkt nach `/fonts/fonts.css` im `<head>` (ohne defer). Es setzt `data-theme` auf `<html>` (localStorage `gst-theme`) und fügt in Lernpfaden einen Hell/Dunkel-Knopf in `nav .wrap` ein; auf der Startseite steht die Auswahl Automatisch/Hell/Dunkel im Platzhalter `data-theme-switch`. Farben in Lernpfaden immer mit `light-dark(hell,dunkel)`, dunkle Werte in Schiefer-Tönen (z. B. #1b2122, #232b2d), kein Dunkelblau.
 - Schriften nur lokal über `/fonts/fonts.css` (Überschriften Source Sans 3 kommt über brand.css), keine Google Fonts, keine externen Dienste.
+- Im Fuß jedes Lernpfads (am Ende von `footer .wrap`): `<p class="rechtl"><a href="/impressum">Impressum · Datenschutz</a></p>`. Impressum, Datenschutz, KI-Hinweis und Haftung stehen zentral in `impressum.html`; neue externe Dienste nur nach Ergänzung dort.
 - QR-Code der eigenen Live-Adresse im Kopf (Python `segno`), Startseite-Eintrag in `KURSE` + Vorschaubild in `BILDER`, README-Liste ergänzen.
 
 ## Formeln

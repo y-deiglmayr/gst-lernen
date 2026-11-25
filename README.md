@@ -6,6 +6,7 @@ Interaktive HTML-Lerninhalte für den Unterricht, veröffentlicht über Cloudfla
 
 ```
 index.html                  Startseite mit allen Lernpfaden
+impressum.html              Impressum, Datenschutz, Urheberrecht/KI, Haftung (Link im Fuß jeder Seite)
 fonts/                      Schriften lokal (Lexend, Atkinson Hyperlegible, SIL OFL) – keine Google-Server
 Physik8/
   reflexion-spiegel.html    Reflexion am ebenen Spiegel
