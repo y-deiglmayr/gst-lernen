@@ -184,6 +184,9 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 @media print{body.printprot>*:not(#protokoll){display:none!important}#protokoll{display:block!important;padding:20px;color:#000;background:#fff}#protokoll h2{margin:0 0 10px}#protokoll .pr{border:1px solid #999;padding:8px 12px;margin:8px 0;min-height:70px;white-space:pre-wrap}}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
 </head>
 <body>
 <nav aria-label="Phasen"><div class="wrap">
@@ -222,7 +225,7 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 </div>
 <div class="merke"><h4>Merke: Energie</h4>
 <p style="margin:0">Energie ist die Fähigkeit, Körper zu <b>bewegen</b>, zu <b>verformen</b>, zu <b>erwärmen</b> oder <b>Licht</b> auszusenden.<br>
-Formelzeichen: <b>E</b> &nbsp;·&nbsp; Einheit: <b>1 Joule (J)</b> &nbsp;·&nbsp; 1 kJ = 1000 J &nbsp;·&nbsp; 1 MJ = 1000 kJ</p></div>
+Formelzeichen: <b>E</b> &nbsp;·&nbsp; Einheit: <b>1 Joule (J)</b> &nbsp;·&nbsp; <f-m>1 kJ = 1000 J</f-m> &nbsp;·&nbsp; <f-m>1 MJ = 1000 kJ</f-m></p></div>
 
 <h3>Wie viel ist ein Joule?</h3>
 <p class="intro">Ein Joule ist nicht viel: Etwa so viel Energie brauchst du, um eine Tafel Schokolade (100 g) einen Meter hochzuheben. Fahre mit der Maus oder dem Finger über die Skala. Jeder Teilstrich bedeutet das <b>Zehnfache</b>.</p>
@@ -233,7 +236,7 @@ Formelzeichen: <b>E</b> &nbsp;·&nbsp; Einheit: <b>1 Joule (J)</b> &nbsp;·&nbsp
 <p>Ein Schokoriegel enthält etwa 1000 kJ, ein voller Handy-Akku speichert etwa 50 kJ. Wie oft könnte man mit der Energie eines Schokoriegels (theoretisch) ein Handy aufladen?</p>
 <div class="mc" data-correct="b" data-task="e2">
 <button data-k="a">etwa 2-mal</button>
-<button data-k="b" data-fb="Richtig: 1000 kJ : 50 kJ = 20. Lebensmittel enthalten erstaunlich viel Energie!">etwa 20-mal</button>
+<button data-k="b" data-fb="Richtig: <f-m>1000 kJ : 50 kJ = 20</f-m>. Lebensmittel enthalten erstaunlich viel Energie!">etwa 20-mal</button>
 <button data-k="c">etwa 200-mal</button>
 <p class="fb"></p></div>
 </div>
@@ -302,7 +305,7 @@ Dabei geht keine Energie <select data-a="verloren"></select>.
 <div class="heft">
 <h3>Was ist Energie?</h3>
 <p>Energie ist die Fähigkeit, Körper zu bewegen, zu verformen, zu erwärmen oder Licht auszusenden.</p>
-<p><span class="box">Formelzeichen: E &nbsp;&nbsp; Einheit: 1 Joule (1 J) &nbsp;&nbsp; 1 kJ = 1000 J</span></p>
+<p><span class="box">Formelzeichen: E &nbsp;&nbsp; Einheit: 1 Joule (1 J) &nbsp;&nbsp; <f-m>1 kJ = 1000 J</f-m></span></p>
 <h3>Energieformen</h3>
 <ul>
 <li><b>Lageenergie E<sub>L</sub></b> – Körper in der Höhe (Wasser im Stausee, Kugel auf dem Regal)</li>
@@ -339,7 +342,7 @@ Dabei geht keine Energie <select data-a="verloren"></select>.
 
 <div class="card" data-task="u3">
 <div class="tag"><span class="stars">★</span> Übung 3 · Einheiten umrechnen</div>
-<p>Rechne um. Merke: 1 kJ = 1000 J und 1 MJ = 1000 kJ.</p>
+<p>Rechne um. Merke: <f-m>1 kJ = 1000 J</f-m> und <f-m>1 MJ = 1000 kJ</f-m>.</p>
 <div class="numq"><span>a) 2,5 kJ =</span><span class="unit"><input type="text" inputmode="decimal" id="u3a" data-a="2500" aria-label="a in J"> J</span></div>
 <div class="numq"><span>b) 4700 J =</span><span class="unit"><input type="text" inputmode="decimal" id="u3b" data-a="4.7" aria-label="b in kJ"> kJ</span></div>
 <div class="numq"><span>c) 0,3 MJ =</span><span class="unit"><input type="text" inputmode="decimal" id="u3c" data-a="300" aria-label="c in kJ"> kJ</span></div>
@@ -364,7 +367,7 @@ Dabei geht keine Energie <select data-a="verloren"></select>.
 <div class="numq"><span>c) Wie viele Gramm Gummibärchen würden den ganzen Tagesbedarf decken?</span><span class="unit"><input type="text" inputmode="decimal" id="u5c" data-a="699.3" data-tol="0.02" aria-label="c in g"> g</span></div>
 <div class="row"><button class="primary" id="u5Check">Prüfen</button><button data-hint="u5">Tipp</button><button data-sol="u5Sol">Lösung zeigen</button></div>
 <p class="fb" id="u5Fb"></p><p class="tip" id="u5Tip"></p>
-<div class="sol" id="u5Sol" hidden><p>a) 2 · 1430 kJ = <b>2860 kJ</b></p><p>b) 2860 kJ : 10 000 kJ = 0,286 = <b>28,6 %</b></p><p>c) 10 000 kJ : 1430 kJ · 100 g ≈ <b>699 g</b> – also fast 3,5 Tüten. Gesund wäre das nicht!</p></div>
+<div class="sol" id="u5Sol" hidden><p>a) <f-m>2 · 1430 kJ = <b>2860 kJ</b></f-m></p><p>b) <f-m>2860 kJ : 10 000 kJ = 0,286 = <b>28,6 %</b></f-m></p><p>c) <f-m>10 000 kJ : 1430 kJ · 100 g ≈ <b>699 g</b></f-m> – also fast 3,5 Tüten. Gesund wäre das nicht!</p></div>
 </div>
 
 <div class="card">
@@ -504,31 +507,31 @@ const bulb=(x,y,on)=>(on?C(x,y,30,'','style="fill:#ffd54a;opacity:.35"'):'')+C(x
 
 /* ---------- Stationen ---------- */
 const ST=[
-{id:'s1',f:'L',name:'Lageenergie',sym:'E<sub>L</sub>',ctrl:{label:'Fallhöhe',min:10,max:100,step:10,val:40,unit:'cm'},btn:'Fallen lassen',
+{id:'s1',f:'L',name:'Lageenergie',sym:'<f-m>E<sub>L</sub></f-m>',ctrl:{label:'Fallhöhe',min:10,max:100,step:10,val:40,unit:'cm'},btn:'Fallen lassen',
  text:'Eine Kugel, die hoch liegt, besitzt <b>Lageenergie</b>. Lässt du sie fallen, kann sie Knete verformen.',
  exp:{mat:'Knete (oder Sand in einer Schale), eine Murmel oder Stahlkugel, Lineal',steps:['Drücke die Knete glatt.','Lass die Kugel aus 20 cm, 40 cm und 60 cm Höhe auf die Knete fallen – jedes Mal an eine neue Stelle.','Vergleiche die Tiefe der Dellen.']},
  q:{t:'Was beobachtest du, wenn die Kugel aus größerer Höhe fällt?',o:['Die Delle wird flacher.','Die Delle wird tiefer.','Die Delle bleibt gleich.'],c:1,fb:'Richtig! Je höher die Kugel liegt, desto mehr Lageenergie besitzt sie – und desto stärker verformt sie die Knete.'}},
-{id:'s2',f:'B',name:'Bewegungsenergie',sym:'E<sub>B</sub>',ctrl:{label:'Geschwindigkeit',min:1,max:5,step:1,val:2,unit:''},btn:'Losfahren',
+{id:'s2',f:'B',name:'Bewegungsenergie',sym:'<f-m>E<sub>B</sub></f-m>',ctrl:{label:'Geschwindigkeit',min:1,max:5,step:1,val:2,unit:''},btn:'Losfahren',
  text:'Ein fahrendes Auto besitzt <b>Bewegungsenergie</b>. Fährt es gegen eine Schachtel, schiebt es sie ein Stück weiter.',
  exp:{mat:'Spielzeugauto, ein Brett und ein paar Bücher als Rampe, eine leere Streichholzschachtel',steps:['Stelle die Schachtel ans Ende der Rampe.','Lass das Auto einmal von weit unten und einmal von weit oben die Rampe herunterrollen.','Miss, wie weit die Schachtel jeweils geschoben wird.']},
  q:{t:'Was passiert, wenn das Auto schneller ist?',o:['Die Schachtel wird weiter geschoben.','Die Schachtel wird weniger weit geschoben.','Das macht keinen Unterschied.'],c:0,fb:'Richtig! Je schneller ein Körper ist, desto mehr Bewegungsenergie hat er. (Auch eine größere Masse bedeutet mehr Bewegungsenergie.)'}},
-{id:'s3',f:'Sp',name:'Spannenergie',sym:'E<sub>Sp</sub>',ctrl:{label:'Spannen',min:1,max:5,step:1,val:2,unit:''},btn:'Loslassen',
+{id:'s3',f:'Sp',name:'Spannenergie',sym:'<f-m>E<sub>Sp</sub></f-m>',ctrl:{label:'Spannen',min:1,max:5,step:1,val:2,unit:''},btn:'Loslassen',
  text:'Ein gespanntes Gummiband besitzt <b>Spannenergie</b>. Lässt du los, schleudert es eine Papierkugel weg.',
  exp:{mat:'Gummiband, Papierkügelchen, Maßband',steps:['Spanne das Gummiband zwischen Daumen und Zeigefinger.','Schieße das Papierkügelchen einmal mit wenig und einmal mit starker Dehnung ab.','Miss die Flugweiten.'],safe:'Ziele niemals auf Personen oder Tiere!'},
  q:{t:'Was beobachtest du bei stärkerer Dehnung?',o:['Das Kügelchen fliegt weniger weit.','Das Kügelchen fliegt weiter.','Die Flugweite ändert sich nicht.'],c:1,fb:'Richtig! Je stärker ein elastischer Körper verformt ist, desto mehr Spannenergie besitzt er.'}},
-{id:'s4',f:'th',name:'thermische Energie',sym:'E<sub>therm</sub>',btn:'Eiswürfel hineinlegen',
+{id:'s4',f:'th',name:'thermische Energie',sym:'<f-m>E<sub>therm</sub></f-m>',btn:'Eiswürfel hineinlegen',
  text:'Warme Körper besitzen <b>thermische Energie</b>. Mit ihr kann man zum Beispiel Eis schmelzen.',
  exp:{mat:'zwei gleiche Gläser, kaltes und warmes Leitungswasser, zwei gleich große Eiswürfel, Uhr',steps:['Fülle ein Glas mit kaltem, das andere mit warmem Wasser (gleich viel).','Lege gleichzeitig in jedes Glas einen Eiswürfel.','Stoppe, wann die Eiswürfel geschmolzen sind.']},
  q:{t:'In welchem Glas schmilzt das Eis schneller – und warum?',o:['Im kalten Wasser, weil es dem Eis ähnlicher ist.','Im warmen Wasser, weil es mehr thermische Energie hat.','In beiden gleich schnell.'],c:1,fb:'Richtig! Das warme Wasser hat mehr thermische Energie. Ein Teil davon wird zum Schmelzen des Eises gebraucht.'}},
-{id:'s5',f:'ch',name:'chemische Energie',sym:'E<sub>chem</sub>',btn:'Teelicht anzünden',
+{id:'s5',f:'ch',name:'chemische Energie',sym:'<f-m>E<sub>chem</sub></f-m>',btn:'Teelicht anzünden',
  text:'Brennstoffe, Nahrung und Batterien speichern <b>chemische Energie</b>. Beim Verbrennen wird sie frei.',
  exp:{mat:'Teelicht, Reagenzglas mit etwa 10 mL Wasser, Thermometer, Stativ',steps:['Spanne das Reagenzglas mit Wasser und Thermometer über das Teelicht.','Zünde das Teelicht an.','Lies alle 30 Sekunden die Temperatur ab.'],safe:'Nur mit deiner Lehrkraft! Schutzbrille tragen.'},
  q:{t:'Woher stammt die Energie, die das Wasser erwärmt?',o:['Aus dem Streichholz.','Aus dem Wachs: Beim Verbrennen wird seine chemische Energie frei.','Aus dem Glas.'],c:1,fb:'Richtig! Im Wachs ist chemische Energie gespeichert. Beim Verbrennen wird sie in thermische Energie (und Licht) umgewandelt.'}},
-{id:'s6',f:'el',name:'elektrische Energie',sym:'E<sub>el</sub>',btn:'Schalter umlegen',
+{id:'s6',f:'el',name:'elektrische Energie',sym:'<f-m>E<sub>el</sub></f-m>',btn:'Schalter umlegen',
  text:'Mit elektrischem Strom wird <b>elektrische Energie</b> übertragen – zum Beispiel von der Batterie zur Lampe und zum Motor.',
  exp:{mat:'Flachbatterie 4,5 V, Lämpchen mit Fassung, kleiner Elektromotor, Kabel, Schalter',steps:['Baue den Stromkreis wie in der Simulation auf.','Schließe den Schalter.','Beobachte Lampe und Motor. Fühle nach einiger Zeit vorsichtig am Lämpchen.']},
  q:{t:'Was machen Lampe und Motor mit der elektrischen Energie?',o:['Sie verbrauchen sie, danach ist sie weg.','Die Lampe wandelt sie in Licht (und Wärme), der Motor in Bewegung um.','Sie speichern sie für später.'],c:1,fb:'Richtig! Lampe und Motor sind Energiewandler. Die Energie ist danach nicht weg, sondern liegt in anderer Form vor.'}},
-{id:'s7',f:'St',name:'Strahlungsenergie',sym:'E<sub>Str</sub>',btn:'Lampe einschalten',
+{id:'s7',f:'St',name:'Strahlungsenergie',sym:'<f-m>E<sub>Str</sub></f-m>',btn:'Lampe einschalten',
  text:'Licht transportiert <b>Strahlungsenergie</b>. Trifft es auf einen Körper, kann es ihn erwärmen.',
  exp:{mat:'ein schwarzes und ein weißes Blatt Papier, zwei Thermometer, Sonne oder Schreibtischlampe',steps:['Lege die Thermometer unter die beiden Papiere.','Stelle beide in die Sonne oder unter die Lampe.','Lies nach 10 Minuten die Temperaturen ab.']},
  q:{t:'Was beobachtest du?',o:['Unter dem weißen Papier wird es wärmer.','Unter dem schwarzen Papier wird es wärmer.','Beide bleiben gleich kalt.'],c:1,fb:'Richtig! Dunkle Flächen nehmen mehr Strahlungsenergie auf und wandeln sie in thermische Energie um. Deshalb wird ein schwarzes T-Shirt in der Sonne heißer.'}}];
@@ -630,11 +633,11 @@ ST.forEach(st=>{const svg=$('#sv_'+st.id),inp=$('#in_'+st.id);let k=0,running=fa
  hints.u1=['Hoch oben → Lageenergie. In Bewegung → Bewegungsenergie. Verformt (gespannt, gedehnt, zusammengedrückt) → Spannenergie.','Alles, was man essen oder verbrennen kann, und Batterien speichern chemische Energie.','Wind ist bewegte Luft.']}
 
 /* ---------- Übung 2 ---------- */
-tfBuild('tf',[['Energie wird in Joule (J) gemessen.',true,'Die Einheit der Energie ist 1 Joule.'],['Wenn eine Lampe leuchtet, wird Energie vernichtet.',false,'Energie wird nie vernichtet – die Lampe wandelt elektrische Energie in Licht und thermische Energie um.'],['Ein ruhender Stein auf einem Berg besitzt Energie.',true,'Er besitzt Lageenergie. Rollt er herunter, wird sie in Bewegungsenergie umgewandelt.'],['Eine Batterie speichert elektrische Energie.',false,'Streng genommen speichert sie chemische Energie. Erst beim Entladen wird daraus elektrische Energie.'],['Ein Mensch ist ein Energiewandler.',true,'Er wandelt die chemische Energie der Nahrung z. B. in Bewegungsenergie und thermische Energie um.'],['1 kJ ist weniger als 500 J.',false,'1 kJ = 1000 J – also mehr als 500 J.']],'u2');
+tfBuild('tf',[['Energie wird in Joule (J) gemessen.',true,'Die Einheit der Energie ist 1 Joule.'],['Wenn eine Lampe leuchtet, wird Energie vernichtet.',false,'Energie wird nie vernichtet – die Lampe wandelt elektrische Energie in Licht und thermische Energie um.'],['Ein ruhender Stein auf einem Berg besitzt Energie.',true,'Er besitzt Lageenergie. Rollt er herunter, wird sie in Bewegungsenergie umgewandelt.'],['Eine Batterie speichert elektrische Energie.',false,'Streng genommen speichert sie chemische Energie. Erst beim Entladen wird daraus elektrische Energie.'],['Ein Mensch ist ein Energiewandler.',true,'Er wandelt die chemische Energie der Nahrung z. B. in Bewegungsenergie und thermische Energie um.'],['1 kJ ist weniger als 500 J.',false,'<f-m>1 kJ = 1000 J</f-m> – also mehr als 500 J.']],'u2');
 
 /* ---------- Übung 3 ---------- */
 numCheck('#u3Check',['#u3a','#u3b','#u3c','#u3d'],'#u3Fb','u3','Alles richtig! Von kJ nach J: mal 1000. Von J nach kJ: durch 1000.');
-hints.u3=['Von kJ nach J rechnest du · 1000, von J nach kJ rechnest du : 1000.','b) 4700 : 1000 = 4,7','c) 1 MJ = 1000 kJ, also 0,3 MJ = 0,3 · 1000 kJ.'];
+hints.u3=['Von kJ nach J rechnest du · 1000, von J nach kJ rechnest du : 1000.','b) <f-m>4700 : 1000 = 4,7</f-m>','c) <f-m>1 MJ = 1000 kJ</f-m>, also <f-m>0,3 MJ = 0,3 · 1000 kJ</f-m>.'];
 
 /* ---------- Übung 4 ---------- */
 {const D=[['Bohrmaschine','el','B','th'],['Auto mit Benzinmotor','ch','B','th'],['Glühlampe','el','St','th'],['Kerze','ch','St','th']];
@@ -652,7 +655,7 @@ hints.u3=['Von kJ nach J rechnest du · 1000, von J nach kJ rechnest du : 1000.'
 
 /* ---------- Übung 5 ---------- */
 numCheck('#u5Check',['#u5a','#u5b','#u5c'],'#u5Fb','u5','Richtig gerechnet! 200 g Gummibärchen liefern fast ein Drittel der Energie, die du an einem Tag brauchst.');
-hints.u5=['a) Die Tüte enthält doppelt so viel wie 100 g.','b) Anteil = 2860 kJ : 10 000 kJ. Mal 100 ergibt Prozent.','c) Wie oft passt 1430 kJ in 10 000 kJ? So oft brauchst du 100 g.'];
+hints.u5=['a) Die Tüte enthält doppelt so viel wie 100 g.','b) Anteil = <f-m>2860 kJ : 10 000 kJ</f-m>. Mal 100 ergibt Prozent.','c) Wie oft passt 1430 kJ in 10 000 kJ? So oft brauchst du 100 g.'];
 
 $('#whyV2').outerHTML=whyBox('v2','b) Begründe: Warum sagen Physikerinnen und Physiker nicht gern „Energieverbrauch“?','Energie kann <b>nicht verbraucht</b> werden – sie wird nur <b>umgewandelt</b>. Was wir „verbrauchen“, ist <b>nutzbare</b> Energie: Am Ende liegt sie meist als <b>thermische Energie</b> der Umgebung vor, mit der man kaum noch etwas anfangen kann. Man spricht von <b>Energieentwertung</b>.');
 $('#whyU6').outerHTML=whyBox('u6d','c) Begründe: Warum wird ein schwarzes Auto in der Sonne heißer als ein weißes?','Sonnenlicht transportiert <b>Strahlungsenergie</b>. Dunkle Flächen nehmen mehr davon auf (helle werfen mehr zurück) und wandeln sie in <b>thermische Energie</b> um. Deshalb erwärmt sich das schwarze Auto stärker – wie das schwarze Papier an Station 7.');

@@ -166,6 +166,9 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 @media print{nav,.qrbtn{display:none}}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -210,14 +213,14 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="fig">
 <svg id="ws" viewBox="0 0 600 330" role="img" aria-label="Winkelscheibe mit Spiegel, Einfallslot und Laserstrahl"></svg>
 </div>
-<div class="row"><label for="alpha" style="font-weight:700;white-space:nowrap">Einfallswinkel α = <span id="alphaVal">30</span>°</label></div>
+<div class="row"><label for="alpha" style="font-weight:700;white-space:nowrap">Einfallswinkel <f-m>α</f-m> = <span id="alphaVal">30</span>°</label></div>
 <input type="range" id="alpha" min="0" max="80" step="1" value="30" aria-label="Einfallswinkel">
-<p class="caption">Stelle mit dem Regler den Einfallswinkel ein. Den Reflexionswinkel β liest du selbst an der Skala ab – genau wie im echten Versuch.</p>
+<p class="caption">Stelle mit dem Regler den Einfallswinkel ein. Den Reflexionswinkel <f-m>β</f-m> liest du selbst an der Skala ab – genau wie im echten Versuch.</p>
 </div>
 <div>
 <div class="card" data-task="r1">
 <div class="tag">Auftrag 1 · Messen</div>
-<p>Stelle nacheinander α = 0°, 10°, …, 80° ein. Lies jeweils β an der Winkelscheibe ab und trage ihn ein.</p>
+<p>Stelle nacheinander <f-m>α = 0°</f-m>, 10°, …, 80° ein. Lies jeweils <f-m>β</f-m> an der Winkelscheibe ab und trage ihn ein.</p>
 <div class="messgrid" id="messTab"></div>
 <div class="row"><button class="primary" id="messCheck">Messwerte prüfen</button></div>
 <p class="fb" id="messFb"></p>
@@ -225,14 +228,14 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="card mc" data-task="r2" data-correct="b">
 <div class="tag">Auftrag 2 · Ergebnis formulieren</div>
 <p>Welcher Satz beschreibt dein Messergebnis?</p>
-<button data-k="a" data-fb="Schau in deine Tabelle: Bei α = 30° hast du nicht 60° gemessen.">Der Reflexionswinkel ist doppelt so groß wie der Einfallswinkel.</button>
-<button data-k="b" data-fb="Genau! Das ist das Reflexionsgesetz: α = β.">Einfallswinkel und Reflexionswinkel sind immer gleich groß.</button>
-<button data-k="c" data-fb="Dann wäre β bei α = 0° gleich 90°. Das passt nicht zu deiner Messung.">Einfallswinkel und Reflexionswinkel ergeben zusammen 90°.</button>
+<button data-k="a" data-fb="Schau in deine Tabelle: Bei <f-m>α = 30°</f-m> hast du nicht 60° gemessen.">Der Reflexionswinkel ist doppelt so groß wie der Einfallswinkel.</button>
+<button data-k="b" data-fb="Genau! Das ist das Reflexionsgesetz: <f-m>α = β</f-m>.">Einfallswinkel und Reflexionswinkel sind immer gleich groß.</button>
+<button data-k="c" data-fb="Dann wäre <f-m>β</f-m> bei <f-m>α = 0°</f-m> gleich 90°. Das passt nicht zu deiner Messung.">Einfallswinkel und Reflexionswinkel ergeben zusammen 90°.</button>
 <p class="fb"></p>
 </div>
 <div class="card mc" data-task="r3" data-correct="a">
 <div class="tag">Auftrag 3 · Aufgepasst!</div>
-<p>Von wo aus werden α und β gemessen?</p>
+<p>Von wo aus werden <f-m>α</f-m> und <f-m>β</f-m> gemessen?</p>
 <button data-k="a" data-fb="Richtig. Das Einfallslot ist die Senkrechte zum Spiegel im Auftreffpunkt.">Vom Einfallslot (Senkrechte auf dem Spiegel) aus.</button>
 <button data-k="b" data-fb="Häufiger Fehler! Gemessen wird immer zum Lot – das ist die gestrichelte Linie in der Abbildung.">Von der Spiegeloberfläche aus.</button>
 <p class="fb"></p>
@@ -244,7 +247,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="merke"><h4>Das Reflexionsgesetz</h4>
 <ul>
 <li>Einfallender Strahl, Einfallslot und reflektierter Strahl liegen in einer Ebene.</li>
-<li>Einfallswinkel und Reflexionswinkel sind gleich groß: <b>α = β</b>. Beide werden zum Einfallslot gemessen.</li>
+<li>Einfallswinkel und Reflexionswinkel sind gleich groß: <f-m><b>α = β</b></f-m>. Beide werden zum Einfallslot gemessen.</li>
 <li>Der Lichtweg ist umkehrbar.</li>
 </ul>
 <p style="margin:0">Ein glatter Spiegel reflektiert Licht <b>gerichtet</b> (alle parallelen Strahlen in dieselbe Richtung). Raue Oberflächen wie Papier streuen das Licht in alle Richtungen (<b>diffuse Reflexion</b>) – deshalb siehst du in einem Blatt Papier kein Spiegelbild.</p>
@@ -289,8 +292,8 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="card mc" data-task="e3" data-correct="a">
 <div class="tag">Auftrag 3 · Abstände</div>
 <p>Schalte <b>Abstände g und b</b> ein. g ist der Abstand Gegenstand–Spiegel (Gegenstandsweite), b der Abstand Bild–Spiegel (Bildweite). Verschiebe die Kerze. Was gilt?</p>
-<button data-k="a" data-fb="Richtig: b = g. Das Bild liegt genauso weit hinter dem Spiegel wie der Gegenstand davor.">Bildweite und Gegenstandsweite sind immer gleich: b = g.</button>
-<button data-k="b" data-fb="Vergleiche die Zahlen noch einmal bei verschiedenen Positionen.">Die Bildweite ist immer doppelt so groß: b = 2·g.</button>
+<button data-k="a" data-fb="Richtig: <f-m>b = g</f-m>. Das Bild liegt genauso weit hinter dem Spiegel wie der Gegenstand davor.">Bildweite und Gegenstandsweite sind immer gleich: <f-m>b = g</f-m>.</button>
+<button data-k="b" data-fb="Vergleiche die Zahlen noch einmal bei verschiedenen Positionen.">Die Bildweite ist immer doppelt so groß: <f-m>b = 2·g</f-m>.</button>
 <button data-k="c" data-fb="Bewege das Auge – die Werte für g und b ändern sich dabei gar nicht.">Das hängt davon ab, wo das Auge ist.</button>
 <p class="fb"></p>
 </div>
@@ -364,7 +367,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="cloze" id="cloze">
 Ein ebener Spiegel reflektiert Licht <select data-ans="gerichtet"><option value="">…</option><option>gestreut</option><option>gerichtet</option></select>. Dabei gilt: Einfallswinkel und Reflexionswinkel sind <select data-ans="gleich groß"><option value="">…</option><option>verschieden</option><option>gleich groß</option></select>; beide werden zum <select data-ans="Einfallslot"><option value="">…</option><option>Einfallslot</option><option>Spiegel</option></select> gemessen.
 Das Licht vom Gegenstand wird am Spiegel reflektiert und gelangt ins Auge. Unser Gehirn verlängert die Strahlen <select data-ans="geradlinig nach hinten"><option value="">…</option><option>geradlinig nach hinten</option><option>bis zur Kerze</option></select>. Deshalb sehen wir das Bild <select data-ans="hinter"><option value="">…</option><option>vor</option><option>auf</option><option>hinter</option></select> dem Spiegel.
-Das Spiegelbild ist <select data-ans="gleich groß"><option value="">…</option><option>kleiner</option><option>gleich groß</option><option>größer</option></select> wie der Gegenstand und <select data-ans="aufrecht"><option value="">…</option><option>aufrecht</option><option>umgekehrt</option></select>. Die Bildweite b ist <select data-ans="gleich"><option value="">…</option><option>gleich</option><option>doppelt so groß wie</option></select> der Gegenstandsweite g. Die Verbindungslinie Gegenstand–Bild steht <select data-ans="senkrecht"><option value="">…</option><option>parallel</option><option>senkrecht</option></select> auf dem Spiegel. Weil man es nicht auf einem Schirm auffangen kann, ist es ein <select data-ans="virtuelles"><option value="">…</option><option>reelles</option><option>virtuelles</option></select> Bild. Der Spiegel vertauscht <select data-ans="vorne und hinten"><option value="">…</option><option>links und rechts</option><option>oben und unten</option><option>vorne und hinten</option></select>.
+Das Spiegelbild ist <select data-ans="gleich groß"><option value="">…</option><option>kleiner</option><option>gleich groß</option><option>größer</option></select> wie der Gegenstand und <select data-ans="aufrecht"><option value="">…</option><option>aufrecht</option><option>umgekehrt</option></select>. Die Bildweite <f-m>b</f-m> ist <select data-ans="gleich"><option value="">…</option><option>gleich</option><option>doppelt so groß wie</option></select> der Gegenstandsweite <f-m>g</f-m>. Die Verbindungslinie Gegenstand–Bild steht <select data-ans="senkrecht"><option value="">…</option><option>parallel</option><option>senkrecht</option></select> auf dem Spiegel. Weil man es nicht auf einem Schirm auffangen kann, ist es ein <select data-ans="virtuelles"><option value="">…</option><option>reelles</option><option>virtuelles</option></select> Bild. Der Spiegel vertauscht <select data-ans="vorne und hinten"><option value="">…</option><option>links und rechts</option><option>oben und unten</option><option>vorne und hinten</option></select>.
 </div>
 <div class="row"><button class="primary" id="clozeCheck">Prüfen</button></div>
 <p class="fb" id="clozeFb"></p>
@@ -386,13 +389,13 @@ Das Spiegelbild ist <select data-ans="gleich groß"><option value="">…</option
 <details class="reveal" id="heftDet"><summary>Musterlösung Heftaufschrieb anzeigen</summary>
 <div class="heft" id="heft">
 <h3>2.3.1 Reflexion am ebenen Spiegel – das Spiegelbild</h3>
-<p><b>Reflexionsgesetz:</b> Einfallender Strahl, Einfallslot und reflektierter Strahl liegen in einer Ebene. Es gilt <span class="box">α = β</span> (Winkel zum Lot gemessen). Der Lichtweg ist umkehrbar.</p>
+<p><b>Reflexionsgesetz:</b> Einfallender Strahl, Einfallslot und reflektierter Strahl liegen in einer Ebene. Es gilt <span class="box"><f-m>α = β</f-m></span> (Winkel zum Lot gemessen). Der Lichtweg ist umkehrbar.</p>
 <p><b>Entstehung des Spiegelbilds:</b> Licht vom Gegenstand wird am Spiegel reflektiert und gelangt ins Auge. Das Gehirn nimmt an, dass Licht geradlinig ins Auge fällt, und verlängert die Strahlen nach hinten. Wo sich die Rückverlängerungen schneiden, sehen wir das Bild – hinter dem Spiegel.</p>
 <svg viewBox="0 0 660 300" style="width:100%;max-width:620px;display:block;margin:6px 0 10px" id="heftFig" role="img" aria-label="Skizze: Kerze, Spiegel, Spiegelbild und Lichtweg ins Auge"></svg>
 <p><b>Eigenschaften des Spiegelbilds:</b></p>
 <ul>
 <li>Es liegt <b>hinter</b> dem Spiegel, und zwar für jeden Beobachter an derselben Stelle.</li>
-<li><b>Bildweite = Gegenstandsweite</b> (b = g); die Verbindungslinie Gegenstand–Bild steht senkrecht auf dem Spiegel (Achsenspiegelung).</li>
+<li><b>Bildweite = Gegenstandsweite</b> <f-m>(b = g)</f-m>; die Verbindungslinie Gegenstand–Bild steht senkrecht auf dem Spiegel (Achsenspiegelung).</li>
 <li>Es ist <b>gleich groß</b> wie der Gegenstand und <b>aufrecht</b>.</li>
 <li>Es ist <b>virtuell</b> (Scheinbild): Man kann es nicht auf einem Schirm auffangen.</li>
 <li>Es ist <b>spiegelverkehrt</b>: Der Spiegel vertauscht vorne und hinten.</li>
@@ -565,11 +568,11 @@ $$('.mc[data-correct]').forEach(box=>{if(box.id==='u6mc')return;const fb=box.que
   let s=L(sx,sy,Cx,Cy,'ray','stroke-width="3"')+L(Cx,Cy,ex,ey,'ray','stroke-width="3"')+arrow(sx,sy,Cx,Cy,'aw',.55)+arrow(Cx,Cy,ex,ey,'aw',.45);
   s+=`<g transform="translate(${bx},${by}) rotate(${deg})"><rect x="-52" y="-11" width="52" height="22" rx="4" fill="#2b3140"/><rect x="-6" y="-4" width="6" height="8" fill="#dc2f28"/></g>`;
   if(al>2){const r=48;s+=`<path d="M${Cx} ${Cy-r} A${r} ${r} 0 0 0 ${Cx-r*Math.sin(a)} ${Cy-r*Math.cos(a)}" class="thin"/><path d="M${Cx} ${Cy-r} A${r} ${r} 0 0 1 ${Cx+r*Math.sin(a)} ${Cy-r*Math.cos(a)}" class="thin"/>`;
-   s+=T(Cx-64*Math.sin(a/2)-5,Cy-64*Math.cos(a/2)+5,'α','txb')+T(Cx+64*Math.sin(a/2)-5,Cy-64*Math.cos(a/2)+5,'β','txb')}
+   s+=T(Cx-64*Math.sin(a/2)-5,Cy-64*Math.cos(a/2)+5,'<f-m>α</f-m>','txb')+T(Cx+64*Math.sin(a/2)-5,Cy-64*Math.cos(a/2)+5,'<f-m>β</f-m>','txb')}
   $('#wsDyn').innerHTML=s}
  $('#alpha').oninput=draw;draw();
  const vals=[0,10,20,30,40,50,60,70,80];
- $('#messTab').innerHTML=vals.map(v=>`<label><span>α = ${v}°</span><span class="unit">β = <input type="number" data-a="${v}" aria-label="β bei α=${v}°">°</span></label>`).join('');
+ $('#messTab').innerHTML=vals.map(v=>`<label><span><f-m>α = ${v}</f-m>°</span><span class="unit"><f-m>β</f-m> = <input type="number" data-a="${v}" aria-label="β bei α=${v}°">°</span></label>`).join('');
  $('#messCheck').onclick=()=>{let ok=0,empty=0;$$('#messTab input').forEach(i=>{if(i.value===''){empty++;i.className='';return}const g=Math.abs(+i.value-+i.dataset.a)<=1;i.className=g?'ok':'bad';if(g)ok++});
   const fb=$('#messFb');if(ok===9){fb.className='fb ok';fb.textContent='Alle Messwerte stimmen. Fällt dir ein Zusammenhang auf?';mark('r1')}
   else{fb.className='fb bad';fb.textContent=(empty?empty+' Felder sind noch leer. ':'')+(9-ok-empty?'Rot markierte Werte noch einmal ablesen – genau auf die kleinen Striche achten.':'')}}}
@@ -631,7 +634,7 @@ $('#clozeCheck').onclick=()=>{let ok=0,all=$$('#cloze select');all.forEach(s=>{c
  ['① Bildpunkt konstruieren','Zeichne von G aus das Lot auf den Spiegel (rechter Winkel!). Verlängere es hinter den Spiegel um die gleiche Länge: G liegt 5 Kästchen vor dem Spiegel, also liegt G\' 5 Kästchen dahinter.'],
  ['② Bildpunkt mit dem Auge verbinden','Verbinde G\' geradlinig mit dem Auge. Hinter dem Spiegel zeichnest du diese Linie gestrichelt – dort läuft kein echtes Licht. Der Schnittpunkt mit dem Spiegel ist der Reflexionspunkt R.'],
  ['③ Lichtweg einzeichnen','Verbinde G mit R. Der echte Lichtweg ist G → R → Auge. Vergiss die Pfeile in Lichtrichtung nicht!'],
- ['Kontrolle mit dem Reflexionsgesetz','Zeichne in R das Einfallslot ein. Einfallswinkel α und Reflexionswinkel β sind gleich groß – die Konstruktion stimmt also mit dem Reflexionsgesetz überein.'],
+ ['Kontrolle mit dem Reflexionsgesetz','Zeichne in R das Einfallslot ein. Einfallswinkel <f-m>α</f-m> und Reflexionswinkel <f-m>β</f-m> sind gleich groß – die Konstruktion stimmt also mit dem Reflexionsgesetz überein.'],
  ['Ganze Kerze spiegeln','Spiegelst du auch den Fußpunkt der Kerze, erhältst du das ganze Spiegelbild: gleich groß, aufrecht, gleich weit hinter dem Spiegel. Auch vom Fuß kommt Licht über einen eigenen Reflexionspunkt ins Auge.']];
  let k=0;$('#consSteps').innerHTML=steps.map((_,i)=>`<i>${i}</i>`).join('');
  function draw(){let o=grid(660,390,c)+`<rect x="${M}" y="0" width="${660-M}" height="390" class="behind" opacity=".55"/>`+mirrorV(M,0,390)+T(M+14,20,'Spiegel','txm');
@@ -642,7 +645,7 @@ $('#clozeCheck').onclick=()=>{let ok=0,all=$$('#cloze select');all.forEach(s=>{c
   if(k>=3){o+=L(G.x,G.y,Rg.x,Rg.y,'ray')+arrow(G.x,G.y,Rg.x,Rg.y,'aw')+arrow(Rg.x,Rg.y,A.x+6,A.y,'aw')}
   if(k>=4){o+=L(Rg.x,Rg.y,Rg.x-110,Rg.y,'lot');const r=40,a1=Math.atan2(G.y-Rg.y,G.x-Rg.x),a2=Math.atan2(A.y-Rg.y,A.x-Rg.x);
    o+=`<path d="M${Rg.x-r} ${Rg.y} A${r} ${r} 0 0 0 ${Rg.x+r*Math.cos(a1)} ${Rg.y+r*Math.sin(a1)}" class="thin"/><path d="M${Rg.x-r} ${Rg.y} A${r} ${r} 0 0 1 ${Rg.x+r*Math.cos(a2)} ${Rg.y+r*Math.sin(a2)}" class="thin"/>`;
-   o+=T(Rg.x-62,Rg.y+22,'α','txb')+T(Rg.x-62,Rg.y-10,'β','txb')}
+   o+=T(Rg.x-62,Rg.y+22,'<f-m>α</f-m>','txb')+T(Rg.x-62,Rg.y-10,'<f-m>β</f-m>','txb')}
   if(k>=5){o+=`<g class="ghost">${candle(Gi.x,Bi.y,Bi.y-Gi.y)}</g>`+L(B.x,B.y,Bi.x,Bi.y,'thin','stroke-dasharray="3 4"')+L(Bi.x,Bi.y,M,Rb.y,'ray2 dash','stroke-width="1.6"')+L(B.x,B.y,M,Rb.y,'ray2')+L(M,Rb.y,A.x+6,A.y,'ray2')+arrow(B.x,B.y,M,Rb.y,'aw2')+arrow(M,Rb.y,A.x+6,A.y,'aw2')+T(Bi.x+10,Bi.y+4,"Bild der Kerze",'txs')}
   svg.innerHTML=o;$('#consH').textContent=steps[k][0];$('#consP').textContent=steps[k][1];
   $$('#consSteps i').forEach((e,i)=>e.classList.toggle('on',i<=k));$('#consPrev').disabled=k===0;$('#consNext').disabled=k===steps.length-1}
@@ -651,14 +654,14 @@ $('#clozeCheck').onclick=()=>{let ok=0,all=$$('#cloze select');all.forEach(s=>{c
  const hc=25,hM=12*hc,hG={x:6*hc,y:5*hc},hB={x:6*hc,y:10*hc},hA={x:2*hc,y:2*hc},hGi={x:18*hc,y:5*hc},hR={x:hM,y:hGi.y+(hM-hGi.x)/(hA.x-hGi.x)*(hA.y-hGi.y)};
  let h=`<rect x="${hM}" y="0" width="${660-hM}" height="300" class="behind" opacity=".5"/>`+mirrorV(hM,0,300)+candle(hG.x,hB.y,hB.y-hG.y)+`<g class="ghost">${candle(hGi.x,hB.y,hB.y-hG.y)}</g>`+eye(hA.x,hA.y);
  h+=L(hG.x,hG.y,hGi.x,hGi.y,'thin','stroke-dasharray="3 4"')+L(hG.x,hR.y,hR.x,hR.y,'')+L(hGi.x,hGi.y,hR.x,hR.y,'ray dash','stroke-width="1.7"')+L(hG.x,hG.y,hR.x,hR.y,'ray')+L(hR.x,hR.y,hA.x+6,hA.y,'ray')+arrow(hG.x,hG.y,hR.x,hR.y,'aw')+arrow(hR.x,hR.y,hA.x+6,hA.y,'aw');
- h+=L(hR.x,hR.y,hR.x-80,hR.y,'lot')+T(hR.x-70,hR.y+20,'α','txb')+T(hR.x-70,hR.y-8,'β','txb')+T(hG.x-24,hG.y+5,'G','txb')+T(hGi.x+12,hGi.y+5,"G'",'txl')+T(hR.x+8,hR.y-8,'R','txl');
+ h+=L(hR.x,hR.y,hR.x-80,hR.y,'lot')+T(hR.x-70,hR.y+20,'<f-m>α</f-m>','txb')+T(hR.x-70,hR.y-8,'<f-m>β</f-m>','txb')+T(hG.x-24,hG.y+5,'G','txb')+T(hGi.x+12,hGi.y+5,"G'",'txl')+T(hR.x+8,hR.y-8,'R','txl');
  h+=L(hG.x,hB.y+18,hM,hB.y+18,'thin')+L(hM,hB.y+18,hGi.x,hB.y+18,'thin')+T((hG.x+hM)/2,hB.y+38,'g','txb','text-anchor="middle"')+T((hGi.x+hM)/2,hB.y+38,'b','txb','text-anchor="middle"')+T(hGi.x+18,hB.y-8,'virtuelles Bild','txs')+T(hM+12,18,'Spiegel','txm');
  $('#heftFig').innerHTML=h;
  $('#heftCopy').onclick=async()=>{const t=$('#heft').innerText;try{await navigator.clipboard.writeText(t);$('#heftCopyMsg').textContent='Kopiert.'}catch(e){$('#heftCopyMsg').textContent='Kopieren wurde vom Browser blockiert – markiere den Text von Hand.'}}}
 
 /* ---------- Übung 1: Richtig/Falsch ---------- */
 {const it=[['Das Spiegelbild entsteht auf der Spiegeloberfläche.',false,'Es liegt hinter dem Spiegel – so weit dahinter, wie der Gegenstand davor steht.'],
- ['Gehst du 1 m vom Spiegel weg, entfernt sich auch dein Spiegelbild um 1 m vom Spiegel.',true,'Es gilt immer b = g.'],
+ ['Gehst du 1 m vom Spiegel weg, entfernt sich auch dein Spiegelbild um 1 m vom Spiegel.',true,'Es gilt immer <f-m>b = g</f-m>.'],
  ['Je weiter du vom Spiegel weg stehst, desto kleiner ist dein Spiegelbild.',false,'Das Bild ist immer gleich groß. Es wirkt nur kleiner, weil es weiter von dir entfernt ist – wie jeder Gegenstand in der Ferne.'],
  ['Ein Schirm hinter dem Spiegel fängt das Spiegelbild auf.',false,'Hinter den Spiegel gelangt kein Licht. Das Bild ist virtuell.'],
  ['Wenn du jemanden im Spiegel siehst, kann diese Person auch dich im Spiegel sehen.',true,'Der Lichtweg ist umkehrbar.'],
@@ -669,13 +672,13 @@ $('#clozeCheck').onclick=()=>{let ok=0,all=$$('#cloze select');all.forEach(s=>{c
   if(ok)solved.add(i);if(solved.size===it.length)mark('u1')})})}
 
 /* ---------- Übung 2: Winkel ---------- */
-{const q=[['a) Ein Lichtstrahl trifft mit dem Einfallswinkel α = 35° auf einen Spiegel. Wie groß ist der Reflexionswinkel β?',35],
- ['b) Ein Lichtstrahl schließt mit der Spiegeloberfläche einen Winkel von 25° ein. Wie groß ist der Einfallswinkel α?',65],
- ['c) Einfallender und reflektierter Strahl schließen zusammen einen Winkel von 110° ein. Wie groß ist α?',55],
- ['d) Ein Lichtstrahl trifft senkrecht auf den Spiegel. Wie groß ist β?',0],
+{const q=[['a) Ein Lichtstrahl trifft mit dem Einfallswinkel <f-m>α = 35°</f-m> auf einen Spiegel. Wie groß ist der Reflexionswinkel <f-m>β</f-m>?',35],
+ ['b) Ein Lichtstrahl schließt mit der Spiegeloberfläche einen Winkel von 25° ein. Wie groß ist der Einfallswinkel <f-m>α</f-m>?',65],
+ ['c) Einfallender und reflektierter Strahl schließen zusammen einen Winkel von 110° ein. Wie groß ist <f-m>α</f-m>?',55],
+ ['d) Ein Lichtstrahl trifft senkrecht auf den Spiegel. Wie groß ist <f-m>β</f-m>?',0],
  ['e) Der Spiegel aus b) wird um 10° so gedreht, dass der Strahl steiler auftrifft (Winkel zur Oberfläche jetzt 35°). Um wie viel Grad ändert sich die Richtung des reflektierten Strahls?',20]];
  $('#u2').innerHTML=q.map((x,i)=>`<div class="numq"><span>${x[0]}</span><span class="unit"><input type="number" data-a="${x[1]}" aria-label="Antwort ${i+1}"> °</span></div>`).join('');
- let h=0;const hints=['Tipp 1: Winkel werden immer zum Lot gemessen. Lot und Spiegel stehen senkrecht aufeinander (90°).','Tipp 2: Zwischen einfallendem und reflektiertem Strahl liegen α + β = 2α.','Tipp 3 zu e): Berechne β vorher und nachher. Der Strahl ändert seine Richtung um 2 · (Änderung von α).'];
+ let h=0;const hints=['Tipp 1: Winkel werden immer zum Lot gemessen. Lot und Spiegel stehen senkrecht aufeinander (90°).','Tipp 2: Zwischen einfallendem und reflektiertem Strahl liegen <f-m>α + β = 2α</f-m>.','Tipp 3 zu e): Berechne <f-m>β</f-m> vorher und nachher. Der Strahl ändert seine Richtung um 2 · (Änderung von α).'];
  $('#u2Hint').onclick=()=>{const fb=$('#u2Fb');fb.className='fb hint';fb.textContent=hints[h%hints.length];h++};
  $('#u2Check').onclick=()=>{let ok=0;$$('#u2 input').forEach(i=>{const g=i.value!==''&&Math.abs(+i.value-+i.dataset.a)<0.5;i.className=i.value===''?'':(g?'ok':'bad');if(g)ok++});
   const fb=$('#u2Fb');if(ok===q.length){fb.className='fb ok';fb.textContent='Alles richtig! Bei e) hast du etwas Wichtiges entdeckt: Dreht man den Spiegel um 10°, dreht sich der reflektierte Strahl um 20°.';mark('u2')}else{fb.className='fb bad';fb.textContent=ok+' von '+q.length+' richtig. Nutze die Tipps, wenn du nicht weiterkommst.'}}}
@@ -751,7 +754,7 @@ $$('[data-solve]').forEach(b=>b.onclick=()=>tasksCfg[b.dataset.solve].solve());
 {const q=[['a) Wie hoch muss der Spiegel mindestens sein?',0.85],['b) In welcher Höhe über dem Boden muss die Unterkante des Spiegels sein?',0.80],['c) In welcher Höhe muss die Oberkante sein?',1.65]];
  $('#u6q').innerHTML=q.map((x,i)=>`<div class="numq"><span>${x[0]}</span><span class="unit"><input type="number" step="0.01" data-a="${x[1]}" aria-label="Antwort ${'abc'[i]}"> m</span></div>`).join('');
  let mcPick=null;$$('#u6mc button').forEach(b=>b.onclick=()=>{mcPick=b.dataset.k;$$('#u6mc button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add('ok');b.style.background='var(--panel)'});
- let h=0;const hints=['Tipp 1: Zeichne Peter, die Wand und Peters Spiegelbild (gleich weit hinter der Wand). Verbinde das Auge mit den Füßen und dem Scheitel des Spiegelbilds.','Tipp 2: Die Wand liegt genau in der Mitte zwischen Peter und seinem Bild. Deshalb trifft die Linie Auge → Bild der Füße die Wand auf halber Augenhöhe.','Tipp 3: Unterkante = 1,60 m : 2. Oberkante = Augenhöhe + halber Abstand Auge–Scheitel = 1,60 m + 0,10 m : 2.'];
+ let h=0;const hints=['Tipp 1: Zeichne Peter, die Wand und Peters Spiegelbild (gleich weit hinter der Wand). Verbinde das Auge mit den Füßen und dem Scheitel des Spiegelbilds.','Tipp 2: Die Wand liegt genau in der Mitte zwischen Peter und seinem Bild. Deshalb trifft die Linie Auge → Bild der Füße die Wand auf halber Augenhöhe.','Tipp 3: Unterkante = <f-m>1,60 m : 2</f-m>. Oberkante = Augenhöhe + halber Abstand Auge–Scheitel = <f-m>1,60 m + 0,10 m : 2</f-m>.'];
  $('#u6Hint').onclick=()=>{const fb=$('#u6Fb');fb.className='fb hint';fb.textContent=hints[h%hints.length];h++};
  $('#u6Check').onclick=()=>{let ok=0;$$('#u6q input').forEach(i=>{const v=parseFloat(String(i.value).replace(',','.')),g=Math.abs(v-+i.dataset.a)<0.006;i.className=i.value===''?'':(g?'ok':'bad');if(g)ok++});
   $$('#u6mc button').forEach(b=>{b.style.background='';b.classList.remove('ok','bad');if(b.dataset.k===mcPick)b.classList.add(mcPick==='a'?'ok':'bad')});if(mcPick==='a')ok++;

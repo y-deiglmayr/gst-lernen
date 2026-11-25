@@ -21,3 +21,6 @@ footer .wrap::before{content:"";display:block;width:40px;height:33px;margin-bott
 .hero{padding-top:max(70px,clamp(28px,4vw,60px))}
 /* fest eingebaute Dunkelblau-Flächen in den Kopf-Grafiken an das Schiefergrau angleichen */
 .hero svg [fill="#0e131d"],.hero svg [fill="#182031"],.hero svg [fill="#141c2a"]{fill:#2f393a}
+/* Formelsatz (KaTeX): etwas kleiner als Standard, damit Formeln zum Fließtext passen */
+f-m .katex{font-size:1.07em}
+.formula f-m .katex{font-size:1em}

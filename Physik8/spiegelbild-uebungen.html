@@ -187,6 +187,9 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 .heftfirst{font-size:15px;background:var(--hint);border-radius:8px;padding:6px 12px;margin:6px 0 10px}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -305,23 +308,23 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="fig"><svg id="a2" viewBox="0 0 900 410" role="img" aria-label="Mann mit Hut vor einem Wandspiegel, Spiegelbild hinter der Wand, Lichtwege von Hutspitze und Füßen ins Auge"></svg></div>
 <div class="row" style="gap:18px">
 <label style="flex:1 1 240px"><b>Abstand zur Wand: <span id="a2dV">1,20</span> m</b><input type="range" id="a2d" min="0.4" max="2.6" step="0.05" value="1.2"></label>
-<label style="flex:1 1 240px"><b>Körperlänge K: <span id="a2kV">1,90</span> m</b><input type="range" id="a2k" min="1.5" max="2.0" step="0.01" value="1.9"></label>
+<label style="flex:1 1 240px"><b>Körperlänge <f-m>K</f-m>: <span id="a2kV">1,90</span> m</b><input type="range" id="a2k" min="1.5" max="2.0" step="0.01" value="1.9"></label>
 <div class="toggles" style="margin:0"><label><input type="checkbox" id="a2show">Konstruktion zeigen</label></div>
 </div>
 <p class="heftfirst">✏️ Skizziere erst im Heft: Mann, Wand, Spiegelbild und die Lichtwege von Hutspitze und Füßen ins Auge. Schalte die Konstruktion erst danach zur Kontrolle ein.</p>
 <div class="part" data-task="a2a"><h4>a) Wie hoch muss der Spiegel mindestens sein?</h4>
 <div class="mc" data-correct="c" data-task="a2a">
-<button data-k="a">genauso hoch wie die Körperlänge K</button>
-<button data-k="b">halb so hoch wie die Augenhöhe: H/2</button>
-<button data-k="c" data-fb="Richtig: Spiegelhöhe = K/2. Die Wand liegt genau in der Mitte zwischen Mann und Spiegelbild – deshalb halbiert sich alles.">halb so hoch wie die Körperlänge: K/2</button>
-<button data-k="d">K − H</button>
+<button data-k="a">genauso hoch wie die Körperlänge <f-m>K</f-m></button>
+<button data-k="b">halb so hoch wie die Augenhöhe: <f-m>H/2</f-m></button>
+<button data-k="c" data-fb="Richtig: Spiegelhöhe = <f-m>K/2</f-m>. Die Wand liegt genau in der Mitte zwischen Mann und Spiegelbild – deshalb halbiert sich alles.">halb so hoch wie die Körperlänge: <f-m>K/2</f-m></button>
+<button data-k="d"><f-m>K − H</f-m></button>
 <p class="fb"></p></div></div>
 <div class="part" data-task="a2b"><h4>b) Wie hoch über dem Boden muss die Unterkante des Spiegels sein?</h4>
 <div class="mc" data-correct="a" data-task="a2b">
-<button data-k="a" data-fb="Richtig: Unterkante = H/2. Der Strahl von den Füßen zum Auge wird auf halber Augenhöhe reflektiert.">bei H/2 – der halben Augenhöhe</button>
-<button data-k="b">bei K/2 – der halben Körperlänge</button>
+<button data-k="a" data-fb="Richtig: Unterkante = <f-m>H/2</f-m>. Der Strahl von den Füßen zum Auge wird auf halber Augenhöhe reflektiert.">bei <f-m>H/2</f-m> – der halben Augenhöhe</button>
+<button data-k="b">bei <f-m>K/2</f-m> – der halben Körperlänge</button>
 <button data-k="c">direkt am Boden</button>
-<button data-k="d">bei (K − H)/2</button>
+<button data-k="d">bei <f-m>(K − H)/2</f-m></button>
 <p class="fb"></p></div></div>
 <div class="part" data-task="a2c"><h4>c) Der Mann geht auf den Spiegel zu. Was muss man an Lage und Höhe des Spiegels ändern?</h4>
 <div class="mc" data-correct="b" data-task="a2c">
@@ -329,7 +332,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <button data-k="b" data-fb="Richtig! Lage und Höhe hängen nur von K und H ab, nicht vom Abstand. Probier es mit dem Schieberegler aus.">Nichts – Lage und Höhe des Spiegels hängen nicht vom Abstand ab.</button>
 <button data-k="c">Der Spiegel darf kleiner werden, muss aber tiefer hängen.</button>
 <p class="fb"></p></div></div>
-<div class="part" data-task="a2d"><h4>d) Rechne: K = 1,90 m, H = 1,66 m</h4>
+<div class="part" data-task="a2d"><h4>d) Rechne: <f-m>K = 1,90 m</f-m>, <f-m>H = 1,66 m</f-m></h4>
 <div class="numq"><span>Spiegelhöhe</span><span class="unit"><input type="text" inputmode="decimal" id="a2n1" data-a="0.95" aria-label="Spiegelhöhe in m"> m</span></div>
 <div class="numq"><span>Höhe der Unterkante über dem Boden</span><span class="unit"><input type="text" inputmode="decimal" id="a2n2" data-a="0.83" aria-label="Unterkante in m"> m</span></div>
 <div class="numq"><span>Höhe der Oberkante über dem Boden</span><span class="unit"><input type="text" inputmode="decimal" id="a2n3" data-a="1.78" aria-label="Oberkante in m"> m</span></div>
@@ -355,7 +358,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="row"><button data-hint="a3">Tipp</button><button data-reset="a3">Neu starten</button><button data-solve="a3">Lösung zeigen</button></div></div>
 </div></div>
 <div class="part" data-task="a3c"><h4>c) Berechne den Abstand der beiden Bilder.</h4>
-<p>Die Lampe steht a = 2,5 m vor der ersten Scheibe, die Scheiben haben den Abstand d = 16 mm.</p>
+<p>Die Lampe steht <f-m>a = 2,5 m</f-m> vor der ersten Scheibe, die Scheiben haben den Abstand <f-m>d = 16 mm</f-m>.</p>
 <div class="numq"><span>Abstand des Bildes L₁' von der 1. Scheibe</span><span class="unit"><input type="text" inputmode="decimal" id="a3n1" data-a="2.5" aria-label="Abstand L1' in m"> m</span></div>
 <div class="numq"><span>Abstand des Bildes L₂' von der 2. Scheibe</span><span class="unit"><input type="text" inputmode="decimal" id="a3n2" data-a="2.516" aria-label="Abstand L2' in m"> m</span></div>
 <div class="numq"><span>Abstand der beiden Bilder voneinander</span><span class="unit"><input type="text" inputmode="decimal" id="a3n3" data-a="32" aria-label="Bildabstand in mm"> mm</span></div>
@@ -379,20 +382,20 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div><div class="steps" id="k1Steps"></div><p class="fb hint" id="k1Fb"></p><p class="fb hint tip" id="k1Tip"></p>
 <div class="row"><button data-hint="k1">Tipp</button><button data-reset="k1">Neu starten</button><button data-solve="k1">Lösung zeigen</button></div></div>
 </div></div>
-<div class="part" data-task="k1b"><h4>b) Um welchen Winkel δ wird das Licht insgesamt abgelenkt?</h4>
+<div class="part" data-task="k1b"><h4>b) Um welchen Winkel <f-m>δ</f-m> wird das Licht insgesamt abgelenkt?</h4>
 <p>Gesucht ist der Winkel, den der von K ausgehende Strahl mit dem bei A ankommenden Strahl bildet (Hinweis: Winkelsumme im Dreieck).</p>
-<div class="numq"><span>δ =</span><span class="unit"><input type="number" id="k1n" aria-label="Ablenkwinkel in Grad"> °</span></div>
+<div class="numq"><span><f-m>δ</f-m> =</span><span class="unit"><input type="number" id="k1n" aria-label="Ablenkwinkel in Grad"> °</span></div>
 <div class="row"><button class="primary" id="k1Check">Prüfen</button><button data-hint="k1b">Tipp</button><button id="k1Sim">Ablenkungs-Labor öffnen</button></div>
 <p class="fb" id="k1bFb"></p><p class="fb hint tip" id="k1bTip"></p>
 <div id="k1SimBox" hidden>
 <div class="fig narrow"><svg id="k1s" viewBox="0 0 660 560" role="img" aria-label="Ablenkungs-Labor: Lichtstrahl im Winkelspiegel mit verschiebbarem Auftreffpunkt"></svg></div>
 <p>Ziehe den roten Punkt auf Spiegel 1. &nbsp;Ablenkung: <span class="readout" id="k1sOut">–</span></p>
-<p class="caption">Egal wo der Strahl auftrifft: Nach zwei Reflexionen ist er immer um denselben Winkel gedreht – nämlich um 2 · 60°.</p>
+<p class="caption">Egal wo der Strahl auftrifft: Nach zwei Reflexionen ist er immer um denselben Winkel gedreht – nämlich um <f-m>2 · 60°</f-m>.</p>
 </div>
 <details class="reveal"><summary>Rechenweg anzeigen</summary>
-<p>Der Strahl trifft Spiegel 1 mit dem Einfallswinkel α und Spiegel 2 mit β. Im Dreieck aus Scheitel S und den beiden Reflexionspunkten gilt: 60° + (90° − α) + (90° − β) = 180°, also <b>α + β = 60°</b>.</p>
-<p>Im Dreieck aus den beiden Reflexionspunkten und dem Schnittpunkt der Strahlen gilt: γ + 2α + 2β = 180°, also γ = 180° − 2 · 60° = 60°.</p>
-<p>δ ist der Nebenwinkel von γ: <b>δ = 180° − 60° = 120°</b> = 2 · 60°.</p>
+<p>Der Strahl trifft Spiegel 1 mit dem Einfallswinkel <f-m>α</f-m> und Spiegel 2 mit <f-m>β</f-m>. Im Dreieck aus Scheitel S und den beiden Reflexionspunkten gilt: <f-m>60° + (90° − α) + (90° − β) = 180°</f-m>, also <f-m><b>α + β = 60°</b></f-m>.</p>
+<p>Im Dreieck aus den beiden Reflexionspunkten und dem Schnittpunkt der Strahlen gilt: <f-m>γ + 2α + 2β = 180°</f-m>, also <f-m>γ = 180° − 2 · 60° = 60°</f-m>.</p>
+<p><f-m>δ</f-m> ist der Nebenwinkel von <f-m>γ</f-m>: <f-m><b>δ = 180° − 60° = 120°</b> = 2 · 60°</f-m>.</p>
 </details>
 </div>
 </div>
@@ -406,10 +409,10 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="row"><select id="k2Sel" aria-label="Anzahl Spiegelbilder"><option value="">bitte wählen</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><button class="primary" id="k2Check">Prüfen</button><button data-hint="k2">Tipp</button></div>
 <p class="fb" id="k2Fb"></p><p class="fb hint tip" id="k2Tip"></p>
 <div id="k2Ex" hidden>
-<p><b>Erkunde:</b> Öffnungswinkel α =
+<p><b>Erkunde:</b> Öffnungswinkel <f-m>α</f-m> =
 <select id="k2Ang" aria-label="Öffnungswinkel"><option>90</option><option selected>60</option><option>45</option><option>36</option><option>30</option></select> °</p>
 <p>Anzahl Bilder: <span class="readout" id="k2Out"></span></p>
-<div class="merke"><h4>Regel</h4><p style="margin:0">Passt der Winkel α ganzzahlig in 360°, entstehen <b>n = 360° : α − 1</b> Spiegelbilder.</p></div>
+<div class="merke"><h4>Regel</h4><p style="margin:0">Passt der Winkel <f-m>α</f-m> ganzzahlig in 360°, entstehen <f-m><b>n = 360° : α − 1</b></f-m> Spiegelbilder.</p></div>
 </div>
 </div>
 </div>
@@ -622,8 +625,8 @@ hints.g3=['Der Spiegel geht von links unten nach rechts oben (45°). Senkrecht d
    const lx=Math.min(ix+40,700);o+=L(Wx+60,ob,lx-4,ob,'lot')+L(Wx+60,u,lx-4,u,'lot')+T(lx,ob+5,'Oberkante '+fmt(H+(K-H)/2)+' m','txl')+T(lx,u+5,'Unterkante '+fmt(H/2)+' m','txb')+T(lx,(ob+u)/2+5,'Spiegel: '+fmt(K/2)+' m','txm')}
   svg.innerHTML=o}
  ['#a2d','#a2k','#a2show'].forEach(s=>$(s).addEventListener('input',draw));draw();
- numCheck('#a2Check',['#a2n1','#a2n2','#a2n3'],'#a2Fb','a2d','Richtig! Spiegelhöhe K/2 = 0,95 m, Unterkante H/2 = 0,83 m, Oberkante 0,83 m + 0,95 m = 1,78 m. Kontrolliere mit der Simulation (K = 1,90 m).');
- hints.a2=['Spiegelhöhe = K/2 – die halbe Körperlänge.','Unterkante = H/2 – die halbe Augenhöhe.','Oberkante = Unterkante + Spiegelhöhe. Oder: H + (K − H)/2, also auf halbem Weg zwischen Auge und Hutspitze.']}
+ numCheck('#a2Check',['#a2n1','#a2n2','#a2n3'],'#a2Fb','a2d','Richtig! Spiegelhöhe <f-m>K/2 = 0,95 m</f-m>, Unterkante <f-m>H/2 = 0,83 m</f-m>, Oberkante <f-m>0,83 m + 0,95 m = 1,78 m</f-m>. Kontrolliere mit der Simulation <f-m>(K = 1,90 m)</f-m>.');
+ hints.a2=['Spiegelhöhe = <f-m>K/2</f-m> – die halbe Körperlänge.','Unterkante = <f-m>H/2</f-m> – die halbe Augenhöhe.','Oberkante = Unterkante + Spiegelhöhe. Oder: <f-m>H + (K − H)/2</f-m>, also auf halbem Weg zwischen Auge und Hutspitze.']}
 
 /* ---------- 3.3 Doppelfenster ---------- */
 {const c1=6,c2=8,E=[3,6],Lm=[9,12],rf=(p,cc)=>[p[1]+cc,p[0]-cc],L1=rf(Lm,c1),L2=rf(Lm,c2);
@@ -645,8 +648,8 @@ hints.g3=['Der Spiegel geht von links unten nach rechts oben (45°). Senkrecht d
    if(k>=4)o+=L(L2[0]*c,L2[1]*c,R2[0]*c,R2[1]*c,'ray2 dash','stroke-width="1.5"')+ray(q(Lm),q(R2),'ray2')+ray(q(R2),[E[0]*c+8,E[1]*c],'ray2');
    return o}});
  hints.a3=['Jede Scheibe ist ein eigener Spiegel. Spiegle L zuerst an der 1. Scheibe, dann (unabhängig davon) an der 2. Scheibe.','Die Scheiben verlaufen diagonal von links oben nach rechts unten. Das Lot verläuft deshalb von links unten nach rechts oben – je ein Kästchen nach rechts und nach oben.','L ist 4,5 Diagonalschritte von der 1. Scheibe entfernt: L₁\' liegt 9 Diagonalschritte von L entfernt. Für die 2. Scheibe kommt ein Schritt dazu (5,5 → 11 Schritte).'];
- numCheck('#a3Check',['#a3n1','#a3n2','#a3n3'],'#a3cFb','a3c','Richtig! L₁\' liegt 2,5 m hinter der 1. Scheibe, L₂\' liegt 2,516 m hinter der 2. Scheibe – also 2 · 16 mm = 32 mm hinter L₁\'. Der Bildabstand ist immer 2d, egal wo die Lampe steht.',0.0015);
- hints.a3c=['Bildweite = Gegenstandsweite. Wie weit ist die Lampe von der 2. Scheibe entfernt?','Die Lampe ist a + d = 2,5 m + 0,016 m = 2,516 m von der 2. Scheibe entfernt.','Abstand der Bilder: L₂\' liegt (a + d) + d hinter der 1. Scheibe, L₁\' liegt a dahinter. Differenz: 2d.']}
+ numCheck('#a3Check',['#a3n1','#a3n2','#a3n3'],'#a3cFb','a3c','Richtig! L₁\' liegt 2,5 m hinter der 1. Scheibe, L₂\' liegt 2,516 m hinter der 2. Scheibe – also <f-m>2 · 16 mm = 32 mm</f-m> hinter L₁\'. Der Bildabstand ist immer 2d, egal wo die Lampe steht.',0.0015);
+ hints.a3c=['Bildweite = Gegenstandsweite. Wie weit ist die Lampe von der 2. Scheibe entfernt?','Die Lampe ist <f-m>a + d = 2,5 m + 0,016 m = 2,516 m</f-m> von der 2. Scheibe entfernt.','Abstand der Bilder: L₂\' liegt <f-m>(a + d) + d</f-m> hinter der 1. Scheibe, L₁\' liegt a dahinter. Differenz: 2d.']}
 
 /* ---------- 4.1 60°-Winkelspiegel ---------- */
 const WV=[200,190],Wu=[Math.cos(Math.PI/6),Math.sin(Math.PI/6)],W1b=[200,540],W2b=[WV[0]+500*Wu[0],WV[1]+500*Wu[1]],WK=[260,400],WA=[420,370];
@@ -667,10 +670,10 @@ function wedge(){const a=[WV[0],WV[1]+60],b=[WV[0]+60*Wu[0],WV[1]+60*Wu[1]];
    return o}});
  hints.k1=['Arbeite rückwärts vom Auge aus: Das Auge sieht nach der zweiten Reflexion ein Bild vom Bild.','K₁ = Bild von K an Spiegel 1. K₂ = Bild von K₁ an Spiegel 2. Verlängere Spiegel 2 gestrichelt über den Scheitel hinaus, damit du das Lot fällen kannst.','Die Linie K₂ → A liefert den Punkt auf Spiegel 2. Von dort zielst du auf K₁ und bekommst den Punkt auf Spiegel 1.']}
 $('#k1Check').onclick=()=>{const v=num($('#k1n').value),fb=$('#k1bFb'),ok=Math.abs(v-120)<0.5;$('#k1n').className=ok?'ok':'bad';
- if(ok){fb.className='fb ok';fb.textContent='Richtig! δ = 120° = 2 · 60°. Das gilt für jeden Strahl, der beide Spiegel trifft – teste es im Ablenkungs-Labor.';mark('k1b')}
- else if(Math.abs(v-60)<0.5){fb.className='fb bad';fb.textContent='60° ist der Winkel γ zwischen den Strahlen im Dreieck. Gesucht ist sein Nebenwinkel.'}
+ if(ok){fb.className='fb ok';fb.textContent='Richtig! <f-m>δ = 120° = 2 · 60°</f-m>. Das gilt für jeden Strahl, der beide Spiegel trifft – teste es im Ablenkungs-Labor.';mark('k1b')}
+ else if(Math.abs(v-60)<0.5){fb.className='fb bad';fb.textContent='60° ist der Winkel <f-m>γ</f-m> zwischen den Strahlen im Dreieck. Gesucht ist sein Nebenwinkel.'}
  else{fb.className='fb bad';fb.textContent='Noch nicht. Nutze die Tipps oder das Ablenkungs-Labor.'}};
-hints.k1b=['Zeichne das Dreieck aus Scheitel S, Reflexionspunkt 1 und Reflexionspunkt 2. Die Winkel zwischen Strahl und Spiegel sind 90° − α und 90° − β.','Winkelsumme: 60° + (90° − α) + (90° − β) = 180°. Daraus folgt α + β = 60°.','Im Dreieck aus beiden Reflexionspunkten und dem Schnittpunkt der Strahlen: γ = 180° − 2α − 2β. δ ist der Nebenwinkel von γ.'];
+hints.k1b=['Zeichne das Dreieck aus Scheitel S, Reflexionspunkt 1 und Reflexionspunkt 2. Die Winkel zwischen Strahl und Spiegel sind <f-m>90° − α</f-m> und <f-m>90° − β</f-m>.','Winkelsumme: <f-m>60° + (90° − α) + (90° − β) = 180°</f-m>. Daraus folgt <f-m>α + β = 60°</f-m>.','Im Dreieck aus beiden Reflexionspunkten und dem Schnittpunkt der Strahlen: <f-m>γ = 180° − 2α − 2β</f-m>. <f-m>δ</f-m> ist der Nebenwinkel von <f-m>γ</f-m>.'];
 {const svg=$('#k1s');let py=380,drag=false;
  function draw(){const P1=[WV[0],py],d0=[P1[0]-WK[0],P1[1]-WK[1]],l0=Math.hypot(...d0),din=[d0[0]/l0,d0[1]/l0],d1=[-din[0],din[1]];
   let o=`<rect x="0" y="0" width="660" height="560" class="behind"/>`+P([WV,[WV[0],560],[660,560],[660,WV[1]+(660-WV[0])*Wu[1]/Wu[0]]],'','style="fill:var(--paper)"')+wedge()+C(WK[0],WK[1],7,'lamp')+T(WK[0]-6,WK[1]+28,'K','txb');
@@ -679,7 +682,7 @@ hints.k1b=['Zeichne das Dreieck aus Scheitel S, Reflexionspunkt 1 und Reflexions
   if(Q&&t>0&&t<500&&fwd>0){const n=[-Wu[1],Wu[0]],dn=d1[0]*n[0]+d1[1]*n[1],d2=[d1[0]-2*dn*n[0],d1[1]-2*dn*n[1]],end0=[Q[0]+d2[0]*400,Q[1]+d2[1]*400],hit1=d2[0]<0?inter(Q,end0,WV,W1b):null,end=hit1&&hit1[1]>WV[1]&&hit1[1]<560?hit1:end0;
    o+=ray(P1,Q,'ray')+ray(Q,end,'ray');
    const S=inter(WK,P1,Q,end);if(S)o+=L(P1[0],P1[1],S[0],S[1],'ray dash','stroke-width="1.2" opacity=".6"')+L(Q[0],Q[1],S[0],S[1],'ray dash','stroke-width="1.2" opacity=".6"')+C(S[0],S[1],4,'aw');
-   const ang=Math.acos(Math.max(-1,Math.min(1,din[0]*d2[0]+din[1]*d2[1])))*180/Math.PI;$('#k1sOut').textContent='δ = '+Math.round(ang)+'°'}
+   const ang=Math.acos(Math.max(-1,Math.min(1,din[0]*d2[0]+din[1]*d2[1])))*180/Math.PI;$('#k1sOut').textContent='<f-m>δ</f-m> = '+Math.round(ang)+'°'}
   else{o+=ray(P1,[P1[0]+d1[0]*300,P1[1]+d1[1]*300],'ray');$('#k1sOut').textContent='trifft Spiegel 2 nicht'}
   o+=C(P1[0],P1[1],11,'handle');svg.innerHTML=o}
  svg.addEventListener('pointerdown',ev=>{const p=svgPt(svg,ev);if(Math.hypot(p.x-WV[0],p.y-py)<30){drag=true;svg.setPointerCapture(ev.pointerId);ev.preventDefault()}});
@@ -694,7 +697,7 @@ hints.k1b=['Zeichne das Dreieck aus Scheitel S, Reflexionspunkt 1 und Reflexions
   o+=P([V,[V[0]+R*Math.cos(a1*Math.PI/180),V[1]+R*Math.sin(a1*Math.PI/180)],[V[0]+R*Math.cos(a2*Math.PI/180),V[1]+R*Math.sin(a2*Math.PI/180)]],'','style="fill:var(--laser);opacity:.06"');
   if(show){images(V,K,a1,a2).forEach((p,i)=>{o+=L(V[0],V[1],p[0],p[1],'thin','opacity=".15"')+C(p[0],p[1],9,'lamp','opacity=".45"')+T(p[0]+11,p[1]-9,String(i+1),'txs')})}
   [a1,a2].forEach(t=>o+=L(V[0],V[1],V[0]+R*Math.cos(t*Math.PI/180),V[1]+R*Math.sin(t*Math.PI/180),'mir'));
-  o+=C(K[0],K[1],18,'','fill="url(#glow)"')+C(K[0],K[1],9,'lamp')+T(K[0]+12,K[1]+20,'K','txb')+T(12,24,'Blick von oben · α = '+alpha+'°','txs');
+  o+=C(K[0],K[1],18,'','fill="url(#glow)"')+C(K[0],K[1],9,'lamp')+T(K[0]+12,K[1]+20,'K','txb')+T(12,24,'Blick von oben · <f-m>α</f-m> = '+alpha+'°','txs');
   svg.innerHTML=o;return images(V,K,a1,a2).length}
  draw(60,false);
  $('#k2Check').onclick=()=>{const v=$('#k2Sel').value,fb=$('#k2Fb');

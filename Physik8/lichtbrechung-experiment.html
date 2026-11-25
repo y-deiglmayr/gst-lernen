@@ -205,6 +205,9 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 @media print{nav,.qrbtn{display:none}}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
 </head>
 <body data-key="lichtbrechung-exp">
 <nav aria-label="Abschnitte"><div class="wrap">
@@ -243,10 +246,10 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 </div>
 <div class="card mc" data-task="v2" data-correct="b">
 <div class="tag">Auftrag 2 · Aufgepasst beim Ablesen!</div>
-<p>Von welcher Linie aus misst du den Einfallswinkel α und den Brechungswinkel β?</p>
+<p>Von welcher Linie aus misst du den Einfallswinkel <f-m>α</f-m> und den Brechungswinkel <f-m>β</f-m>?</p>
 <button data-k="a" data-fb="Häufiger Fehler! Würdest du von der Grenzfläche aus messen, bekämst du 90° minus den richtigen Winkel.">Von der Grenzfläche (Oberfläche des Glases) aus.</button>
 <button data-k="b" data-fb="Richtig. Beide Winkel werden immer zum Einfallslot gemessen – genau wie beim Reflexionsgesetz.">Vom Einfallslot (der Senkrechten zur Grenzfläche) aus.</button>
-<button data-k="c" data-fb="Nein – einen Bezug braucht man für beide Winkel gemeinsam: das Lot.">α von der Grenzfläche, β vom Lot aus.</button>
+<button data-k="c" data-fb="Nein – einen Bezug braucht man für beide Winkel gemeinsam: das Lot."><f-m>α</f-m> von der Grenzfläche, <f-m>β</f-m> vom Lot aus.</button>
 <p class="fb"></p>
 </div>
 </div>
@@ -256,9 +259,9 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="tag">Auftrag 3 · Eure Vermutung</div>
 <p>Ein schmales Lichtbündel trifft <b>schräg</b> von Luft auf Glas. Was vermutet ihr? (Hier gibt es noch kein richtig oder falsch – ihr überprüft es gleich im Versuch.)</p>
 <div class="mc" id="vermBtns">
-<button data-k="hin">Das Licht wird zum Lot <b>hin</b> abgeknickt: β ist kleiner als α.</button>
-<button data-k="weg">Das Licht wird vom Lot <b>weg</b> abgeknickt: β ist größer als α.</button>
-<button data-k="gerade">Das Licht läuft ohne Knick geradeaus weiter: β = α.</button>
+<button data-k="hin">Das Licht wird zum Lot <b>hin</b> abgeknickt: <f-m>β</f-m> ist kleiner als <f-m>α</f-m>.</button>
+<button data-k="weg">Das Licht wird vom Lot <b>weg</b> abgeknickt: <f-m>β</f-m> ist größer als <f-m>α</f-m>.</button>
+<button data-k="gerade">Das Licht läuft ohne Knick geradeaus weiter: <f-m>β = α</f-m>.</button>
 </div>
 <p class="fb" id="vermFb"></p>
 </div>
@@ -282,7 +285,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <label><input type="checkbox">Die <b>gerade Fläche</b> des Halbzylinders liegt genau auf der Durchmesserlinie (90°–90°) der Winkelscheibe.</label>
 <label><input type="checkbox">Die Mitte der geraden Fläche liegt genau auf dem <b>Mittelpunkt</b> der Winkelscheibe.</label>
 <label><input type="checkbox">Das Licht ist ein <b>schmales</b> Bündel (Einschlitzblende) und trifft den Mittelpunkt.</label>
-<label><input type="checkbox">Bei <b>α = 0°</b> läuft das Bündel ohne Knick entlang der 0°-Linie durch den Glaskörper.</label>
+<label><input type="checkbox">Bei <f-m><b>α = 0°</b></f-m> läuft das Bündel ohne Knick entlang der 0°-Linie durch den Glaskörper.</label>
 </div>
 <p class="fb" id="startFb"></p>
 </div>
@@ -291,7 +294,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <!-- ================= PHASE 2 ================= -->
 <section class="band alt" id="experimentieren"><div class="wrap">
 <h2>2 · Experimentieren</h2>
-<p class="intro">Stellt nacheinander die Einfallswinkel 0°, 10°, 20°, …, 80° ein und lest jeweils den Brechungswinkel β an der Skala auf der Glasseite ab. Tragt die Werte <b>zuerst auf eurem Arbeitsblatt</b> und dann hier ein. Ihr seht eure Messpunkte sofort im Diagramm.</p>
+<p class="intro">Stellt nacheinander die Einfallswinkel 0°, 10°, 20°, …, 80° ein und lest jeweils den Brechungswinkel <f-m>β</f-m> an der Skala auf der Glasseite ab. Tragt die Werte <b>zuerst auf eurem Arbeitsblatt</b> und dann hier ein. Ihr seht eure Messpunkte sofort im Diagramm.</p>
 <div class="two">
 <div>
 <div class="card" data-task="e1">
@@ -311,7 +314,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 </div>
 <div class="stick">
 <div class="fig"><svg id="chart" viewBox="0 0 520 440" role="img" aria-label="Diagramm: Brechungswinkel β über dem Einfallswinkel α mit euren Messpunkten"></svg></div>
-<div class="legend"><span><i style="background:var(--laser)"></i>eure Messpunkte</span><span><i style="background:var(--muted)"></i>β = α (ohne Brechung)</span><span id="legRef" hidden><i style="background:var(--laser2)"></i>Vergleichskurve Luft → Glas</span></div>
+<div class="legend"><span><i style="background:var(--laser)"></i>eure Messpunkte</span><span><i style="background:var(--muted)"></i><f-m>β = α</f-m> (ohne Brechung)</span><span id="legRef" hidden><i style="background:var(--laser2)"></i>Vergleichskurve Luft → Glas</span></div>
 <div class="toggles"><label><input type="checkbox" id="showRef">Vergleichskurve zeigen</label></div>
 </div>
 </div>
@@ -321,16 +324,16 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="two">
 <div>
 <div class="fig"><svg id="ws" viewBox="0 0 600 600" role="img" aria-label="Virtuelle Winkelscheibe mit Halbzylinder und Lichtbündel"></svg></div>
-<label for="alpha" style="font-weight:700">Einfallswinkel α = <span id="alphaVal">30</span>°</label>
+<label for="alpha" style="font-weight:700">Einfallswinkel <f-m>α</f-m> = <span id="alphaVal">30</span>°</label>
 <input type="range" id="alpha" min="0" max="85" step="1" value="30">
 <div class="toggles"><label><input type="checkbox" id="rev">Lichtrichtung umkehren (Licht kommt durch die runde Seite: Glas → Luft)</label></div>
 </div>
 <div>
 <div class="card mc" data-task="e3" data-correct="c">
 <div class="tag"><span class="stars">★</span> Zusatzversuch · Umgekehrt: Glas → Luft</div>
-<p>Dreht den Halbzylinder um bzw. schaltet in der virtuellen Winkelscheibe „Lichtrichtung umkehren“ ein. Jetzt kommt das Licht aus dem Glas und geht in die Luft über. Erhöht α langsam bis 60°. Was beobachtet ihr?</p>
+<p>Dreht den Halbzylinder um bzw. schaltet in der virtuellen Winkelscheibe „Lichtrichtung umkehren“ ein. Jetzt kommt das Licht aus dem Glas und geht in die Luft über. Erhöht <f-m>α</f-m> langsam bis 60°. Was beobachtet ihr?</p>
 <button data-k="a" data-fb="Schaut genau hin: Der Strahl in der Luft ist flacher als der im Glas.">Das Licht wird wieder zum Lot hin gebrochen.</button>
-<button data-k="b" data-fb="Fast: Es wird vom Lot weg gebrochen – aber was passiert ab etwa 42°?">Das Licht wird vom Lot weg gebrochen, egal wie groß α ist.</button>
+<button data-k="b" data-fb="Fast: Es wird vom Lot weg gebrochen – aber was passiert ab etwa 42°?">Das Licht wird vom Lot weg gebrochen, egal wie groß <f-m>α</f-m> ist.</button>
 <button data-k="c" data-fb="Genau! Beim Übergang Glas → Luft wird das Licht vom Lot weg gebrochen. Ab ca. 42° tritt gar kein Licht mehr aus – es wird vollständig reflektiert. Das heißt Totalreflexion und kommt in einem späteren Lernpfad.">Das Licht wird vom Lot weg gebrochen; ab etwa 42° kommt gar kein Licht mehr in die Luft.</button>
 <p class="fb"></p>
 </div>
@@ -352,17 +355,17 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="card mc" data-task="a1" data-correct="b">
 <div class="tag">Auftrag 1 · Einfallswinkel und Brechungswinkel vergleichen</div>
 <p>Vergleicht in eurer Tabelle jeden Einfallswinkel mit dem zugehörigen Brechungswinkel. Was gilt (außer bei 0°)?</p>
-<button data-k="a" data-fb="Schaut in die Tabelle: Bei α = 40° habt ihr deutlich weniger als 40° gemessen.">β ist größer als α.</button>
-<button data-k="b" data-fb="Richtig! β ist immer kleiner als α. Das Licht wird also beim Übergang von Luft in Glas zum Lot hin gebrochen.">β ist kleiner als α.</button>
-<button data-k="c" data-fb="Dann würde das Licht gar nicht abknicken. Im Diagramm liegen eure Punkte aber unter der grauen Linie β = α.">β ist gleich α.</button>
+<button data-k="a" data-fb="Schaut in die Tabelle: Bei <f-m>α = 40°</f-m> habt ihr deutlich weniger als 40° gemessen."><f-m>β</f-m> ist größer als <f-m>α</f-m>.</button>
+<button data-k="b" data-fb="Richtig! <f-m>β</f-m> ist immer kleiner als <f-m>α</f-m>. Das Licht wird also beim Übergang von Luft in Glas zum Lot hin gebrochen."><f-m>β</f-m> ist kleiner als <f-m>α</f-m>.</button>
+<button data-k="c" data-fb="Dann würde das Licht gar nicht abknicken. Im Diagramm liegen eure Punkte aber unter der grauen Linie <f-m>β = α</f-m>."><f-m>β</f-m> ist gleich <f-m>α</f-m>.</button>
 <p class="fb"></p>
 </div>
 <div class="card mc" data-task="a2" data-correct="c">
-<div class="tag">Auftrag 2 · Ist β proportional zu α?</div>
+<div class="tag">Auftrag 2 · Ist <f-m>β</f-m> proportional zu <f-m>α</f-m>?</div>
 <p>Schaut auf die Abstände zwischen den Brechungswinkeln in eurer Tabelle. Was fällt auf?</p>
-<button data-k="a" data-fb="Rechnet nach: Von 20° auf 40° verdoppelt sich α – verdoppelt sich auch β? Die Punkte liegen nicht auf einer Geraden.">β ist immer genau halb so groß wie α.</button>
-<button data-k="b" data-fb="Andersherum: Bei großen Einfallswinkeln wächst β immer weniger.">Je größer α, desto größer werden die Abstände zwischen den Brechungswinkeln.</button>
-<button data-k="c" data-fb="Genau. Je größer der Einfallswinkel, desto kleiner werden die Abstände der Brechungswinkel. Die Kurve wird flacher – β und α sind nicht proportional.">Je größer α, desto kleiner werden die Abstände zwischen den Brechungswinkeln.</button>
+<button data-k="a" data-fb="Rechnet nach: Von 20° auf 40° verdoppelt sich <f-m>α</f-m> – verdoppelt sich auch <f-m>β</f-m>? Die Punkte liegen nicht auf einer Geraden."><f-m>β</f-m> ist immer genau halb so groß wie <f-m>α</f-m>.</button>
+<button data-k="b" data-fb="Andersherum: Bei großen Einfallswinkeln wächst <f-m>β</f-m> immer weniger.">Je größer <f-m>α</f-m>, desto größer werden die Abstände zwischen den Brechungswinkeln.</button>
+<button data-k="c" data-fb="Genau. Je größer der Einfallswinkel, desto kleiner werden die Abstände der Brechungswinkel. Die Kurve wird flacher – <f-m>β</f-m> und <f-m>α</f-m> sind nicht proportional.">Je größer <f-m>α</f-m>, desto kleiner werden die Abstände zwischen den Brechungswinkeln.</button>
 <p class="fb"></p>
 </div>
 <div class="card" id="vermCmp" hidden></div>
@@ -375,7 +378,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <textarea id="satz" placeholder="Euer Ergebnissatz …" aria-label="Ergebnissatz"></textarea>
 <div class="row"><button class="primary" id="satzCheck">Mit Musterlösung vergleichen</button></div>
 <div id="satzSol" hidden><div class="merke"><h4>Ergebnis: Brechung beim Übergang Luft → Glas</h4>
-<p style="margin:0">Beim Übergang vom optisch dünneren Stoff (Luft) in den optisch dichteren Stoff (Glas) wird das Licht <b>zum Lot hin</b> gebrochen: Der Brechungswinkel β ist kleiner als der Einfallswinkel α. Trifft das Licht senkrecht auf (α = 0°), wird es nicht gebrochen. Je größer α, desto kleiner werden die Abstände der Brechungswinkel.</p></div>
+<p style="margin:0">Beim Übergang vom optisch dünneren Stoff (Luft) in den optisch dichteren Stoff (Glas) wird das Licht <b>zum Lot hin</b> gebrochen: Der Brechungswinkel <f-m>β</f-m> ist kleiner als der Einfallswinkel <f-m>α</f-m>. Trifft das Licht senkrecht auf <f-m>(α = 0°)</f-m>, wird es nicht gebrochen. Je größer <f-m>α</f-m>, desto kleiner werden die Abstände der Brechungswinkel.</p></div>
 <p class="caption">Stimmt euer Satz inhaltlich? Dann übertragt ihn auf das Arbeitsblatt.</p></div>
 <p class="fb" id="satzFb"></p>
 </div>
@@ -497,16 +500,16 @@ function lamp(x,y,dirDeg,dark){return `<g transform="translate(${x},${y}) rotate
  const nums=[[228,120],[318,48],[548,190],[272,108],[318,276],[372,300],[458,296]];
  nums.forEach((p,i)=>{s+=C(p[0],p[1],13,'num')+T(p[0],p[1]+5,i+1,'numt','text-anchor="middle"')});
  svg.innerHTML=s;
- const ans=['einfallender Strahl','Einfallslot','Grenzfläche','Einfallswinkel α','Brechungswinkel β','gebrochener Strahl','ursprüngliche Richtung'];
- const opts=['Brechungswinkel β','Einfallslot','gebrochener Strahl','Grenzfläche','ursprüngliche Richtung','einfallender Strahl','Einfallswinkel α'];
+ const ans=['einfallender Strahl','Einfallslot','Grenzfläche','Einfallswinkel <f-m>α</f-m>','Brechungswinkel <f-m>β</f-m>','gebrochener Strahl','ursprüngliche Richtung'];
+ const opts=['Brechungswinkel <f-m>β</f-m>','Einfallslot','gebrochener Strahl','Grenzfläche','ursprüngliche Richtung','einfallender Strahl','Einfallswinkel <f-m>α</f-m>'];
  $('#beschrQ').innerHTML=ans.map((x,i)=>`<div class="label-q"><b>${i+1}</b><select data-ans="${x}" aria-label="Begriff zu Nummer ${i+1}"><option value="">bitte wählen …</option>${opts.map(o=>`<option>${o}</option>`).join('')}</select></div>`).join('');
  cloze('beschrQ','beschrCheck','beschrFb','v1','Alles richtig zugeordnet! Die gestrichelte Linie zeigt, wie das Licht ohne Brechung weiterlaufen würde.')}
 
 /* ---------- Auftrag 3: Vermutung ---------- */
-const VERM={hin:'zum Lot hin (β < α)',weg:'vom Lot weg (β > α)',gerade:'ohne Knick geradeaus (β = α)'};
+const VERM={hin:'zum Lot hin (β < α)',weg:'vom Lot weg (β > α)',gerade:'ohne Knick geradeaus <f-m>(β = α)</f-m>'};
 function showVerm(k){$$('#vermBtns button').forEach(b=>{b.classList.toggle('ok',b.dataset.k===k);b.style.background=''});
  if(k){$('#vermFb').className='fb';$('#vermFb').textContent='Eure Vermutung ist gespeichert: '+VERM[k]+'. Im Versuch findet ihr heraus, ob sie stimmt.';
-  const c=$('#vermCmp');c.hidden=false;c.innerHTML=`<div class="tag">Vermutung überprüfen</div><p style="margin:0">Ihr habt vermutet: Das Licht wird <b>${VERM[k]}</b> gebrochen. `+(k==='hin'?'Euer Versuch bestätigt diese Vermutung. 👍':'Euer Versuch zeigt etwas anderes: β ist kleiner als α – das Licht wird zum Lot hin gebrochen. Falsche Vermutungen gehören zum Forschen dazu!')+'</p>'}}
+  const c=$('#vermCmp');c.hidden=false;c.innerHTML=`<div class="tag">Vermutung überprüfen</div><p style="margin:0">Ihr habt vermutet: Das Licht wird <b>${VERM[k]}</b> gebrochen. `+(k==='hin'?'Euer Versuch bestätigt diese Vermutung. 👍':'Euer Versuch zeigt etwas anderes: <f-m>β</f-m> ist kleiner als <f-m>α</f-m> – das Licht wird zum Lot hin gebrochen. Falsche Vermutungen gehören zum Forschen dazu!')+'</p>'}}
 $$('#vermBtns button').forEach(b=>b.onclick=()=>{store('verm',b.dataset.k);showVerm(b.dataset.k);mark('v3')});
 showVerm(load('verm',null));
 
@@ -516,8 +519,8 @@ showVerm(load('verm',null));
  ['① Winkelscheibe hinlegen','Die Winkelscheibe hat zwei wichtige Linien: Die 0°-Linie ist das Einfallslot. Die Linie von 90° nach 90° (der Durchmesser) wird gleich zur Grenzfläche zwischen Luft und Glas.'],
  ['② Halbzylinder auflegen','Legt den Halbzylinder so auf, dass seine gerade Fläche genau auf der 90°–90°-Linie liegt und die Mitte der geraden Fläche genau auf dem Mittelpunkt der Scheibe. Die runde Seite zeigt von der Leuchte weg.'],
  ['③ Lichtbündel ausrichten','Setzt die Einschlitzblende vor die Leuchte. Richtet das schmale Lichtbündel entlang der 0°-Linie genau auf den Mittelpunkt der Winkelscheibe.'],
- ['④ Kontrolle bei α = 0°','Trifft das Bündel senkrecht auf (α = 0°), muss es ohne Knick entlang der 0°-Linie durch den Glaskörper laufen. Ist es abgeknickt, liegt der Halbzylinder nicht richtig – korrigiert das jetzt!'],
- ['⑤ Messen','Dreht die Winkelscheibe (mit dem Halbzylinder darauf) oder verschiebt die Leuchte, bis α = 10°, 20°, … ist. Das Bündel muss immer den Mittelpunkt treffen. Lest β auf der Glasseite ab – vom Lot aus gemessen.']];
+ ['④ Kontrolle bei <f-m>α = 0°</f-m>','Trifft das Bündel senkrecht auf <f-m>(α = 0°)</f-m>, muss es ohne Knick entlang der 0°-Linie durch den Glaskörper laufen. Ist es abgeknickt, liegt der Halbzylinder nicht richtig – korrigiert das jetzt!'],
+ ['⑤ Messen','Dreht die Winkelscheibe (mit dem Halbzylinder darauf) oder verschiebt die Leuchte, bis <f-m>α = 10°</f-m>, 20°, … ist. Das Bündel muss immer den Mittelpunkt treffen. Lest <f-m>β</f-m> auf der Glasseite ab – vom Lot aus gemessen.']];
  let k=0;$('#aufSteps').innerHTML=steps.map((_,i)=>`<i>${i}</i>`).join('');
  function draw(){let s='';const hl=(on)=>on?'style="stroke:var(--laser);stroke-width:3"':'';
   if(k===0){s+=disc(cx,cy,R,180,R-30)+`<g transform="translate(470,40)"><path d="M0 0 A60 60 0 0 1 0 120 Z" class="glass"/></g>`+T(482,180,'Halbzylinder','txs')+lamp(110,215,0)+T(40,250,'Leuchte','txs')+T(cx-40,cy+R+24,'Winkelscheibe','txs')}
@@ -529,7 +532,7 @@ showVerm(load('verm',null));
    s+=lamp(Sx-(-0),Sy,al)+T(Math.max(6,Sx-90),Sy+(al?-22:34),'Leuchte mit Einschlitzblende','txs');
    if(k>=3){const Ex=cx+R*Math.cos(rad(b)),Ey=cy+R*Math.sin(rad(b));s+=L(Sx,Sy,cx,cy,'ray','stroke-width="3"')+L(cx,cy,Ex,Ey,'ray','stroke-width="3"')+arrow(Sx,Sy,cx,cy,'aw',.6)+arrow(cx,cy,Ex,Ey,'aw');
     if(k===4)s+=T(cx+30,cy+28,'läuft ohne Knick durch ✓','txl');
-    if(k===5){s+=L(cx,cy,cx+R*Math.cos(rad(al)),cy+R*Math.sin(rad(al)),'ray dash','stroke-width="1.4" opacity=".55"')+arcPath(cx,cy,62,180,180+al)+arcPath(cx,cy,62,0,b)+T(cx-88,cy-12,'α','txb')+T(cx+70,cy+16,'β','txb');
+    if(k===5){s+=L(cx,cy,cx+R*Math.cos(rad(al)),cy+R*Math.sin(rad(al)),'ray dash','stroke-width="1.4" opacity=".55"')+arcPath(cx,cy,62,180,180+al)+arcPath(cx,cy,62,0,b)+T(cx-88,cy-12,'<f-m>α</f-m>','txb')+T(cx+70,cy+16,'<f-m>β</f-m>','txb');
      const rf=L(cx,cy,cx-R*Math.cos(rad(al)),cy+R*Math.sin(rad(al)),'ray','stroke-width="1.4" opacity=".35"');s+=rf}}}
   svg.innerHTML=s;$('#aufH').textContent=steps[k][0];$('#aufP').textContent=steps[k][1];
   $$('#aufSteps i').forEach((e,i)=>e.classList.toggle('on',i<=k));$('#aufPrev').disabled=k===0;$('#aufNext').disabled=k===steps.length-1}
@@ -544,12 +547,12 @@ showVerm(load('verm',null));
 /* ---------- Messwerte + Diagramm ---------- */
 const VALS=[0,10,20,30,40,50,60,70,80],REF=a=>brech(a,1,1.5);
 {const saved=load('mess',{});
- $('#messTab').innerHTML=VALS.map(v=>`<label><span>α = ${v}°</span><span class="unit">β = <input type="number" min="0" max="90" step="0.5" data-a="${v}" aria-label="β bei α=${v}°" value="${saved[v]??''}">°</span></label>`).join('');
+ $('#messTab').innerHTML=VALS.map(v=>`<label><span><f-m>α = ${v}</f-m>°</span><span class="unit"><f-m>β</f-m> = <input type="number" min="0" max="90" step="0.5" data-a="${v}" aria-label="β bei α=${v}°" value="${saved[v]??''}">°</span></label>`).join('');
  const svg=$('#chart'),x0=60,y0=390,sx=420/90,sy=340/90,X=a=>x0+a*sx,Y=b=>y0-b*sy;
  function draw(){let s='';for(let a=0;a<=90;a+=10){s+=L(X(a),Y(0),X(a),Y(90),'gl')+T(X(a),y0+20,a,'txs','text-anchor="middle"')}
   for(let b=0;b<=90;b+=10){s+=L(X(0),Y(b),X(90),Y(b),'gl')+T(x0-10,Y(b)+4,b,'txs','text-anchor="end"')}
-  s+=L(X(0),Y(0),X(90),Y(0),'thin')+L(X(0),Y(0),X(0),Y(90),'thin')+T(X(90),y0+40,'Einfallswinkel α in °','txs','text-anchor="end"')+T(14,Y(90)-14,'Brechungswinkel β in °','txs');
-  s+=L(X(0),Y(0),X(90),Y(90),'','style="stroke:var(--muted)" stroke-width="1.5" stroke-dasharray="6 6"')+T(X(62),Y(68),'β = α','txs');
+  s+=L(X(0),Y(0),X(90),Y(0),'thin')+L(X(0),Y(0),X(0),Y(90),'thin')+T(X(90),y0+40,'Einfallswinkel <f-m>α</f-m> in °','txs','text-anchor="end"')+T(14,Y(90)-14,'Brechungswinkel <f-m>β</f-m> in °','txs');
+  s+=L(X(0),Y(0),X(90),Y(90),'','style="stroke:var(--muted)" stroke-width="1.5" stroke-dasharray="6 6"')+T(X(62),Y(68),'<f-m>β = α</f-m>','txs');
   if($('#showRef').checked){let d='';for(let a=0;a<=90;a+=1)d+=(a?'L':'M')+X(a)+' '+Y(REF(a));s+=`<path d="${d}" style="stroke:var(--laser2);fill:none" stroke-width="2.4"/>`}
   $$('#messTab input').forEach(i=>{if(i.value==='')return;const a=+i.dataset.a,b=+i.value;s+=C(X(a),Y(b),6,'aw','style="stroke:var(--bg)" stroke-width="2"')});
   svg.innerHTML=s}
@@ -560,7 +563,7 @@ const VALS=[0,10,20,30,40,50,60,70,80],REF=a=>brech(a,1,1.5);
    const a=+i.dataset.a,b=+i.value,d=Math.abs(b-REF(a));if(a>0&&b>a)bigger=true;i.className=d<=3?'ok':d<=7?'warn':'bad';if(d<=3)ok++;else if(d<=7)warn++;else bad++});
   const fb=$('#messFb');let t='';
   if(empty)t+=empty+' Werte fehlen noch. ';
-  if(bigger)t+='Achtung: Bei euch ist β manchmal größer als α. Habt ihr vom Lot aus gemessen und auf der Glasseite abgelesen? ';
+  if(bigger)t+='Achtung: Bei euch ist <f-m>β</f-m> manchmal größer als <f-m>α</f-m>. Habt ihr vom Lot aus gemessen und auf der Glasseite abgelesen? ';
   if(!empty&&bad<=2){fb.className='fb ok';t+='Eure Messreihe ist vollständig. '+(ok===9?'Alle Werte sind sehr genau – stark!':'Grün: sehr genau, orange: kleine Abweichung (normal bei echten Messungen)'+(bad?', rot: deutliche Abweichung – nachmessen lohnt sich.':'.'));mark('e1');$('#showRef').checked=true;$('#legRef').hidden=false;draw()}
   else if(!empty){fb.className='fb bad';t+=bad+' Werte weichen deutlich ab (rot). Prüft mit der Checkliste oben, ob Halbzylinder und Lichtbündel richtig liegen, und messt diese Werte noch einmal.'}
   else fb.className='fb hint';
@@ -583,7 +586,7 @@ const VALS=[0,10,20,30,40,50,60,70,80],REF=a=>brech(a,1,1.5);
  $('#alpha').oninput=draw;$('#rev').onchange=draw;draw()}
 
 /* ---------- Auswertung ---------- */
-{const parts=['Beim Übergang von','Luft','in','Glas','wird das Licht','zum Lot hin','vom Lot weg','gebrochen.','Der Brechungswinkel β ist','kleiner','größer','als der Einfallswinkel α.','Je größer α,','desto'];
+{const parts=['Beim Übergang von','Luft','in','Glas','wird das Licht','zum Lot hin','vom Lot weg','gebrochen.','Der Brechungswinkel <f-m>β</f-m> ist','kleiner','größer','als der Einfallswinkel <f-m>α</f-m>.','Je größer <f-m>α</f-m>,','desto'];
  const ta=$('#satz');ta.value=load('satz','');ta.oninput=()=>store('satz',ta.value);
  $('#chips').innerHTML=parts.map(p=>`<button type="button">${p}</button>`).join('');
  $$('#chips button').forEach(b=>b.onclick=()=>{ta.value=(ta.value.trim()+' '+b.textContent).trim();store('satz',ta.value);ta.focus()});

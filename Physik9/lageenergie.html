@@ -185,6 +185,9 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 .massbtns{display:flex;gap:8px;flex-wrap:wrap}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
 </head>
 <body>
 <nav aria-label="Phasen"><div class="wrap">
@@ -198,7 +201,7 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 
 <header class="band hero"><div class="wrap">
 <div class="herohead"><div><h1>Lageenergie</h1>
-<p>Ein Wasserturm, ein Stausee, ein Apfel am Baum: Alles, was hoch oben ist, hat Energie gespeichert – die <b>Lageenergie</b>. Aber wie viel? In diesem Lernpfad findest du im Fall-Labor heraus, wovon die Lageenergie abhängt, leitest die Formel E<sub>L</sub> = m · g · h her und übst das Rechnen bis zur Seilbahn auf die Zugspitze.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik9/lageenergie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m3 0h1m1 0h1m1 0h1m2 0h2m7 0h7m-33 1h1m5 0h1m1 0h1m1 0h2m1 0h2m1 0h1m3 0h1m5 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m3 0h3m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h3m3 0h2m1 0h3m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m1 0h2m1 0h1m1 0h5m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m6 0h2m5 0h1m5 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h2m1 0h1m2 0h1m3 0h1m1 0h1m2 0h2m-25 1h1m5 0h1m1 0h1m1 0h8m4 0h1m1 0h3m2 0h3m-32 1h1m1 0h3m2 0h4m4 0h1m1 0h5m1 0h1m4 0h4m-32 1h1m5 0h1m1 0h3m1 0h1m2 0h1m1 0h1m6 0h2m2 0h1m1 0h2m-32 1h2m1 0h2m2 0h3m1 0h2m1 0h3m1 0h1m1 0h1m1 0h2m2 0h6m-30 1h1m2 0h2m1 0h2m2 0h3m1 0h1m2 0h2m1 0h1m2 0h2m5 0h1m-33 1h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h2m3 0h3m1 0h2m2 0h2m2 0h3m-33 1h1m2 0h1m1 0h3m2 0h3m1 0h3m3 0h2m3 0h2m4 0h1m-32 1h2m1 0h3m2 0h1m1 0h2m7 0h1m2 0h1m1 0h2m1 0h4m1 0h1m-33 1h1m1 0h1m2 0h2m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h4m1 0h3m2 0h1m-32 1h1m3 0h1m3 0h3m1 0h3m3 0h5m2 0h1m2 0h2m1 0h1m-33 1h2m2 0h3m1 0h2m2 0h1m2 0h3m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m-32 1h1m5 0h1m1 0h1m1 0h1m2 0h3m2 0h1m2 0h5m1 0h5m-32 1h1m1 0h1m1 0h2m2 0h1m2 0h2m3 0h1m7 0h1m1 0h3m2 0h1m-33 1h1m1 0h1m1 0h2m2 0h8m3 0h1m2 0h2m1 0h4m1 0h1m-31 1h1m5 0h1m1 0h1m1 0h4m1 0h4m1 0h1m3 0h4m1 0h1m1 0h1m-32 1h1m3 0h2m3 0h3m6 0h1m3 0h1m1 0h1m2 0h1m2 0h3m-33 1h2m2 0h3m1 0h3m2 0h2m1 0h1m2 0h1m2 0h1m1 0h6m1 0h1m-24 1h2m1 0h1m2 0h3m1 0h4m1 0h2m3 0h1m1 0h1m1 0h1m-33 1h7m2 0h1m2 0h7m1 0h1m1 0h3m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m2 0h2m1 0h1m5 0h2m3 0h2m3 0h3m-31 1h1m1 0h3m1 0h1m2 0h2m1 0h2m1 0h1m1 0h1m4 0h1m1 0h6m-30 1h1m1 0h3m1 0h1m2 0h1m4 0h8m1 0h3m1 0h3m1 0h2m-33 1h1m1 0h3m1 0h1m3 0h3m1 0h2m3 0h2m3 0h2m1 0h3m1 0h2m-33 1h1m5 0h1m4 0h1m1 0h4m1 0h1m1 0h1m6 0h4m-31 1h7m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h3m2 0h1m3 0h1"/></svg>QR groß zeigen</button></div>
+<p>Ein Wasserturm, ein Stausee, ein Apfel am Baum: Alles, was hoch oben ist, hat Energie gespeichert – die <b>Lageenergie</b>. Aber wie viel? In diesem Lernpfad findest du im Fall-Labor heraus, wovon die Lageenergie abhängt, leitest die Formel <f-m>E<sub>L</sub> = m · g · h</f-m> her und übst das Rechnen bis zur Seilbahn auf die Zugspitze.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik9/lageenergie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m3 0h1m1 0h1m1 0h1m2 0h2m7 0h7m-33 1h1m5 0h1m1 0h1m1 0h2m1 0h2m1 0h1m3 0h1m5 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m3 0h3m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h3m3 0h2m1 0h3m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m1 0h2m1 0h1m1 0h5m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m6 0h2m5 0h1m5 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h2m1 0h1m2 0h1m3 0h1m1 0h1m2 0h2m-25 1h1m5 0h1m1 0h1m1 0h8m4 0h1m1 0h3m2 0h3m-32 1h1m1 0h3m2 0h4m4 0h1m1 0h5m1 0h1m4 0h4m-32 1h1m5 0h1m1 0h3m1 0h1m2 0h1m1 0h1m6 0h2m2 0h1m1 0h2m-32 1h2m1 0h2m2 0h3m1 0h2m1 0h3m1 0h1m1 0h1m1 0h2m2 0h6m-30 1h1m2 0h2m1 0h2m2 0h3m1 0h1m2 0h2m1 0h1m2 0h2m5 0h1m-33 1h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h2m3 0h3m1 0h2m2 0h2m2 0h3m-33 1h1m2 0h1m1 0h3m2 0h3m1 0h3m3 0h2m3 0h2m4 0h1m-32 1h2m1 0h3m2 0h1m1 0h2m7 0h1m2 0h1m1 0h2m1 0h4m1 0h1m-33 1h1m1 0h1m2 0h2m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h4m1 0h3m2 0h1m-32 1h1m3 0h1m3 0h3m1 0h3m3 0h5m2 0h1m2 0h2m1 0h1m-33 1h2m2 0h3m1 0h2m2 0h1m2 0h3m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m-32 1h1m5 0h1m1 0h1m1 0h1m2 0h3m2 0h1m2 0h5m1 0h5m-32 1h1m1 0h1m1 0h2m2 0h1m2 0h2m3 0h1m7 0h1m1 0h3m2 0h1m-33 1h1m1 0h1m1 0h2m2 0h8m3 0h1m2 0h2m1 0h4m1 0h1m-31 1h1m5 0h1m1 0h1m1 0h4m1 0h4m1 0h1m3 0h4m1 0h1m1 0h1m-32 1h1m3 0h2m3 0h3m6 0h1m3 0h1m1 0h1m2 0h1m2 0h3m-33 1h2m2 0h3m1 0h3m2 0h2m1 0h1m2 0h1m2 0h1m1 0h6m1 0h1m-24 1h2m1 0h1m2 0h3m1 0h4m1 0h2m3 0h1m1 0h1m1 0h1m-33 1h7m2 0h1m2 0h7m1 0h1m1 0h3m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m2 0h2m1 0h1m5 0h2m3 0h2m3 0h3m-31 1h1m1 0h3m1 0h1m2 0h2m1 0h2m1 0h1m1 0h1m4 0h1m1 0h6m-30 1h1m1 0h3m1 0h1m2 0h1m4 0h8m1 0h3m1 0h3m1 0h2m-33 1h1m1 0h3m1 0h1m3 0h3m1 0h2m3 0h2m3 0h2m1 0h3m1 0h2m-33 1h1m5 0h1m4 0h1m1 0h4m1 0h1m1 0h1m6 0h4m-31 1h7m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h3m2 0h1m3 0h1"/></svg>QR groß zeigen</button></div>
 <svg viewBox="0 0 900 200" role="img" aria-label="Ein Kran hebt eine Kiste, die Säule der Lageenergie wächst mit der Höhe"><g id="heroScene"></g></svg>
 <div class="phases">
 <a href="#einstieg"><b>1 · Einstieg</b><small>Wovon hängt die Lageenergie ab? Vermute!</small></a>
@@ -233,12 +236,12 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 <div><div class="fig"><svg id="fall" viewBox="0 0 560 360" role="img" aria-label="Fall-Labor: Kugel über einem Sandkasten mit Höhenskala"></svg></div>
 <div class="ctrl">
 <div><span style="font-weight:700;font-size:15px">Masse der Kugel</span><div class="massbtns" id="mBtns"><button data-m="50">50 g</button><button data-m="100" aria-pressed="true">100 g</button><button data-m="200">200 g</button></div></div>
-<div><label for="hIn">Fallhöhe h = <span id="hV">40</span> cm</label><input type="range" id="hIn" min="10" max="80" step="10" value="40"></div>
+<div><label for="hIn">Fallhöhe <f-m>h</f-m> = <span id="hV">40</span> cm</label><input type="range" id="hIn" min="10" max="80" step="10" value="40"></div>
 </div>
 <div class="row"><button class="primary" id="drop">▼ Fallen lassen</button><button id="take" disabled>Messwert übernehmen</button><button id="clearT">Tabelle leeren</button></div>
 </div>
 <div>
-<div class="scroll"><table class="mess" id="tab"><thead><tr><th>Nr.</th><th>Masse m</th><th>Höhe h</th><th>Delle</th></tr></thead><tbody></tbody></table></div>
+<div class="scroll"><table class="mess" id="tab"><thead><tr><th>Nr.</th><th>Masse <f-m>m</f-m></th><th>Höhe <f-m>h</f-m></th><th>Delle</th></tr></thead><tbody></tbody></table></div>
 <p class="fb" id="labFb"></p>
 </div>
 </div>
@@ -253,25 +256,25 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 </div>
 
 <h3>B · Heben kostet Energie: Woher kommt die Formel?</h3>
-<p class="intro">Um eine Kiste hochzuheben, musst du ihre <b>Gewichtskraft F<sub>G</sub> = m · g</b> überwinden – auf der Erde ist g = 9,81 N/kg. Die Energie, die du beim Heben aufwendest, ist <b>Kraft mal Hubhöhe</b>. Sie steckt danach als Lageenergie in der Kiste. Diese Größen kannst du genau messen: die Kraft mit einem Kraftmesser, die Höhe mit dem Maßband. Miss mindestens vier Werte mit zwei verschiedenen Massen.</p>
+<p class="intro">Um eine Kiste hochzuheben, musst du ihre <b>Gewichtskraft F<sub>G</sub> = m · g</b> überwinden – auf der Erde ist <f-m>g = 9,81 N/kg</f-m>. Die Energie, die du beim Heben aufwendest, ist <b>Kraft mal Hubhöhe</b>. Sie steckt danach als Lageenergie in der Kiste. Diese Größen kannst du genau messen: die Kraft mit einem Kraftmesser, die Höhe mit dem Maßband. Miss mindestens vier Werte mit zwei verschiedenen Massen.</p>
 <div class="two">
 <div class="fig"><svg id="hub" viewBox="0 0 560 360" role="img" aria-label="Seilrolle hebt eine Kiste, Kraftmesser zeigt die Gewichtskraft"></svg></div>
 <div>
 <div class="ctrl">
-<div><span style="font-weight:700;font-size:15px">Masse m = <span id="hubMv">5</span> kg</span><div class="massbtns" id="hubMB"><button data-m="2">2 kg</button><button data-m="5" aria-pressed="true">5 kg</button><button data-m="10">10 kg</button></div></div>
-<div><label for="hubH">Hubhöhe h = <span id="hubHv">1,0</span> m</label><input type="range" id="hubH" min="0" max="3" step="0.1" value="1"></div>
+<div><span style="font-weight:700;font-size:15px">Masse <f-m>m</f-m> = <span id="hubMv">5</span> kg</span><div class="massbtns" id="hubMB"><button data-m="2">2 kg</button><button data-m="5" aria-pressed="true">5 kg</button><button data-m="10">10 kg</button></div></div>
+<div><label for="hubH">Hubhöhe <f-m>h</f-m> = <span id="hubHv">1,0</span> m</label><input type="range" id="hubH" min="0" max="3" step="0.1" value="1"></div>
 </div>
 <div class="given" id="hubCalc"></div>
 <div class="row"><button class="primary" id="hubTake">Messwert übernehmen</button><button id="hubClear">Tabelle leeren</button></div>
-<div class="scroll"><table class="mess" id="hubTab"><thead><tr><th>m</th><th>h</th><th>F<sub>G</sub></th><th>E = F<sub>G</sub> · h</th></tr></thead><tbody></tbody></table></div>
+<div class="scroll"><table class="mess" id="hubTab"><thead><tr><th>m</th><th>h</th><th><f-m>F<sub>G</sub></f-m></th><th><f-m>E = F<sub>G</sub> · h</f-m></th></tr></thead><tbody></tbody></table></div>
 <div class="fig" style="margin-top:10px"><svg id="chart" viewBox="0 0 440 280" role="img" aria-label="Diagramm: Energie in Abhängigkeit von der Hubhöhe für verschiedene Massen"></svg></div>
 <div class="legend"><span><i style="background:var(--el)"></i>2 kg</span><span><i style="background:var(--eb)"></i>5 kg</span><span><i style="background:var(--eth)"></i>10 kg</span></div>
 <p class="fb" id="hubFb"></p><span data-task="hubm" hidden></span>
 <div class="card" data-task="l2">
 <div class="tag">Auftrag 3 · Nachrechnen</div>
-<p>Eine Kiste mit 5 kg wird 2 m hoch gehoben. Rechne mit g = 9,81 N/kg und überprüfe im Labor oben.</p>
-<div class="numq"><span>Gewichtskraft F<sub>G</sub></span><span class="unit"><input type="text" inputmode="decimal" id="l2a" data-a="49.05" aria-label="Gewichtskraft in N"> N</span></div>
-<div class="numq"><span>Lageenergie E<sub>L</sub></span><span class="unit"><input type="text" inputmode="decimal" id="l2b" data-a="98.1" aria-label="Lageenergie in J"> J</span></div>
+<p>Eine Kiste mit 5 kg wird 2 m hoch gehoben. Rechne mit <f-m>g = 9,81 N/kg</f-m> und überprüfe im Labor oben.</p>
+<div class="numq"><span>Gewichtskraft <f-m>F<sub>G</sub></f-m></span><span class="unit"><input type="text" inputmode="decimal" id="l2a" data-a="49.05" aria-label="Gewichtskraft in N"> N</span></div>
+<div class="numq"><span>Lageenergie <f-m>E<sub>L</sub></f-m></span><span class="unit"><input type="text" inputmode="decimal" id="l2b" data-a="98.1" aria-label="Lageenergie in J"> J</span></div>
 <div class="row"><button class="primary" id="l2Check">Prüfen</button><button data-hint="l2">Tipp</button></div>
 <p class="fb" id="l2Fb"></p><p class="tip" id="l2Tip"></p>
 </div>
@@ -280,11 +283,11 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 
 <div class="card" style="margin-top:14px"><div class="tag">Auftrag 4 · Auswerten</div>
 <div class="part" data-task="l5a"><h4>a) Gleiche Masse, doppelte Hubhöhe. Die Energie wird …</h4>
-<div class="mc" data-correct="b" data-task="l5a" data-tipp="Vergleiche in deiner Tabelle z. B. 1 m und 2 m bei gleicher Masse."><button data-k="a">gleich groß.</button><button data-k="b" data-fb="Richtig: doppelte Höhe → doppelte Energie. Die Lageenergie ist <b>proportional zur Höhe</b>: E<sub>L</sub> ~ h. Im Diagramm liegen die Punkte einer Masse auf einer Ursprungsgeraden.">doppelt so groß.</button><button data-k="c">viermal so groß.</button><p class="fb"></p></div></div>
+<div class="mc" data-correct="b" data-task="l5a" data-tipp="Vergleiche in deiner Tabelle z. B. 1 m und 2 m bei gleicher Masse."><button data-k="a">gleich groß.</button><button data-k="b" data-fb="Richtig: doppelte Höhe → doppelte Energie. Die Lageenergie ist <b>proportional zur Höhe</b>: <f-m>E<sub>L</sub> ~ h</f-m>. Im Diagramm liegen die Punkte einer Masse auf einer Ursprungsgeraden.">doppelt so groß.</button><button data-k="c">viermal so groß.</button><p class="fb"></p></div></div>
 <div class="part" data-task="l5b"><h4>b) Gleiche Höhe, doppelte Masse (5 kg → 10 kg). Die Energie wird …</h4>
-<div class="mc" data-correct="a" data-task="l5b" data-tipp="Doppelte Masse bedeutet doppelte Gewichtskraft."><button data-k="a" data-fb="Richtig: Die Lageenergie ist auch <b>proportional zur Masse</b>: E<sub>L</sub> ~ m.">doppelt so groß.</button><button data-k="b">halb so groß.</button><button data-k="c">gleich groß.</button><p class="fb"></p></div></div>
+<div class="mc" data-correct="a" data-task="l5b" data-tipp="Doppelte Masse bedeutet doppelte Gewichtskraft."><button data-k="a" data-fb="Richtig: Die Lageenergie ist auch <b>proportional zur Masse</b>: <f-m>E<sub>L</sub> ~ m</f-m>.">doppelt so groß.</button><button data-k="b">halb so groß.</button><button data-k="c">gleich groß.</button><p class="fb"></p></div></div>
 <div class="part" data-task="l5c"><h4>c) Was folgt daraus?</h4>
-<div class="mc" data-correct="c" data-task="l5c"><button data-k="a">E<sub>L</sub> = m + g + h</button><button data-k="b">E<sub>L</sub> = m · h : g</button><button data-k="c" data-fb="Genau: E<sub>L</sub> = F<sub>G</sub> · h = <b>m · g · h</b>.">E<sub>L</sub> = m · g · h</button><p class="fb"></p></div></div>
+<div class="mc" data-correct="c" data-task="l5c"><button data-k="a"><f-m>E<sub>L</sub> = m + g + h</f-m></button><button data-k="b"><f-m>E<sub>L</sub> = m · h : g</f-m></button><button data-k="c" data-fb="Genau: <f-m>E<sub>L</sub> = F<sub>G</sub> · h = <b>m · g · h</b></f-m>."><f-m>E<sub>L</sub> = m · g · h</f-m></button><p class="fb"></p></div></div>
 </div>
 
 <h3>C · Ist der Weg egal?</h3>
@@ -302,7 +305,7 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 
 <div id="whyW"></div>
 <h3>D · Hoch über … was eigentlich? Das Nullniveau</h3>
-<p class="intro">Ein Buch (1 kg) liegt auf einem Regalbrett. Wie hoch liegt es? Das kommt darauf an, von wo aus du misst! Die Höhe, von der aus gemessen wird, heißt <b>Nullniveau</b>. Dort ist E<sub>L</sub> = 0. Wähle ein Nullniveau.</p>
+<p class="intro">Ein Buch (1 kg) liegt auf einem Regalbrett. Wie hoch liegt es? Das kommt darauf an, von wo aus du misst! Die Höhe, von der aus gemessen wird, heißt <b>Nullniveau</b>. Dort ist <f-m>E<sub>L</sub> = 0</f-m>. Wähle ein Nullniveau.</p>
 <div class="two">
 <div class="fig"><svg id="null" viewBox="0 0 640 360" role="img" aria-label="Schnitt durch ein Haus mit Keller, Fußboden, Tisch und Regal mit Buch"></svg></div>
 <div>
@@ -310,7 +313,7 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 <div class="given" id="nullTxt"></div>
 <div class="card" data-task="l4"><div class="tag">Auftrag 6 · Nullniveau</div>
 <p>Bezüglich welchen Nullniveaus hat das Buch eine Lageenergie von 9,81 J?</p>
-<div class="mc" data-correct="c" data-task="l4"><button data-k="a">Kellerboden</button><button data-k="b">Fußboden</button><button data-k="c" data-fb="Richtig: Das Buch liegt genau 1 m über der Tischplatte: E<sub>L</sub> = 1 kg · 9,81 N/kg · 1 m = 9,81 J.">Tischplatte</button><button data-k="d">Regalbrett</button><p class="fb"></p></div></div>
+<div class="mc" data-correct="c" data-task="l4"><button data-k="a">Kellerboden</button><button data-k="b">Fußboden</button><button data-k="c" data-fb="Richtig: Das Buch liegt genau 1 m über der Tischplatte: <f-m>E<sub>L</sub> = 1 kg · 9,81 N/kg · 1 m = 9,81 J</f-m>.">Tischplatte</button><button data-k="d">Regalbrett</button><p class="fb"></p></div></div>
 </div>
 </div>
 <div class="merke"><h4>Merke: Nullniveau</h4><p style="margin:0">Das Nullniveau darfst du frei wählen – meist den Boden oder den tiefsten Punkt einer Bewegung. Gib es immer an! Eine Lageenergie ohne Nullniveau ist nicht eindeutig.</p></div>
@@ -321,14 +324,14 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 <section class="band" id="festhalten"><div class="wrap">
 <h2>3 · Festhalten</h2>
 <div class="merke"><h4>Merke: Lageenergie</h4>
-<p style="margin:0">Ein Körper der Masse m, der sich in der Höhe h über dem Nullniveau befindet, besitzt die Lageenergie</p>
-<p class="formula">E<sub>L</sub> = m · g · h</p>
-<p style="margin:0">m in kg, h in m, g = 9,81 N/kg (Ortsfaktor), E<sub>L</sub> in J &nbsp;·&nbsp; 1 J = 1 N · m<br>Umgestellt: h = E<sub>L</sub> : (m · g) &nbsp;und&nbsp; m = E<sub>L</sub> : (g · h)</p></div>
+<p style="margin:0">Ein Körper der Masse <f-m>m</f-m>, der sich in der Höhe <f-m>h</f-m> über dem Nullniveau befindet, besitzt die Lageenergie</p>
+<p class="formula"><f-m>E<sub>L</sub> = m · g · h</f-m></p>
+<p style="margin:0">m in kg, h in m, <f-m>g = 9,81 N/kg</f-m> (Ortsfaktor), <f-m>E<sub>L</sub></f-m> in J &nbsp;·&nbsp; <f-m>1 J = 1 N · m</f-m><br>Umgestellt: <f-m>h = E<sub>L</sub> : (m · g)</f-m> &nbsp;und&nbsp; <f-m>m = E<sub>L</sub> : (g · h)</f-m></p></div>
 <div class="card" data-task="f1">
 <div class="tag">Auftrag 7 · Lückentext</div>
 <div class="cloze" id="cloze">
 Die Lageenergie ist proportional zur <select data-a="Masse"></select> und zur <select data-a="Höhe"></select> des Körpers.
-Der Ortsfaktor g beträgt auf der Erde <select data-a="9,81 N/kg"></select>. Die Einheit der Energie ist das Joule; es gilt 1 J = 1 <select data-a="N · m"></select>.
+Der Ortsfaktor <f-m>g</f-m> beträgt auf der Erde <select data-a="9,81 N/kg"></select>. Die Einheit der Energie ist das Joule; es gilt <f-m>1 J = 1</f-m> <select data-a="N · m"></select>.
 Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welchem Weg der Körper nach oben gelangt, ist für die Lageenergie <select data-a="egal"></select>.
 </div>
 <div class="row"><button class="primary" id="f1Check">Prüfen</button></div>
@@ -341,17 +344,17 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <div class="row"><button class="primary" id="keCheck">Prüfen</button><button data-hint="ke">Tipp</button></div>
 <p class="fb" id="keFb"></p><p class="tip" id="keTip"></p>
 </div>
-<div class="merke"><h4>Merke: Kraft ≠ Energie</h4><p style="margin:0">Eine <b>Kraft</b> (in N) zieht oder drückt – im Moment. Die <b>Energie</b> (in J) ist ein Vorrat, der gespeichert und umgewandelt werden kann. Beim Heben gilt: Energie = Kraft · Weg, also 1 J = 1 N · m.</p></div>
+<div class="merke"><h4>Merke: Kraft ≠ Energie</h4><p style="margin:0">Eine <b>Kraft</b> (in N) zieht oder drückt – im Moment. Die <b>Energie</b> (in J) ist ein Vorrat, der gespeichert und umgewandelt werden kann. Beim Heben gilt: Energie = Kraft · Weg, also <f-m>1 J = 1 N · m</f-m>.</p></div>
 <details class="reveal"><summary>Heftaufschrieb mit Musteraufgabe anzeigen</summary>
 <div class="heft">
 <h3>Lageenergie</h3>
-<p>Ein Körper, der sich über dem Nullniveau befindet, besitzt Lageenergie. Sie ist proportional zur Masse m und zur Höhe h:</p>
-<p><span class="box">E<sub>L</sub> = m · g · h &nbsp;&nbsp; g = 9,81 N/kg &nbsp;&nbsp; [E<sub>L</sub>] = 1 J = 1 N · m</span></p>
-<p>Herleitung: Um einen Körper zu heben, muss man die Gewichtskraft F<sub>G</sub> = m · g längs der Höhe h überwinden: E<sub>L</sub> = F<sub>G</sub> · h = m · g · h. Der Weg spielt keine Rolle, nur der Höhenunterschied.</p>
+<p>Ein Körper, der sich über dem Nullniveau befindet, besitzt Lageenergie. Sie ist proportional zur Masse <f-m>m</f-m> und zur Höhe <f-m>h</f-m>:</p>
+<p><span class="box"><f-m>E<sub>L</sub> = m · g · h</f-m> &nbsp;&nbsp; <f-m>g = 9,81 N/kg</f-m> &nbsp;&nbsp; [<f-m>E<sub>L</sub></f-m>] = <f-m>1 J = 1 N · m</f-m></span></p>
+<p>Herleitung: Um einen Körper zu heben, muss man die Gewichtskraft <f-m>F<sub>G</sub> = m · g</f-m> längs der Höhe <f-m>h</f-m> überwinden: <f-m>E<sub>L</sub> = F<sub>G</sub> · h = m · g · h</f-m>. Der Weg spielt keine Rolle, nur der Höhenunterschied.</p>
 <h3>Musteraufgabe</h3>
 <p>Ein Schüler (55 kg) steigt vom Erdgeschoss in den 1. Stock (3,0 m höher). Wie viel Lageenergie gewinnt er?</p>
-<p><b>Gegeben:</b> m = 55 kg; h = 3,0 m; g = 9,81 N/kg &nbsp; <b>Gesucht:</b> E<sub>L</sub></p>
-<p><b>Rechnung:</b> E<sub>L</sub> = m · g · h = 55 kg · 9,81 N/kg · 3,0 m ≈ 1619 J ≈ 1,6 kJ</p>
+<p><b>Gegeben:</b> <f-m>m = 55 kg</f-m>; <f-m>h = 3,0 m</f-m>; <f-m>g = 9,81 N/kg</f-m> &nbsp; <b>Gesucht:</b> <f-m>E<sub>L</sub></f-m></p>
+<p><b>Rechnung:</b> <f-m>E<sub>L</sub> = m · g · h = 55 kg · 9,81 N/kg · 3,0 m ≈ 1619 J ≈ 1,6 kJ</f-m></p>
 <p><b>Antwort:</b> Der Schüler gewinnt etwa 1,6 kJ Lageenergie (Nullniveau: Erdgeschoss).</p>
 </div>
 </details>
@@ -360,7 +363,7 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <!-- ============ 4 ÜBEN ============ -->
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
-<p class="intro">★ Grundlagen, ★★ Umstellen und Nullniveau, ★★★ Anwenden. Rechne mit g = 9,81 N/kg und notiere im Heft <i>Gegeben – Gesucht – Rechnung – Antwort</i>. Dezimalzahlen mit Komma eingeben.</p>
+<p class="intro">★ Grundlagen, ★★ Umstellen und Nullniveau, ★★★ Anwenden. Rechne mit <f-m>g = 9,81 N/kg</f-m> und notiere im Heft <i>Gegeben – Gesucht – Rechnung – Antwort</i>. Dezimalzahlen mit Komma eingeben.</p>
 
 <div class="card" data-task="u1">
 <div class="tag"><span class="stars">★</span> Übung 1 · Lageenergie berechnen</div>
@@ -369,13 +372,13 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <div class="steprow"><span>Gegeben: h =</span><span class="unit"><input type="text" inputmode="decimal" id="u1h" data-a="1.5" aria-label="Höhe in m"> m</span></div>
 <div class="steprow"><span>Gesucht:</span><select id="u1g" data-a="E" aria-label="Gesucht"><option value="">– wählen –</option><option value="F">Gewichtskraft F<sub>G</sub></option><option value="E">Lageenergie E<sub>L</sub></option><option value="h">Höhe h</option></select></div>
 <div class="steprow"><span>Formel:</span><select id="u1f" data-a="mgh" aria-label="Formel"><option value="">– wählen –</option><option value="mh">E = m · h</option><option value="mgh">E = m · g · h</option><option value="mg">E = m · g</option><option value="emgh">E = m : (g · h)</option></select></div>
-<div class="steprow"><span>Ergebnis: E<sub>L</sub> =</span><span class="unit"><input type="text" inputmode="decimal" id="u1a" data-a="29.43" aria-label="a in J"> J</span></div>
+<div class="steprow"><span>Ergebnis: <f-m>E<sub>L</sub></f-m> =</span><span class="unit"><input type="text" inputmode="decimal" id="u1a" data-a="29.43" aria-label="a in J"> J</span></div>
 <p style="margin-top:14px"><b>Jetzt ohne Hilfe:</b></p>
-<div class="numq"><span>b) Ein Schüler (55 kg) steht im 1. Stock, 3 m über dem Erdgeschoss.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u1b" data-a="1618.65" aria-label="b in J"> J</span></div>
-<div class="numq"><span>c) 1000 kg Wasser stehen im Wasserturm 30 m über dem Boden.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u1c" data-a="294.3" aria-label="c in kJ"> kJ</span></div>
+<div class="numq"><span>b) Ein Schüler (55 kg) steht im 1. Stock, 3 m über dem Erdgeschoss.</span><span class="unit"><f-m>E<sub>L</sub></f-m> = <input type="text" inputmode="decimal" id="u1b" data-a="1618.65" aria-label="b in J"> J</span></div>
+<div class="numq"><span>c) 1000 kg Wasser stehen im Wasserturm 30 m über dem Boden.</span><span class="unit"><f-m>E<sub>L</sub></f-m> = <input type="text" inputmode="decimal" id="u1c" data-a="294.3" aria-label="c in kJ"> kJ</span></div>
 <div class="row"><button class="primary" id="u1Check">Prüfen</button><button data-hint="u1">Tipp</button><button data-sol="u1Sol">Lösung zeigen</button></div>
 <p class="fb" id="u1Fb"></p><p class="tip" id="u1Tip"></p>
-<div class="sol" id="u1Sol" hidden><p>a) 2 kg · 9,81 N/kg · 1,5 m = <b>29,43 J</b></p><p>b) 55 kg · 9,81 N/kg · 3 m = <b>1618,65 J</b> ≈ 1,6 kJ</p><p>c) 1000 kg · 9,81 N/kg · 30 m = 294 300 J = <b>294,3 kJ</b></p></div>
+<div class="sol" id="u1Sol" hidden><p>a) <f-m>2 kg · 9,81 N/kg · 1,5 m = <b>29,43 J</b></f-m></p><p>b) <f-m>55 kg · 9,81 N/kg · 3 m = <b>1618,65 J</b> ≈ 1,6 kJ</f-m></p><p>c) <f-m>1000 kg · 9,81 N/kg · 30 m = 294 300 J = <b>294,3 kJ</b></f-m></p></div>
 </div>
 
 <div class="card" data-task="u2">
@@ -383,11 +386,11 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <p>Die Formel funktioniert nur mit kg und m!</p>
 <div class="numq"><span>a) 250 g =</span><span class="unit"><input type="text" inputmode="decimal" id="u2a" data-a="0.25" aria-label="a in kg"> kg</span></div>
 <div class="numq"><span>b) 80 cm =</span><span class="unit"><input type="text" inputmode="decimal" id="u2b" data-a="0.8" aria-label="b in m"> m</span></div>
-<div class="numq"><span>c) Ein Handy (180 g) liegt auf einem 75 cm hohen Tisch.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u2c" data-a="1.324" aria-label="c in J"> J</span></div>
-<div class="numq"><span>d) Ein Apfel (100 g) hängt 2,5 m hoch am Baum.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u2d" data-a="2.4525" aria-label="d in J"> J</span></div>
+<div class="numq"><span>c) Ein Handy (180 g) liegt auf einem 75 cm hohen Tisch.</span><span class="unit"><f-m>E<sub>L</sub></f-m> = <input type="text" inputmode="decimal" id="u2c" data-a="1.324" aria-label="c in J"> J</span></div>
+<div class="numq"><span>d) Ein Apfel (100 g) hängt 2,5 m hoch am Baum.</span><span class="unit"><f-m>E<sub>L</sub></f-m> = <input type="text" inputmode="decimal" id="u2d" data-a="2.4525" aria-label="d in J"> J</span></div>
 <div class="row"><button class="primary" id="u2Check">Prüfen</button><button data-hint="u2">Tipp</button><button data-sol="u2Sol">Lösung zeigen</button></div>
 <p class="fb" id="u2Fb"></p><p class="tip" id="u2Tip"></p>
-<div class="sol" id="u2Sol" hidden><p>a) 250 g : 1000 = <b>0,25 kg</b> &nbsp; b) 80 cm : 100 = <b>0,8 m</b></p><p>c) 0,18 kg · 9,81 N/kg · 0,75 m ≈ <b>1,32 J</b></p><p>d) 0,1 kg · 9,81 N/kg · 2,5 m ≈ <b>2,45 J</b></p></div>
+<div class="sol" id="u2Sol" hidden><p>a) <f-m>250 g : 1000 = <b>0,25 kg</b></f-m> &nbsp; b) <f-m>80 cm : 100 = <b>0,8 m</b></f-m></p><p>c) <f-m>0,18 kg · 9,81 N/kg · 0,75 m ≈ <b>1,32 J</b></f-m></p><p>d) <f-m>0,1 kg · 9,81 N/kg · 2,5 m ≈ <b>2,45 J</b></f-m></p></div>
 </div>
 
 <div class="card" data-task="u3">
@@ -397,7 +400,7 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <div class="numq"><span>c) Eine Bergsteigerin (60 kg) gewinnt 294,3 kJ Lageenergie. Wie viele Höhenmeter ist sie gestiegen?</span><span class="unit">h = <input type="text" inputmode="decimal" id="u3c" data-a="500" aria-label="c in m"> m</span></div>
 <div class="row"><button class="primary" id="u3Check">Prüfen</button><button data-hint="u3">Tipp</button><button data-sol="u3Sol">Lösung zeigen</button></div>
 <p class="fb" id="u3Fb"></p><p class="tip" id="u3Tip"></p>
-<div class="sol" id="u3Sol" hidden><p>a) h = E<sub>L</sub> : (m · g) = 588,6 J : (12 kg · 9,81 N/kg) = <b>5 m</b></p><p>b) m = E<sub>L</sub> : (g · h) = 2943 J : (9,81 N/kg · 10 m) = <b>30 kg</b></p><p>c) h = 294 300 J : (60 kg · 9,81 N/kg) = <b>500 m</b></p></div>
+<div class="sol" id="u3Sol" hidden><p>a) <f-m>h = E<sub>L</sub> : (m · g) = 588,6 J : (12 kg · 9,81 N/kg) = <b>5 m</b></f-m></p><p>b) <f-m>m = E<sub>L</sub> : (g · h) = 2943 J : (9,81 N/kg · 10 m) = <b>30 kg</b></f-m></p><p>c) <f-m>h = 294 300 J : (60 kg · 9,81 N/kg) = <b>500 m</b></f-m></p></div>
 </div>
 
 <div class="card">
@@ -415,11 +418,11 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <div class="card">
 <div class="tag"><span class="stars">★★</span> Übung 5 · Proportionalität nutzen (ohne Taschenrechner!)</div>
 <div class="part" data-task="u5a"><h4>a) Ein Stein hat in 4 m Höhe 60 J Lageenergie. Wie viel hat er in 12 m Höhe?</h4>
-<div class="mc" data-correct="c" data-task="u5a"><button data-k="a">60 J</button><button data-k="b">120 J</button><button data-k="c" data-fb="Richtig: dreifache Höhe → dreifache Lageenergie: 3 · 60 J = 180 J.">180 J</button><button data-k="d">720 J</button><p class="fb"></p></div></div>
+<div class="mc" data-correct="c" data-task="u5a"><button data-k="a">60 J</button><button data-k="b">120 J</button><button data-k="c" data-fb="Richtig: dreifache Höhe → dreifache Lageenergie: <f-m>3 · 60 J = 180 J</f-m>.">180 J</button><button data-k="d">720 J</button><p class="fb"></p></div></div>
 <div class="part" data-task="u5b"><h4>b) Kiste B hat die halbe Masse von Kiste A, steht aber doppelt so hoch. Vergleiche!</h4>
-<div class="mc" data-correct="a" data-task="u5b"><button data-k="a" data-fb="Richtig: ½ · 2 = 1. Die Lageenergien sind gleich.">Beide haben gleich viel Lageenergie.</button><button data-k="b">Kiste A hat doppelt so viel.</button><button data-k="c">Kiste B hat doppelt so viel.</button><p class="fb"></p></div></div>
+<div class="mc" data-correct="a" data-task="u5b"><button data-k="a" data-fb="Richtig: <f-m>½ · 2 = 1</f-m>. Die Lageenergien sind gleich.">Beide haben gleich viel Lageenergie.</button><button data-k="b">Kiste A hat doppelt so viel.</button><button data-k="c">Kiste B hat doppelt so viel.</button><p class="fb"></p></div></div>
 <div class="part" data-task="u5c"><h4>c) Auf dem Mond ist g nur 1,62 N/kg. Ein Astronaut hebt einen Stein 1 m hoch. Im Vergleich zur Erde ist die Lageenergie …</h4>
-<div class="mc" data-correct="b" data-task="u5c"><button data-k="a">gleich groß.</button><button data-k="b" data-fb="Richtig: etwa 9,81 : 1,62 ≈ 6. Auf dem Mond ist die Lageenergie bei gleicher Masse und Höhe etwa sechsmal kleiner – deshalb ist Heben dort so leicht.">etwa sechsmal kleiner.</button><button data-k="c">etwa sechsmal größer.</button><p class="fb"></p></div></div>
+<div class="mc" data-correct="b" data-task="u5c"><button data-k="a">gleich groß.</button><button data-k="b" data-fb="Richtig: etwa <f-m>9,81 : 1,62 ≈ 6</f-m>. Auf dem Mond ist die Lageenergie bei gleicher Masse und Höhe etwa sechsmal kleiner – deshalb ist Heben dort so leicht.">etwa sechsmal kleiner.</button><button data-k="c">etwa sechsmal größer.</button><p class="fb"></p></div></div>
 </div>
 
 <div class="card" data-task="u6">
@@ -429,7 +432,7 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <div class="numq"><span>b) Tatsächlich nutzen die Muskeln nur etwa 25 % der Energie für die Bewegung, der Rest wird thermische Energie. Wie hoch kommt sie wirklich?</span><span class="unit">h ≈ <input type="text" inputmode="decimal" id="u6b" data-a="364" data-tol="0.02" aria-label="b in m"> m</span></div>
 <div class="row"><button class="primary" id="u6Check">Prüfen</button><button data-hint="u6">Tipp</button><button data-sol="u6Sol">Lösung zeigen</button></div>
 <p class="fb" id="u6Fb"></p><p class="tip" id="u6Tip"></p>
-<div class="sol" id="u6Sol" hidden><p>a) 1000 kJ = 1 000 000 J. h = E<sub>L</sub> : (m · g) = 1 000 000 J : (70 kg · 9,81 N/kg) ≈ <b>1456 m</b></p><p>b) 25 % von 1456 m ≈ <b>364 m</b>. Darum schwitzt man beim Bergwandern: Der Großteil der Energie wird thermische Energie.</p></div>
+<div class="sol" id="u6Sol" hidden><p>a) <f-m>1000 kJ = 1 000 000 J</f-m>. <f-m>h = E<sub>L</sub> : (m · g) = 1 000 000 J : (70 kg · 9,81 N/kg) ≈ <b>1456 m</b></f-m></p><p>b) 25 % von 1456 m: <f-m>0,25 · 1456 m ≈ <b>364 m</b></f-m>. Darum schwitzt man beim Bergwandern: Der Großteil der Energie wird thermische Energie.</p></div>
 </div>
 
 <div class="card" data-task="u7">
@@ -444,14 +447,14 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <div class="numq"><span>d) So viel Energie steckt in wie vielen Schokoriegeln (je 1000 kJ)?</span><span class="unit"><input type="text" inputmode="decimal" id="u7d" data-a="172" data-tol="0.02" aria-label="d Anzahl"> Riegel</span></div>
 <div class="row"><button class="primary" id="u7Check">Prüfen</button><button data-hint="u7">Tipp</button><button data-sol="u7Sol">Lösung zeigen</button></div>
 <p class="fb" id="u7Fb"></p><p class="tip" id="u7Tip"></p>
-<div class="sol" id="u7Sol" hidden><p>a) 2950 m − 1000 m = <b>1950 m</b> &nbsp; b) 120 · 75 kg = <b>9000 kg</b></p><p>c) 9000 kg · 9,81 N/kg · 1950 m = 172 165 500 J ≈ <b>172,2 MJ</b></p><p>d) 172 165 kJ : 1000 kJ ≈ <b>172 Schokoriegel</b> – die Kabine selbst (mehrere Tonnen) ist dabei noch gar nicht mitgerechnet.</p></div>
+<div class="sol" id="u7Sol" hidden><p>a) <f-m>2950 m − 1000 m = <b>1950 m</b></f-m> &nbsp; b) <f-m>120 · 75 kg = <b>9000 kg</b></f-m></p><p>c) <f-m>9000 kg · 9,81 N/kg · 1950 m = 172 165 500 J ≈ <b>172,2 MJ</b></f-m></p><p>d) <f-m>172 165 kJ : 1000 kJ</f-m> ≈ <b>172 Schokoriegel</b> – die Kabine selbst (mehrere Tonnen) ist dabei noch gar nicht mitgerechnet.</p></div>
 </div>
 
 <div class="row" style="margin-top:24px"><button id="resetAll">Fortschritt zurücksetzen</button><a href="/Physik9/energie-einfuehrung" style="text-decoration:none;display:inline-flex;align-items:center;font:600 16px Lexend,sans-serif;padding:8px 16px;border-radius:10px;border:1px solid var(--line);color:var(--ink)">← Was ist Energie?</a><a href="/Physik9/energieerhaltung" style="text-decoration:none;display:inline-flex;align-items:center;font:600 16px Lexend,sans-serif;padding:8px 16px;border-radius:10px;background:var(--acc);color:light-dark(#fff,#11141b)">Weiter: Energieerhaltung →</a></div>
 </div></section>
 
 <footer class="band"><div class="wrap">
-<p>Lernpfad Physik TG9 · Mechanik II: Energie · Lageenergie. Dein Fortschritt wird nur in diesem Browser gespeichert, es werden keine Daten übertragen. Rechne immer mit g = 9,81 N/kg.</p>
+<p>Lernpfad Physik TG9 · Mechanik II: Energie · Lageenergie. Dein Fortschritt wird nur in diesem Browser gespeichert, es werden keine Daten übertragen. Rechne immer mit <f-m>g = 9,81 N/kg</f-m>.</p>
 </div></footer>
 
 <dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Lernpfad"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik9/lageenergie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m3 0h1m1 0h1m1 0h1m2 0h2m7 0h7m-33 1h1m5 0h1m1 0h1m1 0h2m1 0h2m1 0h1m3 0h1m5 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m3 0h3m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h3m3 0h2m1 0h3m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m1 0h2m1 0h1m1 0h5m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m6 0h2m5 0h1m5 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h2m1 0h1m2 0h1m3 0h1m1 0h1m2 0h2m-25 1h1m5 0h1m1 0h1m1 0h8m4 0h1m1 0h3m2 0h3m-32 1h1m1 0h3m2 0h4m4 0h1m1 0h5m1 0h1m4 0h4m-32 1h1m5 0h1m1 0h3m1 0h1m2 0h1m1 0h1m6 0h2m2 0h1m1 0h2m-32 1h2m1 0h2m2 0h3m1 0h2m1 0h3m1 0h1m1 0h1m1 0h2m2 0h6m-30 1h1m2 0h2m1 0h2m2 0h3m1 0h1m2 0h2m1 0h1m2 0h2m5 0h1m-33 1h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h2m3 0h3m1 0h2m2 0h2m2 0h3m-33 1h1m2 0h1m1 0h3m2 0h3m1 0h3m3 0h2m3 0h2m4 0h1m-32 1h2m1 0h3m2 0h1m1 0h2m7 0h1m2 0h1m1 0h2m1 0h4m1 0h1m-33 1h1m1 0h1m2 0h2m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h4m1 0h3m2 0h1m-32 1h1m3 0h1m3 0h3m1 0h3m3 0h5m2 0h1m2 0h2m1 0h1m-33 1h2m2 0h3m1 0h2m2 0h1m2 0h3m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m-32 1h1m5 0h1m1 0h1m1 0h1m2 0h3m2 0h1m2 0h5m1 0h5m-32 1h1m1 0h1m1 0h2m2 0h1m2 0h2m3 0h1m7 0h1m1 0h3m2 0h1m-33 1h1m1 0h1m1 0h2m2 0h8m3 0h1m2 0h2m1 0h4m1 0h1m-31 1h1m5 0h1m1 0h1m1 0h4m1 0h4m1 0h1m3 0h4m1 0h1m1 0h1m-32 1h1m3 0h2m3 0h3m6 0h1m3 0h1m1 0h1m2 0h1m2 0h3m-33 1h2m2 0h3m1 0h3m2 0h2m1 0h1m2 0h1m2 0h1m1 0h6m1 0h1m-24 1h2m1 0h1m2 0h3m1 0h4m1 0h2m3 0h1m1 0h1m1 0h1m-33 1h7m2 0h1m2 0h7m1 0h1m1 0h3m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m2 0h2m1 0h1m5 0h2m3 0h2m3 0h3m-31 1h1m1 0h3m1 0h1m2 0h2m1 0h2m1 0h1m1 0h1m4 0h1m1 0h6m-30 1h1m1 0h3m1 0h1m2 0h1m4 0h8m1 0h3m1 0h3m1 0h2m-33 1h1m1 0h3m1 0h1m3 0h3m1 0h2m3 0h2m3 0h2m1 0h3m1 0h2m-33 1h1m5 0h1m4 0h1m1 0h4m1 0h1m1 0h1m6 0h4m-31 1h7m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h3m2 0h1m3 0h1"/></svg><p>lernapps.gst-lernen.workers.dev/Physik9/lageenergie</p><button id="qrClose">Schließen</button></dialog>
@@ -527,7 +530,7 @@ const crate=(x,y,w,h,lab)=>Rc(x,y,w,h,'','rx="4" style="fill:#d9a066;stroke:var(
  s+=`<line x1="140" y1="180" x2="140" y2="20" stroke="#7f8aa3" stroke-width="8"/><line x1="100" y1="24" x2="560" y2="24" stroke="#7f8aa3" stroke-width="8"/>`;
  [[220,150,'#3a4558'],[340,110,'#4a5a78'],[460,62,'#6aa5ff']].forEach(([x,y,c],i)=>{s+=`<line x1="${x+25}" y1="24" x2="${x+25}" y2="${y}" stroke="#7f8aa3" stroke-width="2"/><rect x="${x}" y="${y}" width="50" height="30" rx="4" fill="#d9a066" opacity="${.4+.3*i}"/>`;
   const hb=(180-y-30)*0.9;s+=`<rect x="${x+70}" y="${180-hb}" width="22" height="${hb}" fill="#6aa5ff" opacity="${.4+.3*i}"/>`});
- s+=`<text x="620" y="80" fill="#eef1f7" font-family="Lexend,sans-serif" font-size="30" font-weight="700">E<tspan font-size="18" dy="6">L</tspan><tspan dy="-6"> = m · g · h</tspan></text><text x="620" y="112" fill="#a9b2c4" font-family="Lexend,sans-serif" font-size="15">je höher, desto mehr Lageenergie</text>`;
+ s+=`<text x="620" y="80" fill="#eef1f7" font-family="Lexend,sans-serif" font-size="30" font-weight="700">E<tspan font-size="18" dy="6">L</tspan><tspan dy="-6"> = <f-m>m · g · h</f-m></tspan></text><text x="620" y="112" fill="#a9b2c4" font-family="Lexend,sans-serif" font-size="15">je höher, desto mehr Lageenergie</text>`;
  $('#heroScene').innerHTML=s}
 
 /* ---------- Auftrag 1: Vermutung ---------- */
@@ -569,7 +572,7 @@ $('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value)
   if(h>0)s+=L(330,fl,330,fl-h*sc,'thin','stroke-width="2"')+arrowHead(330,fl-h*sc,-90,'var(--ink)')+T(338,fl-h*sc/2,'h','txb');
   const eb=E/300*230;s+=Rc(450,fl-eb,40,eb,'fel')+T(470,fl+22,'E','txb','text-anchor="middle"')+T(470,fl-eb-8,Math.round(E)+' J','tel','text-anchor="middle"');
   svg.innerHTML=s;
-  $('#hubCalc').innerHTML=`Kraftmesser: F<sub>G</sub> = <b>${fmt(F,2)} N</b> &nbsp;·&nbsp; Hubhöhe h = <b>${fmt(h,1)} m</b><br>Energie beim Heben: E = F<sub>G</sub> · h = ${fmt(F,2)} N · ${fmt(h,1)} m = <b>${fmt(E,1)} J</b>`}
+  $('#hubCalc').innerHTML=`Kraftmesser: <f-m>F<sub>G</sub> = <b>${fmt(F,2)} N</b></f-m> &nbsp;·&nbsp; Hubhöhe <f-m>h = <b>${fmt(h,1)} m</b></f-m><br>Energie beim Heben: <f-m>E = F<sub>G</sub> · h = ${fmt(F,2)} N · ${fmt(h,1)} m = <b>${fmt(E,1)} J</b></f-m>`}
  function chart(){const c=$('#chart'),x0=50,y0=240,W=360,H=210,xs=v=>x0+v/3*W,ys=v=>y0-v/300*H;let s='';
   for(let v=0;v<=3;v+=0.5)s+=L(xs(v),y0,xs(v),y0-H,'gl')+T(xs(v),y0+18,fmtS(v,1),'txs','text-anchor="middle"');
   for(let v=0;v<=300;v+=50)s+=L(x0,ys(v),x0+W,ys(v),'gl')+T(x0-8,ys(v)+4,v,'txs','text-anchor="end"');
@@ -584,13 +587,13 @@ $('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value)
  $('#hubTake').onclick=()=>{const h=hv();if(h>0&&!data.some(d=>d.m===m&&d.h===h))data.push({m,h,E:m*g*h});data.sort((a,b)=>a.m-b.m||a.h-b.h);table()};
  $('#hubClear').onclick=()=>{data=[];table()};
  draw();table();
- numCheck('#l2Check',['#l2a','#l2b'],'#l2Fb','l2','Richtig! F<sub>G</sub> = 5 kg · 9,81 N/kg = 49,05 N und E<sub>L</sub> = 49,05 N · 2 m = 98,1 J. Allgemein: <b>E<sub>L</sub> = F<sub>G</sub> · h = m · g · h</b>.');
- hints.l2=['Gewichtskraft: F<sub>G</sub> = m · g = 5 kg · 9,81 N/kg.','Lageenergie = Gewichtskraft · Hubhöhe. N · m ergibt J.']}
+ numCheck('#l2Check',['#l2a','#l2b'],'#l2Fb','l2','Richtig! <f-m>F<sub>G</sub> = 5 kg · 9,81 N/kg = 49,05 N</f-m> und <f-m>E<sub>L</sub> = 49,05 N · 2 m = 98,1 J</f-m>. Allgemein: <f-m><b>E<sub>L</sub> = F<sub>G</sub> · h = m · g · h</b></f-m>.');
+ hints.l2=['Gewichtskraft: <f-m>F<sub>G</sub> = m · g = 5 kg · 9,81 N/kg</f-m>.','Lageenergie = Gewichtskraft · Hubhöhe. <f-m>N · m</f-m> ergibt J.']}
 
 /* ---------- C: Weg egal ---------- */
 {const svg=$('#weg'),fl=290,sc=60,top=fl-3*sc,PX=440;let w=-1,k=0;
  const paths=[[[40,fl],[PX,top]],[[100,fl],[140,fl],[140,fl-30],[180,fl-30],[180,fl-60],[220,fl-60],[220,fl-90],[260,fl-90],[260,fl-120],[300,fl-120],[300,fl-150],[340,fl-150],[340,top],[PX,top]],[[600,fl],[600,top]]];
- const info=['Rampe: 6,7 m lang. Ohne Reibung schiebst du mit kleinerer Kraft (≈ 219 N), aber über einen längeren Weg. 219 N · 6,7 m ≈ 1471 J. (Mit Reibung bräuchtest du mehr Energie – der Rest würde zu thermischer Energie.)','Treppe: 6 Stufen à 50 cm. Du hebst den Koffer Stufe für Stufe mit F<sub>G</sub> = 490,5 N insgesamt 3 m hoch. 490,5 N · 3 m = 1471,5 J.','Aufzug: Er hebt den Koffer direkt 3 m hoch: 490,5 N · 3 m = 1471,5 J.'];
+ const info=['Rampe: 6,7 m lang. Ohne Reibung schiebst du mit kleinerer Kraft (≈ 219 N), aber über einen längeren Weg. <f-m>219 N · 6,7 m ≈ 1471 J</f-m>. (Mit Reibung bräuchtest du mehr Energie – der Rest würde zu thermischer Energie.)','Treppe: 6 Stufen à 50 cm. Du hebst den Koffer Stufe für Stufe mit <f-m>F<sub>G</sub> = 490,5 N</f-m> insgesamt 3 m hoch. <f-m>490,5 N · 3 m = 1471,5 J</f-m>.','Aufzug: Er hebt den Koffer direkt 3 m hoch: <f-m>490,5 N · 3 m = 1471,5 J</f-m>.'];
  function at(p,t){let L2=0;const seg=[];for(let i=1;i<p.length;i++){const l=Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1]);seg.push(l);L2+=l}let d=t*L2;for(let i=0;i<seg.length;i++){if(d<=seg[i]){const f=d/seg[i];return [p[i][0]+(p[i+1][0]-p[i][0])*f,p[i][1]+(p[i+1][1]-p[i][1])*f]}d-=seg[i]}return p[p.length-1]}
  function draw(){let s=Rc(0,fl,640,30,'ground')+Rc(PX,top,200,fl-top,'','style="fill:var(--panel);stroke:var(--ink)"')+T(PX+60,top-8,'Plattform','txs');
   s+=`<path d="M40 ${fl} L${PX} ${top} L${PX} ${fl}Z" style="fill:var(--el);opacity:.12;stroke:var(--el)"/>`+T(30,fl-8,'Rampe','tel');
@@ -609,11 +612,11 @@ $('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value)
   s+=Rc(380,Y(1.8),150,6,'','style="fill:#a8743a"')+L(380,Y(1.8)-60,380,Y(0),'thin','stroke-width="4"')+Rc(440,Y(1.8)-26,40,26,'','rx="2" style="fill:var(--el)"')+T(486,Y(1.8)-8,'Buch 1 kg','txs');
   const zv=Z[z][0];s+=L(0,Y(zv),640,Y(zv),'','style="stroke:var(--acc)" stroke-width="2.5" stroke-dasharray="10 6"')+T(530,Y(zv)+20,'Nullniveau','txb','style="fill:var(--acc)"');
   const hh=hb-zv;if(hh>0)s+=L(545,Y(zv),545,Y(hb),'thin','stroke-width="2"')+arrowHead(545,Y(hb),-90,'var(--ink)')+L(480,Y(hb),555,Y(hb),'dashl')+T(552,(Y(zv)+Y(hb))/2,'h = '+fmt(hh,1)+' m','txb');
-  svg.innerHTML=s;$('#nullTxt').innerHTML=`Nullniveau: <b>${Z[z][1]}</b> → h = ${fmt(hh,1)} m<br>E<sub>L</sub> = 1 kg · 9,81 N/kg · ${fmt(hh,1)} m = <b>${fmt(9.81*hh,2)} J</b>`}
+  svg.innerHTML=s;$('#nullTxt').innerHTML=`Nullniveau: <b>${Z[z][1]}</b><br>Höhe des Buchs darüber: <f-m>h = ${fmt(hh,1)} m</f-m><br><f-m>E<sub>L</sub> = 1 kg · 9,81 N/kg · ${fmt(hh,1)} m = <b>${fmt(9.81*hh,2)} J</b></f-m>`}
  $$('#nullBtns button').forEach(b=>b.onclick=()=>{z=+b.dataset.z;$$('#nullBtns button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw()});draw()}
 
 /* ---------- Lückentext ---------- */
-{const words=['Masse','Farbe','Höhe','Geschwindigkeit','9,81 N/kg','1,62 N/kg','N · m','N : m','Nullniveau','Meeresspiegel','egal','entscheidend'];
+{const words=['Masse','Farbe','Höhe','Geschwindigkeit','9,81 N/kg','1,62 N/kg','<f-m>N · m</f-m>','<f-m>N : m</f-m>','Nullniveau','Meeresspiegel','egal','entscheidend'];
  $$('#cloze select').forEach(s=>{s.innerHTML='<option value="">…</option>'+words.map(w=>`<option>${w}</option>`).join('')});
  selCheck('#f1Check','#cloze','#f1Fb','f1','Perfekt! Übertrage den Merksatz und die Musteraufgabe in dein Heft.')}
 
@@ -621,17 +624,17 @@ $('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value)
 $('#u1Check').onclick=()=>{let ok=0,n=0;['#u1m','#u1h','#u1a','#u1b','#u1c'].forEach(id=>{n++;const i=$(id),v=num(i.value),a=+i.dataset.a,g2=!isNaN(v)&&Math.abs(v-a)<=Math.abs(a)*0.01;i.className=i.value===''?'':(g2?'ok':'bad');if(g2)ok++});
  ['#u1g','#u1f'].forEach(id=>{n++;const x=$(id),g2=x.value===x.dataset.a;x.className=x.value===''?'':(g2?'ok':'bad');if(g2)ok++});
  const fb=$('#u1Fb');if(ok===n){fb.className='fb ok';fb.innerHTML='Alles richtig! So gehst du immer vor: Gegeben – Gesucht – Formel – Ergebnis mit Einheit.';mark('u1')}else{fb.className='fb bad';fb.textContent=ok+' von '+n+' Feldern richtig. Prüfe die rot markierten – oder hol dir einen Tipp.'}};
-hints.u1=['Lies aus dem Text ab: Masse in kg, Höhe in m. Gesucht ist die Energie nach dem Hochheben.','Setze direkt in E<sub>L</sub> = m · g · h ein. Beispiel a): 2 · 9,81 · 1,5.','c) Das Ergebnis in J durch 1000 teilen ergibt kJ.'];
+hints.u1=['Lies aus dem Text ab: Masse in kg, Höhe in m. Gesucht ist die Energie nach dem Hochheben.','Setze direkt in <f-m>E<sub>L</sub> = m · g · h</f-m> ein. Beispiel a): <f-m>2 · 9,81 · 1,5</f-m>.','c) Das Ergebnis in J durch 1000 teilen ergibt kJ.'];
 numCheck('#u2Check',['#u2a','#u2b','#u2c','#u2d'],'#u2Fb','u2','Richtig! Immer zuerst in kg und m umrechnen – dann einsetzen.');
-hints.u2=['1 kg = 1000 g, also g : 1000 = kg. 1 m = 100 cm, also cm : 100 = m.','c) 180 g = 0,18 kg und 75 cm = 0,75 m. Dann 0,18 · 9,81 · 0,75.','d) 100 g = 0,1 kg.'];
+hints.u2=['<f-m>1 kg = 1000 g</f-m>: Teile die Gramm-Zahl durch 1000. <f-m>1 m = 100 cm</f-m>: Teile die Zentimeter-Zahl durch 100.','c) <f-m>180 g = 0,18 kg</f-m> und <f-m>75 cm = 0,75 m</f-m>. Dann <f-m>0,18 · 9,81 · 0,75</f-m>.','d) <f-m>100 g = 0,1 kg</f-m>.'];
 numCheck('#u3Check',['#u3a','#u3b','#u3c'],'#u3Fb','u3','Klasse! Du kannst die Formel nach jeder Größe umstellen.');
-hints.u3=['Gesucht h: Teile E<sub>L</sub> durch (m · g). Gesucht m: Teile E<sub>L</sub> durch (g · h).','a) 12 · 9,81 = 117,72. Dann 588,6 : 117,72.','c) Zuerst kJ in J umrechnen: 294,3 kJ = 294 300 J.'];
+hints.u3=['Gesucht h: Teile <f-m>E<sub>L</sub></f-m> durch <f-m>(m · g)</f-m>. Gesucht m: Teile <f-m>E<sub>L</sub></f-m> durch <f-m>(g · h)</f-m>.','a) <f-m>12 · 9,81 = 117,72</f-m>. Dann <f-m>588,6 : 117,72</f-m>.','c) Zuerst kJ in J umrechnen: <f-m>294,3 kJ = 294 300 J</f-m>.'];
 numCheck('#u4Check',['#u4a','#u4b'],'#u4Fb','u4a','Richtig! Bezüglich des Zimmerbodens 17,7 J, bezüglich der Straße 105,9 J.');
-hints.u4=['Bezüglich des Zimmerbodens ist h = 1,2 m.','Bezüglich der Straße ist h = 6,0 m + 1,2 m = 7,2 m.'];
+hints.u4=['Bezüglich des Zimmerbodens ist <f-m>h = 1,2 m</f-m>.','Bezüglich der Straße ist <f-m>h = 6,0 m + 1,2 m = 7,2 m</f-m>.'];
 numCheck('#u6Check',['#u6a','#u6b'],'#u6Fb','u6','Richtig! Theoretisch rund 1456 m, in Wirklichkeit nur etwa 364 m.');
-hints.u6=['1000 kJ = 1 000 000 J. Stelle E<sub>L</sub> = m · g · h nach h um.','h = 1 000 000 J : (70 kg · 9,81 N/kg).','b) 25 % = ein Viertel. Teile das Ergebnis aus a) durch 4.'];
+hints.u6=['<f-m>1000 kJ = 1 000 000 J</f-m>. Stelle <f-m>E<sub>L</sub> = m · g · h</f-m> nach h um.','<f-m>h = 1 000 000 J : (70 kg · 9,81 N/kg)</f-m>.','b) 25 % = ein Viertel. Teile das Ergebnis aus a) durch 4.'];
 numCheck('#u7Check',['#u7a','#u7b','#u7c','#u7d'],'#u7Fb','u7','Super! Die Seilbahn hebt die Fahrgäste um 1950 m – das sind über 170 MJ Lageenergie pro Fahrt.');
-hints.u7=['a) Höhenunterschied = Gipfel − Talstation.','c) E<sub>L</sub> = 9000 kg · 9,81 N/kg · 1950 m. Teile das Ergebnis in J durch 1 000 000, um MJ zu erhalten.','d) 1 MJ = 1000 kJ. Wie oft passt 1000 kJ in die Energie aus c)?'];
+hints.u7=['a) Höhenunterschied = Gipfel − Talstation.','c) <f-m>E<sub>L</sub> = 9000 kg · 9,81 N/kg · 1950 m</f-m>. Teile das Ergebnis in J durch 1 000 000, um MJ zu erhalten.','d) <f-m>1 MJ = 1000 kJ</f-m>. Wie oft passt 1000 kJ in die Energie aus c)?'];
 
 /* Zugspitze-Skizze */
 {let s=`<path d="M0 230 L80 200 L150 205 L260 120 L330 40 L360 60 L440 150 L440 240 L0 240Z" style="fill:var(--panel);stroke:var(--muted)"/>`;
@@ -639,11 +642,11 @@ hints.u7=['a) Höhenunterschied = Gipfel − Talstation.','c) E<sub>L</sub> = 90
  s+=T(40,228,'Talstation ≈ 1000 m','txs')+T(250,22,'Gipfel ≈ 2950 m','txs')+L(400,40,400,195,'thin')+arrowHead(400,40,-90,'var(--ink)')+T(330,120,'Δh = ?','txb');
  $('#zug').innerHTML=s}
 
-$('#whyW').outerHTML=whyBox('w2','Begründe in eigenen Worten: Warum spielt der Weg für die Lageenergie keine Rolle?','Die Lageenergie hängt nur von der <b>Masse</b> und vom <b>Höhenunterschied</b> ab: E<sub>L</sub> = m · g · h. Auf der Rampe brauchst du zwar eine <b>kleinere Kraft</b>, musst sie aber über einen <b>längeren Weg</b> aufbringen. Kraft mal Weg ist am Ende gleich groß wie beim senkrechten Heben (wenn es keine Reibung gibt).');
-$('#whyN').outerHTML=whyBox('n2','Begründe: Warum muss man bei einer Lageenergie immer das Nullniveau angeben?','Die Höhe h wird vom <b>Nullniveau</b> aus gemessen. Wählt man ein anderes Nullniveau, ändert sich h – und damit auch E<sub>L</sub>. Ohne Nullniveau ist eine Angabe wie „17,7 J“ also <b>nicht eindeutig</b>.');
-{const I=[['wird in Newton (N) gemessen','K'],['wird in Joule (J) gemessen','E'],['F<sub>G</sub> = m · g','K'],['E<sub>L</sub> = m · g · h','E'],['kann gespeichert werden, z. B. im Stausee','E'],['zieht einen Körper nach unten','K'],['wird mit einem Federkraftmesser gemessen','K'],['kann in eine andere Form umgewandelt werden','E'],['49,05 N','K'],['98,1 J','E']];
+$('#whyW').outerHTML=whyBox('w2','Begründe in eigenen Worten: Warum spielt der Weg für die Lageenergie keine Rolle?','Die Lageenergie hängt nur von der <b>Masse</b> und vom <b>Höhenunterschied</b> ab: <f-m>E<sub>L</sub> = m · g · h</f-m>. Auf der Rampe brauchst du zwar eine <b>kleinere Kraft</b>, musst sie aber über einen <b>längeren Weg</b> aufbringen. Kraft mal Weg ist am Ende gleich groß wie beim senkrechten Heben (wenn es keine Reibung gibt).');
+$('#whyN').outerHTML=whyBox('n2','Begründe: Warum muss man bei einer Lageenergie immer das Nullniveau angeben?','Die Höhe <f-m>h</f-m> wird vom <b>Nullniveau</b> aus gemessen. Wählt man ein anderes Nullniveau, ändert sich h – und damit auch <f-m>E<sub>L</sub></f-m>. Ohne Nullniveau ist eine Angabe wie „17,7 J“ also <b>nicht eindeutig</b>.');
+{const I=[['wird in Newton (N) gemessen','K'],['wird in Joule (J) gemessen','E'],['<f-m>F<sub>G</sub> = m · g</f-m>','K'],['<f-m>E<sub>L</sub> = m · g · h</f-m>','E'],['kann gespeichert werden, z. B. im Stausee','E'],['zieht einen Körper nach unten','K'],['wird mit einem Federkraftmesser gemessen','K'],['kann in eine andere Form umgewandelt werden','E'],['49,05 N','K'],['98,1 J','E']];
  $('#ke').innerHTML=I.map((x,i)=>`<div class="numq"><label for="ke_${i}">${x[0]}</label><select id="ke_${i}" data-a="${x[1]}"><option value="">– wählen –</option><option value="K">Kraft</option><option value="E">Energie</option></select></div>`).join('');
- selCheck('#keCheck','#ke','#keFb','ke','Super! Kraft (N) und Energie (J) sind verschiedene Größen – beim Heben hängen sie über E = F · h zusammen.');
+ selCheck('#keCheck','#ke','#keFb','ke','Super! Kraft (N) und Energie (J) sind verschiedene Größen – beim Heben hängen sie über <f-m>E = F · h</f-m> zusammen.');
  hints.ke=['Achte auf die Einheit: Newton gehört zur Kraft, Joule zur Energie.','Eine Kraft wirkt im Moment (ziehen, drücken). Eine Energie ist ein Vorrat, den man speichern und umwandeln kann.']}
 initNotes();initMC();updProg();
 }

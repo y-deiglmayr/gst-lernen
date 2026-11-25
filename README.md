@@ -49,3 +49,20 @@ Farben, Logo und Mosaik stammen aus der PowerPoint-Vorlage der Schule und liegen
 Neue Lernpfade binden nach ihrem `<style>`-Block ein: `<link rel="stylesheet" href="/brand/brand.css">`.
 Die fachlichen Farben der Lernpfade (z. B. Laserrot, Energie-Farben) bleiben bewusst erhalten.
 Schrift: Source Sans 3 (SIL OFL) als freie Alternative zur Hausschrift Myriad Pro.
+
+## Formeln
+
+Formeln werden mit KaTeX gesetzt (lokal in `katex/`, keine externen Server). Im Quelltext stehen sie lesbar in `<f-m>…</f-m>`,
+z. B. `<f-m>h = E<sub>L</sub> : (m · g)</f-m>`. `katex/formel.js` setzt sie beim Anzeigen: Variablen kursiv, Einheiten aufrecht,
+`:` und `/` als Bruchstrich, Dezimalkomma und Tausender-Abstand korrekt. Das gilt auch für Rückmeldungen, die erst per Skript erscheinen.
+
+Neue Lernpfade binden nach `brand.css` ein:
+
+```html
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+```
+
+Formeln müssen nicht von Hand markiert werden: `python3 tools/formeln_markieren.py Physik9/neu.html` erkennt Formeln
+(auch in Rückmeldungen im Skript) und markiert sie. Der Doppelpunkt zählt nur mit Leerzeichen (` : `) als Geteilt-Zeichen.
