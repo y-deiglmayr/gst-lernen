@@ -255,6 +255,17 @@ nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
  .fig svg:not(.board) .txb{font-size:21px}.fig svg:not(.board):not(#ramp) .txs{font-size:18px}
  .sim-read{grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}.sim-read div{font-size:13px;padding:4px 8px}.sim-read b{font-size:16px}
 }
+/* Handy: Fragen über den Eingabefeldern statt daneben, Tabellen kompakt */
+@media(max-width:600px){
+ .hero h1{font-size:clamp(24px,7.4vw,30px);hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+ .tf .item,.numq,.steprow{grid-template-columns:minmax(0,1fr);gap:6px}
+ .tf .btns{justify-content:flex-end}
+ .numq>.unit{justify-self:end}
+ .steprow select{width:100%}
+ .lab-tbl,table.mess,.heft table{font-size:13px}
+ .lab-tbl th,.lab-tbl td,table.mess th,table.mess td,.heft td,.heft th{padding:4px 5px}
+ .stick .row .caption{font-size:13px}.stick .row button.lPre{padding:6px 10px;min-width:0}
+}
 
 .wall{fill:light-dark(#8f9ea2,#5F6F74)}
 </style>
@@ -323,7 +334,7 @@ QR groß zeigen</button></div>
 <p class="caption">Modell: reibungsfrei, zentraler Stoß. <f-m>E<sub>B</sub> = ½ · m · v<sup>2</sup></f-m></p>
 </div><div>
 <div class="card"><div class="tag">Auftrag 3 · Was bleibt gleich?</div><p>Probiere beide Stoßarten. Achte in der Tabelle auf die <b>Summe der Impulse</b>.</p>
-<div class="part" data-task="a1"><div class="mc" data-correct="c" data-task="a1" data-tipp="Vergleiche in der Tabelle die rote Zeile „Summe“ in der Spalte p vorher und nachher."><button data-k="a" data-fb="Schau genau auf die Summe: Die einzelnen Impulse ändern sich, die Summe aber nicht.">Der Impuls jedes einzelnen Gleiters bleibt gleich.</button><button data-k="b" data-fb="Probiere auch den total unelastischen Stoß: Die Summe der Impulse bleibt auch dort gleich.">Die Summe der Impulse bleibt nur beim elastischen Stoß gleich.</button><button data-k="c" data-fb="Richtig! Bei <b>beiden</b> Stoßarten bleibt die <b>Summe der Impulse</b> erhalten.">Die Summe der Impulse bleibt bei beiden Stoßarten gleich.</button><p class="fb"></p></div></div>
+<div class="part" data-task="a1"><div class="mc" data-correct="c" data-task="a1" data-tipp="Vergleiche in der Tabelle die rote Zeile Σ (Summe) in der Spalte p vorher und nachher."><button data-k="a" data-fb="Schau genau auf die Summe: Die einzelnen Impulse ändern sich, die Summe aber nicht.">Der Impuls jedes einzelnen Gleiters bleibt gleich.</button><button data-k="b" data-fb="Probiere auch den total unelastischen Stoß: Die Summe der Impulse bleibt auch dort gleich.">Die Summe der Impulse bleibt nur beim elastischen Stoß gleich.</button><button data-k="c" data-fb="Richtig! Bei <b>beiden</b> Stoßarten bleibt die <b>Summe der Impulse</b> erhalten.">Die Summe der Impulse bleibt bei beiden Stoßarten gleich.</button><p class="fb"></p></div></div>
 </div>
 <div class="card"><div class="tag">Auftrag 4 · Und die Energie?</div>
 <div class="part" data-task="a2"><div class="mc" data-correct="a" data-task="a2" data-tipp="Vergleiche die Spalte E vorher und nachher für beide Stoßarten."><button data-k="a" data-fb="Richtig! Beim <b>unelastischen</b> Stoß wird ein Teil in thermische Energie umgewandelt.">Sie bleibt nur beim elastischen Stoß erhalten.</button><button data-k="b" data-fb="Beim total unelastischen Stoß ist die Summe von E nachher kleiner.">Sie bleibt bei beiden Stoßarten erhalten.</button><button data-k="c" data-fb="Beim elastischen Stoß ist die Summe von E vorher und nachher gleich.">Sie wird bei beiden Stoßarten kleiner.</button><p class="fb"></p></div></div>
@@ -675,15 +686,15 @@ const stoss=(m1,v1,m2,v2,el)=>{if(!el){const u=(m1*v1+m2*v2)/(m1+m2);return [u,u
   if(p.wall&&!p.el)s+=`<text x="320" y="24" text-anchor="middle" class="txs">Total unelastisch an der Wand: Gleiter 1 bleibt an der Wand hängen.</text>`;
   svg.innerHTML=s;table(p,phase>0&&after)}
  function table(p,show){const [u1,u2]=stoss(p.m1,p.v1,p.m2,p.v2,p.el),E=(m,v)=>0.5*m*v*v;
-  const f=v=>fmtS(v,3),fp=v=>fmtS(v,3);const n2=p.wall?'Wand':'Gleiter 2';
+  const f=v=>fmtS(v,3),fp=v=>fmtS(v,3);const n2=p.wall?'Wand':'2';
   const pv=[p.m1*p.v1,p.wall?0:p.m2*p.v2],pu=[p.m1*u1,p.wall?-pv[0]+p.m1*p.v1-p.m1*u1+0:p.m2*u2];
   if(p.wall)pu[1]=p.m1*p.v1-p.m1*u1;
   const Ev=[E(p.m1,p.v1),p.wall?0:E(p.m2,p.v2)],Eu=[E(p.m1,u1),p.wall?0:E(p.m2,u2)];
   const c=(x)=>show?x:'?';
-  $('#labTbl').innerHTML=`<tr><th></th><th>v in m/s</th><th>p vorher in kg·m/s</th><th>E vorher in J</th><th>u in m/s</th><th>p nachher in kg·m/s</th><th>E nachher in J</th></tr>
-  <tr><td class="tc1">Gleiter 1</td><td>${f(p.v1)}</td><td>${fp(pv[0])}</td><td>${f(Ev[0])}</td><td>${c(f(u1))}</td><td>${c(fp(pu[0]))}</td><td>${c(f(Eu[0]))}</td></tr>
+  $('#labTbl').innerHTML=`<tr><th rowspan="2">Gleiter</th><th colspan="3">vorher</th><th colspan="3">nachher</th></tr><tr><th>v<br><small>m/s</small></th><th>p<br><small>kg·m/s</small></th><th>E<br><small>J</small></th><th>u<br><small>m/s</small></th><th>p<br><small>kg·m/s</small></th><th>E<br><small>J</small></th></tr>
+  <tr><td class="tc1">1</td><td>${f(p.v1)}</td><td>${fp(pv[0])}</td><td>${f(Ev[0])}</td><td>${c(f(u1))}</td><td>${c(fp(pu[0]))}</td><td>${c(f(Eu[0]))}</td></tr>
   <tr><td class="tc2">${n2}</td><td>${f(p.v2)}</td><td>${fp(pv[1])}</td><td>${f(Ev[1])}</td><td>${c(p.wall?'0':f(u2))}</td><td>${c(fp(pu[1]))}</td><td>${c(f(Eu[1]))}</td></tr>
-  <tr><td class="tcg sum">Summe</td><td></td><td class="tcg sum">${fp(pv[0]+pv[1])}</td><td class="sum">${f(Ev[0]+Ev[1])}</td><td></td><td class="tcg sum">${c(fp(pu[0]+pu[1]))}</td><td class="sum">${c(f(Eu[0]+Eu[1]))}</td></tr>`}
+  <tr><td class="tcg sum">Σ</td><td></td><td class="tcg sum">${fp(pv[0]+pv[1])}</td><td class="sum">${f(Ev[0]+Ev[1])}</td><td></td><td class="tcg sum">${c(fp(pu[0]+pu[1]))}</td><td class="sum">${c(f(Eu[0]+Eu[1]))}</td></tr>`}
  const reset=()=>{phase=0;k=0;draw()};
  $('#lGo').onclick=()=>{if(run)return;run=true;phase=1;k=0;animate(2600,q=>{k=q;draw()},()=>{run=false})};
  $('#lRe').onclick=reset;['#lm1','#lv1','#lm2','#lv2','#lWall'].forEach(i=>$(i).addEventListener('input',reset));$$('input[name=lt]').forEach(r=>r.addEventListener('change',reset));

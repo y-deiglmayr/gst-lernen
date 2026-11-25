@@ -255,6 +255,17 @@ nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
  .fig svg:not(.board) .txb{font-size:21px}.fig svg:not(.board):not(#ramp) .txs{font-size:18px}
  .sim-read{grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}.sim-read div{font-size:13px;padding:4px 8px}.sim-read b{font-size:16px}
 }
+/* Handy: Fragen über den Eingabefeldern statt daneben, Tabellen kompakt */
+@media(max-width:600px){
+ .hero h1{font-size:clamp(24px,7.4vw,30px);hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+ .tf .item,.numq,.steprow{grid-template-columns:minmax(0,1fr);gap:6px}
+ .tf .btns{justify-content:flex-end}
+ .numq>.unit{justify-self:end}
+ .steprow select{width:100%}
+ .lab-tbl,table.mess,.heft table{font-size:13px}
+ .lab-tbl th,.lab-tbl td,table.mess th,table.mess td,.heft td,.heft th{padding:4px 5px}
+ .stick .row .caption{font-size:13px}.stick .row button.lPre{padding:6px 10px;min-width:0}
+}
 
 
 </style>

@@ -92,3 +92,20 @@ details.reveal:has(>.heft)>summary::after{content:" ✎ Heftaufschrieb";font:700
 .insheft::before{background:var(--gst-heft)}
 nav a.heftlink span,a.heftlink span{background:var(--gst-heft);color:var(--gst-on-heft)}
 .heft .calc{border-left-color:var(--gst-heft)}
+/* ===== Handy (alle Lernpfade): Navigation einzeilig, Fragen über den Eingabefeldern, kompakte Tabellen ===== */
+@media(max-width:600px){
+ nav[aria-label] .wrap{flex-wrap:nowrap;gap:0 2px;padding:6px 8px}
+ nav[aria-label] a{padding:6px 3px;white-space:nowrap}
+ nav[aria-label] a:has(>span),nav[aria-label] a[href="/"]{font-size:0;gap:0}
+ nav[aria-label] a>span{font-size:13px;margin-right:0}
+ nav[aria-label] .prog{margin-left:auto;font-size:13px;white-space:nowrap}
+ nav[aria-label] .prog .bar{width:56px}
+ .hero .phases,.hero>.wrap>svg{display:none}
+ .hero h1{font-size:clamp(24px,7.4vw,30px);hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+ .tf .item,.numq,.steprow{grid-template-columns:minmax(0,1fr);gap:6px}
+ .tf .btns{justify-content:flex-end}
+ .numq>.unit{justify-self:end}
+ .steprow select{width:100%}
+ table.mess,.lab-tbl,.heft table{font-size:13px}
+ table.mess th,table.mess td,.lab-tbl th,.lab-tbl td,.heft td,.heft th{padding:4px 5px}
+}

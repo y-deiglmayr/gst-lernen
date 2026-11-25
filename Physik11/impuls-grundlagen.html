@@ -255,6 +255,17 @@ nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
  .fig svg:not(.board) .txb{font-size:21px}.fig svg:not(.board):not(#ramp) .txs{font-size:18px}
  .sim-read{grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}.sim-read div{font-size:13px;padding:4px 8px}.sim-read b{font-size:16px}
 }
+/* Handy: Fragen über den Eingabefeldern statt daneben, Tabellen kompakt */
+@media(max-width:600px){
+ .hero h1{font-size:clamp(24px,7.4vw,30px);hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+ .tf .item,.numq,.steprow{grid-template-columns:minmax(0,1fr);gap:6px}
+ .tf .btns{justify-content:flex-end}
+ .numq>.unit{justify-self:end}
+ .steprow select{width:100%}
+ .lab-tbl,table.mess,.heft table{font-size:13px}
+ .lab-tbl th,.lab-tbl td,table.mess th,table.mess td,.heft td,.heft th{padding:4px 5px}
+ .stick .row .caption{font-size:13px}.stick .row button.lPre{padding:6px 10px;min-width:0}
+}
 
 
 </style>
@@ -357,7 +368,7 @@ QR groß zeigen</button></div>
 <div class="card"><div class="tag">Auftrag 10 · Ranking</div>
 <div class="selbox part" data-task="a7" data-fb="Richtig! Überrascht? Die Gewehrkugel hat weniger Impuls als ein Fußball."><div id="rankList"></div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
 <details class="reveal"><summary>Werte zum Nachrechnen</summary>
-<div class="scroll"><table class="mess" id="rankTbl"><thead><tr><th>Körper</th><th>Masse <f-m>m</f-m></th><th>Geschwindigkeit <f-m>v</f-m></th><th>Impuls <f-m>p</f-m></th></tr></thead><tbody></tbody></table></div>
+<div class="scroll"><table class="mess" id="rankTbl"><thead><tr><th>Körper</th><th>m</th><th>v</th><th>p</th></tr></thead><tbody></tbody></table></div>
 <div class="row"><button id="rankShow">Impulse anzeigen</button></div></details>
 </div>
 </div></section>
