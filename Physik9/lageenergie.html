@@ -173,6 +173,15 @@ table.mess th{background:var(--panel)}
 .formula{font:600 clamp(22px,3vw,30px) Lexend,sans-serif;margin:.3em 0}
 .fig.narrow{max-width:760px}
 input[inputmode=decimal]{width:110px;text-align:right}
+textarea{width:100%;font:16px "Atkinson Hyperlegible",sans-serif;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.why .sol{border-left:4px solid var(--ok)}
+.why label.cbl{display:flex;gap:8px;align-items:center;font-size:15px;margin:6px 0;cursor:pointer}
+.mc button:disabled{opacity:.55;cursor:not-allowed}
+.mc button.bad:disabled{opacity:1}
+details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--acc)}
+.steprow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+#protokoll{display:none}
+@media print{body.printprot>*:not(#protokoll){display:none!important}#protokoll{display:block!important;padding:20px;color:#000;background:#fff}#protokoll h2{margin:0 0 10px}#protokoll .pr{border:1px solid #999;padding:8px 12px;margin:8px 0;min-height:70px;white-space:pre-wrap}}
 .massbtns{display:flex;gap:8px;flex-wrap:wrap}
 </style>
 </head>
@@ -218,7 +227,7 @@ input[inputmode=decimal]{width:110px;text-align:right}
 <h2>2 · Entdecken</h2>
 
 <h3>A · Das Fall-Labor</h3>
-<p class="intro">Lass Kugeln mit verschiedener Masse aus verschiedenen Höhen in den Sand fallen. Die Tiefe der Delle ist ein Maß für die Lageenergie (vereinfachtes Modell). Übernimm jede Messung in die Tabelle – das Diagramm entsteht automatisch.</p>
+<p class="intro">Lass Kugeln mit verschiedener Masse aus verschiedenen Höhen in den Sand fallen und übernimm jede Messung in die Tabelle. Je tiefer die Delle, desto mehr Energie hatte die Kugel. Aber Vorsicht: Ist die Delle auch ein <i>genaues</i> Messgerät für Energie? Das findest du hier heraus.</p>
 <div class="two">
 <div><div class="fig"><svg id="fall" viewBox="0 0 560 360" role="img" aria-label="Fall-Labor: Kugel über einem Sandkasten mit Höhenskala"></svg></div>
 <div class="ctrl">
@@ -229,34 +238,37 @@ input[inputmode=decimal]{width:110px;text-align:right}
 </div>
 <div>
 <div class="scroll"><table class="mess" id="tab"><thead><tr><th>Nr.</th><th>Masse m</th><th>Höhe h</th><th>Delle</th></tr></thead><tbody></tbody></table></div>
-<div class="fig" style="margin-top:10px"><svg id="chart" viewBox="0 0 440 280" role="img" aria-label="Diagramm: Tiefe der Delle in Abhängigkeit von der Fallhöhe"></svg></div>
-<div class="legend"><span><i style="background:var(--el)"></i>50 g</span><span><i style="background:var(--eb)"></i>100 g</span><span><i style="background:var(--eth)"></i>200 g</span></div>
 <p class="fb" id="labFb"></p>
 </div>
 </div>
 <div class="card" style="margin-top:14px">
 <div class="tag">Auftrag 2 · Auswerten</div>
-<div class="part" data-task="l1a"><h4>a) Gleiche Masse, doppelte Höhe (z. B. 20 cm → 40 cm). Die Delle wird …</h4>
-<div class="mc" data-correct="b" data-task="l1a"><button data-k="a">gleich tief.</button><button data-k="b" data-fb="Richtig: doppelte Höhe → doppelte Delle → doppelte Lageenergie. Die Lageenergie ist <b>proportional zur Höhe</b>: E<sub>L</sub> ~ h. Im Diagramm liegen die Punkte einer Masse auf einer Ursprungsgeraden.">doppelt so tief.</button><button data-k="c">viermal so tief.</button><p class="fb"></p></div></div>
-<div class="part" data-task="l1b"><h4>b) Gleiche Höhe, doppelte Masse (z. B. 100 g → 200 g). Die Delle wird …</h4>
-<div class="mc" data-correct="a" data-task="l1b"><button data-k="a" data-fb="Richtig: Die Lageenergie ist auch <b>proportional zur Masse</b>: E<sub>L</sub> ~ m.">doppelt so tief.</button><button data-k="b">halb so tief.</button><button data-k="c">gleich tief.</button><p class="fb"></p></div></div>
-<div class="part" data-task="l1c"><h4>c) Was folgt daraus?</h4>
-<div class="mc" data-correct="c" data-task="l1c"><button data-k="a">E<sub>L</sub> ~ m + h</button><button data-k="b">E<sub>L</sub> ~ m : h</button><button data-k="c" data-fb="Genau: Die Lageenergie ist proportional zum <b>Produkt</b> aus Masse und Höhe. Fehlt nur noch der Faktor davor – den findest du in Teil B.">E<sub>L</sub> ~ m · h</button><p class="fb"></p></div></div>
+<div class="part" data-task="l1a"><h4>a) Gleiche Masse, größere Fallhöhe. Die Delle wird …</h4>
+<div class="mc" data-correct="b" data-task="l1a" data-tipp="Vergleiche in deiner Tabelle zwei Messungen mit gleicher Masse."><button data-k="a">flacher.</button><button data-k="b" data-fb="Richtig: Je höher die Kugel startet, desto mehr Lageenergie hat sie.">tiefer.</button><button data-k="c">gleich tief.</button><p class="fb"></p></div></div>
+<div class="part" data-task="l1b"><h4>b) Gleiche Höhe, größere Masse. Die Delle wird …</h4>
+<div class="mc" data-correct="a" data-task="l1b" data-tipp="Vergleiche zwei Messungen mit gleicher Höhe."><button data-k="a" data-fb="Richtig: Eine schwerere Kugel hat in gleicher Höhe mehr Lageenergie.">tiefer.</button><button data-k="b">flacher.</button><button data-k="c">gleich tief.</button><p class="fb"></p></div></div>
+<div class="part" data-task="l1c"><h4>c) Miss mit 100 g bei 20 cm und bei 80 cm. Die Höhe ist viermal so groß. Ist die Delle auch viermal so tief?</h4>
+<div class="mc" data-correct="b" data-task="l1c" data-tipp="Miss genau diese beiden Werte und teile die Tiefen durcheinander."><button data-k="a">Ja, genau viermal so tief.</button><button data-k="b" data-fb="Richtig beobachtet: nur etwa <b>doppelt</b> so tief. Die Delle zeigt zuverlässig „mehr Energie → tiefere Delle“, aber sie ist kein genaues Messgerät – der Sand wird ja auch zur Seite gedrückt und verdichtet. Um die Energie <b>genau</b> zu bestimmen, messen wir in Teil B anders: beim Heben.">Nein, nur etwa doppelt so tief.</button><button data-k="c">Nein, gleich tief.</button><p class="fb"></p></div></div>
 </div>
 
 <h3>B · Heben kostet Energie: Woher kommt die Formel?</h3>
-<p class="intro">Um eine Kiste hochzuheben, musst du ihre <b>Gewichtskraft F<sub>G</sub> = m · g</b> überwinden – auf der Erde ist g = 9,81 N/kg. Die Energie, die du dabei aufwendest, steckt danach als Lageenergie in der Kiste: Kraft mal Hubhöhe.</p>
+<p class="intro">Um eine Kiste hochzuheben, musst du ihre <b>Gewichtskraft F<sub>G</sub> = m · g</b> überwinden – auf der Erde ist g = 9,81 N/kg. Die Energie, die du beim Heben aufwendest, ist <b>Kraft mal Hubhöhe</b>. Sie steckt danach als Lageenergie in der Kiste. Diese Größen kannst du genau messen: die Kraft mit einem Kraftmesser, die Höhe mit dem Maßband. Miss mindestens vier Werte mit zwei verschiedenen Massen.</p>
 <div class="two">
 <div class="fig"><svg id="hub" viewBox="0 0 560 360" role="img" aria-label="Seilrolle hebt eine Kiste, Kraftmesser zeigt die Gewichtskraft"></svg></div>
 <div>
 <div class="ctrl">
-<div><label for="hubM">Masse m = <span id="hubMv">5</span> kg</label><input type="range" id="hubM" min="1" max="20" step="1" value="5"></div>
+<div><span style="font-weight:700;font-size:15px">Masse m = <span id="hubMv">5</span> kg</span><div class="massbtns" id="hubMB"><button data-m="2">2 kg</button><button data-m="5" aria-pressed="true">5 kg</button><button data-m="10">10 kg</button></div></div>
 <div><label for="hubH">Hubhöhe h = <span id="hubHv">1,0</span> m</label><input type="range" id="hubH" min="0" max="3" step="0.1" value="1"></div>
 </div>
 <div class="given" id="hubCalc"></div>
+<div class="row"><button class="primary" id="hubTake">Messwert übernehmen</button><button id="hubClear">Tabelle leeren</button></div>
+<div class="scroll"><table class="mess" id="hubTab"><thead><tr><th>m</th><th>h</th><th>F<sub>G</sub></th><th>E = F<sub>G</sub> · h</th></tr></thead><tbody></tbody></table></div>
+<div class="fig" style="margin-top:10px"><svg id="chart" viewBox="0 0 440 280" role="img" aria-label="Diagramm: Energie in Abhängigkeit von der Hubhöhe für verschiedene Massen"></svg></div>
+<div class="legend"><span><i style="background:var(--el)"></i>2 kg</span><span><i style="background:var(--eb)"></i>5 kg</span><span><i style="background:var(--eth)"></i>10 kg</span></div>
+<p class="fb" id="hubFb"></p><span data-task="hubm" hidden></span>
 <div class="card" data-task="l2">
 <div class="tag">Auftrag 3 · Nachrechnen</div>
-<p>Eine Kiste mit 5 kg wird 2 m hoch gehoben. Rechne mit g = 9,81 N/kg und überprüfe mit den Schiebereglern.</p>
+<p>Eine Kiste mit 5 kg wird 2 m hoch gehoben. Rechne mit g = 9,81 N/kg und überprüfe im Labor oben.</p>
 <div class="numq"><span>Gewichtskraft F<sub>G</sub></span><span class="unit"><input type="text" inputmode="decimal" id="l2a" data-a="49.05" aria-label="Gewichtskraft in N"> N</span></div>
 <div class="numq"><span>Lageenergie E<sub>L</sub></span><span class="unit"><input type="text" inputmode="decimal" id="l2b" data-a="98.1" aria-label="Lageenergie in J"> J</span></div>
 <div class="row"><button class="primary" id="l2Check">Prüfen</button><button data-hint="l2">Tipp</button></div>
@@ -265,19 +277,29 @@ input[inputmode=decimal]{width:110px;text-align:right}
 </div>
 </div>
 
+<div class="card" style="margin-top:14px"><div class="tag">Auftrag 4 · Auswerten</div>
+<div class="part" data-task="l5a"><h4>a) Gleiche Masse, doppelte Hubhöhe. Die Energie wird …</h4>
+<div class="mc" data-correct="b" data-task="l5a" data-tipp="Vergleiche in deiner Tabelle z. B. 1 m und 2 m bei gleicher Masse."><button data-k="a">gleich groß.</button><button data-k="b" data-fb="Richtig: doppelte Höhe → doppelte Energie. Die Lageenergie ist <b>proportional zur Höhe</b>: E<sub>L</sub> ~ h. Im Diagramm liegen die Punkte einer Masse auf einer Ursprungsgeraden.">doppelt so groß.</button><button data-k="c">viermal so groß.</button><p class="fb"></p></div></div>
+<div class="part" data-task="l5b"><h4>b) Gleiche Höhe, doppelte Masse (5 kg → 10 kg). Die Energie wird …</h4>
+<div class="mc" data-correct="a" data-task="l5b" data-tipp="Doppelte Masse bedeutet doppelte Gewichtskraft."><button data-k="a" data-fb="Richtig: Die Lageenergie ist auch <b>proportional zur Masse</b>: E<sub>L</sub> ~ m.">doppelt so groß.</button><button data-k="b">halb so groß.</button><button data-k="c">gleich groß.</button><p class="fb"></p></div></div>
+<div class="part" data-task="l5c"><h4>c) Was folgt daraus?</h4>
+<div class="mc" data-correct="c" data-task="l5c"><button data-k="a">E<sub>L</sub> = m + g + h</button><button data-k="b">E<sub>L</sub> = m · h : g</button><button data-k="c" data-fb="Genau: E<sub>L</sub> = F<sub>G</sub> · h = <b>m · g · h</b>.">E<sub>L</sub> = m · g · h</button><p class="fb"></p></div></div>
+</div>
+
 <h3>C · Ist der Weg egal?</h3>
-<p class="intro">Ein Koffer (50 kg) soll auf eine 3 m hohe Plattform. Du kannst die Treppe nehmen, ihn eine Rampe hochschieben oder den Aufzug benutzen. Wähle einen Weg und vergleiche.</p>
+<p class="intro">Ein Koffer (50 kg) soll auf eine 3 m hohe Plattform. Du kannst die Treppe nehmen, ihn eine Rampe hochschieben oder den Aufzug benutzen. Wähle einen Weg und vergleiche. (Wir nehmen an, dass es <b>keine Reibung</b> gibt.)</p>
 <div class="two">
 <div class="fig"><svg id="weg" viewBox="0 0 640 320" role="img" aria-label="Drei Wege auf eine Plattform: Rampe, Treppe, Aufzug"></svg></div>
 <div>
 <div class="row"><button data-w="0" class="primary">Rampe</button><button data-w="1" class="primary">Treppe</button><button data-w="2" class="primary">Aufzug</button></div>
 <div class="given" id="wegTxt">Wähle einen Weg.</div>
-<div class="card" data-task="l3"><div class="tag">Auftrag 4 · Vergleichen</div>
+<div class="card" data-task="l3"><div class="tag">Auftrag 5 · Vergleichen</div>
 <p>Auf welchem Weg hat der Koffer oben die meiste Lageenergie?</p>
 <div class="mc" data-correct="d" data-task="l3"><button data-k="a">Rampe – der Weg ist am längsten.</button><button data-k="b">Treppe</button><button data-k="c">Aufzug – er ist am schnellsten.</button><button data-k="d" data-fb="Richtig! Die Lageenergie hängt nur von der Masse und vom <b>Höhenunterschied</b> ab, nicht vom Weg. Auf der Rampe brauchst du weniger Kraft, dafür ist der Weg länger – das Produkt ist gleich.">Bei allen gleich.</button><p class="fb"></p></div></div>
 </div>
 </div>
 
+<div id="whyW"></div>
 <h3>D · Hoch über … was eigentlich? Das Nullniveau</h3>
 <p class="intro">Ein Buch (1 kg) liegt auf einem Regalbrett. Wie hoch liegt es? Das kommt darauf an, von wo aus du misst! Die Höhe, von der aus gemessen wird, heißt <b>Nullniveau</b>. Dort ist E<sub>L</sub> = 0. Wähle ein Nullniveau.</p>
 <div class="two">
@@ -285,12 +307,13 @@ input[inputmode=decimal]{width:110px;text-align:right}
 <div>
 <div class="row" id="nullBtns"><button data-z="0">Kellerboden</button><button data-z="1" aria-pressed="true">Fußboden</button><button data-z="2">Tischplatte</button><button data-z="3">Regalbrett</button></div>
 <div class="given" id="nullTxt"></div>
-<div class="card" data-task="l4"><div class="tag">Auftrag 5 · Nullniveau</div>
+<div class="card" data-task="l4"><div class="tag">Auftrag 6 · Nullniveau</div>
 <p>Bezüglich welchen Nullniveaus hat das Buch eine Lageenergie von 9,81 J?</p>
 <div class="mc" data-correct="c" data-task="l4"><button data-k="a">Kellerboden</button><button data-k="b">Fußboden</button><button data-k="c" data-fb="Richtig: Das Buch liegt genau 1 m über der Tischplatte: E<sub>L</sub> = 1 kg · 9,81 N/kg · 1 m = 9,81 J.">Tischplatte</button><button data-k="d">Regalbrett</button><p class="fb"></p></div></div>
 </div>
 </div>
 <div class="merke"><h4>Merke: Nullniveau</h4><p style="margin:0">Das Nullniveau darfst du frei wählen – meist den Boden oder den tiefsten Punkt einer Bewegung. Gib es immer an! Eine Lageenergie ohne Nullniveau ist nicht eindeutig.</p></div>
+<div id="whyN"></div>
 </div></section>
 
 <!-- ============ 3 FESTHALTEN ============ -->
@@ -301,7 +324,7 @@ input[inputmode=decimal]{width:110px;text-align:right}
 <p class="formula">E<sub>L</sub> = m · g · h</p>
 <p style="margin:0">m in kg, h in m, g = 9,81 N/kg (Ortsfaktor), E<sub>L</sub> in J &nbsp;·&nbsp; 1 J = 1 N · m<br>Umgestellt: h = E<sub>L</sub> : (m · g) &nbsp;und&nbsp; m = E<sub>L</sub> : (g · h)</p></div>
 <div class="card" data-task="f1">
-<div class="tag">Auftrag 6 · Lückentext</div>
+<div class="tag">Auftrag 7 · Lückentext</div>
 <div class="cloze" id="cloze">
 Die Lageenergie ist proportional zur <select data-a="Masse"></select> und zur <select data-a="Höhe"></select> des Körpers.
 Der Ortsfaktor g beträgt auf der Erde <select data-a="9,81 N/kg"></select>. Die Einheit der Energie ist das Joule; es gilt 1 J = 1 <select data-a="N · m"></select>.
@@ -310,6 +333,14 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <div class="row"><button class="primary" id="f1Check">Prüfen</button></div>
 <p class="fb" id="f1Fb"></p>
 </div>
+<div class="card" data-task="ke">
+<div class="tag">Auftrag 8 · Kraft oder Energie?</div>
+<p>Kraft und Energie werden oft verwechselt – dabei sind es ganz verschiedene Größen. Ordne zu.</p>
+<div id="ke"></div>
+<div class="row"><button class="primary" id="keCheck">Prüfen</button><button data-hint="ke">Tipp</button></div>
+<p class="fb" id="keFb"></p><p class="tip" id="keTip"></p>
+</div>
+<div class="merke"><h4>Merke: Kraft ≠ Energie</h4><p style="margin:0">Eine <b>Kraft</b> (in N) zieht oder drückt – im Moment. Die <b>Energie</b> (in J) ist ein Vorrat, der gespeichert und umgewandelt werden kann. Beim Heben gilt: Energie = Kraft · Weg, also 1 J = 1 N · m.</p></div>
 <details class="reveal"><summary>Heftaufschrieb mit Musteraufgabe anzeigen</summary>
 <div class="heft">
 <h3>Lageenergie</h3>
@@ -332,7 +363,13 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 
 <div class="card" data-task="u1">
 <div class="tag"><span class="stars">★</span> Übung 1 · Lageenergie berechnen</div>
-<div class="numq"><span>a) Eine Hantel (2 kg) wird 1,5 m hochgehoben.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u1a" data-a="29.43" aria-label="a in J"> J</span></div>
+<p><b>a) Schritt für Schritt:</b> Eine Hantel (2 kg) wird 1,5 m hochgehoben. Welche Lageenergie hat sie dann?</p>
+<div class="steprow"><span>Gegeben: m =</span><span class="unit"><input type="text" inputmode="decimal" id="u1m" data-a="2" aria-label="Masse in kg"> kg</span></div>
+<div class="steprow"><span>Gegeben: h =</span><span class="unit"><input type="text" inputmode="decimal" id="u1h" data-a="1.5" aria-label="Höhe in m"> m</span></div>
+<div class="steprow"><span>Gesucht:</span><select id="u1g" data-a="E" aria-label="Gesucht"><option value="">– wählen –</option><option value="F">Gewichtskraft F<sub>G</sub></option><option value="E">Lageenergie E<sub>L</sub></option><option value="h">Höhe h</option></select></div>
+<div class="steprow"><span>Formel:</span><select id="u1f" data-a="mgh" aria-label="Formel"><option value="">– wählen –</option><option value="mh">E = m · h</option><option value="mgh">E = m · g · h</option><option value="mg">E = m · g</option><option value="emgh">E = m : (g · h)</option></select></div>
+<div class="steprow"><span>Ergebnis: E<sub>L</sub> =</span><span class="unit"><input type="text" inputmode="decimal" id="u1a" data-a="29.43" aria-label="a in J"> J</span></div>
+<p style="margin-top:14px"><b>Jetzt ohne Hilfe:</b></p>
 <div class="numq"><span>b) Ein Schüler (55 kg) steht im 1. Stock, 3 m über dem Erdgeschoss.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u1b" data-a="1618.65" aria-label="b in J"> J</span></div>
 <div class="numq"><span>c) 1000 kg Wasser stehen im Wasserturm 30 m über dem Boden.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u1c" data-a="294.3" aria-label="c in kJ"> kJ</span></div>
 <div class="row"><button class="primary" id="u1Check">Prüfen</button><button data-hint="u1">Tipp</button><button data-sol="u1Sol">Lösung zeigen</button></div>
@@ -447,11 +484,26 @@ const hints={};
 $$('[data-hint]').forEach(b=>{let h=0;b.onclick=()=>{const id=b.dataset.hint,arr=hints[id]||[],el=$('#'+id+'Tip');if(!arr.length)return;el.className='fb hint tip';el.innerHTML='Tipp '+(h%arr.length+1)+' von '+arr.length+': '+arr[h%arr.length];h++}});
 /* Lösung zeigen */
 $$('[data-sol]').forEach(b=>b.onclick=()=>{const el=$('#'+b.dataset.sol);el.hidden=!el.hidden;b.textContent=el.hidden?'Lösung zeigen':'Lösung ausblenden'});
-/* Multiple Choice */
-function initMC(root=document){root.querySelectorAll('.mc[data-correct]').forEach(box=>{if(box.dataset.init)return;box.dataset.init=1;const fb=box.querySelector('.fb');
- box.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
-  box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');
-  fb.className='fb '+(ok?'ok':'bad');fb.innerHTML=b.dataset.fb||(ok?'Richtig!':'Noch nicht – probier es nochmal.');if(ok&&box.dataset.task)mark(box.dataset.task)})})}
+/* Multiple Choice: Nach einem Fehlversuch gibt es einen Hinweis und eine kurze Denkpause – Raten lohnt sich nicht. */
+function initMC(root=document){root.querySelectorAll('.mc[data-correct]').forEach(box=>{if(box.dataset.init)return;box.dataset.init=1;const fb=box.querySelector('.fb'),btns=[...box.querySelectorAll('button[data-k]')];
+ btns.forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
+  if(ok){btns.forEach(x=>x.classList.remove('bad'));b.classList.add('ok');fb.className='fb ok';fb.innerHTML=b.dataset.fb||'Richtig!';if(box.dataset.task)mark(box.dataset.task);return}
+  b.classList.add('bad');b.disabled=true;fb.className='fb hint';
+  fb.innerHTML=(b.dataset.fb||'Das stimmt nicht.')+(box.dataset.tipp?' <b>Hinweis:</b> '+box.dataset.tipp:' Lies die Frage noch einmal genau und denk nach, bevor du weiterklickst.');
+  const free=btns.filter(x=>!x.classList.contains('bad'));free.forEach(x=>x.disabled=true);setTimeout(()=>free.forEach(x=>x.disabled=false),reduce?0:2500)})})}
+/* Eigene Notizen in Textfeldern (nur in diesem Browser gespeichert) */
+function initNotes(){
+$$('textarea[data-store]').forEach(t=>{const k=KEY+'-txt-'+t.dataset.store;try{t.value=localStorage.getItem(k)||''}catch(e){}t.addEventListener('input',()=>{try{localStorage.setItem(k,t.value)}catch(e){}})});
+/* Begründe-Aufträge: erst selbst formulieren, dann mit der Musterbegründung vergleichen */
+$$('.why').forEach(w=>{const t=w.querySelector('textarea'),cb=w.querySelector('input[type=checkbox]'),show=w.querySelector('.why-show'),sol=w.querySelector('.sol'),okb=w.querySelector('.why-ok');
+ const upd=()=>{show.disabled=!((t&&t.value.trim().length>=15)||(cb&&cb.checked))};if(t)t.addEventListener('input',upd);if(cb)cb.addEventListener('change',upd);upd();
+ show.onclick=()=>{sol.hidden=false;show.hidden=true};okb.onclick=()=>{mark(w.dataset.task);okb.textContent='✓ Abgehakt'}})}
+/* Baustein für einen Begründe-Auftrag */
+const whyBox=(id,q,model)=>`<div class="part why" data-task="${id}"><h4>✍ ${q}</h4>
+<textarea data-store="${id}" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
+<label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
+<div class="row"><button class="why-show">Mit Musterbegründung vergleichen</button></div>
+<div class="sol" hidden><p><b>Musterbegründung:</b> ${model}</p><p class="caption" style="margin:0 0 6px">Vergleiche: Hast du die fett gedruckten Begriffe verwendet? Ergänze sonst deine Begründung.</p><div class="row"><button class="why-ok">Meine Begründung enthält das Wichtigste</button></div></div></div>`;
 /* Zahlen prüfen: inputs mit data-a (Sollwert) und optional data-tol (relativ, Standard 1 %) */
 function numCheck(btn,ids,fbId,task,okText){$(btn).onclick=()=>{let ok=0;ids.forEach(id=>{const i=$(id),v=num(i.value),a=+i.dataset.a,tol=+(i.dataset.tol||0.01),g=!isNaN(v)&&Math.abs(v-a)<=Math.max(Math.abs(a)*tol,1e-9);i.className=i.value===''?'':(g?'ok':'bad');if(g)ok++});
  const fb=$(fbId);if(ok===ids.length){fb.className='fb ok';fb.innerHTML=okText;mark(task)}else{fb.className='fb bad';fb.textContent=ok+' von '+ids.length+' richtig. Prüfe Einheiten und Kommastellen – oder hol dir einen Tipp.'}}}
@@ -481,10 +533,11 @@ const crate=(x,y,w,h,lab)=>Rc(x,y,w,h,'','rx="4" style="fill:#d9a066;stroke:var(
 $('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value),fb=$('#v1Fb');if(!v.length){fb.className='fb bad';fb.textContent='Wähle mindestens eine Größe aus.';return}
  fb.className='fb hint';fb.innerHTML='Deine Vermutung: '+v.map(x=>({h:'Höhe',m:'Masse',f:'Farbe',t:'Temperatur',o:'Ort'})[x]).join(', ')+'. Prüfe sie jetzt im Fall-Labor! (Kleiner Hinweis zum Ort: Auf dem Mond fällt alles viel „sanfter“ – das kommt in Übung 5.)';mark('v1')};
 
-/* ---------- A: Fall-Labor ---------- */
+/* ---------- A: Fall-Labor (qualitativ) ---------- */
 {const svg=$('#fall'),top=300,sc=3,X=290;let m=100,k=0,dropped=false,running=false,data=[];
  const MC={50:'var(--el)',100:'var(--eb)',200:'var(--eth)'};
- const rad=()=>6+m/20,h=()=>+$('#hIn').value,dent=()=>m*h()/1000;
+ /* Modell: Die Delle wächst mit der Energie, aber nicht proportional (Sand wird verdrängt und verdichtet). */
+ const rad=()=>6+m/20,h=()=>+$('#hIn').value,dent=()=>4*Math.sqrt(m*h()/1000);
  function draw(){const r=rad(),y0=top-r-h()*sc,y=dropped?top-r+dent()*1.2:y0+(top-r-y0)*k*k;let s=Rc(0,top+40,560,20,'ground');
   s+=L(80,top,80,top-80*sc-10,'thin','stroke-width="2"');for(let c=0;c<=80;c+=10)s+=L(74,top-c*sc,86,top-c*sc,'thin')+T(30,top-c*sc+5,c+' cm','txs');
   s+=L(86,top-h()*sc,X-r-4,top-h()*sc,'dashl');
@@ -492,15 +545,8 @@ $('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value)
   s+=C(X,y,r,'',`style="fill:${MC[m]};stroke:var(--ink)" stroke-width="1.5"`)+T(X+r+8,y-r,m+' g','txs');
   if(dropped)s+=T(420,top-40,'Delle: '+fmtS(dent(),1)+' mm','txb','style="font-size:18px;fill:var(--acc)"');
   svg.innerHTML=s}
- function chart(){const c=$('#chart'),x0=46,y0=240,W=370,H=210,xs=v=>x0+v/80*W,ys=v=>y0-v/18*H;let s='';
-  for(let v=0;v<=80;v+=20)s+=L(xs(v),y0,xs(v),y0-H,'gl')+T(xs(v),y0+18,v,'txs','text-anchor="middle"');
-  for(let v=0;v<=18;v+=3)s+=L(x0,ys(v),x0+W,ys(v),'gl')+T(x0-8,ys(v)+4,v,'txs','text-anchor="end"');
-  s+=L(x0,y0,x0+W,y0,'thin')+L(x0,y0,x0,y0-H,'thin')+T(x0+W,y0+34,'h in cm','txs','text-anchor="end"')+T(6,16,'Delle in mm','txs');
-  [50,100,200].forEach(mm=>{const pts=data.filter(d=>d.m===mm);if(pts.length>=2){const hm=Math.max(...pts.map(p=>p.h));s+=L(xs(0),ys(0),xs(hm),ys(mm*hm/1000),'','style="stroke:'+MC[mm]+'" stroke-width="1.5" stroke-dasharray="5 4"')}
-   pts.forEach(p=>s+=C(xs(p.h),ys(p.d),5,'',`style="fill:${MC[mm]}"`))});
-  c.innerHTML=s}
- function table(){$('#tab tbody').innerHTML=data.map((d,i)=>`<tr><td>${i+1}</td><td>${d.m} g</td><td>${d.h} cm</td><td>${fmtS(d.d,1)} mm</td></tr>`).join('')||'<tr><td colspan="4">noch keine Messwerte</td></tr>';chart();
-  const ms=new Set(data.map(d=>d.m)),fb=$('#labFb');if(data.length>=4&&ms.size>=2){fb.className='fb ok';fb.textContent='Prima, du hast genug Messwerte. Beantworte jetzt die Fragen unten.';mark('lab')}else{fb.className='fb hint';fb.textContent='Ziel: mindestens 4 Messungen mit mindestens 2 verschiedenen Massen.'}}
+ function table(){$('#tab tbody').innerHTML=data.map((d,i)=>`<tr><td>${i+1}</td><td>${d.m} g</td><td>${d.h} cm</td><td>${fmtS(d.d,1)} mm</td></tr>`).join('')||'<tr><td colspan="4">noch keine Messwerte</td></tr>';
+  const ms=new Set(data.map(d=>d.m)),fb=$('#labFb');if(data.length>=4&&ms.size>=2){fb.className='fb ok';fb.textContent='Prima, du hast genug Messwerte. Beantworte jetzt die Fragen unten.';mark('lab')}else{fb.className='fb hint';fb.textContent='Ziel: mindestens 4 Messungen mit mindestens 2 verschiedenen Massen. Für Frage c brauchst du 100 g bei 20 cm und bei 80 cm.'}}
  $$('#mBtns button').forEach(b=>b.onclick=()=>{m=+b.dataset.m;$$('#mBtns button').forEach(x=>x.setAttribute('aria-pressed',x===b));dropped=false;k=0;$('#take').disabled=true;draw()});
  $('#hIn').oninput=()=>{$('#hV').textContent=h();dropped=false;k=0;$('#take').disabled=true;draw()};
  $('#drop').onclick=()=>{if(running)return;running=true;dropped=false;k=0;animate(250+Math.sqrt(h())*60,t=>{k=t;draw()},()=>{dropped=true;running=false;draw();$('#take').disabled=false})};
@@ -509,27 +555,41 @@ $('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value)
  const labTask=document.createElement('span');labTask.dataset.task='lab';labTask.hidden=true;$('#labFb').after(labTask);
  draw();table()}
 
-/* ---------- B: Heben ---------- */
-{const svg=$('#hub'),fl=320,sc=80;
- function draw(){const m=+$('#hubM').value,h=+$('#hubH').value,F=m*g,E=F*h,bw=40+m*2,bh=30+m;
+/* ---------- B: Heben mit Messtabelle ---------- */
+{const svg=$('#hub'),fl=320,sc=65,MC={2:'var(--el)',5:'var(--eb)',10:'var(--eth)'};let m=5,data=[];
+ const hv=()=>Math.round(+$('#hubH').value*10)/10;
+ function draw(){const h=hv(),F=m*g,E=F*h,bw=40+m*2,bh=30+m;
   $('#hubMv').textContent=m;$('#hubHv').textContent=fmt(h,1);
   let s=Rc(0,fl,560,40,'ground')+L(60,fl,60,20,'thin','stroke-width="6"')+L(40,24,300,24,'thin','stroke-width="6"')+C(250,40,14,'','style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"');
-  const by=fl-h*sc-bh,hookY=by-56;s+=L(250,54,250,hookY,'thin','stroke-width="2"')+L(236,40,236,fl-20,'thin','stroke-width="2"')+T(200,fl-6,'Seil','txs');
-  s+=Rc(242,hookY,16,36,'','rx="4" style="fill:var(--panel);stroke:var(--ink)"')+L(250,hookY+36,250,by,'thin','stroke-width="2"')+T(268,hookY+22,'F = '+fmt(F,1)+' N','txb','style="fill:var(--acc)"');
+  const by=fl-h*sc-bh,hookY=by-40;s+=L(250,54,250,hookY,'thin','stroke-width="2"')+L(236,40,236,fl-20,'thin','stroke-width="2"')+T(200,fl-6,'Seil','txs');
+  s+=Rc(242,hookY,16,26,'','rx="4" style="fill:var(--panel);stroke:var(--ink)"')+L(250,hookY+26,250,by,'thin','stroke-width="2"')+T(268,hookY+22,'Kraftmesser: '+fmt(F,1)+' N','txb','style="fill:var(--acc)"');
   s+=crate(250-bw/2,by,bw,bh,m+' kg');
   for(let v=0;v<=3;v+=0.5)s+=L(84,fl-v*sc,96,fl-v*sc,'thin')+T(100,fl-v*sc+5,fmt(v,1)+' m','txs');
   if(h>0)s+=L(330,fl,330,fl-h*sc,'thin','stroke-width="2"')+arrowHead(330,fl-h*sc,-90,'var(--ink)')+T(338,fl-h*sc/2,'h','txb');
-  const eb=E/588.6*230;s+=Rc(450,fl-eb,40,eb,'fel')+T(470,fl+22,'E','txb','text-anchor="middle"')+T(470,fl-eb-8,Math.round(E)+' J','tel','text-anchor="middle"');
+  const eb=E/300*230;s+=Rc(450,fl-eb,40,eb,'fel')+T(470,fl+22,'E','txb','text-anchor="middle"')+T(470,fl-eb-8,Math.round(E)+' J','tel','text-anchor="middle"');
   svg.innerHTML=s;
-  $('#hubCalc').innerHTML=`F<sub>G</sub> = m · g = ${m} kg · 9,81 N/kg = <b>${fmt(F,2)} N</b><br>E<sub>L</sub> = F<sub>G</sub> · h = ${fmt(F,2)} N · ${fmt(h,1)} m = <b>${fmt(E,1)} J</b>`}
- ['#hubM','#hubH'].forEach(i=>$(i).oninput=draw);draw();
+  $('#hubCalc').innerHTML=`Kraftmesser: F<sub>G</sub> = <b>${fmt(F,2)} N</b> &nbsp;·&nbsp; Hubhöhe h = <b>${fmt(h,1)} m</b><br>Energie beim Heben: E = F<sub>G</sub> · h = ${fmt(F,2)} N · ${fmt(h,1)} m = <b>${fmt(E,1)} J</b>`}
+ function chart(){const c=$('#chart'),x0=50,y0=240,W=360,H=210,xs=v=>x0+v/3*W,ys=v=>y0-v/300*H;let s='';
+  for(let v=0;v<=3;v+=0.5)s+=L(xs(v),y0,xs(v),y0-H,'gl')+T(xs(v),y0+18,fmtS(v,1),'txs','text-anchor="middle"');
+  for(let v=0;v<=300;v+=50)s+=L(x0,ys(v),x0+W,ys(v),'gl')+T(x0-8,ys(v)+4,v,'txs','text-anchor="end"');
+  s+=L(x0,y0,x0+W,y0,'thin')+L(x0,y0,x0,y0-H,'thin')+T(x0+W,y0+34,'h in m','txs','text-anchor="end"')+T(6,16,'E in J','txs');
+  [2,5,10].forEach(mm=>{const pts=data.filter(d=>d.m===mm);if(pts.length>=2){const hm=Math.max(...pts.map(p=>p.h));s+=L(xs(0),ys(0),xs(hm),ys(mm*g*hm),'','style="stroke:'+MC[mm]+'" stroke-width="1.5" stroke-dasharray="5 4"')}
+   pts.forEach(p=>s+=C(xs(p.h),ys(p.E),5,'',`style="fill:${MC[mm]}"`))});
+  c.innerHTML=s}
+ function table(){$('#hubTab tbody').innerHTML=data.map(d=>`<tr><td>${d.m} kg</td><td>${fmt(d.h,1)} m</td><td>${fmt(d.m*g,2)} N</td><td>${fmt(d.E,1)} J</td></tr>`).join('')||'<tr><td colspan="4">noch keine Messwerte</td></tr>';chart();
+  const ms=new Set(data.map(d=>d.m)),fb=$('#hubFb');if(data.length>=4&&ms.size>=2){fb.className='fb ok';fb.textContent='Genug Messwerte! Die Punkte jeder Masse liegen auf einer Ursprungsgeraden. Werte jetzt in Auftrag 4 aus.';mark('hubm')}else{fb.className='fb hint';fb.textContent='Ziel: mindestens 4 Messwerte mit mindestens 2 Massen, z. B. 5 kg bei 1 m und 2 m, 10 kg bei 1 m und 2 m.'}}
+ $$('#hubMB button').forEach(b=>b.onclick=()=>{m=+b.dataset.m;$$('#hubMB button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw()});
+ $('#hubH').oninput=draw;
+ $('#hubTake').onclick=()=>{const h=hv();if(h>0&&!data.some(d=>d.m===m&&d.h===h))data.push({m,h,E:m*g*h});data.sort((a,b)=>a.m-b.m||a.h-b.h);table()};
+ $('#hubClear').onclick=()=>{data=[];table()};
+ draw();table();
  numCheck('#l2Check',['#l2a','#l2b'],'#l2Fb','l2','Richtig! F<sub>G</sub> = 5 kg · 9,81 N/kg = 49,05 N und E<sub>L</sub> = 49,05 N · 2 m = 98,1 J. Allgemein: <b>E<sub>L</sub> = F<sub>G</sub> · h = m · g · h</b>.');
  hints.l2=['Gewichtskraft: F<sub>G</sub> = m · g = 5 kg · 9,81 N/kg.','Lageenergie = Gewichtskraft · Hubhöhe. N · m ergibt J.']}
 
 /* ---------- C: Weg egal ---------- */
 {const svg=$('#weg'),fl=290,sc=60,top=fl-3*sc,PX=440;let w=-1,k=0;
  const paths=[[[40,fl],[PX,top]],[[100,fl],[140,fl],[140,fl-30],[180,fl-30],[180,fl-60],[220,fl-60],[220,fl-90],[260,fl-90],[260,fl-120],[300,fl-120],[300,fl-150],[340,fl-150],[340,top],[PX,top]],[[600,fl],[600,top]]];
- const info=['Rampe: 6,7 m lang. Du schiebst mit kleinerer Kraft (≈ 219 N), aber über einen längeren Weg. 219 N · 6,7 m ≈ 1471 J.','Treppe: 6 Stufen à 50 cm. Du hebst den Koffer Stufe für Stufe mit F<sub>G</sub> = 490,5 N insgesamt 3 m hoch. 490,5 N · 3 m = 1471,5 J.','Aufzug: Er hebt den Koffer direkt 3 m hoch: 490,5 N · 3 m = 1471,5 J.'];
+ const info=['Rampe: 6,7 m lang. Ohne Reibung schiebst du mit kleinerer Kraft (≈ 219 N), aber über einen längeren Weg. 219 N · 6,7 m ≈ 1471 J. (Mit Reibung bräuchtest du mehr Energie – der Rest würde zu thermischer Energie.)','Treppe: 6 Stufen à 50 cm. Du hebst den Koffer Stufe für Stufe mit F<sub>G</sub> = 490,5 N insgesamt 3 m hoch. 490,5 N · 3 m = 1471,5 J.','Aufzug: Er hebt den Koffer direkt 3 m hoch: 490,5 N · 3 m = 1471,5 J.'];
  function at(p,t){let L2=0;const seg=[];for(let i=1;i<p.length;i++){const l=Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1]);seg.push(l);L2+=l}let d=t*L2;for(let i=0;i<seg.length;i++){if(d<=seg[i]){const f=d/seg[i];return [p[i][0]+(p[i+1][0]-p[i][0])*f,p[i][1]+(p[i+1][1]-p[i][1])*f]}d-=seg[i]}return p[p.length-1]}
  function draw(){let s=Rc(0,fl,640,30,'ground')+Rc(PX,top,200,fl-top,'','style="fill:var(--panel);stroke:var(--ink)"')+T(PX+60,top-8,'Plattform','txs');
   s+=`<path d="M40 ${fl} L${PX} ${top} L${PX} ${fl}Z" style="fill:var(--el);opacity:.12;stroke:var(--el)"/>`+T(30,fl-8,'Rampe','tel');
@@ -557,8 +617,10 @@ $('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value)
  selCheck('#f1Check','#cloze','#f1Fb','f1','Perfekt! Übertrage den Merksatz und die Musteraufgabe in dein Heft.')}
 
 /* ---------- Übungen ---------- */
-numCheck('#u1Check',['#u1a','#u1b','#u1c'],'#u1Fb','u1','Alles richtig! Einsetzen in E<sub>L</sub> = m · g · h klappt.');
-hints.u1=['Setze direkt in E<sub>L</sub> = m · g · h ein. Beispiel a): 2 · 9,81 · 1,5.','c) Das Ergebnis in J durch 1000 teilen ergibt kJ.'];
+$('#u1Check').onclick=()=>{let ok=0,n=0;['#u1m','#u1h','#u1a','#u1b','#u1c'].forEach(id=>{n++;const i=$(id),v=num(i.value),a=+i.dataset.a,g2=!isNaN(v)&&Math.abs(v-a)<=Math.abs(a)*0.01;i.className=i.value===''?'':(g2?'ok':'bad');if(g2)ok++});
+ ['#u1g','#u1f'].forEach(id=>{n++;const x=$(id),g2=x.value===x.dataset.a;x.className=x.value===''?'':(g2?'ok':'bad');if(g2)ok++});
+ const fb=$('#u1Fb');if(ok===n){fb.className='fb ok';fb.innerHTML='Alles richtig! So gehst du immer vor: Gegeben – Gesucht – Formel – Ergebnis mit Einheit.';mark('u1')}else{fb.className='fb bad';fb.textContent=ok+' von '+n+' Feldern richtig. Prüfe die rot markierten – oder hol dir einen Tipp.'}};
+hints.u1=['Lies aus dem Text ab: Masse in kg, Höhe in m. Gesucht ist die Energie nach dem Hochheben.','Setze direkt in E<sub>L</sub> = m · g · h ein. Beispiel a): 2 · 9,81 · 1,5.','c) Das Ergebnis in J durch 1000 teilen ergibt kJ.'];
 numCheck('#u2Check',['#u2a','#u2b','#u2c','#u2d'],'#u2Fb','u2','Richtig! Immer zuerst in kg und m umrechnen – dann einsetzen.');
 hints.u2=['1 kg = 1000 g, also g : 1000 = kg. 1 m = 100 cm, also cm : 100 = m.','c) 180 g = 0,18 kg und 75 cm = 0,75 m. Dann 0,18 · 9,81 · 0,75.','d) 100 g = 0,1 kg.'];
 numCheck('#u3Check',['#u3a','#u3b','#u3c'],'#u3Fb','u3','Klasse! Du kannst die Formel nach jeder Größe umstellen.');
@@ -576,7 +638,13 @@ hints.u7=['a) Höhenunterschied = Gipfel − Talstation.','c) E<sub>L</sub> = 90
  s+=T(40,228,'Talstation ≈ 1000 m','txs')+T(250,22,'Gipfel ≈ 2950 m','txs')+L(400,40,400,195,'thin')+arrowHead(400,40,-90,'var(--ink)')+T(330,120,'Δh = ?','txb');
  $('#zug').innerHTML=s}
 
-initMC();updProg();
+$('#whyW').outerHTML=whyBox('w2','Begründe in eigenen Worten: Warum spielt der Weg für die Lageenergie keine Rolle?','Die Lageenergie hängt nur von der <b>Masse</b> und vom <b>Höhenunterschied</b> ab: E<sub>L</sub> = m · g · h. Auf der Rampe brauchst du zwar eine <b>kleinere Kraft</b>, musst sie aber über einen <b>längeren Weg</b> aufbringen. Kraft mal Weg ist am Ende gleich groß wie beim senkrechten Heben (wenn es keine Reibung gibt).');
+$('#whyN').outerHTML=whyBox('n2','Begründe: Warum muss man bei einer Lageenergie immer das Nullniveau angeben?','Die Höhe h wird vom <b>Nullniveau</b> aus gemessen. Wählt man ein anderes Nullniveau, ändert sich h – und damit auch E<sub>L</sub>. Ohne Nullniveau ist eine Angabe wie „17,7 J“ also <b>nicht eindeutig</b>.');
+{const I=[['wird in Newton (N) gemessen','K'],['wird in Joule (J) gemessen','E'],['F<sub>G</sub> = m · g','K'],['E<sub>L</sub> = m · g · h','E'],['kann gespeichert werden, z. B. im Stausee','E'],['zieht einen Körper nach unten','K'],['wird mit einem Federkraftmesser gemessen','K'],['kann in eine andere Form umgewandelt werden','E'],['49,05 N','K'],['98,1 J','E']];
+ $('#ke').innerHTML=I.map((x,i)=>`<div class="numq"><label for="ke_${i}">${x[0]}</label><select id="ke_${i}" data-a="${x[1]}"><option value="">– wählen –</option><option value="K">Kraft</option><option value="E">Energie</option></select></div>`).join('');
+ selCheck('#keCheck','#ke','#keFb','ke','Super! Kraft (N) und Energie (J) sind verschiedene Größen – beim Heben hängen sie über E = F · h zusammen.');
+ hints.ke=['Achte auf die Einheit: Newton gehört zur Kraft, Joule zur Energie.','Eine Kraft wirkt im Moment (ziehen, drücken). Eine Energie ist ein Vorrat, den man speichern und umwandeln kann.']}
+initNotes();initMC();updProg();
 }
 </script>
 </body>

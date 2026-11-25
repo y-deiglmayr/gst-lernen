@@ -613,7 +613,7 @@ $$('[data-num]').forEach(card=>{const id=card.dataset.num,spec=NUM[id];if(!spec)
  box.querySelector('[data-act=sol]').onclick=()=>{sol.hidden=!sol.hidden}});
 
 /* ---------- Phase 1: Energieformen ---------- */
-{const FORMS=['Lageenergie','Bewegungsenergie','Spannenergie','thermische Energie','chemische Energie','elektrische Energie'];
+{const FORMS=['Lageenergie','Bewegungsenergie','Spannenergie','thermische Energie','chemische Energie','elektrische Energie','Strahlungsenergie'];
  const ITEMS=[['Ein Gewicht liegt oben auf einem Schrank.',0],['Ein Wagen fährt über den Tisch.',1],['Ein gespanntes Gummiband.',2],['Heißer Tee in einer Tasse.',3],['Ein Energieriegel bzw. eine volle Batterie.',4],['Der Strom aus der Steckdose.',5]];
  $('#w1').innerHTML=ITEMS.map((it,i)=>`<div class="numq"><label for="w1_${i}">${it[0]}</label><select id="w1_${i}" data-a="${it[1]}"><option value="">– wählen –</option>${FORMS.map((f,j)=>`<option value="${j}">${f}</option>`).join('')}</select></div>`).join('');
  $('#w1Check').onclick=()=>{let ok=0;$$('#w1 select').forEach(s=>{const g=s.value===s.dataset.a;s.className=s.value===''?'':g?'ok':'bad';if(g)ok++});
@@ -728,7 +728,7 @@ $$('[data-num]').forEach(card=>{const id=card.dataset.num,spec=NUM[id];if(!spec)
   f.textContent=ok?TF[i][2].replace(/E_L/g,'E_L').replace(/E_B/g,'E_B'):'Nicht ganz – überleg noch einmal.';st[i]=ok;if(st.every(Boolean))mark('u1')})})}
 
 /* ---------- Übung 2: Umwandlungen ---------- */
-{const F=['Lageenergie','Bewegungsenergie','Spannenergie','thermische Energie','chemische Energie','elektrische Energie'];
+{const F=['Lageenergie','Bewegungsenergie','Spannenergie','thermische Energie','chemische Energie','elektrische Energie','Strahlungsenergie'];
  const IT=[['Eine Pendelkugel schwingt vom Umkehrpunkt nach unten.',0,1],['Ein Fahrrad bremst, die Bremsen werden heiß.',1,3],['Ein Elektromotor hebt eine Tafel Schokolade an.',5,0],['Ein Bogenschütze lässt die gespannte Sehne los, der Pfeil fliegt.',2,1],['Ein Trampolinspringer sinkt ins Sprungtuch ein.',1,2],['Wasser im Pumpspeicherkraftwerk wird nach oben gepumpt.',5,0],['Ein Mensch steigt mit Hilfe seiner Muskeln eine Treppe hinauf.',4,0]];
  const sel=(id,a)=>`<select id="${id}" data-a="${a}" aria-label="Energieform"><option value="">– wählen –</option>${F.map((f,j)=>`<option value="${j}">${f}</option>`).join('')}</select>`;
  $('#u2').innerHTML=IT.map((t,i)=>`<div class="chain"><span>${t[0]}</span>${sel('u2a'+i,t[1])}<span aria-hidden="true">→</span>${sel('u2b'+i,t[2])}</div>`).join('');

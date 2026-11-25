@@ -183,6 +183,8 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 .door{stroke:var(--laser2);stroke-width:6;stroke-linecap:round}
 .see{stroke:var(--laser);stroke-width:9;stroke-linecap:round;opacity:.35}
 .lamp{fill:#ffcf4a;stroke:#d08a00;stroke-width:1.5}
+.mc button:disabled{opacity:.55;cursor:not-allowed}.mc button.bad:disabled{opacity:1}
+.heftfirst{font-size:15px;background:var(--hint);border-radius:8px;padding:6px 12px;margin:6px 0 10px}
 </style>
 </head>
 <body>
@@ -241,6 +243,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 
 <div class="card" data-task="g1">
 <div class="tag"><span class="stars">★</span> Aufgabe 1 · Das Fähnchen</div>
+<p class="heftfirst">✏️ Erst mit Bleistift, Lineal und Geodreieck im Heft konstruieren – dann hier prüfen.</p>
 <p>Konstruiere das Spiegelbild des Fähnchens. Klicke nacheinander auf die Kreuzungspunkte, an denen A', B', C' und D' liegen.</p>
 <div class="fig narrow"><svg id="g1" viewBox="0 0 660 390" role="img" aria-label="Karopapier mit senkrechtem Spiegel und einem Fähnchen ABCD"></svg></div>
 <p class="fb" id="g1Fb"></p><p class="fb hint tip" id="g1Tip"></p>
@@ -249,6 +252,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 
 <div class="card" data-task="g2">
 <div class="tag"><span class="stars">★</span> Aufgabe 2 · Die Laterne im See</div>
+<p class="heftfirst">✏️ Erst mit Bleistift, Lineal und Geodreieck im Heft konstruieren – dann hier prüfen.</p>
 <p>Am anderen Ufer steht eine Laterne. Die ruhige Wasseroberfläche wirkt wie ein waagrechter Spiegel. Konstruiere den Lichtweg von der Lampe L über die Wasseroberfläche in das Auge.</p>
 <div class="two">
 <div class="fig"><svg id="g2" viewBox="0 0 660 480" role="img" aria-label="See als waagrechter Spiegel, Laterne am rechten Ufer, Auge am linken Ufer"></svg></div>
@@ -266,6 +270,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 
 <div class="card" data-task="g3">
 <div class="tag"><span class="stars">★★</span> Aufgabe 3 · Schräger Spiegel</div>
+<p class="heftfirst">✏️ Erst mit Bleistift, Lineal und Geodreieck im Heft konstruieren – dann hier prüfen.</p>
 <p>Konstruiere das Spiegelbild des Dreiecks PQR. Der Spiegel steht schräg – das Lot steht senkrecht auf dem <i>Spiegel</i>, nicht auf den Karolinien.</p>
 <div class="fig narrow"><svg id="g3" viewBox="0 0 660 390" role="img" aria-label="Karopapier mit schrägem Spiegel und Dreieck PQR"></svg></div>
 <p class="fb" id="g3Fb"></p><p class="fb hint tip" id="g3Tip"></p>
@@ -280,6 +285,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 
 <div class="card" data-task="a1">
 <div class="tag"><span class="stars">★★</span> Aufgabe 4 · Konstruktion der Spiegelposition</div>
+<p class="heftfirst">✏️ Erst mit Bleistift, Lineal und Geodreieck im Heft konstruieren – dann hier prüfen.</p>
 <p>Die neugierige Frau Spieker sitzt in ihrem Zimmer hinter einem Raumteiler. Sie möchte über einen Spiegel an der Wand W die Tür T <b>vollständig</b> beobachten können. Wo muss der Spiegel hängen und wie groß muss er mindestens sein?</p>
 <p class="caption">Ziehe die beiden roten Griffe auf der Wand W. Der rote Streifen an der rechten Wand zeigt, was Frau Spieker im Spiegel sieht.</p>
 <div class="two">
@@ -301,7 +307,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <label style="flex:1 1 240px"><b>Körperlänge K: <span id="a2kV">1,90</span> m</b><input type="range" id="a2k" min="1.5" max="2.0" step="0.01" value="1.9"></label>
 <div class="toggles" style="margin:0"><label><input type="checkbox" id="a2show">Konstruktion zeigen</label></div>
 </div>
-<p class="caption">Ohne „Konstruktion zeigen“ siehst du nur den Mann und die Wand – überlege erst selbst!</p>
+<p class="heftfirst">✏️ Skizziere erst im Heft: Mann, Wand, Spiegelbild und die Lichtwege von Hutspitze und Füßen ins Auge. Schalte die Konstruktion erst danach zur Kontrolle ein.</p>
 <div class="part" data-task="a2a"><h4>a) Wie hoch muss der Spiegel mindestens sein?</h4>
 <div class="mc" data-correct="c" data-task="a2a">
 <button data-k="a">genauso hoch wie die Körperlänge K</button>
@@ -340,6 +346,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <button data-k="c" data-fb="Nein – eine einzelne dickere Scheibe wäre stabiler.">Sie machen das Fenster bruchsicherer.</button>
 <p class="fb"></p></div></div>
 <div class="part" data-task="a3b"><h4>b) Abends siehst du das Bild einer Lampe L zweimal. Begründe mit einer Konstruktion.</h4>
+<p class="heftfirst">✏️ Erst mit Bleistift, Lineal und Geodreieck im Heft konstruieren – dann hier prüfen.</p>
 <p>Jede Scheibe wirkt wie ein (schwacher) Spiegel. Konstruiere die beiden Bilder L₁' und L₂' und die zwei Lichtwege in verschiedenen Farben. Die Scheiben sind sehr dünn, Mehrfachreflexionen spielen keine Rolle.</p>
 <div class="two">
 <div class="fig"><svg id="a3" viewBox="0 0 660 390" role="img" aria-label="Zwei schräge parallele Glasscheiben, eine Lampe L und ein Auge davor"></svg></div>
@@ -365,6 +372,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="tag"><span class="stars">★★★</span> Aufgabe 7 · Der 60°-Winkelspiegel</div>
 <p>Zwei Spiegel bilden einen Winkel von 60°. Licht der Kerze K läuft zuerst zu Spiegel 1, dann zu Spiegel 2 und gelangt schließlich ins Auge A.</p>
 <div class="part" data-task="k1a"><h4>a) Konstruiere den Lichtweg K → Spiegel 1 → Spiegel 2 → A.</h4>
+<p class="heftfirst">✏️ Erst mit Bleistift, Lineal und Geodreieck im Heft konstruieren – dann hier prüfen.</p>
 <div class="two">
 <div class="fig"><svg id="k1" viewBox="0 0 660 560" role="img" aria-label="60°-Winkelspiegel mit Kerze K und Auge A"></svg></div>
 <div><div class="steps" id="k1Steps"></div><p class="fb hint" id="k1Fb"></p><p class="fb hint tip" id="k1Tip"></p>
@@ -454,10 +462,12 @@ const hints={};
 $$('[data-hint]').forEach(b=>{let h=0;b.onclick=()=>{const id=b.dataset.hint,arr=hints[id]||[],el=$('#'+id+'Tip');if(!arr.length)return;el.textContent='Tipp '+(h%arr.length+1)+' von '+arr.length+': '+arr[h%arr.length];h++}});
 
 /* ---------- Multiple Choice ---------- */
-$$('.mc[data-correct]').forEach(box=>{const fb=box.querySelector('.fb');
- box.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
-  box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');
-  fb.className='fb '+(ok?'ok':'bad');fb.textContent=b.dataset.fb&&ok?b.dataset.fb:(ok?'Richtig!':(b.dataset.fb||'Noch nicht – probier es nochmal.'));if(ok)mark(box.dataset.task)})});
+/* Nach einem Fehlversuch: Hinweis und kurze Denkpause – Raten lohnt sich nicht. */
+$$('.mc[data-correct]').forEach(box=>{const fb=box.querySelector('.fb'),btns=[...box.querySelectorAll('button[data-k]')];
+ btns.forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
+  if(ok){b.classList.add('ok');fb.className='fb ok';fb.innerHTML=b.dataset.fb||'Richtig!';mark(box.dataset.task);return}
+  b.classList.add('bad');b.disabled=true;fb.className='fb hint';fb.innerHTML=(b.dataset.fb||'Das stimmt nicht.')+' '+(box.dataset.hint||'Überlege mit einer Skizze im Heft, bevor du weiterklickst.');
+  const free=btns.filter(x=>!x.classList.contains('bad'));free.forEach(x=>x.disabled=true);setTimeout(()=>free.forEach(x=>x.disabled=false),matchMedia('(prefers-reduced-motion: reduce)').matches?0:2500)})});
 
 /* ---------- Zahleneingaben ---------- */
 const num=v=>parseFloat(String(v).replace(',','.').replace(/\s/g,''));
