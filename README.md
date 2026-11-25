@@ -37,3 +37,15 @@ z. B. `/Physik8/reflexion-spiegel`. Groß- und Kleinschreibung der Ordner gehör
 ## Schriften
 
 Neue Seiten binden die Schriften mit `<link rel="stylesheet" href="/fonts/fonts.css">` ein – nicht über Google Fonts.
+
+## Schul-Branding
+
+Farben, Logo und Mosaik stammen aus der PowerPoint-Vorlage der Schule und liegen in `brand/`:
+
+- `brand/brand.css` – gemeinsames Branding für alle Lernpfade (Kopf in Schiefergrau mit Pixel-Mosaik, Farbleiste, Logo in Navigation und Fuß, Überschriften in Source Sans 3)
+- `brand/logo.svg`, `brand/mosaik-links.svg`, `brand/mosaik-rechts.svg`
+- Farben: Schiefer #3E4B4C, #5F6F74, Graugrün #76989D, #ACBDC3, #C9D2D3, Hellgrau #E4E7E9, Akzentgelb #FCBE00
+
+Neue Lernpfade binden nach ihrem `<style>`-Block ein: `<link rel="stylesheet" href="/brand/brand.css">`.
+Die fachlichen Farben der Lernpfade (z. B. Laserrot, Energie-Farben) bleiben bewusst erhalten.
+Schrift: Source Sans 3 (SIL OFL) als freie Alternative zur Hausschrift Myriad Pro.

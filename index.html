@@ -6,28 +6,44 @@
 <title>GST Lernpfade</title>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <style>
-:root{color-scheme:light dark;--bg:light-dark(#fff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
---panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--accent:light-dark(#dc2f28,#ff5c50)}
+:root{color-scheme:light dark;--bg:light-dark(#fff,#1b2122);--ink:light-dark(#323A42,#eceff0);--muted:light-dark(#5F6F74,#a9b6b9);
+--panel:light-dark(#f4f6f7,#252c2e);--line:light-dark(#C9D2D3,#3a4547);--accent:#FCBE00;
+--slate:#3E4B4C;--slate2:#5F6F74;--green:#76989D;--blue:#ACBDC3;--grey:#C9D2D3;--light:#E4E7E9}
 *{box-sizing:border-box;min-width:0}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif}
-header{background:#0e131d;color:#eef1f7;padding:clamp(32px,5vw,64px) max(5vw,16px)}
-h1,h2{font-family:Lexend,system-ui,sans-serif;line-height:1.15;margin:0 0 .4em}
-h1{font-size:clamp(32px,5vw,48px)}
-h2{font-size:22px;margin-top:1.6em}
-header p{color:#c6ccd8;max-width:60ch;margin:0}
-main{max-width:1100px;margin:0 auto;padding:8px max(5vw,16px) 48px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-a.card{display:flex;flex-direction:column;gap:6px;padding:0 0 16px;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);text-decoration:none;min-height:44px}
-a.card:hover,a.card:focus-visible{border-color:var(--accent)}
-a.card b{font-family:Lexend,system-ui,sans-serif;font-size:18px;display:block;padding:4px 18px 0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;display:flex;flex-direction:column;min-height:100vh}
+header{background:var(--bg);color:var(--ink);padding:0 0 0;position:relative}
+.mosaic{display:flex;justify-content:space-between;align-items:flex-start;height:62px}
+.mosaic img{height:62px;width:auto;display:block}
+.mosaic img.r{height:62px}
+.headin{max-width:1100px;margin:0 auto;padding:6px max(5vw,16px) 22px}
+.bar{height:10px;background:linear-gradient(90deg,var(--slate) 0 26%,var(--slate2) 26% 30%,var(--green) 30% 34%,var(--blue) 34% 38%,var(--grey) 38% 42%,var(--light) 42%)}
+h1,h2{font-family:"Source Sans 3",system-ui,sans-serif;line-height:1.1;margin:0 0 .3em;font-weight:700}
+h1{font-size:clamp(36px,6vw,58px);letter-spacing:-.01em}
+h1::before,h2::before{content:"";display:inline-block;width:.3em;height:.3em;background:var(--accent);margin-right:.16em}
+h2{font-size:26px;margin-top:1.4em}
+header p{color:var(--muted);max-width:60ch;margin:0;font-size:18px}
+main{max-width:1100px;margin:0 auto;padding:8px max(5vw,16px) 48px;width:100%;flex:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+a.card{display:flex;flex-direction:column;gap:6px;padding:0 0 16px;overflow:hidden;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);text-decoration:none;min-height:44px;transition:border-color .15s,box-shadow .15s}
+a.card:hover,a.card:focus-visible{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+a.card:focus-visible{outline:none}
+a.card b{font-family:"Source Sans 3",system-ui,sans-serif;font-size:20px;display:block;padding:6px 18px 0;line-height:1.2}
 a.card small{color:var(--muted);font-size:15px;padding:0 18px}
-.thumb{display:block;aspect-ratio:16/7;background:#0e131d;border-bottom:1px solid var(--line)}
+.thumb{display:block;aspect-ratio:16/7;background:var(--slate)}
 .thumb svg{display:block;width:100%;height:100%}
-footer{color:var(--muted);font-size:14px;padding:0 max(5vw,16px) 32px;max-width:1100px;margin:0 auto}
+footer{color:#e4e7e9;font-size:14px;background:var(--light)}
+footer .fband{display:flex;align-items:stretch;min-height:48px}
+footer .fband span{display:block}
+footer .fband .s1{background:var(--slate);flex:0 0 18%}
+footer .fband .logo{background:var(--accent);flex:none;width:58px;display:grid;place-items:center}
+footer .fband .logo img{width:50px;height:auto;display:block}
+footer .fband .s2{background:var(--slate);flex:0 0 3.5%}footer .fband .s3{background:var(--slate2);flex:0 0 3.5%}footer .fband .s4{background:var(--green);flex:0 0 3.5%}footer .fband .s5{background:var(--blue);flex:0 0 3.5%}footer .fband .s6{background:var(--grey);flex:0 0 3.5%}
+footer .fband .txt{flex:1;display:flex;align-items:center;justify-content:flex-end;padding:6px 16px;color:var(--slate2);font-size:13px;text-align:right}
+@media(max-width:640px){footer .fband .s1{flex-basis:8%}footer .fband .s2,footer .fband .s3,footer .fband .s4,footer .fband .s5,footer .fband .s6{flex-basis:4%}.mosaic,.mosaic img{height:44px}}
 .herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
-.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn{flex:none;width:136px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 13px "Source Sans 3",sans-serif;text-align:center}
 .qrbtn svg{display:block;width:120px;height:120px}
-.qrbtn:hover,.qrbtn:focus-visible{outline:3px solid #ff5c50}
+.qrbtn:hover,.qrbtn:focus-visible{outline:3px solid #FCBE00}
 dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
 dialog.qrdlg::backdrop{background:rgba(8,10,16,.8)}
 dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
@@ -37,13 +53,15 @@ dialog.qrdlg button{font:600 16px Lexend,sans-serif;min-height:44px;padding:8px 
 </style>
 </head>
 <body>
-<header><div class="herohead"><div>
+<header><div class="mosaic" aria-hidden="true"><img src="/brand/mosaik-links.svg" alt=""><img class="r" src="/brand/mosaik-rechts.svg" alt=""></div>
+<div class="headin"><div class="herohead"><div>
 <h1>GST Lernpfade</h1>
 <p>Interaktive Lerninhalte für den Unterricht. Wähle dein Fach und deinen Lernpfad.</p>
-</div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h2m1 0h1m1 0h2m2 0h2m2 0h7m-29 1h1m5 0h1m2 0h1m4 0h5m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m3 0h1m3 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h3m6 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h2m3 0h1m1 0h3m1 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-18 1h2m1 0h1m1 0h2m2 0h1m-21 1h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h2m4 0h1m1 0h1m1 0h1m-24 1h4m3 0h2m2 0h1m1 0h2m1 0h1m4 0h2m2 0h1m2 0h1m-29 1h3m3 0h1m10 0h1m1 0h2m4 0h3m-28 1h3m2 0h1m1 0h2m1 0h1m1 0h3m4 0h1m3 0h2m1 0h2m-28 1h2m2 0h1m1 0h1m1 0h3m2 0h2m2 0h1m3 0h2m2 0h1m1 0h2m-26 1h1m1 0h1m1 0h2m2 0h1m1 0h1m3 0h1m1 0h2m-21 1h2m1 0h2m1 0h2m5 0h2m2 0h1m2 0h1m1 0h2m1 0h4m-22 1h3m3 0h6m2 0h1m1 0h1m1 0h1m1 0h1m-24 1h4m1 0h3m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m-27 1h3m4 0h7m1 0h2m4 0h2m1 0h1m2 0h1m-29 1h1m4 0h3m3 0h2m1 0h1m2 0h1m4 0h3m2 0h2m-27 1h1m1 0h1m4 0h1m6 0h2m1 0h4m4 0h2m-29 1h1m2 0h5m3 0h2m2 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m7 0h1m2 0h2m3 0h1m1 0h3m-29 1h7m2 0h1m1 0h1m5 0h1m2 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h2m1 0h2m1 0h1m5 0h1m3 0h4m-28 1h1m1 0h3m1 0h1m2 0h3m5 0h1m2 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h3m4 0h2m1 0h1m1 0h6m-28 1h1m1 0h3m1 0h1m2 0h1m2 0h2m5 0h3m2 0h3m1 0h1m-29 1h1m5 0h1m3 0h1m1 0h1m3 0h6m1 0h1m3 0h1m-28 1h7m1 0h3m1 0h1m1 0h2m1 0h1m1 0h5m1 0h1m1 0h1"/></svg>QR groß zeigen</button></div></header>
+</div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h2m1 0h1m1 0h2m2 0h2m2 0h7m-29 1h1m5 0h1m2 0h1m4 0h5m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m3 0h1m3 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h3m6 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h2m3 0h1m1 0h3m1 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-18 1h2m1 0h1m1 0h2m2 0h1m-21 1h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h2m4 0h1m1 0h1m1 0h1m-24 1h4m3 0h2m2 0h1m1 0h2m1 0h1m4 0h2m2 0h1m2 0h1m-29 1h3m3 0h1m10 0h1m1 0h2m4 0h3m-28 1h3m2 0h1m1 0h2m1 0h1m1 0h3m4 0h1m3 0h2m1 0h2m-28 1h2m2 0h1m1 0h1m1 0h3m2 0h2m2 0h1m3 0h2m2 0h1m1 0h2m-26 1h1m1 0h1m1 0h2m2 0h1m1 0h1m3 0h1m1 0h2m-21 1h2m1 0h2m1 0h2m5 0h2m2 0h1m2 0h1m1 0h2m1 0h4m-22 1h3m3 0h6m2 0h1m1 0h1m1 0h1m1 0h1m-24 1h4m1 0h3m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m-27 1h3m4 0h7m1 0h2m4 0h2m1 0h1m2 0h1m-29 1h1m4 0h3m3 0h2m1 0h1m2 0h1m4 0h3m2 0h2m-27 1h1m1 0h1m4 0h1m6 0h2m1 0h4m4 0h2m-29 1h1m2 0h5m3 0h2m2 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m7 0h1m2 0h2m3 0h1m1 0h3m-29 1h7m2 0h1m1 0h1m5 0h1m2 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h2m1 0h2m1 0h1m5 0h1m3 0h4m-28 1h1m1 0h3m1 0h1m2 0h3m5 0h1m2 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h3m4 0h2m1 0h1m1 0h6m-28 1h1m1 0h3m1 0h1m2 0h1m2 0h2m5 0h3m2 0h3m1 0h1m-29 1h1m5 0h1m3 0h1m1 0h1m3 0h6m1 0h1m3 0h1m-28 1h7m1 0h3m1 0h1m1 0h2m1 0h1m1 0h5m1 0h1m1 0h1"/></svg>QR groß zeigen</button></div></div><div class="bar"></div></header>
 <dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zur Übersicht"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h2m1 0h1m1 0h2m2 0h2m2 0h7m-29 1h1m5 0h1m2 0h1m4 0h5m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m3 0h1m3 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h3m6 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h2m3 0h1m1 0h3m1 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-18 1h2m1 0h1m1 0h2m2 0h1m-21 1h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h2m4 0h1m1 0h1m1 0h1m-24 1h4m3 0h2m2 0h1m1 0h2m1 0h1m4 0h2m2 0h1m2 0h1m-29 1h3m3 0h1m10 0h1m1 0h2m4 0h3m-28 1h3m2 0h1m1 0h2m1 0h1m1 0h3m4 0h1m3 0h2m1 0h2m-28 1h2m2 0h1m1 0h1m1 0h3m2 0h2m2 0h1m3 0h2m2 0h1m1 0h2m-26 1h1m1 0h1m1 0h2m2 0h1m1 0h1m3 0h1m1 0h2m-21 1h2m1 0h2m1 0h2m5 0h2m2 0h1m2 0h1m1 0h2m1 0h4m-22 1h3m3 0h6m2 0h1m1 0h1m1 0h1m1 0h1m-24 1h4m1 0h3m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m-27 1h3m4 0h7m1 0h2m4 0h2m1 0h1m2 0h1m-29 1h1m4 0h3m3 0h2m1 0h1m2 0h1m4 0h3m2 0h2m-27 1h1m1 0h1m4 0h1m6 0h2m1 0h4m4 0h2m-29 1h1m2 0h5m3 0h2m2 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m7 0h1m2 0h2m3 0h1m1 0h3m-29 1h7m2 0h1m1 0h1m5 0h1m2 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h2m1 0h2m1 0h1m5 0h1m3 0h4m-28 1h1m1 0h3m1 0h1m2 0h3m5 0h1m2 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h3m4 0h2m1 0h1m1 0h6m-28 1h1m1 0h3m1 0h1m2 0h1m2 0h2m5 0h3m2 0h3m1 0h1m-29 1h1m5 0h1m3 0h1m1 0h1m3 0h6m1 0h1m3 0h1m-28 1h7m1 0h3m1 0h1m1 0h2m1 0h1m1 0h5m1 0h1m1 0h1"/></svg><p>lernapps.gst-lernen.workers.dev</p><button id="qrClose">Schließen</button></dialog>
 <main id="list"></main>
-<footer>Neue Lernpfade werden in der Liste unten im Quelltext (<code>KURSE</code>) eingetragen.</footer>
+<footer><div class="fband"><span class="s1"></span><span class="logo"><img src="/brand/logo.svg" alt="Logo der Schule"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span><span class="s6"></span><span class="txt">Interaktive Lernpfade · Dein Fortschritt bleibt in deinem Browser</span></div></footer>
+<!-- Neue Lernpfade werden in der Liste unten im Quelltext (KURSE) eingetragen. -->
 <script>
 {
 /* Neue Lernpfade hier eintragen: Ordner = Klasse/Fach, Datei ohne .html */
@@ -64,9 +82,9 @@ const KURSE=[
 /* Vorschaubilder (Name in KURSE unter bild:) – Format 320 × 140 */
 const BILDER={
  energieEinf:`<svg viewBox="0 0 320 140" aria-hidden="true"><text x="160" y="78" text-anchor="middle" fill="#eef1f7" font-family="Lexend,sans-serif" font-size="24" font-weight="700">Energie</text>
-  <g stroke-width="3" fill="#182031"><circle cx="40" cy="34" r="16" stroke="#6aa5ff"/><circle cx="110" cy="20" r="12" stroke="#4fd27f"/><circle cx="210" cy="20" r="12" stroke="#c08cff"/><circle cx="280" cy="34" r="16" stroke="#ff7a5c"/>
+  <g stroke-width="3" fill="#2f393a"><circle cx="40" cy="34" r="16" stroke="#6aa5ff"/><circle cx="110" cy="20" r="12" stroke="#4fd27f"/><circle cx="210" cy="20" r="12" stroke="#c08cff"/><circle cx="280" cy="34" r="16" stroke="#ff7a5c"/>
   <circle cx="60" cy="112" r="14" stroke="#e0a86a"/><circle cx="160" cy="118" r="12" stroke="#4fd0e8"/><circle cx="260" cy="112" r="14" stroke="#ffd54a"/></g></svg>`,
- lageenergie:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect y="124" width="320" height="16" fill="#182031"/><line x1="60" y1="124" x2="60" y2="14" stroke="#7f8aa3" stroke-width="5"/><line x1="40" y1="16" x2="200" y2="16" stroke="#7f8aa3" stroke-width="5"/>
+ lageenergie:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect y="124" width="320" height="16" fill="#2f393a"/><line x1="60" y1="124" x2="60" y2="14" stroke="#7f8aa3" stroke-width="5"/><line x1="40" y1="16" x2="200" y2="16" stroke="#7f8aa3" stroke-width="5"/>
   <line x1="170" y1="16" x2="170" y2="44" stroke="#7f8aa3" stroke-width="2"/><rect x="152" y="44" width="36" height="26" rx="3" fill="#d9a066"/><line x1="215" y1="124" x2="215" y2="72" stroke="#eef1f7" stroke-width="2"/><text x="222" y="104" fill="#eef1f7" font-family="Lexend,sans-serif" font-size="16">h</text>
   <rect x="262" y="54" width="26" height="70" fill="#6aa5ff"/><text x="275" y="46" text-anchor="middle" fill="#6aa5ff" font-family="Lexend,sans-serif" font-size="15">E</text></svg>`,
  spiegelUeb:`<svg viewBox="0 0 320 140" aria-hidden="true"><circle cx="150" cy="58" r="44" fill="none" stroke="#3a4558" stroke-dasharray="4 5"/>
@@ -74,11 +92,11 @@ const BILDER={
   <circle cx="166" cy="99" r="16" fill="#ffcf4a" opacity=".2"/><circle cx="166" cy="99" r="6" fill="#ffcf4a"/>
   <line x1="150" y1="58" x2="150" y2="132" stroke="#58c4df" stroke-width="5" stroke-linecap="round"/><line x1="150" y1="58" x2="262" y2="122" stroke="#58c4df" stroke-width="5" stroke-linecap="round"/>
   <text x="18" y="30" fill="#ff5c50" font-family="Lexend,sans-serif" font-size="22" font-weight="700">★★★</text></svg>`,
- spiegel:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect x="170" width="150" height="140" fill="#141c2a"/>
+ spiegel:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect x="170" width="150" height="140" fill="#2f393a"/>
   <circle cx="80" cy="62" r="26" fill="#ffcf4a" opacity=".18"/><rect x="72" y="72" width="16" height="44" fill="#f4ead8"/><path d="M80 48 C88 58 87 66 80 68 C73 66 72 58 80 48Z" fill="#ffb21a"/>
   <g opacity=".4"><rect x="252" y="72" width="16" height="44" fill="#f4ead8"/><path d="M260 48 C268 58 267 66 260 68 C253 66 252 58 260 48Z" fill="#ffb21a"/></g>
   <path d="M80 60 L170 82 L40 108" fill="none" stroke="#ff5c50" stroke-width="2.5"/><path d="M170 82 L260 60" stroke="#ff8a80" stroke-width="1.6" stroke-dasharray="6 5"/>
-  <path d="M25 108 Q40 98 55 108 Q40 118 25 108Z" fill="#eef1f7"/><circle cx="44" cy="108" r="4" fill="#0e131d"/>
+  <path d="M25 108 Q40 98 55 108 Q40 118 25 108Z" fill="#eef1f7"/><circle cx="44" cy="108" r="4" fill="#2f393a"/>
   <line x1="170" y1="8" x2="170" y2="132" stroke="#58c4df" stroke-width="5" stroke-linecap="round"/></svg>`,
  brechExp:`<svg viewBox="0 0 320 140" aria-hidden="true"><circle cx="190" cy="70" r="62" fill="#1b2130" stroke="#3a4558"/>
   <path d="M190 8 A62 62 0 0 1 190 132Z" fill="#1b3140" stroke="#58c4df" stroke-width="1.5"/><line x1="128" y1="70" x2="252" y2="70" stroke="#a9b2c4" stroke-dasharray="4 4"/>
@@ -89,7 +107,7 @@ const BILDER={
   <line x1="110" y1="70" x2="60" y2="140"/><line x1="160" y1="70" x2="110" y2="140"/><line x1="210" y1="70" x2="160" y2="140"/><line x1="260" y1="70" x2="210" y2="140"/></g>
   <line x1="160" y1="8" x2="160" y2="132" stroke="#a9b2c4" stroke-dasharray="4 4"/><line x1="105" y1="15" x2="160" y2="70" stroke="#ff5c50" stroke-width="3"/><line x1="160" y1="70" x2="192" y2="132" stroke="#ff5c50" stroke-width="3"/></svg>`,
  brechUeb:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect y="50" width="320" height="90" fill="#162a44"/><line x1="0" y1="50" x2="320" y2="50" stroke="#64a6ff" stroke-width="2"/>
-  <path d="M40 20 Q55 8 70 20 Q55 32 40 20Z" fill="#eef1f7"/><circle cx="59" cy="20" r="4" fill="#0e131d"/>
+  <path d="M40 20 Q55 8 70 20 Q55 32 40 20Z" fill="#eef1f7"/><circle cx="59" cy="20" r="4" fill="#2f393a"/>
   <line x1="62" y1="22" x2="180" y2="50" stroke="#ff5c50" stroke-width="2.4"/><line x1="180" y1="50" x2="226" y2="112" stroke="#ff5c50" stroke-width="2.4"/><line x1="180" y1="50" x2="236" y2="76" stroke="#ff8a80" stroke-dasharray="5 4"/>
   <g opacity=".45"><path d="M222 78 Q238 66 256 78 Q238 90 222 78Z" fill="#f2a33a"/></g><path d="M212 112 Q228 100 246 112 Q228 124 212 112Z" fill="#f2a33a"/><path d="M244 112 L256 103 L256 121Z" fill="#f2a33a"/></svg>`,
  energie:`<svg viewBox="0 0 320 140" aria-hidden="true"><line x1="60" y1="14" x2="160" y2="14" stroke="#7f8aa3" stroke-width="4"/>

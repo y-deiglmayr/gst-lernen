@@ -1,0 +1,23 @@
+/* Schul-Branding GST – gemeinsam für alle Lernpfade.
+   Farben aus der PowerPoint-Vorlage: Schiefer #3E4B4C, #5F6F74, Graugrün #76989D, #ACBDC3, #C9D2D3, #E4E7E9, Akzentgelb #FCBE00.
+   Schrift: Source Sans 3 (freie Schwesterschrift von Myriad Pro) für Überschriften. Fachliche Farben der Lernpfade bleiben erhalten. */
+:root{--gst-slate:#3E4B4C;--gst-slate2:#5F6F74;--gst-green:#76989D;--gst-blue:#ACBDC3;--gst-grey:#C9D2D3;--gst-light:#E4E7E9;--gst-yellow:#FCBE00;--lab:#3E4B4C}
+h1,h2,h3,h4,.phases b,nav a{font-family:"Source Sans 3",Lexend,system-ui,sans-serif}
+h1{font-weight:700;letter-spacing:-.01em}
+h2,h3{font-weight:700}
+/* Kopfbereich: Schiefer mit Pixel-Mosaik und Farbleiste wie in der Vorlage */
+.hero{background:var(--gst-slate) url(/brand/mosaik-links.svg) no-repeat left top/auto 54px;border-bottom:8px solid;
+ border-image:linear-gradient(90deg,#323d3e 0 26%,var(--gst-slate2) 26% 30%,var(--gst-green) 30% 34%,var(--gst-blue) 34% 38%,var(--gst-grey) 38% 42%,var(--gst-light) 42%) 1}
+.hero h1::before{content:"";display:inline-block;width:.32em;height:.32em;background:var(--gst-yellow);margin-right:.18em;vertical-align:baseline}
+.phases a{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18)}
+.phases a:hover,.phases a:focus-visible{border-color:var(--gst-yellow)}
+.qrbtn:hover,.qrbtn:focus-visible{outline-color:var(--gst-yellow)}
+/* Logo vor dem Link zur Übersicht */
+nav a[href="/"]{display:inline-flex;align-items:center;gap:8px}
+nav a[href="/"]::before{content:"";width:30px;height:25px;background:url(/brand/logo.svg) no-repeat center/contain;border-radius:2px;flex:none}
+footer{border-top:1px solid var(--line)}
+footer .wrap::before{content:"";display:block;width:40px;height:33px;margin-bottom:10px;background:url(/brand/logo.svg) no-repeat left center/contain}
+@media print{.hero{background:none;color:#000;border:0}}
+.hero{padding-top:max(70px,clamp(28px,4vw,60px))}
+/* fest eingebaute Dunkelblau-Flächen in den Kopf-Grafiken an das Schiefergrau angleichen */
+.hero svg [fill="#0e131d"],.hero svg [fill="#182031"],.hero svg [fill="#141c2a"]{fill:#2f393a}
