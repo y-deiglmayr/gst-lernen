@@ -23,6 +23,11 @@ Physik11/
   kraeftezerlegung.html     3 · Kräftezerlegung (grafisch und rechnerisch)
   schiefe-ebene.html        4 · Schiefe Ebene (Hangabtriebs- und Normalkraft)
   newton-reibung.html       5 · Newtonsche Gesetze und Reibung
+  impuls-grundlagen.html    Impuls 1 · Der Impuls – eine neue Größe (p = m · v, Einheit, Vektor, Alltag)
+  stoesse-impulserhaltung.html  Impuls 2 · Stöße und Impulserhaltung (Stoß-Labor, Sonderfälle, Wagen-Versuche)
+  rueckstoss.html           Impuls 3 · Das Rückstoßprinzip
+  kraftstoss.html           Impuls 4 · Kraftstoß und Newtons Axiome (Δp = F · Δt)
+  elastischer-stoss.html    Impuls 5 · Stöße quantitativ (IES + EES, Energiebilanz)
 ```
 
 Jede Klasse bzw. jedes Fach bekommt einen eigenen Ordner. Die Adresse einer Seite ist der Pfad ohne `.html`,
@@ -74,3 +79,6 @@ Neue Lernpfade binden nach `brand.css` ein:
 
 Formeln müssen nicht von Hand markiert werden: `python3 tools/formeln_markieren.py Physik9/neu.html` erkennt Formeln
 (auch in Rückmeldungen im Skript) und markiert sie. Der Doppelpunkt zählt nur mit Leerzeichen (` : `) als Geteilt-Zeichen.
+
+Die Impuls-Lernpfade heben die Heftaufschriebe als eigene Kästen „✎ HEFTAUFSCHRIEB“ hervor (Navigation: „Heft“).
+Formeln: `kg·m/s` und `N·s` gelten als Einheiten, `Δp`, `Δt` usw. als ein Formelzeichen, Minus am Anfang einer Klammer ist erlaubt, z. B. `2,0 kg · (−6,0 m/s)`.

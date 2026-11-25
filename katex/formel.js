@@ -7,9 +7,9 @@ const GREEK={'α':'\\alpha','β':'\\beta','γ':'\\gamma','δ':'\\delta','ε':'\\
 const OPS={'=':'=','≈':'\\approx','·':'\\cdot','×':'\\cdot','+':'+','−':'-','-':'-',':':':','/':'/','→':'\\rightarrow','~':'\\sim','<':'<','>':'>','≤':'\\le','≥':'\\ge'};
 const FR={'½':'\\tfrac{1}{2}','¼':'\\tfrac{1}{4}','¾':'\\tfrac{3}{4}'};
 const REL=new Set(['=','≈','→','~','<','>','≤','≥']),ADD=new Set(['+','−','-']),MUL=new Set(['·','×']),DIV=new Set([':','/']);
-const UNIT=/^(kg\/m³|m\/s²|km\/h|m³|cm³|m²|cm²|N\/kg|N\/m|km\/s|m\/s|kWh|MWh|kJ|MJ|kN|kg|cm|mm|km|J|N|W|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß²])/;
+const UNIT=/^(kg·m\/s|N·s|kg\/m³|m\/s²|km\/h|m³|cm³|m²|cm²|N\/kg|N\/m|km\/s|m\/s|kWh|MWh|kJ|MJ|kN|kg|cm|mm|km|J|N|W|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß²])/;
 const NUM=/^(\d{1,3}(?:[\u00a0 ]\d{3})+|\d+)(?:,\d+)?(?:<sup>[−-]?\d+<\/sup>)?/;
-const VAR=/^([A-Za-zα-ωΔ])(\u20d7)?(?:<sub>([^<]{1,10})<\/sub>|_([A-Za-z0-9]{1,6})(?![A-Za-z0-9]))?(?:<sup>(\d)<\/sup>)?(?![A-Za-zäöüÄÖÜß])/;
+const VAR=/^(Δ[A-Za-zα-ω]|[A-Za-zα-ωΔ])(\u20d7)?(?:<sub>([^<]{1,10})<\/sub>|_([A-Za-z0-9]{1,6})(?![A-Za-z0-9]))?(?:<sup>(\d)<\/sup>)?(?![A-Za-zäöüÄÖÜß])/;
 /* Winkelfunktionen und Wurzel (Physik 11) */
 const FN=/^(arcsin|arccos|arctan|sin|cos|tan)(?![A-Za-zäöüÄÖÜß])/;
 function decode(s){return s.replace(/&nbsp;/g,'\u00a0').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&')}
@@ -33,11 +33,12 @@ function tokenize(html){const t=[];let s=decode(html),bold=false,m;
 function texNum(tok){if(tok.v in FR)return FR[tok.v];let v=tok.v.replace(',','{,}').replace(/[\u00a0 ](?=\d{3})/g,'\\,').replace(/<sup>([−-]?)(\d+)<\/sup>/,(a,mi,d)=>'^{'+(mi?'-':'')+d+'}');
  let u='';if(tok.u){u=tok.u==='°'?'^\\circ':tok.u==='%'?'\\,\\%':'\\,\\mathrm{'+tok.u.replace('·','\\cdot ').replace('²','^2').replace('³','^3')+'}'}
  return v+u}
-function texVar(tok){let v=GREEK[tok.v]||tok.v;if(tok.vec)v='\\vec{'+v+'}';if(tok.sub)v+='_{\\mathrm{'+tok.sub+'}}';if(tok.sup)v+='^{'+tok.sup+'}';return v}
+function texVar(tok){let v=tok.v.length>1&&tok.v[0]==='Δ'?'\\Delta '+(GREEK[tok.v[1]]||tok.v[1]):(GREEK[tok.v]||tok.v);if(tok.vec)v='\\vec{'+v+'}';if(tok.sub)v+='_{\\mathrm{'+tok.sub+'}}';if(tok.sup)v+='^{'+tok.sup+'}';return v}
 function wrapB(tex,b){return b?'\\boldsymbol{'+tex+'}':tex}
 /* Parser mit Rangfolge: Relation < Strich < Punkt/Bruch */
 function parse(tokens,big){let i=0;const peek=()=>tokens[i];
  function atom(){const t=tokens[i];if(!t)return '';
+  if(t.k==='op'&&(t.v==='−'||t.v==='-')){i++;const a=atom();return '-'+(typeof a==='string'?a:'\\left('+a.tex+'\\right)')}
   if(t.k==='('){i++;const e=rel();if(peek()&&peek().k===')')i++;return {paren:true,tex:e,bold:t.bold}}
   if(t.k==='fn'){i++;const a=atom();return wrapB('\\'+t.v+(typeof a==='string'?' '+a:'\\left('+a.tex+'\\right)'),t.bold)}
   if(t.k==='sqrt'){i++;const a=atom();return wrapB('\\sqrt{'+(typeof a==='string'?a:a.tex)+'}',t.bold)}

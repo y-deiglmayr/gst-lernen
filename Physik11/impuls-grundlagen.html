@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impuls 1 · Der Impuls – eine neue Größe</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<script src="/brand/theme.js"></script>
+<style>
+/* Impuls 1 · Der Impuls – eine neue Größe – Lernpfad Physik TG11 (Impuls). Impulspfeile: Körper 1 blau, Körper 2 violett, Gesamtimpuls rot; Bewegungsenergie grün, thermische Energie rot */
+/* Kräfte – Grundlagen – Lernpfad Physik TG11. Kraftpfeile: F1 blau, F2 violett, Resultierende rot; schiefe Ebene: FG grün, FH rot, FN blau */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--grid:light-dark(#d4e2f2,#232c3b);
+--paper:light-dark(#fdfeff,#151a23);
+--acc:light-dark(#c2410c,#ff9a4d);--acc2:light-dark(#1d62c9,#64a6ff);
+--el:light-dark(#2563c9,#6aa5ff);--eb:light-dark(#1d8a4a,#4fd27f);--eth:light-dark(#d4381e,#ff7a5c);--esp:light-dark(#8a3fc4,#c08cff);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2815);--lab:#0e131d;--labink:#eef1f7}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700}
+h3{font-size:21px;font-weight:600;margin-top:1.6em}
+h4{font-size:17px;font-weight:600;margin:0 0 .3em}
+p{margin:0 0 .8em}
+sub{font-size:.72em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.alt{background:var(--panel)}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#fff;font-size:13px;margin-right:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.bar{width:140px;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .4s}
+.hero{background:var(--lab);color:var(--labink)}
+.hero p{color:#c6ccd8;max-width:64ch}
+.hero svg{width:100%;height:auto;display:block;margin:18px 0 8px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px}
+.phases a{display:block;padding:14px 16px;border-radius:12px;background:#182031;color:#eef1f7;text-decoration:none;border:1px solid #2a3448}
+.phases a:hover{border-color:#ff9a4d}
+.phases b{font-family:Lexend,system-ui,sans-serif;display:block;font-size:17px}
+.phases small{color:#a9b2c4;font-size:14px}
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+@media(min-width:901px){.stick{position:sticky;top:70px}}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;touch-action:manipulation;user-select:none}
+.caption{font-size:14px;color:var(--muted);margin:6px 4px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card.done{border-color:var(--ok)}
+.card .tag{font:600 13px Lexend,system-ui,sans-serif;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.card.done>.tag::after{content:"✓ gelöst";color:var(--ok)}
+.stars{color:var(--acc);letter-spacing:2px}
+.intro{max-width:72ch;color:var(--muted)}
+.merke{border:2px solid var(--acc);border-radius:14px;padding:16px 20px;margin:18px 0;background:var(--bg)}
+.merke h4{color:var(--acc)}
+.merke ul{margin:.3em 0;padding-left:1.2em}
+details.reveal{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0;background:var(--bg)}
+details.reveal summary{cursor:pointer;font:600 16px Lexend,system-ui,sans-serif;padding:4px 0}
+button{font:600 16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.alt button{background:var(--bg)}
+button:hover{border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+button.primary{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11141b)}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+input[type=text],select{font:16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--acc);min-height:36px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 18px;margin-top:8px}
+.ctrl label{font-weight:700;font-size:15px}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.toggles label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;min-height:44px;font-size:15px}
+.toggles input{width:18px;height:18px;accent-color:var(--acc)}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font-weight:400}
+.mc button.ok,.tf button.ok{background:var(--okbg);border-color:var(--ok)}
+.mc button.bad,.tf button.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1em;margin:8px 0 0;font-size:16px}
+.fb:empty{display:none}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb.hint{background:var(--hint);color:var(--ink);padding:8px 12px;border-radius:8px}
+input.ok,select.ok{border-color:var(--ok);background:var(--okbg)}
+input.bad,select.bad{border-color:var(--bad);background:var(--badbg)}
+.cloze{line-height:2.5;font-size:17px}
+.cloze select{min-height:38px;padding:2px 6px;margin:0 2px}
+.tf{display:grid;gap:4px}
+.tf .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tf .item .fb{grid-column:1/-1;margin:0}
+.tf .btns{display:flex;gap:6px}
+.numq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.numq input{width:110px;text-align:right}
+.numq .mcq{grid-column:1/-1}
+.unit{white-space:nowrap}
+.sol{background:var(--panel);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:16px}
+.sol p{margin:.3em 0}
+.calc{font-family:"Atkinson Hyperlegible",sans-serif;background:var(--bg);border-left:4px solid var(--acc);padding:6px 12px;margin:6px 0;border-radius:4px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.steps i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font:600 14px Lexend,system-ui,sans-serif}
+.steps i.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.steptext{min-height:7em}
+.heft{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;border:1px solid var(--line);border-radius:12px;padding:22px clamp(16px,3vw,34px)}
+.heft h3{margin-top:.8em;color:var(--acc)}
+.heft h3:first-child{margin-top:0}
+.heft .box{border:2px solid var(--ink);padding:8px 14px;border-radius:6px;background:var(--paper);display:inline-block}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.checks label{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:10px;min-height:44px;cursor:pointer;font-size:16px;background:var(--bg)}
+.checks label.ok{border-color:var(--ok);background:var(--okbg)}.checks label.bad{border-color:var(--bad);background:var(--badbg)}
+.checks input{width:18px;height:18px;accent-color:var(--acc)}
+.chain{display:grid;grid-template-columns:minmax(0,1.3fr) auto auto auto;gap:6px 10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+@media(max-width:640px){.chain{grid-template-columns:auto auto auto}.chain>span:first-child{grid-column:1/-1}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted);margin:6px 4px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.given{background:var(--panel);border-radius:10px;padding:8px 14px;font-size:15px;margin:8px 0}
+footer{font-size:14px;color:var(--muted)}
+/* svg */
+.gl{stroke:var(--grid);stroke-width:1}
+.thin{stroke:var(--ink);stroke-width:1.4;fill:none}
+.dashl{stroke:var(--muted);stroke-width:1.4;stroke-dasharray:6 5;fill:none}
+.tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
+.txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.txb{fill:var(--ink);font:600 15px Lexend,sans-serif}
+.fel{fill:var(--el)}.feb{fill:var(--eb)}.feth{fill:var(--eth)}.fesp{fill:var(--esp)}
+.tel{fill:var(--el);font:600 14px Lexend,sans-serif}.teb{fill:var(--eb);font:600 14px Lexend,sans-serif}.teth{fill:var(--eth);font:600 14px Lexend,sans-serif}
+.ges{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 4}
+.ball{fill:light-dark(#f2b632,#f2b632);stroke:var(--ink);stroke-width:1.5}
+.ghost{opacity:.35}
+.ground{fill:light-dark(#e9edf3,#202736)}
+.track{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.hit{fill:transparent;cursor:pointer}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+@media(max-width:600px){body{font-size:16px}.prog .bar{width:80px}nav a{padding:6px}}
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+.qrbtn:hover{outline:3px solid #ff5c50}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop{background:rgba(8,10,16,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
+@media(max-width:640px){.qrbtn{width:96px}.qrbtn svg{width:80px;height:80px}}
+@media print{nav,.qrbtn{display:none}}
+:root{--ech:light-dark(#8a5a2b,#e0a86a);--eelk:light-dark(#0b7f96,#4fd0e8);--estr:light-dark(#a37a00,#ffd54a)}
+.fech{fill:var(--ech)}.feelk{fill:var(--eelk)}.festr{fill:var(--estr)}
+.part{border-left:4px solid var(--line);padding:4px 0 4px 14px;margin:16px 0}
+.part.done{border-color:var(--ok)}
+.part.done>h4::after{content:"  ✓";color:var(--ok)}
+.tip:empty{display:none}
+.lvl{display:inline-block;font:600 14px Lexend,system-ui,sans-serif;padding:4px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--line);margin-bottom:10px}
+.readout{font:600 18px Lexend,system-ui,sans-serif;color:var(--acc)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.tabs button{display:flex;align-items:center;gap:8px;font-size:15px;padding:8px 12px}
+.tabs button i{width:14px;height:14px;border-radius:50%;display:inline-block;flex:none}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tabs button.solved::after{content:"✓";color:var(--ok);font-weight:700}
+.tabs button[aria-pressed=true].solved::after{color:var(--bg)}
+.exp{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+.exp h4{color:var(--acc)}
+.exp ol,.exp ul{margin:.3em 0 .6em;padding-left:1.3em}
+.safe{color:var(--bad);font-weight:600}
+.badge{display:inline-block;font:600 13px Lexend,sans-serif;padding:2px 10px;border-radius:20px;color:#fff;margin-bottom:6px}
+table.mess{border-collapse:collapse;font-size:15px;width:100%}
+table.mess th,table.mess td{border:1px solid var(--line);padding:5px 8px;text-align:center}
+table.mess th{background:var(--panel)}
+.scroll{overflow-x:auto}
+.formula{font:600 clamp(22px,3vw,30px) Lexend,sans-serif;margin:.3em 0}
+.fig.narrow{max-width:760px}
+input[inputmode=decimal]{width:110px;text-align:right}
+textarea{width:100%;font:16px "Atkinson Hyperlegible",sans-serif;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.why .sol{border-left:4px solid var(--ok)}
+.why label.cbl{display:flex;gap:8px;align-items:center;font-size:15px;margin:6px 0;cursor:pointer}
+.mc button:disabled{opacity:.55;cursor:not-allowed}
+.mc button.bad:disabled{opacity:1}
+details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--acc)}
+.steprow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+#protokoll{display:none}
+@media print{body.printprot>*:not(#protokoll){display:none!important}#protokoll{display:block!important;padding:20px;color:#000;background:#fff}#protokoll h2{margin:0 0 10px}#protokoll .pr{border:1px solid #999;padding:8px 12px;margin:8px 0;min-height:70px;white-space:pre-wrap}}
+.massbtns{display:flex;gap:8px;flex-wrap:wrap}
+.two>*{min-width:0}svg.board{overflow:hidden}.card select{max-width:100%}
+:root{--f1:light-dark(#1d62c9,#6aa5ff);--f2:light-dark(#8a3fc4,#c08cff);--f3:light-dark(#0b7f96,#4fd0e8);--fr:light-dark(#d4381e,#ff7a5c);
+--fg:light-dark(#1d8a4a,#4fd27f);--fh:light-dark(#d4381e,#ff7a5c);--fnn:light-dark(#1d62c9,#6aa5ff);--grid2:light-dark(#e8eff8,#1c2330)}
+.gl2{stroke:var(--grid2);stroke-width:1}
+svg.board{display:block;width:100%;height:auto;user-select:none;-webkit-user-select:none;border-radius:8px}
+svg.board:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.hdl{fill:color-mix(in srgb,var(--paper) 55%,transparent);stroke-width:3;cursor:grab}
+.hdl.act{stroke-dasharray:5 3;stroke-width:3.5}
+.flab{font:italic 700 20px "Atkinson Hyperlegible",serif}
+.rayl{stroke:var(--muted);stroke-width:1.6;stroke-dasharray:2 5;fill:none}
+.ruler{font-size:15px;color:var(--muted);margin:6px 4px 0}
+.ruler b{color:var(--ink)}
+.afb{display:inline-block;font:600 12px Lexend,sans-serif;padding:1px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted)}
+.vt .fig{max-width:720px;position:relative}.vt-max{position:absolute;top:6px;right:6px;z-index:2;padding:4px 10px;font-size:14px;min-height:0}html.noscroll,html.noscroll body{overflow:hidden}.vt.vtmax{position:fixed;inset:0;z-index:1000;margin:0;border-radius:0;overflow:auto;overscroll-behavior:contain;background:var(--bg,var(--paper));padding:10px 10px 24px}.vt.vtmax .fig{max-width:none!important;margin:0}.vt.vtmax svg.board{max-height:calc(100dvh - 150px);margin:0 auto}
+.fig svg.board{margin:0 auto}
+.vt .numq input{width:110px}
+.vt-ask{border-top:1px dashed var(--line);margin-top:10px;padding-top:6px}
+.lvlrow{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:var(--muted);margin:4px 0 14px}
+.trig{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0}
+.trig div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;text-align:center}
+.stepbox{min-height:5.5em}
+table.mess td.l{text-align:left}
+.pill{display:inline-block;padding:1px 9px;border-radius:20px;font:600 14px Lexend,sans-serif;color:#fff}
+.multi label{max-width:100%}
+.ex{display:none}
+.sim-read{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.sim-read div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:15px}
+.sim-read b{display:block;font:600 19px Lexend,sans-serif}
+
+a.lnk{text-decoration:none;display:inline-flex;align-items:center;font:600 16px Lexend,sans-serif;padding:8px 16px;border-radius:10px;border:1px solid var(--line);color:var(--ink)}
+a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11141b)}
+
+/* ===== Impuls-Lernpfade: Ergänzungen ===== */
+:root{--acc:var(--gst-acc,#3f6267);--acc2:var(--gst-acc,#3f6267);--pg:light-dark(#b8322a,#ff8a7a);--ekin:light-dark(#1d8a4a,#4fd27f);--eth:light-dark(#d4381e,#ff7a5c)}
+/* Heftaufschrieb deutlich hervorheben */
+.heftbox{border:2px solid var(--gst-acc);border-radius:14px;margin:22px 0;background:var(--paper);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.hb-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;background:var(--gst-acc);color:var(--gst-on-acc);padding:10px 18px}
+.hb-head b{font:700 19px "Source Sans 3",Lexend,sans-serif;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.hb-head b::before{content:"";width:14px;height:14px;background:var(--gst-mark);flex:none}
+.hb-head small{font-size:14px;opacity:.92}
+.heftbox .heft{border:0;border-radius:0}
+.hb-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:10px 18px;border-top:1px dashed var(--line);background:var(--panel);font-size:15px}
+.heftbox.done{border-color:var(--ok)}
+.heftbox.done .hb-done{background:var(--okbg);border-color:var(--ok)}
+.insheft{display:inline-flex;align-items:center;gap:6px;font:600 13px "Source Sans 3",Lexend,sans-serif;padding:2px 10px;border-radius:20px;border:1px solid var(--gst-acc);color:var(--gst-acc);vertical-align:middle;margin-left:6px;white-space:nowrap}
+.insheft::before{content:"";width:8px;height:8px;background:var(--gst-mark)}
+nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
+.heft .fig2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}
+.heft .fig2 svg{width:100%;height:auto;display:block;background:var(--paper);border:1px solid var(--line);border-radius:8px}
+.heft table{border-collapse:collapse;margin:6px 0;font-size:16px}.heft td,.heft th{border:1px solid var(--line);padding:4px 10px;background:var(--paper)}
+.stepper .stepbox{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+.stepper .stepbox p{margin:.3em 0}
+.lab-tbl{border-collapse:collapse;width:100%;font-size:15px}.lab-tbl th,.lab-tbl td{border:1px solid var(--line);padding:5px 8px;text-align:center}.lab-tbl th{background:var(--panel)}
+.lab-tbl td.sum{font-weight:700}
+.seg{display:inline-flex;flex-wrap:wrap;gap:6px}
+.tc1{color:var(--f1)}.tc2{color:var(--f2)}.tcg{color:var(--pg)}
+
+
+</style>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+</head>
+<body>
+<nav aria-label="Phasen"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#einstieg"><span>1</span>Einstieg</a>
+<a href="#entdecken"><span>2</span>Entdecken</a>
+<a href="#festhalten"><span>3</span>Festhalten</a>
+<a href="#ueben"><span>4</span>Üben</a>
+<a href="#heft" class="heftlink" title="Zum Heftaufschrieb"><span>✎</span>Heft</a>
+<div class="prog"><span id="progtxt">0 / 0 gelöst</span><div class="bar"><i id="progbar"></i></div></div>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Der Impuls – eine neue Größe</h1>
+<p>Ein schwerer Medizinball und ein leichter Volleyball: Welcher hat mehr „Schwung“? In diesem Lernpfad lernst du den <b>Impuls</b> kennen. Er verbindet Masse und Geschwindigkeit zu einer neuen physikalischen Größe und ist die Grundlage für alle Stöße, den Rückstoß und den Kraftstoß.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik11/impuls-grundlagen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m1 0h3m1 0h2m2 0h1m1 0h2m1 0h1m2 0h2m1 0h2m1 0h7m-37 1h1m5 0h1m3 0h3m1 0h5m1 0h3m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m2 0h4m1 0h1m1 0h2m1 0h5m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m1 0h2m3 0h1m1 0h3m2 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h6m4 0h1m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h8m2 0h2m1 0h2m1 0h2m4 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m1 0h1m3 0h1m1 0h3m1 0h1m1 0h1m3 0h3m-29 1h1m3 0h1m1 0h3m1 0h1m2 0h3m2 0h2m2 0h1m1 0h1m3 0h6m2 0h1m-36 1h1m2 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h2m3 0h1m1 0h4m2 0h1m1 0h2m-34 1h2m1 0h2m1 0h1m1 0h3m3 0h1m3 0h2m1 0h1m1 0h3m2 0h2m2 0h1m-35 1h1m3 0h1m2 0h1m1 0h1m1 0h1m5 0h2m2 0h1m2 0h1m4 0h1m1 0h2m1 0h2m-34 1h1m1 0h7m2 0h1m1 0h1m1 0h7m4 0h4m2 0h3m-37 1h2m1 0h2m5 0h1m2 0h6m4 0h1m2 0h3m3 0h2m-34 1h2m2 0h1m1 0h2m1 0h1m1 0h2m2 0h2m1 0h1m1 0h10m1 0h4m-35 1h2m1 0h1m1 0h1m1 0h6m1 0h3m2 0h1m1 0h1m1 0h2m2 0h3m1 0h2m1 0h1m1 0h1m-37 1h2m1 0h2m1 0h5m3 0h1m1 0h1m3 0h1m3 0h1m4 0h3m1 0h2m1 0h1m-36 1h1m2 0h1m2 0h4m2 0h2m2 0h3m1 0h3m1 0h5m2 0h1m1 0h2m-35 1h6m5 0h1m2 0h1m2 0h2m3 0h5m3 0h1m-32 1h2m2 0h2m3 0h1m1 0h1m2 0h4m1 0h6m1 0h2m4 0h4m-36 1h3m1 0h6m1 0h4m1 0h2m2 0h2m2 0h1m2 0h5m1 0h2m-34 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h2m2 0h1m-35 1h3m1 0h2m3 0h2m1 0h1m1 0h1m1 0h1m5 0h1m2 0h2m3 0h4m-35 1h3m1 0h2m1 0h3m1 0h1m1 0h1m3 0h3m2 0h3m2 0h2m2 0h2m1 0h1m-35 1h2m1 0h1m1 0h2m1 0h4m2 0h2m2 0h2m2 0h3m4 0h3m1 0h2m-35 1h3m2 0h1m1 0h6m3 0h1m2 0h3m1 0h1m1 0h3m4 0h1m-30 1h1m2 0h1m9 0h3m1 0h1m2 0h3m1 0h1m1 0h1m1 0h2m1 0h1m-33 1h1m1 0h1m3 0h2m1 0h1m1 0h2m2 0h1m3 0h2m1 0h1m1 0h1m1 0h9m-37 1h2m2 0h1m1 0h1m1 0h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m1 0h1m3 0h7m1 0h1m-29 1h3m1 0h1m1 0h2m1 0h2m3 0h2m4 0h1m3 0h1m2 0h1m-36 1h7m1 0h2m1 0h1m3 0h2m1 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m2 0h1m1 0h2m1 0h1m4 0h3m1 0h2m3 0h1m3 0h4m-36 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m3 0h1m2 0h2m3 0h7m-35 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m4 0h2m2 0h2m1 0h2m1 0h4m4 0h1m-37 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h3m1 0h3m3 0h2m1 0h1m2 0h2m3 0h1m-35 1h1m5 0h1m2 0h1m1 0h3m1 0h7m1 0h1m6 0h1m1 0h4m-36 1h7m1 0h2m1 0h2m1 0h1m1 0h2m2 0h3m1 0h1m1 0h2m2 0h2m2 0h3"/></svg>
+QR groß zeigen</button></div>
+<svg viewBox="0 0 900 150" role="img" aria-label="Kleine schnelle Kugel und große langsame Kugel mit gleich langen Impulspfeilen"><line x1="20" y1="132" x2="880" y2="132" stroke="#c9d2d3" stroke-width="2"/><circle cx="90" cy="118" r="14" fill="#c9d2d3"/><line x1="110" y1="118" x2="300" y2="118" stroke="#a3c3c8" stroke-width="3"/><path d="M312 118 l-14 -7 v14z" fill="#a3c3c8"/><text x="200" y="108" fill="#c9d2d3" font-family="Source Sans 3,sans-serif" font-size="15">v groß</text><line x1="90" y1="80" x2="240" y2="80" stroke="#6aa5ff" stroke-width="6"/><path d="M256 80 l-18 -9 v18z" fill="#6aa5ff"/><text x="150" y="68" fill="#6aa5ff" font-family="Source Sans 3,sans-serif" font-size="18" font-weight="700">p</text><circle cx="440" cy="102" r="30" fill="#76989D"/><line x1="476" y1="118" x2="520" y2="118" stroke="#a3c3c8" stroke-width="3"/><path d="M532 118 l-14 -7 v14z" fill="#a3c3c8"/><text x="476" y="108" fill="#c9d2d3" font-family="Source Sans 3,sans-serif" font-size="15">v klein</text><line x1="440" y1="52" x2="590" y2="52" stroke="#6aa5ff" stroke-width="6"/><path d="M606 52 l-18 -9 v18z" fill="#6aa5ff"/><text x="500" y="40" fill="#6aa5ff" font-family="Source Sans 3,sans-serif" font-size="18" font-weight="700">p</text><text x="650" y="80" fill="#f1f4f4" font-family="Source Sans 3,sans-serif" font-size="32" font-weight="700">p = m · v</text><text x="650" y="110" fill="#c9d2d3" font-family="Source Sans 3,sans-serif" font-size="16">[p] = 1 kg · m/s</text></svg>
+<div class="phases">
+<a href="#einstieg"><b>1 · Einstieg</b><small>Kugel trifft Klötzchen</small></a>
+<a href="#entdecken"><b>2 · Entdecken</b><small>Schwung, Impuls-Waage, Einheit, Richtung, Alltag</small></a>
+<a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ Heftaufschrieb 3.0</small></a>
+<a href="#ueben"><b>4 · Üben</b><small>10 Übungen von ★ bis ★★★</small></a>
+</div>
+</div></header>
+
+<!-- ============ 1 EINSTIEG ============ -->
+<section class="band" id="einstieg"><div class="wrap">
+<h2>1 · Einstieg: Kugel trifft Klötzchen</h2>
+<p class="intro">Im Unterricht lassen wir Kugeln eine Rampe hinunterrollen. Unten stoßen sie gegen ein Holzklötzchen, das ein Stück weit rutscht. Je weiter es rutscht, desto größer ist die <b>Wirkung</b> des Aufpralls. Probiere es hier aus.</p>
+<div class="two"><div class="stick">
+<div class="fig"><svg id="ramp" viewBox="0 0 640 250" role="img" aria-label="Kugel rollt eine Rampe hinunter und stößt ein Klötzchen an"></svg></div>
+<div class="ctrl"><div><label>Kugel</label><div class="seg" id="rBall"><button aria-pressed="true" data-m="0.02">leicht (20 g)</button><button aria-pressed="false" data-m="0.06">schwer (60 g)</button></div></div>
+<div><label for="rH">Starthöhe: <span id="rHv"></span> cm</label><input type="range" id="rH" min="5" max="60" step="1" value="10"></div></div>
+<div class="row"><button class="primary" id="rGo">▶ Kugel loslassen</button><button id="rRe">Zurück</button></div>
+<div class="sim-read" id="rRead"></div>
+<p class="caption">Modell: Die Kugel rollt ohne Verluste, die Drehung der Kugel wird vernachlässigt <f-m>(v = √(2 · g · h))</f-m>. Der Stoß ist elastisch, das Klötzchen hat 100 g und rutscht mit der Gleitreibungszahl 0,4.</p>
+</div><div>
+<div class="card" data-task="e1"><div class="tag">Auftrag 1 · Gleiche Wirkung?</div>
+<p>a) Lass die <b>schwere</b> Kugel aus <b>10 cm</b> Höhe los. Notiere im Heft, wie weit das Klötzchen rutscht.</p>
+<p>b) Kann man mit der <b>leichten</b> Kugel das gleiche Ergebnis erreichen? Stelle die Starthöhe so ein, dass das Klötzchen genauso weit rutscht (± 1 cm), und lass die Kugel rollen.</p>
+<div class="row"><button class="primary" id="e1b">Prüfen</button></div><p class="fb" id="e1Fb"></p></div>
+<div class="card"><div class="tag">Auftrag 2 · Was beobachtest du?</div>
+<div class="part" data-task="e2"><div class="mc" data-correct="c" data-task="e2" data-tipp="Vergleiche: Welche Größen hast du verändert, und was ist mit der Rutschweite passiert?"><button data-k="a" data-fb="Die Masse allein reicht nicht: Die leichte Kugel hat es auch geschafft.">Nur die Masse der Kugel bestimmt die Wirkung.</button><button data-k="b" data-fb="Bei gleicher Starthöhe hat die schwere Kugel aber viel mehr bewirkt.">Nur die Geschwindigkeit der Kugel bestimmt die Wirkung.</button><button data-k="c" data-fb="Richtig! Die Wirkung beim Aufprall hängt von <b>Masse und Geschwindigkeit</b> ab. Eine leichtere Kugel braucht eine größere Geschwindigkeit, um das Gleiche zu bewirken.">Die Wirkung hängt von Masse und Geschwindigkeit ab: Eine leichte Kugel muss schneller sein.</button><p class="fb"></p></div></div>
+</div>
+<div class="card"><div class="tag">Auftrag 3 · Schräg getroffen</div>
+<div class="part" data-task="e3"><h4>Die Kugel trifft das Klötzchen nicht frontal, sondern unter einem spitzen Winkel. Was passiert?</h4><div class="mc" data-correct="b" data-task="e3" data-tipp="Stell dir vor, die Kugel streift das Klötzchen nur seitlich. Wie viel von ihrer Bewegung zeigt dann auf das Klötzchen?"><button data-k="a" data-fb="Die Kugel ist zwar gleich schnell, aber ihre Bewegung zeigt nicht mehr voll auf das Klötzchen.">Das Klötzchen rutscht genauso weit, die Kugel ist ja gleich schnell.</button><button data-k="b" data-fb="Richtig! Bei schrägem Treffer ist die Wirkung geringer. Es kommt also auch auf die <b>Richtung</b> der Bewegung an.">Die Wirkung auf das Klötzchen ist geringer.</button><button data-k="c" data-fb="Nein: Nur der Anteil der Bewegung, der auf das Klötzchen zeigt, schiebt es an.">Die Wirkung ist größer, weil die Kugel mehr Fläche trifft.</button><p class="fb"></p></div></div>
+</div>
+</div></div>
+</div></section>
+
+<!-- ============ 2 ENTDECKEN ============ -->
+<section class="band alt" id="entdecken"><div class="wrap">
+<h2>2 · Entdecken</h2>
+<h3>A · „Schwung“ aus der Sporthalle</h3>
+<p class="intro">Ihr kennt das aus dem Sportunterricht: Einen Medizinball zu fangen ist etwas ganz anderes als einen Volleyball. Umgangssprachlich sagt man, ein Körper hat viel „Schwung“.</p>
+<div class="card"><div class="tag">Auftrag 4 · Richtig oder falsch?</div>
+<div class="tf part" data-task="a1"><div class="item" data-v="1"><span>Medizinball und Volleyball fliegen gleich schnell. Der Medizinball hat mehr Schwung, weil er die größere Masse hat.</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Bei gleicher Geschwindigkeit hat der Körper mit der größeren Masse mehr Schwung.</span></div><div class="item" data-v="1"><span>Zwei gleiche Medizinbälle: Der schnellere hat mehr Schwung.</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Bei gleicher Masse hat der schnellere Körper mehr Schwung.</span></div><div class="item" data-v="0"><span>Ein ruhender Medizinball hat wegen seiner großen Masse viel Schwung.</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Ohne Geschwindigkeit hat ein Körper keinen Schwung, egal wie schwer er ist.</span></div></div>
+</div>
+<div class="merke"><h4>Der Impuls <span class="insheft">kommt ins Heft</span></h4><p>Die Wirkung eines Körpers beim Aufprall hängt von seiner <b>Masse</b> und seiner <b>Geschwindigkeit</b> (Betrag und Richtung) ab. Deshalb definiert man den <b>Impuls</b> <f-m>p</f-m> als Produkt aus Masse und Geschwindigkeit:</p><p class="formula"><f-m>p = m · v</f-m></p><p>Umgangssprachlich ist der Impuls der „Schwung“ eines Körpers.</p></div>
+
+<h3>B · Die Impuls-Waage</h3>
+<p class="intro">Hier vergleichst du die Impulse von zwei Körpern. Stelle Masse und Geschwindigkeit ein. Ein negatives Vorzeichen bedeutet: Der Körper bewegt sich nach <b>links</b>. Die Pfeile zeigen den Impuls (Maßstab für beide gleich).</p>
+<div class="two"><div class="stick">
+<div class="fig"><svg id="iw" viewBox="0 0 640 250" role="img" aria-label="Zwei Körper mit Impulspfeilen"></svg></div>
+<div class="ctrl"><div><label for="m1">Masse Körper 1: <span id="m1v"></span> kg</label><input type="range" id="m1" min="0.1" max="5" step="0.1" value="3"></div>
+<div><label for="v1">Geschwindigkeit Körper 1: <span id="v1v"></span> m/s</label><input type="range" id="v1" min="-15" max="15" step="0.5" value="2"></div>
+<div><label for="m2">Masse Körper 2: <span id="m2v"></span> kg</label><input type="range" id="m2" min="0.1" max="5" step="0.1" value="0.5"></div>
+<div><label for="v2">Geschwindigkeit Körper 2: <span id="v2v"></span> m/s</label><input type="range" id="v2" min="-15" max="15" step="0.5" value="4"></div></div>
+<div class="sim-read" id="iwRead"></div>
+</div><div>
+<div class="card" data-task="a2"><div class="tag">Auftrag 5 · Gleicher Impuls</div><p>Körper 1 ist ein Medizinball: <b>3 kg</b> mit <b>2 m/s</b> nach rechts. Körper 2 ist ein Volleyball mit <b>0,5 kg</b>. Stelle die Geschwindigkeit des Volleyballs so ein, dass beide den <b>gleichen Impuls</b> haben.</p><div class="row"><button class="primary" id="a2b">Prüfen</button></div><p class="fb" id="a2Fb"></p></div>
+<div class="card"><div class="tag">Auftrag 6 · Gegeneinander</div><p>Stelle jetzt für den Volleyball die Geschwindigkeit <b>−12 m/s</b> ein.</p>
+<div class="part" data-task="a3"><div class="mc" data-correct="b" data-task="a3" data-tipp="Schau dir die Pfeile an: Sind sie gleich?"><button data-k="a" data-fb="Die Beträge sind gleich, aber die Pfeile zeigen in verschiedene Richtungen.">Beide Bälle haben denselben Impuls, denn <f-m>3 · 2 = 0,5 · 12</f-m>.</button><button data-k="b" data-fb="Richtig! Der Impuls hat einen <b>Betrag</b> und eine <b>Richtung</b> wie die Geschwindigkeit. Er ist eine <b>Vektorgröße</b>. Auf einer Geraden zeigt das Vorzeichen die Richtung: <f-m>p<sub>1</sub> = 6 kg·m/s</f-m>, <f-m>p<sub>2</sub> = −6 kg·m/s</f-m>.">Die Impulse sind gleich groß, aber entgegengesetzt gerichtet. Sie sind deshalb nicht gleich.</button><button data-k="c" data-fb="Der Impuls des Volleyballs ist nicht null, er bewegt sich ja.">Der Volleyball hat keinen Impuls, weil seine Geschwindigkeit negativ ist.</button><p class="fb"></p></div></div>
+</div>
+</div></div>
+
+<h3>C · Einheit und Umrechnen</h3>
+<p class="intro">Die Einheit des Impulses ergibt sich aus der Formel: <f-m>[p] = [m] · [v] = 1 kg · 1 m/s</f-m>, also <b>1 kg·m/s</b>. Geschwindigkeiten in km/h rechnest du vorher in m/s um (durch 3,6 teilen).</p>
+<div class="card"><div class="tag">Auftrag 7 · Impuls eines Autos</div>
+<div class="numbox part" data-task="a4" data-fb="Richtig: <f-m>v = 54 km/h : 3,6 = 15 m/s</f-m> und <f-m>p = 1200 kg · 15 m/s = 18 000 kg·m/s</f-m>."><div class="numq"><span>Ein Auto (1200 kg) fährt mit 54 km/h. Geschwindigkeit in m/s:</span><span class="unit"><input type="text" inputmode="decimal" data-a="15" data-tol="0.01" aria-label="Geschwindigkeit in m/s"> m/s</span></div><div class="numq"><span>Impuls des Autos:</span><span class="unit"><input type="text" inputmode="decimal" data-a="18000" data-tol="0.01" aria-label="Impuls des Autos"> kg·m/s</span></div><div class="row"><button class="primary num-check">Prüfen</button><button data-hint="a4">Tipp</button></div><p class="fb nfb"></p><p class="tip" id="a4Tip"></p><div class="hintsrc" data-for="a4" hidden><p><f-m>54 km/h : 3,6</f-m> = ? m/s</p><p><f-m>p = m · v</f-m> mit m in kg und v in m/s.</p></div></div>
+</div>
+
+<h3>D · Der Impuls als Pfeil</h3>
+<p class="intro">Weil der Impuls eine Vektorgröße ist, zeichnet man ihn wie eine Kraft als Pfeil: Er zeigt in Bewegungsrichtung, seine Länge gibt den Betrag an. Man schreibt dann <f-m>p⃗ = m · v⃗</f-m>.</p>
+<div class="card"><div class="tag">Auftrag 8 · Impulspfeil zeichnen <span class="insheft">erst im Heft, dann hier</span></div>
+<p>Eine Kugel (0,5 kg) rollt mit <b>6 m/s nach links</b>. Berechne ihren Impuls und zeichne den Impulspfeil am Schwerpunkt. Maßstab: <b>1 cm ≙ 1 kg·m/s</b>.</p>
+<div class="vt part" data-task="a5" data-cfg='{"type":"draw","sc":1,"u":"kg·m/s","T":{"F":3,"a":180},"name":"p","sc_c":"f1","showAng":true,"scene":"kugel","start":[[0.6,0.6],[0,0]],"extra":[[-3.8,-1.2],[1.8,1.2]],"askList":[["Impuls der Kugel (Betrag)",3,"kg·m/s",0.02]],"okText":"Richtig: 3 cm lang, waagrecht nach links (180°).","numOk":"Richtig: p = 0,5 kg · 6 m/s = 3 kg·m/s. Mit Vorzeichen (rechts positiv): p = −3 kg·m/s.","aria":"Zeichenbrett mit Kugel"}'></div>
+</div>
+
+<h3>E · Impuls und Trägheit</h3>
+<div class="card"><div class="tag">Auftrag 9</div>
+<div class="part" data-task="a6"><h4>Ein Eishockey-Puck gleitet über (nahezu) reibungsfreies Eis. Keine Kraft wirkt in Bewegungsrichtung. Was gilt für seinen Impuls?</h4><div class="mc" data-correct="a" data-task="a6" data-tipp="Erinnere dich an das Trägheitsprinzip aus dem Kapitel Kraft: Was macht ein Körper, auf den keine Kraft wirkt?"><button data-k="a" data-fb="Richtig! Das ist das <b>Trägheitsprinzip</b> in neuer Form: Ohne äußere Kraft bleibt der Impuls eines Körpers konstant (nach Betrag und Richtung).">Er bleibt konstant, nach Betrag und Richtung.</button><button data-k="b" data-fb="Der Impuls „verbraucht“ sich nicht. Nur eine Kraft (z. B. Reibung) kann ihn ändern.">Er nimmt langsam ab, weil der Puck seinen Schwung verbraucht.</button><button data-k="c" data-fb="Masse und Geschwindigkeit bleiben gleich, also auch der Impuls.">Er wird größer, weil der Puck immer weiter rutscht.</button><p class="fb"></p></div></div>
+</div>
+
+<h3>F · Impuls im Alltag</h3>
+<p class="intro">Wer hat am meisten „Schwung“? Sortiere die zwölf Beispiele zuerst <b>nach Gefühl</b> (Platz 1 = größter Impuls) und prüfe. Dann klappst du die typischen Werte auf und rechnest nach.</p>
+<div class="card"><div class="tag">Auftrag 10 · Ranking</div>
+<div class="selbox part" data-task="a7" data-fb="Alles richtig sortiert! Überrascht? Die Gewehrkugel hat einen ähnlich kleinen Impuls wie ein Tennisball, und ein Rennauto hat mehr Impuls als ein normales Auto auf der Landstraße."><div id="rankList"></div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+<details class="reveal"><summary>Typische Werte zum Nachrechnen (erst nach deiner Schätzung aufklappen)</summary>
+<div class="scroll"><table class="mess" id="rankTbl"><thead><tr><th>Körper</th><th>Masse <f-m>m</f-m></th><th>Geschwindigkeit <f-m>v</f-m></th><th>Impuls <f-m>p</f-m></th></tr></thead><tbody></tbody></table></div>
+<p class="caption">Gerundete Richtwerte. Rechne km/h vorher in m/s um. Die letzte Spalte kannst du dir anzeigen lassen, wenn du selbst gerechnet hast.</p>
+<div class="row"><button id="rankShow">Impulse anzeigen</button></div></details>
+</div>
+</div></section>
+
+<!-- ============ 3 FESTHALTEN ============ -->
+<section class="band" id="festhalten"><div class="wrap">
+<h2>3 · Festhalten</h2>
+<div class="card"><div class="tag">Lückentext · Der Impuls</div>
+<div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommt der Heftaufschrieb."><div class="cloze">Der Impuls eines Körpers ist das Produkt aus seiner <select data-a="Masse"><option value="">…</option><option>Masse</option><option>Energie</option><option>Kraft</option></select> und seiner <select data-a="Geschwindigkeit"><option value="">…</option><option>Geschwindigkeit</option><option>Beschleunigung</option><option>Höhe</option></select>. Wie die Geschwindigkeit ist der Impuls eine <select data-a="Vektorgröße"><option value="">…</option><option>Vektorgröße</option><option>reine Zahl</option><option>Energieform</option></select>: Er hat einen Betrag und eine <select data-a="Richtung"><option value="">…</option><option>Richtung</option><option>Temperatur</option><option>Farbe</option></select>. Seine Einheit ist <select data-a="kg·m/s"><option value="">…</option><option>kg·m/s</option><option>N</option><option>J</option><option>kg/s</option></select>. Wirkt keine äußere Kraft auf einen Körper, bleibt sein Impuls <select data-a="konstant"><option value="">…</option><option>konstant</option><option>null</option><option>nicht erhalten</option></select>.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<div class="heftbox" id="heft" data-task="heft1"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB</b><small>Vollständig ins Heft übernehmen: Überschrift, Text, Formeln und Merksatz</small></div>
+<div class="heft">
+<h3>3.0 Der Impuls: eine neue Größe</h3>
+<p>Die Wirkung eines Körpers beim Aufprall hängt von seiner Geschwindigkeit (Betrag und Richtung) und seiner Masse ab. Je größer die Masse und je größer die Geschwindigkeit, desto größer ist die Wirkung. Daher definiert man als physikalische Größe den <b>Impuls p</b> als Produkt von Masse und Geschwindigkeit des Körpers.</p>
+<p>Eindimensional: <span class="box"><f-m>p = m · v</f-m></span> &nbsp; bzw. &nbsp; <span class="box"><f-m>p⃗ = m · v⃗</f-m></span></p>
+<p>Wie die Geschwindigkeit ist auch der Impuls eine <b>Vektorgröße</b> mit Länge und Richtung. Auf einer Geraden legt man eine positive Richtung fest; Körper, die sich entgegengesetzt bewegen, haben einen negativen Impuls.</p>
+<p>Einheit: <f-m>[p] = [m · v]</f-m> = 1 kg·m/s</p>
+<p><b>Andere Formulierung des Trägheitsprinzips:</b><br>Der Impuls eines Körpers bleibt ohne Einwirkung einer äußeren Kraft konstant.</p>
+<p><b>Beispiel:</b> Auto, <f-m>m = 1200 kg</f-m>, <f-m>v = 54 km/h = 15 m/s</f-m>: <f-m>p = 1200 kg · 15 m/s = 18 000 kg·m/s</f-m></p>
+</div>
+<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div></div>
+</div></section>
+
+<!-- ============ 4 ÜBEN ============ -->
+<section class="band alt" id="ueben"><div class="wrap">
+<h2>4 · Üben</h2>
+<p class="intro"><b>Erst im Heft rechnen (gegeben, gesucht, Formel, Rechnung, Antwortsatz), dann hier prüfen.</b></p>
+<div class="lvlrow"><span>★ / AFB I: Grundlagen anwenden</span><span>★★ / AFB II: Zusammenhänge herstellen</span><span>★★★ / AFB III: übertragen, beurteilen, begründen</span></div>
+
+<div class="card"><div class="tag">Übung 1 · Tennisaufschlag <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="numbox part" data-task="u1" data-fb="Richtig: <f-m>p = 0,058 kg · 50 m/s = 2,9 kg·m/s</f-m>."><div class="numq"><span>Ein Tennisball (58 g) fliegt nach dem Aufschlag mit 50 m/s. Berechne seinen Impuls.</span><span class="unit"><input type="text" inputmode="decimal" data-a="2.9" data-tol="0.01" aria-label="Impuls des Tennisballs"> kg·m/s</span></div><div class="row"><button class="primary num-check">Prüfen</button><button data-hint="u1">Tipp</button></div><p class="fb nfb"></p><p class="tip" id="u1Tip"></p><div class="hintsrc" data-for="u1" hidden><p>Masse in kg umrechnen: <f-m>58 g = 0,058 kg</f-m>.</p><p><f-m>p = m · v</f-m></p></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 2 · Auto auf der Landstraße <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="numbox part" data-task="u2" data-fb="Richtig: <f-m>v = 72 km/h : 3,6 = 20 m/s</f-m>, <f-m>p = 1200 kg · 20 m/s = 24 000 kg·m/s</f-m>."><div class="numq"><span>Ein Auto mit 1,2 t fährt mit 72 km/h. Berechne seinen Impuls.</span><span class="unit"><input type="text" inputmode="decimal" data-a="24000" data-tol="0.01" aria-label="Impuls des Autos"> kg·m/s</span></div><div class="row"><button class="primary num-check">Prüfen</button><button data-hint="u2">Tipp</button><button data-sol="u2Sol">Lösung zeigen</button></div><p class="fb nfb"></p><p class="tip" id="u2Tip"></p><div class="hintsrc" data-for="u2" hidden><p><f-m>1,2 t = 1200 kg</f-m>.</p><p><f-m>72 km/h : 3,6 = 20 m/s</f-m>.</p></div><div class="sol" id="u2Sol" hidden><p>geg.: <f-m>m = 1200 kg</f-m>, <f-m>v = 72 km/h = 20 m/s</f-m>; ges.: <f-m>p</f-m></p><p class="calc"><f-m>p = m · v = 1200 kg · 20 m/s = 24 000 kg·m/s</f-m></p></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 3 · Stimmt das? <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="tf part" data-task="u3"><div class="item" data-v="0"><span>„Ein schwerer Körper hat immer einen großen Impuls.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Ein ruhender Körper hat den Impuls null, auch wenn er sehr schwer ist.</span></div><div class="item" data-v="1"><span>„Verdoppelt sich die Geschwindigkeit, verdoppelt sich auch der Impuls.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">p ist proportional zu v (bei gleicher Masse).</span></div><div class="item" data-v="0"><span>„1 kg·m/s ist dasselbe wie 1 Joule.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Joule ist die Einheit der Energie (<f-m>1 J = 1 kg · m²/s²</f-m>). Impuls und Energie sind verschiedene Größen.</span></div><div class="item" data-v="1"><span>„Zwei gleich schwere Autos, die gleich schnell aufeinander zufahren, haben entgegengesetzt gleiche Impulse.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Gleicher Betrag, entgegengesetzte Richtung: z. B. +20 000 kg·m/s und −20 000 kg·m/s.</span></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 4 · Rückwärts rechnen <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="numbox part" data-task="u4" data-fb="Richtig! <f-m>v = p : m = 6,8 kg·m/s : 0,17 kg = 40 m/s</f-m> und <f-m>m = p : v = 500 000 kg·m/s : 20 m/s = 25 000 kg = 25 t</f-m>."><div class="numq"><span>a) Ein Eishockey-Puck (170 g) hat den Impuls 6,8 kg·m/s. Wie schnell ist er?</span><span class="unit"><input type="text" inputmode="decimal" data-a="40" data-tol="0.01" aria-label="Geschwindigkeit des Pucks"> m/s</span></div><div class="numq"><span>b) Ein Lkw fährt mit 72 km/h und hat den Impuls 500 000 kg·m/s. Welche Masse hat er?</span><span class="unit"><input type="text" inputmode="decimal" data-a="25" data-tol="0.01" aria-label="Masse des Lkw in t"> t</span></div><div class="row"><button class="primary num-check">Prüfen</button><button data-hint="u4">Tipp</button></div><p class="fb nfb"></p><p class="tip" id="u4Tip"></p><div class="hintsrc" data-for="u4" hidden><p>Stelle <f-m>p = m · v</f-m> nach der gesuchten Größe um: <f-m>v = p : m</f-m> bzw. <f-m>m = p : v</f-m>.</p><p>Bei b) zuerst 72 km/h in m/s umrechnen. Das Ergebnis in kg dann in t umrechnen.</p></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 5 · Schräger Schuss <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<p>Ein Fußball (0,4 kg) fliegt mit <b>10 m/s</b> schräg nach rechts oben, <b>30°</b> zur Waagrechten. Berechne seinen Impuls und zeichne den Impulspfeil. Maßstab: <b>1 cm ≙ 1 kg·m/s</b>.</p>
+<div class="vt part" data-task="u5" data-cfg='{"type":"draw","sc":1,"u":"kg·m/s","T":{"F":4,"a":30},"name":"p","sc_c":"f1","showAng":true,"scene":"kugel","start":[[0.6,0.6],[0,0]],"extra":[[-1.6,-1.2],[3.8,2.4]],"askList":[["Impuls des Balls",4,"kg·m/s",0.02]],"okText":"Richtig: 4 cm lang unter 30° zur Waagrechten.","numOk":"Richtig: p = 0,4 kg · 10 m/s = 4 kg·m/s. Der Pfeil zeigt in Flugrichtung.","aria":"Zeichenbrett mit Ball"}'></div>
+</div>
+
+<div class="card"><div class="tag">Übung 6 · Mit Vorzeichen <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="numbox part" data-task="u6" data-fb="Richtig! Die beiden Impulse heben sich auf: Zusammen haben die Autos den Impuls null, obwohl beide fahren."><p>Zwei Autos (je 1000 kg) fahren mit je 20 m/s aufeinander zu. Auto A fährt nach rechts (positive Richtung), Auto B nach links.</p><div class="numq"><span>Impuls von Auto A:</span><span class="unit"><input type="text" inputmode="decimal" data-a="20000" data-tol="0.01" aria-label="Impuls Auto A"> kg·m/s</span></div><div class="numq"><span>Impuls von Auto B (mit Vorzeichen):</span><span class="unit"><input type="text" inputmode="decimal" data-a="-20000" data-tol="0.01" aria-label="Impuls Auto B"> kg·m/s</span></div><div class="numq"><span>Summe beider Impulse:</span><span class="unit"><input type="text" inputmode="decimal" data-a="0" data-tol="0.01" aria-label="Summe der Impulse"> kg·m/s</span></div><div class="row"><button class="primary num-check">Prüfen</button><button data-hint="u6">Tipp</button></div><p class="fb nfb"></p><p class="tip" id="u6Tip"></p><div class="hintsrc" data-for="u6" hidden><p>Auto B fährt nach links, also ist seine Geschwindigkeit −20 m/s.</p><p>Ein Minuszeichen kannst du als - oder − eingeben.</p></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 7 · Lkw oder Auto? <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="part" data-task="u7"><h4>Ein Lkw (30 t) rollt mit 5 km/h vom Hof. Ein Auto (1,5 t) fährt mit 100 km/h. Wer hat den größeren Impuls?</h4><div class="mc" data-correct="c" data-task="u7" data-tipp="Rechne beide Impulse aus. Du musst nicht einmal in m/s umrechnen, wenn du nur vergleichst: <f-m>30 000 · 5</f-m> und <f-m>1500 · 100</f-m>."><button data-k="a" data-fb="Rechne nach: <f-m>30 000 kg · 5 km/h</f-m> und <f-m>1500 kg · 100 km/h</f-m>.">Der Lkw, weil er viel schwerer ist.</button><button data-k="b" data-fb="Rechne nach: <f-m>30 000 kg · 5 km/h</f-m> und <f-m>1500 kg · 100 km/h</f-m>.">Das Auto, weil es viel schneller ist.</button><button data-k="c" data-fb="Richtig! Beide haben den gleichen Impuls von etwa 41 700 kg·m/s: <f-m>30 000 kg · 1,39 m/s = 1500 kg · 27,8 m/s</f-m>. Die 20-fache Masse gleicht die 20-fach kleinere Geschwindigkeit genau aus.">Beide haben gleich viel Impuls.</button><p class="fb"></p></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 8 · Was fängst du lieber? <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
+<div class="part why" data-task="u8"><h4>✍ Dir wird ein Tischtennisball und eine Bowlingkugel mit derselben Geschwindigkeit zugeworfen. Begründe mit dem Impuls, welchen der beiden du lieber fängst.</h4>
+<textarea data-store="u8" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
+<label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
+<div class="row"><button class="why-show">Mit Musterbegründung vergleichen</button></div>
+<div class="sol" hidden><p><b>Musterbegründung:</b> Beim Fangen muss ich den Ball abbremsen, also seinen <b>Impuls</b> auf null bringen. Bei <b>gleicher Geschwindigkeit</b> hat die Bowlingkugel wegen ihrer viel <b>größeren Masse</b> (etwa 7 kg statt 2,7 g) einen mehrere tausendmal größeren Impuls <f-m>(<b>p = m · v</b>)</f-m>. Den muss ich mit meinen Händen „aufnehmen“, das ist viel schwerer und kann wehtun. Ich fange deshalb lieber den Tischtennisball.</p><p class="caption" style="margin:0 0 6px">Vergleiche: Hast du die fett gedruckten Begriffe verwendet? Ergänze sonst deine Begründung.</p><div class="row"><button class="why-ok">Meine Begründung enthält das Wichtigste</button></div></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 9 · Schräg getroffen <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
+<div class="part why" data-task="u9"><h4>✍ Erkläre mit dem Vektorcharakter des Impulses, warum eine Kugel ein Klötzchen weniger weit anschiebt, wenn sie es unter einem spitzen Winkel trifft.</h4>
+<textarea data-store="u9" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
+<label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
+<div class="row"><button class="why-show">Mit Musterbegründung vergleichen</button></div>
+<div class="sol" hidden><p><b>Musterbegründung:</b> Der Impuls ist eine <b>Vektorgröße</b>, er hat eine <b>Richtung</b>. Man kann den Impulspfeil der Kugel wie eine Kraft in zwei Teile <b>zerlegen</b>: einen Teil, der auf das Klötzchen zeigt, und einen Teil quer dazu. Nur der Teil in Richtung Klötzchen schiebt es an. Je spitzer der Winkel, desto <b>kleiner</b> ist dieser Teil und desto geringer ist die Wirkung.</p><p class="caption" style="margin:0 0 6px">Vergleiche: Hast du die fett gedruckten Begriffe verwendet? Ergänze sonst deine Begründung.</p><div class="row"><button class="why-ok">Meine Begründung enthält das Wichtigste</button></div></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 10 · Gewehrkugel und Tennisball <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
+<div class="part why" data-task="u10"><h4>✍ Eine Gewehrkugel (8 g, 360 m/s) und ein Tennisball (58 g, 55 m/s) haben fast den gleichen Impuls. Trotzdem ist die Gewehrkugel lebensgefährlich. Nimm Stellung: Beschreibt der Impuls allein, wie gefährlich ein Aufprall ist?</h4>
+<textarea data-store="u10" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
+<label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
+<div class="row"><button class="why-show">Mit Musterbegründung vergleichen</button></div>
+<div class="sol" hidden><p><b>Musterbegründung:</b> Die Impulse sind tatsächlich ähnlich: <f-m>p = 0,008 kg · 360 m/s ≈ 2,9 kg·m/s</f-m> und <f-m>p = 0,058 kg · 55 m/s ≈ 3,2 kg·m/s</f-m>. Der Impuls allein beschreibt die Gefahr aber <b>nicht</b>. Die Gewehrkugel hat wegen der viel höheren Geschwindigkeit eine viel größere <b>Bewegungsenergie</b> (<f-m>E<sub>B</sub> = ½ · m · v<sup>2</sup></f-m>: etwa 520 J statt 88 J). Außerdem trifft sie auf einer winzigen <b>Fläche</b> auf und wird in sehr <b>kurzer Zeit</b> abgebremst. Deshalb dringt sie ein, während der Tennisball abprallt.</p><p class="caption" style="margin:0 0 6px">Vergleiche: Hast du die fett gedruckten Begriffe verwendet? Ergänze sonst deine Begründung.</p><div class="row"><button class="why-ok">Meine Begründung enthält das Wichtigste</button></div></div></div>
+</div>
+</div></section>
+
+<section class="band"><div class="wrap">
+<div class="row" style="margin-top:8px"><button id="resetAll">Fortschritt zurücksetzen</button><a class="lnk nx" href="/Physik11/stoesse-impulserhaltung">Weiter: Impuls 2 · Stöße und Impulserhaltung →</a></div>
+</div></section>
+<footer class="band"><div class="wrap">
+<p>Lernpfad Physik TG11 · Impuls 1 (Kapitel 3.0 Der Impuls). Modellannahmen stehen jeweils bei den Simulationen. Dein Fortschritt wird nur in diesem Browser gespeichert, es werden keine Daten übertragen.</p>
+</div></footer>
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Lernpfad"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik11/impuls-grundlagen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m1 0h3m1 0h2m2 0h1m1 0h2m1 0h1m2 0h2m1 0h2m1 0h7m-37 1h1m5 0h1m3 0h3m1 0h5m1 0h3m1 0h1m1 0h1m3 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m2 0h4m1 0h1m1 0h2m1 0h5m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m1 0h2m3 0h1m1 0h3m2 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h6m4 0h1m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h8m2 0h2m1 0h2m1 0h2m4 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m1 0h1m3 0h1m1 0h3m1 0h1m1 0h1m3 0h3m-29 1h1m3 0h1m1 0h3m1 0h1m2 0h3m2 0h2m2 0h1m1 0h1m3 0h6m2 0h1m-36 1h1m2 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h2m3 0h1m1 0h4m2 0h1m1 0h2m-34 1h2m1 0h2m1 0h1m1 0h3m3 0h1m3 0h2m1 0h1m1 0h3m2 0h2m2 0h1m-35 1h1m3 0h1m2 0h1m1 0h1m1 0h1m5 0h2m2 0h1m2 0h1m4 0h1m1 0h2m1 0h2m-34 1h1m1 0h7m2 0h1m1 0h1m1 0h7m4 0h4m2 0h3m-37 1h2m1 0h2m5 0h1m2 0h6m4 0h1m2 0h3m3 0h2m-34 1h2m2 0h1m1 0h2m1 0h1m1 0h2m2 0h2m1 0h1m1 0h10m1 0h4m-35 1h2m1 0h1m1 0h1m1 0h6m1 0h3m2 0h1m1 0h1m1 0h2m2 0h3m1 0h2m1 0h1m1 0h1m-37 1h2m1 0h2m1 0h5m3 0h1m1 0h1m3 0h1m3 0h1m4 0h3m1 0h2m1 0h1m-36 1h1m2 0h1m2 0h4m2 0h2m2 0h3m1 0h3m1 0h5m2 0h1m1 0h2m-35 1h6m5 0h1m2 0h1m2 0h2m3 0h5m3 0h1m-32 1h2m2 0h2m3 0h1m1 0h1m2 0h4m1 0h6m1 0h2m4 0h4m-36 1h3m1 0h6m1 0h4m1 0h2m2 0h2m2 0h1m2 0h5m1 0h2m-34 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h2m2 0h1m-35 1h3m1 0h2m3 0h2m1 0h1m1 0h1m1 0h1m5 0h1m2 0h2m3 0h4m-35 1h3m1 0h2m1 0h3m1 0h1m1 0h1m3 0h3m2 0h3m2 0h2m2 0h2m1 0h1m-35 1h2m1 0h1m1 0h2m1 0h4m2 0h2m2 0h2m2 0h3m4 0h3m1 0h2m-35 1h3m2 0h1m1 0h6m3 0h1m2 0h3m1 0h1m1 0h3m4 0h1m-30 1h1m2 0h1m9 0h3m1 0h1m2 0h3m1 0h1m1 0h1m1 0h2m1 0h1m-33 1h1m1 0h1m3 0h2m1 0h1m1 0h2m2 0h1m3 0h2m1 0h1m1 0h1m1 0h9m-37 1h2m2 0h1m1 0h1m1 0h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m1 0h1m3 0h7m1 0h1m-29 1h3m1 0h1m1 0h2m1 0h2m3 0h2m4 0h1m3 0h1m2 0h1m-36 1h7m1 0h2m1 0h1m3 0h2m1 0h1m1 0h5m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m2 0h1m1 0h2m1 0h1m4 0h3m1 0h2m3 0h1m3 0h4m-36 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m3 0h1m2 0h2m3 0h7m-35 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m4 0h2m2 0h2m1 0h2m1 0h4m4 0h1m-37 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h3m1 0h3m3 0h2m1 0h1m2 0h2m3 0h1m-35 1h1m5 0h1m2 0h1m1 0h3m1 0h7m1 0h1m6 0h1m1 0h4m-36 1h7m1 0h2m1 0h2m1 0h1m1 0h2m2 0h3m1 0h1m1 0h2m2 0h2m2 0h3"/></svg>
+<p>lernapps.gst-lernen.workers.dev/Physik11/impuls-grundlagen</p><button id="qrClose">Schließen</button></dialog>
+<script>
+{
+const KEY='p11-impuls-grundlagen-done';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=(v,n=2)=>(+v).toFixed(n).replace('.',',').replace('-','−');
+const fmtS=(v,n=2)=>fmt(v,n).replace(/(,\d*?)0+$/,'$1').replace(/,$/,'');
+const num=v=>parseFloat(String(v).replace(/[\s ]/g,'').replace(/\.(?=\d{3}(\D|$))/g,'').replace(',','.').replace('−','-'));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const RAD=Math.PI/180,g=9.81;
+const sind=a=>Math.sin(a*RAD),cosd=a=>Math.cos(a*RAD),tand=a=>Math.tan(a*RAD);
+/* Fortschritt (nur in diesem Browser) */
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}}
+function updProg(){const tasks=[...new Set($$('[data-task]').map(e=>e.dataset.task))];const n=tasks.filter(t=>done.has(t)).length;$('#progtxt').textContent=n+' / '+tasks.length+' gelöst';$('#progbar').style.width=(100*n/Math.max(1,tasks.length))+'%';
+ $$('[data-task]').forEach(e=>e.classList.toggle('done',done.has(e.dataset.task)));$$('.tabs button[data-for]').forEach(b=>b.classList.toggle('solved',done.has(b.dataset.for)))}
+function mark(id){if(!id)return;done.add(id);save();updProg()}
+function svgPt(svg,ev){const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+function animate(ms,step,end){if(reduce){step(1);end&&end();return}const t0=performance.now();function f(t){const k=Math.min(1,(t-t0)/ms);step(k);if(k<1)requestAnimationFrame(f);else end&&end()}requestAnimationFrame(f)}
+/* Formelzeichen in SVG: "F|res" -> F mit Index res */
+function lab(n){const [b,s]=String(n).split('|');return s?`${b}<tspan dy="5" font-size="75%">${s}</tspan><tspan dy="-5"> </tspan>`:b}
+function labH(n){const [b,s]=String(n).split('|');return s?`${b}<sub>${s}</sub>`:b}
+const COL={f1:'var(--f1)',f2:'var(--f2)',f3:'var(--f3)',fr:'var(--fr)',fg:'var(--fg)',fh:'var(--fh)',fn:'var(--fnn)',ink:'var(--ink)',mut:'var(--muted)',acc:'var(--acc)'};
+const col=c=>COL[c]||c;
+
+/* ===== Zeichenbrett (Karopapier, Koordinaten in cm, y nach oben) ===== */
+class Board{
+ constructor(svg,o){Object.assign(this,{U:40,snap:0.1,ox:1,oy:1,grid:true},o);this.svg=svg;this.handles=[];this.active=null;this.drag=null;
+  svg.setAttribute('viewBox',`0 0 ${this.W*this.U} ${this.H*this.U}`);if(!o.noMax&&svg.parentElement&&svg.parentElement.classList.contains('fig'))svg.parentElement.style.maxWidth=(this.W*58+18)+'px';svg.classList.add('board');if(!svg.hasAttribute('tabindex'))svg.tabIndex=0;
+  svg.addEventListener('pointerdown',e=>this.down(e));svg.addEventListener('pointermove',e=>this.move(e));
+  ['pointerup','pointercancel','lostpointercapture'].forEach(t=>svg.addEventListener(t,()=>{Board.dragging=false;if(this.drag){this.drag=null;this.redraw()}}));
+  if(!Board.lock){Board.lock=true;document.addEventListener('touchmove',e=>{if(Board.dragging&&e.cancelable)e.preventDefault()},{passive:false});document.addEventListener('touchend',()=>{Board.dragging=false})}
+  svg.addEventListener('touchstart',e=>{const t=e.touches[0];if(e.touches.length===1&&t&&this.hit({clientX:t.clientX,clientY:t.clientY,pointerType:'touch'})){Board.dragging=true;e.preventDefault()}},{passive:false});
+  svg.addEventListener('keydown',e=>this.key(e))}
+ X(x){return +((this.ox+x)*this.U).toFixed(2)}Y(y){return +((this.H-this.oy-y)*this.U).toFixed(2)}
+ pt(e){const p=svgPt(this.svg,e);return [p.x/this.U-this.ox,this.H-this.oy-p.y/this.U]}
+ hit(e){const [x,y]=this.pt(e);const r=this.svg.getBoundingClientRect(),pxcm=r.width/this.W||40;let best=null,bd=e.pointerType==='mouse'?0.85:Math.max(0.85,32/pxcm);for(const h of this.handles){if(h.off&&h.off())continue;const [hx,hy]=h.get(),d=Math.hypot(hx-x,hy-y);if(d<bd){bd=d;best=h}}return best}
+ down(e){const h=this.hit(e);if(!h)return;e.preventDefault();this.drag=h;Board.dragging=true;this.active=h;try{this.svg.setPointerCapture(e.pointerId)}catch(_){}const [x,y]=this.pt(e),[hx,hy]=h.get();this.grab=[hx-x,hy-y];this.redraw()}
+ sn(v){return Math.round(v/this.snap)*this.snap}
+ move(e){if(!this.drag)return;e.preventDefault();const [x,y]=this.pt(e);this.setH(this.drag,x+this.grab[0],y+this.grab[1])}
+ setH(h,x,y){x=Math.max(-this.ox+.1,Math.min(this.W-this.ox-.1,x));y=Math.max(-this.oy+.1,Math.min(this.H-this.oy-.1,y));h.set(this.sn(x),this.sn(y));this.redraw();this.onchange&&this.onchange(h)}
+ key(e){const k={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]}[e.key];
+  if(e.key==='Tab'&&this.handles.length>1&&!e.shiftKey&&this.active){const i=this.handles.indexOf(this.active);if(i<this.handles.length-1){e.preventDefault();this.active=this.handles[i+1];this.redraw();return}}
+  if(!k)return;const h=this.active||this.handles.find(h=>!(h.off&&h.off()));if(!h)return;e.preventDefault();this.active=h;const s=this.snap*(e.shiftKey?5:1),[x,y]=h.get();this.setH(h,x+k[0]*s,y+k[1]*s)}
+ add(h){this.handles.push(h);return h}
+ gridSvg(){if(!this.grid)return '';let s='';const W=this.W*this.U,H=this.H*this.U;
+  for(let i=0;i<=this.W*2;i++){const x=i*this.U/2;s+=`<line x1="${x}" y1="0" x2="${x}" y2="${H}" class="${i%2?'gl2':'gl'}"/>`}
+  for(let i=0;i<=this.H*2;i++){const y=H-i*this.U/2;s+=`<line x1="0" y1="${y}" x2="${W}" y2="${y}" class="${i%2?'gl2':'gl'}"/>`}return s}
+ arrow(x1,y1,x2,y2,c,o={}){const X1=this.X(x1),Y1=this.Y(y1),X2=this.X(x2),Y2=this.Y(y2),L=Math.hypot(X2-X1,Y2-Y1),w=o.w||3.2;if(L<1)return '';
+  const ux=(X2-X1)/L,uy=(Y2-Y1)/L,hs=Math.min(o.hs||15,L*.6),bx=X2-ux*hs,by=Y2-uy*hs,c2=col(c);
+  let s=`<line x1="${X1}" y1="${Y1}" x2="${bx+ux*2}" y2="${by+uy*2}" style="stroke:${c2}" stroke-width="${w}" ${o.dash?'stroke-dasharray="7 5"':''} stroke-linecap="round" ${o.op?`opacity="${o.op}"`:''}/>`;
+  s+=`<path d="M${X2} ${Y2} L${bx-uy*hs*.42} ${by+ux*hs*.42} L${bx+uy*hs*.42} ${by-ux*hs*.42}Z" style="fill:${c2}" ${o.op?`opacity="${o.op}"`:''}/>`;
+  if(o.label){const t=o.lt??.55,mx=X1+(X2-X1)*t,my=Y1+(Y2-Y1)*t,side=o.side||1,d=o.ld||16;s+=`<text x="${mx-uy*d*side}" y="${my+ux*d*side+5}" text-anchor="middle" class="flab" style="fill:${c2}">${lab(o.label)}</text>`}
+  return s}
+ line(x1,y1,x2,y2,cls='dashl',ex=''){return `<line x1="${this.X(x1)}" y1="${this.Y(y1)}" x2="${this.X(x2)}" y2="${this.Y(y2)}" class="${cls}" ${ex}/>`}
+ ray(x,y,a,len,cls='rayl'){return this.line(x,y,x+len*cosd(a),y+len*sind(a),cls)}
+ dot(x,y,r=4,st='fill:var(--ink)'){return `<circle cx="${this.X(x)}" cy="${this.Y(y)}" r="${r}" style="${st}"/>`}
+ text(x,y,t,cls='txs',ex=''){return `<text x="${this.X(x)}" y="${this.Y(y)}" class="${cls}" ${ex}>${t}</text>`}
+ poly(pts,st){return `<path d="${pts.map((p,i)=>(i?'L':'M')+this.X(p[0])+' '+this.Y(p[1])).join(' ')}Z" style="${st}"/>`}
+ handleSvg(h,c){const [x,y]=h.get(),act=h===this.active;return `<circle cx="${this.X(x)}" cy="${this.Y(y)}" r="${act?13:11}" class="hdl${act?' act':''}" style="stroke:${col(c||'acc')}"/>`}
+ redraw(){if(!this.g){this.svg.innerHTML='<g></g><rect x="0" y="0" width="100%" height="100%" fill="transparent"/>';this.g=this.svg.firstChild}this.g.innerHTML=this.gridSvg()+(this.draw?this.draw(this):'')}
+}
+/* Kraft als Vektor in cm (Maßstab sc N pro cm) */
+const vecCm=(F,a,sc)=>[F/sc*cosd(a),F/sc*sind(a)];
+const ang=(x,y)=>{let a=Math.atan2(y,x)/RAD;return a};
+const angDiff=(a,b)=>{let d=Math.abs(a-b)%360;return d>180?360-d:d};
+
+/* ===== Konstruktions-Aufgaben (deklarativ über data-cfg) =====
+   type: add (Parallelogramm), plan (Kräfteplan: Pfeil verschieben), eq (Gleichgewicht), split (Zerlegung), draw (Kraftpfeil zeichnen) */
+const SCENES={};
+const fmtF=(v,u)=>fmtS(v,v>=100?0:1)+' '+u;
+function initVT(box){const c=JSON.parse(box.dataset.cfg),task=box.dataset.task,sc=c.sc,u=c.u||'N',tol=c.tol||0.3;
+ const forces=(c.F||[]).map(f=>({...f,v:vecCm(f.F,f.a,sc)}));
+ const sum=forces.reduce((s,f)=>[s[0]+f.v[0],s[1]+f.v[1]],[0,0]);
+ let target=null;if(c.type==='add'||c.type==='plan')target=sum;if(c.type==='eq')target=[-sum[0],-sum[1]];if(c.type==='draw')target=vecCm(c.T.F,c.T.a,sc);
+ /* Zerlegung: Teilkräfte über Sinussatz aus den Richtungen */
+ let comp=null;if(c.type==='split'){const G=vecCm(c.G.F,c.G.a,sc),[a1,a2]=c.dirs,e1=[cosd(a1),sind(a1)],e2=[cosd(a2),sind(a2)],det=e1[0]*e2[1]-e1[1]*e2[0];
+  const k1=(G[0]*e2[1]-G[1]*e2[0])/det,k2=(e1[0]*G[1]-e1[1]*G[0])/det;comp={G,e:[e1,e2],k:[k1,k2]}}
+ /* Brettgröße automatisch */
+ let pts=[[0,0],...forces.map(f=>f.v)];if(target)pts.push(target);if(c.type==='plan'){let p=[0,0];forces.forEach(f=>{p=[p[0]+f.v[0],p[1]+f.v[1]];pts.push(p)})}
+ if(comp){pts.push(comp.G,comp.e[0].map(v=>v*comp.k[0]),comp.e[1].map(v=>v*comp.k[1]))}
+ if(c.extra)pts.push(...c.extra);
+ const mx=Math.min(...pts.map(p=>p[0])),Mx=Math.max(...pts.map(p=>p[0])),my=Math.min(...pts.map(p=>p[1])),My=Math.max(...pts.map(p=>p[1]));
+ const W=c.W||Math.max(8,Math.ceil(Mx-mx+2.4)),H=c.H||Math.max(5,Math.ceil(My-my+2.4)),ox=c.ox??(W-(Mx-mx))/2-mx,oy=c.oy??(H-(My-my))/2-my;
+ const solved=()=>done.has(task);
+ box.innerHTML=`<div class="fig"><button class="vt-max" type="button" aria-pressed="false" title="Zeichenbrett groß anzeigen">⤢ Groß</button><svg role="img" aria-label="${c.aria||'Zeichenbrett mit Kraftpfeilen'}"></svg></div>
+ <p class="caption">${c.cap||'Ziehe den Punkt am Pfeil (oder wähle das Brett an und nutze die Pfeiltasten). Maßstab: <b>1 cm ≙ '+fmtS(sc,2)+' '+u+'</b> (1 Kästchen = 0,5 cm).'}</p>
+ <p class="ruler" aria-live="polite"></p>
+ <div class="row"><button class="primary vt-check">Konstruktion prüfen</button>${c.type==='split'&&!c.noPar?'<button class="vt-par" aria-pressed="false">Parallelen einblenden</button>':''}${c.type==='add'&&!c.noPar?'<button class="vt-par" aria-pressed="false">Parallelogramm-Hilfslinien</button>':''}<button class="vt-sol">Lösung zeigen</button><button class="vt-reset">Neu</button></div>
+ <p class="fb vt-fb"></p>
+ ${c.ask!==false?`<div class="vt-ask" hidden>${(c.askList||[]).map((q,i)=>`<div class="numq"><span>${q[0]}</span><span class="unit"><input type="text" inputmode="decimal" data-i="${i}" aria-label="${q[0].replace(/<[^>]+>/g,'')}"> ${q[2]||u}</span></div>`).join('')}<div class="row"><button class="primary vt-num">Werte prüfen</button></div><p class="fb vt-nfb"></p></div>`:''}`;
+ const svg=box.querySelector('svg'),b=new Board(svg,{W,H,ox,oy});
+ const mxb=box.querySelector('.vt-max'),setMax=on=>{box.classList.toggle('vtmax',on);document.documentElement.classList.toggle('noscroll',on);mxb.setAttribute('aria-pressed',on);mxb.textContent=on?'✕ Schließen':'⤢ Groß';if(on)box.scrollTop=0;else box.scrollIntoView({block:'center'})};mxb.onclick=()=>setMax(!box.classList.contains('vtmax'));box.addEventListener('keydown',e=>{if(e.key==='Escape'&&box.classList.contains('vtmax'))setMax(false)});
+ let par=false,showSol=false,ok1=false;
+ const start=c.start||[[.8,-.8],[-.8,-.8]];
+ let h1=[...start[0]],h2=[...start[1]];
+ if(c.type==='split'){h1=comp.e[0].map(v=>v*0.6);h2=comp.e[1].map(v=>v*0.6)}
+ if(c.type==='plan'){h2=[forces[0].v[0]*0.3+forces[1].v[1]*0.25,forces[0].v[1]*0.3-forces[1].v[0]*0.25-1.2]}
+ const H1=b.add({get:()=>h1,set:(x,y)=>{if(c.type==='split'){const e=comp.e[0],t=Math.max(0,x*e[0]+y*e[1]);h1=[e[0]*t,e[1]*t]}else h1=[x,y]}});
+ let H2=null;if(c.type==='split'||c.type==='plan')H2=b.add({get:()=>h2,set:(x,y)=>{if(c.type==='split'){const e=comp.e[1],t=Math.max(0,x*e[0]+y*e[1]);h2=[e[0]*t,e[1]*t]}else h2=[x,y]}});
+ if(c.type==='plan')b.handles.reverse();
+ const len=v=>Math.hypot(v[0],v[1]);
+ b.draw=B=>{let s='';if(c.scene&&SCENES[c.scene])s+=SCENES[c.scene](B,c);
+  const showP=(par||showSol||solved())&&(c.type==='add'||c.type==='eq');
+  if(c.type==='add'&&showP&&forces.length===2){const [A,Bv]=forces;s+=B.line(A.v[0],A.v[1],sum[0],sum[1])+B.line(Bv.v[0],Bv.v[1],sum[0],sum[1])}
+  if(c.type==='eq'&&(showSol||solved())){let p=[0,0];forces.forEach(f=>{s+=B.arrow(p[0],p[1],p[0]+f.v[0],p[1]+f.v[1],f.c,{op:.45,w:2.2});p=[p[0]+f.v[0],p[1]+f.v[1]]});s+=B.arrow(p[0],p[1],0,0,'fr',{op:.45,w:2.2,dash:1})}
+  if(c.type==='split'){c.dirs.forEach((a,i)=>{s+=B.ray(0,0,a,30)});if(par||showSol||solved()){const G=comp.G;c.dirs.forEach(a=>{s+=B.line(G[0]-30*cosd(a),G[1]-30*sind(a),G[0]+30*cosd(a),G[1]+30*sind(a),'dashl')})}}
+  forces.forEach(f=>s+=B.arrow(0,0,f.v[0],f.v[1],f.c||'f1',{label:f.n,side:f.side||1}));
+  if(c.type==='split')s+=B.arrow(0,0,comp.G[0],comp.G[1],c.G.c||'fg',{label:c.G.n,side:c.G.side||-1,w:3.6});
+  if(showSol){if(target)s+=B.arrow(0,0,target[0],target[1],'fr',{op:.4,w:6,dash:1});if(comp)comp.k.forEach((k,i)=>s+=B.arrow(0,0,comp.e[i][0]*k,comp.e[i][1]*k,'fr',{op:.4,w:6,dash:1}));if(c.type==='plan'){const f=forces[1];s+=B.arrow(forces[0].v[0],forces[0].v[1],sum[0],sum[1],f.c,{op:.4,w:6,dash:1})}}
+  /* Schülerpfeile */
+  if(c.type==='plan'){const f=forces[1];s+=B.arrow(h2[0],h2[1],h2[0]+f.v[0],h2[1]+f.v[1],f.c,{label:f.n,w:3,dash:0})+`<rect x="${B.X(h2[0])-9}" y="${B.Y(h2[1])-9}" width="18" height="18" class="hdl sq${H2===B.active?' act':''}" style="stroke:${col(f.c)}"/>`}
+  if(c.type==='split'){const n=c.names||['F|1','F|2'];s+=B.arrow(0,0,h1[0],h1[1],c.cc?.[0]||'f1',{label:n[0],side:c.sides?.[0]||1})+B.arrow(0,0,h2[0],h2[1],c.cc?.[1]||'f2',{label:n[1],side:c.sides?.[1]||-1})+B.handleSvg(H1,c.cc?.[0]||'f1')+B.handleSvg(H2,c.cc?.[1]||'f2')}
+  else{s+=B.arrow(0,0,h1[0],h1[1],c.sc_c||'fr',{label:c.name||'F|res',side:c.side||-1})+B.handleSvg(H1,'fr')}
+  s+=B.dot(0,0,5);return s};
+ const ruler=box.querySelector('.ruler');
+ const upd=()=>{if(c.type==='split')ruler.innerHTML=`📏 Deine Pfeile: ${labH((c.names||['F|1'])[0])}: <b>${fmt(len(h1),1)} cm</b> · ${labH((c.names||[0,'F|2'])[1])}: <b>${fmt(len(h2),1)} cm</b>`;
+  else ruler.innerHTML=`📏 Dein Pfeil ${labH(c.name||'F|res')}: <b>${fmt(len(h1),1)} cm</b> lang${c.showAng?`, Winkel zur Waagrechten: <b>${fmtS(((ang(h1[0],h1[1])%360)+360)%360,0)}°</b>`:''}`};
+ b.onchange=upd;b.redraw();upd();
+ const fb=box.querySelector('.vt-fb'),ask=box.querySelector('.vt-ask');
+ const near=(p,q)=>Math.hypot(p[0]-q[0],p[1]-q[1])<=tol;
+ function hintFor(p,t){const lp=len(p),lt=len(t);if(lp<0.3)return 'Du hast noch keinen Pfeil gezeichnet.';const da=angDiff(ang(p[0],p[1]),ang(t[0],t[1]));
+  if(da>6)return 'Die <b>Richtung</b> stimmt noch nicht.'+(c.type==='add'?' Die Resultierende ist die Diagonale des Parallelogramms, das von beiden Kräften aufgespannt wird.':'');
+  return 'Die Richtung passt, aber dein Pfeil ist zu '+(lp>lt?'lang':'kurz')+'.'}
+ box.querySelector('.vt-check').onclick=()=>{let ok=false,msg='';
+  if(c.type==='split'){const t1=comp.e[0].map(v=>v*comp.k[0]),t2=comp.e[1].map(v=>v*comp.k[1]),o1=near(h1,t1),o2=near(h2,t2);ok=o1&&o2;
+   msg=ok?'':(!o1&&!o2?'Beide Teilkräfte stimmen noch nicht.':'Eine Teilkraft passt, die '+(o1?'zweite':'erste')+' noch nicht.')+' Tipp: Zeichne durch die <b>Pfeilspitze</b> der zu zerlegenden Kraft Parallelen zu den beiden Richtungen. Die Schnittpunkte sind die Spitzen der Teilkräfte.'}
+  else if(c.type==='plan'){const tail=forces[0].v,o1=near(h2,tail),o2=near(h1,target);ok=o1&&o2;
+   msg=ok?'':(!o1?`Setze den <b>Schaft</b> von ${labH(forces[1].n)} genau an die <b>Spitze</b> von ${labH(forces[0].n)} (Quadrat ziehen). `:'')+(!o2?'Die Resultierende führt vom Anfangspunkt zur Spitze des letzten Pfeils.':'')}
+  else{ok=near(h1,target);msg=ok?'':hintFor(h1,target)}
+  if(ok){fb.className='fb ok vt-fb';fb.innerHTML=c.okText||'Richtig konstruiert!';ok1=true;if(ask){ask.hidden=false;ask.querySelector('input')?.focus({preventScroll:true})}else mark(task)}
+  else{fb.className='fb hint vt-fb';fb.innerHTML=msg}
+  b.redraw()};
+ const pb=box.querySelector('.vt-par');if(pb)pb.onclick=()=>{par=!par;pb.setAttribute('aria-pressed',par);b.redraw()};
+ box.querySelector('.vt-sol').onclick=e=>{showSol=!showSol;e.target.textContent=showSol?'Lösung ausblenden':'Lösung zeigen';if(showSol&&c.solText){fb.className='fb hint vt-fb';fb.innerHTML=c.solText}if(showSol&&ask)ask.hidden=false;b.redraw()};
+ box.querySelector('.vt-reset').onclick=()=>{h1=[...start[0]];h2=[...start[1]];if(c.type==='split'){h1=comp.e[0].map(v=>v*0.6);h2=comp.e[1].map(v=>v*0.6)}if(c.type==='plan')h2=[forces[0].v[0]*0.3+forces[1].v[1]*0.25,forces[0].v[1]*0.3-forces[1].v[0]*0.25-1.2];fb.textContent='';fb.className='fb vt-fb';b.redraw();upd()};
+ if(ask){const nfb=ask.querySelector('.vt-nfb');ask.querySelector('.vt-num').onclick=()=>{let n=0;const ins=[...ask.querySelectorAll('input')];ins.forEach(inp=>{const q=c.askList[+inp.dataset.i],v=num(inp.value),okv=!isNaN(v)&&Math.abs(v-q[1])<=Math.abs(q[1])*(q[3]||0.06);inp.className=inp.value===''?'':(okv?'ok':'bad');if(okv)n++});
+  if(n===ins.length){nfb.className='fb ok vt-nfb';nfb.innerHTML=c.numOk||'Richtig abgelesen und umgerechnet!';mark(task)}else{nfb.className='fb bad vt-nfb';nfb.innerHTML=n+' von '+ins.length+' richtig. Miss die Pfeillänge (Lineal-Anzeige) und rechne mit dem Maßstab um: Länge in cm · '+fmtS(sc,2)+' '+u+'.'}}}
+}
+
+/* ===== Bausteine ===== */
+const hints={};
+function initCommon(){
+ $$('.hintsrc').forEach(d=>{hints[d.dataset.for]=[...d.children].map(p=>p.innerHTML)});
+ $$('[data-hint]').forEach(b=>{let h=0;b.onclick=()=>{const id=b.dataset.hint,arr=hints[id]||[],el=$('#'+id+'Tip');if(!arr.length||!el)return;el.className='fb hint tip';el.innerHTML='Tipp '+(h%arr.length+1)+' von '+arr.length+': '+arr[h%arr.length];h++}});
+ $$('[data-sol]').forEach(b=>b.onclick=()=>{const el=$('#'+b.dataset.sol);el.hidden=!el.hidden;b.textContent=el.hidden?'Lösung zeigen':'Lösung ausblenden'});
+ /* Multiple Choice: nach einem Fehlversuch Hinweis und kurze Denkpause */
+ $$('.mc[data-correct]').forEach(box=>{const fb=box.querySelector('.fb'),btns=[...box.querySelectorAll('button[data-k]')];
+  btns.forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
+   if(ok){btns.forEach(x=>x.classList.remove('bad'));b.classList.add('ok');fb.className='fb ok';fb.innerHTML=b.dataset.fb||'Richtig!';mark(box.dataset.task);return}
+   b.classList.add('bad');b.disabled=true;fb.className='fb hint';
+   fb.innerHTML=(b.dataset.fb||'Das stimmt nicht.')+(box.dataset.tipp?' <b>Hinweis:</b> '+box.dataset.tipp:' Lies die Frage noch einmal genau und denk nach, bevor du weiterklickst.');
+   const free=btns.filter(x=>!x.classList.contains('bad'));free.forEach(x=>x.disabled=true);setTimeout(()=>free.forEach(x=>x.disabled=false),reduce?0:2500)})});
+ /* Mehrfachauswahl */
+ $$('.multi').forEach(box=>{const fb=box.querySelector('.fb');box.querySelector('.multi-check').onclick=()=>{const ls=[...box.querySelectorAll('label')];let bad=0;ls.forEach(l=>{const i=l.querySelector('input'),should=l.dataset.ok==='1';const r=i.checked===should;l.className=i.checked||!r?(r?'ok':'bad'):'';if(!r)bad++});
+  if(!bad){fb.className='fb ok';fb.innerHTML=box.dataset.fb||'Richtig!';mark(box.dataset.task)}else{fb.className='fb hint';fb.innerHTML=bad+(bad===1?' Auswahl stimmt':' Auswahlen stimmen')+' noch nicht. '+(box.dataset.tipp||'')}}});
+ /* Textfelder */
+ $$('textarea[data-store]').forEach(t=>{const k=KEY+'-txt-'+t.dataset.store;try{t.value=localStorage.getItem(k)||''}catch(e){}t.addEventListener('input',()=>{try{localStorage.setItem(k,t.value)}catch(e){}})});
+ /* Begründe-Aufträge */
+ $$('.why').forEach(w=>{const t=w.querySelector('textarea'),cb=w.querySelector('input[type=checkbox]'),show=w.querySelector('.why-show'),sol=w.querySelector('.sol'),okb=w.querySelector('.why-ok');
+  const upd=()=>{show.disabled=!((t&&t.value.trim().length>=15)||(cb&&cb.checked))};if(t)t.addEventListener('input',upd);if(cb)cb.addEventListener('change',upd);upd();
+  show.onclick=()=>{sol.hidden=false;show.hidden=true};okb.onclick=()=>{mark(w.dataset.task);okb.textContent='✓ Abgehakt'}});
+ /* Zahlen-Aufgaben */
+ $$('.numbox').forEach(box=>{const fb=box.querySelector('.nfb');box.querySelector('.num-check').onclick=()=>{const ins=[...box.querySelectorAll('input[data-a]')];let ok=0;
+  ins.forEach(i=>{const v=num(i.value),a=+i.dataset.a,tol=+(i.dataset.tol||0.01),gd=!isNaN(v)&&Math.abs(v-a)<=Math.max(Math.abs(a)*tol,1e-9);i.className=i.value===''?'':(gd?'ok':'bad');if(gd)ok++});
+  if(ok===ins.length){fb.className='fb ok nfb';fb.innerHTML=box.dataset.fb||'Alles richtig!';mark(box.dataset.task)}else{fb.className='fb bad nfb';fb.textContent=ok+' von '+ins.length+' richtig. Prüfe Rechnung, Einheiten und Rundung – oder hol dir einen Tipp.'}}});
+ /* Auswahlfelder (Lückentext, Zuordnung) */
+ $$('.selbox').forEach(box=>{const fb=box.querySelector('.sfb');box.querySelector('.sel-check').onclick=()=>{const s=[...box.querySelectorAll('select')];let ok=0;s.forEach(x=>{const gd=x.value===x.dataset.a;x.className=x.value===''?'':(gd?'ok':'bad');if(gd)ok++});
+  if(ok===s.length){fb.className='fb ok sfb';fb.innerHTML=box.dataset.fb||'Alles richtig!';mark(box.dataset.task)}else{fb.className='fb bad sfb';fb.textContent=ok+' von '+s.length+' richtig. Prüfe die rot markierten Felder.'}}});
+ /* Richtig/Falsch */
+ $$('.tf').forEach(box=>{const rows=[...box.querySelectorAll('.item')],solved=new Set();rows.forEach((row,i)=>{const ex=row.querySelector('.ex'),fb=row.querySelector('.fb');row.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=b.dataset.v===row.dataset.v;
+  row.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');fb.className='fb '+(ok?'ok':'bad');fb.innerHTML=(ok?'Stimmt. ':'Nein. ')+ex.innerHTML;if(ok)solved.add(i);if(solved.size===rows.length)mark(box.dataset.task)})})});
+ /* Reiter */
+ $$('.tabs[data-group]').forEach(tb=>{const bs=[...tb.querySelectorAll('button')];bs.forEach(b=>b.onclick=()=>{bs.forEach(x=>{x.setAttribute('aria-pressed',x===b);const p=$('#'+x.dataset.panel);if(p)p.hidden=x!==b});const p=$('#'+b.dataset.panel);p&&p.dispatchEvent(new Event('show'))})});
+ $$('.vt').forEach(initVT);
+ {const d=$('#qrDlg');$('#qrOpen').onclick=()=>d.showModal();$('#qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
+ $('#resetAll').onclick=()=>{done.clear();save();location.reload()};
+ updProg()}
+
+
+/* Heftaufschrieb übernommen */
+$$('.hb-done').forEach(b=>{if(done.has(b.dataset.task))b.textContent='✓ Im Heft';b.onclick=()=>{mark(b.dataset.task);b.textContent='✓ Im Heft'}});
+/* Schritt-für-Schritt */
+$$('.stepper').forEach(st=>{const boxes=[...st.querySelectorAll('.stepbox')],nx=st.querySelector('.st-next'),bk=st.querySelector('.st-back'),dots=st.querySelector('.steps');let i=0;
+ const show=()=>{boxes.forEach((b,k)=>b.hidden=k>i);if(dots)dots.innerHTML=boxes.map((b,k)=>`<i class="${k<=i?'on':''}">${k+1}</i>`).join('');nx.disabled=i>=boxes.length-1;bk.disabled=i===0;if(i>=boxes.length-1&&st.dataset.task)mark(st.dataset.task)};
+ nx.onclick=()=>{i=Math.min(boxes.length-1,i+1);show()};bk.onclick=()=>{i=Math.max(0,i-1);show()};show()});
+
+
+SCENES.kugel=(B)=>`<circle cx="${B.X(0)}" cy="${B.Y(0)}" r="${0.5*B.U}" style="fill:color-mix(in srgb,#76989D 45%,transparent);stroke:var(--ink)" stroke-width="2"/>`;
+
+/* ---------- Einstieg: Rampe ---------- */
+{const svg=$('#ramp'),M=0.1,mu=0.4;let m=0.02,phase=0,last=null,k=0;
+ const PX=3; /* 1 cm Rutschweite = 3 px, Skala ab Vorderkante des Klötzchens */
+ const surf=t=>[40+200*t,212-160*Math.pow(1-t,2)];
+ function vals(){const h=+$('#rH').value/100,v=Math.sqrt(2*g*h),uB=2*m*v/(m+M),uK=(m-M)/(m+M)*v,s=uB*uB/(2*mu*g);return {h,v,uB,uK,s}}
+ function draw(){const h=+$('#rH').value;$('#rHv').textContent=h;const V=vals(),r=m>0.03?13:9;
+  let path='M40 212';for(let i=0;i<=30;i++){const [x,y]=surf(i/30);path+=` L${x.toFixed(1)} ${y.toFixed(1)}`}
+  let s=`<rect x="0" y="212" width="640" height="38" class="ground"/><path d="${path} L240 212Z" style="fill:var(--panel);stroke:var(--ink)" stroke-width="2"/><line x1="240" y1="212" x2="640" y2="212" class="thin" stroke-width="2"/>`;
+  for(let i=0;i<=10;i++){const x=334+i*30;s+=`<line x1="${x}" y1="212" x2="${x}" y2="220" class="thin"/>`+(i%2===0?`<text x="${x}" y="236" text-anchor="middle" class="txs">${i*10}</text>`:'')}
+  s+=`<text x="634" y="248" text-anchor="end" class="txs">Rutschweite in cm</text>`;
+  const t0=1-Math.sqrt(h*2.6/160);let bx,by,blk=300;
+  if(phase===0){[bx,by]=surf(t0)}
+  else if(phase===1){if(k<0.8){[bx,by]=surf(t0+(1-t0)*k/0.8)}else{bx=240+(300-r-240)*(k-0.8)/0.2;by=212}}
+  else{blk=300+V.s*100*PX*(1-Math.pow(1-k,2));bx=300-r+V.uK*40*k;by=212}
+  by-=r;
+  s+=`<line x1="10" y1="${212-h*2.6}" x2="${surf(t0)[0]+4}" y2="${212-h*2.6}" class="dashl"/><text x="12" y="${206-h*2.6}" class="txs"><f-m>h = ${h}</f-m> cm</text>`;
+  s+=`<rect x="${blk}" y="182" width="34" height="30" rx="3" style="fill:#d9a066;stroke:var(--ink)"/><text x="${blk+17}" y="201" text-anchor="middle" class="txs" style="fill:#2f393a">100 g</text>`;
+  s+=`<circle cx="${bx}" cy="${by}" r="${r}" style="fill:${m>0.03?'#8f9ea2':'#a3c3c8'};stroke:var(--ink)" stroke-width="1.5"/>`;
+  if(phase===2&&k>=1)s+=`<line x1="317" y1="174" x2="${blk+17}" y2="174" style="stroke:var(--fr)" stroke-width="2"/><text x="${Math.max(360,(317+blk+17)/2)}" y="166" text-anchor="middle" class="txb" style="fill:var(--fr)">${fmt(V.s*100,1)} cm</text>`;
+  svg.innerHTML=s;
+  $('#rRead').innerHTML=`<div>Masse der Kugel<b>${m*1000} g</b></div><div>Geschwindigkeit unten<f-m><b>${fmt(V.v,2)} m/s</b></f-m></div><div>Rutschweite<b style="color:var(--fr)">${phase===2&&k>=1?fmt(V.s*100,1)+' cm':'–'}</b></div>`}
+ let run=false;
+ $('#rGo').onclick=()=>{if(run)return;run=true;phase=1;k=0;animate(900,q=>{k=q;draw()},()=>{phase=2;k=0;animate(1200,q=>{k=q;draw()},()=>{run=false;last={m,s:vals().s*100,h:+$('#rH').value}})})};
+ $('#rRe').onclick=()=>{phase=0;k=0;draw()};
+ $('#rH').oninput=()=>{phase=0;draw()};
+ $$('#rBall button').forEach(b=>b.onclick=()=>{m=+b.dataset.m;$$('#rBall button').forEach(x=>x.setAttribute('aria-pressed',x===b));phase=0;draw()});
+ draw();
+ $('#e1b').onclick=()=>{const fb=$('#e1Fb');const ref=(()=>{const v=Math.sqrt(2*g*0.1),u=2*0.06*v/0.16;return u*u/(2*mu*g)*100})();
+  if(!last){fb.className='fb hint';fb.innerHTML='Lass zuerst eine Kugel rollen.';return}
+  if(last.m>0.03){fb.className='fb hint';fb.innerHTML='Mit der schweren Kugel aus 10 cm rutscht das Klötzchen '+fmt(ref,1)+' cm weit. Wähle jetzt die <b>leichte</b> Kugel und suche die passende Starthöhe.';return}
+  if(Math.abs(last.s-ref)<=1){fb.className='fb ok';fb.innerHTML='Richtig! Aus etwa '+last.h+' cm Höhe schafft die leichte Kugel dasselbe wie die schwere aus 10 cm. Sie muss dafür <b>viel schneller</b> sein ('+fmt(Math.sqrt(2*g*last.h/100),1)+' m/s statt 1,4 m/s).';mark('e1')}
+  else{fb.className='fb hint';fb.innerHTML='Mit der leichten Kugel aus '+last.h+' cm rutscht das Klötzchen '+fmt(last.s,1)+' cm, gesucht sind '+fmt(ref,1)+' cm. Starthöhe '+(last.s<ref?'erhöhen':'verringern')+'.'}}}
+
+/* ---------- Impuls-Waage ---------- */
+{const svg=$('#iw');
+ function draw(){const m1=+$('#m1').value,v1=+$('#v1').value,m2=+$('#m2').value,v2=+$('#v2').value;
+  $('#m1v').textContent=fmtS(m1,1);$('#v1v').textContent=fmtS(v1,1);$('#m2v').textContent=fmtS(m2,1);$('#v2v').textContent=fmtS(v2,1);
+  const p1=m1*v1,p2=m2*v2,S=12;/* 1 kg·m/s = 12 px */
+  let s=`<line x1="20" y1="110" x2="620" y2="110" class="thin"/><line x1="20" y1="225" x2="620" y2="225" class="thin"/><line x1="320" y1="20" x2="320" y2="240" class="dashl"/>`;
+  const body=(y,m,c,lab)=>{const r=8+Math.sqrt(m)*9;return `<circle cx="320" cy="${y-r}" r="${r}" style="fill:${c};opacity:.75;stroke:var(--ink)"/><text x="320" y="${y-r+5}" text-anchor="middle" class="txb" style="fill:#fff">${lab}</text>`};
+  const arr=(y,p,c,lab)=>{if(Math.abs(p)<0.05)return `<text x="330" y="${y}" class="txs"><f-m>p = 0</f-m></text>`;const L=Math.max(-290,Math.min(290,p*S)),x2=320+L,d=Math.sign(L);let t=`<line x1="320" y1="${y}" x2="${x2-d*12}" y2="${y}" style="stroke:${c}" stroke-width="6"/><path d="M${x2} ${y} l${-d*16} -9 v18z" style="fill:${c}"/>`;if(Math.abs(p*S)>290)t+=`<text x="${x2-d*20}" y="${y-12}" text-anchor="middle" class="txs">(gekürzt)</text>`;return t+`<text x="${320+L/2}" y="${y-12}" text-anchor="middle" class="txb" style="fill:${c}">p<tspan dy="5" font-size="75%">${lab}</tspan></text>`};
+  s+=body(110,m1,'#5F6F74','1')+arr(40,p1,'var(--f1)','1')+body(225,m2,'#76989D','2')+arr(155,p2,'var(--f2)','2');
+  svg.innerHTML=s;
+  $('#iwRead').innerHTML=`<div>Impuls Körper 1<b class="tc1"><f-m>p<sub>1</sub> = ${fmtS(p1,2)} kg·m/s</f-m></b></div><div>Impuls Körper 2<b class="tc2"><f-m>p<sub>2</sub> = ${fmtS(p2,2)} kg·m/s</f-m></b></div>`}
+ ['#m1','#v1','#m2','#v2'].forEach(i=>$(i).oninput=draw);draw();
+ $('#a2b').onclick=()=>{const m1=+$('#m1').value,v1=+$('#v1').value,m2=+$('#m2').value,v2=+$('#v2').value,fb=$('#a2Fb');
+  if(Math.abs(m1-3)>0.01||Math.abs(v1-2)>0.01||Math.abs(m2-0.5)>0.01){fb.className='fb hint';fb.innerHTML='Stelle zuerst Körper 1 auf 3 kg und 2 m/s und Körper 2 auf 0,5 kg ein.';return}
+  if(Math.abs(v2-12)<0.01){fb.className='fb ok';fb.innerHTML='Richtig! Der Volleyball braucht <b>12 m/s</b>: <f-m>3 kg · 2 m/s = 0,5 kg · 12 m/s = 6 kg·m/s</f-m>. Sechsmal kleinere Masse braucht sechsmal größere Geschwindigkeit.';mark('a2')}
+  else{fb.className='fb hint';fb.innerHTML='Noch nicht gleich: <f-m>p<sub>1</sub> = 6 kg·m/s</f-m>, <f-m>p<sub>2</sub> = '+fmtS(m2*v2,2)+' kg·m/s</f-m>. Vergleiche die Pfeillängen.'}}}
+
+/* ---------- Ranking ---------- */
+{const R=[['ICE bei voller Fahrt','400 t','300 km/h'],['Lkw auf der Autobahn','40 t','80 km/h'],['Rennauto (Formel 1)','800 kg','300 km/h'],['Pkw außerorts','1,5 t','100 km/h'],['Motorrad auf der Autobahn (mit Fahrer)','300 kg','130 km/h'],['Pkw in der Fußgängerzone','1,5 t','7 km/h'],['Schülerin beim 100-m-Lauf','60 kg','7 m/s'],['Schüler im Fahrstuhl','65 kg','1 m/s'],['Fußball beim Torschuss','430 g','30 m/s'],['Eishockey-Puck','170 g','40 m/s'],['Tennisball beim Aufschlag','58 g','55 m/s'],['Gewehrkugel (9 mm)','8 g','360 m/s']];
+ const P=['<f-m>3,3 · 10<sup>7</sup></f-m>','<f-m>8,9 · 10<sup>5</sup></f-m>','<f-m>6,7 · 10<sup>4</sup></f-m>','<f-m>4,2 · 10<sup>4</sup></f-m>','<f-m>1,1 · 10<sup>4</sup></f-m>','2900','420','65','13','6,8','3,2','2,9'];
+ const order=[5,11,0,8,3,9,1,6,10,2,7,4];/* gemischte Reihenfolge */
+ const opts='<option value="">…</option>'+R.map((_,i)=>`<option>${i+1}</option>`).join('');
+ $('#rankList').innerHTML=order.map(i=>`<div class="steprow"><span>${R[i][0]}</span><select data-a="${i+1}" aria-label="Platz für ${R[i][0]}">${opts}</select></div>`).join('');
+ $('#rankTbl tbody').innerHTML=order.map(i=>`<tr><td class="l">${R[i][0]}</td><td>${R[i][1]}</td><td>${R[i][2]}</td><td class="pv" data-p="${P[i]} kg·m/s">?</td></tr>`).join('');
+ $('#rankShow').onclick=()=>$$('#rankTbl .pv').forEach(td=>td.innerHTML=td.dataset.p)}
+
+initCommon();
+}
+</script>
+</body>
+</html>

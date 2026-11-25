@@ -3,7 +3,7 @@ Formel = zusammenhängende Folge aus Zahlen (mit Einheit), Einzelbuchstaben-Vari
 Rechenzeichen und Klammern, die mindestens ein Rechenzeichen und zwei Operanden enthält."""
 import re,sys,glob,json
 LET='A-Za-zäöüÄÖÜßα-ωΔ'
-UNIT=re.compile(r'(kg/m³|m/s²|km/h|m³|cm³|m²|cm²|N/kg|N/m|km/s|m/s|kWh|MWh|kJ|MJ|kN|kg|cm|mm|km|J|N|W|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß²])')
+UNIT=re.compile(r'(kg·m/s|N·s|kg/m³|m/s²|km/h|m³|cm³|m²|cm²|N/kg|N/m|km/s|m/s|kWh|MWh|kJ|MJ|kN|kg|cm|mm|km|J|N|W|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß²])')
 FUNCS=re.compile(r'(arcsin|arccos|arctan|sin|cos|tan)(?![A-Za-zäöüÄÖÜß])')
 NUM=re.compile(r'(\d{1,3}(?:[  ]\d{3})+|\d+)(?:,\d+)?(?:<sup>[−-]?\d+</sup>)?')
 OPCH='=≈·×+−-:/→~'
@@ -87,6 +87,7 @@ def tokens(s):
             fm=FUNCS.match(s,i)
             if fm:out.append(('fn',i,fm.end()));i=fm.end();continue
             e=i+1
+            if c=='Δ' and e<n and re.match('[A-Za-zα-ω]',s[e]):e+=1
             if s[e:e+1]=='\u20d7':e+=1
             m=re.match(r'<sub>[^<]{1,10}</sub>|_[A-Za-z0-9]{1,6}(?![A-Za-z0-9])',s[e:])
             if m:e+=m.end()
@@ -119,7 +120,7 @@ def valid(run,src):
     if set(ops)=={'/'} and 'var' not in ks and not any(re.search('[A-Za-z%°]',src[t[1]:t[2]]) for t in run if t[0]=='num'):return False
     return True
 
-NOUNS=r'(Masse|Höhe|Hubhöhe|Fallhöhe|Starthöhe|Ortsfaktor|Abstand|Bildweite|Gegenstandsweite|Körperlänge|Augenhöhe|Strecke|Weg|Zeit|Geschwindigkeit|Kraft|Gewichtskraft|Winkel|Einfallswinkel|Reflexionswinkel|Brechungswinkel|Ablenkwinkel|Öffnungswinkel|Energie|Lageenergie|Bewegungsenergie|Scheibenabstand)'
+NOUNS=r'(Masse|Impuls|Impulsänderung|Kraftstoß|Zeitspanne|Höhe|Hubhöhe|Fallhöhe|Starthöhe|Ortsfaktor|Abstand|Bildweite|Gegenstandsweite|Körperlänge|Augenhöhe|Strecke|Weg|Zeit|Geschwindigkeit|Kraft|Gewichtskraft|Winkel|Einfallswinkel|Reflexionswinkel|Brechungswinkel|Ablenkwinkel|Öffnungswinkel|Energie|Lageenergie|Bewegungsenergie|Scheibenabstand)'
 def single_symbol(run,src):
     """Einzelnes Formelzeichen im Fließtext: mit Index, griechisch oder nach einem Größennamen."""
     core=[t for t in run if t[0] not in('ws','bo','bc')]
