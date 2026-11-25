@@ -7,9 +7,11 @@ const GREEK={'α':'\\alpha','β':'\\beta','γ':'\\gamma','δ':'\\delta','ε':'\\
 const OPS={'=':'=','≈':'\\approx','·':'\\cdot','×':'\\cdot','+':'+','−':'-','-':'-',':':':','/':'/','→':'\\rightarrow','~':'\\sim','<':'<','>':'>','≤':'\\le','≥':'\\ge'};
 const FR={'½':'\\tfrac{1}{2}','¼':'\\tfrac{1}{4}','¾':'\\tfrac{3}{4}'};
 const REL=new Set(['=','≈','→','~','<','>','≤','≥']),ADD=new Set(['+','−','-']),MUL=new Set(['·','×']),DIV=new Set([':','/']);
-const UNIT=/^(kg\/m³|m³|cm³|m²|cm²|N\/kg|km\/s|m\/s|kWh|MWh|kJ|MJ|kg|cm|mm|km|J|N|W|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß])/;
+const UNIT=/^(kg\/m³|m\/s²|km\/h|m³|cm³|m²|cm²|N\/kg|N\/m|km\/s|m\/s|kWh|MWh|kJ|MJ|kN|kg|cm|mm|km|J|N|W|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß²])/;
 const NUM=/^(\d{1,3}(?:[\u00a0 ]\d{3})+|\d+)(?:,\d+)?(?:<sup>[−-]?\d+<\/sup>)?/;
-const VAR=/^([A-Za-zα-ωΔ])(?:<sub>([^<]{1,10})<\/sub>|_([A-Za-z0-9]{1,6})(?![A-Za-z0-9]))?(?![A-Za-zäöüÄÖÜß])/;
+const VAR=/^([A-Za-zα-ωΔ])(\u20d7)?(?:<sub>([^<]{1,10})<\/sub>|_([A-Za-z0-9]{1,6})(?![A-Za-z0-9]))?(?:<sup>(\d)<\/sup>)?(?![A-Za-zäöüÄÖÜß])/;
+/* Winkelfunktionen und Wurzel (Physik 11) */
+const FN=/^(arcsin|arccos|arctan|sin|cos|tan)(?![A-Za-zäöüÄÖÜß])/;
 function decode(s){return s.replace(/&nbsp;/g,'\u00a0').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&')}
 function tokenize(html){const t=[];let s=decode(html),bold=false,m;
  while(s.length){
@@ -19,7 +21,9 @@ function tokenize(html){const t=[];let s=decode(html),bold=false,m;
   if((m=NUM.exec(s))){let v=m[0];s=s.slice(v.length);let u=null,mu=/^[\s\u00a0]?/.exec(s)[0];const um=UNIT.exec(s.slice(mu.length));
    if(um){u=um[1];s=s.slice(mu.length+u.length);if(u==='N'&&/^[\s\u00a0]?·[\s\u00a0]?m(?![A-Za-z])/.test(s)){s=s.replace(/^[\s\u00a0]?·[\s\u00a0]?m/,'');u='N·m'}}
    t.push({k:'num',v,u,bold});continue}
-  if((m=VAR.exec(s))){t.push({k:'var',v:m[1],sub:m[2]||m[3],bold});s=s.slice(m[0].length);continue}
+  if((m=FN.exec(s))){t.push({k:'fn',v:m[1],bold});s=s.slice(m[0].length);continue}
+  if(s[0]==='√'){t.push({k:'sqrt',bold});s=s.slice(1);continue}
+  if((m=VAR.exec(s))){t.push({k:'var',v:m[1],vec:!!m[2],sub:m[3]||m[4],sup:m[5],bold});s=s.slice(m[0].length);continue}
   if('½¼¾'.includes(s[0])){t.push({k:'num',v:s[0],bold});s=s.slice(1);continue}
   const c=s[0];
   if(c in OPS){t.push({k:'op',v:c,bold});s=s.slice(1);continue}
@@ -27,14 +31,16 @@ function tokenize(html){const t=[];let s=decode(html),bold=false,m;
   t.push({k:'raw',v:c,bold});s=s.slice(1)}
  return t}
 function texNum(tok){if(tok.v in FR)return FR[tok.v];let v=tok.v.replace(',','{,}').replace(/[\u00a0 ](?=\d{3})/g,'\\,').replace(/<sup>([−-]?)(\d+)<\/sup>/,(a,mi,d)=>'^{'+(mi?'-':'')+d+'}');
- let u='';if(tok.u){u=tok.u==='°'?'^\\circ':tok.u==='%'?'\\,\\%':'\\,\\mathrm{'+tok.u.replace('·','\\cdot ')+'}'}
+ let u='';if(tok.u){u=tok.u==='°'?'^\\circ':tok.u==='%'?'\\,\\%':'\\,\\mathrm{'+tok.u.replace('·','\\cdot ').replace('²','^2').replace('³','^3')+'}'}
  return v+u}
-function texVar(tok){let v=GREEK[tok.v]||tok.v;if(tok.sub)v+='_{\\mathrm{'+tok.sub+'}}';return v}
+function texVar(tok){let v=GREEK[tok.v]||tok.v;if(tok.vec)v='\\vec{'+v+'}';if(tok.sub)v+='_{\\mathrm{'+tok.sub+'}}';if(tok.sup)v+='^{'+tok.sup+'}';return v}
 function wrapB(tex,b){return b?'\\boldsymbol{'+tex+'}':tex}
 /* Parser mit Rangfolge: Relation < Strich < Punkt/Bruch */
 function parse(tokens,big){let i=0;const peek=()=>tokens[i];
  function atom(){const t=tokens[i];if(!t)return '';
   if(t.k==='('){i++;const e=rel();if(peek()&&peek().k===')')i++;return {paren:true,tex:e,bold:t.bold}}
+  if(t.k==='fn'){i++;const a=atom();return wrapB('\\'+t.v+(typeof a==='string'?' '+a:'\\left('+a.tex+'\\right)'),t.bold)}
+  if(t.k==='sqrt'){i++;const a=atom();return wrapB('\\sqrt{'+(typeof a==='string'?a:a.tex)+'}',t.bold)}
   i++;if(t.k==='num')return wrapB(texNum(t),t.bold);if(t.k==='var')return wrapB(texVar(t),t.bold);return wrapB(t.v,t.bold)}
  const show=a=>typeof a==='string'?a:'\\left('+a.tex+'\\right)';
  const bare=a=>typeof a==='string'?a:a.tex;

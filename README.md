@@ -17,6 +17,12 @@ Physik9/
   energie-einfuehrung.html  Was ist Energie? (Energieformen, Stationen, Energiewandler)
   lageenergie.html          Lageenergie (Fall-Labor, E = m · g · h, Nullniveau)
   energieerhaltung.html     Energieerhaltung und Energieentwertung
+Physik11/
+  kraft-grundlagen.html     1 · Kraft – Grundlagen (Wirkungen, Kraftpfeil, Gewichtskraft, Trägheit)
+  kraefteaddition.html      2 · Kräfteaddition und Gleichgewicht (Parallelogramm, Kräfteplan)
+  kraeftezerlegung.html     3 · Kräftezerlegung (grafisch und rechnerisch)
+  schiefe-ebene.html        4 · Schiefe Ebene (Hangabtriebs- und Normalkraft)
+  newton-reibung.html       5 · Newtonsche Gesetze und Reibung
 ```
 
 Jede Klasse bzw. jedes Fach bekommt einen eigenen Ordner. Die Adresse einer Seite ist der Pfad ohne `.html`,

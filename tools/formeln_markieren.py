@@ -3,7 +3,8 @@ Formel = zusammenhängende Folge aus Zahlen (mit Einheit), Einzelbuchstaben-Vari
 Rechenzeichen und Klammern, die mindestens ein Rechenzeichen und zwei Operanden enthält."""
 import re,sys,glob,json
 LET='A-Za-zäöüÄÖÜßα-ωΔ'
-UNIT=re.compile(r'(kg/m³|m³|cm³|m²|cm²|N/kg|km/s|m/s|kWh|MWh|kJ|MJ|kg|cm|mm|km|J|N|W|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß])')
+UNIT=re.compile(r'(kg/m³|m/s²|km/h|m³|cm³|m²|cm²|N/kg|N/m|km/s|m/s|kWh|MWh|kJ|MJ|kN|kg|cm|mm|km|J|N|W|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß²])')
+FUNCS=re.compile(r'(arcsin|arccos|arctan|sin|cos|tan)(?![A-Za-zäöüÄÖÜß])')
 NUM=re.compile(r'(\d{1,3}(?:[  ]\d{3})+|\d+)(?:,\d+)?(?:<sup>[−-]?\d+</sup>)?')
 OPCH='=≈·×+−-:/→~'
 REALOP=set('=≈·×+−:/→~-')
@@ -81,9 +82,15 @@ def tokens(s):
                 nm=re.match(r' ?· ?m(?![A-Za-z])',s[e:])
                 if um.group(1)=='N' and nm:e+=nm.end()
             out.append(('num',i,e));i=e;continue
+        if c=='√':out.append(('fn',i,i+1));i+=1;continue
         if re.match('['+LET+']',c) and not re.match('['+LET+']',prev):
+            fm=FUNCS.match(s,i)
+            if fm:out.append(('fn',i,fm.end()));i=fm.end();continue
             e=i+1
+            if s[e:e+1]=='\u20d7':e+=1
             m=re.match(r'<sub>[^<]{1,10}</sub>|_[A-Za-z0-9]{1,6}(?![A-Za-z0-9])',s[e:])
+            if m:e+=m.end()
+            m=re.match(r'<sup>\d</sup>',s[e:])
             if m:e+=m.end()
             if e<n and re.match('['+LET+']',s[e]):
                 # mehrbuchstabiges Wort: ganz überspringen
@@ -127,7 +134,7 @@ def single_symbol(run,src):
 def trim(run):
     # führende/nachfolgende Füllzeichen und Operatoren entfernen
     while run and run[0][0] in('ws','op',')','bc'):run=run[1:]
-    while run and run[-1][0] in('ws','op','(','bo'):run=run[:-1]
+    while run and run[-1][0] in('ws','op','(','bo','fn'):run=run[:-1]
     # Klammern ausgleichen
     d=0;start=0
     for i,t in enumerate(run):
@@ -158,7 +165,7 @@ def trim(run):
 def mark_html(s):
     toks=tokens(s);res=[];last=0;runs=[];cur=[]
     for t in toks:
-        if t[0] in('num','var','op','(',')','bo','bc','ws'):cur.append(t)
+        if t[0] in('num','var','op','(',')','bo','bc','ws','fn'):cur.append(t)
         else:
             runs.append(cur);cur=[]
             if t[0]=='tag':
