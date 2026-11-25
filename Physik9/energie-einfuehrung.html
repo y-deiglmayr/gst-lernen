@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Was ist Energie?</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+/* VOICE: freundlich-sachlich wie ein gutes Arbeitsheft – du-Ansprache, kurze Aufträge
+   IDEA: Energie-Labor trifft Karoheft – dunkler Versuchsraum oben, Säulendiagramme als durchgehende Bildsprache
+   COLOUR: E_L Blau, E_B Grün, E_therm Rot (wie im Unterrichtsmaterial), Akzent Orange; Lexend + Atkinson Hyperlegible
+   LAYOUT: vier Phasen (Wiederholen – Entdecken – Festhalten – Üben) */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--grid:light-dark(#d4e2f2,#232c3b);
+--paper:light-dark(#fdfeff,#151a23);
+--acc:light-dark(#c2410c,#ff9a4d);--acc2:light-dark(#1d62c9,#64a6ff);
+--el:light-dark(#2563c9,#6aa5ff);--eb:light-dark(#1d8a4a,#4fd27f);--eth:light-dark(#d4381e,#ff7a5c);--esp:light-dark(#8a3fc4,#c08cff);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2815);--lab:#0e131d;--labink:#eef1f7}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700}
+h3{font-size:21px;font-weight:600;margin-top:1.6em}
+h4{font-size:17px;font-weight:600;margin:0 0 .3em}
+p{margin:0 0 .8em}
+sub{font-size:.72em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.alt{background:var(--panel)}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#fff;font-size:13px;margin-right:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.bar{width:140px;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .4s}
+.hero{background:var(--lab);color:var(--labink)}
+.hero p{color:#c6ccd8;max-width:64ch}
+.hero svg{width:100%;height:auto;display:block;margin:18px 0 8px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px}
+.phases a{display:block;padding:14px 16px;border-radius:12px;background:#182031;color:#eef1f7;text-decoration:none;border:1px solid #2a3448}
+.phases a:hover{border-color:#ff9a4d}
+.phases b{font-family:Lexend,system-ui,sans-serif;display:block;font-size:17px}
+.phases small{color:#a9b2c4;font-size:14px}
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+@media(min-width:901px){.stick{position:sticky;top:70px}}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;touch-action:manipulation;user-select:none}
+.caption{font-size:14px;color:var(--muted);margin:6px 4px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card.done{border-color:var(--ok)}
+.card .tag{font:600 13px Lexend,system-ui,sans-serif;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.card.done>.tag::after{content:"✓ gelöst";color:var(--ok)}
+.stars{color:var(--acc);letter-spacing:2px}
+.intro{max-width:72ch;color:var(--muted)}
+.merke{border:2px solid var(--acc);border-radius:14px;padding:16px 20px;margin:18px 0;background:var(--bg)}
+.merke h4{color:var(--acc)}
+.merke ul{margin:.3em 0;padding-left:1.2em}
+details.reveal{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0;background:var(--bg)}
+details.reveal summary{cursor:pointer;font:600 16px Lexend,system-ui,sans-serif;padding:4px 0}
+button{font:600 16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.alt button{background:var(--bg)}
+button:hover{border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+button.primary{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11141b)}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+input[type=text],select{font:16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--acc);min-height:36px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 18px;margin-top:8px}
+.ctrl label{font-weight:700;font-size:15px}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.toggles label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;min-height:44px;font-size:15px}
+.toggles input{width:18px;height:18px;accent-color:var(--acc)}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font-weight:400}
+.mc button.ok,.tf button.ok{background:var(--okbg);border-color:var(--ok)}
+.mc button.bad,.tf button.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1em;margin:8px 0 0;font-size:16px}
+.fb:empty{display:none}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb.hint{background:var(--hint);color:var(--ink);padding:8px 12px;border-radius:8px}
+input.ok,select.ok{border-color:var(--ok);background:var(--okbg)}
+input.bad,select.bad{border-color:var(--bad);background:var(--badbg)}
+.cloze{line-height:2.5;font-size:17px}
+.cloze select{min-height:38px;padding:2px 6px;margin:0 2px}
+.tf{display:grid;gap:4px}
+.tf .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tf .item .fb{grid-column:1/-1;margin:0}
+.tf .btns{display:flex;gap:6px}
+.numq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.numq input{width:110px;text-align:right}
+.numq .mcq{grid-column:1/-1}
+.unit{white-space:nowrap}
+.sol{background:var(--panel);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:16px}
+.sol p{margin:.3em 0}
+.calc{font-family:"Atkinson Hyperlegible",sans-serif;background:var(--bg);border-left:4px solid var(--acc);padding:6px 12px;margin:6px 0;border-radius:4px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.steps i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font:600 14px Lexend,system-ui,sans-serif}
+.steps i.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.steptext{min-height:7em}
+.heft{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;border:1px solid var(--line);border-radius:12px;padding:22px clamp(16px,3vw,34px)}
+.heft h3{margin-top:.8em;color:var(--acc)}
+.heft h3:first-child{margin-top:0}
+.heft .box{border:2px solid var(--ink);padding:8px 14px;border-radius:6px;background:var(--paper);display:inline-block}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.checks label{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:10px;min-height:44px;cursor:pointer;font-size:16px;background:var(--bg)}
+.checks label.ok{border-color:var(--ok);background:var(--okbg)}.checks label.bad{border-color:var(--bad);background:var(--badbg)}
+.checks input{width:18px;height:18px;accent-color:var(--acc)}
+.chain{display:grid;grid-template-columns:minmax(0,1.3fr) auto auto auto;gap:6px 10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+@media(max-width:640px){.chain{grid-template-columns:auto auto auto}.chain>span:first-child{grid-column:1/-1}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted);margin:6px 4px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.given{background:var(--panel);border-radius:10px;padding:8px 14px;font-size:15px;margin:8px 0}
+footer{font-size:14px;color:var(--muted)}
+/* svg */
+.gl{stroke:var(--grid);stroke-width:1}
+.thin{stroke:var(--ink);stroke-width:1.4;fill:none}
+.dashl{stroke:var(--muted);stroke-width:1.4;stroke-dasharray:6 5;fill:none}
+.tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
+.txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.txb{fill:var(--ink);font:600 15px Lexend,sans-serif}
+.fel{fill:var(--el)}.feb{fill:var(--eb)}.feth{fill:var(--eth)}.fesp{fill:var(--esp)}
+.tel{fill:var(--el);font:600 14px Lexend,sans-serif}.teb{fill:var(--eb);font:600 14px Lexend,sans-serif}.teth{fill:var(--eth);font:600 14px Lexend,sans-serif}
+.ges{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 4}
+.ball{fill:light-dark(#f2b632,#f2b632);stroke:var(--ink);stroke-width:1.5}
+.ghost{opacity:.35}
+.ground{fill:light-dark(#e9edf3,#202736)}
+.track{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.hit{fill:transparent;cursor:pointer}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+@media(max-width:600px){body{font-size:16px}.prog .bar{width:80px}nav a{padding:6px}}
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+.qrbtn:hover{outline:3px solid #ff5c50}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop{background:rgba(8,10,16,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
+@media(max-width:640px){.qrbtn{width:96px}.qrbtn svg{width:80px;height:80px}}
+@media print{nav,.qrbtn{display:none}}
+:root{--ech:light-dark(#8a5a2b,#e0a86a);--eelk:light-dark(#0b7f96,#4fd0e8);--estr:light-dark(#a37a00,#ffd54a)}
+.fech{fill:var(--ech)}.feelk{fill:var(--eelk)}.festr{fill:var(--estr)}
+.part{border-left:4px solid var(--line);padding:4px 0 4px 14px;margin:16px 0}
+.part.done{border-color:var(--ok)}
+.part.done>h4::after{content:"  ✓";color:var(--ok)}
+.tip:empty{display:none}
+.lvl{display:inline-block;font:600 14px Lexend,system-ui,sans-serif;padding:4px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--line);margin-bottom:10px}
+.readout{font:600 18px Lexend,system-ui,sans-serif;color:var(--acc)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.tabs button{display:flex;align-items:center;gap:8px;font-size:15px;padding:8px 12px}
+.tabs button i{width:14px;height:14px;border-radius:50%;display:inline-block;flex:none}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tabs button.solved::after{content:"✓";color:var(--ok);font-weight:700}
+.tabs button[aria-pressed=true].solved::after{color:var(--bg)}
+.exp{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+.exp h4{color:var(--acc)}
+.exp ol,.exp ul{margin:.3em 0 .6em;padding-left:1.3em}
+.safe{color:var(--bad);font-weight:600}
+.badge{display:inline-block;font:600 13px Lexend,sans-serif;padding:2px 10px;border-radius:20px;color:#fff;margin-bottom:6px}
+table.mess{border-collapse:collapse;font-size:15px;width:100%}
+table.mess th,table.mess td{border:1px solid var(--line);padding:5px 8px;text-align:center}
+table.mess th{background:var(--panel)}
+.scroll{overflow-x:auto}
+.formula{font:600 clamp(22px,3vw,30px) Lexend,sans-serif;margin:.3em 0}
+.fig.narrow{max-width:760px}
+input[inputmode=decimal]{width:110px;text-align:right}
+</style>
+</head>
+<body>
+<nav aria-label="Phasen"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#einstieg"><span>1</span>Einstieg</a>
+<a href="#entdecken"><span>2</span>Entdecken</a>
+<a href="#festhalten"><span>3</span>Festhalten</a>
+<a href="#ueben"><span>4</span>Üben</a>
+<div class="prog"><span id="progtxt">0 / 0 gelöst</span><div class="bar"><i id="progbar"></i></div></div>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Was ist Energie?</h1>
+<p>Ohne Energie läuft nichts: kein Fahrrad, kein Handy, kein Herzschlag. Aber was <em>ist</em> Energie eigentlich? In diesem Lernpfad entdeckst du an sieben kleinen Experimenten, in welchen Formen Energie auftritt, wie sie von einer Form in eine andere umgewandelt wird – und du übst, Energie zu erkennen und zu benennen.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik9/energie-einfuehrung" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m1 0h2m1 0h4m9 0h1m3 0h1m1 0h7m-37 1h1m5 0h1m1 0h1m3 0h1m1 0h2m5 0h6m1 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m4 0h1m1 0h2m4 0h1m2 0h5m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m3 0h1m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h1m5 0h1m2 0h2m4 0h5m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m4 0h2m2 0h1m1 0h4m1 0h1m3 0h1m1 0h1m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m4 0h2m11 0h1m-27 1h1m1 0h2m1 0h3m1 0h2m3 0h1m3 0h2m2 0h1m3 0h1m1 0h1m1 0h1m2 0h1m1 0h2m-33 1h2m2 0h1m1 0h2m2 0h2m2 0h1m1 0h2m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m-35 1h1m1 0h4m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m2 0h1m1 0h4m-34 1h2m1 0h1m1 0h1m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m2 0h3m7 0h2m-35 1h4m2 0h1m1 0h2m1 0h2m2 0h1m1 0h3m2 0h2m1 0h6m1 0h5m-35 1h1m1 0h2m2 0h1m1 0h4m1 0h3m1 0h1m1 0h1m2 0h1m1 0h8m1 0h2m-36 1h2m3 0h3m3 0h3m1 0h1m2 0h3m2 0h1m1 0h1m1 0h1m3 0h1m1 0h2m-36 1h2m3 0h1m1 0h2m1 0h2m1 0h3m3 0h1m7 0h1m3 0h2m2 0h1m-36 1h5m1 0h1m1 0h2m4 0h1m2 0h1m1 0h1m2 0h2m1 0h1m7 0h3m-36 1h1m2 0h3m1 0h2m5 0h1m2 0h3m1 0h7m2 0h1m4 0h2m-36 1h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m3 0h1m2 0h1m1 0h1m2 0h6m1 0h1m1 0h3m-34 1h1m1 0h1m1 0h2m3 0h1m1 0h4m2 0h1m2 0h2m3 0h1m2 0h1m3 0h1m-35 1h1m2 0h1m1 0h1m1 0h1m2 0h2m1 0h2m1 0h3m1 0h2m3 0h2m1 0h1m1 0h3m2 0h1m-36 1h1m1 0h1m4 0h1m1 0h2m2 0h8m1 0h1m2 0h1m1 0h2m3 0h1m1 0h1m-36 1h1m3 0h1m1 0h1m1 0h1m2 0h3m2 0h1m1 0h1m1 0h1m2 0h1m4 0h1m2 0h1m-30 1h1m1 0h1m2 0h1m1 0h2m1 0h4m1 0h1m6 0h3m1 0h3m1 0h4m-35 1h4m1 0h5m1 0h1m3 0h1m4 0h1m1 0h1m1 0h3m1 0h2m1 0h1m1 0h1m-34 1h1m1 0h1m3 0h2m4 0h1m3 0h1m3 0h2m1 0h1m1 0h2m1 0h4m1 0h3m-36 1h3m1 0h4m1 0h5m3 0h1m2 0h1m11 0h3m-36 1h1m6 0h3m3 0h3m2 0h4m1 0h2m1 0h3m2 0h1m1 0h1m1 0h1m-34 1h2m2 0h1m3 0h1m1 0h1m1 0h1m3 0h2m1 0h3m1 0h1m2 0h5m1 0h2m-28 1h2m1 0h1m2 0h3m3 0h2m1 0h4m1 0h1m3 0h1m1 0h3m-37 1h7m1 0h6m1 0h1m2 0h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m1 0h3m-37 1h1m5 0h1m1 0h1m1 0h1m1 0h1m2 0h5m1 0h1m1 0h2m2 0h2m3 0h1m2 0h1m-36 1h1m1 0h3m1 0h1m5 0h1m1 0h1m1 0h1m3 0h1m2 0h2m1 0h1m1 0h6m2 0h1m-37 1h1m1 0h3m1 0h1m1 0h4m3 0h2m4 0h1m1 0h1m3 0h4m1 0h1m1 0h1m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h1m1 0h2m2 0h3m3 0h4m1 0h3m-35 1h1m5 0h1m3 0h1m2 0h3m2 0h2m5 0h1m4 0h5m-35 1h7m1 0h2m1 0h1m4 0h2m4 0h4m3 0h2m1 0h5"/></svg>QR groß zeigen</button></div>
+<svg viewBox="0 0 900 200" role="img" aria-label="Sieben Energieformen rund um das Wort Energie"><g id="heroScene"></g></svg>
+<div class="phases">
+<a href="#einstieg"><b>1 · Einstieg</b><small>Was haben ein fallender Ball und eine Batterie gemeinsam?</small></a>
+<a href="#entdecken"><b>2 · Entdecken</b><small>7 Stationen mit Mini-Experimenten · Energiewandler</small></a>
+<a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und Heftaufschrieb</small></a>
+<a href="#ueben"><b>4 · Üben</b><small>6 Aufgaben von ★ bis ★★★</small></a>
+</div>
+</div></header>
+
+<!-- ============ 1 EINSTIEG ============ -->
+<section class="band" id="einstieg"><div class="wrap">
+<h2>1 · Einstieg: Was haben diese Situationen gemeinsam?</h2>
+<div class="fig"><svg id="vier" viewBox="0 0 900 230" role="img" aria-label="Vier Situationen: fallende Kugel verformt Knete, Kerze erwärmt Wasser, Batterie bringt Lampe zum Leuchten, gespannter Bogen schießt einen Pfeil"></svg></div>
+<div class="card" data-task="e1" style="margin-top:14px">
+<div class="tag">Auftrag 1 · Was steckt in allen vier Bildern?</div>
+<p>Schau dir die vier Situationen genau an. Was haben die Kugel oben, die Kerze, die Batterie und der gespannte Bogen gemeinsam?</p>
+<div class="mc" data-correct="c" data-task="e1">
+<button data-k="a" data-fb="Nicht ganz – die Kerze und die Batterie bewegen sich ja gar nicht.">Alle bewegen sich gerade schnell.</button>
+<button data-k="b" data-fb="Nein – der Bogen und die Kugel sind gar nicht warm.">Alle sind heiß.</button>
+<button data-k="c" data-fb="Genau! In allen steckt etwas, das eine Wirkung hervorrufen kann: Knete verformen, Wasser erwärmen, Licht erzeugen, einen Pfeil beschleunigen. Dieses „Etwas“ nennen wir <b>Energie</b>.">Alle können etwas bewirken: etwas verformen, erwärmen, leuchten lassen oder in Bewegung setzen.</button>
+<p class="fb"></p></div>
+</div>
+<div class="merke"><h4>Merke: Energie</h4>
+<p style="margin:0">Energie ist die Fähigkeit, Körper zu <b>bewegen</b>, zu <b>verformen</b>, zu <b>erwärmen</b> oder <b>Licht</b> auszusenden.<br>
+Formelzeichen: <b>E</b> &nbsp;·&nbsp; Einheit: <b>1 Joule (J)</b> &nbsp;·&nbsp; 1 kJ = 1000 J &nbsp;·&nbsp; 1 MJ = 1000 kJ</p></div>
+
+<h3>Wie viel ist ein Joule?</h3>
+<p class="intro">Ein Joule ist nicht viel: Etwa so viel Energie brauchst du, um eine Tafel Schokolade (100 g) einen Meter hochzuheben. Fahre mit der Maus oder dem Finger über die Skala. Jeder Teilstrich bedeutet das <b>Zehnfache</b>.</p>
+<div class="fig"><svg id="skala" viewBox="0 0 900 190" role="img" aria-label="Energie-Skala von 1 Joule bis 1 Milliarde Joule mit Alltagsbeispielen"></svg></div>
+<p class="caption" id="skalaTxt">Tippe auf einen Punkt der Skala.</p>
+<div class="card" data-task="e2" style="margin-top:14px">
+<div class="tag">Auftrag 2 · Abschätzen</div>
+<p>Ein Schokoriegel enthält etwa 1000 kJ, ein voller Handy-Akku speichert etwa 50 kJ. Wie oft könnte man mit der Energie eines Schokoriegels (theoretisch) ein Handy aufladen?</p>
+<div class="mc" data-correct="b" data-task="e2">
+<button data-k="a">etwa 2-mal</button>
+<button data-k="b" data-fb="Richtig: 1000 kJ : 50 kJ = 20. Lebensmittel enthalten erstaunlich viel Energie!">etwa 20-mal</button>
+<button data-k="c">etwa 200-mal</button>
+<p class="fb"></p></div>
+</div>
+</div></section>
+
+<!-- ============ 2 ENTDECKEN ============ -->
+<section class="band alt" id="entdecken"><div class="wrap">
+<h2>2 · Entdecken: Energie hat viele Formen</h2>
+<p class="intro">An jeder Station findest du eine Simulation und ein <b>Mini-Experiment</b>, das du in der Schule oder zu Hause nachmachen kannst. Probiere die Simulation aus und beantworte die Frage. Schaffst du alle sieben Stationen?</p>
+<div class="tabs" id="tabs" role="toolbar" aria-label="Stationen"></div>
+<div id="stations"></div>
+
+<h3>Energie wird umgewandelt: die Energiekette</h3>
+<p class="intro">Energie verschwindet nicht einfach – sie wird von einer Form in eine andere <b>umgewandelt</b>. Geräte und Lebewesen, die das tun, heißen <b>Energiewandler</b>. Verfolge die Energie vom Stausee bis zur Lampe.</p>
+<div class="two">
+<div class="fig"><svg id="kette" viewBox="0 0 640 330" role="img" aria-label="Energiekette: Stausee, Turbine, Generator, Stromleitung, Lampe"></svg></div>
+<div>
+<div class="steps" id="ketteSteps"></div>
+<div class="card"><p class="steptext" id="ketteTxt"></p>
+<div class="row"><button id="ketteBack">← Zurück</button><button class="primary" id="ketteNext">Weiter →</button></div></div>
+</div>
+</div>
+
+<div class="card" data-task="w1">
+<div class="tag">Auftrag 3 · Energiewandler</div>
+<p>Welche Energieform nimmt das Gerät auf, und in welche <b>genutzte</b> Energieform wandelt es sie um?</p>
+<div id="w1"></div>
+<div class="row"><button class="primary" id="w1Check">Prüfen</button><button data-hint="w1">Tipp</button></div>
+<p class="fb" id="w1Fb"></p><p class="tip" id="w1Tip"></p>
+</div>
+<div class="merke"><h4>Merke: Energieumwandlung</h4>
+<ul><li>Energie kann von einer Form in eine andere <b>umgewandelt</b> werden. Dabei geht keine Energie verloren und es entsteht keine neue.</li>
+<li>Bei fast jeder Umwandlung entsteht auch <b>thermische Energie</b>, die man meist nicht nutzen kann (die Lampe wird warm, die Bremse heiß).</li>
+<li>Man zeichnet Umwandlungen als <b>Energieflussdiagramm</b>: Energieform → Energiewandler → Energieform(en).</li></ul></div>
+</div></section>
+
+<!-- ============ 3 FESTHALTEN ============ -->
+<section class="band" id="festhalten"><div class="wrap">
+<h2>3 · Festhalten</h2>
+<div class="card" data-task="f1">
+<div class="tag">Auftrag 4 · Lückentext</div>
+<div class="cloze" id="cloze">
+Energie ist die Fähigkeit, Körper zu <select data-a="bewegen"></select>, zu verformen, zu <select data-a="erwärmen"></select> oder Licht auszusenden.
+Das Formelzeichen der Energie ist <select data-a="E"></select>, ihre Einheit ist das <select data-a="Joule"></select>.
+Energie tritt in verschiedenen <select data-a="Formen"></select> auf, zum Beispiel als Lageenergie, Bewegungsenergie oder chemische Energie.
+Sie kann von einer Form in eine andere <select data-a="umgewandelt"></select> werden. Geräte, die das tun, heißen <select data-a="Energiewandler"></select>.
+Dabei geht keine Energie <select data-a="verloren"></select>.
+</div>
+<div class="row"><button class="primary" id="f1Check">Prüfen</button></div>
+<p class="fb" id="f1Fb"></p>
+</div>
+<details class="reveal"><summary>Heftaufschrieb anzeigen</summary>
+<div class="heft">
+<h3>Was ist Energie?</h3>
+<p>Energie ist die Fähigkeit, Körper zu bewegen, zu verformen, zu erwärmen oder Licht auszusenden.</p>
+<p><span class="box">Formelzeichen: E &nbsp;&nbsp; Einheit: 1 Joule (1 J) &nbsp;&nbsp; 1 kJ = 1000 J</span></p>
+<h3>Energieformen</h3>
+<ul>
+<li><b>Lageenergie E<sub>L</sub></b> – Körper in der Höhe (Wasser im Stausee, Kugel auf dem Regal)</li>
+<li><b>Bewegungsenergie E<sub>B</sub></b> – bewegte Körper (fahrendes Auto, Wind)</li>
+<li><b>Spannenergie E<sub>Sp</sub></b> – verformte elastische Körper (gespannter Bogen, Feder)</li>
+<li><b>thermische Energie E<sub>therm</sub></b> – warme Körper (heißes Wasser)</li>
+<li><b>chemische Energie E<sub>chem</sub></b> – in Stoffen gespeichert (Nahrung, Benzin, Batterie)</li>
+<li><b>elektrische Energie E<sub>el</sub></b> – wird mit elektrischem Strom übertragen</li>
+<li><b>Strahlungsenergie E<sub>Str</sub></b> – Licht und Wärmestrahlung (Sonne)</li>
+</ul>
+<h3>Energieumwandlung</h3>
+<p>Energie kann umgewandelt werden. Energiewandler, z. B. Glühlampe: elektrische Energie → Strahlungsenergie + thermische Energie.</p>
+</div>
+</details>
+</div></section>
+
+<!-- ============ 4 ÜBEN ============ -->
+<section class="band alt" id="ueben"><div class="wrap">
+<h2>4 · Üben</h2>
+<p class="intro">★ Grundlagen, ★★ Energieketten und Rechnen, ★★★ Knobeln. Zu jeder Aufgabe gibt es Tipps.</p>
+
+<div class="card" data-task="u1">
+<div class="tag"><span class="stars">★</span> Übung 1 · Welche Energieform steckt darin?</div>
+<p>Welche Energieform ist in der Situation <b>hauptsächlich</b> gespeichert?</p>
+<div id="u1"></div>
+<div class="row"><button class="primary" id="u1Check">Prüfen</button><button data-hint="u1">Tipp</button></div>
+<p class="fb" id="u1Fb"></p><p class="tip" id="u1Tip"></p>
+</div>
+
+<div class="card" data-task="u2">
+<div class="tag"><span class="stars">★</span> Übung 2 · Richtig oder falsch?</div>
+<div class="tf" id="tf"></div>
+</div>
+
+<div class="card" data-task="u3">
+<div class="tag"><span class="stars">★</span> Übung 3 · Einheiten umrechnen</div>
+<p>Rechne um. Merke: 1 kJ = 1000 J und 1 MJ = 1000 kJ.</p>
+<div class="numq"><span>a) 2,5 kJ =</span><span class="unit"><input type="text" inputmode="decimal" id="u3a" data-a="2500" aria-label="a in J"> J</span></div>
+<div class="numq"><span>b) 4700 J =</span><span class="unit"><input type="text" inputmode="decimal" id="u3b" data-a="4.7" aria-label="b in kJ"> kJ</span></div>
+<div class="numq"><span>c) 0,3 MJ =</span><span class="unit"><input type="text" inputmode="decimal" id="u3c" data-a="300" aria-label="c in kJ"> kJ</span></div>
+<div class="numq"><span>d) Ein Joghurt enthält 420 kJ. Das sind</span><span class="unit"><input type="text" inputmode="decimal" id="u3d" data-a="420000" aria-label="d in J"> J</span></div>
+<div class="row"><button class="primary" id="u3Check">Prüfen</button><button data-hint="u3">Tipp</button></div>
+<p class="fb" id="u3Fb"></p><p class="tip" id="u3Tip"></p>
+</div>
+
+<div class="card" data-task="u4">
+<div class="tag"><span class="stars">★★</span> Übung 4 · Energieflussdiagramme vervollständigen</div>
+<p>Vervollständige die Energieflussdiagramme. Unten rechts steht jeweils die Energie, die man <b>nicht</b> nutzen kann.</p>
+<div id="u4"></div>
+<div class="row"><button class="primary" id="u4Check">Prüfen</button><button data-hint="u4">Tipp</button></div>
+<p class="fb" id="u4Fb"></p><p class="tip" id="u4Tip"></p>
+</div>
+
+<div class="card" data-task="u5">
+<div class="tag"><span class="stars">★★</span> Übung 5 · Energie in Lebensmitteln</div>
+<p>Auf einer Tüte Gummibärchen steht: <b>100 g enthalten 1430 kJ</b>. Ein Jugendlicher braucht am Tag etwa <b>10 000 kJ</b>.</p>
+<div class="numq"><span>a) Wie viel Energie enthält die ganze Tüte (200 g)?</span><span class="unit"><input type="text" inputmode="decimal" id="u5a" data-a="2860" aria-label="a in kJ"> kJ</span></div>
+<div class="numq"><span>b) Wie viel Prozent des Tagesbedarfs sind das?</span><span class="unit"><input type="text" inputmode="decimal" id="u5b" data-a="28.6" data-tol="0.02" aria-label="b in Prozent"> %</span></div>
+<div class="numq"><span>c) Wie viele Gramm Gummibärchen würden den ganzen Tagesbedarf decken?</span><span class="unit"><input type="text" inputmode="decimal" id="u5c" data-a="699.3" data-tol="0.02" aria-label="c in g"> g</span></div>
+<div class="row"><button class="primary" id="u5Check">Prüfen</button><button data-hint="u5">Tipp</button><button data-sol="u5Sol">Lösung zeigen</button></div>
+<p class="fb" id="u5Fb"></p><p class="tip" id="u5Tip"></p>
+<div class="sol" id="u5Sol" hidden><p>a) 2 · 1430 kJ = <b>2860 kJ</b></p><p>b) 2860 kJ : 10 000 kJ = 0,286 = <b>28,6 %</b></p><p>c) 10 000 kJ : 1430 kJ · 100 g ≈ <b>699 g</b> – also fast 3,5 Tüten. Gesund wäre das nicht!</p></div>
+</div>
+
+<div class="card">
+<div class="tag"><span class="stars">★★★</span> Übung 6 · Knobeln</div>
+<div class="part" data-task="u6a"><h4>a) Ein Pendel schwingt immer niedriger und bleibt schließlich stehen. Wo ist seine Energie geblieben?</h4>
+<div class="mc" data-correct="b" data-task="u6a">
+<button data-k="a" data-fb="Nein – Energie kann nicht verschwinden. Sie wird nur umgewandelt.">Sie ist verschwunden.</button>
+<button data-k="b" data-fb="Richtig! Durch Reibung an der Aufhängung und mit der Luft wurde sie nach und nach in thermische Energie umgewandelt. Faden, Aufhängung und Luft sind ein ganz kleines bisschen wärmer geworden. Mehr dazu im Lernpfad „Energieerhaltung“.">Sie wurde durch Reibung in thermische Energie umgewandelt – Luft und Aufhängung sind etwas wärmer.</button>
+<button data-k="c" data-fb="Nein – die Lageenergie ist im tiefsten Punkt gerade am kleinsten.">Sie steckt jetzt als Lageenergie in der Kugel.</button>
+<p class="fb"></p></div></div>
+<div class="part" data-task="u6b"><h4>b) Ein Erfinder behauptet: „Meine Maschine gibt mehr Energie ab, als sie aufnimmt.“ Was sagst du?</h4>
+<div class="mc" data-correct="a" data-task="u6b">
+<button data-k="a" data-fb="Genau. Energie kann nicht aus dem Nichts entstehen. Eine solche Maschine („Perpetuum mobile“) gibt es nicht – das hat noch niemand geschafft.">Unmöglich – Energie kann nicht aus dem Nichts entstehen.</button>
+<button data-k="b" data-fb="Auch moderne Technik kann keine Energie erzeugen – sie kann sie nur umwandeln.">Mit moderner Technik ist das möglich.</button>
+<button data-k="c" data-fb="Nein – auch mit großen Maschinen entsteht keine Energie aus dem Nichts.">Das klappt, wenn die Maschine groß genug ist.</button>
+<p class="fb"></p></div></div>
+<div class="part" data-task="u6c"><h4>c) Woher stammt die Energie letztlich, wenn du mit dem Fahrrad einen Berg hinauffährst?</h4>
+<div class="mc" data-correct="c" data-task="u6c">
+<button data-k="a">Aus dem Fahrrad.</button>
+<button data-k="b" data-fb="Fast – die Muskeln sind aber nur der Energiewandler. Wo kommt deren Energie her?">Aus deinen Muskeln.</button>
+<button data-k="c" data-fb="Richtig! Sonne → Pflanzen (chemische Energie) → Nahrung → Muskeln → Bewegungs- und Lageenergie. Fast alle Energie auf der Erde stammt ursprünglich von der Sonne.">Von der Sonne: Sie ließ die Pflanzen wachsen, aus denen deine Nahrung stammt.</button>
+<p class="fb"></p></div></div>
+</div>
+
+<div class="row" style="margin-top:24px"><button id="resetAll">Fortschritt zurücksetzen</button><a class="btn" href="/Physik9/lageenergie" style="text-decoration:none;display:inline-flex;align-items:center;font:600 16px Lexend,sans-serif;padding:8px 16px;border-radius:10px;background:var(--acc);color:light-dark(#fff,#11141b)">Weiter: Lernpfad „Lageenergie“ →</a></div>
+</div></section>
+
+<footer class="band"><div class="wrap">
+<p>Lernpfad Physik TG9 · Mechanik II: Energie · Einführung. Dein Fortschritt wird nur in diesem Browser gespeichert, es werden keine Daten übertragen.</p>
+</div></footer>
+
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Lernpfad"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik9/energie-einfuehrung" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m1 0h2m1 0h4m9 0h1m3 0h1m1 0h7m-37 1h1m5 0h1m1 0h1m3 0h1m1 0h2m5 0h6m1 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m4 0h1m1 0h2m4 0h1m2 0h5m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m3 0h1m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h1m5 0h1m2 0h2m4 0h5m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m4 0h2m2 0h1m1 0h4m1 0h1m3 0h1m1 0h1m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m4 0h2m11 0h1m-27 1h1m1 0h2m1 0h3m1 0h2m3 0h1m3 0h2m2 0h1m3 0h1m1 0h1m1 0h1m2 0h1m1 0h2m-33 1h2m2 0h1m1 0h2m2 0h2m2 0h1m1 0h2m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m-35 1h1m1 0h4m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m2 0h1m1 0h4m-34 1h2m1 0h1m1 0h1m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m2 0h3m7 0h2m-35 1h4m2 0h1m1 0h2m1 0h2m2 0h1m1 0h3m2 0h2m1 0h6m1 0h5m-35 1h1m1 0h2m2 0h1m1 0h4m1 0h3m1 0h1m1 0h1m2 0h1m1 0h8m1 0h2m-36 1h2m3 0h3m3 0h3m1 0h1m2 0h3m2 0h1m1 0h1m1 0h1m3 0h1m1 0h2m-36 1h2m3 0h1m1 0h2m1 0h2m1 0h3m3 0h1m7 0h1m3 0h2m2 0h1m-36 1h5m1 0h1m1 0h2m4 0h1m2 0h1m1 0h1m2 0h2m1 0h1m7 0h3m-36 1h1m2 0h3m1 0h2m5 0h1m2 0h3m1 0h7m2 0h1m4 0h2m-36 1h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m3 0h1m2 0h1m1 0h1m2 0h6m1 0h1m1 0h3m-34 1h1m1 0h1m1 0h2m3 0h1m1 0h4m2 0h1m2 0h2m3 0h1m2 0h1m3 0h1m-35 1h1m2 0h1m1 0h1m1 0h1m2 0h2m1 0h2m1 0h3m1 0h2m3 0h2m1 0h1m1 0h3m2 0h1m-36 1h1m1 0h1m4 0h1m1 0h2m2 0h8m1 0h1m2 0h1m1 0h2m3 0h1m1 0h1m-36 1h1m3 0h1m1 0h1m1 0h1m2 0h3m2 0h1m1 0h1m1 0h1m2 0h1m4 0h1m2 0h1m-30 1h1m1 0h1m2 0h1m1 0h2m1 0h4m1 0h1m6 0h3m1 0h3m1 0h4m-35 1h4m1 0h5m1 0h1m3 0h1m4 0h1m1 0h1m1 0h3m1 0h2m1 0h1m1 0h1m-34 1h1m1 0h1m3 0h2m4 0h1m3 0h1m3 0h2m1 0h1m1 0h2m1 0h4m1 0h3m-36 1h3m1 0h4m1 0h5m3 0h1m2 0h1m11 0h3m-36 1h1m6 0h3m3 0h3m2 0h4m1 0h2m1 0h3m2 0h1m1 0h1m1 0h1m-34 1h2m2 0h1m3 0h1m1 0h1m1 0h1m3 0h2m1 0h3m1 0h1m2 0h5m1 0h2m-28 1h2m1 0h1m2 0h3m3 0h2m1 0h4m1 0h1m3 0h1m1 0h3m-37 1h7m1 0h6m1 0h1m2 0h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m1 0h3m-37 1h1m5 0h1m1 0h1m1 0h1m1 0h1m2 0h5m1 0h1m1 0h2m2 0h2m3 0h1m2 0h1m-36 1h1m1 0h3m1 0h1m5 0h1m1 0h1m1 0h1m3 0h1m2 0h2m1 0h1m1 0h6m2 0h1m-37 1h1m1 0h3m1 0h1m1 0h4m3 0h2m4 0h1m1 0h1m3 0h4m1 0h1m1 0h1m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h1m1 0h2m2 0h3m3 0h4m1 0h3m-35 1h1m5 0h1m3 0h1m2 0h3m2 0h2m5 0h1m4 0h5m-35 1h7m1 0h2m1 0h1m4 0h2m4 0h4m3 0h2m1 0h5"/></svg><p>lernapps.gst-lernen.workers.dev/Physik9/energie-einfuehrung</p><button id="qrClose">Schließen</button></dialog>
+<script>
+{
+const KEY='energie-einfuehrung-done';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=(v,n=2)=>(+v).toFixed(n).replace('.',',');
+const fmtS=(v,n=2)=>fmt(v,n).replace(/(,\d*?)0+$/,'$1').replace(/,$/,'');
+const num=v=>parseFloat(String(v).replace(/\s/g,'').replace(/\.(?=\d{3}(\D|$))/g,'').replace(',','.'));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Fortschritt */
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+let tasks=[];
+function save(){try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}}
+function updProg(){tasks=[...new Set($$('[data-task]').map(e=>e.dataset.task))];const n=tasks.filter(t=>done.has(t)).length;$('#progtxt').textContent=n+' / '+tasks.length+' gelöst';$('#progbar').style.width=(100*n/tasks.length)+'%';
+ $$('[data-task]').forEach(e=>e.classList.toggle('done',done.has(e.dataset.task)));if(window.onProg)window.onProg()}
+function mark(id){done.add(id);save();updProg()}
+$('#resetAll').onclick=()=>{done.clear();save();location.reload()};
+/* SVG */
+function svgPt(svg,ev){const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+const L=(a,b,c,d,cls,ex='')=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="${cls}" ${ex}/>`;
+const C=(x,y,r,cls,ex='')=>`<circle cx="${x}" cy="${y}" r="${r}" class="${cls}" ${ex}/>`;
+const T=(x,y,t,cls,ex='')=>`<text x="${x}" y="${y}" class="${cls}" ${ex}>${t}</text>`;
+const Rc=(x,y,w,h,cls,ex='')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}" ${ex}/>`;
+function arrowHead(x,y,ang,col,s=8){const a=ang*Math.PI/180,c=Math.cos(a),si=Math.sin(a);return `<path d="M${x} ${y} L${x-s*c+s*.6*si} ${y-s*si-s*.6*c} L${x-s*c-s*.6*si} ${y-s*si+s*.6*c}Z" style="fill:${col}"/>`}
+function animate(ms,step,end){if(reduce){step(1);end&&end();return}const t0=performance.now();function f(t){const k=Math.min(1,(t-t0)/ms);step(k);if(k<1)requestAnimationFrame(f);else end&&end()}requestAnimationFrame(f)}
+/* Tipps */
+const hints={};
+$$('[data-hint]').forEach(b=>{let h=0;b.onclick=()=>{const id=b.dataset.hint,arr=hints[id]||[],el=$('#'+id+'Tip');if(!arr.length)return;el.className='fb hint tip';el.innerHTML='Tipp '+(h%arr.length+1)+' von '+arr.length+': '+arr[h%arr.length];h++}});
+/* Lösung zeigen */
+$$('[data-sol]').forEach(b=>b.onclick=()=>{const el=$('#'+b.dataset.sol);el.hidden=!el.hidden;b.textContent=el.hidden?'Lösung zeigen':'Lösung ausblenden'});
+/* Multiple Choice */
+function initMC(root=document){root.querySelectorAll('.mc[data-correct]').forEach(box=>{if(box.dataset.init)return;box.dataset.init=1;const fb=box.querySelector('.fb');
+ box.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
+  box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');
+  fb.className='fb '+(ok?'ok':'bad');fb.innerHTML=b.dataset.fb||(ok?'Richtig!':'Noch nicht – probier es nochmal.');if(ok&&box.dataset.task)mark(box.dataset.task)})})}
+/* Zahlen prüfen: inputs mit data-a (Sollwert) und optional data-tol (relativ, Standard 1 %) */
+function numCheck(btn,ids,fbId,task,okText){$(btn).onclick=()=>{let ok=0;ids.forEach(id=>{const i=$(id),v=num(i.value),a=+i.dataset.a,tol=+(i.dataset.tol||0.01),g=!isNaN(v)&&Math.abs(v-a)<=Math.max(Math.abs(a)*tol,1e-9);i.className=i.value===''?'':(g?'ok':'bad');if(g)ok++});
+ const fb=$(fbId);if(ok===ids.length){fb.className='fb ok';fb.innerHTML=okText;mark(task)}else{fb.className='fb bad';fb.textContent=ok+' von '+ids.length+' richtig. Prüfe Einheiten und Kommastellen – oder hol dir einen Tipp.'}}}
+/* Auswahlfelder prüfen: select[data-a] in einem Container */
+function selCheck(btn,box,fbId,task,okText){$(btn).onclick=()=>{const s=$$(box+' select');let ok=0;s.forEach(x=>{const g=x.value===x.dataset.a;x.className=x.value===''?'':(g?'ok':'bad');if(g)ok++});
+ const fb=$(fbId);if(ok===s.length){fb.className='fb ok';fb.innerHTML=okText;mark(task)}else{fb.className='fb bad';fb.textContent=ok+' von '+s.length+' richtig. Prüfe die rot markierten Felder.'}}}
+/* Richtig/Falsch */
+function tfBuild(id,items,task){const box=$('#'+id);box.innerHTML=items.map((x,i)=>`<div class="item" data-i="${i}"><span>${x[0]}</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p></div>`).join('');
+ const solved=new Set();box.querySelectorAll('.item').forEach(row=>{const i=+row.dataset.i;row.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=(b.dataset.v==='1')===items[i][1];
+  row.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');const fb=row.querySelector('.fb');fb.className='fb '+(ok?'ok':'bad');fb.innerHTML=(ok?'Stimmt. ':'Nein. ')+items[i][2];
+  if(ok)solved.add(i);if(solved.size===items.length)mark(task)})})}
+/* QR */
+{const d=$('#qrDlg');$('#qrOpen').onclick=()=>d.showModal();$('#qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
+
+
+const COL={L:'var(--el)',B:'var(--eb)',Sp:'var(--esp)',th:'var(--eth)',ch:'var(--ech)',el:'var(--eelk)',St:'var(--estr)'};
+const FORMS=[['L','Lageenergie'],['B','Bewegungsenergie'],['Sp','Spannenergie'],['th','thermische Energie'],['ch','chemische Energie'],['el','elektrische Energie'],['St','Strahlungsenergie']];
+const opt=(sel='')=>'<option value="">– wählen –</option>'+FORMS.map(f=>`<option value="${f[0]}">${f[1]}</option>`).join('');
+
+/* ---------- Kleine Zeichen-Bausteine ---------- */
+const sun=(x,y,r)=>{let s=C(x,y,r,'festr');for(let i=0;i<12;i++){const a=i*Math.PI/6;s+=L(x+Math.cos(a)*(r+5),y+Math.sin(a)*(r+5),x+Math.cos(a)*(r+13),y+Math.sin(a)*(r+13),'','style="stroke:var(--estr)" stroke-width="3" stroke-linecap="round"')}return s};
+const flame=(x,y,s=1)=>`<path d="M${x} ${y-22*s} C${x+10*s} ${y-9*s} ${x+9*s} ${y+2*s} ${x} ${y+4*s} C${x-9*s} ${y+2*s} ${x-10*s} ${y-9*s} ${x} ${y-22*s}Z" fill="#ffb21a" stroke="#e0641a" stroke-width="1.2"/>`;
+const battery=(x,y,w=50,h=24)=>Rc(x,y,w,h,'','rx="4" style="fill:var(--panel);stroke:var(--ink)" stroke-width="1.5"')+Rc(x+w,y+h/2-5,5,10,'','style="fill:var(--ink)"')+Rc(x+3,y+3,w*.45,h-6,'','style="fill:var(--eelk)"')+T(x+w*.62,y+h/2+5,'+','txb');
+const bulb=(x,y,on)=>(on?C(x,y,30,'','style="fill:#ffd54a;opacity:.35"'):'')+C(x,y,14,'',`style="fill:${on?'#ffe680':'var(--paper)'};stroke:var(--ink)" stroke-width="1.5"`)+Rc(x-7,y+12,14,10,'','style="fill:var(--muted)"');
+
+/* ---------- Hero ---------- */
+{const items=[['Lage','var(--el)'],['Bewegung','var(--eb)'],['Spann','var(--esp)'],['thermisch','var(--eth)'],['chemisch','var(--ech)'],['elektrisch','var(--eelk)'],['Strahlung','var(--estr)']];
+ let s=`<text x="450" y="112" text-anchor="middle" fill="#eef1f7" font-family="Lexend,sans-serif" font-size="34" font-weight="700">Energie</text>`;
+ items.forEach((it,i)=>{const a=(-90+i*360/7)*Math.PI/180,x=450+Math.cos(a)*300,y=100+Math.sin(a)*75;
+  s+=`<line x1="${450+Math.cos(a)*95}" y1="${100+Math.sin(a)*30}" x2="${x-Math.cos(a)*60}" y2="${y-Math.sin(a)*14}" stroke="#3a4558" stroke-width="2"/>`;
+  s+=`<rect x="${x-62}" y="${y-17}" width="124" height="34" rx="17" fill="#182031" stroke="${it[1]}" stroke-width="2"/><text x="${x}" y="${y+6}" text-anchor="middle" fill="#eef1f7" font-family="Lexend,sans-serif" font-size="15">${it[0]}</text>`});
+ $('#heroScene').innerHTML=s}
+
+/* ---------- Einstieg: vier Situationen ---------- */
+{let s='';const box=(x,t)=>Rc(x+6,6,213,218,'','rx="12" style="fill:var(--bg);stroke:var(--line)"')+T(x+112,212,t,'txs','text-anchor="middle"');
+ s+=box(0,'Kugel über Knete')+L(70,40,70,150,'dashl')+C(70,40,12,'ball')+Rc(40,170,60,24,'','rx="4" style="fill:#d77fa1"')+`<path d="M60 170 Q70 182 80 170" style="fill:var(--bg)"/>`+T(85,80,'fällt','txs')+arrowHead(70,160,90,'var(--muted)');
+ s+=box(225,'Kerze unter Wasser')+Rc(305,40,30,80,'','rx="6" style="fill:#cfe7ff;stroke:var(--ink)"')+Rc(305,70,30,50,'','rx="4" style="fill:#7cb6f0"')+Rc(312,160,16,30,'','style="fill:#f4ead8;stroke:var(--ink)"')+flame(320,152);
+ s+=box(450,'Batterie und Lampe')+battery(490,150)+bulb(600,90,true)+`<path d="M545 162 H600 V112" class="thin"/><path d="M490 162 H475 V60 H600 V68" class="thin" style="display:none"/>`+L(490,162,470,162,'thin')+L(470,162,470,75,'thin')+L(470,75,586,88,'thin');
+ s+=box(675,'Gespannter Bogen')+`<path d="M740 40 Q700 115 740 190" fill="none" style="stroke:var(--ech)" stroke-width="5"/>`+`<path d="M740 40 L790 115 L740 190" fill="none" class="thin"/>`+L(790,115,860,115,'thin','stroke-width="2.5"')+arrowHead(866,115,0,'var(--ink)');
+ $('#vier').innerHTML=s}
+
+/* ---------- Energie-Skala ---------- */
+{const ex=[[0,'1 J','Tafel Schokolade 1 m hochheben'],[1,'10 J','einmal kräftig in die Hände klatschen (Bewegungsenergie beider Hände ≈ 10 J)'],[2,'100 J','einen Eimer Wasser (10 kg) 1 m hochheben'],[3.5,'3 kJ','eine Treppe in den 2. Stock hochgehen (Lageenergie)'],[4.7,'50 kJ','ein voller Handy-Akku'],[6,'1000 kJ','ein Schokoriegel'],[7,'10 000 kJ','Tagesbedarf eines Jugendlichen'],[7.5,'32 MJ','1 Liter Benzin'],[9,'1 GJ','ein Blitz']];
+ const x0=40,x1=860,X=v=>x0+(x1-x0)*v/9,svg=$('#skala');let sel=5;
+ function draw(){let s=L(x0,90,x1,90,'thin','stroke-width="3"');
+  for(let i=0;i<=9;i++)s+=L(X(i),82,X(i),98,'thin')+T(X(i),120,i===0?'1 J':'10'+'⁰¹²³⁴⁵⁶⁷⁸⁹'[i]+' J','txs','text-anchor="middle"');
+  ex.forEach((e,i)=>{const on=i===sel;s+=C(X(e[0]),90,on?11:7,'',`style="fill:${on?'var(--acc)':'var(--paper)'};stroke:var(--acc)" stroke-width="2.5"`)+`<circle cx="${X(e[0])}" cy="90" r="22" class="hit" data-i="${i}"/>`});
+  const e=ex[sel],tx=Math.min(Math.max(X(e[0]),120),780);s+=T(tx,50,e[1],'txb','text-anchor="middle" style="font-size:20px;fill:var(--acc)"')+T(tx,155,e[2],'tx','text-anchor="middle"');
+  svg.innerHTML=s;$('#skalaTxt').textContent=e[1]+': '+e[2]+'.'}
+ svg.addEventListener('pointerdown',ev=>{const p=svgPt(svg,ev);let b=0,bd=1e9;ex.forEach((e,i)=>{const d=Math.abs(X(e[0])-p.x);if(d<bd){bd=d;b=i}});sel=b;draw()});
+ svg.addEventListener('pointermove',ev=>{if(ev.pointerType!=='mouse')return;const p=svgPt(svg,ev);let b=0,bd=1e9;ex.forEach((e,i)=>{const d=Math.abs(X(e[0])-p.x);if(d<bd){bd=d;b=i}});if(b!==sel){sel=b;draw()}});
+ draw()}
+
+/* ---------- Stationen ---------- */
+const ST=[
+{id:'s1',f:'L',name:'Lageenergie',sym:'E<sub>L</sub>',ctrl:{label:'Fallhöhe',min:10,max:100,step:10,val:40,unit:'cm'},btn:'Fallen lassen',
+ text:'Eine Kugel, die hoch liegt, besitzt <b>Lageenergie</b>. Lässt du sie fallen, kann sie Knete verformen.',
+ exp:{mat:'Knete (oder Sand in einer Schale), eine Murmel oder Stahlkugel, Lineal',steps:['Drücke die Knete glatt.','Lass die Kugel aus 20 cm, 40 cm und 60 cm Höhe auf die Knete fallen – jedes Mal an eine neue Stelle.','Vergleiche die Tiefe der Dellen.']},
+ q:{t:'Was beobachtest du, wenn die Kugel aus größerer Höhe fällt?',o:['Die Delle wird flacher.','Die Delle wird tiefer.','Die Delle bleibt gleich.'],c:1,fb:'Richtig! Je höher die Kugel liegt, desto mehr Lageenergie besitzt sie – und desto stärker verformt sie die Knete.'}},
+{id:'s2',f:'B',name:'Bewegungsenergie',sym:'E<sub>B</sub>',ctrl:{label:'Geschwindigkeit',min:1,max:5,step:1,val:2,unit:''},btn:'Losfahren',
+ text:'Ein fahrendes Auto besitzt <b>Bewegungsenergie</b>. Fährt es gegen eine Schachtel, schiebt es sie ein Stück weiter.',
+ exp:{mat:'Spielzeugauto, ein Brett und ein paar Bücher als Rampe, eine leere Streichholzschachtel',steps:['Stelle die Schachtel ans Ende der Rampe.','Lass das Auto einmal von weit unten und einmal von weit oben die Rampe herunterrollen.','Miss, wie weit die Schachtel jeweils geschoben wird.']},
+ q:{t:'Was passiert, wenn das Auto schneller ist?',o:['Die Schachtel wird weiter geschoben.','Die Schachtel wird weniger weit geschoben.','Das macht keinen Unterschied.'],c:0,fb:'Richtig! Je schneller ein Körper ist, desto mehr Bewegungsenergie hat er. (Auch eine größere Masse bedeutet mehr Bewegungsenergie.)'}},
+{id:'s3',f:'Sp',name:'Spannenergie',sym:'E<sub>Sp</sub>',ctrl:{label:'Spannen',min:1,max:5,step:1,val:2,unit:''},btn:'Loslassen',
+ text:'Ein gespanntes Gummiband besitzt <b>Spannenergie</b>. Lässt du los, schleudert es eine Papierkugel weg.',
+ exp:{mat:'Gummiband, Papierkügelchen, Maßband',steps:['Spanne das Gummiband zwischen Daumen und Zeigefinger.','Schieße das Papierkügelchen einmal mit wenig und einmal mit starker Dehnung ab.','Miss die Flugweiten.'],safe:'Ziele niemals auf Personen oder Tiere!'},
+ q:{t:'Was beobachtest du bei stärkerer Dehnung?',o:['Das Kügelchen fliegt weniger weit.','Das Kügelchen fliegt weiter.','Die Flugweite ändert sich nicht.'],c:1,fb:'Richtig! Je stärker ein elastischer Körper verformt ist, desto mehr Spannenergie besitzt er.'}},
+{id:'s4',f:'th',name:'thermische Energie',sym:'E<sub>therm</sub>',btn:'Eiswürfel hineinlegen',
+ text:'Warme Körper besitzen <b>thermische Energie</b>. Mit ihr kann man zum Beispiel Eis schmelzen.',
+ exp:{mat:'zwei gleiche Gläser, kaltes und warmes Leitungswasser, zwei gleich große Eiswürfel, Uhr',steps:['Fülle ein Glas mit kaltem, das andere mit warmem Wasser (gleich viel).','Lege gleichzeitig in jedes Glas einen Eiswürfel.','Stoppe, wann die Eiswürfel geschmolzen sind.']},
+ q:{t:'In welchem Glas schmilzt das Eis schneller – und warum?',o:['Im kalten Wasser, weil es dem Eis ähnlicher ist.','Im warmen Wasser, weil es mehr thermische Energie hat.','In beiden gleich schnell.'],c:1,fb:'Richtig! Das warme Wasser hat mehr thermische Energie. Ein Teil davon wird zum Schmelzen des Eises gebraucht.'}},
+{id:'s5',f:'ch',name:'chemische Energie',sym:'E<sub>chem</sub>',btn:'Teelicht anzünden',
+ text:'Brennstoffe, Nahrung und Batterien speichern <b>chemische Energie</b>. Beim Verbrennen wird sie frei.',
+ exp:{mat:'Teelicht, Reagenzglas mit etwa 10 mL Wasser, Thermometer, Stativ',steps:['Spanne das Reagenzglas mit Wasser und Thermometer über das Teelicht.','Zünde das Teelicht an.','Lies alle 30 Sekunden die Temperatur ab.'],safe:'Nur mit deiner Lehrkraft! Schutzbrille tragen.'},
+ q:{t:'Woher stammt die Energie, die das Wasser erwärmt?',o:['Aus dem Streichholz.','Aus dem Wachs: Beim Verbrennen wird seine chemische Energie frei.','Aus dem Glas.'],c:1,fb:'Richtig! Im Wachs ist chemische Energie gespeichert. Beim Verbrennen wird sie in thermische Energie (und Licht) umgewandelt.'}},
+{id:'s6',f:'el',name:'elektrische Energie',sym:'E<sub>el</sub>',btn:'Schalter umlegen',
+ text:'Mit elektrischem Strom wird <b>elektrische Energie</b> übertragen – zum Beispiel von der Batterie zur Lampe und zum Motor.',
+ exp:{mat:'Flachbatterie 4,5 V, Lämpchen mit Fassung, kleiner Elektromotor, Kabel, Schalter',steps:['Baue den Stromkreis wie in der Simulation auf.','Schließe den Schalter.','Beobachte Lampe und Motor. Fühle nach einiger Zeit vorsichtig am Lämpchen.']},
+ q:{t:'Was machen Lampe und Motor mit der elektrischen Energie?',o:['Sie verbrauchen sie, danach ist sie weg.','Die Lampe wandelt sie in Licht (und Wärme), der Motor in Bewegung um.','Sie speichern sie für später.'],c:1,fb:'Richtig! Lampe und Motor sind Energiewandler. Die Energie ist danach nicht weg, sondern liegt in anderer Form vor.'}},
+{id:'s7',f:'St',name:'Strahlungsenergie',sym:'E<sub>Str</sub>',btn:'Lampe einschalten',
+ text:'Licht transportiert <b>Strahlungsenergie</b>. Trifft es auf einen Körper, kann es ihn erwärmen.',
+ exp:{mat:'ein schwarzes und ein weißes Blatt Papier, zwei Thermometer, Sonne oder Schreibtischlampe',steps:['Lege die Thermometer unter die beiden Papiere.','Stelle beide in die Sonne oder unter die Lampe.','Lies nach 10 Minuten die Temperaturen ab.']},
+ q:{t:'Was beobachtest du?',o:['Unter dem weißen Papier wird es wärmer.','Unter dem schwarzen Papier wird es wärmer.','Beide bleiben gleich kalt.'],c:1,fb:'Richtig! Dunkle Flächen nehmen mehr Strahlungsenergie auf und wandeln sie in thermische Energie um. Deshalb wird ein schwarzes T-Shirt in der Sonne heißer.'}}];
+
+$('#tabs').innerHTML=ST.map((s,i)=>`<button data-st="${i}" aria-pressed="${i===0}"><i style="background:${COL[s.f]}"></i>${i+1} · ${s.name}</button>`).join('');
+$('#stations').innerHTML=ST.map((s,i)=>`<div class="card station" id="st_${s.id}" data-task="${s.id}" ${i?'hidden':''}>
+<div class="tag"><span class="badge" style="background:${COL[s.f]}">${s.sym}</span> Station ${i+1} · ${s.name}</div>
+<div class="two"><div><div class="fig"><svg id="sv_${s.id}" viewBox="0 0 440 260" role="img" aria-label="Simulation ${s.name}"></svg></div>
+${s.ctrl?`<label for="in_${s.id}" style="font-weight:700">${s.ctrl.label}: <span id="iv_${s.id}">${s.ctrl.val}</span> ${s.ctrl.unit}</label><input type="range" id="in_${s.id}" min="${s.ctrl.min}" max="${s.ctrl.max}" step="${s.ctrl.step}" value="${s.ctrl.val}">`:''}
+<div class="row"><button class="primary" id="go_${s.id}">▶ ${s.btn}</button><button id="rs_${s.id}">↺ Zurücksetzen</button></div></div>
+<div><p>${s.text}</p>
+<div class="exp"><h4>Mini-Experiment</h4><p style="margin:0"><b>Material:</b> ${s.exp.mat}</p><ol>${s.exp.steps.map(x=>'<li>'+x+'</li>').join('')}</ol>${s.exp.safe?'<p class="safe" style="margin:0">⚠ '+s.exp.safe+'</p>':''}</div>
+<p><b>${s.q.t}</b></p><div class="mc" data-correct="${s.q.c}" data-task="${s.id}">${s.q.o.map((o,k)=>`<button data-k="${k}" ${k===s.q.c?`data-fb="${s.q.fb}"`:''}>${o}</button>`).join('')}<p class="fb"></p></div>
+</div></div></div>`).join('');
+$$('#tabs button').forEach(b=>b.onclick=()=>{$$('#tabs button').forEach(x=>x.setAttribute('aria-pressed',x===b));$$('.station').forEach((s,i)=>s.hidden=i!==+b.dataset.st)});
+window.onProg=()=>{$$('#tabs button').forEach((b,i)=>b.classList.toggle('solved',done.has(ST[i].id)))};
+
+/* Simulationen: jede bekommt draw(k) mit k = Fortschritt 0..1 */
+const SIM={};
+const ground=y=>Rc(0,y,440,260-y,'ground');
+SIM.s1=(svg,v,k)=>{const hp=v*1.6,top=205,y0=top-14-hp,y=y0+(top-14-y0)*k*k,dent=k>=1?2+v*.16:0;let s=ground(top+25);
+ s+=L(60,top,60,top-170,'thin')+[0,20,40,60,80,100].map(c=>L(54,top-c*1.6,66,top-c*1.6,'thin')+T(18,top-c*1.6+5,c+' cm','txs')).join('');
+ s+=`<path d="M150 ${top} L${200-14} ${top} Q200 ${top+dent*2} ${214} ${top} L250 ${top} L250 ${top+25} L150 ${top+25}Z" style="fill:#d77fa1;stroke:var(--ink)" stroke-width="1"/>`;
+ s+=C(200,y+(k>=1?dent:0),14,'ball')+(k<1?L(200,y0,230,y0,'dashl'):'')+T(258,top+18,'Knete','txs');
+ if(k>=1)s+=T(270,top-40,'Delle: '+fmtS(dent/2,1)+' mm','txb','style="fill:var(--el)"');return s};
+SIM.s2=(svg,v,k)=>{const yb=200,push=6*v*v,k1=Math.min(1,k*1.6),k2=Math.max(0,(k-.62)/.38),cx=20+(196-20)*k1,bx=230+push*(1-(1-k2)*(1-k2));let s=ground(yb);
+ s+=Rc(cx,yb-30,44,22,'','rx="6" style="fill:var(--eb)"')+Rc(cx+8,yb-42,24,14,'','rx="4" style="fill:var(--eb);opacity:.7"')+C(cx+10,yb-6,6,'','style="fill:var(--ink)"')+C(cx+34,yb-6,6,'','style="fill:var(--ink)"');
+ s+=Rc(bx,yb-24,36,24,'','style="fill:#f0d9a8;stroke:var(--ink)"')+T(bx-6,yb-32,'Schachtel','txs');
+ if(k>=1)s+=L(230,yb+18,bx,yb+18,'thin')+T(230,yb+40,'geschoben: '+fmtS(push/10,1)+' cm','txb','style="fill:var(--eb)"');return s};
+SIM.s3=(svg,v,k)=>{const yb=220,px=70,py=130,pull=8*v,d=12*v*v,k1=Math.min(1,k*4),k2=Math.max(0,(k-.25)/.75),bx=px-pull*(1-k1);let s=ground(yb);
+ s+=L(px,yb,px,py-30,'thin','stroke-width="4"')+L(px,yb,px,py+30,'thin','stroke-width="4"');
+ s+=`<path d="M${px} ${py-30} L${bx-8} ${py} L${px} ${py+30}" fill="none" style="stroke:var(--esp)" stroke-width="3"/>`;
+ const x=k2>0?px+d*k2:bx-8,y=k2>0?py-(4*70*k2*(1-k2))+(yb-6-py)*k2:py;s+=C(x,y,6,'','style="fill:var(--paper);stroke:var(--ink)"');
+ if(k>=1)s+=L(px,yb+14,px+d,yb+14,'thin')+T(px+10,yb+34,'Flugweite: '+fmtS(d/10,1)+' m','txb','style="fill:var(--esp)"');
+ if(k===0)s+=T(px-56,py+56,'gedehnt','txs');return s};
+SIM.s4=(svg,v,k)=>{let s='';const cup=(x,col,lab,rate)=>{const m=Math.max(0,1-k*rate),sz=28*Math.sqrt(m);return Rc(x,70,110,150,'','rx="8" style="fill:none;stroke:var(--ink)" stroke-width="2"')+Rc(x+3,110,104,107,'',`style="fill:${col};opacity:.45"`)+(sz>1?Rc(x+55-sz/2,112,sz,sz,'','rx="4" style="fill:#e8f6ff;stroke:#9cc9e8"'):'')+T(x+55,245,lab,'txb','text-anchor="middle"')+T(x+55,60,(m>0?Math.round(m*100)+' % Eis':'geschmolzen!'),'txs','text-anchor="middle"')};
+ s+=cup(70,'#7cb6f0','kalt (10 °C)',0.35)+cup(260,'#ff8a6a','warm (50 °C)',4);s+=T(10,24,'Zeit: '+Math.round(k*10)+' min','txb');return s};
+SIM.s5=(svg,v,k)=>{const temp=20+40*k;let s=ground(235)+L(210,10,210,235,'thin','stroke-width="4"')+L(210,40,250,40,'thin','stroke-width="3"');
+ s+=`<path d="M250 30 L250 150 Q250 170 270 170 Q290 170 290 150 L290 30" fill="none" style="stroke:var(--ink)" stroke-width="2"/>`+`<path d="M252 100 L252 150 Q252 168 270 168 Q288 168 288 150 L288 100Z" style="fill:#7cb6f0;opacity:.5"/>`;
+ s+=L(270,20,270,150,'','style="stroke:var(--muted)" stroke-width="5" stroke-linecap="round"')+L(270,150,270,150-(temp-20)*2.2,'','style="stroke:var(--eth)" stroke-width="5" stroke-linecap="round"')+C(270,152,6,'feth');
+ s+=Rc(250,212-4*k,40,23+4*k,'','rx="3" style="fill:#f4ead8;stroke:var(--ink)"')+Rc(246,226,48,10,'','style="fill:var(--muted)"');if(k>0)s+=flame(270,208,1.1);
+ s+=T(310,90,Math.round(temp)+' °C','txb','style="font-size:24px;fill:var(--eth)"')+T(310,115,'Wasser','txs')+T(10,24,'Zeit: '+Math.round(k*4)+' min','txb');return s};
+let fanA=0;
+SIM.s6=(svg,v,k)=>{const on=k>0;let s='';const w='class="thin" stroke-width="2.5"';
+ s+=`<path d="M70 200 H40 V50 H200" ${w}/><path d="M240 50 H400 V200 H250" ${w}/><path d="M190 200 H130" ${w}/>`;
+ s+=battery(70,188,60,24)+T(70,240,'Batterie','txs');
+ s+=C(200,50,4,'','style="fill:var(--ink)"')+C(240,50,4,'','style="fill:var(--ink)"')+(on?L(200,50,240,50,'thin','stroke-width="3"'):L(200,50,236,28,'thin','stroke-width="3"'))+T(196,80,'Schalter','txs');
+ s+=bulb(400,125,on)+T(330,128,'Lampe','txs');
+ s+=C(220,200,24,'','style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"')+T(212,206,'M','txb')+T(190,245,'Motor','txs');
+ s+=`<g transform="translate(220,145) rotate(${fanA})">${[0,120,240].map(a=>`<ellipse cx="0" cy="-14" rx="6" ry="14" transform="rotate(${a})" style="fill:var(--eelk)"/>`).join('')}</g>`+L(220,176,220,160,'thin','stroke-width="2"');
+ if(on)for(let i=0;i<10;i++){const p=((fanA/360*4)+i/10)%1,path=[[40,200],[40,50],[400,50],[400,200],[40,200]],seg=p*4,j=Math.floor(seg),f=seg-j,a=path[j],b=path[j+1];s+=C(a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,3.5,'feelk')}
+ return s};
+SIM.s7=(svg,v,k)=>{const tb=20+25*k,tw=20+8*k;let s='';
+ s+=Rc(185,10,70,26,'','rx="6" style="fill:var(--muted)"')+(k>0?`<path d="M190 36 L60 190 L380 190 L250 36Z" style="fill:#ffd54a;opacity:.25"/>`:'');
+ s+=Rc(60,190,140,14,'','style="fill:#222;stroke:var(--ink)"')+Rc(240,190,140,14,'','style="fill:#fff;stroke:var(--ink)"');
+ const th=(x,t)=>L(x,150,x,230,'','style="stroke:var(--muted)" stroke-width="5" stroke-linecap="round"')+L(x,230,x,230-(t-10)*1.8,'','style="stroke:var(--eth)" stroke-width="5" stroke-linecap="round"')+C(x,232,6,'feth')+T(x+12,170,Math.round(t)+' °C','txb','style="fill:var(--eth)"');
+ s+=th(130,tb)+th(310,tw)+T(80,250,'schwarz','txs')+T(262,250,'weiß','txs')+T(10,24,'Zeit: '+Math.round(k*10)+' min','txb');return s};
+
+ST.forEach(st=>{const svg=$('#sv_'+st.id),inp=$('#in_'+st.id);let k=0,running=false;
+ const val=()=>inp?+inp.value:0,draw=()=>{svg.innerHTML=SIM[st.id](svg,val(),k)};
+ if(inp)inp.oninput=()=>{$('#iv_'+st.id).textContent=inp.value;if(!running){k=0;draw()}};
+ $('#go_'+st.id).onclick=()=>{if(running)return;running=true;k=0;
+  if(st.id==='s6'){k=1;const loop=()=>{if(k===0){running=false;return}fanA=(fanA+6)%360;draw();requestAnimationFrame(loop)};loop();return}
+  animate(st.id==='s4'||st.id==='s5'||st.id==='s7'?4000:1400,t=>{k=t;draw()},()=>running=false)};
+ $('#rs_'+st.id).onclick=()=>{k=0;running=false;draw()};draw()});
+
+/* ---------- Energiekette ---------- */
+{const txt=['Im Stausee liegt das Wasser hoch oben. Es besitzt <b>Lageenergie</b>.','Das Wasser strömt durch das Rohr nach unten und wird schnell: Lageenergie → <b>Bewegungsenergie</b>.','Das strömende Wasser dreht die Turbine. Der Generator wandelt die Bewegungsenergie in <b>elektrische Energie</b> um.','Über Stromleitungen gelangt die elektrische Energie zu dir nach Hause.','Die Lampe wandelt elektrische Energie in <b>Strahlungsenergie</b> (Licht) um – und leider auch in <b>thermische Energie</b>: Sie wird warm.'];
+ const stages=[['Lageenergie','var(--el)'],['Bewegungs­energie','var(--eb)'],['elektrische Energie','var(--eelk)'],['elektrische Energie','var(--eelk)'],['Strahlungs­energie','var(--estr)']];
+ const pts=[[80,80],[170,170],[250,220],[430,120],[560,150]];let k=0;
+ function draw(){let s=Rc(0,250,640,80,'ground');
+  s+=`<path d="M20 40 L140 40 L140 130 L20 130Z" style="fill:#7cb6f0;opacity:.6"/>`+L(20,130,140,130,'thin')+L(140,30,140,250,'thin','stroke-width="6"')+T(30,30,'Stausee','txs');
+  s+=`<path d="M140 120 Q180 140 200 200 L230 220" fill="none" style="stroke:var(--muted)" stroke-width="14"/>`+T(150,105,'Rohr','txs');
+  s+=C(250,222,24,'','style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"')+T(236,228,'T','txb')+Rc(280,205,60,34,'','rx="6" style="fill:var(--paper);stroke:var(--ink)"')+T(298,228,'G','txb')+T(228,268,'Turbine + Generator','txs');
+  s+=L(340,222,370,222,'thin','stroke-width="2"')+L(370,250,370,90,'thin','stroke-width="4"')+L(350,100,390,100,'thin','stroke-width="3"')+`<path d="M370 100 Q450 140 530 100" fill="none" class="thin"/>`+L(530,250,530,90,'thin','stroke-width="4"')+L(510,100,550,100,'thin','stroke-width="3"')+T(400,88,'Stromleitung','txs');
+  s+=L(530,100,575,140,'thin','stroke-width="2"')+bulb(590,160,k>=4)+T(570,205,'Lampe','txs');
+  if(k>=4)s+=T(560,100,'warm!','txs','style="fill:var(--eth)"');
+  const p=pts[k];s+=C(p[0],p[1],16,'',`style="fill:${stages[k][1]};opacity:.35"`)+C(p[0],p[1],8,'',`style="fill:${stages[k][1]}"`);
+  stages.forEach((st,i)=>{if(i===3)return;const j=i>3?i-1:i,x=12+j*157;s+=Rc(x,282,140,36,'',`rx="8" style="fill:${i<=k?st[1]:'var(--paper)'};stroke:${st[1]}" stroke-width="2"`)+T(x+70,305,st[0].replace('­',''),'txs',`text-anchor="middle" style="fill:${i<=k?'#fff':'var(--ink)'};font-weight:600"`)+(j<3?arrowHead(x+152,300,0,'var(--muted)'):'')});
+  $('#kette').innerHTML=s;$('#ketteTxt').innerHTML=txt[k];$$('#ketteSteps i').forEach((e,i)=>e.classList.toggle('on',i<=k));$('#ketteBack').disabled=k===0;$('#ketteNext').disabled=k===txt.length-1}
+ $('#ketteSteps').innerHTML=txt.map((_,i)=>`<i>${i+1}</i>`).join('');$('#ketteNext').onclick=()=>{k++;draw()};$('#ketteBack').onclick=()=>{k--;draw()};draw()}
+
+/* ---------- Auftrag 3: Energiewandler ---------- */
+{const W=[['Taschenlampe (mit Batterie)','ch','St'],['Elektromotor im Ventilator','el','B'],['Solarzelle','St','el'],['Wasserkocher','el','th'],['Fahrraddynamo','B','el'],['Bogen beim Schuss','Sp','B'],['Mensch beim Treppensteigen','ch','L']];
+ $('#w1').innerHTML=W.map((w,i)=>`<div class="chain"><span>${w[0]}</span><select data-a="${w[1]}" aria-label="${w[0]}: aufgenommene Energie">${opt()}</select><span>→</span><select data-a="${w[2]}" aria-label="${w[0]}: genutzte Energie">${opt()}</select></div>`).join('');
+ selCheck('#w1Check','#w1','#w1Fb','w1','Alles richtig! Fällt dir etwas auf? Bei fast allen Wandlern entsteht zusätzlich thermische Energie, die man nicht nutzen will.');
+ hints.w1=['Frage dich: Was „füttert“ das Gerät? Was soll am Ende herauskommen?','Die Batterie der Taschenlampe speichert chemische Energie. Der Dynamo wird vom Rad gedreht.','Beim Treppensteigen nutzt du die chemische Energie aus deiner Nahrung – oben hast du mehr Lageenergie.']}
+
+/* ---------- Lückentext ---------- */
+{const words=['bewegen','erwärmen','E','J','Joule','Watt','Formen','umgewandelt','vernichtet','Energiewandler','Kraftwerke','verloren','gespeichert'];
+ $$('#cloze select').forEach(s=>{s.innerHTML='<option value="">…</option>'+words.map(w=>`<option>${w}</option>`).join('')});
+ selCheck('#f1Check','#cloze','#f1Fb','f1','Perfekt! Übertrage den Text in dein Heft – oder nutze den Heftaufschrieb unten.')}
+
+/* ---------- Übung 1 ---------- */
+{const I=[['Ein Apfel hängt hoch oben am Baum.','L'],['Ein Fußball fliegt aufs Tor.','B'],['Eine aufgezogene Feder im Spielzeugauto','Sp'],['Eine Tasse heißer Tee','th'],['Ein Brötchen','ch'],['Sonnenlicht trifft auf ein Solarmodul.','St'],['Benzin im Tank eines Autos','ch'],['Ein Trampolin, wenn du am tiefsten Punkt bist','Sp'],['Wind, der ein Windrad antreibt','B'],['Strom fließt durch das Kabel zum Laptop.','el']];
+ $('#u1').innerHTML=I.map((x,i)=>`<div class="numq"><label for="u1_${i}">${x[0]}</label><select id="u1_${i}" data-a="${x[1]}">${opt()}</select></div>`).join('');
+ selCheck('#u1Check','#u1','#u1Fb','u1','Alles richtig – du erkennst Energieformen sicher!');
+ hints.u1=['Hoch oben → Lageenergie. In Bewegung → Bewegungsenergie. Verformt (gespannt, gedehnt, zusammengedrückt) → Spannenergie.','Alles, was man essen oder verbrennen kann, und Batterien speichern chemische Energie.','Wind ist bewegte Luft.']}
+
+/* ---------- Übung 2 ---------- */
+tfBuild('tf',[['Energie wird in Joule (J) gemessen.',true,'Die Einheit der Energie ist 1 Joule.'],['Wenn eine Lampe leuchtet, wird Energie vernichtet.',false,'Energie wird nie vernichtet – die Lampe wandelt elektrische Energie in Licht und thermische Energie um.'],['Ein ruhender Stein auf einem Berg besitzt Energie.',true,'Er besitzt Lageenergie. Rollt er herunter, wird sie in Bewegungsenergie umgewandelt.'],['Eine Batterie speichert elektrische Energie.',false,'Streng genommen speichert sie chemische Energie. Erst beim Entladen wird daraus elektrische Energie.'],['Ein Mensch ist ein Energiewandler.',true,'Er wandelt die chemische Energie der Nahrung z. B. in Bewegungsenergie und thermische Energie um.'],['1 kJ ist weniger als 500 J.',false,'1 kJ = 1000 J – also mehr als 500 J.']],'u2');
+
+/* ---------- Übung 3 ---------- */
+numCheck('#u3Check',['#u3a','#u3b','#u3c','#u3d'],'#u3Fb','u3','Alles richtig! Von kJ nach J: mal 1000. Von J nach kJ: durch 1000.');
+hints.u3=['Von kJ nach J rechnest du · 1000, von J nach kJ rechnest du : 1000.','b) 4700 : 1000 = 4,7','c) 1 MJ = 1000 kJ, also 0,3 MJ = 0,3 · 1000 kJ.'];
+
+/* ---------- Übung 4 ---------- */
+{const D=[['Bohrmaschine','el','B','th'],['Auto mit Benzinmotor','ch','B','th'],['Glühlampe','el','St','th'],['Kerze','ch','St','th']];
+ $('#u4').innerHTML=D.map((d,i)=>`<div class="fig" style="margin:10px 0"><svg viewBox="0 0 760 160" role="img" aria-label="Energieflussdiagramm ${d[0]}">
+  <rect x="250" y="40" width="190" height="60" rx="10" style="fill:var(--panel);stroke:var(--ink)" stroke-width="2"/><text x="345" y="76" text-anchor="middle" class="txb">${d[0]}</text>
+  <path d="M190 70 H245" class="thin" stroke-width="3"/>${arrowHead(250,70,0,'var(--ink)')}
+  <path d="M440 60 H500 V35 H520" class="thin" stroke-width="3"/>${arrowHead(526,35,0,'var(--ink)')}
+  <path d="M440 82 H500 V115 H520" class="thin" stroke-width="2" stroke-dasharray="5 4"/>${arrowHead(526,115,0,'var(--muted)')}
+  <foreignObject x="0" y="48" width="190" height="48"><select xmlns="http://www.w3.org/1999/xhtml" data-a="${d[1]}" aria-label="${d[0]}: zugeführt" style="width:186px">${opt()}</select></foreignObject>
+  <foreignObject x="528" y="12" width="232" height="48"><select xmlns="http://www.w3.org/1999/xhtml" data-a="${d[2]}" aria-label="${d[0]}: genutzt" style="width:228px">${opt()}</select></foreignObject>
+  <foreignObject x="528" y="92" width="232" height="48"><select xmlns="http://www.w3.org/1999/xhtml" data-a="${d[3]}" aria-label="${d[0]}: nicht genutzt" style="width:228px">${opt()}</select></foreignObject>
+  <text x="250" y="155" class="txs">genutzt: oben · nicht genutzt: unten (gestrichelt)</text></svg></div>`).join('');
+ selCheck('#u4Check','#u4','#u4Fb','u4','Super! Bei allen vier Wandlern entsteht als nicht genutzte Energie thermische Energie.');
+ hints.u4=['Links steht, was das Gerät aufnimmt (Steckdose? Tank? Docht?).','Die Bohrmaschine soll den Bohrer drehen. Das Auto soll fahren. Lampe und Kerze sollen leuchten.','Unten rechts steht fast immer dieselbe Energieform: Was spürst du, wenn du ein Gerät nach dem Betrieb anfasst?']}
+
+/* ---------- Übung 5 ---------- */
+numCheck('#u5Check',['#u5a','#u5b','#u5c'],'#u5Fb','u5','Richtig gerechnet! 200 g Gummibärchen liefern fast ein Drittel der Energie, die du an einem Tag brauchst.');
+hints.u5=['a) Die Tüte enthält doppelt so viel wie 100 g.','b) Anteil = 2860 kJ : 10 000 kJ. Mal 100 ergibt Prozent.','c) Wie oft passt 1430 kJ in 10 000 kJ? So oft brauchst du 100 g.'];
+
+initMC();updProg();
+}
+</script>
+</body>
+</html>

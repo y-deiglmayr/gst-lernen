@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lageenergie</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+/* VOICE: freundlich-sachlich wie ein gutes Arbeitsheft – du-Ansprache, kurze Aufträge
+   IDEA: Energie-Labor trifft Karoheft – dunkler Versuchsraum oben, Säulendiagramme als durchgehende Bildsprache
+   COLOUR: E_L Blau, E_B Grün, E_therm Rot (wie im Unterrichtsmaterial), Akzent Orange; Lexend + Atkinson Hyperlegible
+   LAYOUT: vier Phasen (Wiederholen – Entdecken – Festhalten – Üben) */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--grid:light-dark(#d4e2f2,#232c3b);
+--paper:light-dark(#fdfeff,#151a23);
+--acc:light-dark(#c2410c,#ff9a4d);--acc2:light-dark(#1d62c9,#64a6ff);
+--el:light-dark(#2563c9,#6aa5ff);--eb:light-dark(#1d8a4a,#4fd27f);--eth:light-dark(#d4381e,#ff7a5c);--esp:light-dark(#8a3fc4,#c08cff);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2815);--lab:#0e131d;--labink:#eef1f7}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700}
+h3{font-size:21px;font-weight:600;margin-top:1.6em}
+h4{font-size:17px;font-weight:600;margin:0 0 .3em}
+p{margin:0 0 .8em}
+sub{font-size:.72em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.alt{background:var(--panel)}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#fff;font-size:13px;margin-right:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.bar{width:140px;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .4s}
+.hero{background:var(--lab);color:var(--labink)}
+.hero p{color:#c6ccd8;max-width:64ch}
+.hero svg{width:100%;height:auto;display:block;margin:18px 0 8px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px}
+.phases a{display:block;padding:14px 16px;border-radius:12px;background:#182031;color:#eef1f7;text-decoration:none;border:1px solid #2a3448}
+.phases a:hover{border-color:#ff9a4d}
+.phases b{font-family:Lexend,system-ui,sans-serif;display:block;font-size:17px}
+.phases small{color:#a9b2c4;font-size:14px}
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+@media(min-width:901px){.stick{position:sticky;top:70px}}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;touch-action:manipulation;user-select:none}
+.caption{font-size:14px;color:var(--muted);margin:6px 4px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card.done{border-color:var(--ok)}
+.card .tag{font:600 13px Lexend,system-ui,sans-serif;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.card.done>.tag::after{content:"✓ gelöst";color:var(--ok)}
+.stars{color:var(--acc);letter-spacing:2px}
+.intro{max-width:72ch;color:var(--muted)}
+.merke{border:2px solid var(--acc);border-radius:14px;padding:16px 20px;margin:18px 0;background:var(--bg)}
+.merke h4{color:var(--acc)}
+.merke ul{margin:.3em 0;padding-left:1.2em}
+details.reveal{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0;background:var(--bg)}
+details.reveal summary{cursor:pointer;font:600 16px Lexend,system-ui,sans-serif;padding:4px 0}
+button{font:600 16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.alt button{background:var(--bg)}
+button:hover{border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+button.primary{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11141b)}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+input[type=text],select{font:16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--acc);min-height:36px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 18px;margin-top:8px}
+.ctrl label{font-weight:700;font-size:15px}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.toggles label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;min-height:44px;font-size:15px}
+.toggles input{width:18px;height:18px;accent-color:var(--acc)}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font-weight:400}
+.mc button.ok,.tf button.ok{background:var(--okbg);border-color:var(--ok)}
+.mc button.bad,.tf button.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1em;margin:8px 0 0;font-size:16px}
+.fb:empty{display:none}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb.hint{background:var(--hint);color:var(--ink);padding:8px 12px;border-radius:8px}
+input.ok,select.ok{border-color:var(--ok);background:var(--okbg)}
+input.bad,select.bad{border-color:var(--bad);background:var(--badbg)}
+.cloze{line-height:2.5;font-size:17px}
+.cloze select{min-height:38px;padding:2px 6px;margin:0 2px}
+.tf{display:grid;gap:4px}
+.tf .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tf .item .fb{grid-column:1/-1;margin:0}
+.tf .btns{display:flex;gap:6px}
+.numq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.numq input{width:110px;text-align:right}
+.numq .mcq{grid-column:1/-1}
+.unit{white-space:nowrap}
+.sol{background:var(--panel);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:16px}
+.sol p{margin:.3em 0}
+.calc{font-family:"Atkinson Hyperlegible",sans-serif;background:var(--bg);border-left:4px solid var(--acc);padding:6px 12px;margin:6px 0;border-radius:4px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.steps i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font:600 14px Lexend,system-ui,sans-serif}
+.steps i.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.steptext{min-height:7em}
+.heft{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;border:1px solid var(--line);border-radius:12px;padding:22px clamp(16px,3vw,34px)}
+.heft h3{margin-top:.8em;color:var(--acc)}
+.heft h3:first-child{margin-top:0}
+.heft .box{border:2px solid var(--ink);padding:8px 14px;border-radius:6px;background:var(--paper);display:inline-block}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.checks label{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:10px;min-height:44px;cursor:pointer;font-size:16px;background:var(--bg)}
+.checks label.ok{border-color:var(--ok);background:var(--okbg)}.checks label.bad{border-color:var(--bad);background:var(--badbg)}
+.checks input{width:18px;height:18px;accent-color:var(--acc)}
+.chain{display:grid;grid-template-columns:minmax(0,1.3fr) auto auto auto;gap:6px 10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+@media(max-width:640px){.chain{grid-template-columns:auto auto auto}.chain>span:first-child{grid-column:1/-1}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted);margin:6px 4px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.given{background:var(--panel);border-radius:10px;padding:8px 14px;font-size:15px;margin:8px 0}
+footer{font-size:14px;color:var(--muted)}
+/* svg */
+.gl{stroke:var(--grid);stroke-width:1}
+.thin{stroke:var(--ink);stroke-width:1.4;fill:none}
+.dashl{stroke:var(--muted);stroke-width:1.4;stroke-dasharray:6 5;fill:none}
+.tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
+.txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.txb{fill:var(--ink);font:600 15px Lexend,sans-serif}
+.fel{fill:var(--el)}.feb{fill:var(--eb)}.feth{fill:var(--eth)}.fesp{fill:var(--esp)}
+.tel{fill:var(--el);font:600 14px Lexend,sans-serif}.teb{fill:var(--eb);font:600 14px Lexend,sans-serif}.teth{fill:var(--eth);font:600 14px Lexend,sans-serif}
+.ges{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 4}
+.ball{fill:light-dark(#f2b632,#f2b632);stroke:var(--ink);stroke-width:1.5}
+.ghost{opacity:.35}
+.ground{fill:light-dark(#e9edf3,#202736)}
+.track{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.hit{fill:transparent;cursor:pointer}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+@media(max-width:600px){body{font-size:16px}.prog .bar{width:80px}nav a{padding:6px}}
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+.qrbtn:hover{outline:3px solid #ff5c50}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop{background:rgba(8,10,16,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
+@media(max-width:640px){.qrbtn{width:96px}.qrbtn svg{width:80px;height:80px}}
+@media print{nav,.qrbtn{display:none}}
+:root{--ech:light-dark(#8a5a2b,#e0a86a);--eelk:light-dark(#0b7f96,#4fd0e8);--estr:light-dark(#a37a00,#ffd54a)}
+.fech{fill:var(--ech)}.feelk{fill:var(--eelk)}.festr{fill:var(--estr)}
+.part{border-left:4px solid var(--line);padding:4px 0 4px 14px;margin:16px 0}
+.part.done{border-color:var(--ok)}
+.part.done>h4::after{content:"  ✓";color:var(--ok)}
+.tip:empty{display:none}
+.lvl{display:inline-block;font:600 14px Lexend,system-ui,sans-serif;padding:4px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--line);margin-bottom:10px}
+.readout{font:600 18px Lexend,system-ui,sans-serif;color:var(--acc)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.tabs button{display:flex;align-items:center;gap:8px;font-size:15px;padding:8px 12px}
+.tabs button i{width:14px;height:14px;border-radius:50%;display:inline-block;flex:none}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tabs button.solved::after{content:"✓";color:var(--ok);font-weight:700}
+.tabs button[aria-pressed=true].solved::after{color:var(--bg)}
+.exp{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+.exp h4{color:var(--acc)}
+.exp ol,.exp ul{margin:.3em 0 .6em;padding-left:1.3em}
+.safe{color:var(--bad);font-weight:600}
+.badge{display:inline-block;font:600 13px Lexend,sans-serif;padding:2px 10px;border-radius:20px;color:#fff;margin-bottom:6px}
+table.mess{border-collapse:collapse;font-size:15px;width:100%}
+table.mess th,table.mess td{border:1px solid var(--line);padding:5px 8px;text-align:center}
+table.mess th{background:var(--panel)}
+.scroll{overflow-x:auto}
+.formula{font:600 clamp(22px,3vw,30px) Lexend,sans-serif;margin:.3em 0}
+.fig.narrow{max-width:760px}
+input[inputmode=decimal]{width:110px;text-align:right}
+.massbtns{display:flex;gap:8px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<nav aria-label="Phasen"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#einstieg"><span>1</span>Einstieg</a>
+<a href="#entdecken"><span>2</span>Entdecken</a>
+<a href="#festhalten"><span>3</span>Festhalten</a>
+<a href="#ueben"><span>4</span>Üben</a>
+<div class="prog"><span id="progtxt">0 / 0 gelöst</span><div class="bar"><i id="progbar"></i></div></div>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Lageenergie</h1>
+<p>Ein Wasserturm, ein Stausee, ein Apfel am Baum: Alles, was hoch oben ist, hat Energie gespeichert – die <b>Lageenergie</b>. Aber wie viel? In diesem Lernpfad findest du im Fall-Labor heraus, wovon die Lageenergie abhängt, leitest die Formel E<sub>L</sub> = m · g · h her und übst das Rechnen bis zur Seilbahn auf die Zugspitze.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik9/lageenergie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m3 0h1m1 0h1m1 0h1m2 0h2m7 0h7m-33 1h1m5 0h1m1 0h1m1 0h2m1 0h2m1 0h1m3 0h1m5 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m3 0h3m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h3m3 0h2m1 0h3m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m1 0h2m1 0h1m1 0h5m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m6 0h2m5 0h1m5 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h2m1 0h1m2 0h1m3 0h1m1 0h1m2 0h2m-25 1h1m5 0h1m1 0h1m1 0h8m4 0h1m1 0h3m2 0h3m-32 1h1m1 0h3m2 0h4m4 0h1m1 0h5m1 0h1m4 0h4m-32 1h1m5 0h1m1 0h3m1 0h1m2 0h1m1 0h1m6 0h2m2 0h1m1 0h2m-32 1h2m1 0h2m2 0h3m1 0h2m1 0h3m1 0h1m1 0h1m1 0h2m2 0h6m-30 1h1m2 0h2m1 0h2m2 0h3m1 0h1m2 0h2m1 0h1m2 0h2m5 0h1m-33 1h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h2m3 0h3m1 0h2m2 0h2m2 0h3m-33 1h1m2 0h1m1 0h3m2 0h3m1 0h3m3 0h2m3 0h2m4 0h1m-32 1h2m1 0h3m2 0h1m1 0h2m7 0h1m2 0h1m1 0h2m1 0h4m1 0h1m-33 1h1m1 0h1m2 0h2m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h4m1 0h3m2 0h1m-32 1h1m3 0h1m3 0h3m1 0h3m3 0h5m2 0h1m2 0h2m1 0h1m-33 1h2m2 0h3m1 0h2m2 0h1m2 0h3m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m-32 1h1m5 0h1m1 0h1m1 0h1m2 0h3m2 0h1m2 0h5m1 0h5m-32 1h1m1 0h1m1 0h2m2 0h1m2 0h2m3 0h1m7 0h1m1 0h3m2 0h1m-33 1h1m1 0h1m1 0h2m2 0h8m3 0h1m2 0h2m1 0h4m1 0h1m-31 1h1m5 0h1m1 0h1m1 0h4m1 0h4m1 0h1m3 0h4m1 0h1m1 0h1m-32 1h1m3 0h2m3 0h3m6 0h1m3 0h1m1 0h1m2 0h1m2 0h3m-33 1h2m2 0h3m1 0h3m2 0h2m1 0h1m2 0h1m2 0h1m1 0h6m1 0h1m-24 1h2m1 0h1m2 0h3m1 0h4m1 0h2m3 0h1m1 0h1m1 0h1m-33 1h7m2 0h1m2 0h7m1 0h1m1 0h3m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m2 0h2m1 0h1m5 0h2m3 0h2m3 0h3m-31 1h1m1 0h3m1 0h1m2 0h2m1 0h2m1 0h1m1 0h1m4 0h1m1 0h6m-30 1h1m1 0h3m1 0h1m2 0h1m4 0h8m1 0h3m1 0h3m1 0h2m-33 1h1m1 0h3m1 0h1m3 0h3m1 0h2m3 0h2m3 0h2m1 0h3m1 0h2m-33 1h1m5 0h1m4 0h1m1 0h4m1 0h1m1 0h1m6 0h4m-31 1h7m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h3m2 0h1m3 0h1"/></svg>QR groß zeigen</button></div>
+<svg viewBox="0 0 900 200" role="img" aria-label="Ein Kran hebt eine Kiste, die Säule der Lageenergie wächst mit der Höhe"><g id="heroScene"></g></svg>
+<div class="phases">
+<a href="#einstieg"><b>1 · Einstieg</b><small>Wovon hängt die Lageenergie ab? Vermute!</small></a>
+<a href="#entdecken"><b>2 · Entdecken</b><small>Fall-Labor, Heben, Weg und Nullniveau</small></a>
+<a href="#festhalten"><b>3 · Festhalten</b><small>Formel, Lückentext, Musteraufgabe</small></a>
+<a href="#ueben"><b>4 · Üben</b><small>7 Aufgaben von ★ bis ★★★</small></a>
+</div>
+</div></header>
+
+<!-- ============ 1 EINSTIEG ============ -->
+<section class="band" id="einstieg"><div class="wrap">
+<h2>1 · Einstieg: Wovon hängt die Lageenergie ab?</h2>
+<p class="intro">Aus dem Lernpfad <a href="/Physik9/energie-einfuehrung">„Was ist Energie?“</a> weißt du: Eine Kugel, die hoch liegt, besitzt <b>Lageenergie E<sub>L</sub></b>. Lässt man sie fallen, verformt sie Sand oder Knete. Je tiefer die Delle, desto mehr Energie hatte die Kugel.</p>
+<div class="card" data-task="v1">
+<div class="tag">Auftrag 1 · Deine Vermutung</div>
+<p>Wovon hängt es ab, wie viel Lageenergie ein Körper hat? Wähle <b>alle</b> Größen aus, die du für wichtig hältst – danach prüfst du deine Vermutung im Fall-Labor.</p>
+<div class="checks" id="v1Checks">
+<label><input type="checkbox" value="h">Höhe</label><label><input type="checkbox" value="m">Masse</label><label><input type="checkbox" value="f">Farbe</label><label><input type="checkbox" value="t">Temperatur</label><label><input type="checkbox" value="o">Ort (Erde oder Mond)</label>
+</div>
+<div class="row"><button class="primary" id="v1Check">Vermutung festhalten</button></div>
+<p class="fb" id="v1Fb"></p>
+</div>
+</div></section>
+
+<!-- ============ 2 ENTDECKEN ============ -->
+<section class="band alt" id="entdecken"><div class="wrap">
+<h2>2 · Entdecken</h2>
+
+<h3>A · Das Fall-Labor</h3>
+<p class="intro">Lass Kugeln mit verschiedener Masse aus verschiedenen Höhen in den Sand fallen. Die Tiefe der Delle ist ein Maß für die Lageenergie (vereinfachtes Modell). Übernimm jede Messung in die Tabelle – das Diagramm entsteht automatisch.</p>
+<div class="two">
+<div><div class="fig"><svg id="fall" viewBox="0 0 560 360" role="img" aria-label="Fall-Labor: Kugel über einem Sandkasten mit Höhenskala"></svg></div>
+<div class="ctrl">
+<div><span style="font-weight:700;font-size:15px">Masse der Kugel</span><div class="massbtns" id="mBtns"><button data-m="50">50 g</button><button data-m="100" aria-pressed="true">100 g</button><button data-m="200">200 g</button></div></div>
+<div><label for="hIn">Fallhöhe h = <span id="hV">40</span> cm</label><input type="range" id="hIn" min="10" max="80" step="10" value="40"></div>
+</div>
+<div class="row"><button class="primary" id="drop">▼ Fallen lassen</button><button id="take" disabled>Messwert übernehmen</button><button id="clearT">Tabelle leeren</button></div>
+</div>
+<div>
+<div class="scroll"><table class="mess" id="tab"><thead><tr><th>Nr.</th><th>Masse m</th><th>Höhe h</th><th>Delle</th></tr></thead><tbody></tbody></table></div>
+<div class="fig" style="margin-top:10px"><svg id="chart" viewBox="0 0 440 280" role="img" aria-label="Diagramm: Tiefe der Delle in Abhängigkeit von der Fallhöhe"></svg></div>
+<div class="legend"><span><i style="background:var(--el)"></i>50 g</span><span><i style="background:var(--eb)"></i>100 g</span><span><i style="background:var(--eth)"></i>200 g</span></div>
+<p class="fb" id="labFb"></p>
+</div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="tag">Auftrag 2 · Auswerten</div>
+<div class="part" data-task="l1a"><h4>a) Gleiche Masse, doppelte Höhe (z. B. 20 cm → 40 cm). Die Delle wird …</h4>
+<div class="mc" data-correct="b" data-task="l1a"><button data-k="a">gleich tief.</button><button data-k="b" data-fb="Richtig: doppelte Höhe → doppelte Delle → doppelte Lageenergie. Die Lageenergie ist <b>proportional zur Höhe</b>: E<sub>L</sub> ~ h. Im Diagramm liegen die Punkte einer Masse auf einer Ursprungsgeraden.">doppelt so tief.</button><button data-k="c">viermal so tief.</button><p class="fb"></p></div></div>
+<div class="part" data-task="l1b"><h4>b) Gleiche Höhe, doppelte Masse (z. B. 100 g → 200 g). Die Delle wird …</h4>
+<div class="mc" data-correct="a" data-task="l1b"><button data-k="a" data-fb="Richtig: Die Lageenergie ist auch <b>proportional zur Masse</b>: E<sub>L</sub> ~ m.">doppelt so tief.</button><button data-k="b">halb so tief.</button><button data-k="c">gleich tief.</button><p class="fb"></p></div></div>
+<div class="part" data-task="l1c"><h4>c) Was folgt daraus?</h4>
+<div class="mc" data-correct="c" data-task="l1c"><button data-k="a">E<sub>L</sub> ~ m + h</button><button data-k="b">E<sub>L</sub> ~ m : h</button><button data-k="c" data-fb="Genau: Die Lageenergie ist proportional zum <b>Produkt</b> aus Masse und Höhe. Fehlt nur noch der Faktor davor – den findest du in Teil B.">E<sub>L</sub> ~ m · h</button><p class="fb"></p></div></div>
+</div>
+
+<h3>B · Heben kostet Energie: Woher kommt die Formel?</h3>
+<p class="intro">Um eine Kiste hochzuheben, musst du ihre <b>Gewichtskraft F<sub>G</sub> = m · g</b> überwinden – auf der Erde ist g = 9,81 N/kg. Die Energie, die du dabei aufwendest, steckt danach als Lageenergie in der Kiste: Kraft mal Hubhöhe.</p>
+<div class="two">
+<div class="fig"><svg id="hub" viewBox="0 0 560 360" role="img" aria-label="Seilrolle hebt eine Kiste, Kraftmesser zeigt die Gewichtskraft"></svg></div>
+<div>
+<div class="ctrl">
+<div><label for="hubM">Masse m = <span id="hubMv">5</span> kg</label><input type="range" id="hubM" min="1" max="20" step="1" value="5"></div>
+<div><label for="hubH">Hubhöhe h = <span id="hubHv">1,0</span> m</label><input type="range" id="hubH" min="0" max="3" step="0.1" value="1"></div>
+</div>
+<div class="given" id="hubCalc"></div>
+<div class="card" data-task="l2">
+<div class="tag">Auftrag 3 · Nachrechnen</div>
+<p>Eine Kiste mit 5 kg wird 2 m hoch gehoben. Rechne mit g = 9,81 N/kg und überprüfe mit den Schiebereglern.</p>
+<div class="numq"><span>Gewichtskraft F<sub>G</sub></span><span class="unit"><input type="text" inputmode="decimal" id="l2a" data-a="49.05" aria-label="Gewichtskraft in N"> N</span></div>
+<div class="numq"><span>Lageenergie E<sub>L</sub></span><span class="unit"><input type="text" inputmode="decimal" id="l2b" data-a="98.1" aria-label="Lageenergie in J"> J</span></div>
+<div class="row"><button class="primary" id="l2Check">Prüfen</button><button data-hint="l2">Tipp</button></div>
+<p class="fb" id="l2Fb"></p><p class="tip" id="l2Tip"></p>
+</div>
+</div>
+</div>
+
+<h3>C · Ist der Weg egal?</h3>
+<p class="intro">Ein Koffer (50 kg) soll auf eine 3 m hohe Plattform. Du kannst die Treppe nehmen, ihn eine Rampe hochschieben oder den Aufzug benutzen. Wähle einen Weg und vergleiche.</p>
+<div class="two">
+<div class="fig"><svg id="weg" viewBox="0 0 640 320" role="img" aria-label="Drei Wege auf eine Plattform: Rampe, Treppe, Aufzug"></svg></div>
+<div>
+<div class="row"><button data-w="0" class="primary">Rampe</button><button data-w="1" class="primary">Treppe</button><button data-w="2" class="primary">Aufzug</button></div>
+<div class="given" id="wegTxt">Wähle einen Weg.</div>
+<div class="card" data-task="l3"><div class="tag">Auftrag 4 · Vergleichen</div>
+<p>Auf welchem Weg hat der Koffer oben die meiste Lageenergie?</p>
+<div class="mc" data-correct="d" data-task="l3"><button data-k="a">Rampe – der Weg ist am längsten.</button><button data-k="b">Treppe</button><button data-k="c">Aufzug – er ist am schnellsten.</button><button data-k="d" data-fb="Richtig! Die Lageenergie hängt nur von der Masse und vom <b>Höhenunterschied</b> ab, nicht vom Weg. Auf der Rampe brauchst du weniger Kraft, dafür ist der Weg länger – das Produkt ist gleich.">Bei allen gleich.</button><p class="fb"></p></div></div>
+</div>
+</div>
+
+<h3>D · Hoch über … was eigentlich? Das Nullniveau</h3>
+<p class="intro">Ein Buch (1 kg) liegt auf einem Regalbrett. Wie hoch liegt es? Das kommt darauf an, von wo aus du misst! Die Höhe, von der aus gemessen wird, heißt <b>Nullniveau</b>. Dort ist E<sub>L</sub> = 0. Wähle ein Nullniveau.</p>
+<div class="two">
+<div class="fig"><svg id="null" viewBox="0 0 640 360" role="img" aria-label="Schnitt durch ein Haus mit Keller, Fußboden, Tisch und Regal mit Buch"></svg></div>
+<div>
+<div class="row" id="nullBtns"><button data-z="0">Kellerboden</button><button data-z="1" aria-pressed="true">Fußboden</button><button data-z="2">Tischplatte</button><button data-z="3">Regalbrett</button></div>
+<div class="given" id="nullTxt"></div>
+<div class="card" data-task="l4"><div class="tag">Auftrag 5 · Nullniveau</div>
+<p>Bezüglich welchen Nullniveaus hat das Buch eine Lageenergie von 9,81 J?</p>
+<div class="mc" data-correct="c" data-task="l4"><button data-k="a">Kellerboden</button><button data-k="b">Fußboden</button><button data-k="c" data-fb="Richtig: Das Buch liegt genau 1 m über der Tischplatte: E<sub>L</sub> = 1 kg · 9,81 N/kg · 1 m = 9,81 J.">Tischplatte</button><button data-k="d">Regalbrett</button><p class="fb"></p></div></div>
+</div>
+</div>
+<div class="merke"><h4>Merke: Nullniveau</h4><p style="margin:0">Das Nullniveau darfst du frei wählen – meist den Boden oder den tiefsten Punkt einer Bewegung. Gib es immer an! Eine Lageenergie ohne Nullniveau ist nicht eindeutig.</p></div>
+</div></section>
+
+<!-- ============ 3 FESTHALTEN ============ -->
+<section class="band" id="festhalten"><div class="wrap">
+<h2>3 · Festhalten</h2>
+<div class="merke"><h4>Merke: Lageenergie</h4>
+<p style="margin:0">Ein Körper der Masse m, der sich in der Höhe h über dem Nullniveau befindet, besitzt die Lageenergie</p>
+<p class="formula">E<sub>L</sub> = m · g · h</p>
+<p style="margin:0">m in kg, h in m, g = 9,81 N/kg (Ortsfaktor), E<sub>L</sub> in J &nbsp;·&nbsp; 1 J = 1 N · m<br>Umgestellt: h = E<sub>L</sub> : (m · g) &nbsp;und&nbsp; m = E<sub>L</sub> : (g · h)</p></div>
+<div class="card" data-task="f1">
+<div class="tag">Auftrag 6 · Lückentext</div>
+<div class="cloze" id="cloze">
+Die Lageenergie ist proportional zur <select data-a="Masse"></select> und zur <select data-a="Höhe"></select> des Körpers.
+Der Ortsfaktor g beträgt auf der Erde <select data-a="9,81 N/kg"></select>. Die Einheit der Energie ist das Joule; es gilt 1 J = 1 <select data-a="N · m"></select>.
+Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welchem Weg der Körper nach oben gelangt, ist für die Lageenergie <select data-a="egal"></select>.
+</div>
+<div class="row"><button class="primary" id="f1Check">Prüfen</button></div>
+<p class="fb" id="f1Fb"></p>
+</div>
+<details class="reveal"><summary>Heftaufschrieb mit Musteraufgabe anzeigen</summary>
+<div class="heft">
+<h3>Lageenergie</h3>
+<p>Ein Körper, der sich über dem Nullniveau befindet, besitzt Lageenergie. Sie ist proportional zur Masse m und zur Höhe h:</p>
+<p><span class="box">E<sub>L</sub> = m · g · h &nbsp;&nbsp; g = 9,81 N/kg &nbsp;&nbsp; [E<sub>L</sub>] = 1 J = 1 N · m</span></p>
+<p>Herleitung: Um einen Körper zu heben, muss man die Gewichtskraft F<sub>G</sub> = m · g längs der Höhe h überwinden: E<sub>L</sub> = F<sub>G</sub> · h = m · g · h. Der Weg spielt keine Rolle, nur der Höhenunterschied.</p>
+<h3>Musteraufgabe</h3>
+<p>Ein Schüler (55 kg) steigt vom Erdgeschoss in den 1. Stock (3,0 m höher). Wie viel Lageenergie gewinnt er?</p>
+<p><b>Gegeben:</b> m = 55 kg; h = 3,0 m; g = 9,81 N/kg &nbsp; <b>Gesucht:</b> E<sub>L</sub></p>
+<p><b>Rechnung:</b> E<sub>L</sub> = m · g · h = 55 kg · 9,81 N/kg · 3,0 m ≈ 1619 J ≈ 1,6 kJ</p>
+<p><b>Antwort:</b> Der Schüler gewinnt etwa 1,6 kJ Lageenergie (Nullniveau: Erdgeschoss).</p>
+</div>
+</details>
+</div></section>
+
+<!-- ============ 4 ÜBEN ============ -->
+<section class="band alt" id="ueben"><div class="wrap">
+<h2>4 · Üben</h2>
+<p class="intro">★ Grundlagen, ★★ Umstellen und Nullniveau, ★★★ Anwenden. Rechne mit g = 9,81 N/kg und notiere im Heft <i>Gegeben – Gesucht – Rechnung – Antwort</i>. Dezimalzahlen mit Komma eingeben.</p>
+
+<div class="card" data-task="u1">
+<div class="tag"><span class="stars">★</span> Übung 1 · Lageenergie berechnen</div>
+<div class="numq"><span>a) Eine Hantel (2 kg) wird 1,5 m hochgehoben.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u1a" data-a="29.43" aria-label="a in J"> J</span></div>
+<div class="numq"><span>b) Ein Schüler (55 kg) steht im 1. Stock, 3 m über dem Erdgeschoss.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u1b" data-a="1618.65" aria-label="b in J"> J</span></div>
+<div class="numq"><span>c) 1000 kg Wasser stehen im Wasserturm 30 m über dem Boden.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u1c" data-a="294.3" aria-label="c in kJ"> kJ</span></div>
+<div class="row"><button class="primary" id="u1Check">Prüfen</button><button data-hint="u1">Tipp</button><button data-sol="u1Sol">Lösung zeigen</button></div>
+<p class="fb" id="u1Fb"></p><p class="tip" id="u1Tip"></p>
+<div class="sol" id="u1Sol" hidden><p>a) 2 kg · 9,81 N/kg · 1,5 m = <b>29,43 J</b></p><p>b) 55 kg · 9,81 N/kg · 3 m = <b>1618,65 J</b> ≈ 1,6 kJ</p><p>c) 1000 kg · 9,81 N/kg · 30 m = 294 300 J = <b>294,3 kJ</b></p></div>
+</div>
+
+<div class="card" data-task="u2">
+<div class="tag"><span class="stars">★</span> Übung 2 · Erst umrechnen, dann rechnen</div>
+<p>Die Formel funktioniert nur mit kg und m!</p>
+<div class="numq"><span>a) 250 g =</span><span class="unit"><input type="text" inputmode="decimal" id="u2a" data-a="0.25" aria-label="a in kg"> kg</span></div>
+<div class="numq"><span>b) 80 cm =</span><span class="unit"><input type="text" inputmode="decimal" id="u2b" data-a="0.8" aria-label="b in m"> m</span></div>
+<div class="numq"><span>c) Ein Handy (180 g) liegt auf einem 75 cm hohen Tisch.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u2c" data-a="1.324" aria-label="c in J"> J</span></div>
+<div class="numq"><span>d) Ein Apfel (100 g) hängt 2,5 m hoch am Baum.</span><span class="unit">E<sub>L</sub> = <input type="text" inputmode="decimal" id="u2d" data-a="2.4525" aria-label="d in J"> J</span></div>
+<div class="row"><button class="primary" id="u2Check">Prüfen</button><button data-hint="u2">Tipp</button><button data-sol="u2Sol">Lösung zeigen</button></div>
+<p class="fb" id="u2Fb"></p><p class="tip" id="u2Tip"></p>
+<div class="sol" id="u2Sol" hidden><p>a) 250 g : 1000 = <b>0,25 kg</b> &nbsp; b) 80 cm : 100 = <b>0,8 m</b></p><p>c) 0,18 kg · 9,81 N/kg · 0,75 m ≈ <b>1,32 J</b></p><p>d) 0,1 kg · 9,81 N/kg · 2,5 m ≈ <b>2,45 J</b></p></div>
+</div>
+
+<div class="card" data-task="u3">
+<div class="tag"><span class="stars">★★</span> Übung 3 · Formel umstellen</div>
+<div class="numq"><span>a) Eine Kiste (12 kg) hat 588,6 J Lageenergie. In welcher Höhe steht sie?</span><span class="unit">h = <input type="text" inputmode="decimal" id="u3a" data-a="5" aria-label="a in m"> m</span></div>
+<div class="numq"><span>b) Ein Sack hat in 10 m Höhe 2943 J Lageenergie. Welche Masse hat er?</span><span class="unit">m = <input type="text" inputmode="decimal" id="u3b" data-a="30" aria-label="b in kg"> kg</span></div>
+<div class="numq"><span>c) Eine Bergsteigerin (60 kg) gewinnt 294,3 kJ Lageenergie. Wie viele Höhenmeter ist sie gestiegen?</span><span class="unit">h = <input type="text" inputmode="decimal" id="u3c" data-a="500" aria-label="c in m"> m</span></div>
+<div class="row"><button class="primary" id="u3Check">Prüfen</button><button data-hint="u3">Tipp</button><button data-sol="u3Sol">Lösung zeigen</button></div>
+<p class="fb" id="u3Fb"></p><p class="tip" id="u3Tip"></p>
+<div class="sol" id="u3Sol" hidden><p>a) h = E<sub>L</sub> : (m · g) = 588,6 J : (12 kg · 9,81 N/kg) = <b>5 m</b></p><p>b) m = E<sub>L</sub> : (g · h) = 2943 J : (9,81 N/kg · 10 m) = <b>30 kg</b></p><p>c) h = 294 300 J : (60 kg · 9,81 N/kg) = <b>500 m</b></p></div>
+</div>
+
+<div class="card">
+<div class="tag"><span class="stars">★★</span> Übung 4 · Der Blumentopf am Fenster</div>
+<p>Ein Blumentopf (1,5 kg) steht auf der Fensterbank, 1,2 m über dem Zimmerboden. Das Zimmer liegt im 2. Stock: Der Zimmerboden ist 6,0 m über der Straße.</p>
+<div class="part" data-task="u4a"><h4>a) Berechne die Lageenergie</h4>
+<div class="numq"><span>bezüglich des Zimmerbodens</span><span class="unit"><input type="text" inputmode="decimal" id="u4a" data-a="17.658" aria-label="a in J"> J</span></div>
+<div class="numq"><span>bezüglich der Straße</span><span class="unit"><input type="text" inputmode="decimal" id="u4b" data-a="105.948" aria-label="b in J"> J</span></div>
+<div class="row"><button class="primary" id="u4Check">Prüfen</button><button data-hint="u4">Tipp</button></div>
+<p class="fb" id="u4Fb"></p><p class="tip" id="u4Tip"></p></div>
+<div class="part" data-task="u4b"><h4>b) Welche Aussage stimmt?</h4>
+<div class="mc" data-correct="b" data-task="u4b"><button data-k="a">Nur der Wert bezüglich der Straße ist richtig.</button><button data-k="b" data-fb="Richtig! Beide Werte stimmen – sie beziehen sich nur auf verschiedene Nullniveaus. Deshalb muss man das Nullniveau immer angeben.">Beide Werte sind richtig, sie haben nur verschiedene Nullniveaus.</button><button data-k="c">Der Blumentopf hat in Wirklichkeit gar keine Lageenergie, weil er ruht.</button><p class="fb"></p></div></div>
+</div>
+
+<div class="card">
+<div class="tag"><span class="stars">★★</span> Übung 5 · Proportionalität nutzen (ohne Taschenrechner!)</div>
+<div class="part" data-task="u5a"><h4>a) Ein Stein hat in 4 m Höhe 60 J Lageenergie. Wie viel hat er in 12 m Höhe?</h4>
+<div class="mc" data-correct="c" data-task="u5a"><button data-k="a">60 J</button><button data-k="b">120 J</button><button data-k="c" data-fb="Richtig: dreifache Höhe → dreifache Lageenergie: 3 · 60 J = 180 J.">180 J</button><button data-k="d">720 J</button><p class="fb"></p></div></div>
+<div class="part" data-task="u5b"><h4>b) Kiste B hat die halbe Masse von Kiste A, steht aber doppelt so hoch. Vergleiche!</h4>
+<div class="mc" data-correct="a" data-task="u5b"><button data-k="a" data-fb="Richtig: ½ · 2 = 1. Die Lageenergien sind gleich.">Beide haben gleich viel Lageenergie.</button><button data-k="b">Kiste A hat doppelt so viel.</button><button data-k="c">Kiste B hat doppelt so viel.</button><p class="fb"></p></div></div>
+<div class="part" data-task="u5c"><h4>c) Auf dem Mond ist g nur 1,62 N/kg. Ein Astronaut hebt einen Stein 1 m hoch. Im Vergleich zur Erde ist die Lageenergie …</h4>
+<div class="mc" data-correct="b" data-task="u5c"><button data-k="a">gleich groß.</button><button data-k="b" data-fb="Richtig: etwa 9,81 : 1,62 ≈ 6. Auf dem Mond ist die Lageenergie bei gleicher Masse und Höhe etwa sechsmal kleiner – deshalb ist Heben dort so leicht.">etwa sechsmal kleiner.</button><button data-k="c">etwa sechsmal größer.</button><p class="fb"></p></div></div>
+</div>
+
+<div class="card" data-task="u6">
+<div class="tag"><span class="stars">★★★</span> Übung 6 · Mit einem Schokoriegel auf den Berg?</div>
+<p>Ein Schokoriegel liefert etwa <b>1000 kJ</b> Energie. Eine Wanderin wiegt mit Rucksack <b>70 kg</b>.</p>
+<div class="numq"><span>a) Wie viele Höhenmeter könnte sie damit theoretisch steigen, wenn die gesamte Energie zu Lageenergie würde?</span><span class="unit">h = <input type="text" inputmode="decimal" id="u6a" data-a="1456.2" aria-label="a in m"> m</span></div>
+<div class="numq"><span>b) Tatsächlich nutzen die Muskeln nur etwa 25 % der Energie für die Bewegung, der Rest wird thermische Energie. Wie hoch kommt sie wirklich?</span><span class="unit">h ≈ <input type="text" inputmode="decimal" id="u6b" data-a="364" data-tol="0.02" aria-label="b in m"> m</span></div>
+<div class="row"><button class="primary" id="u6Check">Prüfen</button><button data-hint="u6">Tipp</button><button data-sol="u6Sol">Lösung zeigen</button></div>
+<p class="fb" id="u6Fb"></p><p class="tip" id="u6Tip"></p>
+<div class="sol" id="u6Sol" hidden><p>a) 1000 kJ = 1 000 000 J. h = E<sub>L</sub> : (m · g) = 1 000 000 J : (70 kg · 9,81 N/kg) ≈ <b>1456 m</b></p><p>b) 25 % von 1456 m ≈ <b>364 m</b>. Darum schwitzt man beim Bergwandern: Der Großteil der Energie wird thermische Energie.</p></div>
+</div>
+
+<div class="card" data-task="u7">
+<div class="tag"><span class="stars">★★★</span> Übung 7 · Die Seilbahn auf die Zugspitze</div>
+<div class="two">
+<div class="fig"><svg id="zug" viewBox="0 0 440 240" role="img" aria-label="Seilbahn von der Talstation in 1000 m Höhe zum Gipfel in 2950 m Höhe"></svg></div>
+<div><p>Die Seilbahn fährt von der Talstation (rund 1000 m über dem Meer) zum Gipfel (rund 2950 m). Eine Kabine nimmt 120 Personen mit, im Mittel je 75 kg.</p></div>
+</div>
+<div class="numq"><span>a) Höhenunterschied</span><span class="unit"><input type="text" inputmode="decimal" id="u7a" data-a="1950" aria-label="a in m"> m</span></div>
+<div class="numq"><span>b) Masse aller Personen</span><span class="unit"><input type="text" inputmode="decimal" id="u7b" data-a="9000" aria-label="b in kg"> kg</span></div>
+<div class="numq"><span>c) Lageenergie, die die Personen gewinnen (Nullniveau: Talstation)</span><span class="unit"><input type="text" inputmode="decimal" id="u7c" data-a="172.17" aria-label="c in MJ"> MJ</span></div>
+<div class="numq"><span>d) So viel Energie steckt in wie vielen Schokoriegeln (je 1000 kJ)?</span><span class="unit"><input type="text" inputmode="decimal" id="u7d" data-a="172" data-tol="0.02" aria-label="d Anzahl"> Riegel</span></div>
+<div class="row"><button class="primary" id="u7Check">Prüfen</button><button data-hint="u7">Tipp</button><button data-sol="u7Sol">Lösung zeigen</button></div>
+<p class="fb" id="u7Fb"></p><p class="tip" id="u7Tip"></p>
+<div class="sol" id="u7Sol" hidden><p>a) 2950 m − 1000 m = <b>1950 m</b> &nbsp; b) 120 · 75 kg = <b>9000 kg</b></p><p>c) 9000 kg · 9,81 N/kg · 1950 m = 172 165 500 J ≈ <b>172,2 MJ</b></p><p>d) 172 165 kJ : 1000 kJ ≈ <b>172 Schokoriegel</b> – die Kabine selbst (mehrere Tonnen) ist dabei noch gar nicht mitgerechnet.</p></div>
+</div>
+
+<div class="row" style="margin-top:24px"><button id="resetAll">Fortschritt zurücksetzen</button><a href="/Physik9/energie-einfuehrung" style="text-decoration:none;display:inline-flex;align-items:center;font:600 16px Lexend,sans-serif;padding:8px 16px;border-radius:10px;border:1px solid var(--line);color:var(--ink)">← Was ist Energie?</a><a href="/Physik9/energieerhaltung" style="text-decoration:none;display:inline-flex;align-items:center;font:600 16px Lexend,sans-serif;padding:8px 16px;border-radius:10px;background:var(--acc);color:light-dark(#fff,#11141b)">Weiter: Energieerhaltung →</a></div>
+</div></section>
+
+<footer class="band"><div class="wrap">
+<p>Lernpfad Physik TG9 · Mechanik II: Energie · Lageenergie. Dein Fortschritt wird nur in diesem Browser gespeichert, es werden keine Daten übertragen. Rechne immer mit g = 9,81 N/kg.</p>
+</div></footer>
+
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Lernpfad"><svg role="img" aria-label="QR-Code: https://lernapps.gst-lernen.workers.dev/Physik9/lageenergie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#000" d="M2 2.5h7m3 0h1m1 0h1m1 0h1m2 0h2m7 0h7m-33 1h1m5 0h1m1 0h1m1 0h2m1 0h2m1 0h1m3 0h1m5 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m3 0h3m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h3m3 0h2m1 0h3m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m1 0h2m1 0h1m1 0h5m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m6 0h2m5 0h1m5 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h2m1 0h1m2 0h1m3 0h1m1 0h1m2 0h2m-25 1h1m5 0h1m1 0h1m1 0h8m4 0h1m1 0h3m2 0h3m-32 1h1m1 0h3m2 0h4m4 0h1m1 0h5m1 0h1m4 0h4m-32 1h1m5 0h1m1 0h3m1 0h1m2 0h1m1 0h1m6 0h2m2 0h1m1 0h2m-32 1h2m1 0h2m2 0h3m1 0h2m1 0h3m1 0h1m1 0h1m1 0h2m2 0h6m-30 1h1m2 0h2m1 0h2m2 0h3m1 0h1m2 0h2m1 0h1m2 0h2m5 0h1m-33 1h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h2m3 0h3m1 0h2m2 0h2m2 0h3m-33 1h1m2 0h1m1 0h3m2 0h3m1 0h3m3 0h2m3 0h2m4 0h1m-32 1h2m1 0h3m2 0h1m1 0h2m7 0h1m2 0h1m1 0h2m1 0h4m1 0h1m-33 1h1m1 0h1m2 0h2m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h4m1 0h3m2 0h1m-32 1h1m3 0h1m3 0h3m1 0h3m3 0h5m2 0h1m2 0h2m1 0h1m-33 1h2m2 0h3m1 0h2m2 0h1m2 0h3m1 0h1m1 0h4m2 0h1m1 0h2m1 0h1m-32 1h1m5 0h1m1 0h1m1 0h1m2 0h3m2 0h1m2 0h5m1 0h5m-32 1h1m1 0h1m1 0h2m2 0h1m2 0h2m3 0h1m7 0h1m1 0h3m2 0h1m-33 1h1m1 0h1m1 0h2m2 0h8m3 0h1m2 0h2m1 0h4m1 0h1m-31 1h1m5 0h1m1 0h1m1 0h4m1 0h4m1 0h1m3 0h4m1 0h1m1 0h1m-32 1h1m3 0h2m3 0h3m6 0h1m3 0h1m1 0h1m2 0h1m2 0h3m-33 1h2m2 0h3m1 0h3m2 0h2m1 0h1m2 0h1m2 0h1m1 0h6m1 0h1m-24 1h2m1 0h1m2 0h3m1 0h4m1 0h2m3 0h1m1 0h1m1 0h1m-33 1h7m2 0h1m2 0h7m1 0h1m1 0h3m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m2 0h2m1 0h1m5 0h2m3 0h2m3 0h3m-31 1h1m1 0h3m1 0h1m2 0h2m1 0h2m1 0h1m1 0h1m4 0h1m1 0h6m-30 1h1m1 0h3m1 0h1m2 0h1m4 0h8m1 0h3m1 0h3m1 0h2m-33 1h1m1 0h3m1 0h1m3 0h3m1 0h2m3 0h2m3 0h2m1 0h3m1 0h2m-33 1h1m5 0h1m4 0h1m1 0h4m1 0h1m1 0h1m6 0h4m-31 1h7m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h3m2 0h1m3 0h1"/></svg><p>lernapps.gst-lernen.workers.dev/Physik9/lageenergie</p><button id="qrClose">Schließen</button></dialog>
+<script>
+{
+const KEY='lageenergie-done';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=(v,n=2)=>(+v).toFixed(n).replace('.',',');
+const fmtS=(v,n=2)=>fmt(v,n).replace(/(,\d*?)0+$/,'$1').replace(/,$/,'');
+const num=v=>parseFloat(String(v).replace(/\s/g,'').replace(/\.(?=\d{3}(\D|$))/g,'').replace(',','.'));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Fortschritt */
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+let tasks=[];
+function save(){try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}}
+function updProg(){tasks=[...new Set($$('[data-task]').map(e=>e.dataset.task))];const n=tasks.filter(t=>done.has(t)).length;$('#progtxt').textContent=n+' / '+tasks.length+' gelöst';$('#progbar').style.width=(100*n/tasks.length)+'%';
+ $$('[data-task]').forEach(e=>e.classList.toggle('done',done.has(e.dataset.task)));if(window.onProg)window.onProg()}
+function mark(id){done.add(id);save();updProg()}
+$('#resetAll').onclick=()=>{done.clear();save();location.reload()};
+/* SVG */
+function svgPt(svg,ev){const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+const L=(a,b,c,d,cls,ex='')=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="${cls}" ${ex}/>`;
+const C=(x,y,r,cls,ex='')=>`<circle cx="${x}" cy="${y}" r="${r}" class="${cls}" ${ex}/>`;
+const T=(x,y,t,cls,ex='')=>`<text x="${x}" y="${y}" class="${cls}" ${ex}>${t}</text>`;
+const Rc=(x,y,w,h,cls,ex='')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}" ${ex}/>`;
+function arrowHead(x,y,ang,col,s=8){const a=ang*Math.PI/180,c=Math.cos(a),si=Math.sin(a);return `<path d="M${x} ${y} L${x-s*c+s*.6*si} ${y-s*si-s*.6*c} L${x-s*c-s*.6*si} ${y-s*si+s*.6*c}Z" style="fill:${col}"/>`}
+function animate(ms,step,end){if(reduce){step(1);end&&end();return}const t0=performance.now();function f(t){const k=Math.min(1,(t-t0)/ms);step(k);if(k<1)requestAnimationFrame(f);else end&&end()}requestAnimationFrame(f)}
+/* Tipps */
+const hints={};
+$$('[data-hint]').forEach(b=>{let h=0;b.onclick=()=>{const id=b.dataset.hint,arr=hints[id]||[],el=$('#'+id+'Tip');if(!arr.length)return;el.className='fb hint tip';el.innerHTML='Tipp '+(h%arr.length+1)+' von '+arr.length+': '+arr[h%arr.length];h++}});
+/* Lösung zeigen */
+$$('[data-sol]').forEach(b=>b.onclick=()=>{const el=$('#'+b.dataset.sol);el.hidden=!el.hidden;b.textContent=el.hidden?'Lösung zeigen':'Lösung ausblenden'});
+/* Multiple Choice */
+function initMC(root=document){root.querySelectorAll('.mc[data-correct]').forEach(box=>{if(box.dataset.init)return;box.dataset.init=1;const fb=box.querySelector('.fb');
+ box.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
+  box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');
+  fb.className='fb '+(ok?'ok':'bad');fb.innerHTML=b.dataset.fb||(ok?'Richtig!':'Noch nicht – probier es nochmal.');if(ok&&box.dataset.task)mark(box.dataset.task)})})}
+/* Zahlen prüfen: inputs mit data-a (Sollwert) und optional data-tol (relativ, Standard 1 %) */
+function numCheck(btn,ids,fbId,task,okText){$(btn).onclick=()=>{let ok=0;ids.forEach(id=>{const i=$(id),v=num(i.value),a=+i.dataset.a,tol=+(i.dataset.tol||0.01),g=!isNaN(v)&&Math.abs(v-a)<=Math.max(Math.abs(a)*tol,1e-9);i.className=i.value===''?'':(g?'ok':'bad');if(g)ok++});
+ const fb=$(fbId);if(ok===ids.length){fb.className='fb ok';fb.innerHTML=okText;mark(task)}else{fb.className='fb bad';fb.textContent=ok+' von '+ids.length+' richtig. Prüfe Einheiten und Kommastellen – oder hol dir einen Tipp.'}}}
+/* Auswahlfelder prüfen: select[data-a] in einem Container */
+function selCheck(btn,box,fbId,task,okText){$(btn).onclick=()=>{const s=$$(box+' select');let ok=0;s.forEach(x=>{const g=x.value===x.dataset.a;x.className=x.value===''?'':(g?'ok':'bad');if(g)ok++});
+ const fb=$(fbId);if(ok===s.length){fb.className='fb ok';fb.innerHTML=okText;mark(task)}else{fb.className='fb bad';fb.textContent=ok+' von '+s.length+' richtig. Prüfe die rot markierten Felder.'}}}
+/* Richtig/Falsch */
+function tfBuild(id,items,task){const box=$('#'+id);box.innerHTML=items.map((x,i)=>`<div class="item" data-i="${i}"><span>${x[0]}</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p></div>`).join('');
+ const solved=new Set();box.querySelectorAll('.item').forEach(row=>{const i=+row.dataset.i;row.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=(b.dataset.v==='1')===items[i][1];
+  row.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');const fb=row.querySelector('.fb');fb.className='fb '+(ok?'ok':'bad');fb.innerHTML=(ok?'Stimmt. ':'Nein. ')+items[i][2];
+  if(ok)solved.add(i);if(solved.size===items.length)mark(task)})})}
+/* QR */
+{const d=$('#qrDlg');$('#qrOpen').onclick=()=>d.showModal();$('#qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
+
+const g=9.81;
+const crate=(x,y,w,h,lab)=>Rc(x,y,w,h,'','rx="4" style="fill:#d9a066;stroke:var(--ink)" stroke-width="1.5"')+L(x,y,x+w,y+h,'','style="stroke:#a8743a"')+L(x+w,y,x,y+h,'','style="stroke:#a8743a"')+(lab?T(x+w/2,y+h/2+5,lab,'txb','text-anchor="middle"'):'');
+
+/* ---------- Hero ---------- */
+{let s=`<rect x="0" y="180" width="900" height="20" fill="#182031"/>`;
+ s+=`<line x1="140" y1="180" x2="140" y2="20" stroke="#7f8aa3" stroke-width="8"/><line x1="100" y1="24" x2="560" y2="24" stroke="#7f8aa3" stroke-width="8"/>`;
+ [[220,150,'#3a4558'],[340,110,'#4a5a78'],[460,62,'#6aa5ff']].forEach(([x,y,c],i)=>{s+=`<line x1="${x+25}" y1="24" x2="${x+25}" y2="${y}" stroke="#7f8aa3" stroke-width="2"/><rect x="${x}" y="${y}" width="50" height="30" rx="4" fill="#d9a066" opacity="${.4+.3*i}"/>`;
+  const hb=(180-y-30)*0.9;s+=`<rect x="${x+70}" y="${180-hb}" width="22" height="${hb}" fill="#6aa5ff" opacity="${.4+.3*i}"/>`});
+ s+=`<text x="620" y="80" fill="#eef1f7" font-family="Lexend,sans-serif" font-size="30" font-weight="700">E<tspan font-size="18" dy="6">L</tspan><tspan dy="-6"> = m · g · h</tspan></text><text x="620" y="112" fill="#a9b2c4" font-family="Lexend,sans-serif" font-size="15">je höher, desto mehr Lageenergie</text>`;
+ $('#heroScene').innerHTML=s}
+
+/* ---------- Auftrag 1: Vermutung ---------- */
+$('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value),fb=$('#v1Fb');if(!v.length){fb.className='fb bad';fb.textContent='Wähle mindestens eine Größe aus.';return}
+ fb.className='fb hint';fb.innerHTML='Deine Vermutung: '+v.map(x=>({h:'Höhe',m:'Masse',f:'Farbe',t:'Temperatur',o:'Ort'})[x]).join(', ')+'. Prüfe sie jetzt im Fall-Labor! (Kleiner Hinweis zum Ort: Auf dem Mond fällt alles viel „sanfter“ – das kommt in Übung 5.)';mark('v1')};
+
+/* ---------- A: Fall-Labor ---------- */
+{const svg=$('#fall'),top=300,sc=3,X=290;let m=100,k=0,dropped=false,running=false,data=[];
+ const MC={50:'var(--el)',100:'var(--eb)',200:'var(--eth)'};
+ const rad=()=>6+m/20,h=()=>+$('#hIn').value,dent=()=>m*h()/1000;
+ function draw(){const r=rad(),y0=top-r-h()*sc,y=dropped?top-r+dent()*1.2:y0+(top-r-y0)*k*k;let s=Rc(0,top+40,560,20,'ground');
+  s+=L(80,top,80,top-80*sc-10,'thin','stroke-width="2"');for(let c=0;c<=80;c+=10)s+=L(74,top-c*sc,86,top-c*sc,'thin')+T(30,top-c*sc+5,c+' cm','txs');
+  s+=L(86,top-h()*sc,X-r-4,top-h()*sc,'dashl');
+  const d=dropped?dent()*1.2:0;s+=`<path d="M180 ${top} L${X-r-6} ${top} Q${X} ${top+d*2} ${X+r+6} ${top} L400 ${top} L400 ${top+40} L180 ${top+40}Z" style="fill:#e8cf8a;stroke:#b8962f"/>`+T(406,top+26,'Sand','txs');
+  s+=C(X,y,r,'',`style="fill:${MC[m]};stroke:var(--ink)" stroke-width="1.5"`)+T(X+r+8,y-r,m+' g','txs');
+  if(dropped)s+=T(420,top-40,'Delle: '+fmtS(dent(),1)+' mm','txb','style="font-size:18px;fill:var(--acc)"');
+  svg.innerHTML=s}
+ function chart(){const c=$('#chart'),x0=46,y0=240,W=370,H=210,xs=v=>x0+v/80*W,ys=v=>y0-v/18*H;let s='';
+  for(let v=0;v<=80;v+=20)s+=L(xs(v),y0,xs(v),y0-H,'gl')+T(xs(v),y0+18,v,'txs','text-anchor="middle"');
+  for(let v=0;v<=18;v+=3)s+=L(x0,ys(v),x0+W,ys(v),'gl')+T(x0-8,ys(v)+4,v,'txs','text-anchor="end"');
+  s+=L(x0,y0,x0+W,y0,'thin')+L(x0,y0,x0,y0-H,'thin')+T(x0+W,y0+34,'h in cm','txs','text-anchor="end"')+T(6,16,'Delle in mm','txs');
+  [50,100,200].forEach(mm=>{const pts=data.filter(d=>d.m===mm);if(pts.length>=2){const hm=Math.max(...pts.map(p=>p.h));s+=L(xs(0),ys(0),xs(hm),ys(mm*hm/1000),'','style="stroke:'+MC[mm]+'" stroke-width="1.5" stroke-dasharray="5 4"')}
+   pts.forEach(p=>s+=C(xs(p.h),ys(p.d),5,'',`style="fill:${MC[mm]}"`))});
+  c.innerHTML=s}
+ function table(){$('#tab tbody').innerHTML=data.map((d,i)=>`<tr><td>${i+1}</td><td>${d.m} g</td><td>${d.h} cm</td><td>${fmtS(d.d,1)} mm</td></tr>`).join('')||'<tr><td colspan="4">noch keine Messwerte</td></tr>';chart();
+  const ms=new Set(data.map(d=>d.m)),fb=$('#labFb');if(data.length>=4&&ms.size>=2){fb.className='fb ok';fb.textContent='Prima, du hast genug Messwerte. Beantworte jetzt die Fragen unten.';mark('lab')}else{fb.className='fb hint';fb.textContent='Ziel: mindestens 4 Messungen mit mindestens 2 verschiedenen Massen.'}}
+ $$('#mBtns button').forEach(b=>b.onclick=()=>{m=+b.dataset.m;$$('#mBtns button').forEach(x=>x.setAttribute('aria-pressed',x===b));dropped=false;k=0;$('#take').disabled=true;draw()});
+ $('#hIn').oninput=()=>{$('#hV').textContent=h();dropped=false;k=0;$('#take').disabled=true;draw()};
+ $('#drop').onclick=()=>{if(running)return;running=true;dropped=false;k=0;animate(250+Math.sqrt(h())*60,t=>{k=t;draw()},()=>{dropped=true;running=false;draw();$('#take').disabled=false})};
+ $('#take').onclick=()=>{if(!data.some(d=>d.m===m&&d.h===h()))data.push({m,h:h(),d:dent()});$('#take').disabled=true;table()};
+ $('#clearT').onclick=()=>{data=[];table()};
+ const labTask=document.createElement('span');labTask.dataset.task='lab';labTask.hidden=true;$('#labFb').after(labTask);
+ draw();table()}
+
+/* ---------- B: Heben ---------- */
+{const svg=$('#hub'),fl=320,sc=80;
+ function draw(){const m=+$('#hubM').value,h=+$('#hubH').value,F=m*g,E=F*h,bw=40+m*2,bh=30+m;
+  $('#hubMv').textContent=m;$('#hubHv').textContent=fmt(h,1);
+  let s=Rc(0,fl,560,40,'ground')+L(60,fl,60,20,'thin','stroke-width="6"')+L(40,24,300,24,'thin','stroke-width="6"')+C(250,40,14,'','style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"');
+  const by=fl-h*sc-bh,hookY=by-56;s+=L(250,54,250,hookY,'thin','stroke-width="2"')+L(236,40,236,fl-20,'thin','stroke-width="2"')+T(200,fl-6,'Seil','txs');
+  s+=Rc(242,hookY,16,36,'','rx="4" style="fill:var(--panel);stroke:var(--ink)"')+L(250,hookY+36,250,by,'thin','stroke-width="2"')+T(268,hookY+22,'F = '+fmt(F,1)+' N','txb','style="fill:var(--acc)"');
+  s+=crate(250-bw/2,by,bw,bh,m+' kg');
+  for(let v=0;v<=3;v+=0.5)s+=L(84,fl-v*sc,96,fl-v*sc,'thin')+T(100,fl-v*sc+5,fmt(v,1)+' m','txs');
+  if(h>0)s+=L(330,fl,330,fl-h*sc,'thin','stroke-width="2"')+arrowHead(330,fl-h*sc,-90,'var(--ink)')+T(338,fl-h*sc/2,'h','txb');
+  const eb=E/588.6*230;s+=Rc(450,fl-eb,40,eb,'fel')+T(470,fl+22,'E','txb','text-anchor="middle"')+T(470,fl-eb-8,Math.round(E)+' J','tel','text-anchor="middle"');
+  svg.innerHTML=s;
+  $('#hubCalc').innerHTML=`F<sub>G</sub> = m · g = ${m} kg · 9,81 N/kg = <b>${fmt(F,2)} N</b><br>E<sub>L</sub> = F<sub>G</sub> · h = ${fmt(F,2)} N · ${fmt(h,1)} m = <b>${fmt(E,1)} J</b>`}
+ ['#hubM','#hubH'].forEach(i=>$(i).oninput=draw);draw();
+ numCheck('#l2Check',['#l2a','#l2b'],'#l2Fb','l2','Richtig! F<sub>G</sub> = 5 kg · 9,81 N/kg = 49,05 N und E<sub>L</sub> = 49,05 N · 2 m = 98,1 J. Allgemein: <b>E<sub>L</sub> = F<sub>G</sub> · h = m · g · h</b>.');
+ hints.l2=['Gewichtskraft: F<sub>G</sub> = m · g = 5 kg · 9,81 N/kg.','Lageenergie = Gewichtskraft · Hubhöhe. N · m ergibt J.']}
+
+/* ---------- C: Weg egal ---------- */
+{const svg=$('#weg'),fl=290,sc=60,top=fl-3*sc,PX=440;let w=-1,k=0;
+ const paths=[[[40,fl],[PX,top]],[[100,fl],[140,fl],[140,fl-30],[180,fl-30],[180,fl-60],[220,fl-60],[220,fl-90],[260,fl-90],[260,fl-120],[300,fl-120],[300,fl-150],[340,fl-150],[340,top],[PX,top]],[[600,fl],[600,top]]];
+ const info=['Rampe: 6,7 m lang. Du schiebst mit kleinerer Kraft (≈ 219 N), aber über einen längeren Weg. 219 N · 6,7 m ≈ 1471 J.','Treppe: 6 Stufen à 50 cm. Du hebst den Koffer Stufe für Stufe mit F<sub>G</sub> = 490,5 N insgesamt 3 m hoch. 490,5 N · 3 m = 1471,5 J.','Aufzug: Er hebt den Koffer direkt 3 m hoch: 490,5 N · 3 m = 1471,5 J.'];
+ function at(p,t){let L2=0;const seg=[];for(let i=1;i<p.length;i++){const l=Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1]);seg.push(l);L2+=l}let d=t*L2;for(let i=0;i<seg.length;i++){if(d<=seg[i]){const f=d/seg[i];return [p[i][0]+(p[i+1][0]-p[i][0])*f,p[i][1]+(p[i+1][1]-p[i][1])*f]}d-=seg[i]}return p[p.length-1]}
+ function draw(){let s=Rc(0,fl,640,30,'ground')+Rc(PX,top,200,fl-top,'','style="fill:var(--panel);stroke:var(--ink)"')+T(PX+60,top-8,'Plattform','txs');
+  s+=`<path d="M40 ${fl} L${PX} ${top} L${PX} ${fl}Z" style="fill:var(--el);opacity:.12;stroke:var(--el)"/>`+T(30,fl-8,'Rampe','tel');
+  s+=`<path d="${paths[1].map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}" fill="none" style="stroke:var(--eb)" stroke-width="3"/>`+T(250,fl-136,'Treppe','teb');
+  s+=Rc(585,top-4,30,fl-top+4,'','style="fill:none;stroke:var(--eth)" stroke-width="2" stroke-dasharray="4 4"')+T(560,top-20,'Aufzug','teth');
+  s+=L(625,fl,625,top,'thin')+arrowHead(625,top,-90,'var(--ink)')+T(470,(fl+top)/2,'3 m','txb');
+  if(w>=0){const p=at(paths[w],k);s+=crate(p[0]-14,p[1]-24,28,24,'')}
+  svg.innerHTML=s}
+ $$('[data-w]').forEach(b=>b.onclick=()=>{w=+b.dataset.w;animate(1600,t=>{k=t;draw()},()=>{$('#wegTxt').innerHTML=info[w]+'<br><b>Oben: E<sub>L</sub> = 50 kg · 9,81 N/kg · 3 m = 1471,5 J</b>'})});draw()}
+
+/* ---------- D: Nullniveau ---------- */
+{const svg=$('#null'),sc=55,y0=180,Z=[[-2.5,'Kellerboden'],[0,'Fußboden'],[0.8,'Tischplatte'],[1.8,'Regalbrett']],hb=1.8;let z=1;
+ const Y=v=>y0-v*sc;
+ function draw(){let s=Rc(0,Y(0),640,8,'','style="fill:var(--muted)"')+Rc(0,Y(-2.5),640,8,'','style="fill:var(--muted)"')+Rc(0,Y(0)+8,640,Y(-2.5)-Y(0)-8,'','style="fill:var(--panel)"')+T(10,Y(-2.5)-8,'Keller','txs')+T(10,Y(0)-8,'Erdgeschoss','txs');
+  s+=Rc(150,Y(0.8),160,8,'','style="fill:#a8743a"')+L(165,Y(0.8),165,Y(0),'thin','stroke-width="4"')+L(295,Y(0.8),295,Y(0),'thin','stroke-width="4"')+T(200,Y(0.8)-8,'Tisch','txs');
+  s+=Rc(380,Y(1.8),150,6,'','style="fill:#a8743a"')+L(380,Y(1.8)-60,380,Y(0),'thin','stroke-width="4"')+Rc(440,Y(1.8)-26,40,26,'','rx="2" style="fill:var(--el)"')+T(486,Y(1.8)-8,'Buch 1 kg','txs');
+  const zv=Z[z][0];s+=L(0,Y(zv),640,Y(zv),'','style="stroke:var(--acc)" stroke-width="2.5" stroke-dasharray="10 6"')+T(530,Y(zv)+20,'Nullniveau','txb','style="fill:var(--acc)"');
+  const hh=hb-zv;if(hh>0)s+=L(545,Y(zv),545,Y(hb),'thin','stroke-width="2"')+arrowHead(545,Y(hb),-90,'var(--ink)')+L(480,Y(hb),555,Y(hb),'dashl')+T(552,(Y(zv)+Y(hb))/2,'h = '+fmt(hh,1)+' m','txb');
+  svg.innerHTML=s;$('#nullTxt').innerHTML=`Nullniveau: <b>${Z[z][1]}</b> → h = ${fmt(hh,1)} m<br>E<sub>L</sub> = 1 kg · 9,81 N/kg · ${fmt(hh,1)} m = <b>${fmt(9.81*hh,2)} J</b>`}
+ $$('#nullBtns button').forEach(b=>b.onclick=()=>{z=+b.dataset.z;$$('#nullBtns button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw()});draw()}
+
+/* ---------- Lückentext ---------- */
+{const words=['Masse','Farbe','Höhe','Geschwindigkeit','9,81 N/kg','1,62 N/kg','N · m','N : m','Nullniveau','Meeresspiegel','egal','entscheidend'];
+ $$('#cloze select').forEach(s=>{s.innerHTML='<option value="">…</option>'+words.map(w=>`<option>${w}</option>`).join('')});
+ selCheck('#f1Check','#cloze','#f1Fb','f1','Perfekt! Übertrage den Merksatz und die Musteraufgabe in dein Heft.')}
+
+/* ---------- Übungen ---------- */
+numCheck('#u1Check',['#u1a','#u1b','#u1c'],'#u1Fb','u1','Alles richtig! Einsetzen in E<sub>L</sub> = m · g · h klappt.');
+hints.u1=['Setze direkt in E<sub>L</sub> = m · g · h ein. Beispiel a): 2 · 9,81 · 1,5.','c) Das Ergebnis in J durch 1000 teilen ergibt kJ.'];
+numCheck('#u2Check',['#u2a','#u2b','#u2c','#u2d'],'#u2Fb','u2','Richtig! Immer zuerst in kg und m umrechnen – dann einsetzen.');
+hints.u2=['1 kg = 1000 g, also g : 1000 = kg. 1 m = 100 cm, also cm : 100 = m.','c) 180 g = 0,18 kg und 75 cm = 0,75 m. Dann 0,18 · 9,81 · 0,75.','d) 100 g = 0,1 kg.'];
+numCheck('#u3Check',['#u3a','#u3b','#u3c'],'#u3Fb','u3','Klasse! Du kannst die Formel nach jeder Größe umstellen.');
+hints.u3=['Gesucht h: Teile E<sub>L</sub> durch (m · g). Gesucht m: Teile E<sub>L</sub> durch (g · h).','a) 12 · 9,81 = 117,72. Dann 588,6 : 117,72.','c) Zuerst kJ in J umrechnen: 294,3 kJ = 294 300 J.'];
+numCheck('#u4Check',['#u4a','#u4b'],'#u4Fb','u4a','Richtig! Bezüglich des Zimmerbodens 17,7 J, bezüglich der Straße 105,9 J.');
+hints.u4=['Bezüglich des Zimmerbodens ist h = 1,2 m.','Bezüglich der Straße ist h = 6,0 m + 1,2 m = 7,2 m.'];
+numCheck('#u6Check',['#u6a','#u6b'],'#u6Fb','u6','Richtig! Theoretisch rund 1456 m, in Wirklichkeit nur etwa 364 m.');
+hints.u6=['1000 kJ = 1 000 000 J. Stelle E<sub>L</sub> = m · g · h nach h um.','h = 1 000 000 J : (70 kg · 9,81 N/kg).','b) 25 % = ein Viertel. Teile das Ergebnis aus a) durch 4.'];
+numCheck('#u7Check',['#u7a','#u7b','#u7c','#u7d'],'#u7Fb','u7','Super! Die Seilbahn hebt die Fahrgäste um 1950 m – das sind über 170 MJ Lageenergie pro Fahrt.');
+hints.u7=['a) Höhenunterschied = Gipfel − Talstation.','c) E<sub>L</sub> = 9000 kg · 9,81 N/kg · 1950 m. Teile das Ergebnis in J durch 1 000 000, um MJ zu erhalten.','d) 1 MJ = 1000 kJ. Wie oft passt 1000 kJ in die Energie aus c)?'];
+
+/* Zugspitze-Skizze */
+{let s=`<path d="M0 230 L80 200 L150 205 L260 120 L330 40 L360 60 L440 150 L440 240 L0 240Z" style="fill:var(--panel);stroke:var(--muted)"/>`;
+ s+=L(90,195,330,40,'thin','stroke-width="1.5"')+Rc(80,188,24,14,'','style="fill:var(--ink)"')+Rc(320,30,24,14,'','style="fill:var(--ink)"')+Rc(195,107,26,18,'','rx="3" style="fill:var(--eth)"');
+ s+=T(40,228,'Talstation ≈ 1000 m','txs')+T(250,22,'Gipfel ≈ 2950 m','txs')+L(400,40,400,195,'thin')+arrowHead(400,40,-90,'var(--ink)')+T(330,120,'Δh = ?','txb');
+ $('#zug').innerHTML=s}
+
+initMC();updProg();
+}
+</script>
+</body>
+</html>

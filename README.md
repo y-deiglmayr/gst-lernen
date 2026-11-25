@@ -14,6 +14,8 @@ Physik8/
   lichtbrechung-theorie.html     Lichtbrechung 2: Theorie
   lichtbrechung-uebungen.html    Lichtbrechung 3: Üben
 Physik9/
+  energie-einfuehrung.html  Was ist Energie? (Energieformen, Stationen, Energiewandler)
+  lageenergie.html          Lageenergie (Fall-Labor, E = m · g · h, Nullniveau)
   energieerhaltung.html     Energieerhaltung und Energieentwertung
 ```
 
