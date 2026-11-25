@@ -193,7 +193,7 @@ svg.board:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
 .ruler{font-size:15px;color:var(--muted);margin:6px 4px 0}
 .ruler b{color:var(--ink)}
 .afb{display:inline-block;font:600 12px Lexend,sans-serif;padding:1px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted)}
-.vt .fig{max-width:720px}
+.vt .fig{max-width:720px;position:relative}.vt-max{position:absolute;top:6px;right:6px;z-index:2;padding:4px 10px;font-size:14px;min-height:0}html.noscroll,html.noscroll body{overflow:hidden}.vt.vtmax{position:fixed;inset:0;z-index:1000;margin:0;border-radius:0;overflow:auto;overscroll-behavior:contain;background:var(--bg,var(--paper));padding:10px 10px 24px}.vt.vtmax .fig{max-width:none!important;margin:0}.vt.vtmax svg.board{max-height:calc(100dvh - 150px);margin:0 auto}
 .fig svg.board{margin:0 auto}
 .vt .numq input{width:110px}
 .vt-ask{border-top:1px dashed var(--line);margin-top:10px;padding-top:6px}
@@ -464,13 +464,14 @@ class Board{
  constructor(svg,o){Object.assign(this,{U:40,snap:0.1,ox:1,oy:1,grid:true},o);this.svg=svg;this.handles=[];this.active=null;this.drag=null;
   svg.setAttribute('viewBox',`0 0 ${this.W*this.U} ${this.H*this.U}`);if(!o.noMax&&svg.parentElement&&svg.parentElement.classList.contains('fig'))svg.parentElement.style.maxWidth=(this.W*58+18)+'px';svg.classList.add('board');if(!svg.hasAttribute('tabindex'))svg.tabIndex=0;
   svg.addEventListener('pointerdown',e=>this.down(e));svg.addEventListener('pointermove',e=>this.move(e));
-  ['pointerup','pointercancel'].forEach(t=>svg.addEventListener(t,()=>{if(this.drag){this.drag=null;this.redraw()}}));
-  svg.addEventListener('touchstart',e=>{const t=e.touches[0];if(t&&this.hit({clientX:t.clientX,clientY:t.clientY}))e.preventDefault()},{passive:false});
+  ['pointerup','pointercancel','lostpointercapture'].forEach(t=>svg.addEventListener(t,()=>{Board.dragging=false;if(this.drag){this.drag=null;this.redraw()}}));
+  if(!Board.lock){Board.lock=true;document.addEventListener('touchmove',e=>{if(Board.dragging&&e.cancelable)e.preventDefault()},{passive:false});document.addEventListener('touchend',()=>{Board.dragging=false})}
+  svg.addEventListener('touchstart',e=>{const t=e.touches[0];if(e.touches.length===1&&t&&this.hit({clientX:t.clientX,clientY:t.clientY,pointerType:'touch'})){Board.dragging=true;e.preventDefault()}},{passive:false});
   svg.addEventListener('keydown',e=>this.key(e))}
  X(x){return +((this.ox+x)*this.U).toFixed(2)}Y(y){return +((this.H-this.oy-y)*this.U).toFixed(2)}
  pt(e){const p=svgPt(this.svg,e);return [p.x/this.U-this.ox,this.H-this.oy-p.y/this.U]}
- hit(e){const [x,y]=this.pt(e);let best=null,bd=0.85;for(const h of this.handles){if(h.off&&h.off())continue;const [hx,hy]=h.get(),d=Math.hypot(hx-x,hy-y);if(d<bd){bd=d;best=h}}return best}
- down(e){const h=this.hit(e);if(!h)return;e.preventDefault();this.drag=h;this.active=h;try{this.svg.setPointerCapture(e.pointerId)}catch(_){}const [x,y]=this.pt(e),[hx,hy]=h.get();this.grab=[hx-x,hy-y];this.redraw()}
+ hit(e){const [x,y]=this.pt(e);const r=this.svg.getBoundingClientRect(),pxcm=r.width/this.W||40;let best=null,bd=e.pointerType==='mouse'?0.85:Math.max(0.85,32/pxcm);for(const h of this.handles){if(h.off&&h.off())continue;const [hx,hy]=h.get(),d=Math.hypot(hx-x,hy-y);if(d<bd){bd=d;best=h}}return best}
+ down(e){const h=this.hit(e);if(!h)return;e.preventDefault();this.drag=h;Board.dragging=true;this.active=h;try{this.svg.setPointerCapture(e.pointerId)}catch(_){}const [x,y]=this.pt(e),[hx,hy]=h.get();this.grab=[hx-x,hy-y];this.redraw()}
  sn(v){return Math.round(v/this.snap)*this.snap}
  move(e){if(!this.drag)return;e.preventDefault();const [x,y]=this.pt(e);this.setH(this.drag,x+this.grab[0],y+this.grab[1])}
  setH(h,x,y){x=Math.max(-this.ox+.1,Math.min(this.W-this.ox-.1,x));y=Math.max(-this.oy+.1,Math.min(this.H-this.oy-.1,y));h.set(this.sn(x),this.sn(y));this.redraw();this.onchange&&this.onchange(h)}
@@ -493,7 +494,7 @@ class Board{
  text(x,y,t,cls='txs',ex=''){return `<text x="${this.X(x)}" y="${this.Y(y)}" class="${cls}" ${ex}>${t}</text>`}
  poly(pts,st){return `<path d="${pts.map((p,i)=>(i?'L':'M')+this.X(p[0])+' '+this.Y(p[1])).join(' ')}Z" style="${st}"/>`}
  handleSvg(h,c){const [x,y]=h.get(),act=h===this.active;return `<circle cx="${this.X(x)}" cy="${this.Y(y)}" r="${act?13:11}" class="hdl${act?' act':''}" style="stroke:${col(c||'acc')}"/>`}
- redraw(){this.svg.innerHTML=this.gridSvg()+(this.draw?this.draw(this):'')}
+ redraw(){if(!this.g){this.svg.innerHTML='<g></g><rect x="0" y="0" width="100%" height="100%" fill="transparent"/>';this.g=this.svg.firstChild}this.g.innerHTML=this.gridSvg()+(this.draw?this.draw(this):'')}
 }
 /* Kraft als Vektor in cm (Maßstab sc N pro cm) */
 const vecCm=(F,a,sc)=>[F/sc*cosd(a),F/sc*sind(a)];
@@ -518,13 +519,14 @@ function initVT(box){const c=JSON.parse(box.dataset.cfg),task=box.dataset.task,s
  const mx=Math.min(...pts.map(p=>p[0])),Mx=Math.max(...pts.map(p=>p[0])),my=Math.min(...pts.map(p=>p[1])),My=Math.max(...pts.map(p=>p[1]));
  const W=c.W||Math.max(8,Math.ceil(Mx-mx+2.4)),H=c.H||Math.max(5,Math.ceil(My-my+2.4)),ox=c.ox??(W-(Mx-mx))/2-mx,oy=c.oy??(H-(My-my))/2-my;
  const solved=()=>done.has(task);
- box.innerHTML=`<div class="fig"><svg role="img" aria-label="${c.aria||'Zeichenbrett mit Kraftpfeilen'}"></svg></div>
+ box.innerHTML=`<div class="fig"><button class="vt-max" type="button" aria-pressed="false" title="Zeichenbrett groß anzeigen">⤢ Groß</button><svg role="img" aria-label="${c.aria||'Zeichenbrett mit Kraftpfeilen'}"></svg></div>
  <p class="caption">${c.cap||'Ziehe den Punkt am Pfeil (oder wähle das Brett an und nutze die Pfeiltasten). Maßstab: <b>1 cm ≙ '+fmtS(sc,2)+' '+u+'</b> (1 Kästchen = 0,5 cm).'}</p>
  <p class="ruler" aria-live="polite"></p>
  <div class="row"><button class="primary vt-check">Konstruktion prüfen</button>${c.type==='split'&&!c.noPar?'<button class="vt-par" aria-pressed="false">Parallelen einblenden</button>':''}${c.type==='add'&&!c.noPar?'<button class="vt-par" aria-pressed="false">Parallelogramm-Hilfslinien</button>':''}<button class="vt-sol">Lösung zeigen</button><button class="vt-reset">Neu</button></div>
  <p class="fb vt-fb"></p>
  ${c.ask!==false?`<div class="vt-ask" hidden>${(c.askList||[]).map((q,i)=>`<div class="numq"><span>${q[0]}</span><span class="unit"><input type="text" inputmode="decimal" data-i="${i}" aria-label="${q[0].replace(/<[^>]+>/g,'')}"> ${q[2]||u}</span></div>`).join('')}<div class="row"><button class="primary vt-num">Werte prüfen</button></div><p class="fb vt-nfb"></p></div>`:''}`;
  const svg=box.querySelector('svg'),b=new Board(svg,{W,H,ox,oy});
+ const mxb=box.querySelector('.vt-max'),setMax=on=>{box.classList.toggle('vtmax',on);document.documentElement.classList.toggle('noscroll',on);mxb.setAttribute('aria-pressed',on);mxb.textContent=on?'✕ Schließen':'⤢ Groß';if(on)box.scrollTop=0;else box.scrollIntoView({block:'center'})};mxb.onclick=()=>setMax(!box.classList.contains('vtmax'));box.addEventListener('keydown',e=>{if(e.key==='Escape'&&box.classList.contains('vtmax'))setMax(false)});
  let par=false,showSol=false,ok1=false;
  const start=c.start||[[.8,-.8],[-.8,-.8]];
  let h1=[...start[0]],h2=[...start[1]];
