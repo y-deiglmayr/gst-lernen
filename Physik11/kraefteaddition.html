@@ -491,6 +491,7 @@ const COL={f1:'var(--f1)',f2:'var(--f2)',f3:'var(--f3)',fr:'var(--fr)',fg:'var(-
 const col=c=>COL[c]||c;
 
 /* ===== Zeichenbrett (Karopapier, Koordinaten in cm, y nach oben) ===== */
+function strikeSvg(B,v,c){const L=Math.hypot(v[0],v[1]);if(L<.5)return '';const u=[v[0]/L,v[1]/L],n=[-u[1],u[0]];let s='';[.42,.55].forEach(t=>{const m=[v[0]*t,v[1]*t],a=[m[0]+(n[0]*.35-u[0]*.18),m[1]+(n[1]*.35-u[1]*.18)],b=[m[0]-(n[0]*.35-u[0]*.18),m[1]-(n[1]*.35-u[1]*.18)];s+=`<line x1="${B.X(a[0])}" y1="${B.Y(a[1])}" x2="${B.X(b[0])}" y2="${B.Y(b[1])}" style="stroke:${col(c)}" stroke-width="3.5" stroke-linecap="round"/>`});return s}
 class Board{
  constructor(svg,o){Object.assign(this,{U:40,snap:0.1,ox:1,oy:1,grid:true},o);this.svg=svg;this.handles=[];this.active=null;this.drag=null;
   svg.setAttribute('viewBox',`0 0 ${this.W*this.U} ${this.H*this.U}`);if(!o.noMax&&svg.parentElement&&svg.parentElement.classList.contains('fig'))svg.parentElement.style.maxWidth=(this.W*58+18)+'px';svg.classList.add('board');if(!svg.hasAttribute('tabindex'))svg.tabIndex=0;
@@ -563,25 +564,31 @@ function initVT(box){const c=JSON.parse(box.dataset.cfg),task=box.dataset.task,s
  let h1=[...start[0]],h2=[...start[1]];
  if(c.type==='split'){h1=comp.e[0].map(v=>v*0.6);h2=comp.e[1].map(v=>v*0.6)}
  if(c.type==='plan'){h2=[forces[0].v[0]*0.3+forces[1].v[1]*0.25,forces[0].v[1]*0.3-forces[1].v[0]*0.25-1.2]}
- const H1=b.add({get:()=>h1,set:(x,y)=>{if(c.type==='split'){const e=comp.e[0],t=Math.max(0,x*e[0]+y*e[1]);h1=[e[0]*t,e[1]*t]}else h1=[x,y]}});
- let H2=null;if(c.type==='split'||c.type==='plan')H2=b.add({get:()=>h2,set:(x,y)=>{if(c.type==='split'){const e=comp.e[1],t=Math.max(0,x*e[0]+y*e[1]);h2=[e[0]*t,e[1]*t]}else h2=[x,y]}});
+ if(c.type==='split'&&c.free){h1=c.free[0].slice();h2=c.free[1].slice()}
+ let h3=c.unter?(c.unter.start||[.6,.9]).slice():null;
+ const H1=b.add({get:()=>h1,set:(x,y)=>{if(c.type==='split'&&!c.free){const e=comp.e[0],t=Math.max(0,x*e[0]+y*e[1]);h1=[e[0]*t,e[1]*t]}else h1=[x,y]}});
+ let H2=null;if(c.type==='split'||c.type==='plan')H2=b.add({get:()=>h2,set:(x,y)=>{if(c.type==='split'&&!c.free){const e=comp.e[1],t=Math.max(0,x*e[0]+y*e[1]);h2=[e[0]*t,e[1]*t]}else h2=[x,y]}});
+ const H3=h3?b.add({get:()=>h3,set:(x,y)=>{h3=[x,y]}}):null;
  if(c.type==='plan')b.handles.reverse();
  const len=v=>Math.hypot(v[0],v[1]);
  b.draw=B=>{let s='';if(c.scene&&SCENES[c.scene])s+=SCENES[c.scene](B,c);
   const showP=(par||showSol||solved())&&(c.type==='add'||c.type==='eq');
   if(c.type==='add'&&showP&&forces.length===2){const [A,Bv]=forces;s+=B.line(A.v[0],A.v[1],sum[0],sum[1])+B.line(Bv.v[0],Bv.v[1],sum[0],sum[1])}
   if(c.type==='eq'&&(showSol||solved())){let p=[0,0];forces.forEach(f=>{s+=B.arrow(p[0],p[1],p[0]+f.v[0],p[1]+f.v[1],f.c,{op:.45,w:2.2});p=[p[0]+f.v[0],p[1]+f.v[1]]});s+=B.arrow(p[0],p[1],0,0,'fr',{op:.45,w:2.2,dash:1})}
-  if(c.type==='split'){c.dirs.forEach((a,i)=>{s+=B.ray(0,0,a,30)});if(par||showSol||solved()){const G=comp.G;c.dirs.forEach(a=>{s+=B.line(G[0]-30*cosd(a),G[1]-30*sind(a),G[0]+30*cosd(a),G[1]+30*sind(a),'dashl')})}}
+  if(c.type==='split'){if(!c.free)c.dirs.forEach((a,i)=>{s+=B.ray(0,0,a,30)});if(par||showSol||solved()){const G=comp.G;c.dirs.forEach(a=>{s+=B.line(G[0]-30*cosd(a),G[1]-30*sind(a),G[0]+30*cosd(a),G[1]+30*sind(a),'dashl')})}}
   forces.forEach(f=>s+=B.arrow(0,0,f.v[0],f.v[1],f.c||'f1',{label:f.n,side:f.side||1}));
-  if(c.type==='split')s+=B.arrow(0,0,comp.G[0],comp.G[1],c.G.c||'fg',{label:c.G.n,side:c.G.side||-1,w:3.6});
+  if(c.type==='split'){const G=comp.G,st=c.strike&&(ok1||showSol||solved());s+=B.arrow(0,0,G[0],G[1],c.G.c||'fg',{label:c.G.n,side:c.G.side||-1,w:3.6,op:st?.45:0});
+   if(st)s+=strikeSvg(B,G,c.G.c||'fg')}
   if(showSol){if(target)s+=B.arrow(0,0,target[0],target[1],'fr',{op:.4,w:6,dash:1});if(comp)comp.k.forEach((k,i)=>s+=B.arrow(0,0,comp.e[i][0]*k,comp.e[i][1]*k,'fr',{op:.4,w:6,dash:1}));if(c.type==='plan'){const f=forces[1];s+=B.arrow(forces[0].v[0],forces[0].v[1],sum[0],sum[1],f.c,{op:.4,w:6,dash:1})}}
   /* Schülerpfeile */
   if(c.type==='plan'){const f=forces[1];s+=B.arrow(h2[0],h2[1],h2[0]+f.v[0],h2[1]+f.v[1],f.c,{label:f.n,w:3,dash:0})+`<rect x="${B.X(h2[0])-9}" y="${B.Y(h2[1])-9}" width="18" height="18" class="hdl sq${H2===B.active?' act':''}" style="stroke:${col(f.c)}"/>`}
+  if(c.type==='split'&&c.livePar&&len(h1)>.2&&len(h2)>.2){const q=[h1[0]+h2[0],h1[1]+h2[1]],hit=Math.hypot(q[0]-comp.G[0],q[1]-comp.G[1])<=tol;s+=B.line(h1[0],h1[1],q[0],q[1],'dashl')+B.line(h2[0],h2[1],q[0],q[1],'dashl')+`<circle cx="${B.X(q[0])}" cy="${B.Y(q[1])}" r="7" style="fill:none;stroke:${hit?'var(--ok)':'var(--muted)'}" stroke-width="2.5"/>`}
+  if(h3){const nn=c.unter.n||'F|U',cu=c.unter.c||'f3';s+=B.arrow(0,0,h3[0],h3[1],cu,{label:nn,side:c.unter.side||1})+B.handleSvg(H3,cu);if(showSol){const t=comp.e[1].map(v=>-v*comp.k[1]);s+=B.arrow(0,0,t[0],t[1],'fr',{op:.4,w:6,dash:1})}}
   if(c.type==='split'){const n=c.names||['F|1','F|2'];s+=B.arrow(0,0,h1[0],h1[1],c.cc?.[0]||'f1',{label:n[0],side:c.sides?.[0]||1})+B.arrow(0,0,h2[0],h2[1],c.cc?.[1]||'f2',{label:n[1],side:c.sides?.[1]||-1})+B.handleSvg(H1,c.cc?.[0]||'f1')+B.handleSvg(H2,c.cc?.[1]||'f2')}
   else{s+=B.arrow(0,0,h1[0],h1[1],c.sc_c||'fr',{label:c.name||'F|res',side:c.side||-1})+B.handleSvg(H1,'fr')}
   s+=B.dot(0,0,5);return s};
  const ruler=box.querySelector('.ruler');
- const upd=()=>{if(c.type==='split')ruler.innerHTML=`📏 Deine Pfeile: ${labH((c.names||['F|1'])[0])}: <b>${fmt(len(h1),1)} cm</b> · ${labH((c.names||[0,'F|2'])[1])}: <b>${fmt(len(h2),1)} cm</b>`;
+ const upd=()=>{if(c.type==='split')ruler.innerHTML=`📏 Deine Pfeile: ${labH((c.names||['F|1'])[0])}: <b>${fmt(len(h1),1)} cm</b> · ${labH((c.names||[0,'F|2'])[1])}: <b>${fmt(len(h2),1)} cm</b>`+(h3?` · ${labH(c.unter.n||'F|U')}: <b>${fmt(len(h3),1)} cm</b>`:'');
   else ruler.innerHTML=`📏 Dein Pfeil ${labH(c.name||'F|res')}: <b>${fmt(len(h1),1)} cm</b> lang${c.showAng?`, Winkel zur Waagrechten: <b>${fmtS(((ang(h1[0],h1[1])%360)+360)%360,0)}°</b>`:''}`};
  b.onchange=upd;b.redraw();upd();
  const fb=box.querySelector('.vt-fb'),ask=box.querySelector('.vt-ask');
@@ -590,8 +597,11 @@ function initVT(box){const c=JSON.parse(box.dataset.cfg),task=box.dataset.task,s
   if(da>6)return 'Die <b>Richtung</b> stimmt noch nicht.'+(c.type==='add'?' Die Resultierende ist die Diagonale des Parallelogramms, das von beiden Kräften aufgespannt wird.':'');
   return 'Die Richtung passt, aber dein Pfeil ist zu '+(lp>lt?'lang':'kurz')+'.'}
  box.querySelector('.vt-check').onclick=()=>{let ok=false,msg='';
-  if(c.type==='split'){const t1=comp.e[0].map(v=>v*comp.k[0]),t2=comp.e[1].map(v=>v*comp.k[1]),o1=near(h1,t1),o2=near(h2,t2);ok=o1&&o2;
-   msg=ok?'':(!o1&&!o2?'Beide Teilkräfte stimmen noch nicht.':'Eine Teilkraft passt, die '+(o1?'zweite':'erste')+' noch nicht.')+' Tipp: Zeichne durch die <b>Pfeilspitze</b> der zu zerlegenden Kraft Parallelen zu den beiden Richtungen. Die Schnittpunkte sind die Spitzen der Teilkräfte.'}
+  if(c.type==='split'){const t1=comp.e[0].map(v=>v*comp.k[0]),t2=comp.e[1].map(v=>v*comp.k[1]),o1=near(h1,t1),o2=near(h2,t2),o3=!h3||near(h3,[-t2[0],-t2[1]]);ok=o1&&o2&&o3;
+   if(!ok&&c.free){const n=c.names,q=[h1[0]+h2[0],h1[1]+h2[1]],corner=Math.hypot(q[0]-comp.G[0],q[1]-comp.G[1])<=tol,d1=angDiff(ang(h1[0],h1[1]),ang(t1[0],t1[1]))<=6,d2=angDiff(ang(h2[0],h2[1]),ang(t2[0],t2[1]))<=6;
+    msg=!d1?`${labH(n[0])} muss <b>parallel zur Ebene</b> hangabwärts zeigen.`:!d2?`${labH(n[1])} muss <b>senkrecht zur Ebene</b> in die Ebene hinein zeigen.`:!(o1&&o2)?`Die Richtungen stimmen. Jetzt die Längen: Die Spitze von ${labH(c.G.n)} muss die <b>vierte Ecke des Parallelogramms</b> sein (Kreis wird grün).`:`Fast fertig: Die ${labH(c.unter.n||'F|U')} gleicht ${labH(n[1])} aus – gleich lang, <b>genau entgegengesetzt</b>.`;
+    if(corner&&!(o1&&o2))msg='Das Parallelogramm schließt, aber eine Richtung passt noch nicht ganz.'}
+   else msg=ok?'':(!o1&&!o2?'Beide Teilkräfte stimmen noch nicht.':'Eine Teilkraft passt, die '+(o1?'zweite':'erste')+' noch nicht.')+' Tipp: Zeichne durch die <b>Pfeilspitze</b> der zu zerlegenden Kraft Parallelen zu den beiden Richtungen. Die Schnittpunkte sind die Spitzen der Teilkräfte.'}
   else if(c.type==='plan'){const tail=forces[0].v,o1=near(h2,tail),o2=near(h1,target);ok=o1&&o2;
    msg=ok?'':(!o1?`Setze den <b>Schaft</b> von ${labH(forces[1].n)} genau an die <b>Spitze</b> von ${labH(forces[0].n)} (Quadrat ziehen). `:'')+(!o2?'Die Resultierende führt vom Anfangspunkt zur Spitze des letzten Pfeils.':'')}
   else{ok=near(h1,target);msg=ok?'':hintFor(h1,target)}
@@ -600,7 +610,7 @@ function initVT(box){const c=JSON.parse(box.dataset.cfg),task=box.dataset.task,s
   b.redraw()};
  const pb=box.querySelector('.vt-par');if(pb)pb.onclick=()=>{par=!par;pb.setAttribute('aria-pressed',par);b.redraw()};
  box.querySelector('.vt-sol').onclick=e=>{showSol=!showSol;e.target.textContent=showSol?'Lösung ausblenden':'Lösung zeigen';if(showSol&&c.solText){fb.className='fb hint vt-fb';fb.innerHTML=c.solText}if(showSol&&ask)ask.hidden=false;b.redraw()};
- box.querySelector('.vt-reset').onclick=()=>{h1=[...start[0]];h2=[...start[1]];if(c.type==='split'){h1=comp.e[0].map(v=>v*0.6);h2=comp.e[1].map(v=>v*0.6)}if(c.type==='plan')h2=[forces[0].v[0]*0.3+forces[1].v[1]*0.25,forces[0].v[1]*0.3-forces[1].v[0]*0.25-1.2];fb.textContent='';fb.className='fb vt-fb';b.redraw();upd()};
+ box.querySelector('.vt-reset').onclick=()=>{h1=[...start[0]];h2=[...start[1]];if(c.type==='split'){h1=comp.e[0].map(v=>v*0.6);h2=comp.e[1].map(v=>v*0.6)}if(c.type==='split'&&c.free){h1=c.free[0].slice();h2=c.free[1].slice()}if(h3)h3=(c.unter.start||[.6,.9]).slice();ok1=false;if(c.type==='plan')h2=[forces[0].v[0]*0.3+forces[1].v[1]*0.25,forces[0].v[1]*0.3-forces[1].v[0]*0.25-1.2];fb.textContent='';fb.className='fb vt-fb';b.redraw();upd()};
  if(ask){const nfb=ask.querySelector('.vt-nfb');ask.querySelector('.vt-num').onclick=()=>{let n=0;const ins=[...ask.querySelectorAll('input')];ins.forEach(inp=>{const q=c.askList[+inp.dataset.i],v=num(inp.value),okv=!isNaN(v)&&Math.abs(v-q[1])<=Math.abs(q[1])*(q[3]||0.06);inp.className=inp.value===''?'':(okv?'ok':'bad');if(okv)n++});
   if(n===ins.length){nfb.className='fb ok vt-nfb';nfb.innerHTML=c.numOk||'Richtig abgelesen und umgerechnet!';mark(task)}else{nfb.className='fb bad vt-nfb';nfb.innerHTML=n+' von '+ins.length+' richtig. Miss die Pfeillänge (Lineal-Anzeige) und rechne mit dem Maßstab um: Länge in cm · '+fmtS(sc,2)+' '+u+'.'}}}
 }
