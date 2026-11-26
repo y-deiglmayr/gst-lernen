@@ -216,7 +216,7 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 <!-- ============ 1 EINSTIEG ============ -->
 <section class="band" id="einstieg"><div class="wrap">
 <h2>1 · Einstieg: Was haben diese Situationen gemeinsam?</h2>
-<div class="fig"><svg id="vier" viewBox="0 0 900 230" role="img" aria-label="Vier Situationen: fallende Kugel verformt Knete, Kerze erwärmt Wasser, Batterie bringt Lampe zum Leuchten, gespannter Bogen schießt einen Pfeil"></svg></div>
+<div class="fig"><svg id="vier" viewBox="0 0 900 230" role="img" aria-label="Vier Situationen: fallende Kugel verformt Knete, Kerze erwärmt Wasser, Batterie bringt Lampe zum Leuchten, gespannter Bogen"></svg></div>
 <div class="card" data-task="e1" style="margin-top:14px">
 <div class="tag"><span class="stars">★</span> Auftrag 1 · Was steckt in allen vier Bildern?</div>
 <p>Schau dir die vier Situationen genau an. Was haben die Kugel oben, die Kerze, die Batterie und der gespannte Bogen gemeinsam?</p>
@@ -492,8 +492,8 @@ const bulb=(x,y,on)=>(on?C(x,y,30,'','style="fill:#ffd54a;opacity:.35"'):'')+C(x
 {let s='';const box=(x,t)=>Rc(x+6,6,213,218,'','rx="12" style="fill:var(--bg);stroke:var(--line)"')+T(x+112,212,t,'txs','text-anchor="middle"');
  s+=box(0,'Kugel über Knete')+L(70,40,70,150,'dashl')+C(70,40,12,'ball')+Rc(40,170,60,24,'','rx="4" style="fill:#d77fa1"')+`<path d="M60 170 Q70 182 80 170" style="fill:var(--bg)"/>`+T(85,80,'fällt','txs')+arrowHead(70,160,90,'var(--muted)');
  s+=box(225,'Kerze unter Wasser')+Rc(305,40,30,80,'','rx="6" style="fill:#cfe7ff;stroke:var(--ink)"')+Rc(305,70,30,50,'','rx="4" style="fill:#7cb6f0"')+Rc(312,160,16,30,'','style="fill:#f4ead8;stroke:var(--ink)"')+flame(320,152);
- s+=box(450,'Batterie und Lampe')+battery(490,150)+bulb(600,90,true)+`<path d="M545 162 H600 V112" class="thin"/><path d="M490 162 H475 V60 H600 V68" class="thin" style="display:none"/>`+L(490,162,470,162,'thin')+L(470,162,470,75,'thin')+L(470,75,586,88,'thin');
- s+=box(675,'Gespannter Bogen')+`<path d="M740 40 Q700 115 740 190" fill="none" style="stroke:var(--ech)" stroke-width="5"/>`+`<path d="M740 40 L790 115 L740 190" fill="none" class="thin"/>`+L(790,115,860,115,'thin','stroke-width="2.5"')+arrowHead(866,115,0,'var(--ink)');
+ s+=box(450,'Batterie und Lampe')+battery(490,150)+bulb(600,90,true)+`<path d="M545 162 H600 V112" class="thin"/><path d="M490 162 H470 V107 H593" class="thin"/>`;
+ s+=box(675,'Gespannter Bogen')+`<path d="M780 40 Q740 115 780 190" fill="none" style="stroke:var(--ech)" stroke-width="5" stroke-linecap="round"/>`+`<path d="M780 40 L830 115 L780 190" fill="none" class="thin"/>`;
  $('#vier').innerHTML=s}
 
 /* ---------- Energie-Skala ---------- */
@@ -605,10 +605,10 @@ ST.forEach(st=>{const svg=$('#sv_'+st.id),inp=$('#in_'+st.id);let k=0,running=fa
 /* ---------- Energiekette ---------- */
 {const txt=['Im Stausee liegt das Wasser hoch oben. Es besitzt <b>Lageenergie</b>.','Das Wasser strömt durch das Rohr nach unten und wird schnell: Lageenergie → <b>Bewegungsenergie</b>.','Das strömende Wasser dreht die Turbine. Der Generator wandelt die Bewegungsenergie in <b>elektrische Energie</b> um.','Über Stromleitungen gelangt die elektrische Energie zu dir nach Hause.','Die Lampe wandelt elektrische Energie in <b>Strahlungsenergie</b> (Licht) um – und leider auch in <b>thermische Energie</b>: Sie wird warm.'];
  const stages=[['Lageenergie','var(--el)'],['Bewegungs­energie','var(--eb)'],['elektrische Energie','var(--eelk)'],['elektrische Energie','var(--eelk)'],['Strahlungs­energie','var(--estr)']];
- const pts=[[80,80],[170,170],[250,220],[430,120],[560,150]];let k=0;
+ const pts=[[80,80],[187,170],[250,220],[430,120],[560,150]];let k=0;
  function draw(){let s=Rc(0,250,640,80,'ground');
   s+=`<path d="M20 40 L140 40 L140 130 L20 130Z" style="fill:#7cb6f0;opacity:.6"/>`+L(20,130,140,130,'thin')+L(140,30,140,250,'thin','stroke-width="6"')+T(30,30,'Stausee','txs');
-  s+=`<path d="M140 120 Q180 140 200 200 L230 220" fill="none" style="stroke:var(--muted)" stroke-width="14"/>`+T(150,105,'Rohr','txs');
+  s+=`<path d="M138 118 C190 118 185 222 228 222" fill="none" style="stroke:var(--muted)" stroke-width="18"/><path d="M138 118 C190 118 185 222 228 222" fill="none" style="stroke:#7cb6f0" stroke-width="11"/>`+T(150,105,'Rohr','txs');
   s+=C(250,222,24,'','style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"')+T(236,228,'T','txb')+Rc(280,205,60,34,'','rx="6" style="fill:var(--paper);stroke:var(--ink)"')+T(298,228,'G','txb')+T(228,268,'Turbine + Generator','txs');
   s+=L(340,222,370,222,'thin','stroke-width="2"')+L(370,250,370,90,'thin','stroke-width="4"')+L(350,100,390,100,'thin','stroke-width="3"')+`<path d="M370 100 Q450 140 530 100" fill="none" class="thin"/>`+L(530,250,530,90,'thin','stroke-width="4"')+L(510,100,550,100,'thin','stroke-width="3"')+T(400,88,'Stromleitung','txs');
   s+=L(530,100,575,140,'thin','stroke-width="2"')+bulb(590,160,k>=4)+T(570,205,'Lampe','txs');
