@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS feedback (
   erstellt TEXT NOT NULL DEFAULT (datetime('now')),
   seite TEXT NOT NULL,          -- z. B. /Physik9/lageenergie
   stelle TEXT,                  -- Abschnitt oder Aufgabe, die der Schüler gewählt hat
+  rolle TEXT NOT NULL DEFAULT 'schueler', -- schueler | lehrer
   art TEXT NOT NULL,            -- fehler | unklar | idee | lob
   text TEXT NOT NULL,           -- Was genau?
   vorschlag TEXT,               -- Verbesserungsvorschlag (freiwillig)

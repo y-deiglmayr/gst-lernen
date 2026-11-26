@@ -114,6 +114,7 @@ footer .fband .txt{color:var(--muted)}
 <label class="suche"><span class="sr">Lernpfad suchen</span><input type="search" id="suche" placeholder="Lernpfad suchen, z. B. Energie" autocomplete="off"></label>
 <nav class="klassen" id="klassen" aria-label="Zu einer Klasse springen"></nav></div>
 <div id="list"></div>
+<p data-feedback></p>
 </main>
 <footer><div class="fband"><span class="s1"></span><span class="logo"><img src="/brand/logo.svg" alt="Logo der Schule"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span><span class="s6"></span><span class="txt"><span>Interaktive Lernpfade · Dein Fortschritt bleibt in deinem Browser<br><a href="/impressum">Impressum · Datenschutz</a></span></span></div></footer>
 <!-- Neue Lernpfade werden in der Liste unten im Quelltext (KURSE) eingetragen. -->
@@ -269,5 +270,6 @@ wahl(store.get('gst-index-stufe')||'Alle');
 <script>
 {const d=document.getElementById('qrDlg');document.getElementById('qrOpen').onclick=()=>d.showModal();document.getElementById('qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
 </script>
+<script defer src="/brand/feedback.js"></script>
 </body>
 </html>
