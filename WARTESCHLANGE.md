@@ -10,6 +10,23 @@ Quelle: Unterrichtsmaterial von Herrn Deiglmayr (OneNote-Export „3. Akustik“
 Das Material liegt nicht im Repo (öffentlich, Schülernamen), Inhalte unten sind die verbindliche Zusammenfassung.
 In Lernpfaden **keine Schülernamen** aus dem Material verwenden; Beispielpersonen frei erfinden.
 Überschneidung mit „Dynamik · Kräfte“ (Kräfte 1–4, schon online) vermeiden: Kräfte kommen in der Mechanik-Reihe nicht vor.
+## Ablauf eines Laufs (verbindlich für die geplante Aufgabe)
+
+**Sparregeln (Cache-Lesen gering halten):**
+- Ein Lauf = eine Einheit, kurze frische Sitzung, keine Subagenten, nur ein Lauf gleichzeitig.
+- Keine ganzen Dateien lesen: CLAUDE.md und diese Datei nur abschnittsweise (`grep -n`, `sed -n`); aus der Inhaltsliste nur den Abschnitt der eigenen Einheit.
+- Vorlage kopieren statt lesen: neuen Lernpfad mit `cp` aus einem fertigen Physik8-Lernpfad anlegen und gezielt per Skript/`sed`/Edit umbauen; aus Mustern nur einzelne Stellen per `grep` ansehen, keine zweite oder dritte Musterdatei öffnen.
+- Werkzeugausgaben klein halten: keine Datei-Dumps, Server/Playwright/PDF-Befehle leise (`>/dev/null`, `| tail -5`), Prüfskript gibt nur Fehler und Kennzahlen aus; höchstens 2–3 Screenshots ansehen.
+- Nicht dieselbe Prüfung wiederholt laufen lassen, nur nach echten Änderungen.
+
+**Schritte:**
+1. `git fetch origin main`, auf origin/main. Erste Einheit mit `offen` nehmen (`in Arbeit` jünger als 3 h überspringen). Sofort `in Arbeit (Datum Uhrzeit)` setzen, committen, auf main pushen.
+2. Lernpfad bzw. Druck nach CLAUDE.md bauen (Lernpfad ohne PDFs; Druck nach `tools/druck/LIESMICH.md`), Startseite/README ergänzen.
+3. Prüfen nach CLAUDE.md „Prüfen“ (leise), Fehler beheben.
+4. Status `fertig (Datum, Commit)`, `git fetch` + zusammenführen, auf main pushen.
+5. Sicherung: `list_devices`; ist D:\OneDrive\Unterricht WBS\Lernapps erreichbar, Ordner mit `device_request_folder_access` anfordern (vorab freigegeben, keine Rückfrage), alle auf main seit dem Commit in `/mnt/project-files/sicherung/letzte-sicherung-commit.txt` geänderten Auslieferungsdateien (ohne tools/, feedback/) nach /mnt/project-files/sicherung/aktuell/ kopieren und mit `device_commit_files` schreiben; danach Commit-ID in die Datei schreiben und Sicherung-Spalte auf `ja (Datum)`. Sonst `offen` lassen.
+6. Kurz melden (unter 60 Wörtern, Live-Link, Sicherung ja/nein), Thread erledigt.
+
 
 ## Reihenfolge
 
