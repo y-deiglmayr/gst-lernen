@@ -96,6 +96,7 @@ Formeln: `kg·m/s` und `N·s` gelten als Einheiten, `Δp`, `Δt` usw. als ein Fo
 ## Feedback
 
 Jeder Lernpfad bindet `<script defer src="/brand/feedback.js"></script>` ein (nach `formel.js`). Das Skript setzt einen
-Knopf „Feedback“ in die Navigation und in den Fuß. Rückmeldungen gehen anonym an `/api/feedback` (Worker in
+Knopf „Feedback“ in die Navigation und in den Fuß und lädt `brand/feedback.css`. Auf der Startseite steht der Knopf im
+Platzhalter `<p data-feedback></p>` (allgemeines Feedback). Im Formular wählt man die Rolle Schüler/in oder Lehrer/in. Rückmeldungen gehen anonym an `/api/feedback` (Worker in
 `feedback/worker.js`) und werden in Cloudflare D1 (`gst-feedback`) gespeichert, vorgefiltert und vorbewertet.
 Auswerten: siehe `feedback/AUSWERTEN.md` – oder Claude bitten: „Werte das neue Feedback aus.“

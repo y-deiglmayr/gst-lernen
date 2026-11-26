@@ -5,6 +5,7 @@
 
 const ERLAUBT = ['lernapps.gst-lernen.workers.dev', 'localhost', '127.0.0.1'];
 const ARTEN = ['fehler', 'unklar', 'idee', 'lob'];
+const ROLLEN = ['schueler', 'lehrer'];
 const TAGES_LIMIT = 300;          // Schutz vor Überflutung: höchstens so viele Einträge pro Tag
 const MIN_ZEICHEN = 40, MAX_ZEICHEN = 1500, MAX_VORSCHLAG = 800;
 
@@ -25,7 +26,8 @@ function bewerte(d) {
   const alles = d.text + ' ' + (d.vorschlag || '');
   const woerter = alles.split(/\s+/).filter(w => /[a-zäöüß]{2,}/i.test(w));
   s += Math.min(25, Math.round(woerter.length * 0.8)); g.push(woerter.length + ' Wörter');
-  if (d.stelle && d.stelle !== 'Ganze Seite') { s += 15; g.push('Stelle genannt'); }
+  if (d.rolle === 'lehrer') { s += 10; g.push('Lehrkraft'); }
+  if (d.stelle && !['Ganze Seite', 'Allgemein'].includes(d.stelle)) { s += 15; g.push('Stelle genannt'); }
   if (d.vorschlag && d.vorschlag.length >= 15) { s += 15; g.push('Vorschlag'); }
   const konkret = new Set((alles.match(KONKRET) || []).map(w => w.toLowerCase())).size;
   if (konkret) { s += Math.min(10, konkret * 3); g.push('konkret'); }
@@ -43,8 +45,9 @@ function bewerte(d) {
 
 /* Harte Prüfungen: offensichtlich Unbrauchbares wird gar nicht erst gespeichert. */
 function pruefe(d) {
+  if (!ROLLEN.includes(d.rolle)) return 'Bitte wähle aus, ob du Schüler/in oder Lehrer/in bist.';
   if (!ARTEN.includes(d.art)) return 'Bitte wähle aus, worum es geht.';
-  if (!/^\/[A-Za-z0-9\/_-]{1,80}$/.test(d.seite)) return 'Unbekannte Seite.';
+  if (!/^\/[A-Za-z0-9\/_-]{0,80}$/.test(d.seite)) return 'Unbekannte Seite.';
   if (d.text.length < MIN_ZEICHEN) return `Bitte beschreibe genauer, was du meinst (mindestens ${MIN_ZEICHEN} Zeichen).`;
   if (d.text.length > MAX_ZEICHEN || (d.vorschlag || '').length > MAX_VORSCHLAG) return 'Der Text ist zu lang.';
   const alles = d.text + ' ' + (d.vorschlag || '');
@@ -77,6 +80,7 @@ async function nimmFeedback(request, env) {
   const d = {
     seite: sauber(roh.seite, 80).replace(/\.html$/, ''),
     stelle: sauber(roh.stelle, 120) || 'Ganze Seite',
+    rolle: sauber(roh.rolle, 10),
     art: sauber(roh.art, 10),
     text: sauber(roh.text, MAX_ZEICHEN),
     vorschlag: sauber(roh.vorschlag, MAX_VORSCHLAG) || null,
@@ -90,8 +94,8 @@ async function nimmFeedback(request, env) {
   if (doppelt) return json({ ok: true, meldung: 'Danke! Diese Rückmeldung ist schon angekommen.' });
 
   const { qualitaet, gruende } = bewerte(d);
-  await env.DB.prepare('INSERT INTO feedback (seite, stelle, art, text, vorschlag, qualitaet, gruende) VALUES (?, ?, ?, ?, ?, ?, ?)')
-    .bind(d.seite, d.stelle, d.art, d.text, d.vorschlag, qualitaet, gruende).run();
+  await env.DB.prepare('INSERT INTO feedback (seite, stelle, rolle, art, text, vorschlag, qualitaet, gruende) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(d.seite, d.stelle, d.rolle, d.art, d.text, d.vorschlag, qualitaet, gruende).run();
   return json({ ok: true, meldung: 'Danke! Dein Feedback ist angekommen.' });
 }
 
