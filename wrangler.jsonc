@@ -1,0 +1,14 @@
+{
+  // Cloudflare Worker "lernapps": liefert die Lernpfade aus (statische Dateien)
+  // und nimmt unter /api/feedback Rückmeldungen entgegen (Datenbank D1 "gst-feedback").
+  "name": "lernapps",
+  "main": "feedback/worker.js",
+  "compatibility_date": "2025-09-01",
+  "assets": { "directory": ".", "binding": "ASSETS" },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "gst-feedback", "database_id": "17e96367-7f67-4c99-b1f8-ff75f1f89423" }
+  ],
+  // Täglich: Feedback älter als 12 Monate und verworfene Einträge älter als 30 Tage löschen.
+  "triggers": { "crons": ["17 3 * * *"] },
+  "observability": { "enabled": true }
+}

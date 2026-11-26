@@ -7,6 +7,9 @@ Interaktive HTML-Lerninhalte für den Unterricht, veröffentlicht über Cloudfla
 ```
 index.html                  Startseite mit allen Lernpfaden
 impressum.html              Impressum, Datenschutz, Urheberrecht/KI, Haftung (Link im Fuß jeder Seite)
+feedback/                   Feedback: Worker (worker.js), Datenbank-Aufbau (schema.sql), Anleitung AUSWERTEN.md
+wrangler.jsonc              Cloudflare-Worker „lernapps“ (statische Dateien + /api/feedback, D1 gst-feedback)
+.assetsignore               Dateien, die nicht öffentlich ausgeliefert werden
 fonts/                      Schriften lokal (Lexend, Atkinson Hyperlegible, SIL OFL) – keine Google-Server
 Physik8/
   reflexion-spiegel.html    Reflexion am ebenen Spiegel
@@ -83,3 +86,10 @@ Formeln müssen nicht von Hand markiert werden: `python3 tools/formeln_markieren
 
 Die Impuls-Lernpfade heben die Heftaufschriebe als eigene Kästen „✎ HEFTAUFSCHRIEB“ hervor (Navigation: „Heft“).
 Formeln: `kg·m/s` und `N·s` gelten als Einheiten, `Δp`, `Δt` usw. als ein Formelzeichen, Minus am Anfang einer Klammer ist erlaubt, z. B. `2,0 kg · (−6,0 m/s)`.
+
+## Feedback
+
+Jeder Lernpfad bindet `<script defer src="/brand/feedback.js"></script>` ein (nach `formel.js`). Das Skript setzt einen
+Knopf „Feedback“ in die Navigation und in den Fuß. Rückmeldungen gehen anonym an `/api/feedback` (Worker in
+`feedback/worker.js`) und werden in Cloudflare D1 (`gst-feedback`) gespeichert, vorgefiltert und vorbewertet.
+Auswerten: siehe `feedback/AUSWERTEN.md` – oder Claude bitten: „Werte das neue Feedback aus.“

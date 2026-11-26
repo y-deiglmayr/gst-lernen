@@ -14,6 +14,7 @@ Details zu Aufbau, Branding und Formeln: `README.md`.
   <link rel="stylesheet" href="/katex/katex.min.css">
   <script defer src="/katex/katex.min.js"></script>
   <script defer src="/katex/formel.js"></script>
+  <script defer src="/brand/feedback.js"></script>
   ```
 - Schulfarben: Schiefer #3E4B4C, #5F6F74, Graugrün #76989D, #ACBDC3, #C9D2D3, Hellgrau #E4E7E9, Akzentgelb #FCBE00.
   Keine eigenen Dunkelblau-Töne für Kopf oder Vorschaubilder (Vorschaubild-Grund: #3E4B4C bzw. #2f393a).
@@ -37,6 +38,10 @@ Details zu Aufbau, Branding und Formeln: `README.md`.
 - Konstruktionen: „Erst im Heft konstruieren, dann hier prüfen.“
 - Simulationen dürfen nichts „entdecken“ lassen, was physikalisch nicht stimmt; Modellannahmen (z. B. ohne Reibung) nennen.
 - Fortschritt nur im Browser (localStorage), keine Datenerhebung.
+
+## Feedback
+- Schüler-Feedback liegt anonym in Cloudflare D1 `gst-feedback` (ID 17e96367-7f67-4c99-b1f8-ff75f1f89423). Abrufen und Auswerten nach `feedback/AUSWERTEN.md`: nur Einträge mit Stellenbezug, die sich nachprüfen lassen und fachlich stimmen; dem Nutzer erst eine Liste vorlegen, dann ändern, danach `status` setzen.
+- `wrangler.jsonc` + `feedback/worker.js` bilden den Worker „lernapps“; `.assetsignore` hält interne Dateien (CLAUDE.md, tools/, feedback/) aus der Auslieferung.
 
 ## Prüfen und Veröffentlichen
 - Lokal mit `python3 -m http.server` + Playwright: keine JS-Fehler, Desktop 1280 px und Handy 390 px ohne seitliches Scrollen, Aufgaben durchklicken, Screenshots ansehen.
