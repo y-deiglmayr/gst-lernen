@@ -13,6 +13,7 @@ wrangler.jsonc              Cloudflare-Worker „lernapps“ (statische Dateien 
 fonts/                      Schriften lokal (Lexend, Atkinson Hyperlegible, SIL OFL) – keine Google-Server
 Physik8/
   reflexion-spiegel.html    Reflexion am ebenen Spiegel
+  reflexion-spiegel-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   spiegelbild-uebungen.html Spiegelbild konstruieren · Üben (Lichtwege, Winkelspiegel)
   lichtbrechung-experiment.html  Lichtbrechung 1: Schülerexperiment
   lichtbrechung-theorie.html     Lichtbrechung 2: Theorie
