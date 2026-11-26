@@ -3,7 +3,7 @@
    Es werden keine IP-Adressen, Namen oder Geräte-Kennungen gespeichert.
    Abrufen und Auswerten: siehe feedback/AUSWERTEN.md */
 
-const ERLAUBT = ['lernapps.gst-lernen.workers.dev', 'localhost', '127.0.0.1'];
+const ERLAUBT = ['physik.party', 'www.physik.party', 'lernapps.gst-lernen.workers.dev', 'localhost', '127.0.0.1'];
 const ARTEN = ['fehler', 'unklar', 'idee', 'lob'];
 const ROLLEN = ['schueler', 'lehrer'];
 const TAGES_LIMIT = 300;          // Schutz vor Überflutung: höchstens so viele Einträge pro Tag

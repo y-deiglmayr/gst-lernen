@@ -1,7 +1,7 @@
 # Projekt „Physik Unterricht“ – GST-Lernpfade
 
 Interaktive Lernpfade (je eine HTML-Datei, alles inline) für das Technische Gymnasium BW. Sprache: Deutsch, du-Ansprache.
-Cloudflare veröffentlicht automatisch von `main`: https://lernapps.gst-lernen.workers.dev/ (Adresse ohne `.html`).
+Cloudflare veröffentlicht automatisch von `main`: https://physik.party/ (eigene Domain; alt: lernapps.gst-lernen.workers.dev). Adresse ohne `.html`. QR-Codes und Links immer mit physik.party.
 Details zu Aufbau, Branding und Formeln: `README.md`.
 
 **Diese Regeln gelten zusätzlich zum Skill „gst-lernpfad“ und haben Vorrang, wo der Skill etwas anderes sagt**
