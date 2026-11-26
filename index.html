@@ -216,7 +216,8 @@ const BILDER={
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const slug=s=>String(s).toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const zu=new Set(store.get('gst-index-zu')||[]);
+/* Themen starten immer eingeklappt; geöffnete merkt sich die Seite nur bis zum Neuladen (z. B. für die Suche) */
+const auf=new Set();try{localStorage.removeItem('gst-index-zu')}catch(e){}
 const anzahl=n=>n===1?'1 Lernpfad':n+' Lernpfade';
 const karte=(k,t,s)=>{
  const such=esc((s.titel+' '+s.info+' '+t.thema+' '+k.klasse+' '+k.fach+(s.druck?' arbeitsblatt heftaufschrieb übungsblatt pdf druck':'')).toLowerCase());
@@ -229,7 +230,7 @@ document.getElementById('list').innerHTML=stufen.map(st=>{
  return `<section class="stufe" id="${slug(st.name)}" data-stufe="${esc(st.name)}"><div class="stufehead"><h2>${esc(st.name)}</h2><span>${esc(st.info)}</span></div>`+
   klassen.map(k=>`<section class="klasse" id="${slug(k.klasse+'-'+k.fach)}"><h3>${esc(k.klasse)} <span>${esc(k.fach)}</span></h3>`+
    k.themen.map(t=>{const id=slug(k.klasse+'-'+t.thema);
-    return `<details class="thema" id="${id}"${zu.has(id)?'':' open'}><summary><span class="tname">${esc(t.thema)}</span><span class="count">${anzahl(t.seiten.length)}</span></summary><div class="grid">`+
+    return `<details class="thema" id="${id}"><summary><span class="tname">${esc(t.thema)}</span><span class="count">${anzahl(t.seiten.length)}</span></summary><div class="grid">`+
      t.seiten.map(s=>karte(k,t,s)).join('')+'</div></details>'}).join('')+'</section>').join('')+'</section>';
 }).join('')+'<p class="leer" id="leer" hidden>Kein Lernpfad passt zu deiner Suche.</p>';
 /* Schnellwahl: Stufe filtern und Klassen anspringen */
@@ -243,10 +244,10 @@ const wahl=n=>{
  store.set('gst-index-stufe',n);
 };
 nav.addEventListener('click',e=>{const b=e.target.closest('button');if(b){wahl(b.dataset.wahl);suche()}});
-/* Thema auf- und zuklappen merken */
+/* geöffnete Themen bis zum Neuladen merken */
 document.querySelectorAll('details.thema').forEach(d=>d.addEventListener('toggle',()=>{
  if(document.body.classList.contains('sucht'))return;
- d.open?zu.delete(d.id):zu.add(d.id);store.set('gst-index-zu',[...zu]);
+ d.open?auf.add(d.id):auf.delete(d.id);
 }));
 /* Suche über Titel, Beschreibung, Thema und Klasse */
 const feld=document.getElementById('suche');
@@ -257,7 +258,7 @@ const suche=()=>{
  document.querySelectorAll('.stufe').forEach(st=>{
   const sichtbar=!st.hidden;
   st.querySelectorAll('.card').forEach(c=>{const ok=!aktiv||w.every(x=>c.dataset.such.includes(x));c.hidden=!ok;if(ok&&sichtbar)treffer++});
-  st.querySelectorAll('details.thema').forEach(d=>{const n=d.querySelectorAll('.card:not([hidden])').length;d.hidden=aktiv&&!n;if(aktiv)d.open=true;else d.open=!zu.has(d.id)});
+  st.querySelectorAll('details.thema').forEach(d=>{const n=d.querySelectorAll('.card:not([hidden])').length;d.hidden=aktiv&&!n;if(aktiv)d.open=true;else d.open=auf.has(d.id)});
   st.querySelectorAll('.klasse').forEach(k=>k.hidden=aktiv&&!k.querySelector('details.thema:not([hidden])'));
   st.classList.toggle('ohne',aktiv&&!st.querySelector('.klasse:not([hidden])'));
  });

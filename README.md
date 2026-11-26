@@ -42,7 +42,7 @@ z. B. `/Physik8/reflexion-spiegel`. Groß- und Kleinschreibung der Ordner gehör
 ## Neuen Lernpfad hinzufügen
 
 1. HTML-Datei in den passenden Ordner legen (Ordner bei Bedarf neu anlegen).
-2. In `index.html` in der Liste `KURSE` den Lernpfad eintragen. Die Liste ist gegliedert nach Stufe (`Mittelstufe`/`Oberstufe`) → Klasse → Thema (`themen`) → Lernpfade (`seiten`). Neues Thema: weiteren Eintrag in `themen`; neue Klasse: weiteren Block mit `stufe`, `klasse`, `fach`, `ordner`. Die Startseite baut daraus Stufen-Auswahl, Sprungmarken zu den Klassen, aufklappbare Themen und die Suche automatisch auf. Für ein Vorschaubild im Objekt `BILDER` ein kleines SVG (320 × 140) anlegen und im Eintrag mit `bild:'name'` verknüpfen.
+2. In `index.html` in der Liste `KURSE` den Lernpfad eintragen. Die Liste ist gegliedert nach Stufe (`Mittelstufe`/`Oberstufe`) → Klasse → Thema (`themen`) → Lernpfade (`seiten`). Neues Thema: weiteren Eintrag in `themen`; neue Klasse: weiteren Block mit `stufe`, `klasse`, `fach`, `ordner`. Die Startseite baut daraus Stufen-Auswahl, Sprungmarken zu den Klassen, aufklappbare Themen (starten eingeklappt) und die Suche automatisch auf. Für ein Vorschaubild im Objekt `BILDER` ein kleines SVG (320 × 140) anlegen und im Eintrag mit `bild:'name'` verknüpfen.
 3. Committen und pushen – Cloudflare veröffentlicht automatisch.
 
 ## Druckversionen
