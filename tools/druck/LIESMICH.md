@@ -20,6 +20,6 @@ node tools/druck/pdf.js schiefe-ebene-uebungsblatt Physik11/schiefe-ebene-uebung
 ```
 
 Das Skript meldet ungesetzte Formeln und Konsolen-Fehler. Danach Seitenzahl und Bilder prüfen (z. B. `pdftoppm -png`).
-QR-Code im Kopf: mit Python `segno` aus der Live-Adresse des Lernpfads erzeugt.
+QR-Code im Kopf: mit Python `segno` aus der Adresse https://physik.party/<Ordner>/<lernpfad> erzeugt (Fußzeile ebenfalls physik.party).
 
 Kein Feld für Name/Klasse/Datum und kein Formel-Kasten auf den Blättern (Wunsch der Lehrkraft).

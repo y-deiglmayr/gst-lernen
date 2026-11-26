@@ -10,7 +10,7 @@ const {chromium}=require('playwright');
  await p.evaluate(()=>document.fonts.ready);await p.waitForTimeout(400);
  const roh=await p.evaluate(()=>[...document.querySelectorAll('f-m')].filter(e=>!e.querySelector('.katex')).length);
  await p.pdf({path:out,preferCSSPageSize:true,printBackground:true,displayHeaderFooter:true,headerTemplate:'<span></span>',
-  footerTemplate:`<div style="width:100%;font:8px sans-serif;color:#5F6F74;padding:0 13mm;display:flex;justify-content:space-between"><span>${fuss} · lernapps.gst-lernen.workers.dev</span><span>Seite <span class="pageNumber"></span> von <span class="totalPages"></span></span></div>`});
+  footerTemplate:`<div style="width:100%;font:8px sans-serif;color:#5F6F74;padding:0 13mm;display:flex;justify-content:space-between"><span>${fuss} · physik.party</span><span>Seite <span class="pageNumber"></span> von <span class="totalPages"></span></span></div>`});
  console.log('Formeln ungesetzt:',roh,'| Meldungen:',fehler.length?fehler:'keine');
  await b.close();
 })();
