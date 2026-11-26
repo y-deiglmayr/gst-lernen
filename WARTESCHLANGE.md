@@ -15,7 +15,7 @@ In Lernpfaden **keine Schülernamen** aus dem Material verwenden; Beispielperson
 
 | Nr | Einheit | Datei | Status | Sicherung |
 |----|---------|-------|--------|-----------|
-| 1 | Lernpfad Akustik 1 · Wie entsteht Schall? | Physik8/schall-entstehung | offen | offen |
+| 1 | Lernpfad Akustik 1 · Wie entsteht Schall? | Physik8/schall-entstehung | in Arbeit (26.11.2026 14:09) | offen |
 | 2 | Druck Akustik 1 | Physik8/schall-entstehung-*.pdf | offen | offen |
 | 3 | Druck Reflexion am ebenen Spiegel | Physik8/reflexion-spiegel-*.pdf | offen | offen |
 | 4 | Lernpfad Akustik 2 · Schwingungen beschreiben | Physik8/schwingungen | offen | offen |
