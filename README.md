@@ -17,6 +17,10 @@ Physik8/
   lichtbrechung-experiment.html  Lichtbrechung 1: Schülerexperiment
   lichtbrechung-theorie.html     Lichtbrechung 2: Theorie
   lichtbrechung-uebungen.html    Lichtbrechung 3: Üben
+  kraefte-wirkungen.html    Kräfte 1 · Was ist eine Kraft? (Kraftwirkungen, Kraftpfeil, Newton)
+  gewichtskraft-masse.html  Kräfte 2 · Gewichtskraft und Masse (Gravitation, Ortsfaktor, F_G = m · g)
+  hookesches-gesetz.html    Kräfte 3 · Kräfte messen: hookesches Gesetz (Feder-Labor, Federkonstante)
+  kraefte-newton.html       Kräfte 4 · Mehrere Kräfte und Newtons Gesetze (Kräftegleichgewicht, Trägheit, Kraft = Gegenkraft)
 Physik9/
   energie-einfuehrung.html  Was ist Energie? (Energieformen, Stationen, Energiewandler)
   lageenergie.html          Lageenergie (Fall-Labor, E = m · g · h, Nullniveau)
