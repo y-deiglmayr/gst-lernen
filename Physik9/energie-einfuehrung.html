@@ -377,7 +377,7 @@ Dabei geht keine Energie <select data-a="verloren"></select>.
 
 <div class="card" data-task="u5">
 <div class="tag"><span class="stars">★★</span> Übung 5 · Energie in Lebensmitteln</div>
-<p>Auf einer Tüte Gummibärchen steht: <b>100 g enthalten 1430 kJ</b>. Ein Jugendlicher braucht am Tag etwa <b>10 000 kJ</b>.</p>
+<div class="mitbild"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#gummibaer"/></svg><p>Auf einer Tüte Gummibärchen steht: <b>100 g enthalten 1430 kJ</b>. Ein Jugendlicher braucht am Tag etwa <b>10 000 kJ</b>.</p></div>
 <div class="numq"><span>a) Wie viel Energie enthält die ganze Tüte (200 g)?</span><span class="unit"><input type="text" inputmode="decimal" id="u5a" data-a="2860" aria-label="a in kJ"> kJ</span></div>
 <div class="numq"><span>b) Wie viel Prozent des Tagesbedarfs sind das?</span><span class="unit"><input type="text" inputmode="decimal" id="u5b" data-a="28.6" data-tol="0.02" aria-label="b in Prozent"> %</span></div>
 <div class="numq"><span>c) Wie viele Gramm Gummibärchen würden den ganzen Tagesbedarf decken?</span><span class="unit"><input type="text" inputmode="decimal" id="u5c" data-a="699.3" data-tol="0.02" aria-label="c in g"> g</span></div>
@@ -388,20 +388,20 @@ Dabei geht keine Energie <select data-a="verloren"></select>.
 
 <div class="card">
 <div class="tag"><span class="stars">★★★</span> Übung 6 · Knobeln</div>
-<div class="part" data-task="u6a"><h4>a) Ein Pendel schwingt immer niedriger und bleibt schließlich stehen. Wo ist seine Energie geblieben?</h4>
+<div class="part" data-task="u6a"><div class="mitbild"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#pendel"/></svg><h4>a) Ein Pendel schwingt immer niedriger und bleibt schließlich stehen. Wo ist seine Energie geblieben?</h4></div>
 <div class="mc" data-correct="b" data-task="u6a">
 <button data-k="a" data-fb="Nein – Energie kann nicht verschwinden. Sie wird nur umgewandelt.">Sie ist verschwunden.</button>
 <button data-k="b" data-fb="Richtig! Durch Reibung an der Aufhängung und mit der Luft wurde sie nach und nach in thermische Energie umgewandelt. Faden, Aufhängung und Luft sind ein ganz kleines bisschen wärmer geworden. Mehr dazu im Lernpfad „Energieerhaltung“.">Sie wurde durch Reibung in thermische Energie umgewandelt – Luft und Aufhängung sind etwas wärmer.</button>
 <button data-k="c" data-fb="Nein – die Lageenergie ist im tiefsten Punkt gerade am kleinsten.">Sie steckt jetzt als Lageenergie in der Kugel.</button>
 <p class="fb"></p></div></div>
-<div class="part" data-task="u6b"><h4>b) Ein Erfinder behauptet: „Meine Maschine gibt mehr Energie ab, als sie aufnimmt.“ Was sagst du?</h4>
+<div class="part" data-task="u6b"><div class="mitbild"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#zahnraeder"/></svg><h4>b) Ein Erfinder behauptet: „Meine Maschine gibt mehr Energie ab, als sie aufnimmt.“ Was sagst du?</h4></div>
 <div class="mc" data-correct="a" data-task="u6b">
 <button data-k="a" data-fb="Genau. Energie kann nicht aus dem Nichts entstehen. Eine solche Maschine („Perpetuum mobile“) gibt es nicht – das hat noch niemand geschafft.">Unmöglich – Energie kann nicht aus dem Nichts entstehen.</button>
 <button data-k="b" data-fb="Auch moderne Technik kann keine Energie erzeugen – sie kann sie nur umwandeln.">Mit moderner Technik ist das möglich.</button>
 <button data-k="c" data-fb="Nein – auch mit großen Maschinen entsteht keine Energie aus dem Nichts.">Das klappt, wenn die Maschine groß genug ist.</button>
 <p class="fb"></p></div></div>
 <div id="whyU6"></div>
-<div class="part" data-task="u6c"><h4>c) Woher stammt die Energie letztlich, wenn du mit dem Fahrrad einen Berg hinauffährst?</h4>
+<div class="part" data-task="u6c"><div class="mitbild"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#fahrrad"/></svg><h4>c) Woher stammt die Energie letztlich, wenn du mit dem Fahrrad einen Berg hinauffährst?</h4></div>
 <div class="mc" data-correct="c" data-task="u6c">
 <button data-k="a">Aus dem Fahrrad.</button>
 <button data-k="b" data-fb="Fast – die Muskeln sind aber nur der Energiewandler. Wo kommt deren Energie her?">Aus deinen Muskeln.</button>
@@ -632,8 +632,8 @@ ST.forEach(st=>{const svg=$('#sv_'+st.id),inp=$('#in_'+st.id);let k=0,running=fa
  $('#ketteSteps').innerHTML=txt.map((_,i)=>`<i>${i+1}</i>`).join('');$('#ketteNext').onclick=()=>{k++;draw()};$('#ketteBack').onclick=()=>{k--;draw()};draw()}
 
 /* ---------- Auftrag 3: Energiewandler ---------- */
-{const W=[['Taschenlampe (mit Batterie)','ch','St'],['Elektromotor im Ventilator','el','B'],['Solarzelle','St','el'],['Wasserkocher','el','th'],['Fahrraddynamo','B','el'],['Bogen beim Schuss','Sp','B'],['Mensch beim Treppensteigen','ch','L']];
- $('#w1').innerHTML=W.map((w,i)=>`<div class="chain"><span>${w[0]}</span><select data-a="${w[1]}" aria-label="${w[0]}: aufgenommene Energie">${opt()}</select><span>→</span><select data-a="${w[2]}" aria-label="${w[0]}: genutzte Energie">${opt()}</select></div>`).join('');
+{const W=[['Taschenlampe (mit Batterie)','ch','St','taschenlampe'],['Elektromotor im Ventilator','el','B','ventilator'],['Solarzelle','St','el','solar'],['Wasserkocher','el','th','wasserkocher'],['Fahrraddynamo','B','el','dynamo'],['Bogen beim Schuss','Sp','B','bogen'],['Mensch beim Treppensteigen','ch','L','treppe']];const pk=i=>`<svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#${i}"/></svg>`;
+ $('#w1').innerHTML=W.map((w,i)=>`<div class="chain"><span class="mitpk">${pk(w[3])}<span>${w[0]}</span></span><select data-a="${w[1]}" aria-label="${w[0]}: aufgenommene Energie">${opt()}</select><span>→</span><select data-a="${w[2]}" aria-label="${w[0]}: genutzte Energie">${opt()}</select></div>`).join('');
  selCheck('#w1Check','#w1','#w1Fb','w1','Alles richtig! Fällt dir etwas auf? Bei fast allen Wandlern entsteht zusätzlich thermische Energie, die man nicht nutzen will.');
  hints.w1=['Frage dich: Was „füttert“ das Gerät? Was soll am Ende herauskommen?','Die Batterie der Taschenlampe speichert chemische Energie. Der Dynamo wird vom Rad gedreht.','Beim Treppensteigen nutzt du die chemische Energie aus deiner Nahrung – oben hast du mehr Lageenergie.']}
 
@@ -643,8 +643,8 @@ ST.forEach(st=>{const svg=$('#sv_'+st.id),inp=$('#in_'+st.id);let k=0,running=fa
  selCheck('#f1Check','#cloze','#f1Fb','f1','Perfekt! Übertrage den Text in dein Heft – oder nutze den Heftaufschrieb unten.')}
 
 /* ---------- Übung 1 ---------- */
-{const I=[['Ein Apfel hängt hoch oben am Baum.','L'],['Ein Fußball fliegt aufs Tor.','B'],['Eine aufgezogene Feder im Spielzeugauto','Sp'],['Eine Tasse heißer Tee','th'],['Ein Brötchen','ch'],['Sonnenlicht trifft auf ein Solarmodul.','St'],['Benzin im Tank eines Autos','ch'],['Ein Trampolin, wenn du am tiefsten Punkt bist','Sp'],['Wind, der ein Windrad antreibt','B'],['Strom fließt durch das Kabel zum Laptop.','el']];
- $('#u1').innerHTML=I.map((x,i)=>`<div class="numq"><label for="u1_${i}">${x[0]}</label><select id="u1_${i}" data-a="${x[1]}">${opt()}</select></div>`).join('');
+{const I=[['Ein Apfel hängt hoch oben am Baum.','L','apfelbaum'],['Ein Fußball fliegt aufs Tor.','B','fussball'],['Eine aufgezogene Feder im Spielzeugauto','Sp','aufziehauto'],['Eine Tasse heißer Tee','th','tee'],['Ein Brötchen','ch','broetchen'],['Sonnenlicht trifft auf ein Solarmodul.','St','solar'],['Benzin im Tank eines Autos','ch','zapfsaeule'],['Ein Trampolin, wenn du am tiefsten Punkt bist','Sp','trampolin'],['Wind, der ein Windrad antreibt','B','windrad'],['Strom fließt durch das Kabel zum Laptop.','el','laptop']];const pk=i=>`<svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#${i}"/></svg>`;
+ $('#u1').innerHTML=I.map((x,i)=>`<div class="numq"><label class="mitpk" for="u1_${i}">${pk(x[2])}<span>${x[0]}</span></label><select id="u1_${i}" data-a="${x[1]}">${opt()}</select></div>`).join('');
  selCheck('#u1Check','#u1','#u1Fb','u1','Alles richtig – du erkennst Energieformen sicher!');
  hints.u1=['Hoch oben → Lageenergie. In Bewegung → Bewegungsenergie. Verformt (gespannt, gedehnt, zusammengedrückt) → Spannenergie.','Alles, was man essen oder verbrennen kann, und Batterien speichern chemische Energie.','Wind ist bewegte Luft.']}
 

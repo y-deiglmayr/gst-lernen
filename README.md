@@ -76,6 +76,7 @@ Farben, Logo und Mosaik stammen aus der PowerPoint-Vorlage der Schule und liegen
 - `brand/mischen.js` – mischt bei jedem Laden die Reihenfolge der Antworten (Dropdowns, Multiple Choice, Mehrfachauswahl, `[data-mischen]`), damit sie die Lösung nicht verrät; Ausnahme mit `data-fest`
 - `brand/theme.js` – Hell/Dunkel-Umschaltung (Wahl auf der Startseite oder per Knopf in der Navigation, gilt für alle Seiten, gespeichert nur im Browser)
 - `brand/logo.svg`, `brand/mosaik-links.svg`, `brand/mosaik-rechts.svg`
+- `brand/piktos.svg` – Piktogramme für Aufgaben und Quiz (Muster `.mitbild`, `.mitpk`, MC-Knöpfe mit Bild in `brand.css`; Katalog: `tools/piktos-katalog.html`; Regeln: CLAUDE.md)
 - Farben: Schiefer #3E4B4C, #5F6F74, Graugrün #76989D, #ACBDC3, #C9D2D3, Hellgrau #E4E7E9, Akzentgelb #FCBE00
 
 Neue Lernpfade binden im `<head>` nach `/fonts/fonts.css` `<script src="/brand/theme.js"></script>` ein und nach ihrem `<style>`-Block `<link rel="stylesheet" href="/brand/brand.css">`.
