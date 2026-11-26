@@ -21,6 +21,7 @@ Physik8/
   gewichtskraft-masse.html  Kräfte 2 · Gewichtskraft und Masse (Gravitation, Ortsfaktor, F_G = m · g)
   hookesches-gesetz.html    Kräfte 3 · Kräfte messen: hookesches Gesetz (Feder-Labor, Federkonstante)
   kraefte-newton.html       Kräfte 4 · Mehrere Kräfte und Newtons Gesetze (Kräftegleichgewicht, Trägheit, Kraft = Gegenkraft)
+  schall-entstehung.html    Akustik 1 · Wie entsteht Schall? (Schallquelle, -leiter, -empfänger, Vakuum, Schwingungen, Lineal-Labor)
 Physik9/
   energie-einfuehrung.html  Was ist Energie? (Energieformen, Stationen, Energiewandler)
   lageenergie.html          Lageenergie (Fall-Labor, E = m · g · h, Nullniveau)
