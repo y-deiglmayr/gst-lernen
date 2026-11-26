@@ -66,8 +66,11 @@ const sauber = (v, max) => String(v ?? '').replace(/[\u0000-\u0008\u000B-\u001F\
 async function nimmFeedback(request, env) {
   if (request.method !== 'POST') return fehler('Nur POST.', 405);
   const origin = request.headers.get('origin');
-  try { if (!origin || !ERLAUBT.includes(new URL(origin).hostname)) return fehler('Nicht erlaubt.', 403); }
-  catch { return fehler('Nicht erlaubt.', 403); }
+  // Erlaubt: gleiche Adresse wie die Seite (z. B. physik.party, auch neue Domains) oder bekannte Adressen.
+  try {
+    const host = new URL(origin).hostname;
+    if (host !== new URL(request.url).hostname && !ERLAUBT.includes(host)) return fehler('Nicht erlaubt.', 403);
+  } catch { return fehler('Nicht erlaubt.', 403); }
   if (!(request.headers.get('content-type') || '').includes('application/json')) return fehler('Falsches Format.', 415);
   if (Number(request.headers.get('content-length') || 0) > 8000) return fehler('Zu groß.', 413);
 
