@@ -563,14 +563,14 @@ $('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value)
  draw();table()}
 
 /* ---------- B: Heben mit Messtabelle ---------- */
-{const svg=$('#hub'),fl=320,sc=65,MC={2:'var(--el)',5:'var(--eb)',10:'var(--eth)'};let m=5,data=[];
+{const svg=$('#hub'),fl=320,sc=58,MC={2:'var(--el)',5:'var(--eb)',10:'var(--eth)'};let m=5,data=[];
  const hv=()=>Math.round(+$('#hubH').value*10)/10;
  function draw(){const h=hv(),F=m*g,E=F*h,bw=40+m*2,bh=30+m;
   $('#hubMv').textContent=m;$('#hubHv').textContent=fmt(h,1);
-  let s=Rc(0,fl,560,40,'ground')+L(60,fl,60,20,'thin','stroke-width="6"')+L(40,24,300,24,'thin','stroke-width="6"')+C(250,40,14,'','style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"');
-  const by=fl-h*sc-bh,hookY=by-40;s+=L(250,54,250,hookY,'thin','stroke-width="2"')+L(236,40,236,fl-20,'thin','stroke-width="2"')+T(200,fl-6,'Seil','txs');
-  s+=Rc(242,hookY,16,26,'','rx="4" style="fill:var(--panel);stroke:var(--ink)"')+L(250,hookY+26,250,by,'thin','stroke-width="2"')+T(268,hookY+22,'Kraftmesser: '+fmt(F,1)+' N','txb','style="fill:var(--acc)"');
-  s+=crate(250-bw/2,by,bw,bh,m+' kg');
+  let s=Rc(0,fl,560,40,'ground')+L(60,fl,60,20,'thin','stroke-width="6"')+L(40,24,300,24,'thin','stroke-width="6"')+C(250,46,20,'','style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"')+C(250,46,3,'','style="fill:var(--ink)"');
+  const by=fl-h*sc-bh,hookY=by-34;s+=L(270,46,270,hookY,'thin','stroke-width="2"')+L(230,46,230,fl-20,'thin','stroke-width="2"')+T(194,fl-6,'Seil','txs');
+  s+=Rc(262,hookY,16,26,'','rx="4" style="fill:var(--panel);stroke:var(--ink)"')+L(270,hookY+26,270,by,'thin','stroke-width="2"')+T(288,hookY+22,'Kraftmesser: '+fmt(F,1)+' N','txb','style="fill:var(--acc)"');
+  s+=crate(270-bw/2,by,bw,bh,m+' kg');
   for(let v=0;v<=3;v+=0.5)s+=L(84,fl-v*sc,96,fl-v*sc,'thin')+T(100,fl-v*sc+5,fmt(v,1)+' m','txs');
   if(h>0)s+=L(330,fl,330,fl-h*sc,'thin','stroke-width="2"')+arrowHead(330,fl-h*sc,-90,'var(--ink)')+T(338,fl-h*sc/2,'h','txb');
   const eb=E/300*230;s+=Rc(450,fl-eb,40,eb,'fel')+T(470,fl+22,'E','txb','text-anchor="middle"')+T(470,fl-eb-8,Math.round(E)+' J','tel','text-anchor="middle"');
@@ -661,7 +661,7 @@ hints.u7=['a) Höhenunterschied = Gipfel − Talstation.','c) <f-m>E<sub>L</sub>
 
 /* Zugspitze-Skizze */
 {let s=`<path d="M0 230 L80 200 L150 205 L260 120 L330 40 L360 60 L440 150 L440 240 L0 240Z" style="fill:var(--panel);stroke:var(--muted)"/>`;
- s+=L(90,195,330,40,'thin','stroke-width="1.5"')+Rc(80,188,24,14,'','style="fill:var(--ink)"')+Rc(320,30,24,14,'','style="fill:var(--ink)"')+Rc(195,107,26,18,'','rx="3" style="fill:var(--eth)"');
+ s+=L(90,195,330,40,'thin','stroke-width="1.5"')+Rc(80,188,24,14,'','style="fill:var(--ink)"')+Rc(320,30,24,14,'','style="fill:var(--ink)"')+L(208,119,208,125,'thin','stroke-width="2"')+Rc(195,125,26,18,'','rx="3" style="fill:var(--eth)"');
  s+=T(40,228,'Talstation ≈ 1000 m','txs')+T(250,22,'Gipfel ≈ 2950 m','txs')+L(400,40,400,195,'thin')+arrowHead(400,40,-90,'var(--ink)')+T(330,120,'Δh = ?','txb');
  $('#zug').innerHTML=s}
 

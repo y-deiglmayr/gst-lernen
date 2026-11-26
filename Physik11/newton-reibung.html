@@ -677,9 +677,9 @@ const MAT=[['Holz auf Holz',.5,.3],['Gummi auf Asphalt',.8,.6],['Stahl auf Stahl
 const arrowS=(x1,y1,x2,y2,c,w=4)=>{const L=Math.hypot(x2-x1,y2-y1);if(L<2)return '';const ux=(x2-x1)/L,uy=(y2-y1)/L,h=Math.min(14,L*.6);return `<line x1="${x1}" y1="${y1}" x2="${x2-ux*h*.8}" y2="${y2-uy*h*.8}" style="stroke:${c}" stroke-width="${w}"/><path d="M${x2} ${y2} L${x2-ux*h-uy*h*.45} ${y2-uy*h+ux*h*.45} L${x2-ux*h+uy*h*.45} ${y2-uy*h-ux*h*.45}Z" style="fill:${c}"/>`};
 
 /* ---------- Hero Puck ---------- */
-{let s=`<rect x="0" y="120" width="520" height="60" style="fill:color-mix(in srgb,#58c4df 25%,transparent)"/><ellipse cx="150" cy="118" rx="34" ry="10" style="fill:var(--ink)"/>`;
- for(let i=1;i<=4;i++)s+=`<ellipse cx="${150-i*28}" cy="118" rx="34" ry="10" style="fill:var(--ink)" opacity="${.12*(5-i)/2}"/>`;
- s+=arrowS(200,118,320,118,'var(--muted)',3)+`<text x="210" y="100" class="txs">Bewegungsrichtung</text><text x="350" y="122" class="txb">?</text>`;$('#puckHero').innerHTML=s}
+{let s=`<rect x="0" y="120" width="520" height="60" style="fill:color-mix(in srgb,#58c4df 25%,transparent)"/><rect x="116" y="106" width="68" height="14" rx="4" style="fill:var(--ink)"/>`;
+ for(let i=1;i<=4;i++)s+=`<rect x="${116-i*28}" y="106" width="68" height="14" rx="4" style="fill:var(--ink)" opacity="${.12*(5-i)/2}"/>`;
+ s+=arrowS(200,113,320,113,'var(--muted)',3)+`<text x="210" y="96" class="txs">Bewegungsrichtung</text><text x="350" y="118" class="txb">?</text>`;$('#puckHero').innerHTML=s}
 
 /* ---------- A: Puck ---------- */
 {const svg=$('#puck');let f=.3,run=false;const v0=4;let trace=[];
@@ -728,15 +728,15 @@ const arrowS=(x1,y1,x2,y2,c,w=4)=>{const L=Math.hypot(x2-x1,y2-y1);if(L<2)return
 /* ---------- E: Grenzwinkel ---------- */
 {const b=new Board($('#gw'),{W:11,H:7,ox:5,oy:3.6,grid:false});const fH=.5;
  b.draw=B=>{const a=+$('#gwA').value;$('#gwAv').textContent=fmtS(a,1);const slip=tand(a)>fH+1e-9;let s=inclineSvg(B,a,{L1:5,L2:5,fill:slip?'#e8a07a':'#d9a066'});
-  const G=2.6,FH=G*sind(a),FR=slip?.3*G*cosd(a):FH,e=[cosd(-a),sind(-a)];if(a>0.2)s+=B.arrow(0,0,e[0]*FH,e[1]*FH,'fh',{label:'F|H',side:1})+B.arrow(0,0,-e[0]*FR,-e[1]*FR,'f1',{label:'F|R',side:-1});
+  const G=5,FH=G*sind(a),FR=slip?.3*G*cosd(a):FH,e=[cosd(-a),sind(-a)];if(a>0.2)s+=B.arrow(0,0,e[0]*FH,e[1]*FH,'fh',{label:'F|H',side:1})+B.arrow(0,0,-e[0]*FR,-e[1]*FR,'f1',{label:'F|R',side:-1});
   s+=B.text(-4.6,2.9,slip?'Der Klotz rutscht!':'Der Klotz haftet.','txb',`style="fill:${slip?'var(--fr)':'var(--ok)'}"`);return s+B.dot(0,0,4)};
  const read=()=>{const a=+$('#gwA').value,m=1,FG=m*g,FH=FG*sind(a),FHm=fH*FG*cosd(a);$('#gwRead').innerHTML=`<div>Hangabtriebskraft (1 kg)<b style="color:var(--fh)">${fmt(FH,2)} N</b></div><div>max. Haftreibung<b style="color:var(--f1)">${fmt(FHm,2)} N</b></div><div>tan α<b>${fmt(tand(a),3)}</b></div>`};
  $('#gwA').oninput=()=>{b.redraw();read()};b.redraw();read();
  $('#r3b').onclick=()=>{const a=+$('#gwA').value,fb=$('#r3Fb'),slip=tand(a)>fH;if(slip&&a<=27.5){fb.className='fb ok';fb.innerHTML='Richtig: Ab etwa 26,6° rutscht der Klotz. Dort ist <f-m>tan α = 0,5 = f<sub>H</sub></f-m>.';mark('r3')}else if(!slip){fb.className='fb hint';fb.innerHTML='Bei '+fmtS(a,1)+'° haftet der Klotz noch. Kippe weiter.'}else{fb.className='fb hint';fb.innerHTML='Er rutscht, aber geht es auch mit einem kleineren Winkel? Taste dich in kleinen Schritten an die Grenze heran.'}}}
 
 /* ---------- Zuggewicht-Skizze ---------- */
-{let s=`<rect x="20" y="110" width="330" height="12" style="fill:var(--panel);stroke:var(--ink)"/><rect x="60" y="70" width="110" height="34" rx="5" style="fill:color-mix(in srgb,var(--f1) 35%,transparent);stroke:var(--ink)"/><circle cx="80" cy="106" r="6" style="fill:var(--ink)"/><circle cx="150" cy="106" r="6" style="fill:var(--ink)"/><text x="115" y="92" text-anchor="middle" class="txs">2 kg</text>`;
- s+=`<line x1="170" y1="86" x2="352" y2="86" class="thin" stroke-width="2"/><circle cx="360" cy="96" r="11" style="fill:var(--panel);stroke:var(--ink)" stroke-width="2"/><line x1="371" y1="96" x2="371" y2="150" class="thin" stroke-width="2"/><rect x="359" y="150" width="24" height="26" style="fill:#8a8f99;stroke:var(--ink)"/><text x="392" y="168" class="txs">100 g</text>`;$('#zg').innerHTML=s}
+{let s=`<rect x="20" y="110" width="330" height="12" style="fill:var(--panel);stroke:var(--ink)"/><rect x="60" y="70" width="110" height="34" rx="5" style="fill:color-mix(in srgb,var(--f1) 35%,transparent);stroke:var(--ink)"/><circle cx="80" cy="104" r="6" style="fill:var(--ink)"/><circle cx="150" cy="104" r="6" style="fill:var(--ink)"/><text x="115" y="92" text-anchor="middle" class="txs">2 kg</text>`;
+ s+=`<path d="M350 112 L360 96" style="stroke:var(--ink);stroke-width:4"/><line x1="170" y1="86" x2="360" y2="85" class="thin" stroke-width="2"/><circle cx="360" cy="96" r="11" style="fill:var(--panel);stroke:var(--ink)" stroke-width="2"/><line x1="371" y1="96" x2="371" y2="150" class="thin" stroke-width="2"/><rect x="359" y="150" width="24" height="26" style="fill:#8a8f99;stroke:var(--ink)"/><text x="392" y="168" class="txs">100 g</text>`;$('#zg').innerHTML=s}
 
 initCommon();
 }

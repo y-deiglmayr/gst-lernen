@@ -138,6 +138,7 @@ footer{font-size:14px;color:var(--muted)}
 .thin{stroke:var(--ink);stroke-width:1.4;fill:none}
 .tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
 .txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.halo{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
 .txb{fill:var(--ink);font:600 16px Lexend,sans-serif}
 .txl{fill:var(--laser);font:600 16px Lexend,sans-serif}
 .txm{fill:var(--mirror);font:600 14px Lexend,sans-serif}
@@ -643,7 +644,7 @@ $('#clozeCheck').onclick=()=>{let ok=0,all=$$('#cloze select');all.forEach(s=>{c
  function draw(){let o=grid(660,390,c)+`<rect x="${M}" y="0" width="${660-M}" height="390" class="behind" opacity=".55"/>`+mirrorV(M,0,390)+T(M+14,20,'Spiegel','txm');
   o+=candle(G.x,B.y,B.y-G.y)+T(G.x-28,G.y+5,'G','txb')+eye(A.x,A.y)+T(A.x-14,A.y-20,'Auge','txs');
   if(k>=1){o+=L(G.x,G.y,Gi.x,Gi.y,'thin','stroke-dasharray="3 4"')+`<path d="M${M-12} ${G.y} V${G.y-12} H${M}" class="thin"/>`+C(Gi.x,Gi.y,4,'aw')+T(Gi.x+10,Gi.y-8,"G'",'txl');
-   o+=T((G.x+M)/2,G.y+20,'5 Kästchen','txs','text-anchor="middle"')+T((Gi.x+M)/2,G.y+20,'5 Kästchen','txs','text-anchor="middle"')}
+   o+=T((G.x+M)/2,G.y+20,'5 Kästchen','txs halo','text-anchor="middle"')+T((Gi.x+M)/2,G.y+20,'5 Kästchen','txs halo','text-anchor="middle"')}
   if(k>=2){o+=L(Gi.x,Gi.y,Rg.x,Rg.y,'ray dash','stroke-width="1.8"')+L(Rg.x,Rg.y,A.x+6,A.y,k>=3?'ray':'thin')+C(Rg.x,Rg.y,4.5,'aw')+T(Rg.x+8,Rg.y-10,'R','txl')}
   if(k>=3){o+=L(G.x,G.y,Rg.x,Rg.y,'ray')+arrow(G.x,G.y,Rg.x,Rg.y,'aw')+arrow(Rg.x,Rg.y,A.x+6,A.y,'aw')}
   if(k>=4){o+=L(Rg.x,Rg.y,Rg.x-110,Rg.y,'lot');const r=40,a1=Math.atan2(G.y-Rg.y,G.x-Rg.x),a2=Math.atan2(A.y-Rg.y,A.x-Rg.x);
@@ -769,11 +770,11 @@ $$('[data-solve]').forEach(b=>b.onclick=()=>tasksCfg[b.dataset.solve].solve());
  function drawP(){const d=+$('#dist').value;$('#distVal').textContent=d.toFixed(2).replace('.',',');const x=W-d*sc,xi=W+d*sc,ey=fl-1.6*sc,hd=fl-1.7*sc,mF=fl-0.8*sc,mH=fl-1.65*sc;
   let o=`<rect x="${W}" y="0" width="${900-W}" height="${fl}" class="behind"/>`+L(0,fl,900,fl,'thin')+L(W,0,W,fl,'thin','stroke-width="3"')+T(W+10,20,'Wand','txs');
   o+=`<g class="ghost">${fig(xi,-1,'')}</g>`;
-  o+=L(x,ey,xi,fl,'ray dash','stroke-width="1.4"')+L(x,ey,xi,hd,'ray2 dash','stroke-width="1.4"');
-  o+=L(x,fl,W,mF,'ray')+L(W,mF,x,ey,'ray')+arrow(x,fl,W,mF,'aw')+arrow(W,mF,x,ey,'aw');
-  o+=L(x,hd,W,mH,'ray2')+L(W,mH,x,ey,'ray2')+arrow(x,hd,W,mH,'aw2')+arrow(W,mH,x,ey,'aw2');
+  o+=L(W,mF,xi,fl,'ray dash','stroke-width="1.4"')+L(W,mH,xi,hd,'ray2 dash','stroke-width="1.4"');
+  const ex=x;o+=L(x,fl,W,mF,'ray')+L(W,mF,ex,ey,'ray')+arrow(x,fl,W,mF,'aw')+arrow(W,mF,ex,ey,'aw');
+  o+=L(x,hd,W,mH,'ray2')+L(W,mH,ex,ey,'ray2')+arrow(x,hd,W,mH,'aw2')+arrow(W,mH,ex,ey,'aw2');
   o+=fig(x,1,'');
-  o+=L(W,mF,W,mH,'mir','stroke-width="8"')+T(W+12,mH-12,'Oberkante 1,65 m','txm')+T(W+12,mF+20,'Unterkante 0,80 m','txm')+T(W+12,(mF+mH)/2+5,'Spiegel: 0,85 m','txb');
+  o+=L(W,mF,W,mH,'mir','stroke-width="8"')+T(W+12,mH-12,'Oberkante 1,65 m','txm halo')+T(W+12,mF+20,'Unterkante 0,80 m','txm halo')+T(W+12,(mF+mH)/2+5,'Spiegel: 0,85 m','txb halo');
   o+=L(x,fl+18,W,fl+18,'thin')+T((x+W)/2,fl+34,'d = '+d.toFixed(2).replace('.',',')+' m','txs','text-anchor="middle"');
   svg.innerHTML=o}
  $('#dist').oninput=drawP}

@@ -541,9 +541,9 @@ $('#heroScene').innerHTML=waves(900,200,50,1.5,0,'hw',{lowFill:'fill:#1b3140',wc
   if(st.ref){const Q={x:O.x+R*Math.sin(rad(a)),y:O.y-R*Math.cos(rad(a))};s+=L(O.x,O.y,Q.x,Q.y,'ray',`stroke-width="3" opacity="${Math.min(1,.1+Rf*2.2)}"`)+arrow(O.x,O.y,Q.x,Q.y,'aw',.6,`opacity="${Math.min(1,.1+Rf*2.2)}"`)}
   s+=L(S.x,S.y,O.x,O.y,'ray','stroke-width="3.5"')+arrow(S.x,S.y,O.x,O.y,'aw',.6);
   if(b!==null){const E={x:O.x+R*Math.sin(rad(b)),y:O.y+R*Math.cos(rad(b))};s+=L(O.x,O.y,E.x,E.y,'ray',`stroke-width="3.5" opacity="${Math.max(.3,1-Rf)}"`)+arrow(O.x,O.y,E.x,E.y,'aw',.6);
-   if(a>0)s+=arcPath(O.x,O.y,54,90,90-b);if(st.num)s+=T(O.x+16,O.y+86,'<f-m>β</f-m> = '+fmt(b)+'°','txl')}
+   if(a>0)s+=arcPath(O.x,O.y,54,90,90-b);if(st.num){const t=rad(Math.max(10,90-b-14));s+=T(O.x+95*Math.cos(t),O.y+95*Math.sin(t)+6,'<f-m>β</f-m> = '+fmt(b)+'°','txl')}}
   else s+=T(O.x+20,O.y+60,'Kein Licht tritt aus – Totalreflexion!','txl');
-  if(a>0)s+=arcPath(O.x,O.y,54,-90,-90-a);if(st.num)s+=T(O.x-110,O.y-70,'<f-m>α</f-m> = '+a+'°','txl');
+  if(a>0)s+=arcPath(O.x,O.y,54,-90,-90-a);if(st.num){const t=rad(Math.max(-170,-90-a-12));s+=T(O.x+95*Math.cos(t),O.y+95*Math.sin(t)+6,'<f-m>α</f-m> = '+a+'°','txl','text-anchor="end"')}
   s+=`<g class="drag" data-d="1">${C(S.x,S.y,26,'','fill="transparent"')}${lamp2(S.x,S.y,deg(Math.atan2(O.y-S.y,O.x-S.x)))}</g>`;
   svg.innerHTML=s}
  function lamp2(x,y,d){return `<g transform="translate(${x},${y}) rotate(${d})"><rect x="-40" y="-12" width="40" height="24" rx="5" fill="#2b3140"/><rect x="-3" y="-8" width="5" height="16" fill="#ffcf4a"/></g>`}

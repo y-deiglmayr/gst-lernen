@@ -532,7 +532,7 @@ showVerm(load('verm',null));
    if(k===1){s+=T(cx-R+6,cy-8,'0°-Linie = Einfallslot','txl')+T(cx+8,cy-R+18,'90°–90°-Linie','txm')}
    if(k>=2){s+=`<path d="M${cx} ${cy-120} A120 120 0 0 1 ${cx} ${cy+120} Z" class="glass" ${k===2?'style="stroke-width:3"':''} opacity=".92"/>`+C(cx,cy,4,'aw');if(k===2)s+=T(cx+40,cy-130,'gerade Fläche auf 90°–90°','txm')+T(cx+14,cy+20,'Mittelpunkt','txs')}
    const al=k===5?30:0,b=brech(al,1,1.5),Sx=cx-235*Math.cos(rad(al)),Sy=cy-235*Math.sin(rad(al));
-   s+=lamp(Sx-(-0),Sy,al)+T(Math.max(6,Sx-90),Sy+(al?-22:34),'Leuchte mit Einschlitzblende','txs');
+   s+=lamp(Sx-(-0),Sy,al)+T(Math.max(6,Sx-90),Sy+(al?-46:34),'Leuchte mit Einschlitzblende','txs');
    if(k>=3){const Ex=cx+R*Math.cos(rad(b)),Ey=cy+R*Math.sin(rad(b));s+=L(Sx,Sy,cx,cy,'ray','stroke-width="3"')+L(cx,cy,Ex,Ey,'ray','stroke-width="3"')+arrow(Sx,Sy,cx,cy,'aw',.6)+arrow(cx,cy,Ex,Ey,'aw');
     if(k===4)s+=T(cx+30,cy+28,'läuft ohne Knick durch ✓','txl');
     if(k===5){s+=L(cx,cy,cx+R*Math.cos(rad(al)),cy+R*Math.sin(rad(al)),'ray dash','stroke-width="1.4" opacity=".55"')+arcPath(cx,cy,62,180,180+al)+arcPath(cx,cy,62,0,b)+T(cx-88,cy-12,'<f-m>α</f-m>','txb')+T(cx+70,cy+16,'<f-m>β</f-m>','txb');
