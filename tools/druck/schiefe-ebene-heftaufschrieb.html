@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Schiefe Ebene – Heftaufschrieb</title>
+<!-- Druckvorlage (Quelle für Physik11/schiefe-ebene-heftaufschrieb.pdf). Lösung = Heftaufschrieb 2.2 im Lernpfad (3 · Festhalten). -->
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<style>
+body{line-height:1.5}
+.heftblatt{border:.45mm solid var(--heft);border-radius:2mm;overflow:hidden}
+.heftblatt > h2{background:var(--heft);color:#fff;font-size:13pt;padding:1.6mm 3.4mm;letter-spacing:.01em}
+.heftblatt > h2 small{font-weight:600;font-size:9.4pt;opacity:.9;margin-left:2mm}
+.hs{padding:2.6mm 3.6mm 1.4mm;break-inside:avoid}
+.hs + .hs{border-top:.25mm dashed #9fc7ad}
+.hs h3{font-size:11pt;color:var(--heft);margin:0 0 1.4mm;display:flex;align-items:center;gap:1.8mm}
+.hs h3::before{content:"";width:2.4mm;height:2.4mm;background:var(--heft);display:inline-block}
+.hs p{margin:0 0 1.8mm;line-height:1.95}
+.l{display:inline-block;border-bottom:.3mm solid var(--slate2);height:1.2em;vertical-align:-.25em;margin:0 .6mm}
+.l.s{width:14mm}.l.m{width:24mm}.l.g{width:34mm}.l.xg{width:46mm}
+.zeichnen{display:grid;grid-template-columns:104mm 1fr;gap:4mm;align-items:start;margin:1mm 0 1.6mm}
+.zeichnen .karo{height:122mm;margin:0}
+.zeichnen ol{margin:0;padding-left:5mm;font-size:9.6pt;line-height:1.4}
+.zeichnen ol li{margin:0 0 1.5mm}
+.c-fg{color:var(--fg);font-weight:700}.c-fh{color:var(--fh);font-weight:700}.c-fn{color:var(--fn);font-weight:700}.c-fu{color:#0b7f96;font-weight:700}
+.kt{width:100%;border-collapse:collapse;font-size:10pt;margin:.6mm 0 2mm}
+.kt th{font:700 8.8pt "Source Sans 3",sans-serif;color:var(--heft);text-align:left;border-bottom:.35mm solid var(--heft);padding:.6mm 1.6mm}
+.kt td{border-bottom:.25mm solid #cfe3d6;padding:1.2mm 1.6mm;line-height:1.9;vertical-align:middle}
+.kt td:first-child{width:27%}.kt td:nth-child(2){width:47%}.kt td{white-space:nowrap}.kt .box,.kt td:last-child{white-space:nowrap}
+.box{display:inline-block;border:.35mm solid var(--ink);border-radius:1mm;padding:0 2mm}
+.sf{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin:0 0 1.8mm}
+.sf > div{background:var(--heftbg);border-radius:1.4mm;padding:1.4mm 2.6mm;line-height:1.95;font-size:10pt}
+.sf b{color:var(--heft)}
+.schritte{margin:0 0 1.6mm;padding-left:5mm;line-height:1.95}
+.tipp{font-size:8.8pt;color:var(--muted)}
+</style>
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+</head>
+<body>
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 11 · Kraft und Dynamik</div>
+  <h1>Schiefe Ebene</h1>
+  <div class="unter" style="color:var(--heft)">Heftaufschrieb zum Lernpfad 4 · zum Ausfüllen</div>
+ </div>
+ <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33"><path stroke="#3e4b4c" d="M0 0.5h7m6 0h3m1 0h3m1 0h1m1 0h1m2 0h7m-33 1h1m5 0h1m2 0h7m1 0h1m2 0h5m1 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m4 0h1m3 0h1m1 0h1m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h1m3 0h2m2 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m4 0h5m4 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h4m3 0h2m1 0h4m2 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-24 1h1m4 0h2m1 0h1m3 0h2m-23 1h1m2 0h1m1 0h2m1 0h2m1 0h1m1 0h2m4 0h1m1 0h1m1 0h3m1 0h1m-26 1h4m1 0h2m1 0h1m2 0h2m1 0h2m4 0h1m1 0h4m4 0h1m-28 1h2m3 0h2m1 0h1m5 0h3m2 0h1m1 0h3m1 0h1m1 0h1m-32 1h1m1 0h1m5 0h2m1 0h2m2 0h1m1 0h2m1 0h5m2 0h2m2 0h1m-31 1h2m2 0h1m2 0h1m1 0h1m2 0h4m2 0h4m2 0h2m1 0h1m1 0h2m-33 1h1m1 0h2m1 0h1m3 0h2m2 0h1m3 0h1m1 0h3m2 0h1m1 0h1m1 0h2m1 0h2m-33 1h4m1 0h3m2 0h1m1 0h1m3 0h2m2 0h1m1 0h2m1 0h5m1 0h1m-30 1h4m1 0h1m3 0h1m1 0h1m3 0h2m2 0h1m1 0h1m2 0h1m4 0h1m-29 1h1m1 0h2m2 0h1m2 0h1m4 0h1m1 0h1m1 0h4m1 0h1m1 0h2m1 0h1m-32 1h1m11 0h2m4 0h1m2 0h5m1 0h1m1 0h1m1 0h1m-31 1h4m1 0h1m1 0h4m2 0h1m1 0h2m4 0h1m1 0h2m4 0h3m-33 1h1m1 0h3m2 0h1m9 0h1m1 0h1m1 0h1m3 0h3m3 0h2m-33 1h2m1 0h5m1 0h1m3 0h4m4 0h3m1 0h1m6 0h1m-32 1h1m1 0h2m2 0h2m5 0h1m1 0h2m2 0h3m1 0h1m4 0h1m1 0h2m-33 1h2m1 0h1m1 0h5m1 0h4m1 0h4m1 0h1m2 0h1m4 0h1m2 0h1m-32 1h1m2 0h2m1 0h1m6 0h3m3 0h3m2 0h2m4 0h1m-32 1h1m2 0h2m1 0h5m1 0h1m3 0h2m3 0h8m2 0h1m-24 1h1m1 0h4m3 0h1m1 0h4m1 0h1m3 0h2m2 0h1m-33 1h7m4 0h1m5 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h4m-32 1h1m5 0h1m1 0h2m1 0h2m1 0h5m1 0h3m1 0h1m3 0h1m2 0h2m-33 1h1m1 0h3m1 0h1m2 0h3m1 0h2m2 0h3m1 0h1m2 0h6m1 0h2m-33 1h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h2m5 0h1m2 0h1m1 0h3m-31 1h1m1 0h3m1 0h1m3 0h3m1 0h1m2 0h1m3 0h1m1 0h2m3 0h1m3 0h1m-33 1h1m5 0h1m7 0h2m1 0h1m1 0h6m-25 1h7m1 0h1m1 0h4m1 0h2m2 0h1m1 0h1m2 0h1m3 0h2m1 0h1"/></svg>Lernpfad öffnen<br>und vergleichen</div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Ausfüllen:</b> Erst den Lernpfad bis „3 · Festhalten“ bearbeiten, dann die Lücken füllen.</div>
+ <div><b class="n">2</b><b>Zeichnen:</b> Die Zeichnung fertigst du selbst an – mit Bleistift, Geodreieck und Farben.</div>
+ <div><b class="n">3</b><b>Vergleichen:</b> Im Lernpfad unter „3 · Festhalten“ den Heftaufschrieb aufklappen und verbessern.</div>
+</div>
+
+<div class="heftblatt">
+<h2>✎ 2.2 Schiefe Ebene</h2>
+
+<div class="hs">
+ <h3>Zerlegung der Gewichtskraft</h3>
+ <p>Bei der schiefen Ebene bewirkt die Gewichtskraft zweierlei: Sie <span class="l m"></span> den Gegenstand gegen die Unterlage und sie <span class="l g"></span> den Gegenstand den Hang hinunter. Man zerlegt <f-m>F<sub>G</sub></f-m> deshalb mit dem <span class="l xg"></span> in zwei <span class="l g"></span> aufeinander stehende Teilkräfte und streicht <f-m>F<sub>G</sub></f-m> danach <span class="l m"></span>.</p>
+ <div class="zeichnen">
+  <div class="karo"><span class="lab">Meine Zeichnung</span></div>
+  <ol>
+   <li>Zeichne eine schiefe Ebene mit <f-m>α = 30°</f-m> und einen Klotz darauf. Markiere den <b>Schwerpunkt</b>.</li>
+   <li>Zeichne <span class="c-fg"><f-m>F<sub>G</sub></f-m></span> im Schwerpunkt senkrecht nach unten, 4 cm lang (grün).</li>
+   <li>Zeichne durch die Spitze von <f-m>F<sub>G</sub></f-m> eine Parallele und eine Senkrechte zur Ebene (Kräfteparallelogramm, gestrichelt).</li>
+   <li>Zeichne <span class="c-fh"><f-m>F<sub>H</sub></f-m></span> (rot) und <span class="c-fn"><f-m>F<sub>N</sub></f-m></span> (blau) vom Schwerpunkt bis zu den Ecken. Streiche <f-m>F<sub>G</sub></f-m> durch.</li>
+   <li>Ergänze die Unterlagskraft <span class="c-fu"><f-m>F<sub>U</sub></f-m></span>.</li>
+   <li>Markiere <f-m>α</f-m> zweimal: an der Ebene und zwischen <f-m>F<sub>G</sub></f-m> und <f-m>F<sub>N</sub></f-m>.</li>
+  </ol>
+ </div>
+</div>
+
+<div class="hs">
+ <h3>Die Kräfte an der schiefen Ebene</h3>
+ <table class="kt">
+  <tr><th>Kraft</th><th>Richtung</th><th>Betrag</th></tr>
+  <tr><td><b>Hangabtriebskraft</b> <f-m>F<sub>H</sub></f-m></td><td><span class="l m"></span> zur Ebene, hangabwärts</td><td><span class="box"><f-m>F<sub>H</sub> = F<sub>G</sub> ·</f-m> <span class="l s"></span></span></td></tr>
+  <tr><td><b>Normalkraft</b> <f-m>F<sub>N</sub></f-m></td><td><span class="l m"></span> zur Ebene, in die Ebene</td><td><span class="box"><f-m>F<sub>N</sub> = F<sub>G</sub> ·</f-m> <span class="l s"></span></span></td></tr>
+  <tr><td><b>Unterlagskraft</b> <f-m>F<sub>U</sub></f-m></td><td><span class="l g"></span> zu <f-m>F<sub>N</sub></f-m></td><td><f-m>F<sub>U</sub> =</f-m> <span class="l s"></span></td></tr>
+ </table>
+ <p>Normalkraft und Unterlagskraft heben sich auf. Als resultierende Kraft bleibt die <span class="l xg"></span>.</p>
+ <p><b>Angriffspunkt:</b> Alle Kräfte zeichnen wir im <span class="l g"></span> des Körpers ein (Massenpunkt-Modell) – auch <f-m>F<sub>U</sub></f-m>, obwohl sie genau genommen an der Auflagefläche angreift.</p>
+ <p><b>Winkel:</b> Der Neigungswinkel <f-m>α</f-m> findet sich im Kräftedreieck zwischen <span class="l s"></span> und <span class="l s"></span> wieder, weil ihre Schenkel paarweise <span class="l g"></span> aufeinander stehen. <b>Modell:</b> Die Reibung wird <span class="l g"></span>.</p>
+</div>
+
+<div class="hs">
+ <h3>Je steiler, desto …</h3>
+ <p>Je steiler die Ebene, desto <span class="l m"></span> ist die Hangabtriebskraft und desto <span class="l m"></span> ist die Normalkraft.</p>
+ <div class="sf">
+  <div><b><f-m>α = 0°</f-m> (waagrecht):</b><br><f-m>F<sub>H</sub> =</f-m> <span class="l m"></span> &nbsp; <f-m>F<sub>N</sub> =</f-m> <span class="l m"></span></div>
+  <div><b><f-m>α = 90°</f-m> (senkrecht, freier Fall):</b><br><f-m>F<sub>H</sub> =</f-m> <span class="l m"></span> &nbsp; <f-m>F<sub>N</sub> =</f-m> <span class="l m"></span></div>
+ </div>
+ <p><b>Goldene Regel der Mechanik:</b> Mit einer Rampe braucht man <span class="l m"></span> Kraft, aber einen <span class="l m"></span> Weg – <span class="l g"></span> spart man nicht.</p>
+</div>
+
+<div class="hs">
+ <h3>So gehe ich bei Aufgaben vor</h3>
+ <ol class="schritte">
+  <li><span class="l g"></span> mit Ebene, Körper und <f-m>F<sub>G</sub></f-m> zeichnen.</li>
+  <li>Winkel <f-m>α</f-m> einzeichnen und <f-m>F<sub>G</sub></f-m> <span class="l g"></span> (Parallelogramm, <f-m>F<sub>G</sub></f-m> durchstreichen, <f-m>F<sub>U</sub></f-m> ergänzen).</li>
+  <li>Gewichtskraft aus der Masse berechnen: <f-m>F<sub>G</sub> =</f-m> <span class="l m"></span></li>
+  <li><f-m>F<sub>H</sub></f-m> (und <f-m>F<sub>N</sub></f-m>) berechnen.</li>
+  <li><span class="l g"></span> schreiben.</li>
+ </ol>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,10 +1,13 @@
 # Druckversionen (Arbeitsblätter zu Lernpfaden)
 
 Jede Druckvorlage ist eine HTML-Seite in diesem Ordner (A4, Schul-CI, Formeln wie in den Lernpfaden mit `<f-m>`).
-Das fertige PDF liegt neben dem Lernpfad, z. B. `Physik11/schiefe-ebene-arbeitsblatt.pdf`, und wird in `index.html`
-beim Lernpfad mit `druck:{datei:'…pdf',text:'Arbeitsblatt zum Drucken',info:'PDF · 3 Seiten'}` mit einem kleinen Symbol auf der Kachel markiert. Der Download selbst steht im Lernpfad: `<a class="arbeitsblatt" href="…pdf" download>` (Stil in brand.css) im Kopf unter den Phasen und am Anfang von „Üben“.
+Das fertige PDF liegt neben dem Lernpfad, z. B. `Physik11/schiefe-ebene-uebungsblatt.pdf`, und wird in `index.html`
+beim Lernpfad mit `druck:'Heftaufschrieb und Übungsblatt zum Drucken'` (Text für das Symbol) mit einem kleinen Symbol auf der Kachel markiert. Der Download selbst steht im Lernpfad: `<a class="arbeitsblatt" href="…pdf" download>` (Stil in brand.css) im Kopf unter den Phasen und am Anfang von „Festhalten“ (Heftaufschrieb) bzw. „Üben“ (Übungsblatt).
 
-Idee: Das Blatt enthält vor allem die Aufgabenstellungen der Übungen (gleiche Nummern wie im Lernpfad) mit Karo-Feldern
+Zu jedem Lernpfad zwei Dokumente:
+
+- **Heftaufschrieb** (`…-heftaufschrieb`, 1–2 Seiten): Lückentext des Heftaufschriebs aus „Festhalten“ mit leerem Karo-Feld und Schritt-für-Schritt-Anleitung für die eigene Zeichnung. Lösung ist der aufklappbare Heftaufschrieb im Lernpfad – beide müssen Wort für Wort zusammenpassen.
+- **Übungsblatt** (`…-uebungsblatt`, 2–4 Seiten):  die Aufgabenstellungen der Übungen (gleiche Nummern wie im Lernpfad) mit Karo-Feldern
 für den Rechenweg und Ergebnis-Zeilen. Kontrolliert wird online im Lernpfad („online geprüft“ abhaken). Richtwert 2–4 Seiten.
 Konstruktionen mit Maßstab werden in echten Millimetern gezeichnet (SVG in mm) – Hinweis „in 100 % drucken“.
 
@@ -12,8 +15,11 @@ PDF erzeugen (im Repo-Hauptordner):
 
 ```
 python3 -m http.server 8123 &
-node tools/druck/pdf.js schiefe-ebene-arbeitsblatt Physik11/schiefe-ebene-arbeitsblatt.pdf "Physik 11 · Schiefe Ebene · Arbeitsblatt"
+node tools/druck/pdf.js schiefe-ebene-heftaufschrieb Physik11/schiefe-ebene-heftaufschrieb.pdf "Physik 11 · Schiefe Ebene · Heftaufschrieb"
+node tools/druck/pdf.js schiefe-ebene-uebungsblatt Physik11/schiefe-ebene-uebungsblatt.pdf "Physik 11 · Schiefe Ebene · Übungsblatt"
 ```
 
 Das Skript meldet ungesetzte Formeln und Konsolen-Fehler. Danach Seitenzahl und Bilder prüfen (z. B. `pdftoppm -png`).
 QR-Code im Kopf: mit Python `segno` aus der Live-Adresse des Lernpfads erzeugt.
+
+Kein Feld für Name/Klasse/Datum und kein Formel-Kasten auf den Blättern (Wunsch der Lehrkraft).

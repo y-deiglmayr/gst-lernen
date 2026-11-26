@@ -147,7 +147,7 @@ const KURSE=[
    {datei:'kraft-grundlagen',titel:'1 · Kraft – Grundlagen',info:'Wirkungen, Kraftpfeil, Wechselwirkung, Gewichtskraft auf anderen Planeten, Trägheit, 11 Übungen',bild:'p11kraft'},
    {datei:'kraefteaddition',titel:'2 · Kräfteaddition und Gleichgewicht',info:'Kräfte-Labor, Parallelogramm und Kräfteplan zeichnen, Gleichgewicht, 10 Übungen mit vielen Konstruktionen',bild:'p11add'},
    {datei:'kraeftezerlegung',titel:'3 · Kräftezerlegung',info:'Zerlegungs-Labor, Schritt-für-Schritt-Anleitung, Slackline, Schlepper, Lampe, Keil – grafisch und rechnerisch',bild:'p11zerl'},
-   {datei:'schiefe-ebene',titel:'4 · Schiefe Ebene',info:'Hangabtriebs- und Normalkraft zeichnen und berechnen, Rampen-Labor, Rollstuhlrampe, Bollerwagen',bild:'p11ebene',druck:{datei:'schiefe-ebene-arbeitsblatt.pdf',text:'Arbeitsblatt zum Drucken',info:'PDF · 3 Seiten'}},
+   {datei:'schiefe-ebene',titel:'4 · Schiefe Ebene',info:'Hangabtriebs- und Normalkraft zeichnen und berechnen, Rampen-Labor, Rollstuhlrampe, Bollerwagen',bild:'p11ebene',druck:'Heftaufschrieb und Übungsblatt zum Drucken'},
    {datei:'newton-reibung',titel:'5 · Newtonsche Gesetze und Reibung',info:'Trägheit, F = m · a im Fahrbahn-Labor, actio = reactio, Reibungs-Labor, Grenzwinkel, Güterzug',bild:'p11newton'}
   ]},
   {thema:'Impuls und Stöße',seiten:[
@@ -218,9 +218,9 @@ const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){retu
 const zu=new Set(store.get('gst-index-zu')||[]);
 const anzahl=n=>n===1?'1 Lernpfad':n+' Lernpfade';
 const karte=(k,t,s)=>{
- const such=esc((s.titel+' '+s.info+' '+t.thema+' '+k.klasse+' '+k.fach+(s.druck?' arbeitsblatt pdf druck':'')).toLowerCase());
+ const such=esc((s.titel+' '+s.info+' '+t.thema+' '+k.klasse+' '+k.fach+(s.druck?' arbeitsblatt heftaufschrieb übungsblatt pdf druck':'')).toLowerCase());
  /* Kleines Symbol auf dem Vorschaubild, wenn es zum Lernpfad ein Arbeitsblatt zum Drucken gibt (Download im Lernpfad) */
- const ab=s.druck?`<span class="abzeichen" title="Mit Arbeitsblatt zum Drucken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5M9.5 12h7M9.5 15.5h7M9.5 19h4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr">mit Arbeitsblatt</span></span>`:'';
+ const ab=s.druck?`<span class="abzeichen" title="${esc(s.druck)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5M9.5 12h7M9.5 15.5h7M9.5 19h4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr">${esc(s.druck)}</span></span>`:'';
  return `<a class="card" href="/${esc(k.ordner)}/${esc(s.datei)}" data-such="${such}">${BILDER[s.bild]?`<span class="thumb">${BILDER[s.bild]}${ab}</span>`:ab}<b>${esc(s.titel)}</b><small>${esc(s.info)}</small></a>`};
 const stufen=STUFEN.filter(st=>KURSE.some(k=>k.stufe===st.name));
 document.getElementById('list').innerHTML=stufen.map(st=>{

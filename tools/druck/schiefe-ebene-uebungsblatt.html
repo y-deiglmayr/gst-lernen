@@ -2,80 +2,10 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<title>Schiefe Ebene – Arbeitsblatt</title>
-<!-- Druckvorlage (Quelle für Physik11/schiefe-ebene-arbeitsblatt.pdf). PDF erzeugen: siehe tools/druck/LIESMICH.md -->
+<title>Schiefe Ebene – Übungsblatt</title>
+<!-- Druckvorlage (Quelle für Physik11/schiefe-ebene-uebungsblatt.pdf). PDF erzeugen: siehe tools/druck/LIESMICH.md -->
 <link rel="stylesheet" href="/fonts/fonts.css">
-<style>
-@page{size:A4;margin:11mm 13mm 14mm}
-:root{--slate:#3E4B4C;--slate2:#5F6F74;--green:#76989D;--blue:#ACBDC3;--grey:#C9D2D3;--light:#E4E7E9;--yellow:#FCBE00;
---acc:#3f6267;--heft:#2b7a4b;--heftbg:#eef7f1;--ink:#26302f;--muted:#5F6F74;--karo:#cfd8da;
---fg:#1d8a4a;--fh:#d4381e;--fn:#2563c9;--fu:#8a3fc4}
-*{box-sizing:border-box}
-html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-body{margin:0;color:var(--ink);font:10.4pt/1.42 "Atkinson Hyperlegible",system-ui,sans-serif;background:#fff}
-h1,h2,h3{font-family:"Source Sans 3",system-ui,sans-serif;margin:0;line-height:1.1}
-p{margin:0 0 1.6mm}
-sub{font-size:.72em}
-b{font-weight:700}
-/* Kopf */
-.bar{height:2.6mm;background:linear-gradient(90deg,var(--slate) 0 26%,var(--slate2) 26% 30%,var(--green) 30% 34%,var(--blue) 34% 38%,var(--grey) 38% 42%,var(--light) 42%)}
-.kopf{display:flex;gap:5mm;align-items:center;padding:4mm 0 3mm}
-.kopf .logo{width:15mm;height:auto;flex:none;display:block}
-.kopf .tit{flex:1}
-.kopf .ober{font:600 9pt "Source Sans 3",sans-serif;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
-.kopf h1{font-size:25pt;font-weight:700;color:var(--slate)}
-.kopf h1::before{content:"";display:inline-block;width:.3em;height:.3em;background:var(--yellow);margin-right:.16em;vertical-align:.08em}
-.kopf .unter{font:600 11.5pt "Source Sans 3",sans-serif;color:var(--acc)}
-.qr{flex:none;width:31mm;text-align:center;font:600 7.4pt/1.2 "Source Sans 3",sans-serif;color:var(--slate)}
-.qr svg{width:21mm;height:21mm;display:block;margin:0 auto 1mm}
-.namen{display:grid;grid-template-columns:1fr 26mm 30mm;gap:6mm;font:600 9pt "Source Sans 3",sans-serif;color:var(--muted);margin:0 0 3.5mm}
-.namen span{border-bottom:.3mm solid var(--slate2);padding-top:4mm}
-/* Hinweisleiste und Heft-Kasten */
-.so{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin:0 0 3.5mm}
-.so div{background:var(--light);border-radius:1.6mm;padding:2mm 2.6mm;font-size:9.2pt;line-height:1.3;position:relative}
-.so b.n{display:inline-grid;place-items:center;width:5mm;height:5mm;background:var(--slate);color:#fff;border-radius:50%;font:700 8.5pt "Source Sans 3",sans-serif;margin-right:1.4mm;box-shadow:inset 0 -.7mm 0 var(--yellow)}
-.heft{border:.35mm solid var(--heft);border-radius:1.6mm;background:var(--heftbg);margin:0 0 4mm;overflow:hidden}
-.heft .hb-head{background:var(--heft);color:#fff;font:700 9.5pt "Source Sans 3",sans-serif;letter-spacing:.05em;padding:1.1mm 3mm}
-.heft .in{display:grid;grid-template-columns:1.05fr 1fr;gap:3mm 6mm;padding:2.4mm 3mm 2.6mm}
-.heft ul{margin:0;padding-left:4.2mm}.heft li{margin:0 0 .8mm}
-.heft ol{margin:0;padding-left:4.6mm;font-size:9.4pt}.heft ol li{margin:0 0 .4mm}
-.heft .f{font-size:10.6pt}
-.heft .h{font:700 9.4pt "Source Sans 3",sans-serif;color:var(--heft);margin:0 0 .8mm}
-/* Aufgaben */
-.aufg{border:.3mm solid var(--grey);border-radius:1.8mm;margin:0 0 4mm;break-inside:avoid;overflow:hidden}
-.ah{display:flex;align-items:center;gap:2.4mm;background:var(--slate);color:#fff;padding:1.3mm 3mm;font:600 11pt "Source Sans 3",sans-serif}
-.ah .nr{background:var(--yellow);color:var(--slate);font-weight:700;border-radius:1mm;padding:0 1.6mm;font-size:10pt}
-.ah .t{flex:1}
-.ah .st{color:var(--yellow);letter-spacing:.06em;font-size:10.5pt}
-.ah .afb{border:.25mm solid #ffffff99;border-radius:5mm;padding:0 2mm;font-size:8.4pt;font-weight:600}
-.ab{padding:2.6mm 3mm 2.8mm}
-.karo{background-color:#fff;background-image:linear-gradient(var(--karo) .18mm,transparent .18mm),linear-gradient(90deg,var(--karo) .18mm,transparent .18mm);background-size:5mm 5mm;background-position:-.09mm -.09mm;border:.25mm solid var(--karo);border-radius:1mm;margin:1.6mm 0 2mm;position:relative}
-.karo .lab{position:absolute;left:1.4mm;top:.8mm;font:600 7.6pt "Source Sans 3",sans-serif;color:var(--muted);background:#fff;padding:0 1mm}
-.erg{display:flex;flex-wrap:wrap;align-items:flex-end;gap:2mm 6mm;font-size:10pt}
-.erg .feld{display:inline-flex;align-items:flex-end;gap:1.4mm}
-.erg .feld i{display:inline-block;width:22mm;border-bottom:.3mm solid var(--slate2);height:5mm}
-.erg .feld i.w{width:30mm}
-.ok{margin-left:auto;display:inline-flex;align-items:center;gap:1.6mm;font:600 8.6pt "Source Sans 3",sans-serif;color:var(--acc);white-space:nowrap}
-.ok::before{content:"";width:3.6mm;height:3.6mm;border:.35mm solid var(--acc);border-radius:.6mm}
-.zeilen{margin:1.4mm 0 1.6mm;background-image:linear-gradient(transparent calc(7.5mm - .25mm),#b9c4c6 calc(7.5mm - .25mm));background-size:100% 7.5mm}
-.beg{font-weight:700;color:var(--acc)}
-.teil{display:grid;grid-template-columns:6mm 1fr;margin:0 0 1mm}
-.teil > b{color:var(--acc)}
-/* Konstruktionen */
-.figs{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin:1.4mm 0 2mm}
-.fig{border:.25mm solid var(--grey);border-radius:1.4mm;padding:1.6mm 2mm 2mm}
-.fig .fh{font:700 10pt "Source Sans 3",sans-serif;color:var(--slate);margin:0 0 .6mm}
-.fig svg.k{display:block;margin:0 auto}
-.fig .erg{justify-content:space-between;margin-top:1mm}
-.fig .erg .feld i{width:17mm}
-.klein{font-size:8.6pt;color:var(--muted)}
-.zwei{display:grid;grid-template-columns:1fr 46mm;gap:4mm;align-items:start}
-.seite{break-before:page}
-.fuss{margin-top:2mm;display:flex;gap:4mm;align-items:center;font-size:8.6pt;color:var(--muted)}
-.fuss .bar{flex:0 0 30mm;height:2mm}
-f-m{font-style:normal}
-.katex{font-size:1.04em}
-</style>
+<link rel="stylesheet" href="/tools/druck/druck.css">
 <link rel="stylesheet" href="/katex/katex.min.css">
 <script defer src="/katex/katex.min.js"></script>
 <script defer src="/katex/formel.js"></script>
@@ -88,11 +18,10 @@ f-m{font-style:normal}
  <div class="tit">
   <div class="ober">Physik · Klasse 11 · Kraft und Dynamik</div>
   <h1>Schiefe Ebene</h1>
-  <div class="unter">Arbeitsblatt zum Lernpfad 4 · Üben mit Rechenweg</div>
+  <div class="unter">Übungsblatt zum Lernpfad 4 · Üben mit Rechenweg</div>
  </div>
  <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33"><path stroke="#3e4b4c" d="M0 0.5h7m6 0h3m1 0h3m1 0h1m1 0h1m2 0h7m-33 1h1m5 0h1m2 0h7m1 0h1m2 0h5m1 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m4 0h1m3 0h1m1 0h1m2 0h1m2 0h2m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h1m3 0h2m2 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m4 0h5m4 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h4m3 0h2m1 0h4m2 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-24 1h1m4 0h2m1 0h1m3 0h2m-23 1h1m2 0h1m1 0h2m1 0h2m1 0h1m1 0h2m4 0h1m1 0h1m1 0h3m1 0h1m-26 1h4m1 0h2m1 0h1m2 0h2m1 0h2m4 0h1m1 0h4m4 0h1m-28 1h2m3 0h2m1 0h1m5 0h3m2 0h1m1 0h3m1 0h1m1 0h1m-32 1h1m1 0h1m5 0h2m1 0h2m2 0h1m1 0h2m1 0h5m2 0h2m2 0h1m-31 1h2m2 0h1m2 0h1m1 0h1m2 0h4m2 0h4m2 0h2m1 0h1m1 0h2m-33 1h1m1 0h2m1 0h1m3 0h2m2 0h1m3 0h1m1 0h3m2 0h1m1 0h1m1 0h2m1 0h2m-33 1h4m1 0h3m2 0h1m1 0h1m3 0h2m2 0h1m1 0h2m1 0h5m1 0h1m-30 1h4m1 0h1m3 0h1m1 0h1m3 0h2m2 0h1m1 0h1m2 0h1m4 0h1m-29 1h1m1 0h2m2 0h1m2 0h1m4 0h1m1 0h1m1 0h4m1 0h1m1 0h2m1 0h1m-32 1h1m11 0h2m4 0h1m2 0h5m1 0h1m1 0h1m1 0h1m-31 1h4m1 0h1m1 0h4m2 0h1m1 0h2m4 0h1m1 0h2m4 0h3m-33 1h1m1 0h3m2 0h1m9 0h1m1 0h1m1 0h1m3 0h3m3 0h2m-33 1h2m1 0h5m1 0h1m3 0h4m4 0h3m1 0h1m6 0h1m-32 1h1m1 0h2m2 0h2m5 0h1m1 0h2m2 0h3m1 0h1m4 0h1m1 0h2m-33 1h2m1 0h1m1 0h5m1 0h4m1 0h4m1 0h1m2 0h1m4 0h1m2 0h1m-32 1h1m2 0h2m1 0h1m6 0h3m3 0h3m2 0h2m4 0h1m-32 1h1m2 0h2m1 0h5m1 0h1m3 0h2m3 0h8m2 0h1m-24 1h1m1 0h4m3 0h1m1 0h4m1 0h1m3 0h2m2 0h1m-33 1h7m4 0h1m5 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h4m-32 1h1m5 0h1m1 0h2m1 0h2m1 0h5m1 0h3m1 0h1m3 0h1m2 0h2m-33 1h1m1 0h3m1 0h1m2 0h3m1 0h2m2 0h3m1 0h1m2 0h6m1 0h2m-33 1h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h2m5 0h1m2 0h1m1 0h3m-31 1h1m1 0h3m1 0h1m3 0h3m1 0h1m2 0h1m3 0h1m1 0h2m3 0h1m3 0h1m-33 1h1m5 0h1m7 0h2m1 0h1m1 0h6m-25 1h7m1 0h1m1 0h4m1 0h2m2 0h1m1 0h1m2 0h1m3 0h2m1 0h1"/></svg>Lernpfad öffnen<br>und Ergebnisse prüfen</div>
 </header>
-<div class="namen"><span>Name</span><span>Klasse</span><span>Datum</span></div>
 
 <div class="so">
  <div><b class="n">1</b><b>Lösen:</b> Konstruiere und rechne hier auf dem Blatt – immer mit Rechenweg und Einheiten.</div>
@@ -100,27 +29,6 @@ f-m{font-style:normal}
  <div><b class="n">3</b><b>Abhaken:</b> Kreuze <b>online geprüft</b> an. Falsch? Erst den Tipp im Lernpfad lesen, dann neu rechnen.</div>
 </div>
 
-<div class="heft"><div class="hb-head">✎ DAS BRAUCHST DU</div><div class="in">
- <div>
-  <p class="h">Formeln (rechne mit <f-m>g = 9,81 N/kg</f-m>)</p>
-  <ul class="f">
-   <li>Gewichtskraft: <f-m>F<sub>G</sub> = m · g</f-m></li>
-   <li>Hangabtriebskraft: <f-m>F<sub>H</sub> = F<sub>G</sub> · sin α</f-m></li>
-   <li>Normalkraft: <f-m>F<sub>N</sub> = F<sub>G</sub> · cos α</f-m></li>
-   <li>Rampe: <f-m>sin α = h : l</f-m> (<f-m>l</f-m> = Länge der Rampe)</li>
-  </ul>
- </div>
- <div>
-  <p class="h">So gehst du vor</p>
-  <ol>
-   <li>Skizze mit Ebene, Körper und <f-m>F<sub>G</sub></f-m> zeichnen</li>
-   <li>Winkel <f-m>α</f-m> einzeichnen, <f-m>F<sub>G</sub></f-m> zerlegen (Parallelogramm), <f-m>F<sub>G</sub></f-m> durchstreichen, <f-m>F<sub>U</sub></f-m> ergänzen</li>
-   <li><f-m>F<sub>G</sub></f-m> aus der Masse berechnen</li>
-   <li><f-m>F<sub>H</sub></f-m> (und <f-m>F<sub>N</sub></f-m>) berechnen</li>
-   <li>Antwortsatz schreiben</li>
-  </ol>
- </div>
-</div></div>
 
 <section class="aufg">
  <div class="ah"><span class="nr">Übung 3</span><span class="t">Hangabtriebskraft und Normalkraft konstruieren</span><span class="st">★</span><span class="afb">AFB I</span></div>
@@ -138,7 +46,7 @@ f-m{font-style:normal}
 </section>
 
 <!-- Seite 2 -->
-<section class="aufg seite">
+<section class="aufg">
  <div class="ah"><span class="nr">Übung 4</span><span class="t">Grundaufgabe</span><span class="st">★</span><span class="afb">AFB I</span></div>
  <div class="ab">
   <p>Eine Kiste (50 kg) steht auf einer Rampe mit <f-m>α = 25°</f-m>. Berechne die Gewichtskraft, die Hangabtriebskraft und die Normalkraft.</p>
@@ -147,11 +55,11 @@ f-m{font-style:normal}
  </div>
 </section>
 
-<section class="aufg">
+<section class="aufg seite">
  <div class="ah"><span class="nr">Übung 5</span><span class="t">Parkendes Auto</span><span class="st">★★</span><span class="afb">AFB II</span></div>
  <div class="ab">
   <p>Auf ein Auto, das an einem Hang mit <f-m>α = 5°</f-m> steht, wirkt eine Hangabtriebskraft von 1 kN. Berechne die Masse des Autos.</p>
-  <div class="karo" style="height:23mm"><span class="lab">Rechenweg – stelle zuerst die Formel um</span></div>
+  <div class="karo" style="height:18mm"><span class="lab">Rechenweg – stelle zuerst die Formel um</span></div>
   <div class="erg"><span class="feld"><f-m>m</f-m> = <i></i> kg</span><span class="ok">online geprüft</span></div>
  </div>
 </section>
@@ -165,7 +73,7 @@ f-m{font-style:normal}
    </div>
    <svg viewBox="0 0 360 170" width="46mm" role="img" aria-label="Rinne von 80 cm Länge, deren oberes Ende 40 cm hoch liegt"><path d="M30 150 L330 150 L30 50Z" fill="#E4E7E9" stroke="#3E4B4C" stroke-width="3"/><circle cx="74" cy="52" r="12" fill="#ACBDC3" stroke="#3E4B4C" stroke-width="3"/><text x="196" y="86" font-family="Source Sans 3" font-weight="700" font-size="26" fill="#3E4B4C">80 cm</text><text x="40" y="118" font-family="Source Sans 3" font-weight="700" font-size="26" fill="#3E4B4C">40 cm</text><path d="M286 150 A44 44 0 0 1 288.5 136" fill="none" stroke="#3E4B4C" stroke-width="2.5"/><text x="258" y="142" font-family="Source Sans 3" font-style="italic" font-size="24" fill="#3E4B4C">α</text></svg>
   </div>
-  <div class="karo" style="height:24mm"><span class="lab">Rechenweg</span></div>
+  <div class="karo" style="height:18mm"><span class="lab">Rechenweg</span></div>
   <div class="erg"><span class="feld"><f-m>α</f-m> = <i></i> °</span><span class="feld"><f-m>F<sub>H</sub></f-m> = <i></i> N</span><span class="ok">online geprüft</span></div>
  </div>
 </section>
@@ -174,8 +82,23 @@ f-m{font-style:normal}
  <div class="ah"><span class="nr">Übung 7</span><span class="t">Bierfässer verladen</span><span class="st">★★</span><span class="afb">AFB II</span></div>
  <div class="ab">
   <p>Fässer mit <f-m>F<sub>G</sub> = 1200 N</f-m> sollen auf eine 1 m hohe Ladefläche gerollt werden. Der Fahrer schafft höchstens 300 N. Wie lang muss die Bohle mindestens sein? Fertige zuerst eine Skizze an.</p>
-  <div class="karo" style="height:32mm"><span class="lab">Skizze und Rechenweg</span></div>
+  <div class="karo" style="height:24mm"><span class="lab">Skizze und Rechenweg</span></div>
   <div class="erg"><span class="feld"><f-m>l</f-m> = <i></i> m</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 8</span><span class="t">Grenzfälle der Erdbeschleunigung</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Körper gleitet reibungsfrei eine schiefe Ebene hinab. Er wird mit dem Anteil <f-m>g · sin α</f-m> der Fallbeschleunigung beschleunigt. Richtig (r) oder falsch (f)? Überlege dir zu jeder Aussage eine kurze Begründung und kreuze an.</p>
+  <table class="rf">
+   <tr><th></th><th>r</th><th>f</th></tr>
+   <tr><td>Bei <f-m>α = 0°</f-m> ist die Beschleunigung entlang der Ebene null.</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>Bei <f-m>α = 90°</f-m> beträgt sie 9,81 m/s² – der Körper fällt frei.</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>Ein schwerer Körper rutscht (ohne Reibung) schneller hinunter als ein leichter.</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>Bei <f-m>α = 30°</f-m> ist die Beschleunigung halb so groß wie beim freien Fall.</td><td class="x"></td><td class="x"></td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
  </div>
 </section>
 
@@ -206,7 +129,7 @@ f-m{font-style:normal}
   <div class="erg"><span class="feld">b) <f-m>F</f-m> = <i></i> N</span><span class="feld">c) <f-m>α</f-m> = <i></i> °</span></div>
   <div class="teil" style="margin-top:2.4mm"><b>d)</b><span><span class="beg">✍ Erläutere:</span> Frau Meier hält die Deichsel schräg nach oben statt parallel zum Weg. Muss sie dann mehr oder weniger Kraft aufbringen?</span></div>
   <div class="zeilen" style="height:22.5mm"></div>
-  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung. Im Lernpfad warten außerdem Übung 1, 2 und 8.</span><span class="ok">online geprüft</span></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung. Im Lernpfad warten außerdem Übung 1 und 2.</span><span class="ok">online geprüft</span></div>
  </div>
 </section>
 

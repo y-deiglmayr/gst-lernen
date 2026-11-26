@@ -155,5 +155,6 @@ a.arbeitsblatt b{display:block;font-family:"Source Sans 3",system-ui,sans-serif;
 a.arbeitsblatt small{display:block;color:var(--muted);font-size:14px}
 a.arbeitsblatt:hover{border-color:var(--gst-mark);border-left-color:var(--gst-mark)}
 a.arbeitsblatt:focus-visible{outline:3px solid var(--gst-mark);outline-offset:2px}
-a.arbeitsblatt.kopf{margin:16px 0 0}
+.ablinks{display:flex;flex-wrap:wrap;gap:10px 14px;margin:16px 0 0}
+.ablinks a.arbeitsblatt{margin:0;flex:1 1 280px;max-width:none}
 @media print{a.arbeitsblatt{display:none}}

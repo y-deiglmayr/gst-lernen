@@ -26,7 +26,8 @@ Physik11/
   kraefteaddition.html      2 · Kräfteaddition und Gleichgewicht (Parallelogramm, Kräfteplan)
   kraeftezerlegung.html     3 · Kräftezerlegung (grafisch und rechnerisch)
   schiefe-ebene.html        4 · Schiefe Ebene (Hangabtriebs- und Normalkraft)
-  schiefe-ebene-arbeitsblatt.pdf  Druckversion: Übungen mit Platz für den Rechenweg (Download im Lernpfad, Symbol auf der Kachel)
+  schiefe-ebene-heftaufschrieb.pdf  Heftaufschrieb zum Ausfüllen (Lückentext, eigene Zeichnung)
+  schiefe-ebene-uebungsblatt.pdf    Übungsblatt mit Platz für den Rechenweg (beide: Download im Lernpfad, Symbol auf der Kachel)
   newton-reibung.html       5 · Newtonsche Gesetze und Reibung
   impuls-grundlagen.html    Impuls 1 · Der Impuls – eine neue Größe (p = m · v, Einheit, Vektor, Alltag)
   stoesse-impulserhaltung.html  Impuls 2 · Stöße und Impulserhaltung (Stoß-Labor, Sonderfälle, Wagen-Versuche)
@@ -46,7 +47,7 @@ z. B. `/Physik8/reflexion-spiegel`. Groß- und Kleinschreibung der Ordner gehör
 
 ## Druckversionen
 
-Zu einem Lernpfad kann es ein Arbeitsblatt als PDF geben (Aufgaben mit Platz für den Rechenweg, Kontrolle online).
+Zu einem Lernpfad kann es zwei PDFs geben: einen Heftaufschrieb zum Ausfüllen (Lückentext, Zeichnungen selbst anfertigen) und ein Übungsblatt (Aufgaben mit Platz für den Rechenweg, Kontrolle online).
 Vorlage und Anleitung: `tools/druck/` (LIESMICH.md). In `KURSE` mit `druck:{…}` markieren (Symbol auf der Kachel); der Download-Link `a.arbeitsblatt` steht im Lernpfad selbst (Kopf und „Üben“).
 
 ## Cloudflare-Pages-Einstellungen
