@@ -123,3 +123,40 @@ a.arbeitsblatt:focus-visible{outline:3px solid var(--gst-mark);outline-offset:2p
 .ablinks{display:flex;flex-wrap:wrap;gap:10px 14px;margin:16px 0 0}
 .ablinks a.arbeitsblatt{margin:0;flex:1 1 280px;max-width:none}
 @media print{a.arbeitsblatt{display:none}}
+
+/* ===== Piktogramme zu Aufgaben und Quiz (Symbole in /brand/piktos.svg, Katalog: tools/piktos-katalog.html) =====
+   Einbinden: <svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#kerze"/></svg>
+   Muster: .mitbild (Bild neben dem Aufgabentext), .mitpk (Bild vor einer Zeile/Auswahl), .mc button mit .pk, .mc.bildwahl (Kacheln). */
+:root{--pk-ink:light-dark(#3E4B4C,#d3dcde);--pk-weiss:light-dark(#ffffff,#36423f);--pk-grau:light-dark(#b5c1c4,#6f7d80);
+--pk-gelb:light-dark(#FCBE00,#e9ae00);--pk-gelbhell:light-dark(#fff0b3,#5a4c12);--pk-orange:light-dark(#e8840c,#f0a040);
+--pk-rot:light-dark(#d9472f,#e36a55);--pk-ziegel:light-dark(#d98f73,#8f5a48);--pk-blau:light-dark(#4a8fcc,#5d9fd8);
+--pk-wasser:light-dark(#cfe6f3,#2f4b5c);--pk-gruen:light-dark(#5aa866,#5fae6b);--pk-gruengelb:light-dark(#cfe05a,#b6c94a);--pk-braun:light-dark(#b07a4a,#9c6d45)}
+svg.pk{width:44px;height:44px;flex:none;color:var(--pk-ink);overflow:visible;vertical-align:middle}
+svg.pk.klein{width:30px;height:30px}
+svg.pk.gross{width:72px;height:72px}
+/* Bild neben dem Aufgabentext */
+.mitbild{display:flex;gap:14px;align-items:center}
+.mitbild>svg.pk{width:64px;height:64px}
+.mitbild>svg.pk.gross{width:84px;height:84px}
+.mitbild>:not(svg){flex:1;min-width:0}
+.mitbild>p,.mitbild>h4{margin-top:0;margin-bottom:0}
+.card>.mitbild,.part>.mitbild{margin-bottom:10px}
+/* Bild vor einer Zeile (Zuordnen, Lückenzeilen, Energieketten): Text immer in eigenem <span> */
+.mitpk{display:flex;gap:10px;align-items:center;min-width:0}
+.mitpk>svg.pk{width:38px;height:38px}
+/* Multiple Choice mit Bild: <button data-k="a"><svg class="pk">…</svg><span>Text</span></button> */
+.mc button:has(>svg.pk){display:flex;align-items:center;gap:12px}
+.mc button>svg.pk{width:40px;height:40px}
+/* Bildkacheln: kurze Antworten mit großem Bild */
+.mc.bildwahl{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.mc.bildwahl>p,.mc.bildwahl>.fb{grid-column:1/-1}
+.mc.bildwahl button{flex-direction:column;justify-content:flex-start;text-align:center;gap:6px;padding:12px 8px}
+.mc.bildwahl button>svg.pk{width:60px;height:60px}
+@media(max-width:480px){
+ .mitbild{gap:10px}.mitbild>svg.pk{width:48px;height:48px}.mitbild>svg.pk.gross{width:60px;height:60px}
+ .mitpk>svg.pk{width:32px;height:32px}
+ .mc.bildwahl{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media print{svg.pk{color:#3E4B4C}}
+svg.pk.breit{width:66px}
+.mc button>svg.pk.breit{width:62px;height:42px}

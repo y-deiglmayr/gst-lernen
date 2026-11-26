@@ -27,6 +27,12 @@ Details zu Aufbau, Branding und Formeln: `README.md`.
 - Im Fuß jedes Lernpfads (am Ende von `footer .wrap`): `<p class="rechtl"><a href="/impressum">Impressum · Datenschutz</a></p>`. Impressum, Datenschutz, KI-Hinweis und Haftung stehen zentral in `impressum.html`; neue externe Dienste nur nach Ergänzung dort.
 - QR-Code der eigenen Live-Adresse im Kopf (Python `segno`), Startseite-Eintrag in `KURSE` + Vorschaubild in `BILDER`, README-Liste ergänzen.
 
+## Piktogramme (Aufgaben und Quiz auflockern)
+- Manche Aufgaben, Zuordnungen und Quizfragen bekommen kleine Piktogramme, damit keine großen Textblöcke entstehen (nicht jede Aufgabe, eher 5–10 pro Lernpfad).
+- Symbole zentral in `brand/piktos.svg` (eigene SVGs, keine externen Bilder), Übersicht: `tools/piktos-katalog.html` (lokal über `python3 -m http.server`). Einbinden: `<svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#kerze"/></svg>`. Fehlt ein Symbol, neues `<symbol>` im gleichen Stil ergänzen (viewBox 48×48, Linien `currentColor` 2,2, Flächen nur über `style="fill:var(--pk-…)"`; im XML-Kommentar kein doppelter Bindestrich).
+- Muster aus `brand/brand.css`: `.mitbild` (Bild neben Aufgabentext/`h4`), `.mitpk` (Bild vor einer Zuordnungszeile, Text in eigenem `<span>`), MC-Knopf `<button data-k="a"><svg class="pk">…</svg><span>Text</span></button>`, `.mc.bildwahl` (Kacheln), `.pk.breit` für kleine Szenen aus mehreren Symbolen. Farben/Darkmode kommen aus den `--pk-*`-Variablen.
+- Piktogramme sind Schmuck (`aria-hidden`), der Text bleibt vollständig. Ein Bild darf die Lösung nicht verraten. Beispiele: `Physik8/reflexion-spiegel`, `Physik9/energie-einfuehrung`, `Physik11/kraft-grundlagen`.
+
 ## Formeln
 - Formeln normal schreiben, z. B. `h = E<sub>L</sub> : (m · g)`; Geteilt-Zeichen „ : “ mit Leerzeichen.
 - Vor dem Veröffentlichen: `python3 tools/formeln_markieren.py <datei>` – markiert Formeln mit `<f-m>…</f-m>`, `katex/formel.js` setzt sie.
