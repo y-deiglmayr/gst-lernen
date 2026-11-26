@@ -37,7 +37,8 @@ Physik11/
   schiefe-ebene-uebungsblatt.pdf    Übungsblatt mit Platz für den Rechenweg (beide: Download im Lernpfad, Symbol auf der Kachel)
   newton-reibung.html       5 · Newtonsche Gesetze und Reibung
   impuls-grundlagen.html    Impuls 1 · Der Impuls – eine neue Größe (p = m · v, Einheit, Vektor, Alltag)
-  stoesse-impulserhaltung.html  Impuls 2 · Stöße und Impulserhaltung (Stoß-Labor, Sonderfälle, Wagen-Versuche)
+  stoesse-impulserhaltung.html  Impuls 2 · Stöße und Impulserhaltung (Stoß-Labor, Sonderfälle, Stoßexperiment mit Lichtschranken)
+  stoesse-impulserhaltung-heftaufschrieb.pdf / -versuch.pdf / -uebungsblatt.pdf  Druckversionen
   rueckstoss.html           Impuls 3 · Das Rückstoßprinzip
   kraftstoss.html           Impuls 4 · Kraftstoß und Newtons Axiome (Δp = F · Δt)
   elastischer-stoss.html    Impuls 5 · Stöße quantitativ (IES + EES, Energiebilanz)

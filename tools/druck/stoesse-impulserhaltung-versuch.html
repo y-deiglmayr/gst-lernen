@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Stöße und Impulserhaltung – Versuchsprotokoll</title>
+<!-- Druckvorlage (Quelle für Physik11/stoesse-impulserhaltung-versuch.pdf). Gehört zu „2 · Entdecken, E · Experiment“ im Lernpfad (Auftrag 8–10). -->
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<style>
+.mt{width:100%;border-collapse:collapse;font-size:9.6pt;margin:1mm 0 2mm;table-layout:fixed}
+.mt th,.mt td{border:.3mm solid var(--slate2);text-align:center;padding:.4mm 1mm;height:7.6mm}
+.mt th{background:var(--light);font:700 9pt "Source Sans 3",sans-serif;height:auto}
+.mt th small{display:block;font-weight:600;color:var(--muted)}
+.mt td.k{font-weight:700;background:var(--light)}
+.mt td.f{color:var(--muted)}
+.mt col.w{width:15mm}.mt col.m{width:13mm}
+.ablauf{margin:0 0 2mm;padding-left:5mm;line-height:1.5}
+.ablauf li{margin:0 0 .8mm}
+</style>
+</head>
+<body>
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 11 · Impuls</div>
+  <h1>Stoßexperiment</h1>
+  <div class="unter">Versuchsprotokoll zum Lernpfad „Stöße und Impulserhaltung“ · 2 · Entdecken, Teil E</div>
+ </div>
+ <div class="qr"><!--QR:https://physik.party/Physik11/stoesse-impulserhaltung--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33"><path stroke="#3e4b4c" d="M0 0.5h7m2 0h3m1 0h1m6 0h2m1 0h1m2 0h7m-33 1h1m5 0h1m2 0h1m1 0h7m2 0h3m3 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h1m3 0h4m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h5m1 0h3m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m2 0h3m1 0h1m2 0h3m1 0h2m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h1m1 0h5m1 0h1m7 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h2m2 0h1m1 0h2m2 0h7m-25 1h1m1 0h5m4 0h1m1 0h5m1 0h1m4 0h1m1 0h5m-31 1h2m2 0h2m1 0h3m1 0h1m2 0h1m3 0h2m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m-32 1h1m2 0h1m1 0h3m2 0h2m2 0h2m1 0h1m1 0h1m5 0h1m1 0h1m1 0h2m-29 1h3m4 0h2m2 0h2m2 0h1m2 0h1m1 0h3m2 0h5m-30 1h1m2 0h2m1 0h1m5 0h1m2 0h2m2 0h1m2 0h1m1 0h3m1 0h2m-33 1h2m1 0h1m3 0h2m1 0h11m2 0h1m2 0h1m2 0h4m-33 1h1m2 0h1m1 0h2m3 0h1m3 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h3m-32 1h2m1 0h1m4 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m3 0h2m1 0h3m-30 1h2m2 0h2m3 0h2m1 0h2m1 0h2m2 0h1m1 0h2m1 0h1m1 0h3m2 0h1m-33 1h1m2 0h2m5 0h1m6 0h1m1 0h2m1 0h2m1 0h3m1 0h2m1 0h1m-27 1h4m3 0h1m1 0h3m3 0h1m3 0h4m1 0h2m-32 1h1m2 0h3m4 0h1m3 0h1m2 0h2m1 0h2m2 0h2m1 0h4m-30 1h4m1 0h2m4 0h2m2 0h1m3 0h1m1 0h4m1 0h3m1 0h1m-32 1h3m2 0h1m1 0h1m1 0h1m3 0h3m1 0h5m1 0h1m1 0h3m2 0h1m1 0h1m-33 1h1m2 0h4m2 0h3m3 0h2m1 0h1m2 0h1m7 0h1m1 0h1m-32 1h1m3 0h2m2 0h1m1 0h3m2 0h1m4 0h2m7 0h3m-32 1h1m1 0h6m1 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h6m1 0h1m-24 1h1m1 0h1m1 0h2m2 0h1m2 0h3m1 0h2m3 0h1m1 0h3m-33 1h7m2 0h1m3 0h1m1 0h2m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m1 0h3m1 0h1m1 0h2m3 0h1m1 0h4m3 0h5m-33 1h1m1 0h3m1 0h1m1 0h2m2 0h1m5 0h1m1 0h1m1 0h1m1 0h6m-30 1h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h3m2 0h3m2 0h2m2 0h1m1 0h3m-33 1h1m1 0h3m1 0h1m1 0h3m3 0h1m2 0h2m2 0h1m4 0h2m1 0h1m-30 1h1m5 0h1m2 0h2m2 0h1m2 0h1m3 0h4m4 0h3m-31 1h7m1 0h3m3 0h1m2 0h1m1 0h2m1 0h3m2 0h1m3 0h1"/></svg>Lernpfad öffnen<br>und messen</div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Messen:</b> Im Lernpfad unter „2 · Entdecken“, Teil E, den Versuch starten und die Zeiten der Lichtschranken ablesen.</div>
+ <div><b class="n">2</b><b>Auswerten:</b> Zeiten hier eintragen, <f-m>v</f-m>, <f-m>p</f-m> und die Summen berechnen.</div>
+ <div><b class="n">3</b><b>Prüfen:</b> Werte im Lernpfad in die Messtabelle eingeben und <b>online geprüft</b> ankreuzen.</div>
+</div>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Frage</span><span class="t">Bleibt die Summe der Impulse bei einem Stoß erhalten?</span></div>
+ <div class="ab">
+  <p><b>Aufbau:</b> Zwei Wagen stehen auf einer Fahrbahn, die fast reibungsfrei ist. Wagen 2 ruht zwischen Lichtschranke 1 und Lichtschranke 2. Auf jedem Wagen steckt eine Fahne der Breite <f-m>b = 0,1 m</f-m>.</p>
+  <ol class="ablauf">
+   <li>Eine Feder schießt Wagen 1 nach rechts. Er fährt durch Lichtschranke 1 und stößt gegen Wagen 2.</li>
+   <li>Jede Lichtschranke misst die <b>Dunkelzeit</b> <f-m>t</f-m>, in der eine Fahne den Lichtstrahl unterbricht. Fährt ein Wagen ein zweites Mal hindurch, misst sie eine zweite Zeit.</li>
+   <li>Schau in der Animation genau, welcher Wagen wann durch welche Lichtschranke fährt, und ordne die Zeiten zu.</li>
+   <li>Positive Richtung: nach rechts. Fährt ein Wagen nach links, ist seine Geschwindigkeit <b>negativ</b>. Bleibt er stehen, ist <f-m>u = 0</f-m>.</li>
+  </ol>
+  <p class="klein">Rechne <f-m>v = b : t</f-m> und <f-m>p = m · v</f-m>. Runde Geschwindigkeiten auf zwei, Impulse auf drei Nachkommastellen. Vor dem Stoß ruht Wagen 2: <f-m>v<sub>2</sub> = 0</f-m>, <f-m>p<sub>2</sub> = 0</f-m>.</p>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">V1</span><span class="t">elastisch · <f-m>m<sub>1</sub> = 0,4 kg</f-m>, <f-m>m<sub>2</sub> = 0,4 kg</f-m></span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <table class="mt"><colgroup><col class="w"><col class="m"><col><col><col><col><col><col></colgroup>
+   <tr><th rowspan="2">Wagen</th><th rowspan="2"><f-m>m</f-m><small>kg</small></th><th colspan="3">vor dem Stoß</th><th colspan="3">nach dem Stoß</th></tr>
+   <tr><th><f-m>t</f-m><small>s</small></th><th><f-m>v</f-m><small>m/s</small></th><th><f-m>p</f-m><small>kg·m/s</small></th><th><f-m>t</f-m>′<small>s</small></th><th><f-m>u</f-m><small>m/s</small></th><th><f-m>p</f-m>′<small>kg·m/s</small></th></tr>
+   <tr><td class="k">1</td><td>0,4</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+   <tr><td class="k">2</td><td>0,4</td><td class="f">–</td><td class="f">0</td><td class="f">0</td><td></td><td></td><td></td></tr>
+   <tr><td class="k" colspan="4">Summe der Impulse</td><td></td><td colspan="2"></td><td></td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">V2</span><span class="t">elastisch · <f-m>m<sub>1</sub> = 0,8 kg</f-m>, <f-m>m<sub>2</sub> = 0,4 kg</f-m></span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <table class="mt"><colgroup><col class="w"><col class="m"><col><col><col><col><col><col></colgroup>
+   <tr><th rowspan="2">Wagen</th><th rowspan="2"><f-m>m</f-m><small>kg</small></th><th colspan="3">vor dem Stoß</th><th colspan="3">nach dem Stoß</th></tr>
+   <tr><th><f-m>t</f-m><small>s</small></th><th><f-m>v</f-m><small>m/s</small></th><th><f-m>p</f-m><small>kg·m/s</small></th><th><f-m>t</f-m>′<small>s</small></th><th><f-m>u</f-m><small>m/s</small></th><th><f-m>p</f-m>′<small>kg·m/s</small></th></tr>
+   <tr><td class="k">1</td><td>0,8</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+   <tr><td class="k">2</td><td>0,4</td><td class="f">–</td><td class="f">0</td><td class="f">0</td><td></td><td></td><td></td></tr>
+   <tr><td class="k" colspan="4">Summe der Impulse</td><td></td><td colspan="2"></td><td></td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">V3</span><span class="t">unelastisch · <f-m>m<sub>1</sub> = 0,4 kg</f-m>, <f-m>m<sub>2</sub> = 0,4 kg</f-m></span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <table class="mt"><colgroup><col class="w"><col class="m"><col><col><col><col><col><col></colgroup>
+   <tr><th rowspan="2">Wagen</th><th rowspan="2"><f-m>m</f-m><small>kg</small></th><th colspan="3">vor dem Stoß</th><th colspan="3">nach dem Stoß</th></tr>
+   <tr><th><f-m>t</f-m><small>s</small></th><th><f-m>v</f-m><small>m/s</small></th><th><f-m>p</f-m><small>kg·m/s</small></th><th><f-m>t</f-m>′<small>s</small></th><th><f-m>u</f-m><small>m/s</small></th><th><f-m>p</f-m>′<small>kg·m/s</small></th></tr>
+   <tr><td class="k">1</td><td>0,4</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+   <tr><td class="k">2</td><td>0,4</td><td class="f">–</td><td class="f">0</td><td class="f">0</td><td></td><td></td><td></td></tr>
+   <tr><td class="k" colspan="4">Summe der Impulse</td><td></td><td colspan="2"></td><td></td></tr>
+  </table>
+  <div class="teil"><b>+</b><span>Berechne auch die Bewegungsenergie <f-m>E = ½ · m · v</f-m><sup>2</sup> vor und nach dem Stoß.</span></div>
+  <div class="karo" style="height:12mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld"><f-m>E<sub>vorher</sub></f-m> = <i></i> J</span><span class="feld"><f-m>E<sub>nachher</sub></f-m> = <i></i> J</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">V4</span><span class="t">elastisch · <f-m>m<sub>1</sub> = 0,4 kg</f-m>, <f-m>m<sub>2</sub> = 1,2 kg</f-m></span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p class="klein" style="margin:0 0 1mm">Achtung: Wagen 1 prallt zurück und fährt ein zweites Mal durch Lichtschranke 1. Vorzeichen beachten!</p>
+  <table class="mt"><colgroup><col class="w"><col class="m"><col><col><col><col><col><col></colgroup>
+   <tr><th rowspan="2">Wagen</th><th rowspan="2"><f-m>m</f-m><small>kg</small></th><th colspan="3">vor dem Stoß</th><th colspan="3">nach dem Stoß</th></tr>
+   <tr><th><f-m>t</f-m><small>s</small></th><th><f-m>v</f-m><small>m/s</small></th><th><f-m>p</f-m><small>kg·m/s</small></th><th><f-m>t</f-m>′<small>s</small></th><th><f-m>u</f-m><small>m/s</small></th><th><f-m>p</f-m>′<small>kg·m/s</small></th></tr>
+   <tr><td class="k">1</td><td>0,4</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+   <tr><td class="k">2</td><td>1,2</td><td class="f">–</td><td class="f">0</td><td class="f">0</td><td></td><td></td><td></td></tr>
+   <tr><td class="k" colspan="4">Summe der Impulse</td><td></td><td colspan="2"></td><td></td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Auftrag 9</span><span class="t">Ergebnis</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Vergleiche in allen vier Versuchen die Summe der Impulse vor und nach dem Stoß. Formuliere das Ergebnis in einem Satz.</p>
+  <div class="zeilen" style="height:7.5mm"></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Auftrag 10</span><span class="t">Fehlerbetrachtung</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <div class="teil"><b></b><span><span class="beg">✍ Begründe:</span> Warum sind die Summen der Impulse vorher und nachher nicht genau gleich? Widerlegt das den Impulserhaltungssatz?</span></div>
+  <div class="zeilen" style="height:22.5mm"></div>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+</body>
+</html>

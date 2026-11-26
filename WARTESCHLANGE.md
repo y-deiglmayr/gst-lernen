@@ -51,7 +51,7 @@ In Lernpfaden **keine Schülernamen** aus dem Material verwenden; Beispielperson
 | 34 | Druck Physik11 · 3 Kräftezerlegung | Physik11/kraeftezerlegung-*.pdf | offen | offen |
 | 35 | Druck Physik11 · 5 Newtonsche Gesetze und Reibung | Physik11/newton-reibung-*.pdf | offen | offen |
 | 36 | Druck Physik11 · Impuls 1 | Physik11/impuls-grundlagen-*.pdf | offen | offen |
-| 37 | Druck Physik11 · Impuls 2 | Physik11/stoesse-impulserhaltung-*.pdf | offen | offen |
+| 37 | Druck Physik11 · Impuls 2 (mit Versuchsprotokoll, Lernpfad mit Stoßexperiment) | Physik11/stoesse-impulserhaltung-*.pdf | fertig (26.11.2026, Thread „Stoßversuch“) | offen |
 | 38 | Druck Physik11 · Impuls 3 Rückstoß | Physik11/rueckstoss-*.pdf | offen | offen |
 | 39 | Druck Physik11 · Impuls 4 Kraftstoß | Physik11/kraftstoss-*.pdf | offen | offen |
 | 40 | Druck Physik11 · Impuls 5 Stöße quantitativ | Physik11/elastischer-stoss-*.pdf | offen | offen |

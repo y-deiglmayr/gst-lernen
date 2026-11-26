@@ -269,6 +269,23 @@ nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
 .lbl{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
 
 .wall{fill:light-dark(#8f9ea2,#5F6F74)}
+/* Stoßexperiment */
+.sx-fig{padding:4px}.sx-fig svg{display:block;width:100%;height:auto}
+.sx-bahn{fill:light-dark(#C9D2D3,#3a4648)}.sx-rad{fill:var(--ink)}.sx-gew{fill:light-dark(#3E4B4C,#ACBDC3)}
+.sx-fahne{fill:light-dark(#fff,#232b2d);stroke:var(--ink);stroke-width:1.4}.sx-ls{fill:light-dark(#5F6F74,#76989D)}
+.sx-strahl{stroke:var(--fr);stroke-width:3;stroke-dasharray:5 3}.sx-strahl.aus{stroke:var(--muted);opacity:.35}
+.sx-ctl{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center}
+.sx-uhren{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0}
+.sx-uhr{background:light-dark(#3E4B4C,#1b2122);color:#fff;border-radius:10px;padding:8px 14px;font-size:15px}
+.sx-uhr ol{margin:4px 0 0;padding-left:0;list-style-position:inside;font:700 20px/1.35 ui-monospace,Consolas,monospace;color:#FCBE00;min-height:1.35em}
+.sx-uhr li.leer{list-style:none;color:#ACBDC3}
+.sx-tbl input[inputmode=decimal]{width:86px;min-height:38px;padding:4px 6px;font-size:15px}
+.sx-tbl td{white-space:nowrap}
+#sxTabs .stars{font-size:13px}
+.musterfig{margin:6px 0 14px;max-width:520px}.musterfig svg{display:block;width:100%;height:auto}
+.musterfig .kl{font:italic 5px "KaTeX_Math",serif;fill:var(--ink)}.musterfig .tx{font:4px "Atkinson Hyperlegible",system-ui,sans-serif;fill:var(--muted)}
+.musterfig figcaption{font-size:14px;color:var(--muted)}
+@media(max-width:600px){.sx-uhr{padding:6px 10px;font-size:13px}.sx-uhr ol{font-size:17px}.sx-tbl input[inputmode=decimal]{width:70px}}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
 <link rel="stylesheet" href="/katex/katex.min.css">
@@ -295,10 +312,11 @@ QR groß zeigen</button></div>
 <svg viewBox="0 0 900 150" role="img" aria-label="Zwei Gleiter stoßen zusammen, die Summe der Impulse bleibt gleich"><line x1="20" y1="120" x2="880" y2="120" stroke="#c9d2d3" stroke-width="3"/><rect x="90" y="84" width="80" height="34" rx="5" fill="#5F6F74" stroke="#c9d2d3"/><rect x="250" y="84" width="60" height="34" rx="5" fill="#76989D" stroke="#c9d2d3"/><line x1="130" y1="101" x2="220" y2="101" stroke="#6aa5ff" stroke-width="6"/><path d="M236 101 l-18 -9 v18z" fill="#6aa5ff"/><circle cx="130" cy="101" r="4.5" fill="#6aa5ff" stroke="#3E4B4C" stroke-width="1.5"/><text x="170" y="76" fill="#6aa5ff" font-family="Source Sans 3,sans-serif" font-size="18" font-weight="700">p₁</text><text x="350" y="108" fill="#c9d2d3" font-family="Source Sans 3,sans-serif" font-size="30">→</text><rect x="420" y="84" width="80" height="34" rx="5" fill="#5F6F74" stroke="#c9d2d3"/><rect x="540" y="84" width="60" height="34" rx="5" fill="#76989D" stroke="#c9d2d3"/><line x1="460" y1="101" x2="485" y2="101" stroke="#6aa5ff" stroke-width="6"/><path d="M500 101 l-18 -9 v18z" fill="#6aa5ff"/><circle cx="460" cy="101" r="4.5" fill="#6aa5ff" stroke="#3E4B4C" stroke-width="1.5"/><line x1="570" y1="101" x2="626" y2="101" stroke="#c08cff" stroke-width="6"/><path d="M642 101 l-18 -9 v18z" fill="#c08cff"/><circle cx="570" cy="101" r="4.5" fill="#c08cff" stroke="#3E4B4C" stroke-width="1.5"/><text x="600" y="76" fill="#c08cff" font-family="Source Sans 3,sans-serif" font-size="18" font-weight="700">p₂′</text><text x="680" y="70" fill="#f1f4f4" font-family="Source Sans 3,sans-serif" font-size="24" font-weight="700">Σ p vorher</text><text x="680" y="100" fill="#f1f4f4" font-family="Source Sans 3,sans-serif" font-size="24" font-weight="700">= Σ p nachher</text></svg>
 <div class="phases">
 <a href="#einstieg"><b>1 · Einstieg</b><small>Was ist ein Stoß?</small></a>
-<a href="#entdecken"><b>2 · Entdecken</b><small>Stoß-Labor, Sonderfälle, Wagen-Versuche</small></a>
-<a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ zwei Heftaufschriebe</small></a>
+<a href="#entdecken"><b>2 · Entdecken</b><small>Stoß-Labor, Sonderfälle, Stoßexperiment</small></a>
+<a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ Heftaufschrieb</small></a>
 <a href="#ueben"><b>4 · Üben</b><small>8 Übungen von ★ bis ★★★</small></a>
 </div>
+<div class="ablinks"><a class="arbeitsblatt" href="/Physik11/stoesse-impulserhaltung-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigenen Skizzen · PDF, 2 Seiten</small></span></a><a class="arbeitsblatt" href="/Physik11/stoesse-impulserhaltung-versuch.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Versuchsprotokoll</b><small>Messtabellen zum Stoßexperiment · PDF, 2 Seiten</small></span></a><a class="arbeitsblatt" href="/Physik11/stoesse-impulserhaltung-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Aufgaben mit Platz für den Rechenweg · PDF, 3 Seiten</small></span></a></div>
 </div></header>
 
 <!-- ============ 1 EINSTIEG ============ -->
@@ -375,52 +393,87 @@ QR groß zeigen</button></div>
 <div class="row"><button class="st-back">← zurück</button><button class="primary st-next">nächster Schritt →</button></div></div>
 </div></div>
 
-<h3>E · Stoßversuche mit Wagen <span class="insheft">Arbeitsblatt</span></h3>
-<p class="intro">Zum Arbeitsblatt: Fahne <f-m>b = 0,1 m</f-m>, <f-m>v = b : t</f-m>. Trage deine Zeiten ein.</p>
-<div class="tabs" data-group="wv"><button aria-pressed="true" data-panel="wv1">V1 · elastisch</button><button aria-pressed="false" data-panel="wv2">V2 · elastisch, Wagen 1 doppelt</button><button aria-pressed="false" data-panel="wv3">V3 · unelastisch</button></div>
-<div class="card" id="wvCard"><div id="wv1" class="wvp" data-m1="0.4" data-m2="0.4" data-kind="el"></div><div id="wv2" class="wvp" data-m1="0.8" data-m2="0.4" data-kind="el" hidden></div><div id="wv3" class="wvp" data-m1="0.4" data-m2="0.4" data-kind="un" hidden></div></div>
+<h3 id="versuch">E · Experiment: Stöße auf der Fahrbahn messen</h3>
+<p class="intro">Jetzt prüfst du den Impulserhaltungssatz mit Messwerten. Zwei Wagen stoßen auf einer Fahrbahn zusammen. Auf jedem Wagen steckt eine <b>Fahne</b> der Breite <f-m>b = 0,1 m</f-m>. Fährt die Fahne durch eine <b>Lichtschranke</b>, ist der Lichtstrahl für die <b>Dunkelzeit</b> <f-m>t</f-m> unterbrochen. Daraus folgt die Geschwindigkeit <f-m>v = b : t</f-m>.</p>
+<a class="arbeitsblatt" href="/Physik11/stoesse-impulserhaltung-versuch.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Versuchsprotokoll zum Drucken</b><small>Aufbau, Messtabellen V1–V4 und Auswertung · PDF, 2 Seiten</small></span></a>
+<div class="card" id="sx">
+<div class="tag">Stoßexperiment · Fahrbahn mit zwei Lichtschranken</div>
+<span data-task="v1" hidden></span><span data-task="v2" hidden></span><span data-task="v3" hidden></span><span data-task="v4" hidden></span>
+<div class="tabs" id="sxTabs" role="group" aria-label="Versuch wählen"><button aria-pressed="true" data-v="V1" data-for="v1">V1 · elastisch</button><button aria-pressed="false" data-v="V2" data-for="v2">V2 · elastisch, Wagen 1 doppelt so schwer</button><button aria-pressed="false" data-v="V3" data-for="v3">V3 · unelastisch</button><button aria-pressed="false" data-v="V4" data-for="v4">V4 · Wagen 2 dreimal so schwer <span class="stars">★★★</span></button></div>
+<p class="given" id="sxGiven"></p>
+<div class="fig sx-fig"><svg id="sxSvg" viewBox="0 0 760 210" role="img" aria-label="Fahrbahn mit Wagen 1 links, Lichtschranke 1, ruhendem Wagen 2 und Lichtschranke 2"></svg></div>
+<div class="sx-ctl">
+<div class="toggles" id="sxStufe" role="radiogroup" aria-label="Abschussfeder"><span class="caption" style="margin:0">Abschussfeder:</span><label><input type="radio" name="sxs" value="1">schwach</label><label><input type="radio" name="sxs" value="2" checked>mittel</label><label><input type="radio" name="sxs" value="3">stark</label></div>
+<div class="row"><button class="primary" id="sxGo">▶ Wagen 1 abschießen</button><button id="sxRe">Zurücksetzen</button></div>
+</div>
+<div class="sx-uhren" aria-live="polite"><div class="sx-uhr"><b>Lichtschranke 1</b><ol id="sxLS1"></ol></div><div class="sx-uhr"><b>Lichtschranke 2</b><ol id="sxLS2"></ol></div></div>
+<p class="caption">Modell: Die Fahrbahn ist praktisch reibungsfrei, der Stoß ist zentral. Wie im echten Versuch streuen die Messwerte etwas: Die Abschussfeder ist nicht immer gleich stark gespannt, die Lichtschranke misst auf 1 ms genau. Wagen 2 ruht vor dem Stoß zwischen den Lichtschranken.</p>
+</div>
+
+<div class="card" id="sxMess"><div class="tag">Auftrag 8 · Messtabelle ausfüllen <span class="stars" id="sxStars">★★</span> <span class="afb" id="sxAfb">AFB II</span></div>
+<p>Führe den Versuch durch und übertrage die Dunkelzeiten in die Tabelle (oder ins Versuchsprotokoll). Berechne dann <f-m>v = b : t</f-m> und <f-m>p = m · v</f-m>. <b>Achte auf die Richtung:</b> Fährt ein Wagen nach links, ist seine Geschwindigkeit negativ. Bleibt ein Wagen stehen, trägst du bei <f-m>t</f-m>′ nichts und bei <f-m>u</f-m> eine 0 ein.</p>
+<div class="scroll"><table class="lab-tbl sx-tbl" id="sxTbl"></table></div>
+<div class="row"><button class="primary" id="sxCheck">Prüfen</button><button data-hint="sx">Tipp</button></div>
+<p class="fb" id="sxFb"></p><p class="tip" id="sxTip"></p>
+<div class="hintsrc" data-for="sx" hidden><p>Ordne die Zeiten zu: Schau in der Animation, welcher Wagen zuerst durch welche Lichtschranke fährt. Die Liste zeigt die Zeiten in dieser Reihenfolge.</p><p>Beispiel: <f-m>t = 0,250 s</f-m> ergibt <f-m>v = 0,1 m : 0,250 s = 0,40 m/s</f-m>. Mit <f-m>m = 0,4 kg</f-m> folgt <f-m>p = 0,4 kg · 0,40 m/s = 0,16 kg·m/s</f-m>.</p><p>Runde Geschwindigkeiten auf zwei und Impulse auf drei Nachkommastellen. Kleine Rundungsabweichungen sind erlaubt.</p><p>Bei V4 prallt Wagen 1 zurück und fährt ein zweites Mal durch Lichtschranke 1. Seine Geschwindigkeit <f-m>u<sub>1</sub></f-m> und sein Impuls sind dann negativ.</p></div>
+</div>
+
+<div class="two"><div>
+<div class="card"><div class="tag">Auftrag 9 · Was zeigen deine Messungen? <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<p>Vergleiche in allen Versuchen die Summe der Impulse vor und nach dem Stoß.</p>
+<div class="part" data-task="a6"><div class="mc" data-correct="b" data-task="a6" data-tipp="Schau in deiner Tabelle auf die Zeile Summe und auf die Abweichung in Prozent."><button data-k="a" data-fb="Die Abweichung beträgt nur wenige Prozent. Das liegt an der Messgenauigkeit, nicht an einem Impulsverlust.">Nach dem Stoß ist der Gesamtimpuls deutlich kleiner.</button><button data-k="b" data-fb="Richtig! Im Rahmen der <b>Messgenauigkeit</b> bleibt der <b>Gesamtimpuls</b> bei allen Stößen erhalten.">Die Summe der Impulse ist vorher und nachher fast gleich, bei elastischen und unelastischen Stößen.</button><button data-k="c" data-fb="Schau dir V3 an: Auch beim unelastischen Stoß ist die Summe vorher und nachher fast gleich.">Nur beim elastischen Stoß bleibt der Gesamtimpuls erhalten.</button><button data-k="d" data-fb="Vergleiche V2 oder V4: Die einzelnen Geschwindigkeiten ändern sich, gleich bleibt die Summe der Impulse <f-m>m · v</f-m>.">Die Summe der Geschwindigkeiten bleibt gleich.</button><p class="fb"></p></div></div>
+</div>
+</div><div>
+<div class="card"><div class="tag">Auftrag 10 · Fehlerbetrachtung <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
+<div class="part why" data-task="a7"><h4>✍ Begründe, warum die Summen der Impulse vorher und nachher nicht genau gleich sind, und ob das den Impulserhaltungssatz widerlegt.</h4>
+<textarea data-store="a7" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
+<label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
+<div class="row"><button class="why-show">Mit Musterbegründung vergleichen</button></div>
+<div class="sol" hidden><p><b>Musterbegründung:</b> Jede Messung hat <b>Messunsicherheiten</b>: Die Lichtschranke misst nur auf 1 ms genau, die Fahne ist nicht exakt 0,1 m breit und beim Rechnen wird <b>gerundet</b>. Im echten Versuch kommt etwas <b>Reibung</b> dazu. Die Abweichung beträgt nur wenige <b>Prozent</b> und ist mal positiv, mal negativ. Deshalb widerlegt sie den Impulserhaltungssatz nicht: Er gilt im Rahmen der <b>Messgenauigkeit</b>.</p><p class="caption" style="margin:0 0 6px">Vergleiche: Hast du die fett gedruckten Begriffe verwendet? Ergänze sonst deine Begründung.</p><div class="row"><button class="why-ok">Meine Begründung enthält das Wichtigste</button></div></div></div>
+</div>
+</div></div>
 </div></section>
 
 <!-- ============ 3 FESTHALTEN ============ -->
 <section class="band" id="festhalten"><div class="wrap">
 <h2>3 · Festhalten</h2>
 <div class="card"><div class="tag">Lückentext · Stöße und Impulserhaltung <span class="stars">★</span> <span class="afb">AFB I</span></div>
-<div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommen die beiden Heftaufschriebe."><div class="cloze">Bei einem Stoß treffen mindestens zwei Körper mit unterschiedlichen Impulsen aufeinander. Beim <select data-a="elastischen"><option value="">…</option><option>elastischen</option><option>unelastischen</option></select> Stoß bleibt die Bewegungsenergie erhalten, die Körper prallen voneinander ab. Beim <select data-a="unelastischen"><option value="">…</option><option>elastischen</option><option>unelastischen</option></select> Stoß wird Bewegungsenergie in thermische Energie und Verformung umgewandelt. Beim total unelastischen Stoß <select data-a="haften die Körper zusammen"><option value="">…</option><option>haften die Körper zusammen</option><option>bleiben beide Körper stehen</option><option>tauschen die Körper ihre Geschwindigkeiten</option></select>. Wirken keine äußeren Kräfte, bleibt die <select data-a="Summe der Impulse"><option value="">…</option><option>Summe der Impulse</option><option>Geschwindigkeit jedes Körpers</option><option>Summe der Geschwindigkeiten</option></select> konstant. Das ist der <select data-a="Impulserhaltungssatz"><option value="">…</option><option>Impulserhaltungssatz</option><option>Energieerhaltungssatz</option><option>Trägheitssatz</option></select>.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+<div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommt der Heftaufschrieb."><div class="cloze">Bei einem Stoß treffen mindestens zwei Körper mit unterschiedlichen Impulsen aufeinander. Beim <select data-a="elastischen"><option value="">…</option><option>elastischen</option><option>unelastischen</option></select> Stoß bleibt die Bewegungsenergie erhalten, die Körper prallen voneinander ab. Beim <select data-a="unelastischen"><option value="">…</option><option>elastischen</option><option>unelastischen</option></select> Stoß wird Bewegungsenergie in thermische Energie und Verformung umgewandelt. Beim total unelastischen Stoß <select data-a="haften die Körper zusammen"><option value="">…</option><option>haften die Körper zusammen</option><option>bleiben beide Körper stehen</option><option>tauschen die Körper ihre Geschwindigkeiten</option></select>. Wirken keine äußeren Kräfte, bleibt die <select data-a="Summe der Impulse"><option value="">…</option><option>Summe der Impulse</option><option>Geschwindigkeit jedes Körpers</option><option>Summe der Geschwindigkeiten</option></select> konstant. Das ist der <select data-a="Impulserhaltungssatz"><option value="">…</option><option>Impulserhaltungssatz</option><option>Energieerhaltungssatz</option><option>Trägheitssatz</option></select>.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
 </div>
 
-<div class="heftbox" id="heft" data-task="heft1"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB 1</b><small>Vollständig ins Heft übernehmen, die Skizzen zu den Sonderfällen abzeichnen</small></div>
+<a class="arbeitsblatt" href="/Physik11/stoesse-impulserhaltung-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigenen Skizzen – ausdrucken, ausfüllen, hier vergleichen · PDF, 2 Seiten</small></span></a>
+<details class="reveal" id="heft"><summary>Heftaufschrieb 3.1 und 3.2 · Stöße und Impulserhaltung (aufklappen)</summary>
 <div class="heft">
 <h3>3.1 Stoßprozesse</h3>
-<p>Ein Stoßprozess tritt auf, wenn mindestens zwei Körper mit unterschiedlichen Impulsen aufeinandertreffen. Man unterscheidet zwei Stoßprozesse:</p>
-<ol><li>Der <b>elastische Stoß</b>: Die Bewegungsenergie bleibt erhalten. Die Körper „prallen“ voneinander ab.</li>
-<li>Der <b>unelastische Stoß</b>: Bewegungsenergie wird in thermische Energie bzw. Verformung umgewandelt.<br>a) <b>Total unelastischer Stoß</b>: Beide Körper „kleben“ zusammen.</li></ol>
-<p><b>Beim elastischen Stoß gibt es drei Sonderfälle</b> (vorher | nachher):</p>
-<div class="fig2"><div><p>1. <f-m>m<sub>1</sub> = m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> ≠ 0</f-m>; <f-m>v<sub>2</sub> = 0</f-m></p><svg id="sf1" viewBox="0 0 300 90"></svg><p>Die Körper tauschen ihre Geschwindigkeiten: <f-m>u<sub>1</sub> = 0</f-m>, <f-m>u<sub>2</sub> = v<sub>1</sub></f-m></p></div>
-<div><p>2. <f-m>m<sub>1</sub> = m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> = −v<sub>2</sub></f-m></p><svg id="sf2" viewBox="0 0 300 90"></svg><p>Beide prallen zurück: <f-m>u<sub>1</sub> = −v<sub>1</sub></f-m>, <f-m>u<sub>2</sub> = −v<sub>2</sub></f-m></p></div>
-<div><p>3. <f-m>m<sub>1</sub> ≪ m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> ≠ 0</f-m>; <f-m>v<sub>2</sub> = 0</f-m></p><svg id="sf3" viewBox="0 0 300 90"></svg><p>Körper 1 wird reflektiert: <f-m>u<sub>1</sub> = −v<sub>1</sub></f-m>, <f-m>u<sub>2</sub> = 0</f-m></p></div></div>
-</div>
-<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft1">Heftaufschrieb 1 übernommen</button></div></div>
-
-<div class="heftbox" id="heft-b" data-task="heft2"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB 2</b><small>Impulserhaltung mit Beispielaufgabe ins Heft übernehmen</small></div>
-<div class="heft">
-<h3>Impulserhaltung</h3>
-<p>Wenn zwei Körper (ohne äußere Einflüsse) miteinander wechselwirken, bleibt die <b>Summe ihrer Impulse konstant</b>!</p>
-<p><b>Der Impulserhaltungssatz</b> (<f-m>v</f-m>: vor dem Stoß, <f-m>u</f-m>: nach dem Stoß):</p>
-<p><span class="box"><f-m>m<sub>1</sub> · v⃗<sub>1</sub> + m<sub>2</sub> · v⃗<sub>2</sub> = m<sub>1</sub> · u⃗<sub>1</sub> + m<sub>2</sub> · u⃗<sub>2</sub></f-m></span></p>
-<p>Beim <b>total unelastischen</b> Stoß gilt demnach:</p>
-<p><span class="box"><f-m>m<sub>1</sub> · v⃗<sub>1</sub> + m<sub>2</sub> · v⃗<sub>2</sub> = (m<sub>1</sub> + m<sub>2</sub>) · u⃗</f-m></span></p>
-<p><b>Beispielaufgabe:</b> Aus vollem Lauf (21,6 km/h) springt ein Junge (55 kg) auf sein ruhendes Skateboard (5 kg).</p>
-<p>geg.: <f-m>m<sub>1</sub> = 55 kg</f-m>; <f-m>v<sub>1</sub> = 21,6 km/h = 6 m/s</f-m>; <f-m>m<sub>2</sub> = 5 kg</f-m>; <f-m>v<sub>2</sub> = 0</f-m> &nbsp; ges.: <f-m>u</f-m></p>
-<p class="calc"><f-m>u = (m<sub>1</sub> · v<sub>1</sub> + m<sub>2</sub> · v<sub>2</sub>) : (m<sub>1</sub> + m<sub>2</sub>) = (55 kg · 6 m/s + 5 kg · 0) : 60 kg = 5,5 m/s</f-m></p>
-<p>Energie: <f-m>E<sub>vorher</sub> = 990 J</f-m>, <f-m>E<sub>nachher</sub> = 907,5 J</f-m>, also werden <f-m>ΔE = 82,5 J</f-m> entwertet.</p>
-</div>
-<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft2">Heftaufschrieb 2 übernommen</button></div></div>
+<p>Ein Stoßprozess tritt auf, wenn mindestens zwei Körper mit unterschiedlichen <b>Impulsen</b> aufeinandertreffen. Man unterscheidet zwei Stoßprozesse:</p>
+<ol><li>Der <b>elastische</b> Stoß: Die <b>Bewegungsenergie</b> bleibt erhalten. Die Körper „prallen“ voneinander ab.</li>
+<li>Der <b>unelastische</b> Stoß: Bewegungsenergie wird in <b>thermische Energie</b> bzw. Verformung umgewandelt.<br>Beim <b>total unelastischen</b> Stoß „kleben“ beide Körper zusammen.</li></ol>
+<p>Beim elastischen Stoß gibt es drei Sonderfälle (vorher | nachher):</p>
+<div class="fig2"><div><p>1. <f-m>m<sub>1</sub> = m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> ≠ 0</f-m>; <f-m>v<sub>2</sub> = 0</f-m></p><svg id="sf1" viewBox="0 0 300 90" role="img" aria-label="Musterskizze Sonderfall 1"></svg><p>Die Körper <b>tauschen</b> ihre Geschwindigkeiten: <f-m>u<sub>1</sub> = <b>0</b></f-m>, <f-m>u<sub>2</sub> = <b>v<sub>1</sub></b></f-m></p></div>
+<div><p>2. <f-m>m<sub>1</sub> = m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> = −v<sub>2</sub></f-m></p><svg id="sf2" viewBox="0 0 300 90" role="img" aria-label="Musterskizze Sonderfall 2"></svg><p>Beide prallen <b>zurück</b>: <f-m>u<sub>1</sub> = <b>−v<sub>1</sub></b></f-m>, <f-m>u<sub>2</sub> = <b>−v<sub>2</sub></b></f-m></p></div>
+<div><p>3. <f-m>m<sub>1</sub> ≪ m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> ≠ 0</f-m>; <f-m>v<sub>2</sub> = 0</f-m></p><svg id="sf3" viewBox="0 0 300 90" role="img" aria-label="Musterskizze Sonderfall 3"></svg><p>Körper 1 wird <b>reflektiert</b>: <f-m>u<sub>1</sub> = <b>−v<sub>1</sub></b></f-m>, <f-m>u<sub>2</sub> = <b>0</b></f-m></p></div></div>
+<h3>3.2 Impulserhaltung</h3>
+<p><b>Versuch:</b> Wagen 1 stößt auf einer Fahrbahn gegen den ruhenden Wagen 2. Die Fahne (Breite <f-m>b</f-m>) auf jedem Wagen unterbricht eine Lichtschranke für die <b>Dunkelzeit</b> <f-m>t</f-m>. Daraus folgen die Geschwindigkeit <f-m>v = <b>b : t</b></f-m> und der Impuls <f-m>p = <b>m · v</b></f-m>.</p>
+<figure class="musterfig"><svg viewBox="0 0 160 50" role="img" aria-label="Musterskizze: Fahrbahn, links Wagen 1 mit Fahne und Geschwindigkeitspfeil nach rechts, dann Lichtschranke 1, ruhender Wagen 2 mit Fahne, rechts Lichtschranke 2."><line x1="4" y1="44" x2="156" y2="44" style="stroke:var(--ink)" stroke-width=".8"/><rect x="12" y="35" width="22" height="7" rx="1" style="fill:#5F6F74;stroke:var(--ink)" stroke-width=".4"/><circle cx="16" cy="43" r="1.2" style="fill:var(--ink)"/><circle cx="30" cy="43" r="1.2" style="fill:var(--ink)"/><line x1="23" y1="35" x2="23" y2="29" style="stroke:var(--ink)" stroke-width=".4"/><rect x="19" y="24" width="8" height="5" style="fill:var(--paper);stroke:var(--ink)" stroke-width=".5"/><path d="M19 21.5h8" style="stroke:var(--muted)" stroke-width=".4"/><text x="23" y="20.5" text-anchor="middle" class="kl">b</text><line x1="36" y1="38.5" x2="47" y2="38.5" style="stroke:var(--f1)" stroke-width="1"/><path d="M49 38.5 l-3 -1.6 v3.2z" style="fill:var(--f1)"/><text x="42" y="35.5" text-anchor="middle" class="kl" style="fill:var(--f1)">v<tspan dy="1" font-size="3.4">1</tspan></text><rect x="56" y="19" width="4" height="4" style="fill:var(--muted)"/><rect x="56" y="30" width="4" height="13" style="fill:var(--muted)"/><line x1="58" y1="23" x2="58" y2="30" style="stroke:var(--fr)" stroke-width=".6" stroke-dasharray="1 .7"/><text x="58" y="16" text-anchor="middle" class="tx">LS 1</text><rect x="80" y="35" width="22" height="7" rx="1" style="fill:#76989D;stroke:var(--ink)" stroke-width=".4"/><circle cx="84" cy="43" r="1.2" style="fill:var(--ink)"/><circle cx="98" cy="43" r="1.2" style="fill:var(--ink)"/><line x1="91" y1="35" x2="91" y2="29" style="stroke:var(--ink)" stroke-width=".4"/><rect x="87" y="24" width="8" height="5" style="fill:var(--paper);stroke:var(--ink)" stroke-width=".5"/><text x="88" y="13" text-anchor="middle" class="kl">v<tspan dy="1" font-size="3.4">2</tspan></text><text x="91" y="13" class="tx">= 0</text><rect x="124" y="19" width="4" height="4" style="fill:var(--muted)"/><rect x="124" y="30" width="4" height="13" style="fill:var(--muted)"/><line x1="126" y1="23" x2="126" y2="30" style="stroke:var(--fr)" stroke-width=".6" stroke-dasharray="1 .7"/><text x="126" y="16" text-anchor="middle" class="tx">LS 2</text><text x="23" y="49.5" text-anchor="middle" class="tx">Wagen 1</text><text x="91" y="49.5" text-anchor="middle" class="tx">Wagen 2</text></svg><figcaption>Musterskizze des Versuchsaufbaus</figcaption></figure>
+<p><b>Ergebnis:</b> Die einzelnen Impulse ändern sich. Die <b>Summe</b> der Impulse ist vor und nach dem Stoß im Rahmen der <b>Messgenauigkeit</b> gleich, beim elastischen und beim unelastischen Stoß.</p>
+<p>Wenn zwei Körper ohne äußere Einflüsse miteinander wechselwirken, bleibt die Summe ihrer Impulse <b>konstant</b>.</p>
+<p><b>Impulserhaltungssatz</b> (<f-m>v</f-m>: vor dem Stoß, <f-m>u</f-m>: nach dem Stoß):</p>
+<p><span class="box"><f-m>m<sub>1</sub> · v⃗<sub>1</sub> + m<sub>2</sub> · v⃗<sub>2</sub> = <b>m<sub>1</sub> · u⃗<sub>1</sub> + m<sub>2</sub> · u⃗<sub>2</sub></b></f-m></span></p>
+<p>Beim total unelastischen Stoß gilt:</p>
+<p><span class="box"><f-m>m<sub>1</sub> · v⃗<sub>1</sub> + m<sub>2</sub> · v⃗<sub>2</sub> = <b>(m<sub>1</sub> + m<sub>2</sub>) · u⃗</b></f-m></span></p>
+<p><b>Richtung:</b> Eine Richtung wird als positiv festgelegt. Geschwindigkeiten und Impulse in die Gegenrichtung sind <b>negativ</b>.</p>
+<p><b>Beispielaufgabe:</b> Aus vollem Lauf (21,6 km/h) springt ein Junge (55 kg) auf sein ruhendes Skateboard (5 kg). Wie schnell fährt er los? Wie viel Energie wird entwertet?</p>
+<p><b>Gegeben:</b> <f-m>m<sub>1</sub> = 55 kg</f-m>; <f-m>v<sub>1</sub> = 21,6 km/h = 6 m/s</f-m>; <f-m>m<sub>2</sub> = 5 kg</f-m>; <f-m>v<sub>2</sub> = 0</f-m> &nbsp; <b>Gesucht:</b> <f-m>u</f-m>, <f-m>ΔE</f-m></p>
+<p><b>Rechnung:</b> total unelastischer Stoß<br><f-m>u = (m<sub>1</sub> · v<sub>1</sub> + m<sub>2</sub> · v<sub>2</sub>) : (m<sub>1</sub> + m<sub>2</sub>) = (55 kg · 6 m/s + 5 kg · 0) : 60 kg = 5,5 m/s</f-m><br><f-m>E<sub>vorher</sub> = ½ · 55 kg · (6 m/s)</f-m><sup>2</sup> = 990 J; <f-m>E<sub>nachher</sub> = ½ · 60 kg · (5,5 m/s)</f-m><sup>2</sup> = 907,5 J; <f-m>ΔE = 82,5 J</f-m></p>
+<p><b>Antwort:</b> Der Junge fährt mit 5,5 m/s los. 82,5 J Bewegungsenergie werden in thermische Energie umgewandelt.</p>
+</div></details>
 </div></section>
 
 <!-- ============ 4 ÜBEN ============ -->
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
 <p class="intro"><b>Erst im Heft rechnen (Skizze, Stoßart, positive Richtung), dann hier prüfen.</b></p>
+<a class="arbeitsblatt" href="/Physik11/stoesse-impulserhaltung-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt zum Drucken</b><small>Übung 1–8 auf dem Blatt rechnen, hier prüfen · PDF, 3 Seiten</small></span></a>
 <div class="lvlrow"><span>★ / AFB I: Grundlagen anwenden</span><span>★★ / AFB II: Zusammenhänge herstellen</span><span>★★★ / AFB III: übertragen, beurteilen, begründen</span></div>
 
 <div class="card"><div class="tag">Übung 1 · Billard <span class="stars">★</span> <span class="afb">AFB I</span></div>
@@ -719,22 +772,88 @@ const stoss=(m1,v1,m2,v2,el)=>{if(!el){const u=(m1*v1+m2*v2)/(m1+m2);return [u,u
  $('#sf2').innerHTML=ball(30,'m₁')+ar(30,1,'v₁','var(--f1)')+ball(110,'m₂')+ar(110,-1,'v₂','var(--f2)')+sep+ball(190,'m₁')+ar(190,-1,'u₁','var(--f1)')+ball(260,'m₂')+ar(260,1,'u₂','var(--f2)');
  $('#sf3').innerHTML=ball(40,'m₁',10)+ar(40,1,'v₁','var(--f1)')+`<path d="M100 10 h30 v80 h-30z" class="wall"/>`+`<text x="115" y="54" text-anchor="middle" class="txs">m₂</text>`+sep+ball(220,'m₁',10)+ar(220,-1,'u₁ = −v₁','var(--f1)')+`<path d="M258 10 h30 v80 h-30z" class="wall"/>`}
 
-/* ---------- Wagen-Versuche (Arbeitsblatt) ---------- */
-{const b=0.1,BSP={wv1:{t1:0.20,t1n:'',t2n:0.21},wv2:{t1:0.25,t1n:0.78,t2n:0.19},wv3:{t1:0.20,t12n:0.42}};
- $$('.wvp').forEach(el=>{const m1=+el.dataset.m1,m2=+el.dataset.m2,un=el.dataset.kind==='un',id=el.id;
-  const inp=(k,lab)=>`<div class="numq"><span>${lab}</span><span class="unit"><input type="text" inputmode="decimal" data-k="${k}" aria-label="${lab}"> s</span></div>`;
-  el.innerHTML=`<p class="given">Gegeben: <f-m>m<sub>1</sub> = ${fmtS(m1,1)} kg</f-m>, <f-m>m<sub>2</sub> = ${fmtS(m2,1)} kg</f-m>, <f-m>b = 0,1 m</f-m>, <f-m>v<sub>2</sub> = 0</f-m> (Wagen 2 ruht). ${un?'Die Wagen haften nach dem Stoß zusammen (Klett oder Knete).':'Federnde Puffer: elastischer Stoß.'}</p>`+
-   inp('t1','Zeit <f-m>t<sub>1</sub></f-m> (Wagen 1 vor dem Stoß):')+(un?inp('t12n','Zeit <f-m>t</f-m>′<sub><f-m>1+2</f-m></sub> (beide Wagen nach dem Stoß):'):inp('t1n','Zeit <f-m>t</f-m>′<sub>1</sub> (Wagen 1 nach dem Stoß, leer lassen, wenn er stehen bleibt):')+inp('t2n','Zeit <f-m>t</f-m>′<sub>2</sub> (Wagen 2 nach dem Stoß):'))+
-   `<div class="row"><button class="primary wv-calc">Auswerten</button><button class="wv-bsp">Beispielwerte eintragen</button></div><div class="wv-out"></div>`;
-  const out=el.querySelector('.wv-out'),get=k=>{const i=el.querySelector(`[data-k="${k}"]`);return i?num(i.value):NaN};
-  el.querySelector('.wv-bsp').onclick=()=>{const B=BSP[id];Object.keys(B).forEach(k=>{const i=el.querySelector(`[data-k="${k}"]`);if(i)i.value=B[k]===''?'':String(B[k]).replace('.',',')})};
-  el.querySelector('.wv-calc').onclick=()=>{const t1=get('t1');if(!(t1>0)){out.innerHTML='<p class="fb hint">Trage mindestens <f-m>t<sub>1</sub></f-m> ein.</p>';return}
-   const v1=b/t1;let u1,u2;if(un){const t=get('t12n');if(!(t>0)){out.innerHTML='<p class="fb hint">Trage die Zeit nach dem Stoß ein.</p>';return}u1=u2=b/t}else{const a=get('t1n'),c=get('t2n');u1=a>0?b/a:0;if(!(c>0)){out.innerHTML='<p class="fb hint">Trage t′<sub>2</sub> ein.</p>';return}u2=b/c}
-   const pv=m1*v1,pn=m1*u1+m2*u2,dev=Math.abs(pn-pv)/pv*100;
-   out.innerHTML=`<div class="scroll"><table class="lab-tbl"><tr><th></th><th>vorher: v in m/s</th><th>p in kg·m/s</th><th>nachher: u in m/s</th><th>p in kg·m/s</th></tr><tr><td class="tc1">Wagen 1</td><td>${fmt(v1,2)}</td><td>${fmt(pv,3)}</td><td>${fmt(u1,2)}</td><td>${fmt(m1*u1,3)}</td></tr><tr><td class="tc2">Wagen 2</td><td>0</td><td>0</td><td>${fmt(u2,2)}</td><td>${fmt(m2*u2,3)}</td></tr><tr><td class="tcg sum">Summe</td><td></td><td class="tcg sum">${fmt(pv,3)}</td><td></td><td class="tcg sum">${fmt(pn,3)}</td></tr></table></div>
-   <p class="fb ${dev<=10?'ok':'hint'}">Abweichung der Impulssummen: ${fmt(dev,1)} %. ${dev<=10?'Im Rahmen der Messgenauigkeit bleibt der Gesamtimpuls erhalten.':'Das ist recht viel. Prüfe die Messwerte (Fahne ganz durch die Lichtschranke? Reibung?).'}</p>`;
-   if(dev<=10)mark('a6')}});
- $$('.wvp').forEach(el=>el.dataset.task='a6')}
+/* ---------- Stoßexperiment: Fahrbahn mit Lichtschranken ---------- */
+{const B=0.1,LS=[0.55,1.30],X1=0.15,X2=0.95,D=0.17,XMIN=0.13,XMAX=1.67,SP=1.5;
+ const VS={V1:{m1:0.4,m2:0.4,el:true,txt:'Beide Wagen haben Federpuffer: elastischer Stoß.'},
+  V2:{m1:0.8,m2:0.4,el:true,txt:'Wagen 1 trägt zwei Zusatzmassen. Federpuffer: elastischer Stoß.'},
+  V3:{m1:0.4,m2:0.4,el:false,txt:'Klettband an den Puffern: Die Wagen haften nach dem Stoß zusammen (unelastischer Stoß).'},
+  V4:{m1:0.4,m2:1.2,el:true,txt:'Wagen 2 trägt vier Zusatzmassen. Federpuffer: elastischer Stoß.'}};
+ const MK=KEY+'-mess',IK=KEY+'-messin';let M={},IN={};
+ try{M=JSON.parse(localStorage.getItem(MK)||'{}')||{};IN=JSON.parse(localStorage.getItem(IK)||'{}')||{}}catch(e){}
+ const saveM=()=>{try{localStorage.setItem(MK,JSON.stringify(M));localStorage.setItem(IK,JSON.stringify(IN))}catch(e){}};
+ let cur='V1',run=false,anim=null,tNow=0,sim=null;
+ const svg=$('#sxSvg'),PX=x=>20+x*400;
+ const rnd=a=>1+(Math.random()*2-1)*a;
+ /* Bewegung: vor dem Stoß ruht Wagen 2, danach u1/u2; die Wagen halten an den Bahnenden an */
+ function simulate(v,tms){const c=VS[cur],[u1,u2]=stoss(c.m1,v,c.m2,0,c.el),tc=(X2-D-X1)/v;
+  const pos=t=>{if(t<=tc)return [X1+v*t,X2];const d=t-tc;let x2=Math.min(XMAX,X2+u2*d),x1=X2-D+u1*d;x1=Math.max(XMIN,Math.min(x1,x2-D));if(!c.el)x2=x1+D;return [x1,x2]};
+  /* Ereignisse: Vorderkante der Fahne erreicht die Lichtschranke, Dunkelzeit = b : |v| (gemessen auf 1 ms) */
+  const ev=[];const seg=(w,x0,t0,vv,t1)=>{if(Math.abs(vv)<1e-9)return;LS.forEach((L,i)=>{const front=vv>0?L-B/2:L+B/2,te=t0+(front-x0)/vv;if(te>=t0&&te<=t1){const dt=B/Math.abs(vv);ev.push({w,ls:i,te,dt,tm:Math.round(dt*rnd(0.015)*1000)/1000})}})};
+  const endT=(x0,uu,lim)=>uu>0?(lim-x0)/uu:uu<0?(x0-lim)/(-uu):0;
+  const x1c=X2-D,t2end=tc+endT(X2,u2,XMAX),t1end=u1>0?tc+endT(x1c,u1,XMAX-D):u1<0?tc+endT(x1c,u1,XMIN):tc;
+  seg(1,X1,0,v,tc);seg(1,x1c,tc,u1,t1end);seg(2,X2,tc,u2,t2end);
+  ev.sort((a,b)=>a.te-b.te);if(tms)ev.forEach((e,i)=>{if(tms[i]!==undefined)e.tm=tms[i]});
+  return {v,u1,u2,tc,pos,ev,T:Math.max(t1end,t2end,...ev.map(e=>e.te+e.dt))+0.4}}
+ function wagen(x,m,n,col){const cx=PX(x),w=64,k=Math.round((m-0.4)/0.2);let s='';
+  s+=`<rect x="${cx-w/2}" y="152" width="${w}" height="22" rx="4" style="fill:${col};stroke:var(--ink)" stroke-width="1.2"/>`;
+  s+=`<circle cx="${cx-19}" cy="178" r="5" class="sx-rad"/><circle cx="${cx+19}" cy="178" r="5" class="sx-rad"/>`;
+  for(let i=0;i<k;i++)s+=`<rect x="${cx-28+(i%2)*34}" y="${144-Math.floor(i/2)*8}" width="22" height="7" rx="1.5" class="sx-gew"/>`;
+  s+=`<line x1="${cx}" y1="152" x2="${cx}" y2="118" class="thin"/><rect x="${cx-20}" y="96" width="40" height="22" class="sx-fahne"/>`;
+  s+=`<text x="${cx}" y="168" text-anchor="middle" class="txs" style="fill:#fff;font-weight:700">${n}</text>`;
+  return s}
+ function draw(){const c=VS[cur];let x1=X1,x2=X2;const dark=[false,false];
+  if(sim){[x1,x2]=sim.pos(tNow);sim.ev.forEach(e=>{if(tNow>=e.te&&tNow<e.te+e.dt)dark[e.ls]=true})}
+  let s=`<rect x="12" y="184" width="736" height="8" rx="3" class="sx-bahn"/><rect x="14" y="138" width="10" height="46" class="wall"/><rect x="736" y="138" width="10" height="46" class="wall"/>`;
+  LS.forEach((L,i)=>{const X=PX(L);s+=`<rect x="${X-7}" y="70" width="14" height="22" rx="3" class="sx-ls"/><rect x="${X-7}" y="122" width="14" height="62" rx="3" class="sx-ls"/><line x1="${X}" y1="92" x2="${X}" y2="122" class="sx-strahl${dark[i]?' aus':''}"/><text x="${X}" y="60" text-anchor="middle" class="txb">LS ${i+1}</text>`});
+  s+=wagen(x1,c.m1,1,'#5F6F74')+wagen(x2,c.m2,2,'#76989D');
+  if(!sim||tNow<sim.tc)s+=`<text x="${PX(X2)}" y="88" text-anchor="middle" class="txs">ruht</text>`;
+  if(sim&&tNow>=sim.T-0.05)s+=`<text x="380" y="24" text-anchor="middle" class="txs">Messung fertig: Zeiten unten ablesen.</text>`;
+  svg.innerHTML=s}
+ function uhren(){const shown=sim?sim.ev.filter(e=>tNow>=e.te+e.dt):[];[0,1].forEach(i=>{const l=shown.filter(e=>e.ls===i);$('#sxLS'+(i+1)).innerHTML=l.length?l.map(e=>`<li>${fmt(e.tm,3)} s</li>`).join(''):'<li class="leer">– – –</li>'})}
+ const LBL={t1:'t vor dem Stoß, Wagen 1',v1:'v Wagen 1',p1:'p Wagen 1',t1n:'t′ nach dem Stoß, Wagen 1',u1:'u Wagen 1',p1n:'p′ Wagen 1',t2n:'t′ nach dem Stoß, Wagen 2',u2:'u Wagen 2',p2n:'p′ Wagen 2',ps:'Summe der Impulse vor dem Stoß',psn:'Summe der Impulse nach dem Stoß'};
+ function table(){const c=VS[cur],I=IN[cur]||{};
+  const inp=k=>`<input type="text" inputmode="decimal" data-k="${k}" value="${String(I[k]||'').replace(/["<>&]/g,'')}" aria-label="${LBL[k]}">`;
+  $('#sxTbl').innerHTML=`<tr><th rowspan="2">Wagen</th><th rowspan="2"><f-m>m</f-m><br><small>kg</small></th><th colspan="3">vor dem Stoß</th><th colspan="3">nach dem Stoß</th></tr>
+  <tr><th><f-m>t</f-m><br><small>s</small></th><th><f-m>v</f-m><br><small>m/s</small></th><th><f-m>p</f-m><br><small>kg·m/s</small></th><th><f-m>t</f-m>′<br><small>s</small></th><th><f-m>u</f-m><br><small>m/s</small></th><th><f-m>p</f-m>′<br><small>kg·m/s</small></th></tr>
+  <tr><td class="tc1">1</td><td>${fmtS(c.m1,1)}</td><td>${inp('t1')}</td><td>${inp('v1')}</td><td>${inp('p1')}</td><td>${inp('t1n')}</td><td>${inp('u1')}</td><td>${inp('p1n')}</td></tr>
+  <tr><td class="tc2">2</td><td>${fmtS(c.m2,1)}</td><td>–</td><td>0</td><td>0</td><td>${inp('t2n')}</td><td>${inp('u2')}</td><td>${inp('p2n')}</td></tr>
+  <tr><td class="tcg sum" colspan="4">Summe der Impulse</td><td>${inp('ps')}</td><td colspan="2"></td><td>${inp('psn')}</td></tr>`;
+  $$('#sxTbl input').forEach(i=>i.addEventListener('input',()=>{(IN[cur]=IN[cur]||{})[i.dataset.k]=i.value;i.className='';saveM()}))}
+ function stop(){if(anim)cancelAnimationFrame(anim);anim=null;run=false}
+ function clearFb(){const fb=$('#sxFb');fb.textContent='';fb.className='fb'}
+ function setV(v){cur=v;stop();sim=null;tNow=0;const c=VS[v];
+  $$('#sxTabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));
+  $('#sxGiven').innerHTML=`<b>${v}:</b> <f-m>m<sub>1</sub> = ${fmtS(c.m1,1)} kg</f-m>, <f-m>m<sub>2</sub> = ${fmtS(c.m2,1)} kg</f-m>, <f-m>v<sub>2</sub> = 0</f-m>, Fahnenbreite <f-m>b = 0,1 m</f-m>. ${c.txt}`;
+  $('#sxStars').textContent=v==='V4'?'★★★':'★★';$('#sxAfb').textContent=v==='V4'?'AFB III':'AFB II';
+  if(M[v]&&M[v].v>0){sim=simulate(M[v].v,M[v].tm);tNow=sim.T}
+  draw();uhren();table();clearFb()}
+ $$('#sxTabs button').forEach(b=>b.onclick=()=>setV(b.dataset.v));
+ $('#sxRe').onclick=()=>{stop();sim=null;tNow=0;draw();uhren()};
+ $('#sxGo').onclick=()=>{if(run)return;const st=+$('input[name=sxs]:checked').value,v=[0,0.30,0.42,0.55][st]*rnd(0.04);
+  sim=simulate(v);M[cur]={v,tm:sim.ev.map(e=>e.tm)};IN[cur]={};saveM();table();clearFb();
+  if(reduce){tNow=sim.T;draw();uhren();return}
+  run=true;const t0=performance.now();const f=t=>{tNow=Math.min(sim.T,(t-t0)/1000*SP);draw();uhren();if(tNow<sim.T)anim=requestAnimationFrame(f);else{run=false;anim=null}};anim=requestAnimationFrame(f)};
+ /* Prüfen: Sollwerte aus den eigenen Messwerten */
+ $('#sxCheck').onclick=()=>{const fb=$('#sxFb'),c=VS[cur],m=M[cur];
+  if(!m||!(m.v>0)){fb.className='fb hint';fb.innerHTML='Führe zuerst den Versuch durch: <b>▶ Wagen 1 abschießen</b>.';return}
+  const s=simulate(m.v,m.tm);
+  const find=(w,after)=>s.ev.find(e=>e.w===w&&(after?e.te>s.tc:e.te<s.tc));
+  const e1=find(1,false),e1n=find(1,true),e2n=find(2,true),sg=uu=>uu<0?-1:1;
+  const E={t1:e1.tm,v1:B/e1.tm,t1n:e1n?e1n.tm:null,u1:e1n?sg(s.u1)*B/e1n.tm:0,t2n:e2n.tm,u2:sg(s.u2)*B/e2n.tm};
+  E.p1=c.m1*E.v1;E.p1n=c.m1*E.u1;E.p2n=c.m2*E.u2;E.ps=E.p1;E.psn=E.p1n+E.p2n;
+  const TOL={t:[0,0.0015],v:[0.03,0.006],p:[0.03,0.0025]},MS={p1:c.m1,p1n:c.m1,p2n:c.m2,ps:c.m1,psn:c.m1+c.m2};/* Rundung von v darf sich auf p übertragen */
+  let ok=0,n=0,sign=false,swap=false;
+  $$('#sxTbl input').forEach(i=>{const k=i.dataset.k,raw=i.value.trim(),val=num(raw);n++;let gd;
+   if(k==='t1n'&&E.t1n===null)gd=raw===''||/^[-–—]$/.test(raw)||val===0;
+   else{const ty=k[0]==='t'?'t':(k[0]==='p'?'p':'v'),[r,a]=TOL[ty],lim=Math.max(Math.abs(E[k])*r,a+(ty==='p'?MS[k]*0.006:0));gd=!isNaN(val)&&Math.abs(val-E[k])<=lim;
+    if(!gd&&!isNaN(val)&&E[k]<0&&Math.abs(-val-E[k])<=lim)sign=true;
+    if(!gd&&ty==='t'&&!isNaN(val)&&s.ev.some(e=>Math.abs(e.tm-val)<0.0015))swap=true}
+   i.className=gd?'ok':'bad';if(gd)ok++});
+  const dev=(E.psn-E.ps)/E.ps*100,ds=(dev>=0?'+':'')+fmt(dev,1);
+  if(ok===n){fb.className='fb ok';fb.innerHTML=`Alles richtig! Gesamtimpuls vorher <f-m>${fmt(E.ps,3)} kg·m/s</f-m>, nachher <f-m>${fmt(E.psn,3)} kg·m/s</f-m>. Abweichung: ${ds} %.`+(cur==='V3'?` Die Bewegungsenergie nimmt dagegen ab: <f-m>${fmt(0.5*c.m1*E.v1**2,3)} J</f-m> vorher, <f-m>${fmt(0.5*(c.m1+c.m2)*E.u2**2,3)} J</f-m> nachher.`:'');mark(cur.toLowerCase());updTabs()}
+  else{fb.className='fb bad';fb.innerHTML=`${ok} von ${n} Feldern richtig.`+(swap?' Mindestens eine Zeit gehört zu einem anderen Wagen oder zu einem anderen Zeitpunkt. Schau, wer wann durch welche Lichtschranke fährt.':'')+(sign?' <b>Vorzeichen!</b> Ein Wagen fährt nach links: Seine Geschwindigkeit und sein Impuls sind negativ.':'')+' Hol dir sonst einen Tipp.'}};
+ function updTabs(){$$('#sxTabs button').forEach(b=>b.classList.toggle('solved',done.has(b.dataset.for)))}
+ setV('V1');updTabs()}
 
 initCommon();
 }

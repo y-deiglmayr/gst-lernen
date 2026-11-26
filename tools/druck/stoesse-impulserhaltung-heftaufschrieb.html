@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Stöße und Impulserhaltung – Heftaufschrieb</title>
+<!-- Druckvorlage (Quelle für Physik11/stoesse-impulserhaltung-heftaufschrieb.pdf). Lösung = Heftaufschrieb 3.1 und 3.2 im Lernpfad (3 · Festhalten). -->
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<style>
+.sf3{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin:0 0 1.6mm}
+.sf3 > div{font-size:9.6pt;line-height:1.85}
+.sf3 .karo{height:36mm;margin:.6mm 0 1mm}
+</style>
+</head>
+<body class="heftseite">
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 11 · Impuls</div>
+  <h1>Stöße und Impulserhaltung</h1>
+  <div class="unter" style="color:var(--heft)">Heftaufschrieb zum Lernpfad Impuls 2 · zum Ausfüllen</div>
+ </div>
+ <div class="qr"><!--QR:https://physik.party/Physik11/stoesse-impulserhaltung--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33"><path stroke="#3e4b4c" d="M0 0.5h7m2 0h3m1 0h1m6 0h2m1 0h1m2 0h7m-33 1h1m5 0h1m2 0h1m1 0h7m2 0h3m3 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h1m3 0h4m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h5m1 0h3m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m2 0h3m1 0h1m2 0h3m1 0h2m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h1m1 0h5m1 0h1m7 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h2m2 0h1m1 0h2m2 0h7m-25 1h1m1 0h5m4 0h1m1 0h5m1 0h1m4 0h1m1 0h5m-31 1h2m2 0h2m1 0h3m1 0h1m2 0h1m3 0h2m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m-32 1h1m2 0h1m1 0h3m2 0h2m2 0h2m1 0h1m1 0h1m5 0h1m1 0h1m1 0h2m-29 1h3m4 0h2m2 0h2m2 0h1m2 0h1m1 0h3m2 0h5m-30 1h1m2 0h2m1 0h1m5 0h1m2 0h2m2 0h1m2 0h1m1 0h3m1 0h2m-33 1h2m1 0h1m3 0h2m1 0h11m2 0h1m2 0h1m2 0h4m-33 1h1m2 0h1m1 0h2m3 0h1m3 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h3m-32 1h2m1 0h1m4 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m3 0h2m1 0h3m-30 1h2m2 0h2m3 0h2m1 0h2m1 0h2m2 0h1m1 0h2m1 0h1m1 0h3m2 0h1m-33 1h1m2 0h2m5 0h1m6 0h1m1 0h2m1 0h2m1 0h3m1 0h2m1 0h1m-27 1h4m3 0h1m1 0h3m3 0h1m3 0h4m1 0h2m-32 1h1m2 0h3m4 0h1m3 0h1m2 0h2m1 0h2m2 0h2m1 0h4m-30 1h4m1 0h2m4 0h2m2 0h1m3 0h1m1 0h4m1 0h3m1 0h1m-32 1h3m2 0h1m1 0h1m1 0h1m3 0h3m1 0h5m1 0h1m1 0h3m2 0h1m1 0h1m-33 1h1m2 0h4m2 0h3m3 0h2m1 0h1m2 0h1m7 0h1m1 0h1m-32 1h1m3 0h2m2 0h1m1 0h3m2 0h1m4 0h2m7 0h3m-32 1h1m1 0h6m1 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h6m1 0h1m-24 1h1m1 0h1m1 0h2m2 0h1m2 0h3m1 0h2m3 0h1m1 0h3m-33 1h7m2 0h1m3 0h1m1 0h2m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m1 0h3m1 0h1m1 0h2m3 0h1m1 0h4m3 0h5m-33 1h1m1 0h3m1 0h1m1 0h2m2 0h1m5 0h1m1 0h1m1 0h1m1 0h6m-30 1h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h3m2 0h3m2 0h2m2 0h1m1 0h3m-33 1h1m1 0h3m1 0h1m1 0h3m3 0h1m2 0h2m2 0h1m4 0h2m1 0h1m-30 1h1m5 0h1m2 0h2m2 0h1m2 0h1m3 0h4m4 0h3m-31 1h7m1 0h3m3 0h1m2 0h1m1 0h2m1 0h3m2 0h1m3 0h1"/></svg>Lernpfad öffnen<br>und vergleichen</div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Ausfüllen:</b> Erst den Lernpfad bis „3 · Festhalten“ bearbeiten, dann die Lücken füllen.</div>
+ <div><b class="n">2</b><b>Zeichnen:</b> Die Skizzen zeichnest du selbst – mit Bleistift, Lineal und Farben.</div>
+ <div><b class="n">3</b><b>Vergleichen:</b> Im Lernpfad unter „3 · Festhalten“ den Heftaufschrieb aufklappen und verbessern.</div>
+</div>
+
+<div class="heftblatt">
+<h2>✎ Stöße und Impulserhaltung</h2>
+
+<div class="hs">
+ <h3>3.1 Stoßprozesse</h3>
+ <p>Ein Stoßprozess tritt auf, wenn mindestens zwei Körper mit unterschiedlichen <span class="l g"></span> aufeinandertreffen. Man unterscheidet zwei Stoßprozesse:</p>
+ <p>1. Der <span class="l g"></span> Stoß: Die <span class="l xg"></span> bleibt erhalten. Die Körper „prallen“ voneinander ab.<br>
+ 2. Der <span class="l g"></span> Stoß: Bewegungsenergie wird in <span class="l xg"></span> bzw. Verformung umgewandelt.<br>
+ Beim <span class="l xg"></span> Stoß „kleben“ beide Körper zusammen.</p>
+ <p>Beim elastischen Stoß gibt es drei Sonderfälle (vorher | nachher):</p>
+ <div class="sf3">
+  <div>1. <f-m>m<sub>1</sub> = m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> ≠ 0</f-m>; <f-m>v<sub>2</sub> = 0</f-m><div class="karo"></div>Die Körper <span class="l m"></span> ihre Geschwindigkeiten: <f-m>u<sub>1</sub> =</f-m> <span class="l s"></span>, <f-m>u<sub>2</sub> =</f-m> <span class="l s"></span></div>
+  <div>2. <f-m>m<sub>1</sub> = m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> = −v<sub>2</sub></f-m><div class="karo"></div>Beide prallen <span class="l m"></span>: <f-m>u<sub>1</sub> =</f-m> <span class="l s"></span>, <f-m>u<sub>2</sub> =</f-m> <span class="l s"></span></div>
+  <div>3. <f-m>m<sub>1</sub> ≪ m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> ≠ 0</f-m>; <f-m>v<sub>2</sub> = 0</f-m><div class="karo"></div>Körper 1 wird <span class="l m"></span>: <f-m>u<sub>1</sub> =</f-m> <span class="l s"></span>, <f-m>u<sub>2</sub> =</f-m> <span class="l s"></span></div>
+ </div>
+ <p class="tipp">So zeichnest du: Körper als Kreise (bei 3 eine Wand), links „vorher“, rechts „nachher“, dazwischen ein senkrechter Strich. Geschwindigkeitspfeile für Körper 1 blau, für Körper 2 violett.</p>
+</div>
+
+<div class="hs">
+ <h3>3.2 Impulserhaltung</h3>
+ <p><b>Versuch:</b> Wagen 1 stößt auf einer Fahrbahn gegen den ruhenden Wagen 2. Die Fahne (Breite <f-m>b</f-m>) auf jedem Wagen unterbricht eine Lichtschranke für die <span class="l g"></span> <f-m>t</f-m>. Daraus folgen die Geschwindigkeit <f-m>v =</f-m> <span class="l s"></span> und der Impuls <f-m>p =</f-m> <span class="l s"></span>.</p>
+ <div class="zeichnen" style="grid-template-columns:100mm 1fr">
+  <div class="karo" style="height:46mm"><span class="lab">Skizze des Versuchsaufbaus</span></div>
+  <ol>
+   <li>Zeichne unten eine waagrechte Fahrbahn.</li>
+   <li>Zeichne links Wagen 1 mit Fahne. Beschrifte die Breite <f-m>b</f-m> der Fahne.</li>
+   <li>Zeichne einen blauen Pfeil <f-m>v<sub>1</sub></f-m> nach rechts.</li>
+   <li>Zeichne Lichtschranke 1 (LS 1), dann den ruhenden Wagen 2 mit Fahne (<f-m>v<sub>2</sub> = 0</f-m>) und rechts Lichtschranke 2 (LS 2).</li>
+  </ol>
+ </div>
+ <p><b>Ergebnis:</b> Die einzelnen Impulse ändern sich. Die <span class="l m"></span> der Impulse ist vor und nach dem Stoß im Rahmen der <span class="l xg"></span> gleich, beim elastischen und beim unelastischen Stoß.</p>
+ <p>Wenn zwei Körper ohne äußere Einflüsse miteinander wechselwirken, bleibt die Summe ihrer Impulse <span class="l g"></span>.</p>
+ <p><b>Impulserhaltungssatz</b> (<f-m>v</f-m>: vor dem Stoß, <f-m>u</f-m>: nach dem Stoß):</p>
+ <p><span class="box"><f-m>m<sub>1</sub> · v⃗<sub>1</sub> + m<sub>2</sub> · v⃗<sub>2</sub> =</f-m> <span class="l xg"></span></span></p>
+ <p>Beim total unelastischen Stoß gilt:</p>
+ <p><span class="box"><f-m>m<sub>1</sub> · v⃗<sub>1</sub> + m<sub>2</sub> · v⃗<sub>2</sub> =</f-m> <span class="l xg"></span></span></p>
+ <p><b>Richtung:</b> Eine Richtung wird als positiv festgelegt. Geschwindigkeiten und Impulse in die Gegenrichtung sind <span class="l m"></span>.</p>
+</div>
+
+<div class="hs">
+ <h3>Beispielaufgabe</h3>
+ <p>Aus vollem Lauf (21,6 km/h) springt ein Junge (55 kg) auf sein ruhendes Skateboard (5 kg). Wie schnell fährt er los? Wie viel Energie wird entwertet?</p>
+ <div class="teil gg"><b>Geg.:</b><span class="l"></span></div>
+ <div class="teil gg"><b>Ges.:</b><span class="l"></span></div>
+ <div class="teil gg"><b>Rechn.:</b><span class="l"></span></div>
+ <div class="teil gg"><b></b><span class="l"></span></div>
+ <div class="teil gg"><b></b><span class="l"></span></div>
+ <div class="teil gg"><b>Antw.:</b><span class="l"></span></div>
+</div>
+</div>
+
+</body>
+</html>

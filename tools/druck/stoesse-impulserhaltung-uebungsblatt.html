@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Stöße und Impulserhaltung – Übungsblatt</title>
+<!-- Druckvorlage (Quelle für Physik11/stoesse-impulserhaltung-uebungsblatt.pdf). Gleiche Übungsnummern wie im Lernpfad (4 · Üben). -->
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+</head>
+<body>
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 11 · Impuls</div>
+  <h1>Stöße und Impulserhaltung</h1>
+  <div class="unter">Übungsblatt zum Lernpfad Impuls 2 · 4 · Üben</div>
+ </div>
+ <div class="qr"><!--QR:https://physik.party/Physik11/stoesse-impulserhaltung--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33"><path stroke="#3e4b4c" d="M0 0.5h7m2 0h3m1 0h1m6 0h2m1 0h1m2 0h7m-33 1h1m5 0h1m2 0h1m1 0h7m2 0h3m3 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h1m3 0h4m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h5m1 0h3m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m2 0h3m1 0h1m2 0h3m1 0h2m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h1m1 0h5m1 0h1m7 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h2m2 0h1m1 0h2m2 0h7m-25 1h1m1 0h5m4 0h1m1 0h5m1 0h1m4 0h1m1 0h5m-31 1h2m2 0h2m1 0h3m1 0h1m2 0h1m3 0h2m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m-32 1h1m2 0h1m1 0h3m2 0h2m2 0h2m1 0h1m1 0h1m5 0h1m1 0h1m1 0h2m-29 1h3m4 0h2m2 0h2m2 0h1m2 0h1m1 0h3m2 0h5m-30 1h1m2 0h2m1 0h1m5 0h1m2 0h2m2 0h1m2 0h1m1 0h3m1 0h2m-33 1h2m1 0h1m3 0h2m1 0h11m2 0h1m2 0h1m2 0h4m-33 1h1m2 0h1m1 0h2m3 0h1m3 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h3m-32 1h2m1 0h1m4 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m3 0h2m1 0h3m-30 1h2m2 0h2m3 0h2m1 0h2m1 0h2m2 0h1m1 0h2m1 0h1m1 0h3m2 0h1m-33 1h1m2 0h2m5 0h1m6 0h1m1 0h2m1 0h2m1 0h3m1 0h2m1 0h1m-27 1h4m3 0h1m1 0h3m3 0h1m3 0h4m1 0h2m-32 1h1m2 0h3m4 0h1m3 0h1m2 0h2m1 0h2m2 0h2m1 0h4m-30 1h4m1 0h2m4 0h2m2 0h1m3 0h1m1 0h4m1 0h3m1 0h1m-32 1h3m2 0h1m1 0h1m1 0h1m3 0h3m1 0h5m1 0h1m1 0h3m2 0h1m1 0h1m-33 1h1m2 0h4m2 0h3m3 0h2m1 0h1m2 0h1m7 0h1m1 0h1m-32 1h1m3 0h2m2 0h1m1 0h3m2 0h1m4 0h2m7 0h3m-32 1h1m1 0h6m1 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h6m1 0h1m-24 1h1m1 0h1m1 0h2m2 0h1m2 0h3m1 0h2m3 0h1m1 0h3m-33 1h7m2 0h1m3 0h1m1 0h2m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m1 0h3m1 0h1m1 0h2m3 0h1m1 0h4m3 0h5m-33 1h1m1 0h3m1 0h1m1 0h2m2 0h1m5 0h1m1 0h1m1 0h1m1 0h6m-30 1h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h3m2 0h3m2 0h2m2 0h1m1 0h3m-33 1h1m1 0h3m1 0h1m1 0h3m3 0h1m2 0h2m2 0h1m4 0h2m1 0h1m-30 1h1m5 0h1m2 0h2m2 0h1m2 0h1m3 0h4m4 0h3m-31 1h7m1 0h3m3 0h1m2 0h1m1 0h2m1 0h3m2 0h1m3 0h1"/></svg>Lernpfad öffnen<br>und Ergebnisse prüfen</div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Lösen:</b> Skizze, Stoßart und positive Richtung festlegen, dann mit Rechenweg und Einheiten rechnen.</div>
+ <div><b class="n">2</b><b>Prüfen:</b> Gib dein Ergebnis im Lernpfad unter <b>„4 · Üben“</b> bei derselben Übungsnummer ein.</div>
+ <div><b class="n">3</b><b>Abhaken:</b> Kreuze <b>online geprüft</b> an. Falsch? Erst den Tipp im Lernpfad lesen, dann neu rechnen.</div>
+</div>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 1</span><span class="t">Billard</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Die weiße Kugel trifft eine ruhende Kugel gleicher Masse frontal.</p>
+  <div class="erg" style="justify-content:flex-start"><span class="feld">Stoßart: <i class="w"></i></span><span class="feld">Weiße Kugel nach dem Stoß: <i class="w"></i></span><span class="feld">Getroffene Kugel nach dem Stoß: <i class="w"></i></span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 2</span><span class="t">Torwart</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Ein Torwart (80 kg) springt senkrecht hoch und fängt einen Ball (400 g, waagrecht 80 m/s). Mit welcher waagrechten Geschwindigkeit bewegt er sich danach?</p>
+  <div class="karo" style="height:25mm"><span class="lab">Rechenweg: Stoßart – Gegeben – Gesucht – Rechnung</span></div>
+  <div class="erg"><span class="feld"><f-m>u</f-m> = <i></i> m/s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 3</span><span class="t">Bart und Homer</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Bart (40 kg) prallt mit 10 m/s auf dem Skateboard gegen Homer, der mit aufs Brett fällt. Zusammen rollen sie mit 2,5 m/s weiter. Wie schwer ist Homer? (Brett vernachlässigen)</p>
+  <div class="karo" style="height:30mm"><span class="lab">Rechenweg – stelle die Gleichung nach der gesuchten Masse um</span></div>
+  <div class="erg"><span class="feld"><f-m>m</f-m> = <i></i> kg</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 4</span><span class="t">Lkw in der Gegenfahrbahn</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Lkw (7,5 t, 80 km/h) stößt mit zwei entgegenkommenden Autos (1,2 t und 1,8 t, je 100 km/h) zusammen. Alle verhaken sich. Fahrtrichtung Lkw = positiv.</p>
+  <div class="teil"><b>a)</b><span>Berechne den Gesamtimpuls vor dem Aufprall.</span></div>
+  <div class="teil"><b>b)</b><span>Berechne die Geschwindigkeit des Wracks nach dem Aufprall.</span></div>
+  <div class="karo" style="height:38mm"><span class="lab">Rechenweg – Geschwindigkeiten zuerst in m/s umrechnen</span></div>
+  <div class="erg"><span class="feld">a) <f-m>p<sub>ges</sub></f-m> = <i class="w"></i> kg·m/s</span><span class="feld">b) <f-m>u</f-m> = <i></i> m/s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 5</span><span class="t">Die Fischerin</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Eine Fischerin (75 kg) sitzt im ruhenden Boot (200 kg). Sie wirft nacheinander zwei Steine (je 0,5 kg) mit 5,0 m/s nach hinten. Ohne Reibung.</p>
+  <div class="teil"><b>a)</b><span>Berechne den Betrag des Impulses eines Steins beim Abwurf.</span></div>
+  <div class="teil"><b>b)</b><span>Berechne die Geschwindigkeit des Boots nach dem 1. Wurf und nach dem 2. Wurf (in mm/s).</span></div>
+  <div class="karo" style="height:45mm"><span class="lab">Rechenweg – bedenke, was nach dem 1. Wurf noch im Boot ist</span></div>
+  <div class="erg"><span class="feld">a) <f-m>p</f-m> = <i></i> kg·m/s</span><span class="feld">b) 1. Wurf: <i></i> mm/s</span><span class="feld">2. Wurf: <i></i> mm/s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 6</span><span class="t">Wie schnell ist eine Gewehrkugel?</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Man schießt eine Kugel (10 g) in einen Holzblock auf einem Wagen (zusammen 2,0 kg). Sie bleibt stecken. Block und Kugel fahren danach mit 1,5 m/s. Wie schnell war die Kugel?</p>
+  <div class="karo" style="height:35mm"><span class="lab">Rechenweg: Skizze – Stoßart – Gleichung umstellen</span></div>
+  <div class="erg"><span class="feld"><f-m>v<sub>K</sub></f-m> = <i></i> m/s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 7</span><span class="t">Vollbremsung</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <div class="teil"><b></b><span><span class="beg">✍ Begründe:</span> Du bremst mit dem Fahrrad (80 kg, 10 m/s) bis zum Stillstand. Wo bleibt die Impulserhaltung?</span></div>
+  <div class="zeilen" style="height:30mm"></div>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 8</span><span class="t">Frontalzusammenstoß</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <div class="teil"><b></b><span><span class="beg">✍ Begründe:</span> Zwei gleiche Autos fahren gleich schnell frontal ineinander und stehen danach. Erkläre, warum der Impulserhaltungssatz trotzdem gilt.</span></div>
+  <div class="zeilen" style="height:30mm"></div>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+</body>
+</html>
