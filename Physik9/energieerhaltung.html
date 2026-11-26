@@ -184,7 +184,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="two">
 <div>
 <div class="card" data-task="w1">
-<div class="tag">Auftrag 1 · Welche Energieform steckt darin?</div>
+<div class="tag"><span class="stars">★</span> Auftrag 1 · Welche Energieform steckt darin?</div>
 <p>Ordne jeder Situation die passende Energieform zu.</p>
 <div id="w1"></div>
 <div class="row"><button class="primary" id="w1Check">Prüfen</button></div>
@@ -198,7 +198,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 </div>
 <div>
 <div class="card" data-task="w2" data-num="w2">
-<div class="tag">Auftrag 2 · Schnell gerechnet</div>
+<div class="tag"><span class="stars">★★</span> Auftrag 2 · Schnell gerechnet</div>
 <p>Berechne. Gib Dezimalzahlen mit Komma ein, z. B. 47,1.</p>
 </div>
 </div>
@@ -225,7 +225,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 </div>
 <div>
 <div class="card mc" data-task="e1" data-correct="b">
-<div class="tag">Auftrag 1 · Umkehrpunkt</div>
+<div class="tag"><span class="stars">★</span> Auftrag 1 · Umkehrpunkt</div>
 <p>Starte das Pendel ohne Reibung und halte es an einem <b>Umkehrpunkt</b> (ganz außen) an. Welche Energie hat die Kugel dort?</p>
 <button data-k="a" data-fb="Schau auf die grüne Säule: Am Umkehrpunkt ist die Kugel kurz in Ruhe.">Nur Bewegungsenergie.</button>
 <button data-k="b" data-fb="Richtig. Am Umkehrpunkt ist die Kugel am höchsten und kurz in Ruhe: Es gibt nur Lageenergie.">Nur Lageenergie.</button>
@@ -233,7 +233,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <p class="fb"></p>
 </div>
 <div class="card mc" data-task="e2" data-correct="c">
-<div class="tag">Auftrag 2 · Tiefster Punkt</div>
+<div class="tag"><span class="stars">★</span> Auftrag 2 · Tiefster Punkt</div>
 <p>Halte das Pendel möglichst genau am <b>tiefsten Punkt</b> an. Was stellst du fest?</p>
 <button data-k="a" data-fb="Nein – die Kugel ist dort am schnellsten! Schau auf die grüne Säule.">Die Kugel hat dort gar keine Energie mehr.</button>
 <button data-k="b" data-fb="Die blaue Säule ist am tiefsten Punkt leer, denn dort liegt das Nullniveau <f-m>(h = 0)</f-m>.">Dort ist die Lageenergie am größten.</button>
@@ -241,7 +241,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <p class="fb"></p>
 </div>
 <div class="card mc" data-task="e3" data-correct="a">
-<div class="tag">Auftrag 3 · Die Summe</div>
+<div class="tag"><span class="stars">★</span> Auftrag 3 · Die Summe</div>
 <p>Beobachte die gestrichelte Säule (Summe) während der Schwingung. Was gilt für das ideale Pendel?</p>
 <button data-k="a" data-fb="Richtig! Was an Lageenergie abnimmt, kommt als Bewegungsenergie dazu – und umgekehrt. <f-m>E_L + E_B</f-m> = konstant.">Die Summe aus <f-m>E<sub>L</sub></f-m> und <f-m>E<sub>B</sub></f-m> bleibt immer gleich.</button>
 <button data-k="b" data-fb="Beobachte noch einmal genau: Die gestrichelte Säule bewegt sich nicht.">Die Summe ist am tiefsten Punkt am größten.</button>
@@ -249,7 +249,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <p class="fb"></p>
 </div>
 <div class="card mc" data-task="e4" data-correct="b">
-<div class="tag">Auftrag 4 · Wie hoch auf der anderen Seite?</div>
+<div class="tag"><span class="stars">★★</span> Auftrag 4 · Wie hoch auf der anderen Seite?</div>
 <p>Das ideale Pendel startet links auf 20 cm Höhe. Wie hoch kommt es auf der rechten Seite? Überprüfe mit der gestrichelten Linie.</p>
 <button data-k="a" data-fb="Dann wäre Energie dazugekommen – woher sollte sie stammen?">Höher als 20 cm, weil es unten Schwung geholt hat.</button>
 <button data-k="b" data-fb="Richtig. Die gesamte Bewegungsenergie wird wieder in Lageenergie umgewandelt – das Pendel erreicht genau die Starthöhe.">Genau 20 cm.</button>
@@ -257,11 +257,11 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <p class="fb"></p>
 </div>
 <div class="card" data-task="e5" data-num="e5">
-<div class="tag">Auftrag 5 · Nachrechnen</div>
+<div class="tag"><span class="stars">★★</span> Auftrag 5 · Nachrechnen</div>
 <p>Stelle <f-m><b>m = 1,0 kg</b></f-m> und <f-m><b>h = 20 cm</b></f-m> ein (ohne Reibung). Berechne zuerst, dann kontrollierst du mit dem Labor, indem du anhältst.</p>
 </div>
 <div class="card mc" data-task="e6" data-correct="c">
-<div class="tag">Auftrag 6 · Das reale Pendel</div>
+<div class="tag"><span class="stars">★</span> Auftrag 6 · Das reale Pendel</div>
 <p>Schalte jetzt <b>Reibung</b> ein und starte. Ein echtes Pendel schwingt immer weniger hoch. Wo bleibt die Energie?</p>
 <button data-k="a" data-fb="Beobachte die gestrichelte Säule: Die Summe bleibt gleich groß. Es verschwindet also keine Energie.">Sie verschwindet einfach.</button>
 <button data-k="b" data-fb="Die grüne Säule wird mit der Zeit auch kleiner. Schau auf die rote Säule!">Sie bleibt als Bewegungsenergie im Pendel.</button>
@@ -269,7 +269,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <p class="fb"></p>
 </div>
 <div class="card mc" data-task="e7" data-correct="a">
-<div class="tag">Auftrag 7 · Kann man die Wärme zurückholen?</div>
+<div class="tag"><span class="stars">★★</span> Auftrag 7 · Kann man die Wärme zurückholen?</div>
 <p>Wenn das reale Pendel stehen bleibt, ist die gesamte Energie als thermische Energie in der Umgebung verteilt. Kann sie das Pendel von selbst wieder anstoßen?</p>
 <button data-k="a" data-fb="Genau. Die Wärme ist in Luft und Aufhängung verteilt und kann praktisch nicht mehr genutzt werden. Man sagt: Die Energie ist entwertet.">Nein – die verteilte Wärme lässt sich praktisch nicht mehr nutzen.</button>
 <button data-k="b" data-fb="Hast du schon einmal ein Pendel gesehen, das von selbst wieder anfängt zu schwingen? Die Wärme ist in der Umgebung verteilt.">Ja, sobald sich die Luft abkühlt.</button>
@@ -290,7 +290,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 </div>
 <div>
 <div class="card mc" data-task="f1" data-correct="b">
-<div class="tag">Auftrag 8 · Warum springt der Ball nicht wieder gleich hoch?</div>
+<div class="tag"><span class="stars">★</span> Auftrag 8 · Warum springt der Ball nicht wieder gleich hoch?</div>
 <p>Lass den Flummi fallen. Nach jedem Aufprall erreicht er eine geringere Höhe. Was passiert beim Aufprall?</p>
 <button data-k="a" data-fb="Schau auf die gestrichelte Säule. Die Summe bleibt gleich – es geht nichts verloren.">Ein Teil der Energie wird beim Aufprall vernichtet.</button>
 <button data-k="b" data-fb="Richtig. Beim Aufprall wird der Ball verformt; ein Teil der Energie wird in thermische Energie umgewandelt (Ball und Boden werden etwas wärmer, auch Schall entsteht).">Ein Teil der Energie wird in thermische Energie umgewandelt.</button>
@@ -298,11 +298,11 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <p class="fb"></p>
 </div>
 <div class="card" data-task="f2" data-num="f2">
-<div class="tag">Auftrag 9 · Wie viel Energie wurde entwertet?</div>
+<div class="tag"><span class="stars">★★</span> Auftrag 9 · Wie viel Energie wurde entwertet?</div>
 <p>Der <b>Flummi (m = 30 g = 0,030 kg)</b> fällt aus <b>1,50 m</b> Höhe und springt danach nur noch <b>1,20 m</b> hoch. Überprüfe die Höhe im Labor.</p>
 </div>
 <div class="card mc" data-task="f3" data-correct="c">
-<div class="tag">Auftrag 10 · Die Knetkugel</div>
+<div class="tag"><span class="stars">★★</span> Auftrag 10 · Die Knetkugel</div>
 <p>Lass die Knetkugel fallen. Was passiert mit ihrer Energie beim Aufprall?</p>
 <button data-k="a" data-fb="Die Knetkugel bleibt liegen – sie hat danach weder Lage- noch Bewegungsenergie. Die Energie muss aber irgendwo sein.">Sie verschwindet vollständig.</button>
 <button data-k="b" data-fb="Die Knetkugel springt nicht zurück, also wird keine Lageenergie zurückgewonnen.">Sie wird wieder in Lageenergie umgewandelt.</button>
@@ -319,7 +319,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="two">
 <div>
 <div class="card" data-task="h1">
-<div class="tag">Lückentext · Die zwei wichtigsten Merksätze</div>
+<div class="tag"><span class="stars">★</span> Lückentext · Die zwei wichtigsten Merksätze</div>
 <div class="cloze" id="cloze"></div>
 <div class="row"><button class="primary" id="clozeCheck">Prüfen</button></div>
 <p class="fb" id="clozeFb"></p>

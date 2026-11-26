@@ -247,7 +247,7 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <p class="intro">Wer auf einer Slackline balanciert, kennt das: Damit die Leine nicht bis zum Boden durchhängt, muss sie extrem stark gespannt werden – mit Kräften, die viel größer sind als die Gewichtskraft der Person. Warum eigentlich?</p>
 <div class="two">
 <div class="fig"><svg viewBox="0 0 560 220" role="img" aria-label="Person auf einer Slackline zwischen zwei Bäumen, die Leine hängt in der Mitte leicht durch"><g id="slackHero"></g></svg></div>
-<div><div class="card"><div class="tag">Auftrag 1 · Vermute</div>
+<div><div class="card"><div class="tag">Auftrag 1 · Vermute <span class="stars">★</span> <span class="afb">AFB I</span></div>
 <div class="part" data-task="e1"><h4>Wie hängen Durchhang und Kraft in der Leine zusammen?</h4><div class="mc" data-correct="b" data-task="e1" data-tipp="Denk an eine fast gerade gespannte Leine: Nur ein winziger Teil der Seilkraft zeigt dann nach oben und kann die Person tragen."><button data-k="a">Die Leine muss nur so stark gespannt werden, wie die Person schwer ist – also mit etwa 700 N.</button><button data-k="b" data-fb="Richtig vermutet! Warum das so ist, findest du mit der <b>Kräftezerlegung</b> heraus.">Je flacher die Leine sein soll, desto größer muss die Kraft in der Leine sein – sie kann ein Vielfaches der Gewichtskraft betragen.</button><button data-k="c" data-fb="Leider nein – teste es gleich im Slackline-Modell.">Je flacher die Leine, desto kleiner die Kraft in der Leine.</button><p class="fb"></p></div></div>
 
 </div>
@@ -265,9 +265,9 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <div class="toggles"><label><input type="checkbox" id="zlPar" checked>Parallelen zeigen</label></div>
 <div class="sim-read" id="zlRead"></div><p class="caption">Maßstab: 1 cm ≙ 10 N. Die grünen Kraft <f-m>F = 40 N</f-m> bleibt fest, die Richtungen kannst du verstellen.</p></div>
 <div>
-<div class="card" data-task="m1"><div class="tag">Auftrag 2 · Erstaunlich!</div><p>Stelle die Richtungen so ein, dass <b>beide</b> Teilkräfte <b>größer</b> sind als <f-m>F</f-m> selbst.</p><div class="row"><button class="primary" id="m1b">Einstellung prüfen</button></div><p class="fb" id="m1Fb"></p></div>
-<div class="card" data-task="m2"><div class="tag">Auftrag 3 · Rechtwinklig</div><p>Stelle die beiden Richtungen <b>senkrecht</b> zueinander ein. Was gilt jetzt für die Teilkräfte im Vergleich zu <f-m>F</f-m>?</p><div class="row"><button class="primary" id="m2b">Einstellung prüfen</button></div><p class="fb" id="m2Fb"></p></div>
-<div class="card"><div class="tag">Auftrag 4</div>
+<div class="card" data-task="m1"><div class="tag">Auftrag 2 · Erstaunlich! <span class="stars">★★</span> <span class="afb">AFB II</span></div><p>Stelle die Richtungen so ein, dass <b>beide</b> Teilkräfte <b>größer</b> sind als <f-m>F</f-m> selbst.</p><div class="row"><button class="primary" id="m1b">Einstellung prüfen</button></div><p class="fb" id="m1Fb"></p></div>
+<div class="card" data-task="m2"><div class="tag">Auftrag 3 · Rechtwinklig <span class="stars">★</span> <span class="afb">AFB I</span></div><p>Stelle die beiden Richtungen <b>senkrecht</b> zueinander ein. Was gilt jetzt für die Teilkräfte im Vergleich zu <f-m>F</f-m>?</p><div class="row"><button class="primary" id="m2b">Einstellung prüfen</button></div><p class="fb" id="m2Fb"></p></div>
+<div class="card"><div class="tag">Auftrag 4 <span class="stars">★★</span> <span class="afb">AFB II</span></div>
 <div class="part" data-task="m3"><h4>Was hast du herausgefunden?</h4><div class="mc" data-correct="b" data-task="m3" data-tipp="Vergleiche deine Einstellungen aus Auftrag 2 und 3."><button data-k="a" data-fb="Das stimmt nur, wenn die Richtungen einen spitzen oder rechten Winkel einschließen.">Teilkräfte sind immer kleiner als die ursprüngliche Kraft.</button><button data-k="b" data-fb="Richtig! Genau das passiert bei der Slackline, beim Keil und bei einer straff gespannten Wäscheleine.">Je weiter die beiden Richtungen auseinanderliegen (stumpfer Winkel), desto größer werden die Teilkräfte – sie können viel größer als <f-m>F</f-m> sein.</button><button data-k="c" data-fb="Nein – wie bei der Addition gilt die Summe nur für die Pfeile, nicht für die Beträge.">Die Summe der Beträge der Teilkräfte ist immer gleich <f-m>F</f-m>.</button><p class="fb"></p></div></div>
 
 </div>
@@ -290,11 +290,11 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <div><label for="slA">Neigung der Leine <f-m>α</f-m>: <span id="slAv"></span>°</label><input type="range" id="slA" min="1" max="45" step="1" value="20"></div></div>
 <div class="sim-read" id="slRead"></div></div>
 <div>
-<div class="card" data-task="m4"><div class="tag">Auftrag 5 · Messreihe</div><p>Stelle 70 kg ein und notiere die Kraft in einer Leinenhälfte für <f-m>α = 30°</f-m>, 10°, 5° und 2°. Bei welchem Winkel ist die Kraft in der Leine genauso groß wie die Gewichtskraft?</p>
+<div class="card" data-task="m4"><div class="tag">Auftrag 5 · Messreihe <span class="stars">★★</span> <span class="afb">AFB II</span></div><p>Stelle 70 kg ein und notiere die Kraft in einer Leinenhälfte für <f-m>α = 30°</f-m>, 10°, 5° und 2°. Bei welchem Winkel ist die Kraft in der Leine genauso groß wie die Gewichtskraft?</p>
 <div class="numbox part" data-task="m4n" data-fb="Richtig! Bei 30° trägt jede Leinenhälfte genau <f-m>F<sub>G</sub></f-m>, bei 5° schon fast das Sechsfache. Wird <f-m>α</f-m> sehr klein, wächst die Kraft über alle Grenzen."><div class="numq"><span>Kraft in der Leine bei <f-m>α = 5°</f-m>:</span><span class="unit"><input type="text" inputmode="decimal" data-a="3939" data-tol="0.02" aria-label="Kraft in der Leine bei α = 5°:"> N</span></div><div class="numq"><span>Winkel, bei dem die Leinenkraft gleich <f-m>F<sub>G</sub></f-m> ist:</span><span class="unit"><input type="text" inputmode="decimal" data-a="30" data-tol="0.02" aria-label="Winkel, bei dem die Leinenkraft gleich FG ist:"> °</span></div><div class="row"><button class="primary num-check">Prüfen</button><button data-hint="m4n">Tipp</button></div><p class="fb nfb"></p><p class="tip" id="m4nTip"></p><div class="hintsrc" data-for="m4n" hidden><p>Lies die Werte im Modell ab.</p><p>Bei 30° ist <f-m>sin 30° = 0,5</f-m> – und die beiden Hälften teilen sich <f-m>F<sub>G</sub></f-m>.</p></div></div>
 
 </div>
-<div class="card"><div class="tag">Begründe</div>
+<div class="card"><div class="tag">Begründe <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
 <div class="part why" data-task="w1"><h4>✍ Begründe mit der Kräftezerlegung, warum man eine Slackline (oder eine Wäscheleine) niemals ganz gerade spannen kann, wenn etwas daran hängt.</h4>
 <textarea data-store="w1" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
 <label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
@@ -314,7 +314,7 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <div><div class="merke"><h4>Rechtwinklige Zerlegung</h4>
 <p class="formula"><f-m>F<sub>x</sub> = F · cos α</f-m></p><p class="formula"><f-m>F<sub>y</sub> = F · sin α</f-m></p>
 <p><f-m>α</f-m> ist der Winkel zwischen <f-m>F</f-m> und der Richtung von <f-m>F<sub>x</sub></f-m>. Merkhilfe: Die Teilkraft, die am Winkel <b>anliegt</b>, bekommt den <b>Kosinus</b>.</p></div>
-<div class="card"><div class="tag">Auftrag 6</div>
+<div class="card"><div class="tag">Auftrag 6 <span class="stars">★★</span> <span class="afb">AFB II</span></div>
 <div class="numbox part" data-task="m5" data-fb="Richtig: <f-m>F<sub>x</sub> = 100 N · cos 30° ≈ 86,6 N</f-m> und <f-m>F<sub>y</sub> = 100 N · sin 30° = 50 N</f-m>. Nur <f-m>F<sub>x</sub></f-m> zieht den Wagen nach vorne, <f-m>F<sub>y</sub></f-m> hebt ihn etwas an."><div class="numq"><span>Stelle <f-m>α = 30°</f-m> ein. Waagrechte Teilkraft <f-m>F<sub>x</sub></f-m> =</span><span class="unit"><input type="text" inputmode="decimal" data-a="86.6" data-tol="0.01" aria-label="Stelle α = 30° ein. Waagrechte Teilkraft Fx ="> N</span></div><div class="numq"><span>Senkrechte Teilkraft <f-m>F<sub>y</sub></f-m> =</span><span class="unit"><input type="text" inputmode="decimal" data-a="50" data-tol="0.01" aria-label="Senkrechte Teilkraft Fy ="> N</span></div><div class="row"><button class="primary num-check">Prüfen</button><button data-hint="m5">Tipp</button></div><p class="fb nfb"></p><p class="tip" id="m5Tip"></p><div class="hintsrc" data-for="m5" hidden><p>Taschenrechner im Gradmaß (DEG)!</p><p><f-m>F<sub>x</sub> = F · cos α</f-m>, <f-m>F<sub>y</sub> = F · sin α</f-m>.</p></div></div>
 
 </div>
@@ -325,7 +325,7 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <!-- ============ 3 FESTHALTEN ============ -->
 <section class="band" id="festhalten"><div class="wrap">
 <h2>3 · Festhalten</h2>
-<div class="card"><div class="tag">Lückentext · Kräftezerlegung</div>
+<div class="card"><div class="tag">Lückentext · Kräftezerlegung <span class="stars">★</span> <span class="afb">AFB I</span></div>
 <div class="selbox part" data-task="f1" data-fb="Alles richtig! Übertrage den Text in dein Heft."><div class="cloze">Eine Kraft kann in zwei <select data-a="Teilkräfte"><option value="">…</option><option>Teilkräfte</option><option>Gegenkräfte</option><option>Gewichtskräfte</option></select> zerlegt werden, die zusammen dieselbe Wirkung haben wie die ursprüngliche Kraft. Dazu müssen die beiden <select data-a="Richtungen"><option value="">…</option><option>Richtungen</option><option>Beträge</option><option>Angriffspunkte</option></select> der Teilkräfte bekannt sein. Man zeichnet durch die <select data-a="Pfeilspitze"><option value="">…</option><option>Pfeilspitze</option><option>Mitte</option><option>Pfeilschaft</option></select> der Kraft Parallelen zu den beiden Richtungen; die Schnittpunkte sind die Spitzen der Teilkräfte. Die ursprüngliche Kraft ist die <select data-a="Diagonale"><option value="">…</option><option>Diagonale</option><option>Seite</option><option>Höhe</option></select> des Kräfteparallelogramms. Je stumpfer der Winkel zwischen den Richtungen, desto <select data-a="größer"><option value="">…</option><option>größer</option><option>kleiner</option></select> werden die Teilkräfte.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
 
 </div>

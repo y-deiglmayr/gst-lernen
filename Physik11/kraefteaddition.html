@@ -248,12 +248,12 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <div class="two">
 <div class="fig"><svg viewBox="0 0 520 300" role="img" aria-label="Gespannter Bogen: Beide Hälften der Sehne ziehen schräg am Ende des Pfeils"><g id="bowScene"></g></svg><p class="caption">Die gespannte Sehne zieht mit zwei Kräften <f-m>F<sub>1</sub></f-m> und <f-m>F<sub>2</sub></f-m> schräg am Pfeilende.</p></div>
 <div>
-<div class="card"><div class="tag">Auftrag 1 · Vermute</div>
+<div class="card"><div class="tag">Auftrag 1 · Vermute <span class="stars">★</span> <span class="afb">AFB I</span></div>
 <div class="part" data-task="e1"><h4>In welche Richtung wird der Pfeil beim Loslassen beschleunigt?</h4><div class="mc" data-correct="b" data-task="e1" data-tipp="Die Sehne ist symmetrisch gespannt. Überlege, was mit den Anteilen nach oben und nach unten passiert."><button data-k="a">Schräg nach oben, in Richtung von <f-m>F<sub>1</sub></f-m>.</button><button data-k="b" data-fb="Richtig! Die beiden schrägen Kräfte wirken zusammen wie <b>eine</b> Kraft nach rechts. Ihre Anteile nach oben und unten heben sich auf.">Nach rechts, genau entlang des Pfeils.</button><button data-k="c" data-fb="Nein. Beide Kräfte haben einen Anteil nach rechts – diese Anteile verstärken sich.">Gar nicht – die Kräfte heben sich auf.</button><button data-k="d">Nach links, zur Sehne hin.</button><p class="fb"></p></div></div>
 
 </div>
 
-<div class="card"><div class="tag">Auftrag 2 · Vermute</div>
+<div class="card"><div class="tag">Auftrag 2 · Vermute <span class="stars">★</span> <span class="afb">AFB I</span></div>
 <div class="part" data-task="e2"><h4>Zwei Kräfte mit 30 N und 40 N greifen am selben Punkt an. Wie groß ist die Gesamtkraft?</h4><div class="mc" data-correct="c" data-task="e2" data-tipp="Stell dir vor, die beiden Kräfte ziehen einmal in die gleiche Richtung und einmal gegeneinander."><button data-k="a" data-fb="Nur wenn beide Kräfte in die gleiche Richtung zeigen.">Immer 70 N.</button><button data-k="b" data-fb="Nur wenn sie genau gegeneinander ziehen.">Immer 10 N.</button><button data-k="c" data-fb="Genau! Das untersuchst du gleich im Kräfte-Labor.">Zwischen 10 N und 70 N – es kommt auf den Winkel zwischen den Kräften an.</button><button data-k="d" data-fb="Nur in einem Sonderfall (bei 90°).">Immer 50 N.</button><p class="fb"></p></div></div>
 
 </div>
@@ -272,7 +272,7 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <div class="ctrl"><div><label for="tauL">Mannschaft links: <span id="tauLv"></span> N</label><input type="range" id="tauL" min="0" max="1200" step="50" value="750"></div>
 <div><label for="tauR">Mannschaft rechts: <span id="tauRv"></span> N</label><input type="range" id="tauR" min="0" max="1200" step="50" value="700"></div></div></div>
 <div>
-<div class="card"><div class="tag">Auftrag 3 · Tauziehen</div>
+<div class="card"><div class="tag">Auftrag 3 · Tauziehen <span class="stars">★</span> <span class="afb">AFB I</span></div>
 <div class="part" data-task="e3"><h4>Links ziehen drei Personen mit je 250 N, rechts zwei mit je 350 N. Was passiert?</h4><div class="mc" data-correct="b" data-task="e3" data-tipp="Gegeneinander gerichtete Kräfte: größere minus kleinere Kraft."><button data-k="a">Das Seil bleibt in Ruhe – die Kräfte sind gleich groß.</button><button data-k="b" data-fb="Richtig: <f-m>F<sub>res</sub> = 750 N − 700 N = 50 N</f-m>, Richtung der größeren Kraft.">Die resultierende Kraft beträgt 50 N nach links – das Seil wird nach links beschleunigt.</button><button data-k="c" data-fb="Nein: Die Kräfte ziehen <b>gegeneinander</b>, also wird subtrahiert.">Die resultierende Kraft beträgt 1450 N.</button><p class="fb"></p></div></div>
 
 </div>
@@ -288,11 +288,11 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <div class="sim-read" id="labRead"></div>
 <p class="caption">Maßstab: 1 cm ≙ 10 N. Modell: Beide Kräfte greifen im selben Punkt an.</p></div>
 <div>
-<div class="card" data-task="m1"><div class="tag">Auftrag 4 · Gleiche Richtung</div><p>Stelle beide Kräfte in die <b>gleiche Richtung</b>. Wie groß ist jetzt <f-m>F<sub>res</sub></f-m> im Vergleich zu <f-m>F<sub>1</sub> + F<sub>2</sub></f-m>?</p><div class="row"><button class="primary" data-m="1">Einstellung prüfen</button></div><p class="fb" id="m1Fb"></p></div>
-<div class="card" data-task="m2"><div class="tag">Auftrag 5 · Gegenrichtung</div><p>Stelle die beiden Kräfte genau <b>gegeneinander</b> (Winkel 180°).</p><div class="row"><button class="primary" data-m="2">Einstellung prüfen</button></div><p class="fb" id="m2Fb"></p></div>
-<div class="card" data-task="m3"><div class="tag">Auftrag 6 · Rechter Winkel</div><p>Stelle <f-m>F<sub>1</sub> = 30 N</f-m> und <f-m>F<sub>2</sub> = 40 N</f-m> im <b>rechten Winkel</b> zueinander ein. Lies <f-m>F<sub>res</sub></f-m> ab.</p><div class="row"><button class="primary" data-m="3">Einstellung prüfen</button></div><p class="fb" id="m3Fb"></p></div>
-<div class="card" data-task="m4"><div class="tag">Auftrag 7 · Knobelei</div><p>Zwei Kräfte von je <b>50 N</b> sollen zusammen nur eine Resultierende von <b>50 N</b> ergeben. Finde den passenden Winkel!</p><div class="row"><button class="primary" data-m="4">Einstellung prüfen</button></div><p class="fb" id="m4Fb"></p></div>
-<div class="card"><div class="tag">Auftrag 8 · Was hast du entdeckt?</div>
+<div class="card" data-task="m1"><div class="tag">Auftrag 4 · Gleiche Richtung <span class="stars">★</span> <span class="afb">AFB I</span></div><p>Stelle beide Kräfte in die <b>gleiche Richtung</b>. Wie groß ist jetzt <f-m>F<sub>res</sub></f-m> im Vergleich zu <f-m>F<sub>1</sub> + F<sub>2</sub></f-m>?</p><div class="row"><button class="primary" data-m="1">Einstellung prüfen</button></div><p class="fb" id="m1Fb"></p></div>
+<div class="card" data-task="m2"><div class="tag">Auftrag 5 · Gegenrichtung <span class="stars">★</span> <span class="afb">AFB I</span></div><p>Stelle die beiden Kräfte genau <b>gegeneinander</b> (Winkel 180°).</p><div class="row"><button class="primary" data-m="2">Einstellung prüfen</button></div><p class="fb" id="m2Fb"></p></div>
+<div class="card" data-task="m3"><div class="tag">Auftrag 6 · Rechter Winkel <span class="stars">★★</span> <span class="afb">AFB II</span></div><p>Stelle <f-m>F<sub>1</sub> = 30 N</f-m> und <f-m>F<sub>2</sub> = 40 N</f-m> im <b>rechten Winkel</b> zueinander ein. Lies <f-m>F<sub>res</sub></f-m> ab.</p><div class="row"><button class="primary" data-m="3">Einstellung prüfen</button></div><p class="fb" id="m3Fb"></p></div>
+<div class="card" data-task="m4"><div class="tag">Auftrag 7 · Knobelei <span class="stars">★★★</span> <span class="afb">AFB III</span></div><p>Zwei Kräfte von je <b>50 N</b> sollen zusammen nur eine Resultierende von <b>50 N</b> ergeben. Finde den passenden Winkel!</p><div class="row"><button class="primary" data-m="4">Einstellung prüfen</button></div><p class="fb" id="m4Fb"></p></div>
+<div class="card"><div class="tag">Auftrag 8 · Was hast du entdeckt? <span class="stars">★★</span> <span class="afb">AFB II</span></div>
 <div class="part" data-task="m5"><div class="mc" data-correct="b" data-task="m5" data-tipp="Vergleiche deine Ergebnisse aus den Aufträgen 4 bis 7."><button data-k="a" data-fb="Das gilt nur, wenn beide Kräfte in die gleiche Richtung zeigen.">Die Beträge werden immer addiert: <f-m>F<sub>res</sub> = F<sub>1</sub> + F<sub>2</sub></f-m>.</button><button data-k="b" data-fb="Richtig! Kräfte addiert man als <b>Pfeile (Vektoren)</b>, nicht als Zahlen.">Je größer der Winkel zwischen den Kräften, desto kleiner die Resultierende. Sie liegt zwischen <f-m>F<sub>1</sub> − F<sub>2</sub></f-m> und <f-m>F<sub>1</sub> + F<sub>2</sub></f-m>.</button><button data-k="c" data-fb="Nein, schau dir Auftrag 7 an: Bei 120° ist sie nur so groß wie jede Einzelkraft.">Die Resultierende ist immer größer als jede Einzelkraft.</button><p class="fb"></p></div></div>
 
 </div>
@@ -306,17 +306,17 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <div class="toggles"><label><input type="checkbox" id="p3Plan" checked>Kräfteplan zeigen</label></div>
 <div class="sim-read" id="p3Read"></div></div>
 <div>
-<div class="card" data-task="m6"><div class="tag">Auftrag 9 · Kräftegleichgewicht</div><p>Drei Hunde ziehen am Halsband eines Spielzeugs. Stelle die drei Kräfte (je mindestens 20 N) so ein, dass sich das Spielzeug <b>nicht bewegt</b>, also <f-m>F<sub>res</sub> = 0</f-m> ist. Was fällt dir am Kräfteplan auf?</p><div class="row"><button class="primary" id="m6b">Einstellung prüfen</button></div><p class="fb" id="m6Fb"></p></div>
+<div class="card" data-task="m6"><div class="tag">Auftrag 9 · Kräftegleichgewicht <span class="stars">★★</span> <span class="afb">AFB II</span></div><p>Drei Hunde ziehen am Halsband eines Spielzeugs. Stelle die drei Kräfte (je mindestens 20 N) so ein, dass sich das Spielzeug <b>nicht bewegt</b>, also <f-m>F<sub>res</sub> = 0</f-m> ist. Was fällt dir am Kräfteplan auf?</p><div class="row"><button class="primary" id="m6b">Einstellung prüfen</button></div><p class="fb" id="m6Fb"></p></div>
 <div class="merke"><h4>Kräftegleichgewicht</h4><p>Ist die Resultierende aller Kräfte, die an einem Körper angreifen, null, herrscht <b>Kräftegleichgewicht</b>. Der Kräfteplan ist dann ein <b>geschlossenes Vieleck</b>. Ein Körper im Kräftegleichgewicht verhält sich wie ein kräftefreier Körper: Er bleibt in Ruhe oder bewegt sich gleichförmig geradeaus weiter.</p></div>
 </div></div>
 
 <h3>D · Kräftegleichgewicht im Alltag</h3>
-<div class="card"><div class="tag">Auftrag 10</div>
+<div class="card"><div class="tag">Auftrag 10 <span class="stars">★★</span> <span class="afb">AFB II</span></div>
 <div class="part" data-task="m7"><h4>Ein Auto fährt mit konstant 100 km/h geradeaus auf der Autobahn. Was gilt?</h4><div class="mc" data-correct="b" data-task="m7" data-tipp="Konstante Geschwindigkeit heißt: Die Bewegung ändert sich nicht. Was gilt dann für die resultierende Kraft?"><button data-k="a" data-fb="Das ist eine typische Fehlvorstellung. Wäre die Antriebskraft größer, würde das Auto immer schneller.">Die Antriebskraft ist größer als die Reibungskräfte – sonst würde das Auto ja stehen bleiben.</button><button data-k="b" data-fb="Richtig! Bei konstanter Geschwindigkeit herrscht Kräftegleichgewicht.">Antriebskraft und Reibungskräfte (Luft- und Rollreibung) sind gleich groß und entgegengesetzt: <f-m>F<sub>res</sub> = 0</f-m>.</button><button data-k="c" data-fb="Doch: Antriebskraft, Reibungskräfte, Gewichtskraft und die Kraft der Straße wirken – aber sie heben sich auf.">Auf das Auto wirkt gar keine Kraft.</button><p class="fb"></p></div></div>
 
 </div>
 
-<div class="card"><div class="part why" data-task="w1"><h4>✍ Begründe: Ein Fallschirmspringer sinkt mit geöffnetem Schirm mit konstant 5 m/s zu Boden, obwohl die Gewichtskraft weiter auf ihn wirkt.</h4>
+<div class="card"><div class="tag">Begründe <span class="stars">★★★</span> <span class="afb">AFB III</span></div><div class="part why" data-task="w1"><h4>✍ Begründe: Ein Fallschirmspringer sinkt mit geöffnetem Schirm mit konstant 5 m/s zu Boden, obwohl die Gewichtskraft weiter auf ihn wirkt.</h4>
 <textarea data-store="w1" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
 <label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
 <div class="row"><button class="why-show">Mit Musterbegründung vergleichen</button></div>
@@ -327,7 +327,7 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <!-- ============ 3 FESTHALTEN ============ -->
 <section class="band" id="festhalten"><div class="wrap">
 <h2>3 · Festhalten</h2>
-<div class="card"><div class="tag">Lückentext · Zusammenwirken mehrerer Kräfte</div>
+<div class="card"><div class="tag">Lückentext · Zusammenwirken mehrerer Kräfte <span class="stars">★</span> <span class="afb">AFB I</span></div>
 <div class="selbox part" data-task="f1" data-fb="Alles richtig! Übertrage den Text in dein Heft."><div class="cloze">Zwei Kräfte, die im gleichen Punkt angreifen, wirken zusammen wie eine einzige Kraft, die <select data-a="resultierende Kraft"><option value="">…</option><option>resultierende Kraft</option><option>Gegenkraft</option><option>Gewichtskraft</option></select> heißt. Man findet sie zeichnerisch als <select data-a="Diagonale"><option value="">…</option><option>Diagonale</option><option>Seite</option><option>Höhe</option></select> des Kräfteparallelogramms oder im Kräfteplan, indem man die Pfeile <select data-a="Spitze an Schaft"><option value="">…</option><option>Spitze an Schaft</option><option>Schaft an Schaft</option><option>Spitze an Spitze</option></select> aneinanderhängt. Die Beträge darf man nur dann einfach addieren, wenn die Kräfte <select data-a="in die gleiche Richtung zeigen"><option value="">…</option><option>in die gleiche Richtung zeigen</option><option>senkrecht aufeinander stehen</option><option>verschieden groß sind</option></select>. Ist die Resultierende null, herrscht <select data-a="Kräftegleichgewicht"><option value="">…</option><option>Kräftegleichgewicht</option><option>Trägheit</option><option>Wechselwirkung</option></select>.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
 
 </div>
@@ -355,7 +355,7 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <p class="formula"><f-m>F<sub>res</sub><sup>2</sup> = F<sub>1</sub><sup>2</sup> + F<sub>2</sub><sup>2</sup> + 2 · F<sub>1</sub> · F<sub>2</sub> · cos γ</f-m></p>
 <p>Für <f-m>γ = 0°</f-m> (<f-m>cos γ = 1</f-m>) ergibt sich <f-m>F<sub>1</sub> + F<sub>2</sub></f-m>, für <f-m>γ = 90°</f-m> der Satz des Pythagoras, für <f-m>γ = 180°</f-m> die Differenz. Probier es mit Auftrag 7: <f-m>50<sup>2</sup> + 50<sup>2</sup> + 2 · 50 · 50 · cos 120° = 2500</f-m>, also <f-m>F<sub>res</sub> = 50 N</f-m>.</p>
 </details>
-<div class="card"><div class="tag">Begründe</div>
+<div class="card"><div class="tag">Begründe <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
 <div class="part why" data-task="w2"><h4>✍ Begründe, warum zwei Kräfte von 30 N und 40 N zusammen niemals eine Resultierende von 80 N ergeben können.</h4>
 <textarea data-store="w2" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
 <label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>

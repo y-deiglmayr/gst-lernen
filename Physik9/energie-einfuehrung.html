@@ -216,7 +216,7 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 <h2>1 · Einstieg: Was haben diese Situationen gemeinsam?</h2>
 <div class="fig"><svg id="vier" viewBox="0 0 900 230" role="img" aria-label="Vier Situationen: fallende Kugel verformt Knete, Kerze erwärmt Wasser, Batterie bringt Lampe zum Leuchten, gespannter Bogen schießt einen Pfeil"></svg></div>
 <div class="card" data-task="e1" style="margin-top:14px">
-<div class="tag">Auftrag 1 · Was steckt in allen vier Bildern?</div>
+<div class="tag"><span class="stars">★</span> Auftrag 1 · Was steckt in allen vier Bildern?</div>
 <p>Schau dir die vier Situationen genau an. Was haben die Kugel oben, die Kerze, die Batterie und der gespannte Bogen gemeinsam?</p>
 <div class="mc" data-correct="c" data-task="e1">
 <button data-k="a" data-fb="Nicht ganz – die Kerze und die Batterie bewegen sich ja gar nicht.">Alle bewegen sich gerade schnell.</button>
@@ -233,7 +233,7 @@ Formelzeichen: <b>E</b> &nbsp;·&nbsp; Einheit: <b>1 Joule (J)</b> &nbsp;·&nbsp
 <div class="fig"><svg id="skala" viewBox="0 0 900 190" role="img" aria-label="Energie-Skala von 1 Joule bis 1 Milliarde Joule mit Alltagsbeispielen"></svg></div>
 <p class="caption" id="skalaTxt">Tippe auf einen Punkt der Skala.</p>
 <div class="card" data-task="e2" style="margin-top:14px">
-<div class="tag">Auftrag 2 · Abschätzen</div>
+<div class="tag"><span class="stars">★★</span> Auftrag 2 · Abschätzen</div>
 <p>Ein Schokoriegel enthält etwa 1000 kJ, ein voller Handy-Akku speichert etwa 50 kJ. Wie oft könnte man mit der Energie eines Schokoriegels (theoretisch) ein Handy aufladen?</p>
 <div class="mc" data-correct="b" data-task="e2">
 <button data-k="a">etwa 2-mal</button>
@@ -263,7 +263,7 @@ Formelzeichen: <b>E</b> &nbsp;·&nbsp; Einheit: <b>1 Joule (J)</b> &nbsp;·&nbsp
 </div>
 
 <div class="card" data-task="w1">
-<div class="tag">Auftrag 3 · Energiewandler</div>
+<div class="tag"><span class="stars">★</span> Auftrag 3 · Energiewandler</div>
 <p>Welche Energieform nimmt das Gerät auf, und in welche <b>genutzte</b> Energieform wandelt es sie um?</p>
 <div id="w1"></div>
 <div class="row"><button class="primary" id="w1Check">Prüfen</button><button data-hint="w1">Tipp</button></div>
@@ -275,7 +275,7 @@ Formelzeichen: <b>E</b> &nbsp;·&nbsp; Einheit: <b>1 Joule (J)</b> &nbsp;·&nbsp
 <li>Man zeichnet Umwandlungen als <b>Energieflussdiagramm</b>: Energieform → Energiewandler → Energieform(en).</li></ul></div>
 
 <div class="card">
-<div class="tag">Auftrag 4 · „Energieverbrauch“ – gibt es das?</div>
+<div class="tag"><span class="stars">★★</span> Auftrag 4 · „Energieverbrauch“ – gibt es das?</div>
 <p>Auf der Stromrechnung deiner Familie steht: <b>„Verbrauch: 3500 kWh“</b>. Aber gerade hast du gelernt, dass Energie nicht verloren geht. Was passiert wirklich mit der elektrischen Energie im Haushalt?</p>
 <div class="part" data-task="v1"><h4>a) Wähle die beste Erklärung.</h4>
 <div class="mc" data-correct="b" data-task="v1" data-tipp="Denk an die Merke-Box: Energie verschwindet nie. Was fühlst du, wenn Geräte lange laufen?">
@@ -291,7 +291,7 @@ Formelzeichen: <b>E</b> &nbsp;·&nbsp; Einheit: <b>1 Joule (J)</b> &nbsp;·&nbsp
 <section class="band" id="festhalten"><div class="wrap">
 <h2>3 · Festhalten</h2>
 <div class="card" data-task="f1">
-<div class="tag">Auftrag 5 · Lückentext</div>
+<div class="tag"><span class="stars">★</span> Auftrag 5 · Lückentext</div>
 <div class="cloze" id="cloze">
 Energie ist die Fähigkeit, Körper zu <select data-a="bewegen"></select>, zu verformen, zu <select data-a="erwärmen"></select> oder Licht auszusenden.
 Das Formelzeichen der Energie ist <select data-a="E"></select>, ihre Einheit ist das <select data-a="Joule"></select>.
@@ -539,7 +539,7 @@ const ST=[
 
 $('#tabs').innerHTML=ST.map((s,i)=>`<button data-st="${i}" aria-pressed="${i===0}"><i style="background:${COL[s.f]}"></i>${i+1} · ${s.name}</button>`).join('');
 $('#stations').innerHTML=ST.map((s,i)=>`<div class="card station" id="st_${s.id}" data-task="${s.id}" ${i?'hidden':''}>
-<div class="tag"><span class="badge" style="background:${COL[s.f]}">${s.sym}</span> Station ${i+1} · ${s.name}</div>
+<div class="tag"><span class="stars">★</span> <span class="badge" style="background:${COL[s.f]}">${s.sym}</span> Station ${i+1} · ${s.name}</div>
 <div class="two"><div><div class="fig"><svg id="sv_${s.id}" viewBox="0 0 440 260" role="img" aria-label="Simulation ${s.name}"></svg></div>
 ${s.ctrl?`<label for="in_${s.id}" style="font-weight:700">${s.ctrl.label}: <span id="iv_${s.id}">${s.ctrl.val}</span> ${s.ctrl.unit}</label><input type="range" id="in_${s.id}" min="${s.ctrl.min}" max="${s.ctrl.max}" step="${s.ctrl.step}" value="${s.ctrl.val}">`:''}
 <div class="row"><button class="primary" id="go_${s.id}">▶ ${s.btn}</button><button id="rs_${s.id}">↺ Zurücksetzen</button></div></div>
