@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Der Wirkungsgrad – Übungsblatt</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+</head>
+<body>
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 9 · Mechanik II: Energie</div>
+  <h1>Der Wirkungsgrad</h1>
+  <div class="unter">Übungsblatt zum Lernpfad „Der Wirkungsgrad“ · 4 · Üben</div>
+ </div>
+ <div class="qr"><!--QR:https://physik.party/Physik9/wirkungsgrad--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29"><path stroke="#3e4b4c" d="M0 0.5h7m2 0h2m1 0h1m2 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m1 0h3m1 0h1m2 0h3m1 0h1m2 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m1 0h1m2 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m3 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h2m1 0h1m4 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m4 0h2m1 0h2m1 0h1m1 0h2m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h2m2 0h2m1 0h3m1 0h1m-21 1h1m1 0h1m1 0h1m1 0h1m3 0h2m1 0h1m1 0h3m1 0h2m3 0h1m2 0h1m-26 1h1m1 0h2m4 0h1m2 0h2m1 0h3m2 0h2m2 0h1m2 0h1m-28 1h1m1 0h1m2 0h2m1 0h6m2 0h2m4 0h1m2 0h3m-28 1h2m2 0h1m2 0h2m2 0h2m1 0h5m3 0h1m3 0h1m-28 1h2m2 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1m1 0h2m-27 1h1m1 0h2m3 0h1m3 0h1m2 0h1m3 0h3m2 0h1m2 0h1m-29 1h2m2 0h1m1 0h1m2 0h1m2 0h1m1 0h1m3 0h1m1 0h1m2 0h3m1 0h2m-29 1h4m1 0h1m1 0h2m1 0h1m1 0h3m2 0h4m1 0h4m1 0h1m-28 1h2m2 0h3m1 0h2m1 0h3m1 0h3m4 0h2m1 0h1m1 0h2m-28 1h1m2 0h2m1 0h1m2 0h1m1 0h2m2 0h1m3 0h3m2 0h2m1 0h1m-29 1h1m3 0h1m1 0h2m1 0h2m1 0h1m3 0h3m1 0h2m2 0h1m2 0h2m-28 1h3m3 0h1m2 0h4m3 0h2m2 0h5m1 0h1m-28 1h1m3 0h3m3 0h1m1 0h1m1 0h1m2 0h2m1 0h5m-17 1h2m2 0h2m2 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m2 0h2m1 0h1m1 0h1m3 0h3m1 0h1m1 0h2m1 0h2m-29 1h1m5 0h1m5 0h2m1 0h1m1 0h2m1 0h1m3 0h2m-26 1h1m1 0h3m1 0h1m1 0h1m5 0h5m1 0h5m-25 1h1m1 0h3m1 0h1m2 0h2m1 0h2m2 0h1m6 0h2m1 0h3m-29 1h1m1 0h3m1 0h1m1 0h3m2 0h2m2 0h1m2 0h2m1 0h3m2 0h1m-29 1h1m5 0h1m2 0h2m3 0h1m1 0h6m1 0h1m3 0h1m-28 1h7m1 0h2m1 0h4m2 0h1m1 0h2m1 0h1m1 0h2m1 0h2"/></svg>Lernpfad öffnen<br>und Ergebnisse prüfen</div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Lösen:</b> Rechne hier auf dem Blatt – immer mit Rechenweg und Einheiten.</div>
+ <div><b class="n">2</b><b>Prüfen:</b> Gib dein Ergebnis im Lernpfad unter <b>„4 · Üben“</b> bei derselben Übungsnummer ein.</div>
+ <div><b class="n">3</b><b>Abhaken:</b> Kreuze <b>online geprüft</b> an. Falsch? Erst den Tipp im Lernpfad lesen, dann neu rechnen.</div>
+</div>
+
+<p class="klein" style="margin:-1mm 0 3mm">Rechne mit <f-m>g = 9,81 N/kg</f-m>. Wirkungsgrad: Nutzen geteilt durch Aufwand – als Dezimalzahl oder in Prozent.</p>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 1</span><span class="t">Wirkungsgrad berechnen</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <div class="teil"><b>a)</b><span>Ein Elektromotor bekommt 200 J elektrische Energie und gibt 150 J Bewegungsenergie ab. (Dezimalzahl)</span></div>
+  <div class="teil"><b>b)</b><span>Aus 60 J elektrischer Energie macht eine Glühlampe 3 J Licht. (in %)</span></div>
+  <div class="teil"><b>c)</b><span>Eine Solarzelle wandelt 1000 J Licht in 200 J elektrische Energie um. (in %)</span></div>
+  <div class="karo" style="height:20mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <f-m>η</f-m> = <i></i></span><span class="feld">b) <f-m>η</f-m> = <i></i> %</span><span class="feld">c) <f-m>η</f-m> = <i></i> %</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 2</span><span class="t">Was bedeuten 40 %?</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Ein Benzinmotor hat einen Wirkungsgrad von 40 %. Im Motor werden 500 kJ chemische Energie aus dem Benzin umgewandelt.</p>
+  <div class="teil"><b>a)</b><span>Erkläre in einem Satz, was der Wirkungsgrad von 40 % bedeutet.</span></div>
+  <div class="zeilen" style="height:7.5mm"></div>
+  <div class="teil"><b>b)</b><span>Berechne die Bewegungsenergie (Nutzen) und die thermische Energie (entwertet).</span></div>
+  <div class="karo" style="height:15mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">Bewegungsenergie: <i></i> kJ</span><span class="feld">thermische Energie: <i></i> kJ</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 3</span><span class="t">Mit Leistungen rechnen</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <div class="teil"><b>a)</b><span>Ein Wasserkocher nimmt 2000 W auf, 1840 W kommen im Wasser an.</span></div>
+  <div class="teil"><b>b)</b><span>Der Motor eines E-Bikes nimmt 300 W auf und gibt 240 W Bewegungsleistung ab.</span></div>
+  <div class="karo" style="height:13mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <f-m>η</f-m> = <i></i> %</span><span class="feld">b) <f-m>η</f-m> = <i></i> %</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg seite">
+ <div class="ah"><span class="nr">Übung 4</span><span class="t">Formel umstellen</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <div class="teil"><b>a)</b><span>Ein Elektromotor (<f-m>η = 0,95</f-m>) bekommt 2000 J elektrische Energie. Wie viel Bewegungsenergie gibt er ab?</span></div>
+  <div class="teil"><b>b)</b><span>Ein Kohlekraftwerk (<f-m>η = 0,40</f-m>) soll 400 MJ elektrische Energie liefern. Wie viel chemische Energie muss die Kohle enthalten?</span></div>
+  <div class="teil"><b>c)</b><span>Eine LED-Lampe (<f-m>η = 0,30</f-m>) gibt 6 W Lichtleistung ab. Welche elektrische Leistung nimmt sie auf?</span></div>
+  <div class="karo" style="height:26mm"><span class="lab">Rechenweg – stelle zuerst die Formel um</span></div>
+  <div class="erg"><span class="feld">a) <i></i> J</span><span class="feld">b) <i></i> MJ</span><span class="feld">c) <i></i> W</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 5</span><span class="t">Der Baukran</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Baukran hebt einen Stahlträger (500 kg) 12 m hoch. Sein Elektromotor nimmt dafür 98,1 kJ elektrische Energie auf.</p>
+  <div class="teil"><b>a)</b><span>Berechne die Lageenergie des Trägers (Nullniveau: Boden).</span></div>
+  <div class="teil"><b>b)</b><span>Berechne den Wirkungsgrad des Krans.</span></div>
+  <div class="teil"><b>c)</b><span>Wie viel Energie wird entwertet (z. B. thermische Energie in Motor, Getriebe und Seilrollen)?</span></div>
+  <div class="karo" style="height:28mm"><span class="lab">Rechenweg: Gegeben – Gesucht – Rechnung – Antwort</span></div>
+  <div class="erg"><span class="feld">a) <f-m>E<sub>L</sub></f-m> = <i></i> kJ</span><span class="feld">b) <f-m>η</f-m> = <i></i> %</span><span class="feld">c) <i></i> kJ</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 6</span><span class="t">Richtig oder falsch?</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <table class="rf"><tr><th></th><th>r</th><th>f</th></tr><tr><td>Ein Wirkungsgrad von 0,25 bedeutet dasselbe wie 25 %.</td><td class="x"></td><td class="x"></td></tr><tr><td>Der Wirkungsgrad wird in Joule angegeben.</td><td class="x"></td><td class="x"></td></tr><tr><td>Ein sehr gutes Gerät kann einen Wirkungsgrad von 1,2 haben.</td><td class="x"></td><td class="x"></td></tr><tr><td>Die nicht genutzte Energie wird vernichtet.</td><td class="x"></td><td class="x"></td></tr><tr><td>Der Wirkungsgrad einer Glühlampe hängt davon ab, ob man Licht oder Wärme nutzen will.</td><td class="x"></td><td class="x"></td></tr><tr><td>In einer Energiekette ist der Gesamtwirkungsgrad kleiner als jeder einzelne Wirkungsgrad.</td><td class="x"></td><td class="x"></td></tr></table>
+  <div class="teil" style="margin-top:2mm"><b></b><span><span class="beg">✍ Begründe:</span> Warum kann der Wirkungsgrad nie größer als 1 sein?</span></div>
+  <div class="zeilen" style="height:15mm"></div>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg seite">
+ <div class="ah"><span class="nr">Übung 7</span><span class="t">Vom Kraftwerk bis zur Lampe</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Ein Kohlekraftwerk hat einen Wirkungsgrad von 40 %, die Stromleitungen bis zum Haus 90 %. Im Zimmer brennt eine Glühlampe (5 %) oder eine LED-Lampe (30 %).</p>
+  <div class="teil"><b>a)</b><span>Berechne den Gesamtwirkungsgrad mit Glühlampe.</span></div>
+  <div class="teil"><b>b)</b><span>Berechne den Gesamtwirkungsgrad mit LED-Lampe.</span></div>
+  <div class="teil"><b>c)</b><span>Wie viel chemische Energie der Kohle braucht man für 100 J Licht aus der LED-Lampe? (ganze J)</span></div>
+  <div class="karo" style="height:40mm"><span class="lab">Rechenweg – zeichne dir die Energiekette auf</span></div>
+  <div class="erg"><span class="feld">a) <f-m>η<sub>ges</sub></f-m> = <i></i> %</span><span class="feld">b) <f-m>η<sub>ges</sub></f-m> = <i></i> %</span><span class="feld">c) <i></i> J</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 8</span><span class="t">Das Pumpspeicherkraftwerk</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Nachts, wenn viel Strom übrig ist, pumpt ein Pumpspeicherkraftwerk 1000 t Wasser 300 m hoch in ein Oberbecken. Tagsüber fließt das Wasser zurück und treibt Turbine und Generator an. Die Pumpe hat einen Wirkungsgrad von 75 %, Turbine und Generator zusammen 85 %.</p>
+  <div class="teil"><b>a)</b><span>Berechne die Lageenergie des Wassers im Oberbecken.</span></div>
+  <div class="teil"><b>b)</b><span>Wie viel elektrische Energie braucht die Pumpe dafür?</span></div>
+  <div class="teil"><b>c)</b><span>Wie viel elektrische Energie liefert der Generator tagsüber zurück?</span></div>
+  <div class="teil"><b>d)</b><span>Berechne den Gesamtwirkungsgrad des Speichers (Strom rein → Strom raus).</span></div>
+  <div class="karo" style="height:50mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <i></i> MJ</span><span class="feld">b) <i></i> MJ</span><span class="feld">c) <i></i> MJ</span><span class="feld">d) <i></i> %</span><span class="ok">online geprüft</span></div>
+  <div class="teil" style="margin-top:2mm"><b></b><span><span class="beg">✍ Begründe:</span> Warum baut man Pumpspeicherkraftwerke, obwohl ein Drittel der Energie entwertet wird?</span></div>
+  <div class="zeilen" style="height:22.5mm"></div>
+ </div>
+</section>
+
+</body>
+</html>

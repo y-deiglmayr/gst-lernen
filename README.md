@@ -26,7 +26,8 @@ Physik9/
   energie-einfuehrung.html  Was ist Energie? (Energieformen, Stationen, Energiewandler)
   lageenergie.html          Lageenergie (Fall-Labor, E = m · g · h, Nullniveau)
   energieerhaltung.html     Energieerhaltung und Energieentwertung
-  <lernpfad>-heftaufschrieb.pdf / <lernpfad>-uebungsblatt.pdf  Druckversionen zu allen drei Energie-Lernpfaden
+  wirkungsgrad.html         Der Wirkungsgrad (Aufwand und Nutzen, η = E_Nutzen : E_Aufwand, Energieketten)
+  <lernpfad>-heftaufschrieb.pdf / <lernpfad>-uebungsblatt.pdf  Druckversionen zu allen vier Energie-Lernpfaden
 Physik11/
   kraft-grundlagen.html     1 · Kraft – Grundlagen (Wirkungen, Kraftpfeil, Gewichtskraft, Trägheit)
   kraefteaddition.html      2 · Kräfteaddition und Gleichgewicht (Parallelogramm, Kräfteplan)
