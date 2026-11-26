@@ -26,6 +26,7 @@ Physik11/
   kraefteaddition.html      2 · Kräfteaddition und Gleichgewicht (Parallelogramm, Kräfteplan)
   kraeftezerlegung.html     3 · Kräftezerlegung (grafisch und rechnerisch)
   schiefe-ebene.html        4 · Schiefe Ebene (Hangabtriebs- und Normalkraft)
+  schiefe-ebene-arbeitsblatt.pdf  Druckversion: Übungen mit Platz für den Rechenweg (Download in der Kachel)
   newton-reibung.html       5 · Newtonsche Gesetze und Reibung
   impuls-grundlagen.html    Impuls 1 · Der Impuls – eine neue Größe (p = m · v, Einheit, Vektor, Alltag)
   stoesse-impulserhaltung.html  Impuls 2 · Stöße und Impulserhaltung (Stoß-Labor, Sonderfälle, Wagen-Versuche)
@@ -42,6 +43,11 @@ z. B. `/Physik8/reflexion-spiegel`. Groß- und Kleinschreibung der Ordner gehör
 1. HTML-Datei in den passenden Ordner legen (Ordner bei Bedarf neu anlegen).
 2. In `index.html` in der Liste `KURSE` den Lernpfad eintragen. Die Liste ist gegliedert nach Stufe (`Mittelstufe`/`Oberstufe`) → Klasse → Thema (`themen`) → Lernpfade (`seiten`). Neues Thema: weiteren Eintrag in `themen`; neue Klasse: weiteren Block mit `stufe`, `klasse`, `fach`, `ordner`. Die Startseite baut daraus Stufen-Auswahl, Sprungmarken zu den Klassen, aufklappbare Themen und die Suche automatisch auf. Für ein Vorschaubild im Objekt `BILDER` ein kleines SVG (320 × 140) anlegen und im Eintrag mit `bild:'name'` verknüpfen.
 3. Committen und pushen – Cloudflare veröffentlicht automatisch.
+
+## Druckversionen
+
+Zu einem Lernpfad kann es ein Arbeitsblatt als PDF geben (Aufgaben mit Platz für den Rechenweg, Kontrolle online).
+Vorlage und Anleitung: `tools/druck/` (LIESMICH.md). In `KURSE` mit `druck:{datei,text,info}` als Download in die Kachel setzen.
 
 ## Cloudflare-Pages-Einstellungen
 
