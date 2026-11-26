@@ -184,6 +184,14 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 #protokoll{display:none}
 @media print{body.printprot>*:not(#protokoll){display:none!important}#protokoll{display:block!important;padding:20px;color:#000;background:#fff}#protokoll h2{margin:0 0 10px}#protokoll .pr{border:1px solid #999;padding:8px 12px;margin:8px 0;min-height:70px;white-space:pre-wrap}}
 .massbtns{display:flex;gap:8px;flex-wrap:wrap}
+.musterfig{margin:6px 0 14px;max-width:460px}
+.musterfig svg{display:block;width:100%;height:auto}
+.musterfig .kl{font:italic 5px "KaTeX_Math",serif}
+.musterfig .tx{font:5px "Atkinson Hyperlegible",system-ui,sans-serif}
+.musterfig figcaption{font-size:14px;color:var(--muted)}
+.heft .tabw{overflow-x:auto}
+.heft table.ht{border-collapse:collapse;width:100%;font-size:16px;margin:4px 0 10px}
+.heft table.ht th,.heft table.ht td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
 <link rel="stylesheet" href="/katex/katex.min.css">
@@ -212,6 +220,7 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 <a href="#festhalten"><b>3 · Festhalten</b><small>Formel, Lückentext, Musteraufgabe</small></a>
 <a href="#ueben"><b>4 · Üben</b><small>7 Aufgaben von ★ bis ★★★</small></a>
 </div>
+<div class="ablinks"><a class="arbeitsblatt" href="/Physik9/lageenergie-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Zeichnung · PDF, 2 Seiten</small></span></a><a class="arbeitsblatt" href="/Physik9/lageenergie-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Aufgaben mit Platz für den Rechenweg · PDF, 3 Seiten</small></span></a></div>
 </div></header>
 
 <!-- ============ 1 EINSTIEG ============ -->
@@ -348,12 +357,19 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <p class="fb" id="keFb"></p><p class="tip" id="keTip"></p>
 </div>
 <div class="merke"><h4>Merke: Kraft ≠ Energie</h4><p style="margin:0">Eine <b>Kraft</b> (in N) zieht oder drückt – im Moment. Die <b>Energie</b> (in J) ist ein Vorrat, der gespeichert und umgewandelt werden kann. Beim Heben gilt: Energie = Kraft · Weg, also <f-m>1 J = 1 N · m</f-m>.</p></div>
+<a class="arbeitsblatt" href="/Physik9/lageenergie-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Zeichnung – ausdrucken, ausfüllen, hier vergleichen · PDF, 2 Seiten</small></span></a>
 <details class="reveal"><summary>Heftaufschrieb mit Musteraufgabe anzeigen</summary>
 <div class="heft">
 <h3>Lageenergie</h3>
-<p>Ein Körper, der sich über dem Nullniveau befindet, besitzt Lageenergie. Sie ist proportional zur Masse <f-m>m</f-m> und zur Höhe <f-m>h</f-m>:</p>
-<p><span class="box"><f-m>E<sub>L</sub> = m · g · h</f-m> &nbsp;&nbsp; <f-m>g = 9,81 N/kg</f-m> &nbsp;&nbsp; [<f-m>E<sub>L</sub></f-m>] = <f-m>1 J = 1 N · m</f-m></span></p>
-<p>Herleitung: Um einen Körper zu heben, muss man die Gewichtskraft <f-m>F<sub>G</sub> = m · g</f-m> längs der Höhe <f-m>h</f-m> überwinden: <f-m>E<sub>L</sub> = F<sub>G</sub> · h = m · g · h</f-m>. Der Weg spielt keine Rolle, nur der Höhenunterschied.</p>
+<p>Ein Körper, der sich über dem <b>Nullniveau</b> befindet, besitzt Lageenergie. Sie ist proportional zur <b>Masse</b> <f-m>m</f-m> und zur <b>Höhe</b> <f-m>h</f-m>:</p>
+<p><span class="box"><f-m>E<sub>L</sub> = m · g · h</f-m></span> &nbsp;&nbsp; <f-m>g = 9,81 N/kg</f-m> (Ortsfaktor) &nbsp;&nbsp; <f-m>[E<sub>L</sub>] = 1 J = 1 N · m</f-m></p>
+<p>Umgestellt: &nbsp; <f-m>h = E<sub>L</sub> : (m · g)</f-m> &nbsp;&nbsp; <f-m>m = E<sub>L</sub> : (g · h)</f-m></p>
+<h3>Herleitung und Nullniveau</h3>
+<figure class="musterfig"><svg viewBox="0 13 140 77" role="img" aria-label="Musterzeichnung: Gestrichelte Bodenlinie als Nullniveau. Rechts ein Regal in der Höhe h mit einer Kiste. Weg 1 führt senkrecht nach oben, Weg 2 über eine Treppe. Die Höhe h ist als Maßpfeil vom Nullniveau bis zur Kiste eingezeichnet, an der Kiste zeigt die Gewichtskraft nach unten."><line x1="3" y1="80" x2="137" y2="80" style="stroke:var(--ink)" stroke-width=".6" stroke-dasharray="2.4 1.6"/><text x="4" y="86.5" class="tx" style="fill:var(--ink);font-weight:700">Nullniveau</text><rect x="100" y="30" width="34" height="1.8" style="fill:var(--muted)"/><line x1="102" y1="31.8" x2="102" y2="80" style="stroke:var(--muted)" stroke-width="1"/><line x1="132" y1="31.8" x2="132" y2="80" style="stroke:var(--muted)" stroke-width="1"/><rect x="106" y="20" width="14" height="10" rx="1" style="fill:#d9a066;stroke:var(--ink)" stroke-width=".5"/><rect x="62" y="70" width="14" height="10" rx="1" fill="none" style="stroke:var(--muted)" stroke-width=".5" stroke-dasharray="1.2 1"/><text x="69" y="76.6" text-anchor="middle" class="tx" style="fill:var(--muted);font-size:3.6px">vorher</text><path d="M66 69 V25 H101" fill="none" style="stroke:var(--el)" stroke-width=".7" stroke-dasharray="2 1.2"/><path d="M104.5 25 L100 23 L100 27Z" style="fill:var(--el)"/><text x="64" y="48" text-anchor="end" class="tx" style="fill:var(--el);font-weight:700">Weg 1</text><path d="M76 75 H81.6 V65 H87.2 V55 H92.8 V45 H98.4 V35 H103.5 V33" fill="none" style="stroke:var(--eb)" stroke-width=".7" stroke-dasharray="2 1.2"/><path d="M103.5 30.6 L101.5 34.4 L105.5 34.4Z" style="fill:var(--eb)"/><text x="86" y="73.5" class="tx" style="fill:var(--eb);font-weight:700">Weg 2</text><line x1="125" y1="31.6" x2="125" y2="78.4" style="stroke:var(--ink)" stroke-width=".45"/><path d="M125 30 L123.6 33.4 L126.4 33.4Z M125 80 L123.6 76.6 L126.4 76.6Z" style="fill:var(--ink)"/><text x="127" y="58" class="kl" style="fill:var(--ink)">h</text><line x1="113" y1="25" x2="113" y2="40" style="stroke:var(--eth)" stroke-width="1"/><path d="M113 43.5 L111.4 39.6 L114.6 39.6Z" style="fill:var(--eth)"/><circle cx="113" cy="25" r=".9" style="fill:var(--ink)"/><text x="114.5" y="42" class="kl" style="fill:var(--eth)">F<tspan dy="1.2" font-size="3.4" font-style="normal" font-family="KaTeX_Main,serif">G</tspan></text></svg><figcaption>Musterzeichnung: Auf beiden Wegen gewinnt die Kiste dieselbe Lageenergie, denn nur die Höhe <f-m>h</f-m> über dem Nullniveau zählt.</figcaption></figure>
+<p>Um einen Körper zu heben, muss man die <b>Gewichtskraft</b> <f-m>F<sub>G</sub> = m · g</f-m> längs der Höhe <f-m>h</f-m> überwinden: <f-m>E<sub>L</sub> = F<sub>G</sub> · h = m · g · h</f-m>. Der <b>Weg</b> spielt keine Rolle, nur der <b>Höhenunterschied</b>.</p>
+<p>Die Höhe wird vom <b>Nullniveau</b> aus gemessen. Man darf es frei wählen, muss es aber immer <b>angeben</b>.</p>
+<h3>Kraft ≠ Energie</h3>
+<p>Eine <b>Kraft</b> (in <b>N</b>) zieht oder drückt – im Moment. Die <b>Energie</b> (in <b>J</b>) ist ein <b>Vorrat</b>, der gespeichert und umgewandelt werden kann. Beim Heben gilt: Energie = <b>Kraft</b> · <b>Weg</b>, also <f-m>1 J = 1 N · m</f-m>.</p>
 <h3>Musteraufgabe</h3>
 <p>Ein Schüler (55 kg) steigt vom Erdgeschoss in den 1. Stock (3,0 m höher). Wie viel Lageenergie gewinnt er?</p>
 <p><b>Gegeben:</b> <f-m>m = 55 kg</f-m>; <f-m>h = 3,0 m</f-m>; <f-m>g = 9,81 N/kg</f-m> &nbsp; <b>Gesucht:</b> <f-m>E<sub>L</sub></f-m></p>
@@ -367,6 +383,7 @@ Die Höhe wird vom <select data-a="Nullniveau"></select> aus gemessen. Auf welch
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
 <p class="intro">★ Grundlagen, ★★ Umstellen und Nullniveau, ★★★ Anwenden. Rechne mit <f-m>g = 9,81 N/kg</f-m> und notiere im Heft <i>Gegeben – Gesucht – Rechnung – Antwort</i>. Dezimalzahlen mit Komma eingeben.</p>
+<a class="arbeitsblatt" href="/Physik9/lageenergie-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt zum Drucken</b><small>Übung 1–7 auf dem Blatt rechnen, hier prüfen · PDF, 3 Seiten</small></span></a>
 
 <div class="card" data-task="u1">
 <div class="tag"><span class="stars">★</span> Übung 1 · Lageenergie berechnen</div>
@@ -563,14 +580,14 @@ $('#v1Check').onclick=()=>{const v=$$('#v1Checks input:checked').map(i=>i.value)
  draw();table()}
 
 /* ---------- B: Heben mit Messtabelle ---------- */
-{const svg=$('#hub'),fl=320,sc=65,MC={2:'var(--el)',5:'var(--eb)',10:'var(--eth)'};let m=5,data=[];
+{const svg=$('#hub'),fl=320,sc=58,MC={2:'var(--el)',5:'var(--eb)',10:'var(--eth)'};let m=5,data=[];
  const hv=()=>Math.round(+$('#hubH').value*10)/10;
  function draw(){const h=hv(),F=m*g,E=F*h,bw=40+m*2,bh=30+m;
   $('#hubMv').textContent=m;$('#hubHv').textContent=fmt(h,1);
-  let s=Rc(0,fl,560,40,'ground')+L(60,fl,60,20,'thin','stroke-width="6"')+L(40,24,300,24,'thin','stroke-width="6"')+C(250,40,14,'','style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"');
-  const by=fl-h*sc-bh,hookY=by-40;s+=L(250,54,250,hookY,'thin','stroke-width="2"')+L(236,40,236,fl-20,'thin','stroke-width="2"')+T(200,fl-6,'Seil','txs');
-  s+=Rc(242,hookY,16,26,'','rx="4" style="fill:var(--panel);stroke:var(--ink)"')+L(250,hookY+26,250,by,'thin','stroke-width="2"')+T(268,hookY+22,'Kraftmesser: '+fmt(F,1)+' N','txb','style="fill:var(--acc)"');
-  s+=crate(250-bw/2,by,bw,bh,m+' kg');
+  let s=Rc(0,fl,560,40,'ground')+L(60,fl,60,20,'thin','stroke-width="6"')+L(40,24,300,24,'thin','stroke-width="6"')+C(250,46,20,'','style="fill:var(--paper);stroke:var(--ink)" stroke-width="2"')+C(250,46,3,'','style="fill:var(--ink)"');
+  const by=fl-h*sc-bh,hookY=by-34;s+=L(270,46,270,hookY,'thin','stroke-width="2"')+L(230,46,230,fl-20,'thin','stroke-width="2"')+T(194,fl-6,'Seil','txs');
+  s+=Rc(262,hookY,16,26,'','rx="4" style="fill:var(--panel);stroke:var(--ink)"')+L(270,hookY+26,270,by,'thin','stroke-width="2"')+T(288,hookY+22,'Kraftmesser: '+fmt(F,1)+' N','txb','style="fill:var(--acc)"');
+  s+=crate(270-bw/2,by,bw,bh,m+' kg');
   for(let v=0;v<=3;v+=0.5)s+=L(84,fl-v*sc,96,fl-v*sc,'thin')+T(100,fl-v*sc+5,fmt(v,1)+' m','txs');
   if(h>0)s+=L(330,fl,330,fl-h*sc,'thin','stroke-width="2"')+arrowHead(330,fl-h*sc,-90,'var(--ink)')+T(338,fl-h*sc/2,'h','txb');
   const eb=E/300*230;s+=Rc(450,fl-eb,40,eb,'fel')+T(470,fl+22,'E','txb','text-anchor="middle"')+T(470,fl-eb-8,Math.round(E)+' J','tel','text-anchor="middle"');
@@ -661,8 +678,8 @@ hints.u7=['a) Höhenunterschied = Gipfel − Talstation.','c) <f-m>E<sub>L</sub>
 
 /* Zugspitze-Skizze */
 {let s=`<path d="M0 230 L80 200 L150 205 L260 120 L330 40 L360 60 L440 150 L440 240 L0 240Z" style="fill:var(--panel);stroke:var(--muted)"/>`;
- s+=L(90,195,330,40,'thin','stroke-width="1.5"')+Rc(80,188,24,14,'','style="fill:var(--ink)"')+Rc(320,30,24,14,'','style="fill:var(--ink)"')+Rc(195,107,26,18,'','rx="3" style="fill:var(--eth)"');
- s+=T(40,228,'Talstation ≈ 1000 m','txs')+T(250,22,'Gipfel ≈ 2950 m','txs')+L(400,40,400,195,'thin')+arrowHead(400,40,-90,'var(--ink)')+T(330,120,'Δh = ?','txb');
+ s+=L(90,195,330,40,'thin','stroke-width="1.5"')+Rc(80,188,24,14,'','style="fill:var(--ink)"')+Rc(320,30,24,14,'','style="fill:var(--ink)"')+L(208,119,208,125,'thin','stroke-width="2"')+Rc(195,125,26,18,'','rx="3" style="fill:var(--eth)"');
+ s+=T(40,228,'Talstation ≈ 1000 m','txs')+T(250,22,'Gipfel ≈ 2950 m','txs')+L(400,40,400,195,'thin')+arrowHead(400,40,-90,'var(--ink)')+T(330,120,'<f-m>Δh</f-m> = ?','txb');
  $('#zug').innerHTML=s}
 
 $('#whyW').outerHTML=whyBox('w2','Begründe in eigenen Worten: Warum spielt der Weg für die Lageenergie keine Rolle?','Die Lageenergie hängt nur von der <b>Masse</b> und vom <b>Höhenunterschied</b> ab: <f-m>E<sub>L</sub> = m · g · h</f-m>. Auf der Rampe brauchst du zwar eine <b>kleinere Kraft</b>, musst sie aber über einen <b>längeren Weg</b> aufbringen. Kraft mal Weg ist am Ende gleich groß wie beim senkrechten Heben (wenn es keine Reibung gibt).');

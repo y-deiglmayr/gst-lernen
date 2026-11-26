@@ -11,6 +11,14 @@ Zu jedem Lernpfad zwei Dokumente:
 für den Rechenweg und Ergebnis-Zeilen. Kontrolliert wird online im Lernpfad („online geprüft“ abhaken). Richtwert 2–4 Seiten.
 Konstruktionen mit Maßstab werden in echten Millimetern gezeichnet (SVG in mm) – Hinweis „in 100 % drucken“.
 
+Vorhanden: Physik11/schiefe-ebene, Physik9/energie-einfuehrung, Physik9/lageenergie, Physik9/energieerhaltung.
+Neue Vorlagen am besten von einer vorhandenen kopieren (Kopf, Schritt-Leiste, Abschnitte). Bausteine in `druck.css`:
+Heftaufschrieb `body.heftseite`, `.heftblatt` > `.hs` (Abschnitt), Lücken `.l .s/.m/.g/.xg`, `.zeichnen` (Karo-Feld + Schrittliste),
+`.kt` (Tabelle), `.box`, `.sf` (zwei Fälle nebeneinander), `.hmerke`, `.teil.gg` (Geg./Ges./Rechn./Antw.-Zeilen);
+Übungsblatt `.aufg` (Kopf `.ah` mit Nummer, ★, AFB), `.teil`, `.karo`, `.zeilen`, `.erg` mit `.feld` und `.ok`, `.rf` (richtig/falsch), `.beg` (Begründe).
+Seitenumbruch vor einer Aufgabe mit `class="aufg seite"`; Abschnitte und Aufgaben werden nicht zerteilt.
+QR-Code: Platzhalter `<!--QR:https://physik.party/…-->` im Kopf, dann `python3 tools/druck/qr_einsetzen.py <datei>.html`.
+
 PDF erzeugen (im Repo-Hauptordner):
 
 ```

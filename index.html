@@ -144,9 +144,9 @@ const KURSE=[
  ]},
  {stufe:'Mittelstufe',klasse:'Klasse 9',fach:'Physik',ordner:'Physik9',themen:[
   {thema:'Energie',seiten:[
-   {datei:'energie-einfuehrung',titel:'Was ist Energie?',info:'Energieformen an 7 Stationen mit Mini-Experimenten, Energiewandler und Energieketten',bild:'energieEinf'},
-   {datei:'lageenergie',titel:'Lageenergie',info:'Fall-Labor, Herleitung von E = m · g · h, Nullniveau, 7 Übungen bis zur Zugspitze',bild:'lageenergie'},
-   {datei:'energieerhaltung',titel:'Energieerhaltung und Energieentwertung',info:'Pendel- und Flummi-Labor, Energieumwandlungen, thermische Energie, 13 Übungen',bild:'energie'}
+   {datei:'energie-einfuehrung',titel:'Was ist Energie?',info:'Energieformen an 7 Stationen mit Mini-Experimenten, Energiewandler und Energieketten',bild:'energieEinf',druck:'Heftaufschrieb und Übungsblatt zum Drucken'},
+   {datei:'lageenergie',titel:'Lageenergie',info:'Fall-Labor, Herleitung von E = m · g · h, Nullniveau, 7 Übungen bis zur Zugspitze',bild:'lageenergie',druck:'Heftaufschrieb und Übungsblatt zum Drucken'},
+   {datei:'energieerhaltung',titel:'Energieerhaltung und Energieentwertung',info:'Pendel- und Flummi-Labor, Energieumwandlungen, thermische Energie, 13 Übungen',bild:'energie',druck:'Heftaufschrieb und Übungsblatt zum Drucken'}
   ]}
  ]},
  {stufe:'Oberstufe',klasse:'Klasse 11',fach:'Physik',ordner:'Physik11',themen:[
@@ -201,27 +201,27 @@ const BILDER={
  spiegel:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect x="170" width="150" height="140" fill="#2f393a"/>
   <circle cx="80" cy="62" r="26" fill="#ffcf4a" opacity=".18"/><rect x="72" y="72" width="16" height="44" fill="#f4ead8"/><path d="M80 48 C88 58 87 66 80 68 C73 66 72 58 80 48Z" fill="#ffb21a"/>
   <g opacity=".4"><rect x="252" y="72" width="16" height="44" fill="#f4ead8"/><path d="M260 48 C268 58 267 66 260 68 C253 66 252 58 260 48Z" fill="#ffb21a"/></g>
-  <path d="M80 60 L170 82 L40 108" fill="none" stroke="#ff5c50" stroke-width="2.5"/><path d="M170 82 L260 60" stroke="#ff8a80" stroke-width="1.6" stroke-dasharray="6 5"/>
+  <path d="M80 60 L170 79.6 L40 108" fill="none" stroke="#ff5c50" stroke-width="2.5"/><path d="M170 79.6 L260 60" stroke="#ff8a80" stroke-width="1.6" stroke-dasharray="6 5"/>
   <path d="M25 108 Q40 98 55 108 Q40 118 25 108Z" fill="#eef1f7"/><circle cx="44" cy="108" r="4" fill="#2f393a"/>
   <line x1="170" y1="8" x2="170" y2="132" stroke="#58c4df" stroke-width="5" stroke-linecap="round"/></svg>`,
  brechExp:`<svg viewBox="0 0 320 140" aria-hidden="true"><circle cx="190" cy="70" r="62" fill="#1b2130" stroke="#3a4558"/>
   <path d="M190 8 A62 62 0 0 1 190 132Z" fill="#1b3140" stroke="#58c4df" stroke-width="1.5"/><line x1="128" y1="70" x2="252" y2="70" stroke="#a9b2c4" stroke-dasharray="4 4"/>
-  <line x1="60" y1="20" x2="190" y2="70" stroke="#ff5c50" stroke-width="3"/><line x1="190" y1="70" x2="246" y2="92" stroke="#ff5c50" stroke-width="3"/>
+  <line x1="60" y1="20" x2="190" y2="70" stroke="#ff5c50" stroke-width="3"/><line x1="190" y1="70" x2="250" y2="85" stroke="#ff5c50" stroke-width="3"/>
   <g transform="translate(60,20) rotate(21)"><rect x="-36" y="-10" width="36" height="20" rx="4" fill="#2b3a52"/></g></svg>`,
  brechTheo:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect y="70" width="320" height="70" fill="#1b3140"/><line x1="0" y1="70" x2="320" y2="70" stroke="#58c4df" stroke-width="2"/>
-  <g stroke="#64a6ff" stroke-width="1.6" opacity=".7"><line x1="40" y1="0" x2="110" y2="70"/><line x1="0" y1="10" x2="60" y2="70"/><line x1="90" y1="0" x2="160" y2="70"/><line x1="140" y1="0" x2="210" y2="70"/><line x1="190" y1="0" x2="260" y2="70"/>
-  <line x1="110" y1="70" x2="60" y2="140"/><line x1="160" y1="70" x2="110" y2="140"/><line x1="210" y1="70" x2="160" y2="140"/><line x1="260" y1="70" x2="210" y2="140"/></g>
-  <line x1="160" y1="8" x2="160" y2="132" stroke="#a9b2c4" stroke-dasharray="4 4"/><line x1="105" y1="15" x2="160" y2="70" stroke="#ff5c50" stroke-width="3"/><line x1="160" y1="70" x2="192" y2="132" stroke="#ff5c50" stroke-width="3"/></svg>`,
+  <g stroke="#64a6ff" stroke-width="1.6" opacity=".7"><line x1="-9.8" y1="70" x2="60.2" y2="0"/><line x1="46.8" y1="70" x2="116.8" y2="0"/><line x1="103.4" y1="70" x2="173.4" y2="0"/><line x1="160.0" y1="70" x2="230.0" y2="0"/><line x1="216.6" y1="70" x2="286.6" y2="0"/><line x1="273.2" y1="70" x2="343.2" y2="0"/><line x1="329.8" y1="70" x2="399.8" y2="0"/>
+  <line x1="103.4" y1="70" x2="-27.8" y2="140"/><line x1="160.0" y1="70" x2="28.8" y2="140"/><line x1="216.6" y1="70" x2="85.4" y2="140"/><line x1="273.2" y1="70" x2="142.0" y2="140"/><line x1="329.8" y1="70" x2="198.6" y2="140"/><line x1="386.4" y1="70" x2="255.2" y2="140"/></g>
+  <line x1="160" y1="8" x2="160" y2="132" stroke="#a9b2c4" stroke-dasharray="4 4"/><line x1="105" y1="15" x2="160" y2="70" stroke="#ff5c50" stroke-width="3"/><line x1="160" y1="70" x2="193" y2="132" stroke="#ff5c50" stroke-width="3"/></svg>`,
  brechUeb:`<svg viewBox="0 0 320 140" aria-hidden="true"><rect y="50" width="320" height="90" fill="#162a44"/><line x1="0" y1="50" x2="320" y2="50" stroke="#64a6ff" stroke-width="2"/>
   <path d="M40 20 Q55 8 70 20 Q55 32 40 20Z" fill="#eef1f7"/><circle cx="59" cy="20" r="4" fill="#2f393a"/>
-  <line x1="62" y1="22" x2="180" y2="50" stroke="#ff5c50" stroke-width="2.4"/><line x1="180" y1="50" x2="226" y2="112" stroke="#ff5c50" stroke-width="2.4"/><line x1="180" y1="50" x2="236" y2="76" stroke="#ff8a80" stroke-dasharray="5 4"/>
-  <g opacity=".45"><path d="M222 78 Q238 66 256 78 Q238 90 222 78Z" fill="#f2a33a"/></g><path d="M212 112 Q228 100 246 112 Q228 124 212 112Z" fill="#f2a33a"/><path d="M244 112 L256 103 L256 121Z" fill="#f2a33a"/></svg>`,
+  <line x1="59" y1="20" x2="180" y2="50" stroke="#ff5c50" stroke-width="2.4"/><line x1="180" y1="50" x2="246" y2="112" stroke="#ff5c50" stroke-width="2.4"/><line x1="180" y1="50" x2="246" y2="66.4" stroke="#ff8a80" stroke-dasharray="5 4"/>
+  <g opacity=".45"><path d="M232 66 Q248 54 266 66 Q248 78 232 66Z" fill="#f2a33a"/><path d="M264 66 L276 57 L276 75Z" fill="#f2a33a"/></g><path d="M232 112 Q248 100 266 112 Q248 124 232 112Z" fill="#f2a33a"/><path d="M264 112 L276 103 L276 121Z" fill="#f2a33a"/></svg>`,
  energie:`<svg viewBox="0 0 320 140" aria-hidden="true"><line x1="60" y1="14" x2="160" y2="14" stroke="#7f8aa3" stroke-width="4"/>
-  <path d="M52 92 A100 100 0 0 0 168 92" fill="none" stroke="#7f8aa3" stroke-dasharray="4 5"/>
-  <line x1="110" y1="14" x2="52" y2="92" stroke="#a9b2c4" opacity=".5"/><line x1="110" y1="14" x2="110" y2="114" stroke="#a9b2c4"/>
-  <circle cx="52" cy="92" r="10" fill="#f2b632" opacity=".55"/><circle cx="110" cy="114" r="11" fill="#f2b632"/>
-  <rect x="210" y="40" width="22" height="80" rx="2" fill="#6aa5ff"/><rect x="238" y="70" width="22" height="50" rx="2" fill="#4fd27f"/><rect x="266" y="100" width="22" height="20" rx="2" fill="#ff7a5c"/>
-  <rect x="210" y="40" width="78" height="80" fill="none" stroke="#eef1f7" stroke-dasharray="4 4" opacity=".5"/><line x1="202" y1="120" x2="296" y2="120" stroke="#a9b2c4"/></svg>`
+  <path d="M52 95.5 A100 100 0 0 0 168 95.5" fill="none" stroke="#7f8aa3" stroke-dasharray="4 5"/>
+  <line x1="110" y1="14" x2="52" y2="95.5" stroke="#a9b2c4" opacity=".5"/><line x1="110" y1="14" x2="80" y2="109.4" stroke="#a9b2c4"/>
+  <circle cx="52" cy="95.5" r="10" fill="#f2b632" opacity=".55"/><circle cx="80" cy="109.4" r="11" fill="#f2b632"/>
+  <rect x="200" y="100" width="22" height="20" rx="2" fill="#6aa5ff"/><rect x="228" y="72" width="22" height="48" rx="2" fill="#4fd27f"/><rect x="256" y="108" width="22" height="12" rx="2" fill="#ff7a5c"/>
+  <rect x="284" y="40" width="22" height="80" rx="2" fill="none" stroke="#eef1f7" stroke-dasharray="4 4" opacity=".6"/><line x1="194" y1="120" x2="312" y2="120" stroke="#a9b2c4"/></svg>`
 };
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const slug=s=>String(s).toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');

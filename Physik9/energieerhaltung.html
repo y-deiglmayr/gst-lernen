@@ -148,6 +148,14 @@ dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;w
 dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 @media(max-width:640px){.qrbtn{width:96px}.qrbtn svg{width:80px;height:80px}}
 @media print{nav,.qrbtn{display:none}}
+.musterfig{margin:6px 0 14px;max-width:460px}
+.musterfig svg{display:block;width:100%;height:auto}
+.musterfig .kl{font:italic 5px "KaTeX_Math",serif}
+.musterfig .tx{font:5px "Atkinson Hyperlegible",system-ui,sans-serif}
+.musterfig figcaption{font-size:14px;color:var(--muted)}
+.heft .tabw{overflow-x:auto}
+.heft table.ht{border-collapse:collapse;width:100%;font-size:16px;margin:4px 0 10px}
+.heft table.ht th,.heft table.ht td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
 <link rel="stylesheet" href="/katex/katex.min.css">
@@ -177,6 +185,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext, Musterbeispiel, Heftaufschrieb</small></a>
 <a href="#ueben"><b>4 · Üben</b><small>13 Aufgaben von ★ bis ★★★</small></a>
 </div>
+<div class="ablinks"><a class="arbeitsblatt" href="/Physik9/energieerhaltung-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Zeichnung · PDF, 2 Seiten</small></span></a><a class="arbeitsblatt" href="/Physik9/energieerhaltung-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Aufgaben mit Platz für den Rechenweg · PDF, 4 Seiten</small></span></a></div>
 </div></header>
 
 <!-- ================= PHASE 1 ================= -->
@@ -342,21 +351,32 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 </div>
 </div>
 
-<details class="reveal"><summary>Heftaufschrieb zum Abschreiben (Musterlösung aufklappen)</summary>
+<a class="arbeitsblatt" href="/Physik9/energieerhaltung-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Zeichnung – ausdrucken, ausfüllen, hier vergleichen · PDF, 2 Seiten</small></span></a>
+<details class="reveal"><summary>Heftaufschrieb 1.3 · Musterlösung (aufklappen)</summary>
 <div class="heft">
 <h3>1.3 Energieerhaltung und Energieentwertung</h3>
-<p><b>1. Das Fadenpendel</b><br>Eine ausgelenkte Pendelkugel schwingt hin und her. Dabei wird Lageenergie <f-m>E<sub>L</sub></f-m> in Bewegungsenergie <f-m>E<sub>B</sub></f-m> umgewandelt – und wieder zurück.</p>
+<h3>1. Das Fadenpendel</h3>
+<figure class="musterfig"><svg viewBox="0 0 130 82" role="img" aria-label="Musterzeichnung: Fadenpendel in drei Stellungen. Am linken und rechten Umkehrpunkt hat die Kugel nur Lageenergie, am tiefsten Punkt nur Bewegungsenergie. Durch den tiefsten Punkt verläuft gestrichelt das Nullniveau, am Umkehrpunkt ist die Höhe h eingetragen."><line x1="50" y1="8" x2="80" y2="8" style="stroke:var(--ink)" stroke-width=".8"/><line x1="51" y1="8" x2="54" y2="5" style="stroke:var(--ink)" stroke-width=".4"/><line x1="55" y1="8" x2="58" y2="5" style="stroke:var(--ink)" stroke-width=".4"/><line x1="59" y1="8" x2="62" y2="5" style="stroke:var(--ink)" stroke-width=".4"/><line x1="63" y1="8" x2="66" y2="5" style="stroke:var(--ink)" stroke-width=".4"/><line x1="67" y1="8" x2="70" y2="5" style="stroke:var(--ink)" stroke-width=".4"/><line x1="71" y1="8" x2="74" y2="5" style="stroke:var(--ink)" stroke-width=".4"/><line x1="75" y1="8" x2="78" y2="5" style="stroke:var(--ink)" stroke-width=".4"/><line x1="79" y1="8" x2="82" y2="5" style="stroke:var(--ink)" stroke-width=".4"/><path d="M25.1 55.5 A62 62 0 0 0 104.9 55.5" fill="none" style="stroke:var(--muted)" stroke-width=".4" stroke-dasharray="1 1.2"/><line x1="65" y1="8" x2="25.1" y2="55.5" style="stroke:var(--ink)" stroke-width=".45" opacity="0.55"/><circle cx="25.1" cy="55.5" r="3.6" style="fill:var(--muted);stroke:var(--ink)" stroke-width=".5"/><line x1="65" y1="8" x2="65.0" y2="70.0" style="stroke:var(--ink)" stroke-width=".45" opacity="1"/><circle cx="65.0" cy="70.0" r="3.6" style="fill:var(--muted);stroke:var(--ink)" stroke-width=".5"/><line x1="65" y1="8" x2="104.9" y2="55.5" style="stroke:var(--ink)" stroke-width=".45" opacity="0.55"/><circle cx="104.9" cy="55.5" r="3.6" style="fill:var(--muted);stroke:var(--ink)" stroke-width=".5"/><line x1="3" y1="70" x2="127" y2="70" style="stroke:var(--ink)" stroke-width=".5" stroke-dasharray="2.4 1.6"/><text x="127" y="76" text-anchor="end" class="tx" style="fill:var(--ink);font-weight:700">Nullniveau</text><line x1="114" y1="56.9" x2="114" y2="68.6" style="stroke:var(--ink)" stroke-width=".4"/><path d="M114 55.5 L112.7 58.5 L115.3 58.5Z M114 70 L112.7 67 L115.3 67Z" style="fill:var(--ink)"/><text x="116" y="64.5" class="kl" style="fill:var(--ink)">h</text><text x="22.1" y="51.5" text-anchor="end" class="tx" style="fill:var(--el);font-weight:700">nur <tspan class="kl" style="font-weight:400">E</tspan><tspan dy="1.2" font-size="3.4">L</tspan></text><text x="109.9" y="51.5" text-anchor="start" class="tx" style="fill:var(--el);font-weight:700">nur <tspan class="kl" style="font-weight:400">E</tspan><tspan dy="1.2" font-size="3.4">L</tspan></text><text x="65" y="79" text-anchor="middle" class="tx" style="fill:var(--eb);font-weight:700">nur <tspan class="kl" style="font-weight:400">E</tspan><tspan dy="1.2" font-size="3.4">B</tspan></text></svg><figcaption>Musterzeichnung: Pendel an den Umkehrpunkten und am tiefsten Punkt, Nullniveau durch den tiefsten Punkt.</figcaption></figure>
+<p>Eine ausgelenkte Pendelkugel schwingt hin und her. Dabei wird <b>Lageenergie <f-m>E<sub>L</sub></f-m></b> in <b>Bewegungsenergie <f-m>E<sub>B</sub></f-m></b> umgewandelt – und wieder zurück.</p>
 <ul>
-<li><b>Umkehrpunkt (oben):</b> h maximal, Kugel kurz in Ruhe → nur <f-m>E<sub>L</sub></f-m></li>
-<li><b>Tiefster Punkt:</b> <f-m>h = 0</f-m>, Geschwindigkeit maximal → nur <f-m>E<sub>B</sub></f-m></li>
-<li><b>Dazwischen:</b> <f-m>E<sub>L</sub></f-m> und <f-m>E<sub>B</sub></f-m> – die Summe bleibt immer gleich: <span class="box"><f-m>E<sub>L</sub> + E<sub>B</sub></f-m> = konstant</span></li>
+<li><b>Umkehrpunkt (oben):</b> <f-m>h</f-m> <b>maximal</b>, Kugel kurz in <b>Ruhe</b> → nur <f-m>E<sub>L</sub></f-m></li>
+<li><b>Tiefster Punkt:</b> <f-m>h = 0</f-m>, Geschwindigkeit <b>maximal</b> → nur <f-m>E<sub>B</sub></f-m></li>
 </ul>
-<div class="merke"><h4>Merke: Prinzip der Energieerhaltung</h4><p style="margin:0">Energie kann weder erzeugt noch vernichtet werden. Sie wird nur von einer Energieform in andere Energieformen umgewandelt. Die Gesamtenergie bleibt immer gleich.</p></div>
-<p><b>2. Das reale Pendel – thermische Energie</b><br>Ein echtes Pendel schwingt immer weniger hoch und bleibt irgendwann stehen. Grund ist die <b>Reibung</b> an der Aufhängung und mit der Luft. Bei jeder Umwandlung wird ein Teil der Energie in <b>thermische Energie E<sub>therm</sub></b> umgewandelt – Pendel, Luft und Umgebung werden (minimal) <b>wärmer</b>.</p>
+<p>Dazwischen hat die Kugel <f-m>E<sub>L</sub></f-m> und <f-m>E<sub>B</sub></f-m> – die Summe bleibt immer gleich: <span class="box"><f-m>E<sub>L</sub> + E<sub>B</sub></f-m> = <b>konstant</b></span></p>
+<div class="merke"><h4>Merke: Prinzip der Energieerhaltung</h4><p style="margin:0">Energie kann weder <b>erzeugt</b> noch <b>vernichtet</b> werden. Sie wird nur von einer Energieform in andere Energieformen <b>umgewandelt</b>. Die <b>Gesamtenergie</b> bleibt immer gleich.</p></div>
+<h3>2. Das reale Pendel – thermische Energie</h3>
+<p>Ein echtes Pendel schwingt immer weniger hoch und bleibt irgendwann stehen. Grund ist die <b>Reibung</b> an der Aufhängung und mit der Luft. Bei jeder Umwandlung wird ein Teil der Energie in <b>thermische Energie <f-m>E<sub>therm</sub></f-m></b> umgewandelt – Pendel, Luft und Umgebung werden (minimal) <b>wärmer</b>.</p>
 <p><span class="box"><f-m>E<sub>L</sub> + E<sub>B</sub> + E<sub>therm</sub></f-m> = konstant</span></p>
-<div class="merke"><h4>Merke: Energieentwertung</h4><p style="margin:0">Bei jeder Energieumwandlung wird ein Teil der Energie in thermische Energie der Umgebung umgewandelt. Diese verteilte Wärme kann man kaum noch nutzen – die Energie ist entwertet. Im Alltag spricht man (physikalisch ungenau) von „Energieverlust“.</p></div>
-<p><b>Beispiel:</b> Fallende Knetkugel: <f-m>E<sub>L</sub> → E<sub>B</sub> → E<sub>therm</sub></f-m> (Kugel und Boden erwärmen sich beim Aufprall).</p>
-<p><b>Rechnen mit der Energieerhaltung:</b> Entwertete Energie = Energie vorher − nutzbare Energie nachher, z. B. <f-m>E<sub>therm</sub> = m · g · h<sub>vorher</sub> − m · g · h<sub>nachher</sub></f-m></p>
+<div class="merke"><h4>Merke: Energieentwertung</h4><p style="margin:0">Bei jeder Energieumwandlung wird ein Teil der Energie in thermische Energie der Umgebung umgewandelt. Diese verteilte Wärme kann man kaum noch <b>nutzen</b> – die Energie ist <b>entwertet</b>. Im Alltag spricht man (physikalisch ungenau) von <b>„Energieverlust“</b>.</p></div>
+<h3>3. Energieflussdiagramm</h3>
+<figure class="musterfig"><svg viewBox="0 0 146 58" role="img" aria-label="Musterzeichnung: Energieflussdiagramm. Ein 2 cm breiter blauer Pfeil für 2,0 J Lageenergie teilt sich in einen 1,6 cm breiten grünen Pfeil für 1,6 J Bewegungsenergie und einen 0,4 cm breiten roten Pfeil für 0,4 J thermische Energie."><path d="M4 10 H58 V30 H4Z" style="fill:var(--el)"/><path d="M58 10 H134 V7.5 L142 18 L134 28.5 V26 H58Z" style="fill:var(--eb)"/><path d="M58 26 C78 26 78 40 98 40 H134 V37.5 L142 42 L134 46.5 V44 H98 C74 44 74 30 58 30Z" style="fill:var(--eth)"/><text x="7" y="21.8" class="tx" style="fill:#fff;font-weight:700">E<tspan dy="1.2" font-size="3.4">L</tspan><tspan dy="-1.2"> = 2,0 J</tspan></text><text x="84" y="20" class="tx" style="fill:#fff;font-weight:700">E<tspan dy="1.2" font-size="3.4">B</tspan><tspan dy="-1.2"> = 1,6 J</tspan></text><text x="62" y="54" class="tx" style="fill:var(--eth);font-weight:700">E<tspan dy="1.2" font-size="3.4">therm</tspan><tspan dy="-1.2"> = 0,4 J (entwertet)</tspan></text></svg><figcaption>Musterzeichnung (1 J ≙ 1 cm): 2,0 J Lageenergie werden zu 1,6 J Bewegungsenergie und 0,4 J thermischer Energie.</figcaption></figure>
+<p>Die Breite eines Pfeils zeigt, <b>wie viel Energie fließt</b>. Die Breiten der Pfeile nach der Umwandlung ergeben zusammen wieder <b>den Anfangspfeil</b>.</p>
+<h3>4. Rechnen mit der Energieerhaltung</h3>
+<p>Entwertete Energie = Energie <b>vorher</b> − nutzbare Energie <b>nachher</b>, &nbsp; z. B. <f-m>E<sub>therm</sub> = m · g · h<sub>vorher</sub> − m · g · h<sub>nachher</sub></f-m></p>
+<p><b>Musterbeispiel:</b> Ein Ball (<f-m>m = 0,20 kg</f-m>) fällt aus 1,5 m Höhe auf den Boden und springt danach nur noch 1,2 m hoch. Wie viel Energie wurde beim Aufprall in thermische Energie umgewandelt?</p>
+<p><b>Gegeben:</b> <f-m>m = 0,20 kg</f-m>; <f-m>h<sub>vorher</sub> = 1,5 m</f-m>; <f-m>h<sub>nachher</sub> = 1,2 m</f-m>; <f-m>g = 9,81 N/kg</f-m> &nbsp; <b>Gesucht:</b> <f-m>E<sub>therm</sub></f-m></p>
+<p><b>Rechnung:</b> <f-m>E<sub>therm</sub> = m · g · h<sub>vorher</sub> − m · g · h<sub>nachher</sub></f-m><br><f-m>= 0,20 kg · 9,81 N/kg · 1,5 m − 0,20 kg · 9,81 N/kg · 1,2 m</f-m><br><f-m>≈ 2,94 J − 2,35 J ≈ 0,59 J</f-m></p>
+<p><b>Antwort:</b> Beim Aufprall wurden etwa 0,59 J in thermische Energie umgewandelt.</p>
 </div>
 </details>
 </div></section>
@@ -365,6 +385,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
 <p class="intro">Die Aufgaben werden schwieriger: ★ Grundlagen, ★★ Rechnen mit der Energieerhaltung, ★★★ Anwenden und Knobeln. Rechne mit <f-m>g = 9,81 N/kg</f-m> und notiere im Heft immer <i>Gegeben – Gesucht – Rechnung – Antwort</i>. Bei jeder Aufgabe kannst du dir Tipps holen.</p>
+<a class="arbeitsblatt" href="/Physik9/energieerhaltung-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt zum Drucken</b><small>Übung 1, 2, 4–7, 10 und 13 auf dem Blatt rechnen, hier prüfen · PDF, 4 Seiten</small></span></a>
 
 <div class="card" data-task="u1">
 <div class="tag"><span class="stars">★</span> Übung 1 · Richtig oder falsch?</div>
@@ -765,7 +786,7 @@ $$('[data-num]').forEach(card=>{const id=card.dataset.num,spec=NUM[id];if(!spec)
   let run=false;
   btn.onclick=()=>{if(run)return;run=true;btn.disabled=true;let s=s0,t0=null;car.style.opacity=1;
    const step=t=>{const dt=t0==null?0:Math.min(.05,(t-t0)/1000);t0=t;const h=put(s),v=Math.sqrt(2*9.81*Math.max(0,28-h));
-    s+=dt*9*Math.max(v,1.5);txt.innerHTML=`Höhe <i>h</i> ≈ ${fmt(Math.max(0,h),0)} m · Geschwindigkeit <i>v</i> ≈ ${fmt(v,0)} m/s`;
+    s+=dt*9*Math.max(v,1.5);txt.innerHTML=`Höhe <i>h</i> ≈ ${fmt(Math.max(0,h),0)} m · Geschwindigkeit <i>v</i> ≈ <f-m>${fmt(v,0)} m/s</f-m>`;
     if(s<Ltot)requestAnimationFrame(step);else{put(Ltot);car.style.opacity=.35;run=false;btn.disabled=false;btn.textContent='↺ Nochmal';
      setTimeout(()=>{if(!run){put(s0);car.style.opacity=1}},900)}};
    requestAnimationFrame(step)}}

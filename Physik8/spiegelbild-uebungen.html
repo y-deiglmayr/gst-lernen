@@ -138,6 +138,7 @@ footer{font-size:14px;color:var(--muted)}
 .thin{stroke:var(--ink);stroke-width:1.4;fill:none}
 .tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
 .txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.halo{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
 .txb{fill:var(--ink);font:600 16px Lexend,sans-serif}
 .txl{fill:var(--laser);font:600 16px Lexend,sans-serif}
 .txm{fill:var(--mirror);font:600 14px Lexend,sans-serif}
@@ -532,8 +533,8 @@ function images(V,K,a1,a2){/* alle Bilder von K bei Spiegelgeraden durch V mit W
   'Schritt 5 – Lichtweg: Zeichne F → R → Auge mit Pfeilen. Das Auge verlängert das Licht geradlinig nach hinten – deshalb „sieht“ es die Flamme bei F\'. Probe: Einfallswinkel = Reflexionswinkel am Lot in R!'];
  let k=0;$('#demoSteps').innerHTML=txt.map((_,i)=>`<i>${i}</i>`).join('');
  function draw(){let o=grid(660,390,c)+mirrorV(M*c,0,390)+T(M*c+14,20,'Spiegel','txm')+candle(F[0]*c,B[1]*c,(B[1]-F[1])*c)+T(F[0]*c-30,F[1]*c+5,'F','txb')+eye(E[0]*c,E[1]*c,15)+T(E[0]*c-20,E[1]*c-20,'Auge','txs');
-  if(k>=1)o+=L(F[0]*c,F[1]*c,M*c,F[1]*c,'lot')+T((F[0]+2)*c,F[1]*c-8,'5 Kästchen','txs');
-  if(k>=2)o+=L(M*c,F[1]*c,Fi[0]*c,Fi[1]*c,'lot')+T((M+1.5)*c,F[1]*c-8,'5 Kästchen','txs')+C(Fi[0]*c,Fi[1]*c,5,'aw')+T(Fi[0]*c+8,Fi[1]*c-8,"F'",'txl')+`<g class="ghost">${candle(Fi[0]*c,B[1]*c,(B[1]-F[1])*c)}</g>`;
+  if(k>=1)o+=L(F[0]*c,F[1]*c,M*c,F[1]*c,'lot')+T((F[0]+2)*c,F[1]*c-8,'5 Kästchen','txs halo');
+  if(k>=2)o+=L(M*c,F[1]*c,Fi[0]*c,Fi[1]*c,'lot')+T((M+1.5)*c,F[1]*c-8,'5 Kästchen','txs halo')+C(Fi[0]*c,Fi[1]*c,5,'aw')+T(Fi[0]*c+8,Fi[1]*c-8,"F'",'txl')+`<g class="ghost">${candle(Fi[0]*c,B[1]*c,(B[1]-F[1])*c)}</g>`;
   if(k>=3)o+=L(Fi[0]*c,Fi[1]*c,M*c,R[1]*c,'ray dash','stroke-width="1.6"')+L(M*c,R[1]*c,E[0]*c+8,E[1]*c,'thin');
   if(k>=4)o+=C(M*c,R[1]*c,6,'aw')+T(M*c-24,R[1]*c-10,'R','txl');
   if(k>=5)o+=ray([F[0]*c,F[1]*c],[M*c,R[1]*c],'ray')+ray([M*c,R[1]*c],[E[0]*c+8,E[1]*c],'ray')+L(M*c-80,R[1]*c,M*c,R[1]*c,'lot');
@@ -556,7 +557,7 @@ hints.g1=['Der Spiegel steht senkrecht. Das Lot verläuft deshalb waagrecht entl
   done:"Das Licht der Lampe wird bei R an der Wasseroberfläche reflektiert. Für das Auge scheint es von L' zu kommen – 5 Kästchen unter der Wasseroberfläche.",
   draw:k=>{let o=`<rect x="0" y="${S*c}" width="660" height="${480-S*c}" class="behind"/>`+grid(660,480,c);
    o+=`<rect x="0" y="${S*c}" width="${5*c}" height="16" class="ground"/><rect x="${14*c}" y="${S*c}" width="${8*c}" height="16" class="ground"/><rect x="${5*c}" y="${S*c}" width="${9*c}" height="${480-S*c}" class="water"/>`;
-   o+=L(5*c,S*c,14*c,S*c,'mir')+T(10*c,S*c+24,'Wasseroberfläche','txm')+T(14*c+6,S*c+34,'Ufer','txs')+T(8,S*c+34,'Ufer','txs');
+   o+=L(5*c,S*c,14*c,S*c,'mir')+T(14*c-6,S*c+24,'Wasseroberfläche','txm','text-anchor="end"')+T(14*c+6,S*c+34,'Ufer','txs')+T(8,S*c+34,'Ufer','txs');
    o+=L(Lp[0]*c,Lp[1]*c,Lp[0]*c,S*c,'thin','stroke-width="4"')+C(Lp[0]*c,Lp[1]*c,22,'','fill="url(#glow)"')+C(Lp[0]*c,Lp[1]*c,8,'lamp')+T(Lp[0]*c+14,Lp[1]*c-8,'L','txb');
    o+=L(E[0]*c,E[1]*c+12,E[0]*c,S*c,'thin','stroke-width="3"')+eye(E[0]*c,E[1]*c,20)+T(E[0]*c-26,E[1]*c-18,'Auge','txs');
    if(k>=1)o+=L(Lp[0]*c,Lp[1]*c,Li[0]*c,Li[1]*c,'lot')+`<g class="ghost">${L(Lp[0]*c,Li[1]*c,Lp[0]*c,S*c,'thin','stroke-width="4"')+C(Li[0]*c,Li[1]*c,8,'lamp')}</g>`+T(Li[0]*c+14,Li[1]*c+6,"L'",'txl')+T(Lp[0]*c+8,(S-2.5)*c,'5','txs')+T(Lp[0]*c+8,(S+2.5)*c,'5','txs');

@@ -45,6 +45,15 @@ Details zu Aufbau, Branding und Formeln: `README.md`.
 - Schüler-Feedback liegt anonym in Cloudflare D1 `gst-feedback` (ID 17e96367-7f67-4c99-b1f8-ff75f1f89423). Abrufen und Auswerten nach `feedback/AUSWERTEN.md`: nur Einträge mit Stellenbezug, die sich nachprüfen lassen und fachlich stimmen; dem Nutzer erst eine Liste vorlegen, dann ändern, danach `status` setzen.
 - `wrangler.jsonc` + `feedback/worker.js` bilden den Worker „lernapps“; `.assetsignore` hält interne Dateien (CLAUDE.md, tools/, feedback/) aus der Auslieferung.
 
+## Druckversionen (Heftaufschrieb + Übungsblatt)
+Zu jedem Lernpfad (Kachel) schrittweise zwei PDFs; Vorlagen, Bausteine und Befehle in `tools/druck/` (LIESMICH.md, druck.css, pdf.js, qr_einsetzen.py). Muster: `Physik11/schiefe-ebene`, `Physik9/energie*`, `Physik9/lageenergie`.
+- **Heftaufschrieb** (`<lernpfad>-heftaufschrieb.pdf`, max. 1–2 A4-Seiten, eher kurz): Lückentext mit nur dem Wichtigsten (nachschaubar), Lücken für Fachbegriffe/Formeln, damit Denkleistung bleibt. Erste Zeichnungen/Diagramme zeichnen die Schüler selbst: leeres Karo-Feld plus nummerierte Schrittliste.
+- Der aufklappbare Heftaufschrieb im Lernpfad (`details.reveal .heft`) ist die Lösung: Wort für Wort gleich, Lückenwörter fett, mit Musterzeichnung (`figure.musterfig`, SVG mit CSS-Variablen, hell/dunkel). Lernpfad dafür bei Bedarf anpassen.
+- **Übungsblatt** (`<lernpfad>-uebungsblatt.pdf`, 2–4 Seiten): Aufgaben gemischt AFB I–III (★/★★/★★★), gleiche Übungsnummern und Teilaufgaben-Buchstaben wie online, Karo-Felder für den Rechenweg, Ergebnisfelder, „online geprüft“ zum Abhaken. Nicht alle Übungen nötig. Begründe-Aufträge mit Schreibzeilen.
+- Nicht auf die Blätter: Name/Klasse/Datum, „Das brauchst du“, Formel-Kasten.
+- Kopf mit QR-Code und Fußzeile mit physik.party; Konstruktionen mit Maßstab in echten mm („in 100 % drucken“). PDFs mit `node tools/druck/pdf.js` (keine ungesetzten Formeln), Seiten ansehen.
+- PDFs neben den Lernpfad legen. Downloads nur im Lernpfad (`a.arbeitsblatt`: `.ablinks` im Kopf unter den Phasen, Heftaufschrieb vor dem `details.reveal` in „Festhalten“, Übungsblatt am Anfang von „Üben“). Auf der Kachel nur das Symbol: in `KURSE` `druck:'Heftaufschrieb und Übungsblatt zum Drucken'`. README-Liste ergänzen; PDFs mitsichern.
+
 ## Prüfen und Veröffentlichen
 - Lokal mit `python3 -m http.server` + Playwright: keine JS-Fehler, Desktop 1280 px und Handy 390 px ohne seitliches Scrollen, Aufgaben durchklicken, Screenshots ansehen.
 - Vor dem Push `git fetch` und auf neue Commits achten – auf dem PC des Nutzers (yannik-pc) kann es ungepushte Änderungen geben.

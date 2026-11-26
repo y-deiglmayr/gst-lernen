@@ -183,6 +183,14 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 .steprow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
 #protokoll{display:none}
 @media print{body.printprot>*:not(#protokoll){display:none!important}#protokoll{display:block!important;padding:20px;color:#000;background:#fff}#protokoll h2{margin:0 0 10px}#protokoll .pr{border:1px solid #999;padding:8px 12px;margin:8px 0;min-height:70px;white-space:pre-wrap}}
+.musterfig{margin:6px 0 14px;max-width:460px}
+.musterfig svg{display:block;width:100%;height:auto}
+.musterfig .kl{font:italic 5px "KaTeX_Math",serif}
+.musterfig .tx{font:5px "Atkinson Hyperlegible",system-ui,sans-serif}
+.musterfig figcaption{font-size:14px;color:var(--muted)}
+.heft .tabw{overflow-x:auto}
+.heft table.ht{border-collapse:collapse;width:100%;font-size:16px;margin:4px 0 10px}
+.heft table.ht th,.heft table.ht td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
 <link rel="stylesheet" href="/katex/katex.min.css">
@@ -211,6 +219,7 @@ details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--a
 <a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und Heftaufschrieb</small></a>
 <a href="#ueben"><b>4 · Üben</b><small>6 Aufgaben von ★ bis ★★★</small></a>
 </div>
+<div class="ablinks"><a class="arbeitsblatt" href="/Physik9/energie-einfuehrung-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Zeichnung · PDF, 1 Seite</small></span></a><a class="arbeitsblatt" href="/Physik9/energie-einfuehrung-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Aufgaben mit Platz für den Rechenweg · PDF, 3 Seiten</small></span></a></div>
 </div></header>
 
 <!-- ============ 1 EINSTIEG ============ -->
@@ -304,23 +313,26 @@ Dabei geht keine Energie <select data-a="verloren"></select>.
 <div class="row"><button class="primary" id="f1Check">Prüfen</button></div>
 <p class="fb" id="f1Fb"></p>
 </div>
+<a class="arbeitsblatt" href="/Physik9/energie-einfuehrung-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Zeichnung – ausdrucken, ausfüllen, hier vergleichen · PDF, 1 Seite</small></span></a>
 <details class="reveal"><summary>Heftaufschrieb anzeigen</summary>
 <div class="heft">
-<h3>Was ist Energie?</h3>
-<p>Energie ist die Fähigkeit, Körper zu bewegen, zu verformen, zu erwärmen oder Licht auszusenden.</p>
-<p><span class="box">Formelzeichen: E &nbsp;&nbsp; Einheit: 1 Joule (1 J) &nbsp;&nbsp; <f-m>1 kJ = 1000 J</f-m></span></p>
+<h3>Energie</h3>
+<p>Energie ist die Fähigkeit, Körper zu <b>bewegen</b>, zu <b>verformen</b>, zu <b>erwärmen</b> oder Licht <b>auszusenden</b>.</p>
+<p><span class="box">Formelzeichen: <b>E</b> &nbsp;&nbsp; Einheit: 1 <b>Joule</b> (1 J) &nbsp;&nbsp; <f-m>1 kJ = 1000 J</f-m></span></p>
 <h3>Energieformen</h3>
-<ul>
-<li><b>Lageenergie E<sub>L</sub></b> – Körper in der Höhe (Wasser im Stausee, Kugel auf dem Regal)</li>
-<li><b>Bewegungsenergie E<sub>B</sub></b> – bewegte Körper (fahrendes Auto, Wind)</li>
-<li><b>Spannenergie E<sub>Sp</sub></b> – verformte elastische Körper (gespannter Bogen, Feder)</li>
-<li><b>thermische Energie E<sub>therm</sub></b> – warme Körper (heißes Wasser)</li>
-<li><b>chemische Energie E<sub>chem</sub></b> – in Stoffen gespeichert (Nahrung, Benzin, Batterie)</li>
-<li><b>elektrische Energie E<sub>el</sub></b> – wird mit elektrischem Strom übertragen</li>
-<li><b>Strahlungsenergie E<sub>Str</sub></b> – Licht und Wärmestrahlung (Sonne)</li>
-</ul>
+<div class="tabw"><table class="ht">
+<tr><th>Energieform</th><th>Woran erkennst du sie?</th><th>Beispiel</th></tr>
+<tr><td><b>Lageenergie</b> <f-m>E<sub>L</sub></f-m></td><td>Körper in der <b>Höhe</b></td><td>Wasser im Stausee, Kugel auf dem Regal</td></tr>
+<tr><td><b>Bewegungsenergie</b> <f-m>E<sub>B</sub></f-m></td><td><b>bewegte</b> Körper</td><td>fahrendes Auto, Wind</td></tr>
+<tr><td><b>Spannenergie</b> <f-m>E<sub>Sp</sub></f-m></td><td><b>verformte</b> elastische Körper</td><td>gespannter Bogen, Feder</td></tr>
+<tr><td><b>thermische Energie</b> <f-m>E<sub>therm</sub></f-m></td><td><b>warme</b> Körper</td><td>heißes Wasser</td></tr>
+<tr><td><b>chemische Energie</b> <f-m>E<sub>chem</sub></f-m></td><td>in <b>Stoffen</b> gespeichert</td><td>Nahrung, Benzin, Batterie</td></tr>
+<tr><td><b>elektrische Energie</b> <f-m>E<sub>el</sub></f-m></td><td>wird mit elektrischem <b>Strom</b> übertragen</td><td>Steckdose</td></tr>
+<tr><td><b>Strahlungsenergie</b> <f-m>E<sub>Str</sub></f-m></td><td><b>Licht</b> und Wärmestrahlung</td><td>Sonne</td></tr>
+</table></div>
 <h3>Energieumwandlung</h3>
-<p>Energie kann umgewandelt werden. Energiewandler, z. B. Glühlampe: elektrische Energie → Strahlungsenergie + thermische Energie.</p>
+<p>Energie kann von einer Form in eine andere <b>umgewandelt</b> werden. Geräte (und Lebewesen), die das tun, heißen <b>Energiewandler</b>. Dabei geht keine Energie <b>verloren</b>.</p>
+<figure class="musterfig"><svg viewBox="0 0 146 58" role="img" aria-label="Musterzeichnung: Energieflussdiagramm einer Glühlampe. Links fließt elektrische Energie hinein, rechts oben kommt als genutzte Energie Strahlungsenergie heraus, rechts unten als nicht genutzte Energie thermische Energie (gestrichelt)."><rect x="52" y="16" width="40" height="26" rx="3" style="fill:var(--panel);stroke:var(--ink)" stroke-width=".6"/><text x="72" y="31" text-anchor="middle" class="tx" style="fill:var(--ink);font-weight:700">Glühlampe</text><path d="M4 22.0 L47 22.0 L47 20.0 L52 29 L47 38.0 L47 36.0 L4 36.0Z" style="fill:var(--eelk)" opacity=".9"/><text x="6" y="12" class="tx" style="fill:var(--eelk);font-weight:700">elektrische Energie</text><path d="M92 17.5 L135 17.5 L135 15.5 L140 19 L135 22.5 L135 20.5 L92 20.5Z" style="fill:var(--estr)"/><text x="97" y="12" class="tx" style="fill:var(--estr);font-weight:700">Strahlungsenergie</text><text x="97" y="27" class="tx" style="fill:var(--estr);font-size:4px">genutzt (Licht)</text><path d="M92 30.5 L135 30.5 L135 28.5 L140 35.5 L135 42.5 L135 40.5 L92 40.5Z" style="fill:color-mix(in srgb,var(--eth) 22%,transparent);stroke:var(--eth)" stroke-width=".6" stroke-dasharray="1.6 1.2"/><text x="97" y="49.5" class="tx" style="fill:var(--eth);font-weight:700">thermische Energie</text><text x="97" y="55" class="tx" style="fill:var(--eth);font-size:4px">nicht genutzt</text></svg><figcaption>Musterzeichnung: Energieflussdiagramm der Glühlampe. Bei der Glühlampe ist die nicht genutzte thermische Energie sogar der größte Teil.</figcaption></figure>
 </div>
 </details>
 </div></section>
@@ -329,6 +341,7 @@ Dabei geht keine Energie <select data-a="verloren"></select>.
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
 <p class="intro">★ Grundlagen, ★★ Energieketten und Rechnen, ★★★ Knobeln. Zu jeder Aufgabe gibt es Tipps.</p>
+<a class="arbeitsblatt" href="/Physik9/energie-einfuehrung-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt zum Drucken</b><small>Übung 1–6 auf dem Blatt lösen, hier prüfen · PDF, 3 Seiten</small></span></a>
 
 <div class="card" data-task="u1">
 <div class="tag"><span class="stars">★</span> Übung 1 · Welche Energieform steckt darin?</div>
@@ -388,7 +401,7 @@ Dabei geht keine Energie <select data-a="verloren"></select>.
 <button data-k="c" data-fb="Nein – auch mit großen Maschinen entsteht keine Energie aus dem Nichts.">Das klappt, wenn die Maschine groß genug ist.</button>
 <p class="fb"></p></div></div>
 <div id="whyU6"></div>
-<div class="part" data-task="u6c"><h4>d) Woher stammt die Energie letztlich, wenn du mit dem Fahrrad einen Berg hinauffährst?</h4>
+<div class="part" data-task="u6c"><h4>c) Woher stammt die Energie letztlich, wenn du mit dem Fahrrad einen Berg hinauffährst?</h4>
 <div class="mc" data-correct="c" data-task="u6c">
 <button data-k="a">Aus dem Fahrrad.</button>
 <button data-k="b" data-fb="Fast – die Muskeln sind aber nur der Energiewandler. Wo kommt deren Energie her?">Aus deinen Muskeln.</button>
@@ -559,16 +572,16 @@ const ground=y=>Rc(0,y,440,260-y,'ground');
 SIM.s1=(svg,v,k)=>{const hp=v*1.6,top=205,y0=top-14-hp,y=y0+(top-14-y0)*k*k,dent=k>=1?2+v*.16:0;let s=ground(top+25);
  s+=L(60,top,60,top-170,'thin')+[0,20,40,60,80,100].map(c=>L(54,top-c*1.6,66,top-c*1.6,'thin')+T(18,top-c*1.6+5,c+' cm','txs')).join('');
  s+=`<path d="M150 ${top} L${200-14} ${top} Q200 ${top+dent*2} ${214} ${top} L250 ${top} L250 ${top+25} L150 ${top+25}Z" style="fill:#d77fa1;stroke:var(--ink)" stroke-width="1"/>`;
- s+=C(200,y+(k>=1?dent:0),14,'ball')+(k<1?L(200,y0,230,y0,'dashl'):'')+T(258,top+18,'Knete','txs');
+ s+=C(200,y+(k>=1?dent:0),14,'ball')+(k<1?L(66,y0+14,200,y0+14,'dashl'):'')+T(258,top+18,'Knete','txs');
  if(k>=1)s+=T(270,top-40,'Delle: '+fmtS(dent/2,1)+' mm','txb','style="fill:var(--el)"');return s};
 SIM.s2=(svg,v,k)=>{const yb=200,push=6*v*v,k1=Math.min(1,k*1.6),k2=Math.max(0,(k-.62)/.38),cx=20+(196-20)*k1,bx=230+push*(1-(1-k2)*(1-k2));let s=ground(yb);
  s+=Rc(cx,yb-30,44,22,'','rx="6" style="fill:var(--eb)"')+Rc(cx+8,yb-42,24,14,'','rx="4" style="fill:var(--eb);opacity:.7"')+C(cx+10,yb-6,6,'','style="fill:var(--ink)"')+C(cx+34,yb-6,6,'','style="fill:var(--ink)"');
  s+=Rc(bx,yb-24,36,24,'','style="fill:#f0d9a8;stroke:var(--ink)"')+T(bx-6,yb-32,'Schachtel','txs');
  if(k>=1)s+=L(230,yb+18,bx,yb+18,'thin')+T(230,yb+40,'geschoben: '+fmtS(push/10,1)+' cm','txb','style="fill:var(--eb)"');return s};
 SIM.s3=(svg,v,k)=>{const yb=220,px=70,py=130,pull=8*v,d=12*v*v,k1=Math.min(1,k*4),k2=Math.max(0,(k-.25)/.75),bx=px-pull*(1-k1);let s=ground(yb);
- s+=L(px,yb,px,py-30,'thin','stroke-width="4"')+L(px,yb,px,py+30,'thin','stroke-width="4"');
- s+=`<path d="M${px} ${py-30} L${bx-8} ${py} L${px} ${py+30}" fill="none" style="stroke:var(--esp)" stroke-width="3"/>`;
- const x=k2>0?px+d*k2:bx-8,y=k2>0?py-(4*70*k2*(1-k2))+(yb-6-py)*k2:py;s+=C(x,y,6,'','style="fill:var(--paper);stroke:var(--ink)"');
+ s+=L(px,yb,px,py+28,'thin','stroke-width="5"')+L(px,py+28,px-10,py-4,'thin','stroke-width="4"')+L(px,py+28,px+10,py-4,'thin','stroke-width="4"');
+ s+=`<path d="M${px-10} ${py-4} L${bx-8} ${py} L${px+10} ${py-4}" fill="none" style="stroke:var(--esp)" stroke-width="3" stroke-linejoin="round"/>`;
+ const x=k2>0?px-8+(d+8)*k2:bx-8,y=k2>0?py-(4*70*k2*(1-k2))+(yb-6-py)*k2:py;s+=C(x,y,6,'','style="fill:var(--paper);stroke:var(--ink)"');
  if(k>=1)s+=L(px,yb+14,px+d,yb+14,'thin')+T(px+10,yb+34,'Flugweite: '+fmtS(d/10,1)+' m','txb','style="fill:var(--esp)"');
  if(k===0)s+=T(px-56,py+56,'gedehnt','txs');return s};
 SIM.s4=(svg,v,k)=>{let s='';const cup=(x,col,lab,rate)=>{const m=Math.max(0,1-k*rate),sz=28*Math.sqrt(m);return Rc(x,70,110,150,'','rx="8" style="fill:none;stroke:var(--ink)" stroke-width="2"')+Rc(x+3,110,104,107,'',`style="fill:${col};opacity:.45"`)+(sz>1?Rc(x+55-sz/2,112,sz,sz,'','rx="4" style="fill:#e8f6ff;stroke:#9cc9e8"'):'')+T(x+55,245,lab,'txb','text-anchor="middle"')+T(x+55,60,(m>0?Math.round(m*100)+' % Eis':'geschmolzen!'),'txs','text-anchor="middle"')};
