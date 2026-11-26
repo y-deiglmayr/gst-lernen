@@ -15,6 +15,7 @@ Details zu Aufbau, Branding und Formeln: `README.md`.
   <script defer src="/katex/katex.min.js"></script>
   <script defer src="/katex/formel.js"></script>
   <script defer src="/brand/feedback.js"></script>
+  <script defer src="/brand/mischen.js"></script>
   ```
 - Schulfarben: Schiefer #3E4B4C, #5F6F74, Graugrün #76989D, #ACBDC3, #C9D2D3, Hellgrau #E4E7E9, Akzentgelb #FCBE00.
   Keine eigenen Dunkelblau-Töne für Kopf oder Vorschaubilder (Vorschaubild-Grund: #3E4B4C bzw. #2f393a).
@@ -33,6 +34,7 @@ Details zu Aufbau, Branding und Formeln: `README.md`.
 
 ## Didaktik
 - Phasen: Einstieg/Wiederholen → Entdecken → Festhalten → Üben (★/★★/★★★, Tipps, Lösungen).
+- Antwortreihenfolge nie fest: `brand/mischen.js` mischt bei jedem Laden Dropdowns (`select` mit `data-a`/`data-ans` oder in `.selbox`/`[data-task]`, Platzhalter „…“ bleibt oben), Multiple-Choice-Knöpfe (`.mc button[data-k]`/`[data-j]`), Mehrfachauswahl (`.multi label`) und Kinder von `[data-mischen]` (z. B. Wortbausteine), auch per JS erzeugte. Prüfen-Logik daher immer über Werte/Kennungen, nie über Positionen. Reine Zahlenlisten bleiben geordnet; Ausnahme per `data-fest`.
 - Multiple Choice: nach Fehlversuch Hinweis und kurze Denkpause (kein Durchraten).
 - Pro Lernpfad 2–3 „Begründe“-Aufträge mit Musterbegründung (erst nach eigenem Satz sichtbar).
 - Konstruktionen: „Erst im Heft konstruieren, dann hier prüfen.“
