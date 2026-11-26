@@ -28,18 +28,9 @@ main{max-width:1100px;margin:0 auto;padding:8px max(5vw,16px) 48px;width:100%;fl
 a.card{display:flex;flex-direction:column;gap:6px;padding:0 0 16px;overflow:hidden;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);text-decoration:none;min-height:44px;transition:border-color .15s,box-shadow .15s}
 a.card:hover,a.card:focus-visible{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
 a.card:focus-visible{outline:none}
-.card.mitdruck{display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);border-radius:6px;background:var(--panel);transition:border-color .15s,box-shadow .15s}
-.card.mitdruck:hover,.card.mitdruck:focus-within{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
-.card.mitdruck a{color:var(--ink);text-decoration:none}
-a.clink{display:flex;flex-direction:column;gap:6px;padding:0 0 14px;flex:1}
-a.clink b{font-family:"Source Sans 3",system-ui,sans-serif;font-size:20px;display:block;padding:6px 18px 0;line-height:1.2}
-a.clink small{color:var(--muted);font-size:15px;padding:0 18px}
-a.druck{display:flex;align-items:center;gap:10px;min-height:44px;margin:0 12px 12px;padding:6px 12px;border:1px solid var(--line);border-radius:6px;background:var(--bg);font:600 15px "Source Sans 3",system-ui,sans-serif}
-a.druck svg{width:22px;height:22px;flex:none;color:var(--slate2)}
-a.druck span{flex:1;white-space:nowrap}
-a.druck em{font-style:normal;font-weight:400;font-size:13px;color:var(--muted)}
-a.druck:hover{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
-a.clink:focus-visible,a.druck:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.thumb{position:relative}
+.abzeichen{position:absolute;top:8px;right:8px;width:34px;height:34px;display:grid;place-items:center;background:#fff;color:var(--slate);border-radius:6px;box-shadow:0 0 0 2px var(--accent)}
+.abzeichen svg{width:22px;height:22px}
 a.card b{font-family:"Source Sans 3",system-ui,sans-serif;font-size:20px;display:block;padding:6px 18px 0;line-height:1.2}
 a.card small{color:var(--muted);font-size:15px;padding:0 18px}
 .thumb{display:block;aspect-ratio:16/7;background:var(--slate)}
@@ -228,11 +219,9 @@ const zu=new Set(store.get('gst-index-zu')||[]);
 const anzahl=n=>n===1?'1 Lernpfad':n+' Lernpfade';
 const karte=(k,t,s)=>{
  const such=esc((s.titel+' '+s.info+' '+t.thema+' '+k.klasse+' '+k.fach+(s.druck?' arbeitsblatt pdf druck':'')).toLowerCase());
- const innen=`${BILDER[s.bild]?`<span class="thumb">${BILDER[s.bild]}</span>`:''}<b>${esc(s.titel)}</b><small>${esc(s.info)}</small>`;
- if(!s.druck)return `<a class="card" href="/${esc(k.ordner)}/${esc(s.datei)}" data-such="${such}">${innen}</a>`;
- /* Kachel mit Druckversion: Lernpfad-Link und PDF-Download nebeneinander, nicht verschachtelt */
- return `<div class="card mitdruck" data-such="${such}"><a class="clink" href="/${esc(k.ordner)}/${esc(s.datei)}">${innen}</a>`+
-  `<a class="druck" href="/${esc(k.ordner)}/${esc(s.druck.datei)}" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>${esc(s.druck.text)}</span><em>${esc(s.druck.info)}</em></a></div>`};
+ /* Kleines Symbol auf dem Vorschaubild, wenn es zum Lernpfad ein Arbeitsblatt zum Drucken gibt (Download im Lernpfad) */
+ const ab=s.druck?`<span class="abzeichen" title="Mit Arbeitsblatt zum Drucken"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5M9.5 12h7M9.5 15.5h7M9.5 19h4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr">mit Arbeitsblatt</span></span>`:'';
+ return `<a class="card" href="/${esc(k.ordner)}/${esc(s.datei)}" data-such="${such}">${BILDER[s.bild]?`<span class="thumb">${BILDER[s.bild]}${ab}</span>`:ab}<b>${esc(s.titel)}</b><small>${esc(s.info)}</small></a>`};
 const stufen=STUFEN.filter(st=>KURSE.some(k=>k.stufe===st.name));
 document.getElementById('list').innerHTML=stufen.map(st=>{
  const klassen=KURSE.filter(k=>k.stufe===st.name);

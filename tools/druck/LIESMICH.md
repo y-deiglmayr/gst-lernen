@@ -2,7 +2,7 @@
 
 Jede Druckvorlage ist eine HTML-Seite in diesem Ordner (A4, Schul-CI, Formeln wie in den Lernpfaden mit `<f-m>`).
 Das fertige PDF liegt neben dem Lernpfad, z. B. `Physik11/schiefe-ebene-arbeitsblatt.pdf`, und wird in `index.html`
-beim Lernpfad mit `druck:{datei:'…pdf',text:'Arbeitsblatt zum Drucken',info:'PDF · 3 Seiten'}` als Download in die Kachel gesetzt.
+beim Lernpfad mit `druck:{datei:'…pdf',text:'Arbeitsblatt zum Drucken',info:'PDF · 3 Seiten'}` mit einem kleinen Symbol auf der Kachel markiert. Der Download selbst steht im Lernpfad: `<a class="arbeitsblatt" href="…pdf" download>` (Stil in brand.css) im Kopf unter den Phasen und am Anfang von „Üben“.
 
 Idee: Das Blatt enthält vor allem die Aufgabenstellungen der Übungen (gleiche Nummern wie im Lernpfad) mit Karo-Feldern
 für den Rechenweg und Ergebnis-Zeilen. Kontrolliert wird online im Lernpfad („online geprüft“ abhaken). Richtwert 2–4 Seiten.
