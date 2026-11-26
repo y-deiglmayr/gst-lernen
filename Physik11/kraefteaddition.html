@@ -248,7 +248,7 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 <h2>1 · Einstieg: Wenn mehrere Kräfte ziehen</h2>
 <p class="intro">Bisher hast du meist <b>eine</b> Kraft auf einen Körper betrachtet. In Wirklichkeit greifen fast immer mehrere Kräfte gleichzeitig an: Beim Bogenschießen ziehen beide Hälften der Sehne am Pfeil, beim Tauziehen ziehen zwei Mannschaften am Seil. Wie wirken solche Kräfte zusammen?</p>
 <div class="two">
-<div class="fig"><svg viewBox="0 0 520 300" role="img" aria-label="Gespannter Bogen: Beide Hälften der Sehne ziehen schräg am Ende des Pfeils"><g id="bowScene"></g></svg><p class="caption">Die gespannte Sehne zieht mit zwei Kräften <f-m>F<sub>1</sub></f-m> und <f-m>F<sub>2</sub></f-m> schräg am Pfeilende.</p></div>
+<div class="fig"><svg viewBox="0 0 520 300" role="img" aria-label="Gespannter Bogen: Beide Hälften der Sehne ziehen schräg am Ende des Pfeils"><g id="bowScene" transform="translate(-60 0)"></g></svg><p class="caption">Die gespannte Sehne zieht mit zwei Kräften <f-m>F<sub>1</sub></f-m> und <f-m>F<sub>2</sub></f-m> schräg am Pfeilende.</p></div>
 <div>
 <div class="card"><div class="tag">Auftrag 1 · Vermute <span class="stars">★</span> <span class="afb">AFB I</span></div>
 <div class="part" data-task="e1"><h4>In welche Richtung wird der Pfeil beim Loslassen beschleunigt?</h4><div class="mc" data-correct="b" data-task="e1" data-tipp="Die Sehne ist symmetrisch gespannt. Überlege, was mit den Anteilen nach oben und nach unten passiert."><button data-k="a">Schräg nach oben, in Richtung von <f-m>F<sub>1</sub></f-m>.</button><button data-k="b" data-fb="Richtig! Die beiden schrägen Kräfte wirken zusammen wie <b>eine</b> Kraft nach rechts. Ihre Anteile nach oben und unten heben sich auf.">Nach rechts, genau entlang des Pfeils.</button><button data-k="c" data-fb="Nein. Beide Kräfte haben einen Anteil nach rechts – diese Anteile verstärken sich.">Gar nicht – die Kräfte heben sich auf.</button><button data-k="d">Nach links, zur Sehne hin.</button><p class="fb"></p></div></div>
@@ -658,13 +658,16 @@ function initCommon(){
 
 
 /* ---------- Bogen ---------- */
-{let s='';const ax=300,ay=150;
- s+=`<path d="M380 20 Q470 150 380 280" fill="none" style="stroke:#a8743a" stroke-width="10" stroke-linecap="round"/>`;
- s+=`<line x1="380" y1="20" x2="${ax}" y2="${ay}" style="stroke:var(--muted)" stroke-width="2"/><line x1="380" y1="280" x2="${ax}" y2="${ay}" style="stroke:var(--muted)" stroke-width="2"/>`;
- s+=`<line x1="${ax}" y1="${ay}" x2="500" y2="${ay}" style="stroke:var(--ink)" stroke-width="4"/><path d="M500 ${ay} l-14 -7 v14z" style="fill:var(--ink)"/><path d="M${ax} ${ay} l14 -9 h12 l-14 9 l14 9 h-12z" style="fill:var(--fr)"/>`;
- const arr=(x1,y1,x2,y2,c,t,tx,ty)=>{const L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L;return `<line x1="${x1}" y1="${y1}" x2="${x2-ux*12}" y2="${y2-uy*12}" style="stroke:${c}" stroke-width="4"/><path d="M${x2} ${y2} L${x2-ux*15-uy*6} ${y2-uy*15+ux*6} L${x2-ux*15+uy*6} ${y2-uy*15-ux*6}Z" style="fill:${c}"/><text x="${tx}" y="${ty}" class="flab" style="fill:${c}">${t}</text>`};
- s+=arr(ax,ay,ax+80*0.53,ay-80*0.85,'var(--f1)',lab('F|1'),ax+44,ay-80)+arr(ax,ay,ax+80*0.53,ay+80*0.85,'var(--f2)',lab('F|2'),ax+46,ay+92);
- s+=`<g opacity=".9"><circle cx="150" cy="95" r="16" style="fill:none;stroke:var(--ink)" stroke-width="2"/><path d="M150 111 L160 190 M160 190 L140 270 M160 190 L180 270 M155 130 L${ax} ${ay} M155 130 L425 146" style="stroke:var(--ink);fill:none" stroke-width="3" stroke-linecap="round"/></g>`;
+{let s='';const ax=300,ay=150,M='var(--muted)';
+ /* Nur die Hände, dezent: Zughand hält die Sehne am Pfeilende, Bogenhand umfasst den Griff */
+ s+=`<path d="M206 176 L282 154" style="stroke:${M}" stroke-width="12" stroke-linecap="round" opacity=".55"/><rect x="270" y="140" width="26" height="22" rx="8" style="fill:${M}" opacity=".75"/>`;
+ s+=`<path d="M380 20 Q470 150 380 280" fill="none" style="stroke:#a8743a" stroke-width="10" stroke-linecap="round"/><rect x="412" y="136" width="24" height="30" rx="8" style="fill:${M}" opacity=".75"/>`;
+ s+=`<line x1="380" y1="20" x2="${ax}" y2="${ay}" style="stroke:${M}" stroke-width="2"/><line x1="380" y1="280" x2="${ax}" y2="${ay}" style="stroke:${M}" stroke-width="2"/>`;
+ s+=`<line x1="${ax}" y1="${ay}" x2="488" y2="${ay}" style="stroke:${M}" stroke-width="3"/><path d="M500 ${ay} l-14 -6 v12z" style="fill:${M}"/>`;
+ const arr=(x1,y1,x2,y2,c,t,tx,ty)=>{const L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L;return `<line x1="${x1}" y1="${y1}" x2="${x2-ux*12}" y2="${y2-uy*12}" style="stroke:${c}" stroke-width="5"/><path d="M${x2} ${y2} L${x2-ux*17-uy*7} ${y2-uy*17+ux*7} L${x2-ux*17+uy*7} ${y2-uy*17-ux*7}Z" style="fill:${c}"/><text x="${tx}" y="${ty}" class="flab" style="fill:${c}">${t}</text>`};
+ const l=100,ux=0.53,uy=0.85;
+ s+=arr(ax,ay,ax+l*ux,ay-l*uy,'var(--f1)',lab('F|1'),ax+l*ux/2+16,ay-l*uy/2+16)+arr(ax,ay,ax+l*ux,ay+l*uy,'var(--f2)',lab('F|2'),ax+l*ux/2+16,ay+l*uy/2+2);
+ s+=`<circle cx="${ax}" cy="${ay}" r="4.5" style="fill:var(--ink)"/>`;
  $('#bowScene').innerHTML=s}
 
 /* ---------- A: Tauziehen ---------- */

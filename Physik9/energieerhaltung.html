@@ -391,6 +391,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="tag"><span class="stars">★</span> Übung 4 · Säulendiagramm einer Achterbahn</div>
 <p>Ein Achterbahnwagen startet im Punkt A in 28 m Höhe aus der Ruhe und rollt <b>ohne Reibung</b> durch die Bahn. Die Lageenergie (blau) ist schon eingezeichnet. Ergänze die Bewegungsenergie (grün): <b>Klicke in die grüne Spalte</b> auf die passende Höhe.</p>
 <div class="fig"><svg id="u4track" viewBox="0 0 640 175" role="img" aria-label="Achterbahnstrecke mit den Punkten A (28 m), B (10 m), C (0 m) und D (20 m)"></svg></div>
+<div class="row"><button id="u4Run">▶ Start</button><span class="caption" id="u4Txt" style="margin:0">Der Wagen startet in A aus der Ruhe (Modell: ohne Reibung).</span></div>
 <div class="fig" style="margin-top:8px"><svg id="u4" viewBox="0 0 640 320" role="img" aria-label="Säulendiagramm mit Lageenergie und anklickbarer Bewegungsenergie in den Punkten A bis D"></svg></div>
 <div class="row"><button class="primary" id="u4Check">Prüfen</button><button id="u4Hint">Tipp</button><button id="u4Solve">Lösung zeigen</button></div>
 <p class="fb" id="u4Fb"></p>
@@ -755,8 +756,19 @@ $$('[data-num]').forEach(card=>{const id=card.dataset.num,spec=NUM[id];if(!spec)
  {let o='';const sx=[60,230,380,560],sy=h=>155-h*3.6;
   o+=`<path d="M20 ${sy(28)} L${sx[0]} ${sy(28)} C110 ${sy(28)} 150 ${sy(10)} ${sx[1]} ${sy(10)} C290 ${sy(10)} 310 ${sy(0)} ${sx[2]} ${sy(0)} C440 ${sy(0)} 480 ${sy(20)} ${sx[3]} ${sy(20)} C590 ${sy(20)} 600 ${sy(14)} 625 ${sy(8)}" class="track"/>`;
   o+=L(10,sy(0)+3,630,sy(0)+3,'dashl');
-  P.forEach((p,i)=>{o+=C(sx[i],sy(p[1])-8,7,'ball')+T(sx[i],sy(p[1])-22,p[0]+' ('+p[1]+' m)','txb','text-anchor="middle"')});
-  $('#u4track').innerHTML=o}
+  P.forEach((p,i)=>{o+=C(sx[i],sy(p[1]),4,'','style="fill:var(--ink)"')+T(sx[i],sy(p[1])-22,p[0]+' ('+p[1]+' m)','txb','text-anchor="middle"')});
+  o+=C(sx[0],sy(28)-8,8,'ball','id="u4car"');
+  $('#u4track').innerHTML=o;
+  const tr=$('#u4track path.track'),car=$('#u4car'),btn=$('#u4Run'),txt=$('#u4Txt'),Ltot=tr.getTotalLength(),s0=sx[0]-20,hOf=y=>(155-y)/3.6;
+  const put=s=>{const q=tr.getPointAtLength(s),q2=tr.getPointAtLength(Math.min(Ltot,s+1)),q1=tr.getPointAtLength(Math.max(0,s-1)),a=Math.atan2(q2.y-q1.y,q2.x-q1.x);
+   car.setAttribute('cx',q.x+8*Math.sin(a));car.setAttribute('cy',q.y-8*Math.cos(a));return hOf(q.y)};
+  let run=false;
+  btn.onclick=()=>{if(run)return;run=true;btn.disabled=true;let s=s0,t0=null;car.style.opacity=1;
+   const step=t=>{const dt=t0==null?0:Math.min(.05,(t-t0)/1000);t0=t;const h=put(s),v=Math.sqrt(2*9.81*Math.max(0,28-h));
+    s+=dt*9*Math.max(v,1.5);txt.innerHTML=`Höhe <i>h</i> ≈ ${fmt(Math.max(0,h),0)} m · Geschwindigkeit <i>v</i> ≈ ${fmt(v,0)} m/s`;
+    if(s<Ltot)requestAnimationFrame(step);else{put(Ltot);car.style.opacity=.35;run=false;btn.disabled=false;btn.textContent='↺ Nochmal';
+     setTimeout(()=>{if(!run){put(s0);car.style.opacity=1}},900)}};
+   requestAnimationFrame(step)}}
  const svg=$('#u4');
  function draw(sol){let o='';
   for(let u=0;u<=UNIT;u++){const y=Y0-u*PX;o+=L(50,y,620,y,'gl')}
@@ -768,7 +780,7 @@ $$('[data-num]').forEach(card=>{const id=card.dataset.num,spec=NUM[id];if(!spec)
    o+=T(x,Y0+22,p[0],'txb','text-anchor="middle"')+T(x-24,Y0+40,sub('E','L'),'tel','text-anchor="middle"')+T(x+24,Y0+40,sub('E','B'),'teb','text-anchor="middle"')});
   o+=L(50,Y0,620,Y0,'thin');P.forEach((p,i)=>{o+=`<rect x="${xs[i]+2}" y="${Y0-UNIT*PX-8}" width="44" height="${UNIT*PX+16}" class="hit" data-i="${i}"><title>Bewegungsenergie in ${p[0]} festlegen</title></rect>`});svg.innerHTML=o;
   svg.querySelectorAll('.hit').forEach(h=>h.onclick=ev=>{const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;const q=p.matrixTransform(svg.getScreenCTM().inverse());
-   user[+h.dataset.i]=Math.max(0,Math.min(UNIT,Math.round((Y0-q.y)/PX)));draw(false)})}
+   user[+h.dataset.i]=Math.max(0,Math.min(UNIT,Math.round((Y0-q.y)/PX)));const fb=$('#u4Fb');fb.className='fb';fb.textContent='';draw(false)})}
  draw(false);
  $('#u4Check').onclick=()=>{const fb=$('#u4Fb');if(user.some(v=>v==null)){fb.className='fb bad';fb.textContent='Zeichne in allen vier Punkten die Bewegungsenergie ein.';return}
   const wrong=P.filter((p,i)=>user[i]!==UNIT-p[1]/2).map(p=>p[0]);
