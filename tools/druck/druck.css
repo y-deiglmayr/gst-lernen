@@ -65,7 +65,9 @@ b{font-weight:700}
 .seite{break-before:page}
 .fuss{margin-top:2mm;display:flex;gap:4mm;align-items:center;font-size:8.6pt;color:var(--muted)}
 .fuss .bar{flex:0 0 30mm;height:2mm}
-f-m{font-style:normal}
+f-m{font-style:normal;white-space:nowrap}
+/* Formeln nie umbrechen: KaTeX trennt sonst nach = oder ·. Lange Formeln in eine eigene Zeile setzen. */
+f-m .katex,f-m .katex-html{white-space:nowrap}
 .katex{font-size:1.04em}
 .rf{width:100%;border-collapse:collapse;font-size:9.6pt;margin:1mm 0 2mm}
 .rf th{font:700 8.6pt "Source Sans 3",sans-serif;color:var(--muted);text-align:left;padding:0 1.6mm 1mm}
@@ -106,3 +108,4 @@ body.heftseite{line-height:1.5}
 .leerz{border-bottom:.3mm solid var(--slate2);height:7.5mm}
 .c-el{color:#2563c9;font-weight:700}.c-eb{color:#1d8a4a;font-weight:700}.c-eth{color:#d4381e;font-weight:700}
 .teil.gg{grid-template-columns:15mm 1fr;align-items:end;margin:0 0 2.6mm}.teil.gg .l{width:auto;display:block;margin:0}.teil.gg > b{color:var(--heft)}
+.nw{white-space:nowrap}

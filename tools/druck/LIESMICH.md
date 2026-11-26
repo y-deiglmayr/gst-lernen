@@ -16,6 +16,7 @@ Neue Vorlagen am besten von einer vorhandenen kopieren (Kopf, Schritt-Leiste, Ab
 Heftaufschrieb `body.heftseite`, `.heftblatt` > `.hs` (Abschnitt), Lücken `.l .s/.m/.g/.xg`, `.zeichnen` (Karo-Feld + Schrittliste),
 `.kt` (Tabelle), `.box`, `.sf` (zwei Fälle nebeneinander), `.hmerke`, `.teil.gg` (Geg./Ges./Rechn./Antw.-Zeilen);
 Übungsblatt `.aufg` (Kopf `.ah` mit Nummer, ★, AFB), `.teil`, `.karo`, `.zeilen`, `.erg` mit `.feld` und `.ok`, `.rf` (richtig/falsch), `.beg` (Begründe).
+Formeln brechen nicht um (`f-m` nowrap). Lücke + Formelzeichen zusammenhalten mit `<span class="nw">…</span>`, Zahl und Einheit im Text mit geschütztem Leerzeichen.
 Seitenumbruch vor einer Aufgabe mit `class="aufg seite"`; Abschnitte und Aufgaben werden nicht zerteilt.
 QR-Code: Platzhalter `<!--QR:https://physik.party/…-->` im Kopf, dann `python3 tools/druck/qr_einsetzen.py <datei>.html`.
 

@@ -57,6 +57,7 @@ Zu jedem Lernpfad (Kachel) schrittweise zwei PDFs; Vorlagen, Bausteine und Befeh
 - Der aufklappbare Heftaufschrieb im Lernpfad (`details.reveal .heft`) ist die Lösung: Wort für Wort gleich, Lückenwörter fett, mit Musterzeichnung (`figure.musterfig`, SVG mit CSS-Variablen, hell/dunkel). Lernpfad dafür bei Bedarf anpassen.
 - **Übungsblatt** (`<lernpfad>-uebungsblatt.pdf`, 2–4 Seiten): Aufgaben gemischt AFB I–III (★/★★/★★★), gleiche Übungsnummern und Teilaufgaben-Buchstaben wie online, Karo-Felder für den Rechenweg, Ergebnisfelder, „online geprüft“ zum Abhaken. Nicht alle Übungen nötig. Begründe-Aufträge mit Schreibzeilen.
 - Nicht auf die Blätter: Name/Klasse/Datum, „Das brauchst du“, Formel-Kasten.
+- Formeln nie umbrechen (druck.css: `f-m` mit `nowrap`). Lücke + zugehöriges Formelzeichen und Klammerformeln wie `(E<sub>Aufwand</sub>)` in `<span class="nw">…</span>` zusammenhalten, zwischen Zahl und Einheit im Fließtext ein geschütztes Leerzeichen. Lange Formeln in eine eigene Zeile. PDF-Seiten auf getrennte Formeln prüfen.
 - Kopf mit QR-Code und Fußzeile mit physik.party; Konstruktionen mit Maßstab in echten mm („in 100 % drucken“). PDFs mit `node tools/druck/pdf.js` (keine ungesetzten Formeln), Seiten ansehen.
 - PDFs neben den Lernpfad legen. Downloads nur im Lernpfad (`a.arbeitsblatt`: `.ablinks` im Kopf unter den Phasen, Heftaufschrieb vor dem `details.reveal` in „Festhalten“, Übungsblatt am Anfang von „Üben“). Auf der Kachel nur das Symbol: in `KURSE` `druck:'Heftaufschrieb und Übungsblatt zum Drucken'`. README-Liste ergänzen; PDFs mitsichern.
 
