@@ -347,7 +347,22 @@ table.eta td:last-child{text-align:right;white-space:nowrap}
 <div id="whyM"></div>
 
 <h3>D · Wirkungsgrad mit Leistungen</h3>
-<p class="intro">Auf Geräten steht meist keine Energie, sondern die <b>Leistung</b> in Watt – also wie viel Energie pro Sekunde umgesetzt wird (<f-m>1 W = 1 J : 1 s</f-m>). Vergleicht man Nutzen und Aufwand im <b>gleichen Zeitabschnitt</b>, kann man auch die Leistungen ins Verhältnis setzen: <f-m>η = P<sub>Nutzen</sub> : P<sub>Aufwand</sub></f-m>.</p>
+<div class="merke"><h4>Info: Was ist Leistung?</h4>
+<div class="two" style="gap:16px;align-items:center">
+<div>
+<p>Auf Elektrogeräten steht keine Energie, sondern die <b>Leistung</b> <f-m>P</f-m>. Sie gibt an, <b>wie viel Energie in jeder Sekunde</b> umgewandelt wird.</p>
+<p class="formula"><f-m>P = E : t</f-m></p>
+<p style="margin:0">Einheit: <b>Watt</b> (W). <f-m>1 W = 1 J : 1 s</f-m> – also 1 Joule pro Sekunde.<br>Beispiel: Ein Wasserkocher mit 2000 W wandelt in jeder Sekunde 2000 J elektrische Energie um, in 10 s also 20 000 J.</p>
+</div>
+<svg viewBox="0 0 300 120" role="img" aria-label="Piktogramm: Ein Wasserkocher mit 2000 W bekommt in jeder Sekunde 2000 Joule" style="width:100%;max-width:320px;height:auto"><circle cx="40" cy="60" r="30" style="fill:var(--paper);stroke:var(--ink)" stroke-width="3"/><line x1="40" y1="60" x2="40" y2="38" style="stroke:var(--ink)" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="60" x2="55" y2="60" style="stroke:var(--ink)" stroke-width="3" stroke-linecap="round"/><text x="40" y="110" text-anchor="middle" class="txb">1 s</text><rect x="85" y="48" width="90" height="24" style="fill:var(--eelk)"/><path d="M175 40 L195 60 L175 80Z" style="fill:var(--eelk)"/><text x="130" y="38" text-anchor="middle" class="txb">2000 J</text><path d="M215 100 L222 45 Q225 32 238 32 L262 32 Q275 32 277 45 L284 100Z" style="fill:var(--panel);stroke:var(--ink)" stroke-width="3"/><path d="M277 50 Q296 54 294 72 Q292 88 280 90" fill="none" style="stroke:var(--ink)" stroke-width="5"/><rect x="210" y="98" width="80" height="8" rx="3" style="fill:var(--muted)"/><text x="249" y="76" text-anchor="middle" class="txb" style="font-size:13px">2000 W</text></svg>
+</div></div>
+<div class="card" data-task="d0">
+<div class="tag"><span class="stars">★</span> Kurz-Check · Leistung</div>
+<div class="numq"><span>Ein Föhn hat eine Leistung von 1000 W. Wie viel Energie wandelt er in 10 s um?</span><span class="unit"><f-m>E</f-m> = <input type="text" inputmode="decimal" id="d0a" data-a="10000" aria-label="Energie in J"> J</span></div>
+<div class="row"><button class="primary" id="d0Check">Prüfen</button><button data-hint="d0">Tipp</button></div>
+<p class="fb" id="d0Fb"></p><p class="tip" id="d0Tip"></p>
+</div>
+<p class="intro">Vergleicht man Nutzen und Aufwand im <b>gleichen Zeitabschnitt</b>, kann man statt der Energien auch die Leistungen ins Verhältnis setzen: <f-m>η = P<sub>Nutzen</sub> : P<sub>Aufwand</sub></f-m>.</p>
 <div class="card" data-task="d1">
 <div class="tag"><span class="stars">★★</span> Auftrag 9 · Lampen vergleichen</div>
 <div class="numq"><span>a) Eine LED-Lampe nimmt 8 W elektrische Leistung auf und gibt 2,4 W als Licht ab.</span><span class="unit"><f-m>η</f-m> = <input type="text" inputmode="decimal" id="d1a" data-a="30" aria-label="a in Prozent"> %</span></div>
@@ -432,6 +447,7 @@ In einer Energiekette werden die einzelnen Wirkungsgrade <select data-a="multipl
 <p>Ein Energiewandler wandelt nie die gesamte zugeführte Energie in die gewünschte Form um. Die zugeführte Energie heißt <b>aufgewendete Energie</b> <f-m>E<sub>Aufwand</sub></f-m>, der gewünschte Anteil heißt <b>nutzbare Energie</b> <f-m>E<sub>Nutzen</sub></f-m>. Der Rest wird meist zu <b>thermischer Energie</b> der Umgebung. Er ist nicht verloren, sondern <b>entwertet</b>.</p>
 <p>Der Wirkungsgrad <f-m>η</f-m> ist das <b>Verhältnis</b> von nutzbarer zu aufgewendeter Energie:</p>
 <p><span class="box"><f-m>η = <b>E<sub>Nutzen</sub> : E<sub>Aufwand</sub></b> = <b>P<sub>Nutzen</sub> : P<sub>Aufwand</sub></b></f-m></span></p>
+<p>Die <b>Leistung</b> <f-m>P = E : t</f-m> gibt an, wie viel Energie pro Sekunde umgewandelt wird. Einheit: <f-m>1 W = 1 J : 1 s</f-m>.</p>
 <p>Der Wirkungsgrad hat <b>keine Einheit</b>. Man gibt ihn als Dezimalzahl oder in <b>Prozent</b> an: <f-m>0,30 = 30 %</f-m>. Wegen der <b>Energieerhaltung</b> gilt immer <f-m>η ≤ 1</f-m>. In Wirklichkeit ist <f-m>η</f-m> immer <b>kleiner</b> als 1.</p>
 <p>Was der Nutzen ist, hängt vom <b>Zweck</b> ab: Eine Glühlampe zum Beleuchten hat <f-m>η ≈ 0,05</f-m>, im Brutkasten zum Wärmen <f-m>η ≈ 0,95</f-m>.</p>
 <h3>Energieflussdiagramm einer LED-Lampe</h3>
@@ -450,7 +466,7 @@ In einer Energiekette werden die einzelnen Wirkungsgrade <select data-a="multipl
 <!-- ============ 4 ÜBEN ============ -->
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
-<p class="intro">★ Grundlagen, ★★ Umstellen und Anwenden, ★★★ Energieketten. Notiere im Heft <i>Gegeben – Gesucht – Rechnung – Antwort</i>. Dezimalzahlen mit Komma eingeben, Rechne mit <f-m>g = 9,81 N/kg</f-m>.</p>
+<p class="intro">★ Grundlagen, ★★ Umstellen und Anwenden, ★★★ Energieketten. Leistung: <f-m>1 W = 1 J : 1 s</f-m>. Notiere im Heft <i>Gegeben – Gesucht – Rechnung – Antwort</i>. Dezimalzahlen mit Komma eingeben, Rechne mit <f-m>g = 9,81 N/kg</f-m>.</p>
 <a class="arbeitsblatt" href="/Physik9/wirkungsgrad-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt zum Drucken</b><small>Übung 1–8 auf dem Blatt rechnen, hier prüfen · PDF, 3 Seiten</small></span></a>
 
 <div class="card" data-task="u1">
@@ -705,6 +721,8 @@ numCheck('#c1Check',['#c1a','#c1b','#c1c'],'#c1Fb','c1','Richtig: <f-m>E<sub>el<
 hints.c1=['Schalte den Motor mit 200 g ein und lies <f-m>U</f-m>, <f-m>I</f-m> und <f-m>t</f-m> aus der Tabelle ab.','<f-m>E<sub>el</sub> = U · I · t = 6,0 V · 0,30 A · 2,9 s</f-m>.','<f-m>200 g = 0,2 kg</f-m>. <f-m>E<sub>L</sub> = 0,2 kg · 9,81 N/kg · 0,8 m</f-m>. Dann <f-m>η = E<sub>L</sub> : E<sub>el</sub></f-m>.'];
 
 /* ---------- D: Leistung ---------- */
+numCheck('#d0Check',['#d0a'],'#d0Fb','d0','Richtig: In jeder Sekunde 1000 J, in 10 s also <f-m>E = P · t = 1000 W · 10 s = 10 000 J</f-m>.');
+hints.d0=['1000 W bedeutet: 1000 J in jeder Sekunde.','Wie viel sind 10 Sekunden lang je 1000 J?'];
 numCheck('#d1Check',['#d1a','#d1b'],'#d1Fb','d1','Richtig: LED <f-m>2,4 W : 8 W = 0,30 = 30 %</f-m>, Glühlampe <f-m>3 W : 60 W = 0,05 = 5 %</f-m>. Für fast gleich viel Licht braucht die Glühlampe die 7,5-fache Leistung.');
 hints.d1=['<f-m>η = P<sub>Nutzen</sub> : P<sub>Aufwand</sub></f-m>. Die Lichtleistung ist der Nutzen.','Dezimalzahl mal 100 ergibt Prozent: <f-m>0,30 = 30 %</f-m>.'];
 
@@ -762,7 +780,7 @@ hints.f1=['Starte beide Versuche und lies die Anzeige des Energiemessgeräts in 
  s+=`<path d="M64 ${y+Hu} L${cx} ${y+Hu} A${ro} ${ro} 0 0 1 ${cx+ro} ${cy} L${cx+ro} ${yl} L${cx+ro+2} ${yl} L${cx+(ri+ro)/2} ${yl+Hl/2+3} L${cx+ri-2} ${yl} L${cx+ri} ${yl} L${cx+ri} ${cy} A${ri} ${ri} 0 0 0 ${cx} ${y+H} L64 ${y+H}Z" style="fill:var(--eth)"/>`;
  s+=`<rect x="40" y="${y-4}" width="24" height="${H+8}" rx="2" style="fill:var(--paper);stroke:var(--ink)" stroke-width=".5"/>`;
  s+=`<text x="52" y="${y+H/2-1}" text-anchor="middle" class="tx" style="fill:var(--ink);font-weight:700">LED-</text><text x="52" y="${y+H/2+5}" text-anchor="middle" class="tx" style="fill:var(--ink);font-weight:700">Lampe</text>`;
- s+=`<text x="${x}" y="5" class="tx" style="fill:var(--ink)">100 J = E${sub('Aufwand')}</text><text x="${x}" y="${y+H+10}" class="tx" style="fill:var(--ink)">elektrische</text><text x="${x}" y="${y+H+16}" class="tx" style="fill:var(--ink)">Energie</text>`;
+ s+=`<text x="${x}" y="5" class="tx" style="fill:var(--ink)"><f-m>100 J = E${sub('Aufwand')}</f-m></text><text x="${x}" y="${y+H+10}" class="tx" style="fill:var(--ink)">elektrische</text><text x="${x}" y="${y+H+16}" class="tx" style="fill:var(--ink)">Energie</text>`;
  s+=`<text x="66" y="5" class="tx" style="fill:var(--ink)">30 J Licht = E${sub('Nutzen')}</text>`;
  s+=`<text x="${cx+ro+4}" y="${yl+1}" class="tx" style="fill:var(--ink)">70 J thermische</text><text x="${cx+ro+4}" y="${yl+7}" class="tx" style="fill:var(--ink)">Energie (entwertet)</text>`;
  $('#musterSvg').innerHTML=s}
