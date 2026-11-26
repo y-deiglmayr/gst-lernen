@@ -14,7 +14,31 @@ const json = (obj, status = 200) => new Response(JSON.stringify(obj), {
 });
 const fehler = (meldung, status = 400) => json({ ok: false, meldung }, status);
 
-const SCHIMPF = /\b(schei(ss|ß)\w*|kacke|fick\w*|arsch\w*|hurens\w*|wichs\w*|spast\w*|behindert|missgeburt|fotze|opfer|hs|stfu)\b/i;
+/* Wortfilter. Der Text wird vorher vereinheitlicht (klein, ä→ae, ß→ss, 0→o, 1→i, 3→e, 4→a, @→a, $→s,
+   doppelte Buchstaben → einfach), damit „Kaaacke“, „H1tler“ oder „Scheiße“ auch erkannt werden.
+   Die Muster stehen deshalb ohne Doppelbuchstaben (missgeburt → misgeburt). Ein Treffer muss am Wortanfang
+   stehen, damit Fachwörter wie „Analyse“ oder „Kometenschweif“ nicht hängen bleiben. */
+const WA = '(?<![a-z])';               // Wortanfang (nach dem Vereinheitlichen gibt es nur a–z)
+const SCHIMPF = new RegExp(WA + '(scheis|kack|kaka\\b|fick|arsch|huren|hure\\b|wichs|spast|behindert|misgeburt|mistgeburt|fotze|opfer\\b|hs\\b|stfu|bitch|fuck|shit|wtf|pimel|schlampe|schwuchtel|homo\\b|schwul|lesbe|neger|nig(a|er)\\b|kanake|zigeuner|dep\\b|idiot|vollidiot|trotel|pener|lapen\\b|loser|verpis|halt.?s.?maul|frese)');
+const UNANSTAENDIG = new RegExp(WA + '(pipi|popo|poloch|pups|furz|pinkel|pise|pis\\b|kot\\b|sex(\\b|y|uel)|porn|penis|vagina|muschi|titen|busen|schwanz\\b|hoden|orgasm|masturb|blowjob|wixe|kondom|erotik)');
+const EXTREM = new RegExp(WA + '(hitler|adolf|nazi|neonazi|nsdap|gestapo|holocaust|shoah|hakenkreuz|sieg ?heil|heil ?hitler|reichsbuerger|jude\\b|juden|kz\\b|auschwitz|teror|atentat|islamis|dschihad|jihad|isis\\b|hamas|hisbol|taliban|al.?qaida|amok|umbringen|ermorden|erschies|genozid|voelkermord|rasis|afd\\b|npd\\b|maga\\b|make america|great again|trump|putin|biden|merz\\b|scholz|palest|palaest|from the river|israel|zionis|intifada|ukrain|rusland|krieg\\b)');
+/* Lange, eindeutige Wörter zusätzlich ohne Leerzeichen und Satzzeichen suchen („H i t l e r“, „k.a.c.k.e“). */
+const ZUSAMMEN = /(hitler|holocaust|hakenkreuz|hurenson|wichser|arschloch|misgeburt|scheise|kacke|terorist|atentat|nsdap)/;
+const vereinheitlicht = t => String(t || '').toLowerCase().normalize('NFKC').replace(/[\u200B-\u200D\u00AD]/g, '')
+  .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+  .replace(/[0134@$]/g, z => ({ 0: 'o', 1: 'i', 3: 'e', 4: 'a', '@': 'a', $: 's' })[z])
+  .replace(/([a-z])\1+/g, '$1');
+/* Gibt zurück, welche Art unpassender Wörter vorkommt (oder null). Prüft alle Freitext-Felder. */
+function unpassend(...felder) {
+  const t = vereinheitlicht(felder.join(' \n '));
+  if (EXTREM.test(t)) return 'extrem';
+  if (SCHIMPF.test(t)) return 'schimpf';
+  if (UNANSTAENDIG.test(t)) return 'unanstaendig';
+  if (ZUSAMMEN.test(t.replace(/[^a-z]/g, ''))) return 'schimpf';
+  return null;
+}
+/* Häufige kleine Wörter: Ein „Satz“ ganz ohne sie ist meist eine Wortliste (Test, Unsinn), kein Vorschlag. */
+const FUNKTIONSWORT = /(?<![a-zäöüß])(der|die|das|den|dem|des|ein|eine|einen|einem|einer|und|oder|aber|ist|sind|war|wird|werden|kann|könnte|sollte|würde|man|ich|du|es|sie|wir|hier|da|zu|im|in|bei|mit|von|auf|für|nicht|noch|auch|als|wie|dass|wenn|weil|statt|besser|lieber|mehr|bitte)(?![a-zäöüß])/i;
 const ABWERTEND = /\b(langweilig|doof|blöd|dumm|schlecht|sinnlos|nervig|kacke|mies|lame|cringe|egal)\b/i;
 const BEGRUENDUNG = /\b(weil|da |denn|deshalb|daher|dadurch|sonst|obwohl|stattdessen|besser wäre|sollte|könnte|würde|vorschlag|zum beispiel|z\. ?b\.)/i;
 const KONKRET = /\b(aufgabe|teilaufgabe|auftrag|lösung|tipp|hinweis|formel|einheit|rechnung|ergebnis|zahl|wert|pfeil|bild|grafik|simulation|regler|knopf|text|satz|wort|heft|merke|frage|antwort|schritt|beispiel|skizze|winkel|kraft|energie|impuls|masse|geschwindigkeit|spiegel|licht|strahl)\w*/gi;
@@ -28,7 +52,12 @@ function bewerte(d) {
   s += Math.min(25, Math.round(woerter.length * 0.8)); g.push(woerter.length + ' Wörter');
   if (d.rolle === 'lehrer') { s += 10; g.push('Lehrkraft'); }
   if (d.stelle && !['Ganze Seite', 'Allgemein'].includes(d.stelle)) { s += 15; g.push('Stelle genannt'); }
-  if (d.vorschlag && d.vorschlag.length >= 15) { s += 15; g.push('Vorschlag'); }
+  if (d.vorschlag && d.vorschlag.length >= 15) {
+    if (FUNKTIONSWORT.test(d.vorschlag)) { s += 15; g.push('Vorschlag'); }
+    else { s -= 10; g.push('Vorschlag ohne ganzen Satz'); }
+  }
+  // Zweite Sicherung (falls die harte Prüfung einmal umgangen wird): unpassende Wörter → ganz nach unten.
+  if (unpassend(d.text, d.vorschlag, d.stelle)) { s -= 80; g.push('unpassende Wörter'); }
   const konkret = new Set((alles.match(KONKRET) || []).map(w => w.toLowerCase())).size;
   if (konkret) { s += Math.min(10, konkret * 3); g.push('konkret'); }
   if (/\d/.test(alles)) { s += 5; g.push('Zahlen'); }
@@ -55,7 +84,9 @@ function pruefe(d) {
   if (/(.)\1{5,}/.test(alles)) return 'Bitte schreibe normalen Text ohne lange Zeichenketten.';
   if (/https?:\/\/|www\./i.test(alles)) return 'Bitte keine Links einfügen.';
   if (/[\w.+-]+@[\w-]+\.[\w.]+/.test(alles) || /(\+49|\b0)\d{2,5}[ \/-]?\d{4,}/.test(alles)) return 'Bitte keine E-Mail-Adressen oder Telefonnummern eintragen.';
-  if (SCHIMPF.test(alles)) return 'Bitte formuliere sachlich – so kann dein Feedback ausgewertet werden.';
+  const u = unpassend(d.text, d.vorschlag, d.stelle);
+  if (u === 'extrem') return 'Bitte bleib beim Lernpfad: Politische Parolen und Anspielungen auf Gewalt oder Nationalsozialismus werden nicht angenommen.';
+  if (u) return 'Bitte formuliere sachlich – so kann dein Feedback ausgewertet werden.';
   const buchst = (alles.match(/[a-zäöüß]/gi) || []).length;
   if (buchst / alles.replace(/\s/g, '').length < 0.6) return 'Bitte schreibe normalen Text.';
   return null;

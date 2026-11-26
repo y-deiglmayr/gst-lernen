@@ -10,11 +10,18 @@ Sie landen anonym in der Cloudflare-D1-Datenbank **gst-feedback**
 
 - `brand/feedback.js` (+ `brand/feedback.css`, lädt das Skript selbst) baut Knopf und Formular, `feedback/worker.js` nimmt unter `POST /api/feedback` an.
 - **Harte Filter (wird gar nicht gespeichert):** unter 40 Zeichen oder unter 7 Wörtern, Zeichenketten wie „aaaaaa“,
-  Links, E-Mail-Adressen, Telefonnummern, Schimpfwörter, fast nur Sonderzeichen, Bots (verstecktes Feld,
+  Links, E-Mail-Adressen, Telefonnummern, unpassende Wörter, fast nur Sonderzeichen, Bots (verstecktes Feld,
   Formular kürzer als 10 s offen), fremde Herkunft, mehr als 300 Einträge am Tag, doppelte Texte.
   Im Browser zusätzlich höchstens 5 Rückmeldungen pro Tag.
+- **Wortfilter** (`unpassend()` in `worker.js`) prüft alle Freitext-Felder (Text, Vorschlag, Stelle) auf drei Listen:
+  Schimpfwörter/Beleidigungen, unanständige Wörter (Fäkal-, Sexualwörter) und Extremes/Politisches (NS-Bezüge,
+  Terror, Gewalt, politische Parolen). Vorher wird vereinheitlicht (klein, ä→ae, ß→ss, Ziffern wie 1→i, doppelte
+  Buchstaben → einfach), lange eindeutige Wörter werden auch ohne Leerzeichen gefunden („H i t l e r“).
+  Treffer nur am Wortanfang, damit Fachwörter nicht hängen bleiben (Sextant, Anschlag, toter Winkel, Kakao, Nute …).
+  Neue Wörter in der vereinheitlichten Form eintragen (ohne Doppelbuchstaben) und gegen alle Lernpfad-Texte testen.
 - **Vorbewertung `qualitaet` (0–100)** mit Begründung in `gruende`: Punkte für Länge, genannte Stelle, Vorschlag,
   Fachwörter/konkrete Bezüge, Lehrkraft (+10), Zahlen, Begründung („weil“, „sollte“ …); Abzug für GROSSBUCHSTABEN, „!!!“,
+  Vorschlag ohne ganzen Satz (bloße Wortliste), unpassende Wörter (−80, falls die harte Prüfung umgangen wird),
   abwertend ohne Begründung („langweilig“, „doof“ …), viele Wiederholungen, kurzes Lob.
   Faustregel: ab 50 lohnt sich ein Blick, ab 70 meist konkret und brauchbar.
 - `status`: `neu` → `uebernommen` (eingebaut) / `erledigt` (geprüft, keine Änderung nötig) / `verworfen`.
