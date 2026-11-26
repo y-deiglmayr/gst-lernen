@@ -21,6 +21,7 @@ Physik9/
   energie-einfuehrung.html  Was ist Energie? (Energieformen, Stationen, Energiewandler)
   lageenergie.html          Lageenergie (Fall-Labor, E = m · g · h, Nullniveau)
   energieerhaltung.html     Energieerhaltung und Energieentwertung
+  <lernpfad>-heftaufschrieb.pdf / <lernpfad>-uebungsblatt.pdf  Druckversionen zu allen drei Energie-Lernpfaden
 Physik11/
   kraft-grundlagen.html     1 · Kraft – Grundlagen (Wirkungen, Kraftpfeil, Gewichtskraft, Trägheit)
   kraefteaddition.html      2 · Kräfteaddition und Gleichgewicht (Parallelogramm, Kräfteplan)
@@ -48,7 +49,7 @@ z. B. `/Physik8/reflexion-spiegel`. Groß- und Kleinschreibung der Ordner gehör
 ## Druckversionen
 
 Zu einem Lernpfad kann es zwei PDFs geben: einen Heftaufschrieb zum Ausfüllen (Lückentext, Zeichnungen selbst anfertigen) und ein Übungsblatt (Aufgaben mit Platz für den Rechenweg, Kontrolle online).
-Vorlage und Anleitung: `tools/druck/` (LIESMICH.md). In `KURSE` mit `druck:{…}` markieren (Symbol auf der Kachel); der Download-Link `a.arbeitsblatt` steht im Lernpfad selbst (Kopf und „Üben“).
+Vorlage und Anleitung: `tools/druck/` (LIESMICH.md). In `KURSE` mit `druck:'Heftaufschrieb und Übungsblatt zum Drucken'` markieren (Symbol auf der Kachel); der Download-Link `a.arbeitsblatt` steht im Lernpfad selbst (Kopf, „Festhalten“ und „Üben“). Verbindliche Regeln: `CLAUDE.md`, Abschnitt „Druckversionen“.
 
 ## Cloudflare-Pages-Einstellungen
 

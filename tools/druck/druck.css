@@ -72,3 +72,37 @@ f-m{font-style:normal}
 .rf td{border-top:.25mm solid var(--grey);padding:1.2mm 1.6mm;vertical-align:middle}
 .rf td:first-child{width:auto}
 .rf td.x{width:7mm;text-align:center}.rf td.x::before{content:"";display:inline-block;width:3.6mm;height:3.6mm;border:.35mm solid var(--slate2);border-radius:.6mm}
+/* Heftaufschrieb zum Ausfüllen */
+body.heftseite{line-height:1.5}
+.heftblatt{border:.45mm solid var(--heft);border-radius:2mm;overflow:hidden}
+.heftblatt > h2{background:var(--heft);color:#fff;font-size:13pt;padding:1.6mm 3.4mm;letter-spacing:.01em}
+.heftblatt > h2 small{font-weight:600;font-size:9.4pt;opacity:.9;margin-left:2mm}
+.hs{padding:2.6mm 3.6mm 1.4mm;break-inside:avoid}
+.hs + .hs{border-top:.25mm dashed #9fc7ad}
+.hs h3{font-size:11pt;color:var(--heft);margin:0 0 1.4mm;display:flex;align-items:center;gap:1.8mm}
+.hs h3::before{content:"";width:2.4mm;height:2.4mm;background:var(--heft);display:inline-block}
+.hs p{margin:0 0 1.8mm;line-height:1.95}
+.l{display:inline-block;border-bottom:.3mm solid var(--slate2);height:1.2em;vertical-align:-.25em;margin:0 .6mm}
+.l.s{width:14mm}.l.m{width:24mm}.l.g{width:34mm}.l.xg{width:46mm}
+.zeichnen{display:grid;grid-template-columns:104mm 1fr;gap:4mm;align-items:start;margin:1mm 0 1.6mm}
+.zeichnen .karo{height:122mm;margin:0}
+.zeichnen ol{margin:0;padding-left:5mm;font-size:9.6pt;line-height:1.4}
+.zeichnen ol li{margin:0 0 1.5mm}
+.c-fg{color:var(--fg);font-weight:700}.c-fh{color:var(--fh);font-weight:700}.c-fn{color:var(--fn);font-weight:700}.c-fu{color:#0b7f96;font-weight:700}
+.kt{width:100%;border-collapse:collapse;font-size:10pt;margin:.6mm 0 2mm}
+.kt th{font:700 8.8pt "Source Sans 3",sans-serif;color:var(--heft);text-align:left;border-bottom:.35mm solid var(--heft);padding:.6mm 1.6mm}
+.kt td{border-bottom:.25mm solid #cfe3d6;padding:1.2mm 1.6mm;line-height:1.9;vertical-align:middle}
+.kt td:first-child{width:27%}.kt td:nth-child(2){width:47%}.kt td{white-space:nowrap}.kt .box,.kt td:last-child{white-space:nowrap}
+.box{display:inline-block;border:.35mm solid var(--ink);border-radius:1mm;padding:0 2mm}
+.sf{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin:0 0 1.8mm}
+.sf > div{background:var(--heftbg);border-radius:1.4mm;padding:1.4mm 2.6mm;line-height:1.95;font-size:10pt}
+.sf b{color:var(--heft)}
+.schritte{margin:0 0 1.6mm;padding-left:5mm;line-height:1.95}
+.tipp{font-size:8.8pt;color:var(--muted)}
+.hmerke{background:var(--heftbg);border-left:1.2mm solid var(--heft);padding:1.4mm 2.6mm;margin:0 0 2mm;border-radius:1mm;line-height:1.95}
+.hmerke b.t{color:var(--heft)}
+.kt.frei td{white-space:normal}
+.kt.frei td:first-child,.kt.frei td:nth-child(2){width:auto}
+.leerz{border-bottom:.3mm solid var(--slate2);height:7.5mm}
+.c-el{color:#2563c9;font-weight:700}.c-eb{color:#1d8a4a;font-weight:700}.c-eth{color:#d4381e;font-weight:700}
+.teil.gg{grid-template-columns:15mm 1fr;align-items:end;margin:0 0 2.6mm}.teil.gg .l{width:auto;display:block;margin:0}.teil.gg > b{color:var(--heft)}

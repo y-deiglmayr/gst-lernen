@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Lageenergie – Übungsblatt</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+</head>
+<body>
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 9 · Mechanik II: Energie</div>
+  <h1>Lageenergie</h1>
+  <div class="unter">Übungsblatt zum Lernpfad „Lageenergie“ · 4 · Üben</div>
+ </div>
+ <div class="qr"><!--QR:https://physik.party/Physik9/lageenergie--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29"><path stroke="#3e4b4c" d="M0 0.5h7m2 0h1m1 0h1m3 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m2 0h1m3 0h1m1 0h1m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h2m4 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m2 0h5m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m3 0h1m2 0h1m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-19 1h2m2 0h1m2 0h4m-21 1h1m2 0h1m1 0h2m1 0h1m3 0h5m2 0h1m1 0h1m1 0h1m-24 1h1m4 0h1m4 0h1m1 0h1m3 0h3m2 0h2m2 0h1m2 0h1m-28 1h1m1 0h4m1 0h2m1 0h1m1 0h2m1 0h4m2 0h2m1 0h3m-28 1h1m2 0h1m1 0h1m2 0h2m1 0h1m1 0h1m1 0h2m1 0h3m5 0h2m-26 1h3m1 0h2m1 0h1m2 0h2m2 0h2m1 0h1m1 0h3m1 0h1m1 0h2m-28 1h1m2 0h2m3 0h3m7 0h3m-20 1h2m1 0h3m4 0h1m1 0h1m2 0h2m5 0h5m-29 1h6m1 0h2m2 0h1m1 0h8m1 0h4m1 0h1m-27 1h2m1 0h3m3 0h1m1 0h3m2 0h1m1 0h1m3 0h1m3 0h1m-27 1h1m2 0h2m1 0h2m1 0h1m2 0h2m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m2 0h1m1 0h2m1 0h3m1 0h1m1 0h1m2 0h2m1 0h2m2 0h1m2 0h2m-26 1h2m4 0h2m1 0h1m4 0h3m1 0h1m1 0h2m2 0h2m-29 1h1m5 0h1m1 0h1m1 0h1m5 0h1m1 0h1m1 0h5m1 0h1m-19 1h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m2 0h1m1 0h2m3 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h1m1 0h2m2 0h2m2 0h1m1 0h1m3 0h4m-28 1h1m1 0h3m1 0h1m2 0h2m5 0h3m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h5m6 0h1m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m4 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m4 0h8m1 0h1m3 0h1m-28 1h7m1 0h2m1 0h3m1 0h1m1 0h1m2 0h1m3 0h1m2 0h1"/></svg>Lernpfad öffnen<br>und Ergebnisse prüfen</div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Lösen:</b> Rechne hier auf dem Blatt – immer mit Rechenweg und Einheiten.</div>
+ <div><b class="n">2</b><b>Prüfen:</b> Gib dein Ergebnis im Lernpfad unter <b>„4 · Üben“</b> bei derselben Übungsnummer ein.</div>
+ <div><b class="n">3</b><b>Abhaken:</b> Kreuze <b>online geprüft</b> an. Falsch? Erst den Tipp im Lernpfad lesen, dann neu rechnen.</div>
+</div>
+
+<p class="klein" style="margin:-1mm 0 3mm">Rechne mit <f-m>g = 9,81 N/kg</f-m>. Die Formel <f-m>E<sub>L</sub> = m · g · h</f-m> funktioniert nur mit kg und m.</p>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 1</span><span class="t">Lageenergie berechnen</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <div class="teil"><b>a)</b><span>Eine Hantel (2 kg) wird 1,5 m hochgehoben. Welche Lageenergie hat sie dann?</span></div>
+  <div class="teil"><b>b)</b><span>Ein Schüler (55 kg) steht im 1. Stock, 3 m über dem Erdgeschoss.</span></div>
+  <div class="teil"><b>c)</b><span>1000 kg Wasser stehen im Wasserturm 30 m über dem Boden.</span></div>
+  <div class="karo" style="height:30mm"><span class="lab">Rechenweg: Gegeben – Gesucht – Rechnung – Antwort</span></div>
+  <div class="erg"><span class="feld">a) <i></i> J</span><span class="feld">b) <i></i> J</span><span class="feld">c) <i></i> kJ</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 2</span><span class="t">Erst umrechnen, dann rechnen</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <div class="teil"><b>a)</b><span>250 g = ? kg &nbsp;&nbsp;&nbsp; <b>b)</b> 80 cm = ? m</span></div>
+  <div class="teil"><b>c)</b><span>Ein Handy (180 g) liegt auf einem 75 cm hohen Tisch. Berechne seine Lageenergie.</span></div>
+  <div class="teil"><b>d)</b><span>Ein Apfel (100 g) hängt 2,5 m hoch am Baum. Berechne seine Lageenergie.</span></div>
+  <div class="karo" style="height:26mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <i></i> kg</span><span class="feld">b) <i></i> m</span><span class="feld">c) <i></i> J</span><span class="feld">d) <i></i> J</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg seite">
+ <div class="ah"><span class="nr">Übung 3</span><span class="t">Formel umstellen</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <div class="teil"><b>a)</b><span>Eine Kiste (12 kg) hat 588,6 J Lageenergie. In welcher Höhe steht sie?</span></div>
+  <div class="teil"><b>b)</b><span>Ein Sack hat in 10 m Höhe 2943 J Lageenergie. Welche Masse hat er?</span></div>
+  <div class="teil"><b>c)</b><span>Eine Bergsteigerin (60 kg) gewinnt 294,3 kJ Lageenergie. Wie viele Höhenmeter ist sie gestiegen?</span></div>
+  <div class="karo" style="height:30mm"><span class="lab">Rechenweg – stelle zuerst die Formel um</span></div>
+  <div class="erg"><span class="feld">a) <f-m>h</f-m> = <i></i> m</span><span class="feld">b) <f-m>m</f-m> = <i></i> kg</span><span class="feld">c) <f-m>h</f-m> = <i></i> m</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 4</span><span class="t">Der Blumentopf am Fenster</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Blumentopf (1,5 kg) steht auf der Fensterbank, 1,2 m über dem Zimmerboden. Das Zimmer liegt im 2. Stock: Der Zimmerboden ist 6,0 m über der Straße.</p>
+  <div class="teil"><b>a)</b><span>Berechne die Lageenergie bezüglich des Zimmerbodens und bezüglich der Straße.</span></div>
+  <div class="karo" style="height:22mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">Zimmerboden: <i></i> J</span><span class="feld">Straße: <i></i> J</span></div>
+  <div class="teil" style="margin-top:2mm"><b>b)</b><span><span class="beg">✍ Begründe:</span> Welcher der beiden Werte ist richtig?</span></div>
+  <div class="zeilen" style="height:15mm"></div>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 5</span><span class="t">Proportionalität nutzen (ohne Taschenrechner!)</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Antworte und begründe in einem Satz.</p>
+  <div class="teil"><b>a)</b><span>Ein Stein hat in 4 m Höhe 60 J Lageenergie. Wie viel hat er in 12 m Höhe?</span></div><div class="zeilen" style="height:7.5mm"></div>
+  <div class="teil"><b>b)</b><span>Kiste B hat die halbe Masse von Kiste A, steht aber doppelt so hoch. Vergleiche ihre Lageenergien.</span></div><div class="zeilen" style="height:7.5mm"></div>
+  <div class="teil"><b>c)</b><span>Auf dem Mond ist <f-m>g</f-m> nur 1,62 N/kg. Ein Astronaut hebt einen Stein 1 m hoch. Wie groß ist die Lageenergie im Vergleich zur Erde?</span></div><div class="zeilen" style="height:7.5mm"></div>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg seite">
+ <div class="ah"><span class="nr">Übung 6</span><span class="t">Mit einem Schokoriegel auf den Berg?</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Ein Schokoriegel liefert etwa 1000 kJ Energie. Eine Wanderin wiegt mit Rucksack 70 kg.</p>
+  <div class="teil"><b>a)</b><span>Wie viele Höhenmeter könnte sie damit theoretisch steigen, wenn die gesamte Energie zu Lageenergie würde?</span></div>
+  <div class="teil"><b>b)</b><span>Tatsächlich nutzen die Muskeln nur etwa 25 % der Energie für die Bewegung, der Rest wird thermische Energie. Wie hoch kommt sie wirklich?</span></div>
+  <div class="karo" style="height:30mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <f-m>h</f-m> = <i></i> m</span><span class="feld">b) <f-m>h</f-m> ≈ <i></i> m</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 7</span><span class="t">Die Seilbahn auf die Zugspitze</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Die Seilbahn fährt von der Talstation (rund 1000 m über dem Meer) zum Gipfel (rund 2950 m). Eine Kabine nimmt 120 Personen mit, im Mittel je 75 kg.</p>
+  <div class="teil"><b>a)</b><span>Berechne den Höhenunterschied und die Masse aller Personen.</span></div>
+  <div class="teil"><b>b)</b><span>Berechne die Lageenergie, die die Personen gewinnen (Nullniveau: Talstation).</span></div>
+  <div class="teil"><b>c)</b><span>So viel Energie steckt in wie vielen Schokoriegeln (je 1000 kJ)? Beurteile: Ist der Energiebedarf der Seilbahn damit vollständig erfasst?</span></div>
+  <div class="karo" style="height:40mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">Höhe: <i></i> m</span><span class="feld">Masse: <i></i> kg</span><span class="feld"><f-m>E<sub>L</sub></f-m> = <i></i> MJ</span><span class="feld"><i></i> Riegel</span></div>
+  <div class="zeilen" style="height:15mm"></div>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+</body>
+</html>
