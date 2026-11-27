@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akustik 3 · Tonhöhe, Lautstärke und Schallarten</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<script src="/brand/theme.js"></script>
+<style>
+/* Akustik 3 · Tonhöhe, Lautstärke und Schallarten – Lernpfad Physik Klasse 8 (Akustik). */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--grid:light-dark(#d4e2f2,#232c3b);
+--paper:light-dark(#fdfeff,#151a23);
+--acc:light-dark(#c2410c,#ff9a4d);--acc2:light-dark(#1d62c9,#64a6ff);
+--el:light-dark(#2563c9,#6aa5ff);--eb:light-dark(#1d8a4a,#4fd27f);--eth:light-dark(#d4381e,#ff7a5c);--esp:light-dark(#8a3fc4,#c08cff);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2815);--lab:#0e131d;--labink:#eef1f7}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700}
+h3{font-size:21px;font-weight:600;margin-top:1.6em}
+h4{font-size:17px;font-weight:600;margin:0 0 .3em}
+p{margin:0 0 .8em}
+sub{font-size:.72em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.alt{background:var(--panel)}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#fff;font-size:13px;margin-right:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.bar{width:140px;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .4s}
+.hero{background:var(--lab);color:var(--labink)}
+.hero p{color:#c6ccd8;max-width:64ch}
+.hero svg{width:100%;height:auto;display:block;margin:18px 0 8px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px}
+.phases a{display:block;padding:14px 16px;border-radius:12px;background:#182031;color:#eef1f7;text-decoration:none;border:1px solid #2a3448}
+.phases a:hover{border-color:#ff9a4d}
+.phases b{font-family:Lexend,system-ui,sans-serif;display:block;font-size:17px}
+.phases small{color:#a9b2c4;font-size:14px}
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+@media(min-width:901px){.stick{position:sticky;top:70px}}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;touch-action:manipulation;user-select:none}
+.caption{font-size:14px;color:var(--muted);margin:6px 4px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card.done{border-color:var(--ok)}
+.card .tag{font:600 13px Lexend,system-ui,sans-serif;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.card.done>.tag::after{content:"✓ gelöst";color:var(--ok)}
+.stars{color:var(--acc);letter-spacing:2px}
+.intro{max-width:72ch;color:var(--muted)}
+.merke{border:2px solid var(--acc);border-radius:14px;padding:16px 20px;margin:18px 0;background:var(--bg)}
+.merke h4{color:var(--acc)}
+.merke ul{margin:.3em 0;padding-left:1.2em}
+details.reveal{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0;background:var(--bg)}
+details.reveal summary{cursor:pointer;font:600 16px Lexend,system-ui,sans-serif;padding:4px 0}
+button{font:600 16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.alt button{background:var(--bg)}
+button:hover{border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+button.primary{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11141b)}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+input[type=text],select{font:16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--acc);min-height:36px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 18px;margin-top:8px}
+.ctrl label{font-weight:700;font-size:15px}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.toggles label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;min-height:44px;font-size:15px}
+.toggles input{width:18px;height:18px;accent-color:var(--acc)}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font-weight:400}
+.mc button.ok,.tf button.ok{background:var(--okbg);border-color:var(--ok)}
+.mc button.bad,.tf button.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1em;margin:8px 0 0;font-size:16px}
+.fb:empty{display:none}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb.hint{background:var(--hint);color:var(--ink);padding:8px 12px;border-radius:8px}
+input.ok,select.ok{border-color:var(--ok);background:var(--okbg)}
+input.bad,select.bad{border-color:var(--bad);background:var(--badbg)}
+.cloze{line-height:2.5;font-size:17px}
+.cloze select{min-height:38px;padding:2px 6px;margin:0 2px}
+.tf{display:grid;gap:4px}
+.tf .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tf .item .fb{grid-column:1/-1;margin:0}
+.tf .btns{display:flex;gap:6px}
+.numq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.numq input{width:110px;text-align:right}
+.numq .mcq{grid-column:1/-1}
+.unit{white-space:nowrap}
+.sol{background:var(--panel);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:16px}
+.sol p{margin:.3em 0}
+.calc{font-family:"Atkinson Hyperlegible",sans-serif;background:var(--bg);border-left:4px solid var(--acc);padding:6px 12px;margin:6px 0;border-radius:4px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.steps i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font:600 14px Lexend,system-ui,sans-serif}
+.steps i.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.steptext{min-height:7em}
+.heft{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;border:1px solid var(--line);border-radius:12px;padding:22px clamp(16px,3vw,34px)}
+.heft h3{margin-top:.8em;color:var(--acc)}
+.heft h3:first-child{margin-top:0}
+.heft .box{border:2px solid var(--ink);padding:8px 14px;border-radius:6px;background:var(--paper);display:inline-block}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.checks label{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:10px;min-height:44px;cursor:pointer;font-size:16px;background:var(--bg)}
+.checks label.ok{border-color:var(--ok);background:var(--okbg)}.checks label.bad{border-color:var(--bad);background:var(--badbg)}
+.checks input{width:18px;height:18px;accent-color:var(--acc)}
+.chain{display:grid;grid-template-columns:minmax(0,1.3fr) auto auto auto;gap:6px 10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+@media(max-width:640px){.chain{grid-template-columns:auto auto auto}.chain>span:first-child{grid-column:1/-1}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted);margin:6px 4px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.given{background:var(--panel);border-radius:10px;padding:8px 14px;font-size:15px;margin:8px 0}
+footer{font-size:14px;color:var(--muted)}
+/* svg */
+.gl{stroke:var(--grid);stroke-width:1}
+.thin{stroke:var(--ink);stroke-width:1.4;fill:none}
+.dashl{stroke:var(--muted);stroke-width:1.4;stroke-dasharray:6 5;fill:none}
+.tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
+.txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.txb{fill:var(--ink);font:600 15px Lexend,sans-serif}
+.fel{fill:var(--el)}.feb{fill:var(--eb)}.feth{fill:var(--eth)}.fesp{fill:var(--esp)}
+.tel{fill:var(--el);font:600 14px Lexend,sans-serif}.teb{fill:var(--eb);font:600 14px Lexend,sans-serif}.teth{fill:var(--eth);font:600 14px Lexend,sans-serif}
+.ges{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 4}
+.ball{fill:light-dark(#f2b632,#f2b632);stroke:var(--ink);stroke-width:1.5}
+.ghost{opacity:.35}
+.ground{fill:light-dark(#e9edf3,#202736)}
+.track{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.hit{fill:transparent;cursor:pointer}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+@media(max-width:600px){body{font-size:16px}.prog .bar{width:80px}nav a{padding:6px}}
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+.qrbtn:hover{outline:3px solid #ff5c50}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop{background:rgba(8,10,16,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
+@media(max-width:640px){.qrbtn{width:96px}.qrbtn svg{width:80px;height:80px}}
+@media print{nav,.qrbtn{display:none}}
+:root{--ech:light-dark(#8a5a2b,#e0a86a);--eelk:light-dark(#0b7f96,#4fd0e8);--estr:light-dark(#a37a00,#ffd54a)}
+.fech{fill:var(--ech)}.feelk{fill:var(--eelk)}.festr{fill:var(--estr)}
+.part{border-left:4px solid var(--line);padding:4px 0 4px 14px;margin:16px 0}
+.part.done{border-color:var(--ok)}
+.part.done>h4::after{content:"  ✓";color:var(--ok)}
+.tip:empty{display:none}
+.lvl{display:inline-block;font:600 14px Lexend,system-ui,sans-serif;padding:4px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--line);margin-bottom:10px}
+.readout{font:600 18px Lexend,system-ui,sans-serif;color:var(--acc)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.tabs button{display:flex;align-items:center;gap:8px;font-size:15px;padding:8px 12px}
+.tabs button i{width:14px;height:14px;border-radius:50%;display:inline-block;flex:none}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tabs button.solved::after{content:"✓";color:var(--ok);font-weight:700}
+.tabs button[aria-pressed=true].solved::after{color:var(--bg)}
+.exp{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+.exp h4{color:var(--acc)}
+.exp ol,.exp ul{margin:.3em 0 .6em;padding-left:1.3em}
+.safe{color:var(--bad);font-weight:600}
+.badge{display:inline-block;font:600 13px Lexend,sans-serif;padding:2px 10px;border-radius:20px;color:#fff;margin-bottom:6px}
+table.mess{border-collapse:collapse;font-size:15px;width:100%}
+table.mess th,table.mess td{border:1px solid var(--line);padding:5px 8px;text-align:center}
+table.mess th{background:var(--panel)}
+.scroll{overflow-x:auto}
+.formula{font:600 clamp(22px,3vw,30px) Lexend,sans-serif;margin:.3em 0}
+.fig.narrow{max-width:760px}
+input[inputmode=decimal]{width:110px;text-align:right}
+textarea{width:100%;font:16px "Atkinson Hyperlegible",sans-serif;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.why .sol{border-left:4px solid var(--ok)}
+.why label.cbl{display:flex;gap:8px;align-items:center;font-size:15px;margin:6px 0;cursor:pointer}
+.mc button:disabled{opacity:.55;cursor:not-allowed}
+.mc button.bad:disabled{opacity:1}
+details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--acc)}
+.steprow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+#protokoll{display:none}
+@media print{body.printprot>*:not(#protokoll){display:none!important}#protokoll{display:block!important;padding:20px;color:#000;background:#fff}#protokoll h2{margin:0 0 10px}#protokoll .pr{border:1px solid #999;padding:8px 12px;margin:8px 0;min-height:70px;white-space:pre-wrap}}
+.massbtns{display:flex;gap:8px;flex-wrap:wrap}
+.two>*{min-width:0}svg.board{overflow:hidden}.card select{max-width:100%}
+:root{--f1:light-dark(#1d62c9,#6aa5ff);--f2:light-dark(#8a3fc4,#c08cff);--f3:light-dark(#0b7f96,#4fd0e8);--fr:light-dark(#d4381e,#ff7a5c);
+--fg:light-dark(#1d8a4a,#4fd27f);--fh:light-dark(#d4381e,#ff7a5c);--fnn:light-dark(#1d62c9,#6aa5ff);--grid2:light-dark(#e8eff8,#1c2330)}
+.gl2{stroke:var(--grid2);stroke-width:1}
+svg.board{display:block;width:100%;height:auto;user-select:none;-webkit-user-select:none;border-radius:8px}
+svg.board:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.hdl{fill:color-mix(in srgb,var(--paper) 55%,transparent);stroke-width:3;cursor:grab}
+.hdl.act{stroke-dasharray:5 3;stroke-width:3.5}
+.flab{font:italic 700 20px "Atkinson Hyperlegible",serif}
+.rayl{stroke:var(--muted);stroke-width:1.6;stroke-dasharray:2 5;fill:none}
+.ruler{font-size:15px;color:var(--muted);margin:6px 4px 0}
+.ruler b{color:var(--ink)}
+.afb{display:inline-block;font:600 12px Lexend,sans-serif;padding:1px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted)}
+.vt .fig{max-width:720px;position:relative}.vt-max{position:absolute;top:6px;right:6px;z-index:2;padding:4px 10px;font-size:14px;min-height:0}html.noscroll,html.noscroll body{overflow:hidden}.vt.vtmax{position:fixed;inset:0;z-index:1000;margin:0;border-radius:0;overflow:auto;overscroll-behavior:contain;background:var(--bg,var(--paper));padding:10px 10px 24px}.vt.vtmax .fig{max-width:none!important;margin:0}.vt.vtmax svg.board{max-height:calc(100dvh - 150px);margin:0 auto}
+.fig svg.board{margin:0 auto}
+.vt .numq input{width:110px}
+.vt-ask{border-top:1px dashed var(--line);margin-top:10px;padding-top:6px}
+.lvlrow{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:var(--muted);margin:4px 0 14px}
+.trig{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0}
+.trig div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;text-align:center}
+.stepbox{min-height:5.5em}
+table.mess td.l{text-align:left}
+.pill{display:inline-block;padding:1px 9px;border-radius:20px;font:600 14px Lexend,sans-serif;color:#fff}
+.multi label{max-width:100%}
+.ex{display:none}
+.sim-read{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.sim-read div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:15px}
+.sim-read b{display:block;font:600 19px Lexend,sans-serif}
+
+a.lnk{text-decoration:none;display:inline-flex;align-items:center;font:600 16px Lexend,sans-serif;padding:8px 16px;border-radius:10px;border:1px solid var(--line);color:var(--ink)}
+a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11141b)}
+
+/* ===== Impuls-Lernpfade: Ergänzungen ===== */
+:root{--acc:var(--gst-acc,#3f6267);--acc2:var(--gst-acc,#3f6267);--pg:light-dark(#b8322a,#ff8a7a);--ekin:light-dark(#1d8a4a,#4fd27f);--eth:light-dark(#d4381e,#ff7a5c)}
+/* Heftaufschrieb deutlich hervorheben */
+.heftbox{border:2px solid var(--gst-acc);border-radius:14px;margin:22px 0;background:var(--paper);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.hb-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;background:var(--gst-acc);color:var(--gst-on-acc);padding:10px 18px}
+.hb-head b{font:700 19px "Source Sans 3",Lexend,sans-serif;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.hb-head b::before{content:"";width:14px;height:14px;background:var(--gst-mark);flex:none}
+.hb-head small{font-size:14px;opacity:.92}
+.heftbox .heft{border:0;border-radius:0}
+.hb-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:10px 18px;border-top:1px dashed var(--line);background:var(--panel);font-size:15px}
+.heftbox.done{border-color:var(--ok)}
+.heftbox.done .hb-done{background:var(--okbg);border-color:var(--ok)}
+.insheft{display:inline-flex;align-items:center;gap:6px;font:600 13px "Source Sans 3",Lexend,sans-serif;padding:2px 10px;border-radius:20px;border:1px solid var(--gst-acc);color:var(--gst-acc);vertical-align:middle;margin-left:6px;white-space:nowrap}
+.insheft::before{content:"";width:8px;height:8px;background:var(--gst-mark)}
+nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
+.heft .fig2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}
+.heft .fig2 svg{width:100%;height:auto;display:block;background:var(--paper);border:1px solid var(--line);border-radius:8px}
+.heft table{border-collapse:collapse;margin:6px 0;font-size:16px}.heft td,.heft th{border:1px solid var(--line);padding:4px 10px;background:var(--paper)}
+.stepper .stepbox{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+.stepper .stepbox p{margin:.3em 0}
+.lab-tbl{border-collapse:collapse;width:100%;font-size:15px}.lab-tbl th,.lab-tbl td{border:1px solid var(--line);padding:5px 8px;text-align:center}.lab-tbl th{background:var(--panel)}
+.lab-tbl td.sum{font-weight:700}
+.seg{display:inline-flex;flex-wrap:wrap;gap:6px}
+.tc1{color:var(--f1)}.tc2{color:var(--f2)}.tcg{color:var(--pg)}
+.ctrl{grid-template-columns:repeat(2,minmax(0,1fr))}
+/* Handy: Navigation in einer Zeile, Simulation mit Reglern auf einen Bildschirm */
+@media(max-width:600px){
+ nav .wrap{flex-wrap:nowrap;gap:0 2px;padding:6px 8px}
+ nav a{font-size:0;padding:6px 3px;white-space:nowrap}
+ nav a span{font-size:13px;margin-right:0}
+ nav a[href="/"]{font-size:0;gap:0}
+ nav .prog{margin-left:auto;font-size:13px;white-space:nowrap}nav .prog .bar{width:56px}
+ .hero>.wrap>svg,.hero .phases{display:none}
+ .ctrl{grid-template-columns:1fr 1fr;gap:0 12px}
+ .ctrl label{font-size:13px}
+ .ctrl input[type=range]{min-height:30px}
+ .toggles{gap:6px;margin:6px 0}.toggles label{min-height:36px;padding:4px 10px;font-size:14px}
+ .stick .row{margin:6px 0;gap:6px}.stick .row button{padding:6px 10px;min-height:38px;font-size:14px}
+ .fig svg:not(.board) .txb{font-size:21px}.fig svg:not(.board):not(#ramp) .txs{font-size:18px}
+ .sim-read{grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}.sim-read div{font-size:13px;padding:4px 8px}.sim-read b{font-size:16px}
+}
+/* Handy: Fragen über den Eingabefeldern statt daneben, Tabellen kompakt */
+@media(max-width:600px){
+ .hero h1{font-size:clamp(24px,7.4vw,30px);hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+ .tf .item,.numq,.steprow{grid-template-columns:minmax(0,1fr);gap:6px}
+ .tf .btns{justify-content:flex-end}
+ .numq>.unit{justify-self:end}
+ .steprow select{width:100%}
+ .lab-tbl,table.mess,.heft table{font-size:13px}
+ .lab-tbl th,.lab-tbl td,table.mess th,table.mess td,.heft td,.heft th{padding:4px 5px}
+ .stick .row .caption{font-size:13px}.stick .row button.lPre{padding:6px 10px;min-width:0}
+}
+.lbl{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
+
+
+
+
+/* ===== Klasse 8 · Kräfte: Ergänzungen ===== */
+.big{font-size:18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.labbox{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:8px 0}
+.kv div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:15px}
+.kv b{display:block;font:600 19px "Source Sans 3",Lexend,sans-serif}
+.lab-tbl input{width:80px;text-align:right;min-height:36px;font:15px "Atkinson Hyperlegible",sans-serif;padding:4px 6px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.lab-tbl input.ok{border-color:var(--ok);background:var(--okbg)}.lab-tbl input.bad{border-color:var(--bad);background:var(--badbg)}
+.fehler{border-left:4px solid var(--gst-mark);background:var(--panel);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:15px}
+.pic{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:10px 0}
+.pic figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px}
+.pic svg{width:100%;height:auto;display:block}
+.pic figcaption{font-size:14px;color:var(--muted);margin:4px 2px 0}
+
+#ball,#press{background:light-dark(#f4f7f2,#1f2627)}
+.musterfig{margin:6px 0 14px;max-width:460px}
+.musterfig svg{display:block;width:100%;height:auto}
+.musterfig .tx{font:5px "Atkinson Hyperlegible",system-ui,sans-serif}
+.musterfig figcaption{font-size:14px;color:var(--muted)}
+:root{--kurve:light-dark(#2f6fb3,#7fb2e6)}
+.mc.dgwahl{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.mc.dgwahl button{display:flex;flex-direction:column;align-items:stretch;gap:4px;text-align:center}
+.mc.dgwahl button svg{width:100%;height:auto;display:block}
+.fig.narrow svg{max-width:560px}
+:root{--scr:light-dark(#f4f7f6,#1b2122);--inf:light-dark(#dfe7ee,#26313a);--hb:light-dark(#dcebdd,#1f3326);--ult:light-dark(#efe3d7,#3a2e24)}
+.steprow.mitpk{grid-template-columns:auto minmax(0,1fr) auto}
+.steprow.mitpk .pk{width:40px;height:40px}
+.musterfig.schallarten{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pk.breit{width:96px}
+</style>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<script defer src="/brand/feedback.js"></script>
+<script defer src="/brand/mischen.js"></script>
+<body>
+<nav aria-label="Phasen"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#einstieg"><span>1</span>Einstieg</a>
+<a href="#entdecken"><span>2</span>Entdecken</a>
+<a href="#festhalten"><span>3</span>Festhalten</a>
+<a href="#ueben"><span>4</span>Üben</a>
+<a href="#heft" class="heftlink" title="Zum Heftaufschrieb"><span>✎</span>Heft</a>
+<div class="prog"><span id="progtxt">0 / 0 gelöst</span><div class="bar"><i id="progbar"></i></div></div>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Akustik 3 · Tonhöhe, Lautstärke und Schallarten</h1>
+<p>Schall schwingt viel zu schnell für unsere Augen. Ein Oszilloskop macht die Schwingungen sichtbar. Hier erkennst du an Schallbildern, wie hoch und wie laut ein Ton ist, unterscheidest Ton, Klang, Geräusch und Knall und lernst, welche Frequenzen wir hören.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://physik.party/Physik8/schallarten" viewBox="0 0 37 37" class="segno"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#000" d="M4 4.5h7m3 0h3m2 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m6 0h1m1 0h1m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m5 0h3m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h2m1 0h1m1 0h1m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h1m1 0h2m2 0h1m1 0h4m-21 1h1m2 0h1m1 0h2m1 0h4m1 0h4m2 0h1m1 0h1m1 0h1m-24 1h1m1 0h2m1 0h1m3 0h1m1 0h3m2 0h3m2 0h2m2 0h1m2 0h1m-27 1h1m2 0h2m3 0h4m3 0h3m2 0h2m1 0h3m-27 1h1m3 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h3m5 0h2m-28 1h4m1 0h4m1 0h2m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h2m-29 1h1m2 0h3m3 0h5m5 0h3m-20 1h1m3 0h1m3 0h1m2 0h2m2 0h2m5 0h5m-26 1h1m1 0h1m6 0h2m1 0h1m1 0h4m1 0h4m1 0h1m-28 1h2m2 0h1m1 0h5m2 0h2m2 0h1m1 0h1m3 0h1m3 0h1m-26 1h1m1 0h2m5 0h1m1 0h2m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m2 0h2m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h2m2 0h1m2 0h2m-22 1h2m2 0h2m2 0h5m1 0h1m1 0h2m2 0h2m-29 1h1m1 0h2m1 0h4m2 0h1m3 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m3 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m2 0h4m3 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h2m1 0h1m2 0h1m5 0h1m3 0h4m-28 1h1m1 0h3m1 0h1m2 0h1m1 0h1m4 0h3m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m5 0h1m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m6 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m3 0h2m5 0h5m1 0h1m3 0h1m-28 1h7m1 0h1m4 0h1m2 0h2m2 0h1m3 0h1m2 0h1"/></svg>
+QR groß zeigen</button></div>
+<svg viewBox="0 0 900 150" role="img" aria-label="Ein Lautsprecher sendet Schall zu einem Mikrofon, ein Oszilloskop zeigt das Schwingungsbild"><rect x="30" y="45" width="34" height="60" rx="4" fill="#76989D"/><path d="M64 55l30-22v84l-30-22z" fill="#c9d2d3"/><path d="M112 55c10 12 10 28 0 40M128 45c16 18 16 42 0 60M144 35c22 24 22 56 0 80" fill="none" stroke="#FCBE00" stroke-width="3.5" stroke-linecap="round"/><circle cx="200" cy="75" r="13" fill="#e9edee"/><path d="M200 88v30h80V100" fill="none" stroke="#c9d2d3" stroke-width="3"/><rect x="280" y="22" width="220" height="110" rx="10" fill="#2f393a" stroke="#ACBDC3" stroke-width="3"/><path d="M300 77h180M390 34v86" stroke="#5F6F74" stroke-width="1.5"/><path d="M300 77 C309 77 311 44 320 44 S331 110 340 110 S351 44 360 44 S371 110 380 110 S391 44 400 44 S411 110 420 110 S431 44 440 44 S451 110 460 110 S471 77 480 77" fill="none" stroke="#FCBE00" stroke-width="3.5" stroke-linecap="round"/><path d="M540 75 C548 75 550 55 558 55 S568 95 576 95 S586 55 594 55 S604 95 612 95 S622 75 630 75" fill="none" stroke="#e9edee" stroke-width="2.5"/><text x="585" y="128" fill="#c9d2d3" font-size="15" text-anchor="middle" font-style="italic">Ton</text><path d="M660 75 c4-18 8-18 10-4 c3 14 6-24 9-6 c3 12 5 18 8 2 c3-14 6-4 10 8 c3 8 5-26 9-6 c3 10 6 8 8-2 c3-8 5 4 6 8" fill="none" stroke="#e9edee" stroke-width="2.5"/><text x="690" y="128" fill="#c9d2d3" font-size="15" text-anchor="middle" font-style="italic">Geräusch</text><path d="M760 75 l4-50 l5 96 l5-80 l5 62 l5-44 l5 30 l5-20 l5 12 l5-6 l5 3 h40" fill="none" stroke="#e9edee" stroke-width="2.5"/><text x="805" y="128" fill="#c9d2d3" font-size="15" text-anchor="middle" font-style="italic">Knall</text></svg>
+<div class="phases">
+<a href="#einstieg"><b>1 · Einstieg</b><small>Wiederholen: Frequenz und Amplitude</small></a><a href="#entdecken"><b>2 · Entdecken</b><small>Oszilloskop, Tongenerator-Labor, Schallarten, Hörbereich</small></a><a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ Heftaufschrieb</small></a><a href="#ueben"><b>4 · Üben</b><small>9 Übungen von ★ bis ★★★</small></a>
+</div>
+</div></header>
+
+<!-- ============ 1 EINSTIEG ============ -->
+<section class="band" id="einstieg"><div class="wrap">
+<h2>1 · Einstieg: Schall sichtbar machen</h2>
+<p class="intro">In Akustik 2 hast du Schwingungen mit Amplitude, Periodendauer und Frequenz beschrieben. Bei Schall gibt es ein Problem: Die Schwingungen sind sehr schnell und sehr klein.</p>
+<div class="two"><div>
+<div class="card"><div class="tag">Auftrag 1 · Wiederholen <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="mitbild"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#stimmgabel"/></svg><h4>Die Zinken einer Stimmgabel schwingen 440-mal in einer Sekunde. Wie groß ist die Frequenz?</h4></div>
+<div class="mc" data-correct="b" data-task="e1" data-tipp="Die Frequenz gibt an, wie viele Schwingungen in einer Sekunde stattfinden. Einheit: Hertz."><button data-k="a" data-fb="Sekunden sind die Einheit der Periodendauer, nicht der Frequenz.">440&nbsp;s</button><button data-k="b" data-fb="Richtig! 440 Schwingungen pro Sekunde sind 440 Hz. Das ist der Kammerton a, auf den Musiker ihre Instrumente stimmen.">440&nbsp;Hz</button><button data-k="c" data-fb="So groß wäre die Periodendauer in Sekunden, wenn man 1 durch 440 teilt. Gefragt ist aber die Frequenz.">0,0023&nbsp;Hz</button><button data-k="d" data-fb="Das wäre nur eine Schwingung in etwa 2 Sekunden.">0,44&nbsp;Hz</button><p class="fb"></p></div>
+</div>
+</div><div>
+<div class="card"><div class="tag">Auftrag 2 · Zu schnell fürs Auge <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<h4>Warum kann man die Schwingung einer Stimmgabel nicht einfach mit dem Auge verfolgen und von Hand aufzeichnen?</h4>
+<div class="mc" data-correct="a" data-task="e2" data-tipp="Denk an die Frequenz aus Auftrag 1: Wie viele Schwingungen sind das in einer Sekunde?"><button data-k="a" data-fb="Richtig! Hunderte Schwingungen pro Sekunde sind viel zu schnell. Außerdem ist die Amplitude winzig. Wir brauchen ein Messgerät, das schneller zeichnet als wir.">Sie schwingt hunderte Male pro Sekunde, und die Ausschläge sind winzig.</button><button data-k="b" data-fb="Doch: Jede Schallquelle schwingt. Das hast du in Akustik 1 gesehen.">Eine summende Stimmgabel schwingt gar nicht.</button><button data-k="c" data-fb="Die Ausschläge sind nicht zu groß, sondern sehr klein.">Die Ausschläge sind zu groß für ein Blatt Papier.</button><p class="fb"></p></div>
+</div>
+</div></div>
+</div></section>
+
+<!-- ============ 2 ENTDECKEN ============ -->
+<section class="band alt" id="entdecken"><div class="wrap">
+<h2>2 · Entdecken</h2>
+<h3>A · Das Oszilloskop</h3>
+<p class="intro">Ein Lautsprecher schwingt und bringt die Luft davor zum Schwingen: Der <b>Luftdruck</b> wird abwechselnd ein bisschen größer und kleiner. Ein <b>Mikrofon</b> wandelt diese Luftdruckschwankungen in ein <b>elektrisches Signal</b> um. Das <b>Oszilloskop</b> zeichnet daraus das Schwingungsbild, viel schneller, als wir zeichnen könnten. Das Bild heißt auch <b>Schallbild</b>.</p>
+<div class="fig narrow"><svg viewBox="0 0 640 190" role="img" aria-label="Lautsprecher, Schallwellen in der Luft, Mikrofon mit Kabel, Oszilloskop mit Schwingungsbild">
+<rect x="20" y="60" width="40" height="70" rx="5" style="fill:var(--muted)"/><path d="M60 72l34-26v98l-34-26z" style="fill:var(--line);stroke:var(--ink)" stroke-width="1.5"/>
+<path d="M112 68c10 14 10 40 0 54M132 56c18 20 18 58 0 78M152 44c26 26 26 76 0 102" style="fill:none;stroke:var(--gst-mark,#FCBE00)" stroke-width="3" stroke-linecap="round"/>
+<circle cx="230" cy="95" r="15" style="fill:var(--ink)"/><path d="M230 110v40h120v-20" style="fill:none;stroke:var(--muted)" stroke-width="3"/>
+<rect x="350" y="30" width="270" height="130" rx="10" style="fill:var(--panel);stroke:var(--ink)" stroke-width="2"/><rect x="365" y="42" width="190" height="106" rx="4" style="fill:var(--scr);stroke:var(--line)"/>
+<path d="M365 95h190M460 42v106" style="stroke:var(--grid)" stroke-width="1.5"/>
+<path d="M365 95 C372 95 374 60 381 60 S391 130 398 130 S408 60 415 60 S425 130 432 130 S442 60 449 60 S459 130 466 130 S476 60 483 60 S493 130 500 130 S510 60 517 60 S527 130 534 130 S544 95 555 95" style="fill:none;stroke:var(--kurve)" stroke-width="2.6"/>
+<circle cx="588" cy="66" r="9" style="fill:none;stroke:var(--ink)" stroke-width="1.6"/><circle cx="588" cy="100" r="9" style="fill:none;stroke:var(--ink)" stroke-width="1.6"/>
+<text x="40" y="178" text-anchor="middle" class="txs">Lautsprecher</text><text x="140" y="178" text-anchor="middle" class="txs">Luft</text><text x="230" y="70" text-anchor="middle" class="txs">Mikrofon</text><text x="485" y="178" text-anchor="middle" class="txs">Oszilloskop</text></svg></div>
+
+<div class="card"><div class="tag">Auftrag 3 · Vom Lautsprecher zum Bild <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<p>Bring die Schritte in die richtige Reihenfolge.</p>
+<div class="selbox part" data-task="a1" data-fb="Richtig! Lautsprecher schwingt → Luftdruck schwankt → Mikrofon macht daraus ein elektrisches Signal → Oszilloskop zeichnet das Schallbild.">
+<div class="steprow"><span>Der Lautsprecher schwingt.</span><select data-a="1" aria-label="Schritt Lautsprecher" data-fest><option value="">…</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+<div class="steprow"><span>Das Oszilloskop zeichnet das Schallbild.</span><select data-a="4" aria-label="Schritt Oszilloskop" data-fest><option value="">…</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+<div class="steprow"><span>Das Mikrofon wandelt die Schwankungen in ein elektrisches Signal um.</span><select data-a="3" aria-label="Schritt Mikrofon" data-fest><option value="">…</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+<div class="steprow"><span>Der Luftdruck vor dem Lautsprecher schwankt.</span><select data-a="2" aria-label="Schritt Luft" data-fest><option value="">…</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<h3>B · Das Tongenerator-Labor</h3>
+<p class="intro">Ein Tongenerator lässt einen Lautsprecher mit einstellbarer <b>Frequenz</b> und <b>Amplitude</b> schwingen. Der Bildschirm zeigt das Schallbild: Ein Kästchen nach rechts entspricht <b>1&nbsp;ms</b> (eine tausendstel Sekunde), der ganze Schirm also 10&nbsp;ms.</p>
+<div class="fig narrow"><svg id="oszi" viewBox="0 0 320 170" role="img" aria-label="Oszilloskop-Schirm mit dem Schallbild des eingestellten Tons"></svg></div>
+<div class="two"><div>
+<div class="ctrl"><div><label for="gF">Frequenz: <span id="gFTxt">300&nbsp;Hz</span></label><input type="range" id="gF" min="100" max="1000" step="50" value="300"></div>
+<div><label for="gA">Amplitude: <span id="gATxt">2&nbsp;Kästchen</span></label><input type="range" id="gA" min="0.5" max="3.5" step="0.5" value="2"></div></div>
+<div class="row"><button id="gPlay">♪ Ton kurz anhören</button></div>
+<p class="fehler">🔈 Stell dein Gerät vorher leise. Der Ton erklingt nur, wenn du den Knopf drückst, und nur kurz. Du kannst alles auch ohne Ton lösen.</p>
+</div><div>
+<div class="sim-read" id="gRead"></div>
+<p class="caption">Modell: Der Tongenerator erzeugt einen reinen Ton (Sinusform). Wie laut wir einen Ton empfinden, hängt auch etwas von seiner Frequenz ab. Vergleiche die Lautstärke deshalb bei gleicher Frequenz.</p>
+</div></div>
+
+<div class="card"><div class="tag">Auftrag 4 · Was ändert sich? <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<p>Verändere im Labor erst nur die Frequenz, dann nur die Amplitude. Beobachte das Schallbild.</p>
+<div class="selbox part" data-task="a2" data-fb="Richtig! Größere Frequenz: Die Wellenberge liegen <b>enger</b>, der Ton wird <b>höher</b>. Größere Amplitude: Die Ausschläge werden <b>größer</b>, der Ton wird <b>lauter</b>. Die Periodendauer bleibt dabei <b>gleich</b>: Tonhöhe und Lautstärke hängen nicht voneinander ab."><div class="cloze">Wenn ich die Frequenz vergrößere, liegen die Wellenberge <select data-a="enger beieinander" aria-label="Lücke 1"><option value="">…</option><option>enger beieinander</option><option>weiter auseinander</option><option>genauso weit auseinander</option></select> und der Ton wird <select data-a="höher" aria-label="Lücke 2"><option value="">…</option><option>höher</option><option>tiefer</option><option>lauter</option></select>. Wenn ich die Amplitude vergrößere, werden die Ausschläge <select data-a="größer" aria-label="Lücke 3"><option value="">…</option><option>größer</option><option>kleiner</option><option>enger</option></select> und der Ton wird <select data-a="lauter" aria-label="Lücke 4"><option value="">…</option><option>lauter</option><option>leiser</option><option>höher</option></select>. Beim Verändern der Amplitude bleibt die Periodendauer <select data-a="gleich" aria-label="Lücke 5"><option value="">…</option><option>gleich</option><option>größer</option><option>kleiner</option></select>.</div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<div class="card"><div class="tag">Auftrag 5 · Am Schirm ablesen <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<p>Stell im Labor <b>500&nbsp;Hz</b> ein. Zähle die Perioden auf dem Schirm und lies die Periodendauer ab.</p>
+<div class="numbox part" data-task="a3" data-fb="Richtig! 5 Perioden passen auf 10 ms, eine Periode dauert also 2 ms. Probe: <f-m>f = 1 : 0,002&nbsp;s = 500&nbsp;Hz</f-m>.">
+<div class="numq"><span>a) Perioden auf dem Schirm</span><span class="unit"><input type="text" inputmode="decimal" data-a="5" data-tol="0.01" aria-label="Anzahl Perioden"></span></div>
+<div class="numq"><span>b) Periodendauer T</span><span class="unit"><input type="text" inputmode="decimal" data-a="2" data-tol="0.02" aria-label="Periodendauer in ms"> ms</span></div>
+<div class="row"><button class="primary num-check">Prüfen</button></div><p class="fb nfb"></p></div>
+</div>
+
+<h3>C · Ton, Klang, Geräusch und Knall</h3>
+<p class="intro">Nicht jedes Schallbild sieht aus wie eine glatte Welle. Nach ihrem Schallbild unterscheidet man vier <b>Schallarten</b>.</p>
+<div class="pic">
+<figure><svg data-schall="ton,4,2.6" viewBox="0 0 320 170" role="img" aria-label="Schallbild Ton: gleichmäßige Wellenlinie"></svg><figcaption><b>Ton</b>: gleichmäßige Wellenlinie (sinusförmig) mit gleichbleibender Frequenz. Beispiel: Stimmgabel.</figcaption></figure>
+<figure><svg data-schall="klang,4,2.6" viewBox="0 0 320 170" role="img" aria-label="Schallbild Klang: verschnörkeltes Muster, das sich regelmäßig wiederholt"></svg><figcaption><b>Klang</b>: ein Muster, das sich regelmäßig wiederholt. Ein Klang setzt sich aus mehreren Tönen zusammen. Beispiele: Blockflöte, Stimme beim Singen.</figcaption></figure>
+<figure><svg data-schall="geraeusch,0,2.6" viewBox="0 0 320 170" role="img" aria-label="Schallbild Geräusch: unregelmäßiges Gezacke ohne Muster"></svg><figcaption><b>Geräusch</b>: unregelmäßig, ohne erkennbares Muster. Beispiele: Rassel, Papier zerknüllen.</figcaption></figure>
+<figure><svg data-schall="knall,0,3.6" viewBox="0 0 320 170" role="img" aria-label="Schallbild Knall: kurz, am Anfang sehr große Ausschläge, die schnell kleiner werden"></svg><figcaption><b>Knall</b>: sehr kurz, am Anfang sehr große Amplitude, die schnell abnimmt. Beispiel: in die Hände klatschen.</figcaption></figure>
+</div>
+
+<div class="card"><div class="tag">Auftrag 6 · Welche Schallart? <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="selbox part" data-task="a4" data-fb="Richtig! Stimmgabel: <b>Ton</b>. Blockflöte und Singen: <b>Klang</b>. Rassel und Papier: <b>Geräusch</b>. Klatschen: <b>Knall</b>.">
+<div class="steprow mitpk"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#stimmgabel"/></svg><span>Eine Stimmgabel summt.</span><select data-a="Ton" aria-label="Stimmgabel"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="steprow mitpk"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#floete"/></svg><span>Jemand spielt Blockflöte.</span><select data-a="Klang" aria-label="Blockflöte"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="steprow mitpk"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#rassel"/></svg><span>Ein Baby schüttelt eine Rassel.</span><select data-a="Geräusch" aria-label="Rassel"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="steprow mitpk"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#haende"/></svg><span>Jemand klatscht einmal in die Hände.</span><select data-a="Knall" aria-label="Klatschen"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="steprow mitpk"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#papier"/></svg><span>Ein Blatt Papier wird zerknüllt.</span><select data-a="Geräusch" aria-label="Papier"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="steprow mitpk"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#person"/></svg><span>Jemand singt ein „aaa“.</span><select data-a="Klang" aria-label="Singen"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<div class="card"><div class="tag">Auftrag 7 · Ein Ballon platzt <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<h4>Ein Luftballon platzt vor dem Mikrofon. Welches Schallbild zeigt das Oszilloskop?</h4>
+<div class="mc dgwahl" data-correct="c" data-task="a5" data-tipp="Ein Platzen ist sehr kurz und am Anfang sehr laut. Danach ist es schnell still."><button data-k="a" data-fb="Dieses Muster wiederholt sich regelmäßig. Das ist ein Klang, zum Beispiel ein Instrument."><svg data-schall="klang,3,2.2" viewBox="0 0 320 170" aria-hidden="true"></svg><span>Bild A</span></button><button data-k="b" data-fb="Das Gezacke ist unregelmäßig, aber es bleibt die ganze Zeit gleich stark. Das ist ein Geräusch, zum Beispiel Rauschen."><svg data-schall="geraeusch,1,2.2" viewBox="0 0 320 170" aria-hidden="true"></svg><span>Bild B</span></button><button data-k="c" data-fb="Richtig! Ein Knall: sehr kurz, am Anfang riesige Ausschläge, die schnell abnehmen."><svg data-schall="knall,1,3.6" viewBox="0 0 320 170" aria-hidden="true"></svg><span>Bild C</span></button><button data-k="d" data-fb="Eine gleichmäßige Wellenlinie ist ein Ton, zum Beispiel eine Stimmgabel."><svg data-schall="ton,6,2" viewBox="0 0 320 170" aria-hidden="true"></svg><span>Bild D</span></button><p class="fb"></p></div>
+</div>
+
+<h3>D · Was können wir hören?</h3>
+<p class="intro">Wir hören nicht alle Frequenzen. Der <b>Hörbereich</b> des Menschen reicht etwa von <b>20&nbsp;Hz bis 20&nbsp;000&nbsp;Hz</b>. Schall unter 20&nbsp;Hz heißt <b>Infraschall</b>, Schall über 20&nbsp;000&nbsp;Hz heißt <b>Ultraschall</b>. Viele Tiere hören andere Bereiche als wir. Mit dem Alter sinkt bei Menschen die obere Grenze: Ältere Menschen hören hohe Töne oft nicht mehr.</p>
+<div class="fig"><svg id="hoer" viewBox="0 0 640 230" role="img" aria-label="Frequenzskala von 1 Hz bis 200 000 Hz mit Infraschall, Hörbereich des Menschen und Ultraschall sowie den Hörbereichen von Elefant, Hund und Fledermaus"></svg></div>
+<p class="caption">Ungefähre Werte. Die Skala ist so eingeteilt, dass jeder Schritt zehnmal so viel ist wie der vorige. Elefanten verständigen sich auch mit Infraschall, Erdbeben erzeugen Infraschall, Fledermäuse orientieren sich mit Ultraschall.</p>
+
+<div class="two"><div>
+<div class="card"><div class="tag">Auftrag 8 · Hörbar oder nicht? <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="selbox part" data-task="a6" data-fb="Richtig! Unter 20 Hz ist <b>Infraschall</b>, von 20&nbsp;Hz bis 20&nbsp;000&nbsp;Hz <b>hörbarer Schall</b>, darüber <b>Ultraschall</b>.">
+<div class="steprow"><span>5&nbsp;Hz (Erdbeben)</span><select data-a="Infraschall" aria-label="5 Hz"><option value="">…</option><option>Infraschall</option><option>hörbarer Schall</option><option>Ultraschall</option></select></div>
+<div class="steprow"><span>440&nbsp;Hz (Kammerton a)</span><select data-a="hörbarer Schall" aria-label="440 Hz"><option value="">…</option><option>Infraschall</option><option>hörbarer Schall</option><option>Ultraschall</option></select></div>
+<div class="steprow"><span>15&nbsp;000&nbsp;Hz (Pfeifen eines alten Fernsehers)</span><select data-a="hörbarer Schall" aria-label="15 000 Hz"><option value="">…</option><option>Infraschall</option><option>hörbarer Schall</option><option>Ultraschall</option></select></div>
+<div class="steprow"><span>50&nbsp;000&nbsp;Hz (Ruf einer Fledermaus)</span><select data-a="Ultraschall" aria-label="50 000 Hz"><option value="">…</option><option>Infraschall</option><option>hörbarer Schall</option><option>Ultraschall</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+</div><div>
+<div class="card"><div class="tag">Auftrag 9 · Wer hört das? <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="multi part" data-task="a7" data-fb="Richtig! 30 000 Hz ist Ultraschall. Hund und Fledermaus hören ihn, Mensch und Elefant nicht." data-tipp="Lies im Bild ab, wessen Balken bis 30 000 Hz reicht."><p>Ein Gerät sendet einen Ton mit <b>30&nbsp;000&nbsp;Hz</b>. Wer kann ihn hören? Kreuze <b>alle</b> an.</p><div class="checks">
+<label data-ok="0" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#person"/></svg><span>Mensch</span></label>
+<label data-ok="1" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#hund"/></svg><span>Hund</span></label>
+<label data-ok="0" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#elefant"/></svg><span>Elefant</span></label>
+<label data-ok="1" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#fledermaus"/></svg><span>Fledermaus</span></label>
+</div><div class="row"><button class="primary multi-check">Prüfen</button></div><p class="fb"></p></div>
+</div>
+</div></div>
+</div></section>
+
+<!-- ============ 3 FESTHALTEN ============ -->
+<section class="band" id="festhalten"><div class="wrap">
+<h2>3 · Festhalten</h2>
+<div class="card"><div class="tag">Lückentext · Tonhöhe, Lautstärke und Schallarten <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommt der Heftaufschrieb."><div class="cloze">Ein Mikrofon wandelt Luftdruckschwankungen in ein <select data-a="elektrisches Signal" aria-label="Lücke 1"><option value="">…</option><option>elektrisches Signal</option><option>Lichtsignal</option><option>Schallbild</option></select> um, das Oszilloskop zeichnet daraus das Schallbild. Je größer die Frequenz, desto <select data-a="höher" aria-label="Lücke 2"><option value="">…</option><option>höher</option><option>tiefer</option><option>lauter</option></select> ist der Ton. Je größer die Amplitude, desto <select data-a="lauter" aria-label="Lücke 3"><option value="">…</option><option>lauter</option><option>leiser</option><option>höher</option></select> ist der Ton. Ein <select data-a="Ton" aria-label="Lücke 4"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select> hat ein sinusförmiges Schallbild, ein <select data-a="Klang" aria-label="Lücke 5"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select> ein regelmäßig wiederkehrendes Muster, ein <select data-a="Geräusch" aria-label="Lücke 6"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select> ist unregelmäßig. Der Mensch hört etwa 20&nbsp;Hz bis 20&nbsp;000&nbsp;Hz. Darunter liegt der <select data-a="Infraschall" aria-label="Lücke 7"><option value="">…</option><option>Infraschall</option><option>Ultraschall</option></select>, darüber der <select data-a="Ultraschall" aria-label="Lücke 8"><option value="">…</option><option>Infraschall</option><option>Ultraschall</option></select>.</div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<details class="reveal" id="heft"><summary>✎ Heftaufschrieb anzeigen (erst selbst versuchen, dann vergleichen)</summary>
+<div class="heft">
+<h3>Tonhöhe und Lautstärke</h3>
+<p>Ein <b>Mikrofon</b> wandelt die Luftdruckschwankungen in ein <b>elektrisches Signal</b> um. Das <b>Oszilloskop</b> zeichnet daraus das Schwingungsbild (Schallbild).</p>
+<p>Je größer die <b>Frequenz</b>, desto <b>höher</b> der Ton. Je größer die <b>Amplitude</b>, desto <b>lauter</b> der Ton. Tonhöhe und Lautstärke hängen <b>nicht</b> voneinander ab.</p>
+<h3>Schallarten</h3>
+<figure class="musterfig schallarten"><svg data-schall="ton,3,2.6,Ton" viewBox="0 0 320 170" role="img" aria-label="Schallbild Ton"></svg><svg data-schall="klang,3,2.6,Klang" viewBox="0 0 320 170" role="img" aria-label="Schallbild Klang"></svg><svg data-schall="geraeusch,0,2.6,Geräusch" viewBox="0 0 320 170" role="img" aria-label="Schallbild Geräusch"></svg><svg data-schall="knall,0,3.6,Knall" viewBox="0 0 320 170" role="img" aria-label="Schallbild Knall"></svg></figure>
+<p><b>Ton</b>: sinusförmig, gleichbleibende Frequenz (Stimmgabel). <b>Klang</b>: regelmäßig wiederkehrendes Muster, aus mehreren Tönen zusammengesetzt (Blockflöte, Stimme). <b>Geräusch</b>: unregelmäßig, ohne Muster (Rassel, zerknülltes Papier). <b>Knall</b>: kurz, am Anfang sehr große Amplitude, die schnell abnimmt (Klatschen).</p>
+<h3>Hörbereich</h3>
+<p>Der Mensch hört etwa <b>20&nbsp;Hz</b> bis <b>20&nbsp;000&nbsp;Hz</b>. Unter 20&nbsp;Hz: <b>Infraschall</b> (Elefanten, Erdbeben). Über 20&nbsp;000&nbsp;Hz: <b>Ultraschall</b> (Fledermäuse; Hunde hören höhere Töne als wir). Mit dem Alter <b>sinkt</b> die obere Hörgrenze.</p>
+<div class="row"><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div>
+</div>
+</details>
+<div class="merke"><h4>Merke</h4><ul><li><b>Frequenz</b> → Tonhöhe: große Frequenz, enge Wellen, hoher Ton.</li><li><b>Amplitude</b> → Lautstärke: großer Ausschlag, lauter Ton.</li><li>Schallarten: Ton, Klang, Geräusch, Knall.</li><li>Hörbereich des Menschen: etwa 20&nbsp;Hz bis 20&nbsp;000&nbsp;Hz.</li></ul></div>
+</div></section>
+
+<!-- ============ 4 ÜBEN ============ -->
+<section class="band alt" id="ueben"><div class="wrap">
+<h2>4 · Üben</h2>
+<p class="intro"><b>Erst im Heft lösen, dann hier prüfen.</b></p>
+<div class="lvlrow"><span>★ / AFB I: Grundlagen anwenden</span><span>★★ / AFB II: Zusammenhänge herstellen</span><span>★★★ / AFB III: übertragen, beurteilen, begründen</span></div>
+
+<div class="card"><div class="tag">Übung 1 · Stimmt das? <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="tf part" data-task="u1">
+<div class="item" data-v="0"><span>„Ein lauter Ton ist immer auch ein hoher Ton.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Lautstärke hängt von der Amplitude ab, Tonhöhe von der Frequenz. Ein tiefer Ton kann sehr laut sein, zum Beispiel ein Bass.</span></div>
+<div class="item" data-v="1"><span>„Liegen die Wellenberge im Schallbild enger beieinander, ist der Ton höher.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Enge Wellen bedeuten eine kurze Periodendauer, also eine große Frequenz und einen hohen Ton.</span></div>
+<div class="item" data-v="0"><span>„Ultraschall ist besonders lauter Schall.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Ultraschall hat eine sehr große <b>Frequenz</b> (über 20&nbsp;000&nbsp;Hz). Mit der Lautstärke hat das nichts zu tun.</span></div>
+<div class="item" data-v="1"><span>„Ein Klang besteht aus mehreren Tönen.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Darum sieht das Schallbild eines Klangs verschnörkelt aus, wiederholt sich aber regelmäßig.</span></div>
+</div>
+</div>
+
+<div class="card"><div class="tag">Übung 2 · Oszi-Schwingungen <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<p>Alle vier Bilder sind mit derselben Einstellung des Oszilloskops aufgenommen.</p>
+<div class="pic">
+<figure><svg data-schall="ton,3,3.2,A" viewBox="0 0 320 170" role="img" aria-label="Bild A: 3 Perioden, Amplitude 3,2 Kästchen"></svg></figure>
+<figure><svg data-schall="ton,8,1,B" viewBox="0 0 320 170" role="img" aria-label="Bild B: 8 Perioden, Amplitude 1 Kästchen"></svg></figure>
+<figure><svg data-schall="ton,3,1,C" viewBox="0 0 320 170" role="img" aria-label="Bild C: 3 Perioden, Amplitude 1 Kästchen"></svg></figure>
+<figure><svg data-schall="ton,8,3.2,D" viewBox="0 0 320 170" role="img" aria-label="Bild D: 8 Perioden, Amplitude 3,2 Kästchen"></svg></figure>
+</div>
+<div class="selbox part" data-task="u2" data-fb="Richtig! B: viele enge Wellen (große Frequenz), kleiner Ausschlag. C: wenige Wellen und kleiner Ausschlag, also tief und leise. D: enge Wellen und großer Ausschlag, also hoch und laut. Gleich hoch wie D ist B: Beide haben 8 Perioden auf dem Schirm.">
+<div class="steprow"><span>a) große Frequenz und kleine Amplitude</span><select data-a="Bild B" aria-label="Teilaufgabe a"><option value="">…</option><option>Bild A</option><option>Bild B</option><option>Bild C</option><option>Bild D</option></select></div>
+<div class="steprow"><span>b) tief und leise</span><select data-a="Bild C" aria-label="Teilaufgabe b"><option value="">…</option><option>Bild A</option><option>Bild B</option><option>Bild C</option><option>Bild D</option></select></div>
+<div class="steprow"><span>c) hoch und laut</span><select data-a="Bild D" aria-label="Teilaufgabe c"><option value="">…</option><option>Bild A</option><option>Bild B</option><option>Bild C</option><option>Bild D</option></select></div>
+<div class="steprow"><span>d) gleiche Tonhöhe wie Bild D, aber leiser</span><select data-a="Bild B" aria-label="Teilaufgabe d"><option value="">…</option><option>Bild A</option><option>Bild B</option><option>Bild C</option><option>Bild D</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<div class="card"><div class="tag">Übung 3 · Schallarten im Alltag <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="selbox part" data-task="u3" data-fb="Richtig! Ballon: <b>Knall</b>. Regen: <b>Geräusch</b>. Gitarrensaite: <b>Klang</b>. Tongenerator: <b>Ton</b>. Staubsauger: <b>Geräusch</b>.">
+<div class="steprow"><span>a) Ein Luftballon platzt.</span><select data-a="Knall" aria-label="Ballon"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="steprow"><span>b) Regen prasselt aufs Dach.</span><select data-a="Geräusch" aria-label="Regen"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="steprow"><span>c) Eine Gitarrensaite wird gezupft.</span><select data-a="Klang" aria-label="Gitarre"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="steprow"><span>d) Ein Tongenerator erzeugt eine reine Sinusschwingung mit 440&nbsp;Hz.</span><select data-a="Ton" aria-label="Tongenerator"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="steprow"><span>e) Ein Staubsauger läuft.</span><select data-a="Geräusch" aria-label="Staubsauger"><option value="">…</option><option>Ton</option><option>Klang</option><option>Geräusch</option><option>Knall</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<div class="card"><div class="tag">Übung 4 · Hören wir das? <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<p>Berechne aus der Periodendauer die Frequenz mit <f-m>f = 1 : T</f-m>. Entscheide dann, ob ein Mensch den Schall hören kann.</p>
+<div class="numbox part" data-task="u4" data-fb="Richtig! <f-m>f = 1 : 0,1&nbsp;s = 10&nbsp;Hz</f-m>, <f-m>f = 1 : 0,001 s = 1 000 Hz</f-m>, <f-m>f = 1 : 0,00004 s = 25 000 Hz</f-m>.">
+<div class="numq"><span>a) <f-m>T = 0,1 s</f-m></span><span class="unit"><input type="text" inputmode="decimal" data-a="10" data-tol="0.01" aria-label="Frequenz a in Hz"> Hz</span></div>
+<div class="numq"><span>b) <f-m>T = 0,001 s</f-m></span><span class="unit"><input type="text" inputmode="decimal" data-a="1000" data-tol="0.01" aria-label="Frequenz b in Hz"> Hz</span></div>
+<div class="numq"><span>c) <f-m>T = 0,00004 s</f-m></span><span class="unit"><input type="text" inputmode="decimal" data-a="25000" data-tol="0.01" aria-label="Frequenz c in Hz"> Hz</span></div>
+<div class="row"><button class="primary num-check">Prüfen</button><button data-sol="u4Sol">Lösung zeigen</button></div><p class="fb nfb"></p>
+<div class="sol" id="u4Sol" hidden><p>a) <f-m>f = 1 : 0,1 s = 10 Hz</f-m>. b) <f-m>f = 1 : 0,001 s = 1 000 Hz</f-m>. c) <f-m>f = 1 : 0,00004 s = 25 000 Hz</f-m>.</p></div></div>
+<div class="selbox part" data-task="u4b" data-fb="Richtig! 10 Hz ist Infraschall, 1 000 Hz hören wir gut, 25 000 Hz ist Ultraschall.">
+<div class="steprow"><span>d) Schall aus a)</span><select data-a="Infraschall" aria-label="Schall aus a"><option value="">…</option><option>Infraschall</option><option>hörbarer Schall</option><option>Ultraschall</option></select></div>
+<div class="steprow"><span>e) Schall aus b)</span><select data-a="hörbarer Schall" aria-label="Schall aus b"><option value="">…</option><option>Infraschall</option><option>hörbarer Schall</option><option>Ultraschall</option></select></div>
+<div class="steprow"><span>f) Schall aus c)</span><select data-a="Ultraschall" aria-label="Schall aus c"><option value="">…</option><option>Infraschall</option><option>hörbarer Schall</option><option>Ultraschall</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<div class="card"><div class="tag">Übung 5 · Den Schirm auswerten <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="fig narrow"><svg data-schall="ton,4,2.5" viewBox="0 0 320 170" role="img" aria-label="Oszilloskop-Schirm mit einem Ton: 4 Perioden auf 10 Kästchen"></svg></div>
+<p class="caption">Einstellung: Ein Kästchen nach rechts entspricht 0,5&nbsp;ms. Der Schirm ist 10&nbsp;Kästchen breit.</p>
+<div class="numbox part" data-task="u5" data-fb="Richtig! Der Schirm zeigt 5 ms. Darin liegen 4 Perioden, also <f-m>T = 5&nbsp;ms : 4 = 1,25&nbsp;ms</f-m> und <f-m>f = 4 : 0,005 s = 800 Hz</f-m>.">
+<div class="numq"><span>a) Zeit, die der ganze Schirm zeigt</span><span class="unit"><input type="text" inputmode="decimal" data-a="5" data-tol="0.01" aria-label="Zeit in ms"> ms</span></div>
+<div class="numq"><span>b) Periodendauer T</span><span class="unit"><input type="text" inputmode="decimal" data-a="1.25" data-tol="0.01" aria-label="Periodendauer in ms"> ms</span></div>
+<div class="numq"><span>c) Frequenz f</span><span class="unit"><input type="text" inputmode="decimal" data-a="800" data-tol="0.01" aria-label="Frequenz in Hz"> Hz</span></div>
+<div class="row"><button class="primary num-check">Prüfen</button><button data-hint="u5">Tipp</button><button data-sol="u5Sol">Lösung zeigen</button></div><p class="fb" id="u5Tip"></p><p class="fb nfb"></p>
+<div class="hintsrc" data-for="u5" hidden><p>10&nbsp;Kästchen mal 0,5&nbsp;ms ergibt die Zeit des ganzen Schirms.</p><p>Zähle die Perioden: Wie oft wiederholt sich das Muster auf dem Schirm?</p><p>Die Frequenz ist die Anzahl der Perioden geteilt durch die Zeit in Sekunden: 5&nbsp;ms = 0,005&nbsp;s.</p></div>
+<div class="sol" id="u5Sol" hidden><p>a) <f-m>10 · 0,5 ms = 5 ms</f-m>. b) 4 Perioden: <f-m>T = 5 ms : 4 = 1,25 ms</f-m>. c) <f-m>f = 4 : 0,005 s = 800 Hz</f-m> (oder <f-m>f = 1 : 0,00125 s = 800 Hz</f-m>).</p></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 6 · Leiser drehen <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<h4>Ein Tongenerator spielt einen Ton. Du drehst nur die Lautstärke herunter. Wie verändert sich das Schallbild?</h4>
+<div class="mc" data-correct="a" data-task="u6" data-tipp="Leiser heißt: kleinere Amplitude. Die Tonhöhe bleibt gleich. Was bedeutet das für die Abstände der Wellenberge?"><button data-k="a" data-fb="Richtig! Die Kurve wird flacher (kleinere Amplitude), die Abstände der Wellenberge bleiben gleich (gleiche Frequenz).">Die Kurve wird flacher, die Abstände der Wellenberge bleiben gleich.</button><button data-k="b" data-fb="Engere Wellenberge würden einen höheren Ton bedeuten. Die Tonhöhe ändert sich aber nicht.">Die Wellenberge rücken enger zusammen.</button><button data-k="c" data-fb="Flacher stimmt, aber weiter auseinander würde einen tieferen Ton bedeuten.">Die Kurve wird flacher und die Wellenberge rücken weiter auseinander.</button><button data-k="d" data-fb="Ein leiser Ton bleibt ein Ton mit gleichmäßiger Wellenlinie.">Das Bild wird unregelmäßig wie bei einem Geräusch.</button><p class="fb"></p></div>
+</div>
+
+<div class="card"><div class="tag">Übung 7 · Flöte und Geige <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
+<div class="part why" data-task="u7"><div class="mitbild"><svg class="pk breit" aria-hidden="true" viewBox="0 0 96 48"><use href="/brand/piktos.svg#floete" width="48" height="48"/><use href="/brand/piktos.svg#geige" x="48" width="48" height="48"/></svg><h4>✍ Eine Blockflöte und eine Geige spielen genau denselben Ton (gleiche Tonhöhe). Trotzdem erkennst du sofort, welches Instrument spielt. Begründe mit dem Schallbild.</h4></div>
+<textarea data-store="u7" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
+<label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
+<div class="row"><button class="why-show">Mit Musterbegründung vergleichen</button></div>
+<div class="sol" hidden><p><b>Musterbegründung:</b> Beide Instrumente erzeugen einen <b>Klang</b>, also eine Mischung aus mehreren Tönen. Weil die Tonhöhe gleich ist, haben beide die gleiche <b>Grundfrequenz</b>: Das Muster im Schallbild wiederholt sich gleich oft pro Sekunde. Die Töne, aus denen sich der Klang zusammensetzt, sind aber bei Flöte und Geige verschieden stark. Deshalb hat das sich wiederholende <b>Muster eine andere Form</b>, und wir hören eine andere Klangfarbe.</p><div class="row"><button class="why-ok">Meine Begründung enthält das Wichtigste</button></div></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 8 · Die Hundepfeife <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
+<div class="part why" data-task="u8"><div class="mitbild"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#hund"/></svg><h4>✍ Lena bläst in eine Hundepfeife. Sie hört nichts, aber ihr Hund kommt sofort angerannt. Begründe mit dem Hörbereich.</h4></div>
+<textarea data-store="u8" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
+<label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
+<div class="row"><button class="why-show">Mit Musterbegründung vergleichen</button></div>
+<div class="sol" hidden><p><b>Musterbegründung:</b> Die Pfeife erzeugt Schall mit einer sehr großen <b>Frequenz</b>, über <b>20&nbsp;000&nbsp;Hz</b>. Das ist <b>Ultraschall</b>. Er liegt über dem Hörbereich des Menschen, deshalb hört Lena nichts. Hunde hören auch höhere Frequenzen (bis etwa 45&nbsp;000&nbsp;Hz), deshalb hört der Hund den Pfiff.</p><div class="row"><button class="why-ok">Meine Begründung enthält das Wichtigste</button></div></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 9 · Hörtest <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
+<div class="multi part" data-task="u9" data-fb="Richtig! Nur Lea hört 50 Hz (unter Opas 75 Hz) und 12 000 Hz (über Opas 9 000 Hz). 5 000 Hz hören beide, 25 000 Hz keiner von beiden." data-tipp="Ein Ton, den nur Lea hört, muss in ihrem Bereich liegen, aber außerhalb von Opas Bereich."><p>Bei einem Hörtest mit dem Tongenerator hört Lea (14&nbsp;Jahre) Töne von 20&nbsp;Hz bis 19&nbsp;000&nbsp;Hz, ihr Opa nur von 75&nbsp;Hz bis 9&nbsp;000&nbsp;Hz. Welche Töne hört <b>nur Lea</b>? Kreuze <b>alle</b> an.</p><div class="checks">
+<label data-ok="1"><input type="checkbox"><span>50&nbsp;Hz</span></label>
+<label data-ok="0"><input type="checkbox"><span>5&nbsp;000&nbsp;Hz</span></label>
+<label data-ok="1"><input type="checkbox"><span>12&nbsp;000&nbsp;Hz</span></label>
+<label data-ok="0"><input type="checkbox"><span>25&nbsp;000&nbsp;Hz</span></label>
+</div><div class="row"><button class="primary multi-check">Prüfen</button></div><p class="fb"></p></div>
+</div>
+</div></section>
+
+<section class="band"><div class="wrap">
+<div class="row" style="margin-top:8px"><button id="resetAll">Fortschritt zurücksetzen</button></div>
+</div></section>
+<footer class="band"><div class="wrap">
+<p>Lernpfad Physik Klasse 8 · Akustik 3 (Oszilloskop, Mikrofon, Tonhöhe und Frequenz, Lautstärke und Amplitude, Ton, Klang, Geräusch, Knall, Hörbereich, Infraschall, Ultraschall). Dein Fortschritt wird nur in diesem Browser gespeichert, es werden keine Daten übertragen (nur Feedback, das du selbst abschickst).</p>
+<p class="rechtl"><a href="/impressum">Impressum · Datenschutz</a></p></div></footer>
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Lernpfad"><svg role="img" aria-label="QR-Code: https://physik.party/Physik8/schallarten" viewBox="0 0 37 37" class="segno"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#000" d="M4 4.5h7m3 0h3m2 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m6 0h1m1 0h1m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m5 0h3m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h2m1 0h1m1 0h1m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h1m1 0h2m2 0h1m1 0h4m-21 1h1m2 0h1m1 0h2m1 0h4m1 0h4m2 0h1m1 0h1m1 0h1m-24 1h1m1 0h2m1 0h1m3 0h1m1 0h3m2 0h3m2 0h2m2 0h1m2 0h1m-27 1h1m2 0h2m3 0h4m3 0h3m2 0h2m1 0h3m-27 1h1m3 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h3m5 0h2m-28 1h4m1 0h4m1 0h2m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h2m-29 1h1m2 0h3m3 0h5m5 0h3m-20 1h1m3 0h1m3 0h1m2 0h2m2 0h2m5 0h5m-26 1h1m1 0h1m6 0h2m1 0h1m1 0h4m1 0h4m1 0h1m-28 1h2m2 0h1m1 0h5m2 0h2m2 0h1m1 0h1m3 0h1m3 0h1m-26 1h1m1 0h2m5 0h1m1 0h2m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m2 0h2m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h2m2 0h1m2 0h2m-22 1h2m2 0h2m2 0h5m1 0h1m1 0h2m2 0h2m-29 1h1m1 0h2m1 0h4m2 0h1m3 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m3 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m2 0h4m3 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h2m1 0h1m2 0h1m5 0h1m3 0h4m-28 1h1m1 0h3m1 0h1m2 0h1m1 0h1m4 0h3m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m5 0h1m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m6 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m3 0h2m5 0h5m1 0h1m3 0h1m-28 1h7m1 0h1m4 0h1m2 0h2m2 0h1m3 0h1m2 0h1"/></svg>
+<p>physik.party/Physik8/schallarten</p><button id="qrClose">Schließen</button></dialog>
+<script>
+{
+const KEY='p8-schallarten-done';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=(v,n=2)=>(+v).toFixed(n).replace('.',',').replace('-','−');
+const fmtS=(v,n=2)=>fmt(v,n).replace(/(,\d*?)0+$/,'$1').replace(/,$/,'');
+const num=v=>parseFloat(String(v).replace(/[\s ]/g,'').replace(/\.(?=\d{3}(\D|$))/g,'').replace(',','.').replace('−','-'));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const RAD=Math.PI/180,g=9.81;
+const sind=a=>Math.sin(a*RAD),cosd=a=>Math.cos(a*RAD),tand=a=>Math.tan(a*RAD);
+/* Fortschritt (nur in diesem Browser) */
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}}
+function updProg(){const tasks=[...new Set($$('[data-task]').map(e=>e.dataset.task))];const n=tasks.filter(t=>done.has(t)).length;$('#progtxt').textContent=n+' / '+tasks.length+' gelöst';$('#progbar').style.width=(100*n/Math.max(1,tasks.length))+'%';
+ $$('[data-task]').forEach(e=>e.classList.toggle('done',done.has(e.dataset.task)));$$('.tabs button[data-for]').forEach(b=>b.classList.toggle('solved',done.has(b.dataset.for)))}
+function mark(id){if(!id)return;done.add(id);save();updProg()}
+function svgPt(svg,ev){const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+function animate(ms,step,end){if(reduce){step(1);end&&end();return}const t0=performance.now();function f(t){const k=Math.min(1,(t-t0)/ms);step(k);if(k<1)requestAnimationFrame(f);else end&&end()}requestAnimationFrame(f)}
+/* Formelzeichen in SVG: "F|res" -> F mit Index res */
+function lab(n){const [b,s]=String(n).split('|');return s?`${b}<tspan dy="5" font-size="75%">${s}</tspan><tspan dy="-5"> </tspan>`:b}
+function labH(n){const [b,s]=String(n).split('|');return s?`${b}<sub>${s}</sub>`:b}
+const COL={f1:'var(--f1)',f2:'var(--f2)',f3:'var(--f3)',fr:'var(--fr)',fg:'var(--fg)',fh:'var(--fh)',fn:'var(--fnn)',ink:'var(--ink)',mut:'var(--muted)',acc:'var(--acc)'};
+const col=c=>COL[c]||c;
+/* ===== Bausteine ===== */
+const hints={};
+function initCommon(){
+ $$('.hintsrc').forEach(d=>{hints[d.dataset.for]=[...d.children].map(p=>p.innerHTML)});
+ $$('[data-hint]').forEach(b=>{let h=0;b.onclick=()=>{const id=b.dataset.hint,arr=hints[id]||[],el=$('#'+id+'Tip');if(!arr.length||!el)return;el.className='fb hint tip';el.innerHTML='Tipp '+(h%arr.length+1)+' von '+arr.length+': '+arr[h%arr.length];h++}});
+ $$('[data-sol]').forEach(b=>b.onclick=()=>{const el=$('#'+b.dataset.sol);el.hidden=!el.hidden;b.textContent=el.hidden?'Lösung zeigen':'Lösung ausblenden'});
+ /* Multiple Choice: nach einem Fehlversuch Hinweis und kurze Denkpause */
+ $$('.mc[data-correct]').forEach(box=>{const fb=box.querySelector('.fb'),btns=[...box.querySelectorAll('button[data-k]')];
+  btns.forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
+   if(ok){btns.forEach(x=>x.classList.remove('bad'));b.classList.add('ok');fb.className='fb ok';fb.innerHTML=b.dataset.fb||'Richtig!';mark(box.dataset.task);return}
+   b.classList.add('bad');b.disabled=true;fb.className='fb hint';
+   fb.innerHTML=(b.dataset.fb||'Das stimmt nicht.')+(box.dataset.tipp?' <b>Hinweis:</b> '+box.dataset.tipp:' Lies die Frage noch einmal genau und denk nach, bevor du weiterklickst.');
+   const free=btns.filter(x=>!x.classList.contains('bad'));free.forEach(x=>x.disabled=true);setTimeout(()=>free.forEach(x=>x.disabled=false),reduce?0:2500)})});
+ /* Mehrfachauswahl */
+ $$('.multi').forEach(box=>{const fb=box.querySelector('.fb');box.querySelector('.multi-check').onclick=()=>{const ls=[...box.querySelectorAll('label')];let bad=0;ls.forEach(l=>{const i=l.querySelector('input'),should=l.dataset.ok==='1';const r=i.checked===should;l.className=i.checked||!r?(r?'ok':'bad'):'';if(!r)bad++});
+  if(!bad){fb.className='fb ok';fb.innerHTML=box.dataset.fb||'Richtig!';mark(box.dataset.task)}else{fb.className='fb hint';fb.innerHTML=bad+(bad===1?' Auswahl stimmt':' Auswahlen stimmen')+' noch nicht. '+(box.dataset.tipp||'')}}});
+ /* Textfelder */
+ $$('textarea[data-store]').forEach(t=>{const k=KEY+'-txt-'+t.dataset.store;try{t.value=localStorage.getItem(k)||''}catch(e){}t.addEventListener('input',()=>{try{localStorage.setItem(k,t.value)}catch(e){}})});
+ /* Begründe-Aufträge */
+ $$('.why').forEach(w=>{const t=w.querySelector('textarea'),cb=w.querySelector('input[type=checkbox]'),show=w.querySelector('.why-show'),sol=w.querySelector('.sol'),okb=w.querySelector('.why-ok');
+  const upd=()=>{show.disabled=!((t&&t.value.trim().length>=15)||(cb&&cb.checked))};if(t)t.addEventListener('input',upd);if(cb)cb.addEventListener('change',upd);upd();
+  show.onclick=()=>{sol.hidden=false;show.hidden=true};okb.onclick=()=>{mark(w.dataset.task);okb.textContent='✓ Abgehakt'}});
+ /* Zahlen-Aufgaben */
+ $$('.numbox').forEach(box=>{const fb=box.querySelector('.nfb');box.querySelector('.num-check').onclick=()=>{const ins=[...box.querySelectorAll('input[data-a]')];let ok=0;
+  ins.forEach(i=>{const v=num(i.value),a=+i.dataset.a,tol=+(i.dataset.tol||0.01),gd=!isNaN(v)&&Math.abs(v-a)<=Math.max(Math.abs(a)*tol,1e-9);i.className=i.value===''?'':(gd?'ok':'bad');if(gd)ok++});
+  if(ok===ins.length){fb.className='fb ok nfb';fb.innerHTML=box.dataset.fb||'Alles richtig!';mark(box.dataset.task)}else{fb.className='fb bad nfb';fb.textContent=ok+' von '+ins.length+' richtig. Prüfe Rechnung, Einheiten und Rundung – oder hol dir einen Tipp.'}}});
+ /* Auswahlfelder (Lückentext, Zuordnung) */
+ $$('.selbox').forEach(box=>{const fb=box.querySelector('.sfb');box.querySelector('.sel-check').onclick=()=>{const s=[...box.querySelectorAll('select')];let ok=0;s.forEach(x=>{const gd=x.value===x.dataset.a;x.className=x.value===''?'':(gd?'ok':'bad');if(gd)ok++});
+  if(ok===s.length){fb.className='fb ok sfb';fb.innerHTML=box.dataset.fb||'Alles richtig!';mark(box.dataset.task)}else{fb.className='fb bad sfb';fb.textContent=ok+' von '+s.length+' richtig. Prüfe die rot markierten Felder.'}}});
+ /* Richtig/Falsch */
+ $$('.tf').forEach(box=>{const rows=[...box.querySelectorAll('.item')],solved=new Set();rows.forEach((row,i)=>{const ex=row.querySelector('.ex'),fb=row.querySelector('.fb');row.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=b.dataset.v===row.dataset.v;
+  row.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');fb.className='fb '+(ok?'ok':'bad');fb.innerHTML=(ok?'Stimmt. ':'Nein. ')+ex.innerHTML;if(ok)solved.add(i);if(solved.size===rows.length)mark(box.dataset.task)})})});
+ /* Reiter */
+ $$('.tabs[data-group]').forEach(tb=>{const bs=[...tb.querySelectorAll('button')];bs.forEach(b=>b.onclick=()=>{bs.forEach(x=>{x.setAttribute('aria-pressed',x===b);const p=$('#'+x.dataset.panel);if(p)p.hidden=x!==b});const p=$('#'+b.dataset.panel);p&&p.dispatchEvent(new Event('show'))})});
+ {const d=$('#qrDlg');$('#qrOpen').onclick=()=>d.showModal();$('#qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
+ $('#resetAll').onclick=()=>{done.clear();save();location.reload()};
+ updProg()}
+
+
+/* Heftaufschrieb übernommen */
+$$('.hb-done').forEach(b=>{if(done.has(b.dataset.task))b.textContent='✓ Im Heft';b.onclick=()=>{mark(b.dataset.task);b.textContent='✓ Im Heft'}});
+/* Schritt-für-Schritt */
+$$('.stepper').forEach(st=>{const boxes=[...st.querySelectorAll('.stepbox')],nx=st.querySelector('.st-next'),bk=st.querySelector('.st-back'),dots=st.querySelector('.steps');let i=0;
+ const show=()=>{boxes.forEach((b,k)=>b.hidden=k>i);if(dots)dots.innerHTML=boxes.map((b,k)=>`<i class="${k<=i?'on':''}">${k+1}</i>`).join('');nx.disabled=i>=boxes.length-1;bk.disabled=i===0;if(i>=boxes.length-1&&st.dataset.task)mark(st.dataset.task)};
+ nx.onclick=()=>{i=Math.min(boxes.length-1,i+1);show()};bk.onclick=()=>{i=Math.max(0,i-1);show()};show()});
+
+
+/* ---------- Schallbilder: data-schall="art,perioden,amplitude[,titel]" (Schirm 10 × 8 Kästchen) ---------- */
+function rng(seed){let s=seed>>>0||1;return()=>{s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0;return s/4294967296}}
+function schallY(kind,n,A,seed){const N=400,ys=[];
+ if(kind==='ton'){for(let i=0;i<=N;i++)ys.push(A*Math.sin(2*Math.PI*n*i/N))}
+ else if(kind==='klang'){const k=(x)=>Math.sin(x)+0.6*Math.sin(2*x+0.8)+0.35*Math.sin(3*x+1.9);let mx=0;for(let i=0;i<=200;i++)mx=Math.max(mx,Math.abs(k(2*Math.PI*i/200)));for(let i=0;i<=N;i++)ys.push(A*k(2*Math.PI*n*i/N)/mx)}
+ else{const r=rng(seed*7919+17),comp=[];for(let j=0;j<14;j++)comp.push([9+r()*70,r()*6.283,0.4+r()]);
+  const raw=[];for(let i=0;i<=N;i++){const x=i/N;let v=0;comp.forEach(([f,p,a])=>v+=a*Math.sin(2*Math.PI*f*x+p));v+=1.4*(r()-0.5);raw.push(v)}
+  const mx=Math.max(...raw.map(Math.abs));
+  if(kind==='geraeusch')raw.forEach(v=>ys.push(A*v/mx*(0.75+0.25*Math.abs(v/mx))));
+  else{const x0=0.06;raw.forEach((v,i)=>{const x=i/N;ys.push(x<x0?0:A*(v/mx)*Math.exp(-(x-x0)/0.07))})}}
+ return ys}
+function osziSVG(kind,n,A,title,seed){const L=10,T=10,W=300,H=150,cy=T+H/2,dx=W/10,dy=H/8;let s=`<rect x="${L}" y="${T}" width="${W}" height="${H}" rx="6" style="fill:var(--scr);stroke:var(--line)"/>`;
+ for(let i=1;i<10;i++)s+=`<line x1="${L+i*dx}" y1="${T}" x2="${L+i*dx}" y2="${T+H}" style="stroke:var(--grid)" stroke-width="${i===5?1.6:1}"/>`;
+ for(let j=1;j<8;j++)s+=`<line x1="${L}" y1="${T+j*dy}" x2="${L+W}" y2="${T+j*dy}" style="stroke:var(--grid)" stroke-width="${j===4?1.6:1}"/>`;
+ const ys=schallY(kind,n,A,seed);s+=`<path d="${ys.map((y,i)=>(i?'L':'M')+(L+i/(ys.length-1)*W).toFixed(1)+' '+(cy-Math.max(-3.9,Math.min(3.9,y))*dy).toFixed(1)).join('')}" style="fill:none;stroke:var(--kurve)" stroke-width="2.4" stroke-linejoin="round"/>`;
+ if(title)s+=`<rect x="${L+4}" y="${T+4}" width="${title.length*9+14}" height="24" rx="4" style="fill:var(--paper);stroke:var(--line)"/><text x="${L+11}" y="${T+21}" style="fill:var(--ink);font:700 16px Lexend,sans-serif">${title}</text>`;
+ return s}
+$$('svg[data-schall]').forEach((sv,i)=>{const [k,n,A,ti]=sv.dataset.schall.split(',');sv.innerHTML=osziSVG(k,+n,+A,ti,+n+3)});
+
+/* ---------- Tongenerator-Labor: Schirm 10 ms breit ---------- */
+{const svg=$('#oszi');let f=300,A=2,ctx=null,busy=false;
+ const lautTxt=a=>a<=1?'leise':a<=2?'mittel':a<=3?'laut':'sehr laut';
+ function draw(){svg.innerHTML=osziSVG('ton',f/100,A)+`<text x="304" y="155" text-anchor="end" class="txs" style="font-size:9px">1 Kästchen = 1 ms</text>`;
+  $('#gFTxt').textContent=f+' Hz';$('#gATxt').textContent=fmtS(A,1)+(A===1?' Kästchen':' Kästchen');
+  $('#gRead').innerHTML=`<div>Frequenz f<b>${f} Hz</b></div><div>Periodendauer T<b>${fmtS(1000/f,2)} ms</b></div><div>Perioden auf dem Schirm<b>${fmtS(f/100,1)}</b></div><div>Lautstärke<b>${lautTxt(A)}</b></div>`}
+ $('#gF').oninput=()=>{f=+$('#gF').value;draw()};
+ $('#gA').oninput=()=>{A=+$('#gA').value;draw()};
+ $('#gPlay').onclick=()=>{if(busy)return;try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();}catch(e){return}
+  busy=true;const o=ctx.createOscillator(),gn=ctx.createGain(),t=ctx.currentTime,peak=0.05*A/3.5;
+  o.type='sine';o.frequency.value=f;gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(peak,t+0.08);gn.gain.setValueAtTime(peak,t+1.1);gn.gain.linearRampToValueAtTime(0,t+1.3);
+  o.connect(gn).connect(ctx.destination);o.start(t);o.stop(t+1.35);o.onended=()=>{busy=false}};
+ draw()}
+
+/* ---------- Hörbereich (logarithmische Skala 1 Hz bis 200 000 Hz) ---------- */
+{const de=v=>String(v).replace(/\B(?=(\d{3})+$)/g,' '),svg=$('#hoer'),X0=110,X1=595,lg=Math.log10,LMAX=lg(200000),x=v=>X0+lg(v)/LMAX*(X1-X0);let s='';
+ const band=(a,b,fill,txt)=>`<rect x="${x(a)}" y="18" width="${x(b)-x(a)}" height="34" style="fill:${fill}"/><text x="${(x(a)+x(b))/2}" y="40" text-anchor="middle" style="fill:var(--ink);font:700 14px Lexend,sans-serif">${txt}</text>`;
+ s+=band(1,20,'var(--inf)','Infraschall')+band(20,20000,'var(--hb)','hörbarer Schall')+band(20000,200000,'var(--ult)','Ultraschall');
+ [1,10,100,1000,10000,100000].forEach((v,i)=>{s+=`<line x1="${x(v)}" y1="52" x2="${x(v)}" y2="214" style="stroke:var(--grid)" stroke-width="1"/><text x="${x(v)}" y="226" text-anchor="middle" class="txs">${de(v)} Hz</text>`});
+ [20,20000].forEach(v=>s+=`<line x1="${x(v)}" y1="14" x2="${x(v)}" y2="214" style="stroke:var(--ink)" stroke-width="1.6" stroke-dasharray="4 3"/>`);
+ const row=(i,name,a,b,pk)=>{const y=68+i*36;return `<use href="/brand/piktos.svg#${pk}" x="4" y="${y-4}" width="30" height="30" style="color:var(--ink)"/><text x="38" y="${y+16}" style="fill:var(--ink);font:600 14px Lexend,sans-serif">${name}</text><rect x="${x(a)}" y="${y+4}" width="${x(b)-x(a)}" height="16" rx="8" style="fill:var(--kurve)"/><text x="${x(a)-4}" y="${y+16}" text-anchor="end" class="txs">${de(a)}</text><text x="${x(b)+4}" y="${y+16}" class="txs">${de(b)}</text>`};
+ s+=row(0,'Mensch',20,20000,'person')+row(1,'Elefant',14,12000,'elefant')+row(2,'Hund',50,45000,'hund')+row(3,'Fledermaus',2000,110000,'fledermaus');
+ svg.innerHTML=s}
+
+initCommon();
+}
+</script>
+</body>
+</html>
