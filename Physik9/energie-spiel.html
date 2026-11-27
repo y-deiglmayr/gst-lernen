@@ -68,7 +68,10 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .talkbox p{margin:2px 0 0}
 .talkbox small{position:absolute;right:10px;bottom:4px;font-size:11px;color:#a9b6b9}
 .startov{position:absolute;inset:0;display:grid;place-items:center;background:rgba(14,19,20,.55);text-align:center;line-height:1.4;padding:12px}
-.startov[hidden],.pause[hidden],.talkbox[hidden]{display:none}
+.endov{position:absolute;inset:0;display:grid;place-items:center;background:rgba(14,19,20,.6);text-align:center;line-height:1.45;padding:12px;color:#f1f4f4}
+.endov>div{background:#1b2122;border:3px solid #e9edee;box-shadow:0 0 0 3px #1b2122;padding:16px 22px;max-width:520px}
+.endov p{margin:0 0 6px}
+.endov[hidden],.startov[hidden],.pause[hidden],.talkbox[hidden]{display:none}
 .pxtitle{font:700 clamp(20px,4vw,40px) Lexend,sans-serif;color:#f1f4f4;text-shadow:3px 3px 0 #1b2122;margin:0 0 14px}
 .startov .keys{color:#d3dcde;font-size:14px;margin:12px 0 0}
 .pause{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:#1b2122;color:#f1f4f4;padding:4px 12px;border-radius:6px;font-size:13px;line-height:1.4}
@@ -217,6 +220,7 @@ dialog.spick .top button{background:transparent;color:inherit;border-color:curre
   <canvas id="cv" width="320" height="180" tabindex="0" aria-label="Spielwelt: verschneites Bergdorf bei Nacht. Steuern mit Pfeiltasten oder WASD, sprechen mit Leertaste."></canvas>
   <div class="talkbox" id="talkbox" hidden><canvas id="face" width="16" height="16" aria-hidden="true"></canvas><div><b id="tbWho"></b><p id="tbTxt"></p><small>▼ Leertaste / Tippen</small></div></div>
   <div class="startov" id="startov"><div><p class="pxtitle">Stromausfall auf der Gipfelhütte</p><button class="primary" id="startBtn" type="button">▶ Spiel starten</button><p class="keys">Laufen: Pfeiltasten oder WASD · Sprechen und weiter: Leertaste oder E</p></div></div>
+  <div class="endov" id="endov" hidden><div><div id="endTxt"></div><button class="primary" id="endOk" type="button">Weiter herumlaufen</button></div></div>
   <div class="pause" id="pause" hidden>Pausiert · klick ins Bild zum Weiterspielen</div>
  </div>
  <div class="pad" id="pad" aria-label="Steuerkreuz">
@@ -243,7 +247,7 @@ dialog.spick .top button{background:transparent;color:inherit;border-color:curre
 <p>Energie-Spiel Physik Klasse 9 · Wiederholung zu Energieformen, Energieumwandlung, Lageenergie, Energieerhaltung und Wirkungsgrad. Dein Spielstand wird nur in diesem Browser gespeichert, es werden keine Daten übertragen (nur Feedback, das du selbst abschickst).</p>
 <p class="rechtl"><a href="/impressum">Impressum · Datenschutz</a></p></div></footer>
 <dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Spiel"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR-Code: https://physik.party/Physik9/energie-spiel" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h1m2 0h8m2 0h7m-29 1h1m5 0h1m2 0h4m1 0h2m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h3m2 0h1m2 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h3m2 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m5 0h2m1 0h3m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h2m2 0h3m2 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-18 1h2m1 0h7m-21 1h1m2 0h1m1 0h2m1 0h4m1 0h4m2 0h1m1 0h1m1 0h1m-24 1h2m8 0h1m1 0h3m1 0h3m2 0h2m2 0h1m2 0h1m-28 1h1m1 0h4m1 0h1m1 0h5m1 0h4m2 0h2m1 0h3m-28 1h3m2 0h1m1 0h3m3 0h2m1 0h1m1 0h3m5 0h2m-23 1h2m3 0h4m2 0h2m1 0h1m1 0h3m1 0h1m1 0h2m-29 1h1m2 0h2m3 0h1m1 0h2m1 0h1m5 0h3m-21 1h1m1 0h4m9 0h3m5 0h5m-22 1h1m3 0h4m2 0h4m1 0h4m1 0h1m-28 1h5m1 0h1m1 0h1m1 0h2m4 0h2m1 0h1m3 0h1m3 0h1m-26 1h3m3 0h1m1 0h1m2 0h2m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m5 0h1m1 0h2m7 0h2m1 0h2m2 0h1m2 0h2m-27 1h1m1 0h1m2 0h2m1 0h3m1 0h2m1 0h3m1 0h1m1 0h2m2 0h2m-29 1h1m1 0h2m1 0h2m1 0h2m3 0h2m1 0h1m1 0h1m1 0h5m1 0h1m-19 1h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m4 0h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h3m1 0h3m1 0h1m1 0h1m1 0h1m3 0h5m-29 1h1m1 0h3m1 0h1m2 0h1m4 0h5m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h2m7 0h1m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h2m3 0h1m6 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m4 0h3m1 0h7m1 0h1m3 0h1m-28 1h7m1 0h3m1 0h3m2 0h1m2 0h1m3 0h1m2 0h1"/></svg><p>physik.party/Physik9/energie-spiel</p><button id="qrClose">Schließen</button></dialog>
-<dialog class="taskdlg" id="taskDlg" aria-label="Aufgaben"><div class="top"><button type="button" id="taskClose">✕ Zurück ins Spiel</button></div><div id="panel" aria-live="polite"></div></dialog>
+<dialog class="taskdlg" id="taskDlg" aria-label="Aufgaben"><div class="top"><button type="button" id="taskClose">✕ Zurück ins Spiel</button></div><div id="panel" aria-live="polite" tabindex="-1" style="outline:none"></div></dialog>
 <dialog class="spick" id="spickDlg" aria-label="Spickzettel"><div class="top"><h3>✎ Spickzettel</h3><button type="button" id="spickClose">Schließen</button></div><div class="in" id="spickDlgIn"></div></dialog>
 <script>
 {
@@ -312,10 +316,73 @@ const ST=[
   muster:'Wegen der Reibung wird auf dem Weg ein Teil der Energie in thermische Energie umgewandelt (Schlitten, Schnee und Luft werden etwas wärmer). Die Gesamtenergie bleibt zwar erhalten, aber für die Lageenergie bleibt weniger übrig als am Start. Deshalb ist die erreichbare Höhe kleiner.',
   checks:['Ich habe die Reibung genannt.','Ich habe gesagt, dass thermische Energie entsteht.','Ich habe erklärt, dass deshalb weniger Lageenergie übrig bleibt (Energie geht nicht verloren, sie wird entwertet).']}
  ]},
-{name:'Das Turbinenhaus',thema:'Wirkungsgrad',x:760,y:236,locked:true},
-{name:'Die Gipfelhütte',thema:'Energieketten und Finale',x:885,y:150,locked:true}
+{name:'Das Turbinenhaus',thema:'Wirkungsgrad',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Frau Berger zeigt auf das Typenschild der Anlage: „Wirkungsgrad 70 %“. Was bedeutet das?',
+  opts:[['a','70 % der zugeführten Energie werden in nutzbare elektrische Energie umgewandelt.'],['b','Die Turbine läuft 70 % der Zeit.'],['c','70 % der Energie werden vernichtet.'],['d','Die Turbine dreht sich mit 70 % ihrer Höchstgeschwindigkeit.']],ok:'a',
+  hinweis:'Der Wirkungsgrad vergleicht zwei Energien miteinander. Welche?',
+  tipps:['Der Wirkungsgrad ist das Verhältnis von nutzbarer zu aufgewendeter Energie.','<f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub></f-m>. 70 % heißt: Von 100 J zugeführter Energie werden 70 J genutzt.'],
+  loesung:'Antwort a: <f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub> = 0,70</f-m>. Von der zugeführten Energie werden 70 % zu elektrischer Energie.'},
+ {afb:2,typ:'num',frage:'Probelauf: In einer Stunde fließt Wasser mit 2943 kJ Lageenergie durch die Turbine (das hast du am Speichersee berechnet). Der Generator gibt dabei 2060 kJ elektrische Energie ab. Berechne den Wirkungsgrad in Prozent.',bild:'kraftwerk',
+  einheit:'%',ziel:2060/2943*100,tol:.015,
+  fehler:[[2060/2943,'Das ist der Wirkungsgrad als Dezimalzahl. Gefragt ist er in Prozent.'],[2943/2060*100,'Umgekehrt! Der Nutzen kommt nach oben: <f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub></f-m>.'],[2943/2060,'Umgekehrt geteilt. <f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub></f-m>.']],
+  tipps:['Was ist hier der Aufwand, was der Nutzen? Aufwand: die Energie des Wassers. Nutzen: die elektrische Energie.','<f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub> = 2060 kJ : 2943 kJ</f-m>. Das Ergebnis mal 100 ergibt Prozent.'],
+  loesung:'<f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub> = 2060 kJ : 2943 kJ ≈ 0,70 = 70 %</f-m>'},
+ {afb:2,typ:'mc',frage:'Von den 2943 kJ kommen nur 2060 kJ als elektrische Energie heraus. Wo sind die übrigen 883 kJ geblieben?',
+  opts:[['a','Sie wurden vernichtet.'],['b','Sie wurden vor allem in thermische Energie umgewandelt: Lager, Wasser und Generator werden etwas wärmer.'],['c','Sie stecken noch als Lageenergie im Wasser unten im Tal.'],['d','Sie wurden in chemische Energie umgewandelt.']],ok:'b',
+  hinweis:'Energieerhaltung: Verschwinden kann nichts. Was entsteht durch Reibung?',
+  tipps:['Energie kann nicht vernichtet werden.','In Lagern, im Generator und im Wasser gibt es Reibung. Dabei entsteht thermische Energie.'],
+  loesung:'Antwort b: Der Rest wird durch Reibung zu thermischer Energie der Umgebung. Er ist nicht verloren, aber entwertet.'},
+ {afb:3,typ:'begr',frage:'<b>Begründe:</b> Ein Vertreter will Frau Berger eine Wunder-Turbine mit 110 % Wirkungsgrad verkaufen. Warum kann das nicht stimmen?',
+  muster:'Der Wirkungsgrad ist das Verhältnis von nutzbarer zu aufgewendeter Energie. Bei 110 % käme mehr nutzbare Energie heraus, als hineingesteckt wird. Energie kann aber nicht erzeugt werden (Energieerhaltung). Mehr als 100 % sind also unmöglich. Weil durch Reibung immer auch thermische Energie entsteht, liegt der Wirkungsgrad in Wirklichkeit sogar immer unter 100 %.',
+  checks:['Ich habe gesagt, dass dann mehr Energie herauskäme als hineingeht.','Ich habe die Energieerhaltung genannt (Energie kann nicht erzeugt werden).','Ich habe erklärt, dass <f-m>η</f-m> wegen der Reibung sogar immer unter 100 % liegt.']}
+ ]},
+{name:'Die Gipfelhütte',thema:'Energieketten und Leistung',
+ tasks:[
+ {afb:2,typ:'mc',frage:'Der Hauptschalter ist fast erreicht! Welche Energiekette führt vom Speichersee bis zum Licht in der Hütte?',
+  opts:[['a','<f-m>E<sub>L</sub></f-m> (Wasser oben) → <f-m>E<sub>B</sub></f-m> (strömendes Wasser, Turbine) → <f-m>E<sub>el</sub></f-m> (Generator) → <f-m>E<sub>Str</sub> + E<sub>therm</sub></f-m> (Lampe)'],['b','<f-m>E<sub>B</sub> → E<sub>L</sub> → E<sub>el</sub> → E<sub>Str</sub></f-m>'],['c','<f-m>E<sub>L</sub> → E<sub>el</sub> → E<sub>B</sub> → E<sub>Str</sub></f-m>'],['d','<f-m>E<sub>chem</sub> → E<sub>B</sub> → E<sub>el</sub> → E<sub>Str</sub></f-m>']],ok:'a',
+  hinweis:'Wo ist das Wasser am Anfang? Was passiert auf dem Weg nach unten, und was macht der Generator?',
+  tipps:['Am Anfang liegt das Wasser hoch oben: Lageenergie.','Fallendes Wasser bewegt sich und dreht die Turbine. Der Generator macht daraus elektrische Energie, die Lampe Licht und Wärme.'],
+  loesung:'Antwort a: <f-m>E<sub>L</sub> → E<sub>B</sub> → E<sub>el</sub> → E<sub>Str</sub> + E<sub>therm</sub></f-m>'},
+ {afb:3,typ:'num',frage:'Die Kette hat drei Glieder: Turbine mit Generator <f-m>η<sub>1</sub> = 0,70</f-m>, Leitung zur Hütte <f-m>η<sub>2</sub> = 0,95</f-m> und LED-Lampen <f-m>η<sub>3</sub> = 0,30</f-m> (Nutzen: Licht). Wie groß ist der Gesamtwirkungsgrad vom Wasser bis zum Licht? Gib ihn in Prozent an.',
+  einheit:'%',ziel:0.7*0.95*0.3*100,tol:.03,
+  fehler:[[0.7*0.95*0.3,'Das ist die Dezimalzahl. Gefragt ist der Wert in Prozent.'],[(0.7+0.95+0.3)/3*100,'Wirkungsgrade einer Kette werden multipliziert, nicht gemittelt.'],[(0.7+0.95+0.3)*100,'Wirkungsgrade einer Kette werden multipliziert, nicht addiert.']],
+  tipps:['Bei einer Energiekette multipliziert man die einzelnen Wirkungsgrade.','<f-m>η<sub>ges</sub> = η<sub>1</sub> · η<sub>2</sub> · η<sub>3</sub> = 0,70 · 0,95 · 0,30</f-m>. Dann mal 100 für Prozent.'],
+  loesung:'<f-m>η<sub>ges</sub> = η<sub>1</sub> · η<sub>2</sub> · η<sub>3</sub> = 0,70 · 0,95 · 0,30 ≈ 0,20 = 20 %</f-m>'},
+ {afb:3,typ:'num',frage:'Von den 2060 kJ, die der Generator pro Stunde liefert, kommen 95 % in der Hütte an. Lampen, Kühlschrank und Heizlüfter haben zusammen eine Leistung von 600 W. Wie viele Minuten reicht diese Energie? Reicht es für eine Stunde?',
+  einheit:'min',ziel:2060000*0.95/600/60,tol:.02,
+  fehler:[[2060000*0.95/600,'Das ist die Zeit in Sekunden. Rechne noch in Minuten um.'],[2060000/600/60,'Fast! In der Hütte kommen nur 95 % der 2060 kJ an.'],[2060000/600,'Denk an die 95 % und rechne Sekunden in Minuten um.'],[2060*0.95/600/60,'Achte auf die Einheit: <f-m>1 kJ = 1000 J</f-m>.']],
+  tipps:['Erst die Energie in der Hütte: <f-m>E = 0,95 · 2060 kJ = 1957 kJ = 1 957 000 J</f-m>.','Die Leistung ist <f-m>P = E : t</f-m>, umgestellt <f-m>t = E : P = 1 957 000 J : 600 W</f-m>. Das Ergebnis ist in Sekunden.'],
+  loesung:'<f-m>E = 0,95 · 2060 kJ = 1957 kJ</f-m>; <f-m>t = E : P = 1 957 000 J : 600 W ≈ 3262 s ≈ 54</f-m> min. Das reicht nicht ganz für eine Stunde.'}
+ ]},
+{name:'Lenas Tee',thema:'Nebenquest · Energieentwertung',side:1,
+ tasks:[
+ {afb:1,typ:'mc',frage:'Lena hat ihren heißen Tee draußen stehen lassen. Nach einer Viertelstunde ist er kalt. Was ist mit der thermischen Energie des Tees passiert?',bild:'tee',
+  opts:[['a','Sie wurde an die kalte Umgebung abgegeben und ist dort verteilt.'],['b','Sie ist einfach verschwunden.'],['c','Sie hat sich in „Kälte“ umgewandelt.'],['d','Sie steckt jetzt in der Tasse und kommt gleich zurück.']],ok:'a',
+  hinweis:'Energie verschwindet nie. In welche Richtung fließt Wärme: von warm nach kalt oder umgekehrt?',
+  tipps:['Wärme fließt immer vom wärmeren zum kälteren Körper.','Die Energie ist in der kalten Luft und im Schnee verteilt.'],
+  loesung:'Antwort a: Die thermische Energie ist an die Umgebung abgegeben worden.'},
+ {afb:2,typ:'mc',frage:'Lena fragt: „Kann man die Energie aus der Luft nicht einfach zurückholen und den Tee damit wieder heiß machen?“',
+  opts:[['a','Ja, ganz einfach, sie ist ja noch da.'],['b','Kaum. Die Energie ist so fein in der Umgebung verteilt, dass man sie praktisch nicht mehr nutzen kann. Sie ist entwertet.'],['c','Nein, weil es sie nicht mehr gibt.'],['d','Ja, wenn man lange wartet, wird der Tee von allein wieder heiß.']],ok:'b',
+  hinweis:'Denk an das Wort „Energieentwertung“.',
+  tipps:['Die Energie ist noch da, aber wo genau?','Verteilte thermische Energie in der Umgebung kann man kaum noch nutzen. Das nennt man Energieentwertung.'],
+  loesung:'Antwort b: Die Energie ist entwertet. Sie ist noch da, aber nicht mehr nutzbar.'}
+ ]},
+{name:'Opas Holzaufzug',thema:'Nebenquest · Lageenergie',side:1,
+ tasks:[
+ {afb:2,typ:'num',frage:'Opa Huber zieht einen Korb mit 15 kg Brennholz mit einem Seilzug 4,0 m hoch auf den Dachboden des Schuppens. Wie viel Lageenergie hat das Holz oben gewonnen (Nullniveau: Boden)?',bild:'kran',
+  einheit:'J',ziel:15*g*4,tol:.015,
+  fehler:[[60,'Da fehlt der Ortsfaktor <f-m>g = 9,81 N/kg</f-m>.'],[15*g*4/1000,'Gefragt ist die Energie in J, nicht in kJ.']],
+  tipps:['Die Formel ist <f-m>E<sub>L</sub> = m · g · h</f-m>.','<f-m>E<sub>L</sub> = 15 kg · 9,81 N/kg · 4,0 m</f-m>.'],
+  loesung:'<f-m>E<sub>L</sub> = m · g · h = 15 kg · 9,81 N/kg · 4,0 m ≈ 589 J</f-m>'},
+ {afb:2,typ:'mc',frage:'Opa überlegt, den Korb lieber über eine lange, flache Rampe hinaufzuziehen. Wie viel Lageenergie hat das Holz dann oben?',
+  opts:[['a','Mehr, weil der Weg länger ist.'],['b','Weniger, weil die Rampe flach ist.'],['c','Genauso viel, denn nur die Höhe über dem Nullniveau zählt.'],['d','Gar keine, weil er es nicht senkrecht hebt.']],ok:'c',
+  hinweis:'Kommt in <f-m>E<sub>L</sub> = m · g · h</f-m> der Weg vor?',
+  tipps:['Schau dir die Formel genau an: Welche Größen kommen darin vor?','Der Weg spielt keine Rolle, nur der Höhenunterschied.'],
+  loesung:'Antwort c: Gleich viel, <f-m>E<sub>L</sub></f-m> hängt nur von m, g und h ab.'}
+ ]}
 ];
-const TOTAL=ST.reduce((a,s)=>a+(s.tasks?s.tasks.length:0),0);
+const TOTAL=ST.reduce((a,s)=>a+(s.side?0:s.tasks.length),0);
 
 /* ---------- Aufgabentypen ---------- */
 const TYP={
@@ -412,21 +479,25 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
 const tid=(s,t)=>s+'-'+t;
 const isDone=(s,t)=>tid(s,t) in state.t;
 const stDone=s=>!!ST[s].tasks&&ST[s].tasks.every((_,t)=>isDone(s,t));
+const MAIN=ST.map((s,i)=>i).filter(i=>!ST[i].side),SIDE=ST.map((s,i)=>i).filter(i=>ST[i].side);
+const MAXF=ST.reduce((a,s)=>a+s.tasks.length*3,0);
 let used=0,solShown=false;
-function hud(){const n=Object.keys(state.t).length,f=Object.values(state.t).reduce((a,b)=>a+b,0),p=Math.round(100*n/(TOTAL+6));
- $('#akkuBar').style.width=p+'%';$('#akkuTxt').textContent=p+' %';$('#funken').textContent=f;$('#quest').textContent=questText()}
+function funken(){return Object.values(state.t).reduce((a,b)=>a+b,0)}
+function hud(){const n=MAIN.reduce((a,i)=>a+ST[i].tasks.filter((_,k)=>isDone(i,k)).length,0),p=Math.round(100*n/TOTAL);
+ $('#akkuBar').style.width=p+'%';$('#akkuTxt').textContent=p+' %';$('#funken').textContent=funken();$('#quest').textContent=questText()}
 function questText(){const F=state.f;
  if(!F.intro)return 'Steig aus dem Bus.';if(!F.berger)return 'Geh den Weg hinauf zur Gipfelhütte und sprich mit Frau Berger.';
  if(!stDone(0))return 'Weck Joulie auf. Er steht beim Schuppen (links).';if(!stDone(1))return 'Hilf Mia am Speichersee (rechts oben).';
- if(!stDone(2))return 'Ben wartet an der Rodelbahn (rechts unten).';if(!F.ende)return 'Bring das Ersatzteil zu Frau Berger.';
- return 'Ende von Teil 1. Turbinenhaus und Finale folgen.'}
+ if(!stDone(2))return 'Ben wartet an der Rodelbahn (rechts unten).';if(!F.teil2)return 'Bring das Ersatzteil zu Frau Berger an der Hütte.';
+ if(!stDone(3))return 'Frau Berger wartet am Turbinenhaus (Mitte).';if(!stDone(4))return 'Geh in die Gipfelhütte und leg den Hauptschalter um.';
+ const n=SIDE.filter(stDone).length;return n<SIDE.length?`Geschafft, die Hütte leuchtet! Nebenquests: ${n} von ${SIDE.length}.`:'Alles geschafft! Du bist ein Energie-Profi.'}
 
 /* ---------- Aufgaben-Fenster ---------- */
 const TD=$('#taskDlg');
 function openSt(i){const s=ST[i];let t=s.tasks.findIndex((_,k)=>!isDone(i,k));if(t<0)t=0;
- showTask(i,t,false);if(!TD.open)TD.showModal();TD.scrollTop=0}
+ showTask(i,t,false);if(!TD.open)TD.showModal();TD.scrollTop=0;$('#panel').focus({preventScroll:true})}
 TD.addEventListener('close',()=>{G.freeze=false;hud()});
-function head(i){const s=ST[i];return `<h3>Station ${i+1} · ${s.name}</h3><p style="color:var(--muted);margin-top:-4px">${s.thema}</p>`}
+function head(i){const s=ST[i];return `<h3>${s.side?'Nebenquest':'Station '+(i+1)} · ${s.name}</h3><p style="color:var(--muted);margin-top:-4px">${s.thema}</p>`}
 function showTask(i,t,withIntro){const s=ST[i],T=s.tasks[t];used=0;solShown=false;
  const P=$('#panel');
  const dots=s.tasks.map((_,k)=>`<i class="${isDone(i,k)?'ok':''} ${k===t?'cur':''}"></i>`).join('');
@@ -452,11 +523,11 @@ function solve(i,t,viaSol){const s=ST[i];if(!isDone(i,t)){state.t[tid(i,t)]=viaS
  if(viaSol){go();return}
  fb(box,'ok',`<b>Richtig!</b> +${state.t[tid(i,t)]} ⚡ ${next>=0?'':'– das war die letzte Aufgabe hier.'}`);
  box.querySelectorAll('[data-tip],[data-sol]').forEach(b=>b.disabled=true);
- box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="tools"><button class="primary" type="button" data-weiter>${next>=0?'Nächste Aufgabe':'Station abschließen'}</button></div>`);
+ box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="tools"><button class="primary" type="button" data-weiter>${next>=0?'Nächste Aufgabe':(s.side?'Nebenquest abschließen':'Station abschließen')}</button></div>`);
  const w=box.querySelector('[data-weiter]');w.onclick=go;w.focus({preventScroll:true});
 }
 function stationWin(i){hud();const s=ST[i];const f=s.tasks.reduce((a,_,k)=>a+(state.t[tid(i,k)]||0),0);
- $('#panel').innerHTML=head(i)+`<div class="win-box"><div class="big">✓ Station geschafft</div><p>${f} von ${s.tasks.length*3} ⚡ an dieser Station</p></div><div class="tools" style="justify-content:center"><button class="primary" type="button" id="nx">Zurück ins Spiel</button></div>`;
+ $('#panel').innerHTML=head(i)+`<div class="win-box"><div class="big">✓ ${s.side?'Nebenquest':'Station'} geschafft</div><p>${f} von ${s.tasks.length*3} ⚡</p></div><div class="tools" style="justify-content:center"><button class="primary" type="button" id="nx">Zurück ins Spiel</button></div>`;
  $('#nx').onclick=()=>{TD.close();G.after(i)};$('#nx').focus();
 }
 $('#taskClose').onclick=()=>TD.close();
@@ -466,6 +537,7 @@ $('#taskClose').onclick=()=>TD.close();
    ========================================================== */
 const G=(()=>{
 const TS=16,VW=320,VH=180,MW=40,MH=30;
+const F=state.f;
 const cv=$('#cv'),cx=cv.getContext('2d');cx.imageSmoothingEnabled=false;
 const dk=document.createElement('canvas');dk.width=VW;dk.height=VH;const dx=dk.getContext('2d');
 const R=(c,x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(x,y,w,h)};
@@ -474,41 +546,57 @@ const hash=(x,y)=>{let h=(x*374761393+y*668265263)^0x5bf03635;h=(h^(h>>>13))*127
 const map=[];for(let y=0;y<MH;y++){map.push([]);for(let x=0;x<MW;x++)map[y].push(x<2||x>=MW-2||y<2||y>=MH-2?'T':'.')}
 const set=(x,y,c)=>{if(x>=0&&y>=0&&x<MW&&y<MH)map[y][x]=c};
 const line=(x1,y1,x2,y2)=>{if(x1===x2)for(let y=Math.min(y1,y2);y<=Math.max(y1,y2);y++)set(x1,y,',');else for(let x=Math.min(x1,x2);x<=Math.max(x1,x2);x++)set(x,y1,',')};
-const BUILD=[{id:'huette',x:16,y:2,w:9,h:6,door:20,win:[17,18,22,23],name:'GIPFELHÜTTE'},{id:'schuppen',x:3,y:5,w:5,h:4,door:5,win:[7]},{id:'turbine',x:23,y:12,w:5,h:4,door:25,win:[24]},{id:'werkstatt',x:34,y:22,w:4,h:3,door:35,win:[36]}];
+const BUILD=[{id:'huette',x:16,y:2,w:9,h:6,door:20,win:[17,18,22,23]},{id:'schuppen',x:3,y:5,w:5,h:4,door:5,win:[7]},{id:'turbine',x:23,y:12,w:5,h:4,door:25,win:[24]},{id:'werkstatt',x:34,y:22,w:4,h:3,door:35,win:[36]}];
 for(let x=28;x<=37;x++){for(let y=3;y<=8;y++)set(x,y,'W');set(x,9,'D')}
 for(let y=10;y<=13;y++)set(28,y,'P');
 [[6,27,6,20],[5,9,5,20],[5,20,32,20],[20,8,20,20],[32,20,32,11],[25,16,25,20],[20,20,20,23],[20,23,28,23]].forEach(a=>line(...a));
 for(let y=21;y<=27;y++)for(let x=29;x<=33;x++)if(map[y][x]==='.')set(x,y,'s');
 for(let k=0;k<5;k++)set(29+k,21+k,'S'),set(30+k,21+k,'S');
 BUILD.forEach(b=>{for(let y=b.y;y<b.y+b.h;y++)for(let x=b.x;x<b.x+b.w;x++)set(x,y,'B')});
-const LAMPS=[{x:6,y:9,on:()=>stDone(0)},{x:31,y:11,on:()=>stDone(1)},{x:27,y:22,on:()=>stDone(2)},{x:19,y:8,on:()=>!!state.f.ende},{x:24,y:16,on:()=>false}];
+for(let x=8;x<=11;x++)for(let y=26;y<=27;y++)set(x,y,'V');           // Bus
+[[3,9],[4,9]].forEach(([x,y])=>set(x,y,'H'));                       // Holzstapel
+set(14,9,'M');                                                       // Schneemann
+[[9,21],[10,21],[11,21],[12,21],[13,21]].forEach(([x,y])=>set(x,y,'F'));[[15,9],[16,9],[17,9]].forEach(([x,y])=>set(x,y,'F'));
+set(34,12,'K');                                                      // Bank am See
+const LAMPS=[{x:6,y:9,on:()=>stDone(0)},{x:31,y:11,on:()=>stDone(1)},{x:27,y:22,on:()=>stDone(2)},{x:24,y:16,on:()=>stDone(3)},{x:19,y:8,on:()=>stDone(4)},{x:21,y:19,on:()=>stDone(4)},{x:7,y:19,on:()=>stDone(4)}];
 LAMPS.forEach(l=>set(l.x,l.y,'L'));
-const SIGNS=[{x:7,y:26,t:['Haltestelle „Gipfelbahn“. Heute fährt kein Bus mehr.']},{x:21,y:21,t:['Wegweiser: ↑ Gipfelhütte · ← Schuppen · → Speichersee · ↓ Rodelbahn']},{x:26,y:16,t:['„Turbinenhaus – Betreten nur mit Frau Berger“. Die Tür ist abgeschlossen.','Hier geht es im nächsten Teil weiter (Wirkungsgrad).']}];
+const SIGNS=[{x:7,y:25,t:['Haltestelle „Gipfelbahn“. Heute fährt kein Bus mehr.']},{x:21,y:21,t:['Wegweiser: ↑ Gipfelhütte · ← Schuppen · → Speichersee · ↓ Rodelbahn']},{x:26,y:16,t:['Turbinenhaus. Betreten nur mit Frau Berger.']},{x:33,y:19,t:['Speichersee: 12 000 kg Wasser, 25 m über der Turbine. Bitte nicht aufs Eis!']}];
 SIGNS.forEach(s=>set(s.x,s.y,'X'));
 const free=(x,y)=>{for(let j=-1;j<=1;j++)for(let i=-1;i<=1;i++){const c=(map[y+j]||[])[x+i];if(c&&c!=='.'&&c!=='T')return false}return true};
-for(let y=2;y<MH-2;y++)for(let x=2;x<MW-2;x++){if(map[y][x]!=='.'||!free(x,y))continue;const r=hash(x,y);if(r<.11)set(x,y,'T');else if(r<.13)set(x,y,'R')}
-[[6,26],[6,25],[5,26],[7,25]].forEach(([x,y])=>{if(map[y][x]==='T'||map[y][x]==='R')set(x,y,'.')});
-const SOLID=new Set(['T','R','W','B','D','P','L','X']);
+const RES=[[17,9],[18,9],[22,8],[26,17],[8,24],[4,10],[8,9],[18,10],[9,23],[33,11],[28,22]];
+for(let y=2;y<MH-2;y++)for(let x=2;x<MW-2;x++){if(map[y][x]!=='.'||!free(x,y)||RES.some(([a,b])=>Math.abs(a-x)<=1&&Math.abs(b-y)<=1))continue;const r=hash(x,y);if(r<.11)set(x,y,'T');else if(r<.13)set(x,y,'R')}
+[[6,26],[6,25],[5,26],[7,24]].forEach(([x,y])=>{if(map[y][x]==='T'||map[y][x]==='R')set(x,y,'.')});
+const SOLID=new Set(['T','R','W','B','D','P','L','X','V','H','M','F','K']);
 /* --- Figuren --- */
 const LOOK={ich:{hat:'#FCBE00',coat:'#76989D',scarf:'#3E4B4C',pants:'#3E4B4C',hair:'#6b4a2f'},
  berger:{hair:'#d8dee0',coat:'#8a4f3c',apron:'#f1f4f4',pants:'#3E4B4C',bun:1},
  mia:{hat:'#c94a3a',coat:'#5d5a8f',scarf:'#f1f4f4',pants:'#2f393a',hair:'#2b1d14',zopf:1},
- ben:{hat:'#3f7a55',coat:'#b07a2a',scarf:'#2f393a',pants:'#3E4B4C',hair:'#c9a25a'}};
-const NPC=[{id:'berger',name:'Frau Berger',x:22,y:8,look:'berger'},{id:'mia',name:'Mia',x:33,y:11,look:'mia'},{id:'ben',name:'Ben',x:28,y:22,look:'ben'},{id:'schieber',name:'Schieber',x:30,y:10,obj:1}];
-NPC.forEach(n=>set(n.x,n.y,'N'));SOLID.add('N');
-function person(c,x,y,L,dir,fr){x=Math.round(x);y=Math.round(y);
- R(c,x+3,y+14,10,2,'rgba(20,28,29,.28)');
- const st=fr?1:0;
- R(c,x+5,y+12,2,3-(dir!=='up'&&dir!=='down'?0:st),L.pants);R(c,x+9,y+12,2,3-(dir!=='up'&&dir!=='down'?0:1-st),L.pants);
- R(c,x+5,y+14-(st&&dir!=='left'&&dir!=='right'?1:0),2,1,'#2a2321');R(c,x+9,y+14-(!st&&dir!=='left'&&dir!=='right'?1:0),2,1,'#2a2321');
- if(dir==='left'||dir==='right'){R(c,x+5+(st?-1:1),y+12,2,3,L.pants);R(c,x+9+(st?1:-1),y+12,2,3,L.pants)}
- R(c,x+4,y+7,8,6,L.coat);if(L.apron)R(c,x+5,y+8,6,5,L.apron);
+ ben:{hat:'#3f7a55',coat:'#b07a2a',scarf:'#2f393a',pants:'#3E4B4C',hair:'#c9a25a'},
+ lena:{hat:'#8a3fc4',coat:'#d9c27a',scarf:'#8a3fc4',pants:'#3E4B4C',hair:'#a0522d',zopf:1},
+ opa:{hat:'#5a4636',coat:'#4f6b5a',scarf:'#b8322a',pants:'#2f393a',hair:'#e4e7e9',bart:1},
+ tim:{coat:'#2563c9',scarf:'#FCBE00',pants:'#2f393a',hair:'#1b1410',hood:'#2563c9'}};
+const NPC=[
+ {id:'berger',name:'Frau Berger',look:'berger',pos:()=>F.teil2&&!stDone(3)?[26,17]:[22,8],dir:'down'},
+ {id:'mia',name:'Mia',look:'mia',pos:()=>[33,11],dir:'left'},
+ {id:'ben',name:'Ben',look:'ben',pos:()=>[28,22],dir:'right'},
+ {id:'lena',name:'Lena',look:'lena',pos:()=>[8,23],dir:'down'},
+ {id:'opa',name:'Opa Huber',look:'opa',pos:()=>[4,10],dir:'right'},
+ {id:'tim',name:'Tim',look:'tim',pos:()=>stDone(4)?[18,8]:[18,10],dir:'down'},
+ {id:'schieber',name:'Schieber',obj:1,pos:()=>[30,10]}];
+function person(c,x,y,L,dir,fr){x=Math.round(x);y=Math.round(y)-(fr?1:0);
+ R(c,x+3,y+14+(fr?1:0),10,2,'rgba(20,28,29,.28)');
+ const st=fr?1:0,side=dir==='left'||dir==='right';
+ if(side){R(c,x+5+(st?-1:1),y+12,2,3,L.pants);R(c,x+9+(st?1:-1),y+12,2,3,L.pants);R(c,x+5+(st?-1:1),y+14,2,1,'#2a2321');R(c,x+9+(st?1:-1),y+14,2,1,'#2a2321')}
+ else{R(c,x+5,y+12,2,3-st,L.pants);R(c,x+9,y+12,2,2+st,L.pants);R(c,x+5,y+14-st,2,1,'#2a2321');R(c,x+9,y+13+st,2,1,'#2a2321')}
+ R(c,x+4,y+7,8,6,L.coat);R(c,x+4,y+12,8,1,'rgba(0,0,0,.18)');if(L.apron)R(c,x+5,y+8,6,5,L.apron);
  R(c,x+3,y+8,1,4,L.coat);R(c,x+12,y+8,1,4,L.coat);R(c,x+3,y+11+(st?0:-1),1,1,'#f0c8a8');R(c,x+12,y+11+(st?-1:0),1,1,'#f0c8a8');
  R(c,x+5,y+2,6,5,'#f0c8a8');
  if(L.scarf)R(c,x+4,y+7,8,1,L.scarf);
  R(c,x+5,y+2,6,1,L.hair);if(dir==='up')R(c,x+5,y+2,6,4,L.hair);
  if(dir==='left')R(c,x+9,y+2,2,4,L.hair);if(dir==='right')R(c,x+5,y+2,2,4,L.hair);
  if(L.zopf){R(c,x+4,y+4,1,4,L.hair);R(c,x+11,y+4,1,4,L.hair)}
+ if(L.bart&&dir!=='up')R(c,x+5,y+5,6,2,L.hair);
+ if(L.hood){R(c,x+4,y+1,8,2,L.hood);R(c,x+4,y+2,1,5,L.hood);R(c,x+11,y+2,1,5,L.hood)}
  if(L.hat){R(c,x+4,y+1,8,2,L.hat);R(c,x+5,y,6,1,L.hat);R(c,x+7,y-1,2,1,'#f1f4f4')}
  if(L.bun){R(c,x+6,y,4,2,L.hair)}
  const eye='#1b2122';
@@ -526,31 +614,43 @@ const bg=document.createElement('canvas');bg.width=MW*TS;bg.height=MH*TS;const b
 function snow(x,y){const X=x*TS,Y=y*TS;R(b,X,Y,TS,TS,'#dde3e5');for(let k=0;k<6;k++){const h=hash(x*7+k,y*13+k);R(b,X+Math.floor(h*16),Y+Math.floor(hash(k,h*99)*16),1,1,h<.5?'#c9d2d5':'#f6f8f9')}}
 function drawBg(){
  for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){const c=map[y][x],X=x*TS,Y=y*TS;snow(x,y);
-  if(c===','){R(b,X,Y,TS,TS,'#bcc6c9');for(let k=0;k<4;k++){const h=hash(x*3+k,y*5);R(b,X+Math.floor(h*14),Y+Math.floor(hash(y,k*h*50)*14),2,1,'#aab5b8')}}
-  if(c==='s'||c==='S'){R(b,X,Y,TS,TS,c==='S'?'#c3d0d6':'#e8eef0');if(c==='S'){R(b,X+3,Y,1,TS,'#aebcc3');R(b,X+11,Y,1,TS,'#aebcc3')}}
+  if(c===','){R(b,X,Y,TS,TS,'#bcc6c9');for(let k=0;k<4;k++){const h=hash(x*3+k,y*5);R(b,X+Math.floor(h*14),Y+Math.floor(hash(y,k*h*50)*14),2,1,'#aab5b8')}
+   const n=(i,j)=>(map[j]||[])[i]===',';if(!n(x,y-1))R(b,X,Y,TS,1,'#cdd5d8');if(!n(x,y+1))R(b,X,Y+15,TS,1,'#a9b4b7');if(!n(x-1,y))R(b,X,Y,1,TS,'#cdd5d8');if(!n(x+1,y))R(b,X+15,Y,1,TS,'#a9b4b7')}
+  if(c==='s'||c==='S'){R(b,X,Y,TS,TS,c==='S'?'#c3d0d6':'#e8eef0');if(c==='S'){R(b,X+3,Y,1,TS,'#aebcc3');R(b,X+11,Y,1,TS,'#aebcc3')}if(c==='s'&&hash(x,y)<.15){R(b,X+7,Y+4,1,9,'#5F6F74');R(b,X+8,Y+4,4,3,'#c94a3a')}}
   if(c==='T'){R(b,X+7,Y+12,2,4,'#5a4636');R(b,X+2,Y+9,12,3,'#2f4a3f');R(b,X+3,Y+6,10,3,'#2f4a3f');R(b,X+5,Y+3,6,3,'#2f4a3f');R(b,X+7,Y,2,3,'#2f4a3f');
-   R(b,X+2,Y+9,5,2,'#3d5e4f');R(b,X+3,Y+6,4,2,'#3d5e4f');R(b,X+5,Y+3,3,2,'#3d5e4f');R(b,X+3,Y+9,3,1,'#f1f4f4');R(b,X+4,Y+6,3,1,'#f1f4f4');R(b,X+6,Y+3,2,1,'#f1f4f4');R(b,X+7,Y,2,1,'#f1f4f4')}
+   R(b,X+2,Y+9,5,2,'#3d5e4f');R(b,X+3,Y+6,4,2,'#3d5e4f');R(b,X+5,Y+3,3,2,'#3d5e4f');R(b,X+3,Y+9,3,1,'#f1f4f4');R(b,X+4,Y+6,3,1,'#f1f4f4');R(b,X+6,Y+3,2,1,'#f1f4f4');R(b,X+7,Y,2,1,'#f1f4f4');R(b,X+4,Y+15,8,1,'rgba(20,28,29,.18)')}
   if(c==='R'){R(b,X+3,Y+8,10,6,'#6f7d80');R(b,X+4,Y+7,8,1,'#6f7d80');R(b,X+4,Y+8,4,2,'#8d9a9d');R(b,X+5,Y+6,6,2,'#f6f8f9');R(b,X+3,Y+14,10,1,'#5F6F74')}
   if(c==='W'){R(b,X,Y,TS,TS,'#3f5f68');if(map[y-1][x]!=='W'){R(b,X,Y,TS,3,'#e9eef0');R(b,X,Y+3,TS,1,'#9fb7bd')}if(map[y][x-1]!=='W')R(b,X,Y,2,TS,'#e9eef0');if(map[y][x+1]!=='W')R(b,X+14,Y,2,TS,'#e9eef0')}
-  if(c==='D'){R(b,X,Y,TS,TS,'#7d8b8e');for(let r=0;r<4;r++)R(b,X,Y+r*4+3,TS,1,'#5F6F74');R(b,X+((y+0)%2?4:10),Y,1,TS,'#5F6F74');R(b,X,Y,TS,2,'#f1f4f4')}
+  if(c==='D'){R(b,X,Y,TS,TS,'#7d8b8e');for(let r=0;r<4;r++)R(b,X,Y+r*4+3,TS,1,'#5F6F74');R(b,X+((y+x)%2?4:10),Y,1,TS,'#5F6F74');R(b,X,Y,TS,2,'#f1f4f4')}
   if(c==='P'){R(b,X+4,Y,8,TS,'#5F6F74');R(b,X+5,Y,2,TS,'#8d9a9d');R(b,X+4,Y+7,8,2,'#3E4B4C')}
+  if(c==='H'){for(let r=0;r<3;r++)for(let k=0;k<3-(r===2?1:0);k++){const xx=X+1+k*5+(r===2?2:0),yy=Y+11-r*4;R(b,xx,yy,5,4,'#8a6a4a');R(b,xx+1,yy+1,3,2,'#c9a27a');R(b,xx+2,yy+1,1,2,'#8a6a4a')}R(b,X+1,Y+2,14,1,'#f6f8f9')}
+  if(c==='M'){R(b,X+3,Y+8,10,7,'#f6f8f9');R(b,X+4,Y+15,8,1,'#c9d2d5');R(b,X+5,Y+3,6,5,'#f6f8f9');R(b,X+6,Y+4,1,1,'#1b2122');R(b,X+9,Y+4,1,1,'#1b2122');R(b,X+7,Y+6,3,1,'#e8840c');R(b,X+5,Y+1,6,2,'#1b2122');R(b,X+4,Y+3,8,1,'#1b2122');R(b,X+7,Y+10,1,1,'#1b2122');R(b,X+7,Y+12,1,1,'#1b2122');R(b,X+1,Y+8,3,1,'#5a4636');R(b,X+12,Y+8,3,1,'#5a4636')}
+  if(c==='F'){R(b,X,Y+7,TS,2,'#8a6a4a');R(b,X,Y+11,TS,2,'#8a6a4a');R(b,X+2,Y+5,2,10,'#6b5444');R(b,X+12,Y+5,2,10,'#6b5444');R(b,X+2,Y+4,2,1,'#f6f8f9');R(b,X+12,Y+4,2,1,'#f6f8f9');R(b,X,Y+6,TS,1,'#f6f8f9')}
+  if(c==='K'){R(b,X+1,Y+7,14,3,'#8a6a4a');R(b,X+1,Y+6,14,1,'#f6f8f9');R(b,X+2,Y+10,2,5,'#5a4636');R(b,X+12,Y+10,2,5,'#5a4636')}
  }
+ // Bus
+ {const X=8*TS,Y=26*TS;R(b,X+2,Y+4,60,22,'#c94a3a');R(b,X+2,Y+4,60,3,'#f6f8f9');R(b,X+2,Y+24,60,2,'#8f3328');for(let k=0;k<5;k++)R(b,X+6+k*11,Y+9,9,7,'#2f393a');R(b,X+6,Y+9,3,7,'#3E4B4C');
+  R(b,X+8,Y+26,8,5,'#1b2122');R(b,X+46,Y+26,8,5,'#1b2122');R(b,X+10,Y+27,4,3,'#5F6F74');R(b,X+48,Y+27,4,3,'#5F6F74');R(b,X+20,Y+19,26,3,'#f6f8f9');R(b,X+59,Y+18,3,3,'#FCBE00')}
  BUILD.forEach(d=>{const X=d.x*TS,Y=d.y*TS,W=d.w*TS,H=d.h*TS;
-  R(b,X,Y+28,W,H-28,'#6b5444');for(let y=Y+32;y<Y+H;y+=4)R(b,X,y,W,1,'#5a4636');
-  R(b,X-3,Y+4,W+6,26,'#3E4B4C');for(let y=Y+9;y<Y+30;y+=5)for(let x=X-3+(y%10?0:4);x<X+W+3;x+=8)R(b,x,y,1,4,'#2f393a');
-  R(b,X-3,Y+2,W+6,4,'#f6f8f9');for(let x=X;x<X+W;x+=7)R(b,x,Y+6,3,2+Math.floor(hash(x,Y)*3),'#f6f8f9');R(b,X-3,Y+29,W+6,2,'#2f393a');
-  if(d.id==='huette'){R(b,X+W-30,Y-10,10,14,'#5F6F74');R(b,X+W-31,Y-11,12,3,'#f6f8f9');R(b,X+W/2-34,Y+34,68,9,'#8a6a4a');}
-  if(d.id==='turbine'){R(b,X+46,Y+36,12,12,'#3E4B4C');R(b,X+48,Y+38,8,8,'#ACBDC3');R(b,X+51,Y+38,2,8,'#3E4B4C');R(b,X+48,Y+41,8,2,'#3E4B4C')}
-  const dX=d.door*TS;R(b,dX+3,Y+H-14,10,14,'#3a2c22');R(b,dX+4,Y+H-13,8,13,'#4a382b');R(b,dX+10,Y+H-7,1,1,'#FCBE00')});
- b.font='bold 7px Lexend,sans-serif';b.fillStyle='#f1f4f4';b.textAlign='center';b.fillText('GIPFELHÜTTE',20.5*TS,2*TS+40);
+  R(b,X,Y+28,W,H-28,'#6b5444');for(let y=Y+32;y<Y+H;y+=4)R(b,X,y,W,1,'#5a4636');R(b,X,Y+28,3,H-28,'#5a4636');R(b,X+W-3,Y+28,3,H-28,'#4a382b');
+  for(let r=0;r<26;r++)R(b,X-3,Y+4+r,W+6,1,r<6?'#4d5c5e':r<14?'#3E4B4C':'#354244');
+  for(let y=Y+9;y<Y+30;y+=5)for(let x=X-3+((y-Y)%10?0:4);x<X+W+3;x+=8)R(b,x,y,1,4,'#2a3335');
+  R(b,X-3,Y+2,W+6,4,'#f6f8f9');for(let x=X;x<X+W;x+=7)R(b,x,Y+6,3,2+Math.floor(hash(x,Y)*3),'#f6f8f9');R(b,X-3,Y+29,W+6,2,'#2a3335');R(b,X-3,Y+31,W+6,2,'rgba(20,28,29,.35)');
+  R(b,X+2,Y+H,W-4,2,'rgba(20,28,29,.22)');
+  if(d.id==='huette'){R(b,X+W-30,Y-10,10,14,'#5F6F74');R(b,X+W-31,Y-11,12,3,'#f6f8f9');R(b,X+W/2-34,Y+34,68,9,'#8a6a4a');R(b,X+W/2-33,Y+35,66,1,'#a8885f');
+   b.font='bold 7px Lexend,sans-serif';b.fillStyle='#f1f4f4';b.textAlign='center';b.textBaseline='middle';b.fillText('GIPFELHÜTTE',X+W/2,Y+39)}
+  if(d.id==='turbine'){R(b,X+46,Y+36,12,12,'#3E4B4C')}
+  if(d.id==='werkstatt'){R(b,X+4,Y+36,10,6,'#8a6a4a');R(b,X+6,Y+38,6,1,'#3E4B4C')}
+  const dX=d.door*TS;R(b,dX+3,Y+H-14,10,14,'#3a2c22');R(b,dX+4,Y+H-13,8,13,'#4a382b');R(b,dX+10,Y+H-7,1,1,'#FCBE00');R(b,dX+2,Y+H-15,12,1,'#2a2321')});
 }
 /* --- Spielzustand --- */
 const P={x:6*TS,y:26*TS,dir:'up',fr:0,ft:0};
-if(state.f.pos){P.x=state.f.pos[0];P.y=state.f.pos[1]}
+if(F.pos){P.x=F.pos[0];P.y=F.pos[1]}
 const J={x:8*TS,y:9*TS,trail:[]};if(stDone(0)){J.x=P.x-12;J.y=P.y+2}
-const keys={};let active=false,freeze=false,talk=null,flakes=[],T0=performance.now(),last=T0;
+const keys={};let active=false,freeze=false,talk=null,flakes=[],T0=performance.now(),last=T0,steps=[],smoke=[],fw=[],fwT=0;
 for(let k=0;k<70;k++)flakes.push({x:Math.random()*VW,y:Math.random()*VH,s:12+Math.random()*25,r:Math.random()<.3?2:1});
-const solid=(px,py)=>{const x=Math.floor(px/TS),y=Math.floor(py/TS);return x<0||y<0||x>=MW||y>=MH||SOLID.has(map[y][x])||(!stDone(0)&&x===8&&y===9)};
+const npcAt=(x,y)=>NPC.some(n=>{const p=n.pos();return p[0]===x&&p[1]===y});
+const solid=(px,py)=>{const x=Math.floor(px/TS),y=Math.floor(py/TS);return x<0||y<0||x>=MW||y>=MH||SOLID.has(map[y][x])||npcAt(x,y)||(!stDone(0)&&x===8&&y===9)};
 const hit=(x,y)=>solid(x+4,y+11)||solid(x+11,y+11)||solid(x+4,y+15)||solid(x+11,y+15);
 /* --- Gespräche --- */
 const FACE=$('#face').getContext('2d');
@@ -560,41 +660,70 @@ function showLine(){const L=talk.lines[talk.k];$('#talkbox').hidden=false;$('#tb
  $('#face').style.display=w&&w!=='Schild'?'':'none';$('#tbTxt').textContent=''}
 function advance(){if(!talk)return;if(talk.n<talk.full.length){talk.n=talk.full.length;$('#tbTxt').textContent=talk.full;return}
  talk.k++;if(talk.k<talk.lines.length)showLine();else{const d=talk.done;talk=null;$('#talkbox').hidden=true;d&&d()}}
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
 /* --- Story --- */
-const F=state.f;
 function interact(){const px=P.x+8+(P.dir==='left'?-4:P.dir==='right'?4:0),py=P.y+12+(P.dir==='up'?-4:P.dir==='down'?4:0);
  const C=[];const add=(x,y,f,pen=0)=>{const d=Math.hypot(x-px,y-py);if(d<24)C.push({d:d+pen,f})};
- if(!stDone(0))add(8*TS+8,9*TS+10,talkJoulie);else add(J.x+8,J.y+10,()=>sayLines([['Joulie',questText()]]),14);
- NPC.forEach(n=>add(n.x*TS+8,n.y*TS+10,({berger:talkBerger,mia:talkMia,ben:talkBen,schieber:talkSchieber})[n.id]));
+ if(!stDone(0))add(8*TS+8,9*TS+10,talkJoulie);else add(J.x+8,J.y+10,talkJoulieMit,14);
+ NPC.forEach(n=>{const p=n.pos();add(p[0]*TS+8,p[1]*TS+10,TALK[n.id])});
  SIGNS.forEach(s=>add(s.x*TS+8,s.y*TS+10,()=>sayLines(s.t.map(t=>['Schild',t]))));
- BUILD.forEach(d=>add(d.door*TS+8,(d.y+d.h-1)*TS+10,()=>sayLines([['',({huette:'Drinnen ist es stockdunkel. Deine Klasse sitzt bei Kerzenlicht und wartet auf Strom.',schuppen:'Der Schuppen. Drinnen liegt alles durcheinander.',turbine:'Abgeschlossen. Im nächsten Teil geht es hier weiter.',werkstatt:'Die Werkstatt. Zu Fuß kommst du nicht hin, der Weg ist verweht.'})[d.id]]])));
+ BUILD.forEach(d=>add(d.door*TS+8,(d.y+d.h-1)*TS+10,()=>DOOR[d.id]()));
+ add(8*TS+40,26*TS+16,()=>sayLines([['','Der Bus. Der Fahrer ist längst unten im Tal. Zurück geht es erst morgen früh.']]));
+ add(14*TS+8,9*TS+10,()=>sayLines([['','Ein Schneemann. Jemand aus deiner Klasse hat ihm eine Karotte als Nase gegeben.'],['Joulie','Seine Energie? Ziemlich wenig. Er steht ja nur rum. Aber wenn er schmilzt, braucht er dafür thermische Energie aus der Umgebung!']]));
  const c=C.sort((a,b)=>a.d-b.d)[0];if(c)c.f()}
+const DOOR={
+ huette(){if(stDone(4))return sayLines([['','Drinnen ist es hell und warm. Deine Klasse spielt Karten und isst Kaiserschmarrn.']]);
+  if(stDone(3))return sayLines([['','Drinnen sitzt deine Klasse bei Kerzenlicht. Neben der Tür hängt der Hauptschalter.'],['Joulie','Bevor wir einschalten, rechnen wir nach, ob die Energie reicht. Sonst fliegt gleich wieder die Sicherung!']],()=>openSt(4));
+  sayLines([['','Drinnen ist es stockdunkel. Deine Klasse sitzt bei Kerzenlicht und wartet auf Strom.']])},
+ schuppen(){sayLines([['',stDone(0)?'Der Schuppen ist jetzt ordentlich aufgeräumt. Joulies Ladekabel hängt an der Wand.':'Der Schuppen. Drinnen liegt alles durcheinander.']])},
+ turbine(){if(!F.teil2)return sayLines([['','Abgeschlossen. Ohne Frau Berger kommst du hier nicht rein.']]);if(!stDone(3))return talkBerger();sayLines([['','Die Turbine summt. Am Messgerät leuchtet ein grünes Lämpchen.']])},
+ werkstatt(){sayLines([['','Die Werkstatt. Zu Fuß kommst du nicht hin, der Weg ist verweht.']])}};
 function talkBerger(){
  if(!F.berger)return sayLines([['Frau Berger','Da bist du ja endlich! Und ausgerechnet heute: Stromausfall.'],['Frau Berger','Unser kleines Wasserkraftwerk ist ausgefallen. Der Sturm hat den Schieber am Speichersee zugeworfen, und an der Turbine ist ein Teil kaputt.'],['Frau Berger','Das Ersatzteil liegt in der Werkstatt hinter der Rodelbahn. Allein schaffst du das nicht.'],['Frau Berger','Weck Joulie, unseren Hausroboter. Er steht beim Schuppen links, aber sein Akku ist leer. Du kennst dich doch mit Energie aus, oder?']],()=>{F.berger=1;save();hud()});
- if(stDone(2)&&!F.ende)return sayLines([['Frau Berger','Das Ersatzteil! Wunderbar, ihr seid ein tolles Team.'],['Joulie','Und das Wasser fließt auch schon wieder zur Turbine!'],['Frau Berger','Dann bauen wir das Teil gleich ins Turbinenhaus ein. Danach prüfen wir, wie gut die Anlage arbeitet.'],['','Ende von Teil 1 (Entwurf). Im Turbinenhaus geht es mit dem Wirkungsgrad weiter, dann kommt das große Finale.']],()=>{F.ende=1;save();hud()});
+ if(stDone(2)&&!F.teil2)return sayLines([['Frau Berger','Das Ersatzteil! Wunderbar, ihr seid ein tolles Team.'],['Joulie','Und das Wasser fließt auch schon wieder zur Turbine!'],['Frau Berger','Dann los, wir bauen es gleich ein. Ich gehe schon mal vor zum Turbinenhaus. Komm nach!']],()=>{F.teil2=1;save();hud()});
+ if(F.teil2&&!stDone(3))return sayLines([['Frau Berger','So, das Ersatzteil sitzt. Bevor wir die Hütte anschließen, machen wir einen Probelauf.'],['Frau Berger','Ich will wissen, wie gut die Anlage arbeitet. Du weißt doch, was ein Wirkungsgrad ist?']],()=>openSt(3));
+ if(stDone(4))return sayLines([['Frau Berger',rnd(['Ohne dich säßen wir immer noch im Dunkeln. Danke!','Nimm dir ruhig noch Kaiserschmarrn. Der Herd läuft wieder!','Ich glaube, Joulie mag dich. Er hat noch nie so viel geblinkt.'])]]);
  sayLines([['Frau Berger',questText()]]);
 }
 function talkJoulie(){if(!F.berger)return sayLines([['','Ein kleiner Roboter. Er rührt sich nicht. Auf seinem Bauch blinkt ein rotes Lämpchen.']]);
  sayLines([['Joulie','… bzzzt … Akku … leer …',0],['Joulie','… Not-Kurbel … im Schuppen … bitte …',0],['','Im Schuppen liegt alles durcheinander. Bring Ordnung hinein und kurbel Joulie wach.']],()=>openSt(0))}
+function talkJoulieMit(){sayLines([['Joulie',stDone(4)?rnd(['Mein Akku ist voll, die Hütte leuchtet. Bester Tag!','Weißt du, was mein Lieblingswort ist? Energieerhaltung!','Hast du schon alle Nebenquests? Lena und Opa Huber freuen sich über Hilfe.']):questText()]])}
 function talkMia(){if(!stDone(0))return sayLines([['Mia','Hey! Ich bin am Speichersee, aber allein bekomme ich den Schieber nicht auf. Hol erst Joulie, okay?']]);
- if(stDone(1))return sayLines([['Mia','Hörst du das Rauschen? Das Wasser fließt wieder zur Turbine! Ben wartet an der Rodelbahn.']]);
+ if(stDone(1))return sayLines([['Mia',stDone(4)?'Schau mal, wie die Hütte leuchtet! Das ist unser Wasser da drin.':'Hörst du das Rauschen? Das Wasser fließt wieder zur Turbine! Ben wartet an der Rodelbahn.']]);
  sayLines([['Mia','Da seid ihr ja! Frau Berger sagt, wir sollen erst nachrechnen, ob das Wasser im See für die Nacht reicht.'],['Joulie','Lageenergie! Das kannst du. Ich helfe, wenn du einen Tipp brauchst.']],()=>openSt(1))}
 function talkSchieber(){if(stDone(1))return sayLines([['','Der Schieber ist offen. Das Wasser rauscht durchs Rohr hinunter zum Turbinenhaus.']]);talkMia()}
 function talkBen(){if(!stDone(1))return sayLines([['Ben','Ich passe hier auf den Schlitten auf. Hilf zuerst Mia am Speichersee!']]);
- if(stDone(2))return sayLines([['Ben','Was für eine Fahrt! Bring das Ersatzteil schnell zu Frau Berger.']]);
+ if(stDone(2))return sayLines([['Ben',stDone(4)?'Morgen fahre ich die Rodelbahn zehnmal runter. Mit genug Starthöhe natürlich!':'Was für eine Fahrt! Bring das Ersatzteil schnell zu Frau Berger.']]);
  sayLines([['Ben','Die Werkstatt ist da drüben auf dem Hügel, hinter der Senke. Zu Fuß ist alles verweht.'],['Ben','Mit dem Schlitten geht es schneller. Aber er hat keinen Motor!'],['Joulie','Ich fahre! Du musst nur ausrechnen, wie hoch ich starten muss.']],()=>openSt(2))}
+function talkLena(){if(stDone(5))return sayLines([['Lena','Neuer Tee, neues Glück. Diesmal trinke ich ihn, solange er heiß ist!']]);
+ sayLines([['Lena','Menno. Ich hab meinen Tee hier draußen vergessen, und jetzt ist er eiskalt.'],['Lena','Wo ist die ganze Wärme hin? Kannst du mir das erklären?']],()=>openSt(5))}
+function talkOpa(){if(stDone(6))return sayLines([['Opa Huber','Das Holz liegt oben, der Ofen bleibt warm. Danke dir, junger Mensch!']]);
+ sayLines([['Opa Huber','Grüß dich! Ich bin der Opa Huber, ich helfe Frau Berger mit dem Brennholz.'],['Opa Huber','Früher hat man mir gesagt, Holz oben auf dem Dachboden hat Lageenergie. Rechnest du mir aus, wie viel?']],()=>openSt(6))}
+function talkTim(){sayLines([['Tim',stDone(4)?rnd(['WLAN geht wieder! Ach nee, das war nur das Licht. Egal, auch gut.','Ich hab gehört, du hast das ganze Kraftwerk repariert? Krass.']):rnd(['Kein Strom, kein WLAN, kein Akku. Das ist die schlimmste Klassenfahrt ever.','Mein Handy hat noch 3 %. Kannst du dich mal beeilen?','Frau Berger sagt, das Licht kommt aus dem Speichersee. Wasser macht Licht? Ich glaub, die veräppelt mich.'])]])}
+const TALK={berger:talkBerger,mia:talkMia,ben:talkBen,schieber:talkSchieber,lena:talkLena,opa:talkOpa,tim:talkTim};
 function after(i){hud();
  if(i===0)sayLines([['Joulie','Bzzzt! Akku geladen! Hallo, ich bin Joulie. Danke dir!'],['Joulie','Ich komme mit. Als Nächstes müssen wir zum Schieber am Speichersee. Mia ist schon dort.']]);
  if(i===1)sayLines([['','Du ziehst am Schieber. Rauschend schießt das Wasser ins Rohr hinunter zum Turbinenhaus.'],['Mia','Super! Jetzt fehlt nur noch das Ersatzteil. Ben ist an der Rodelbahn.']]);
- if(i===2){J.x=P.x-12;J.y=P.y;J.trail=[];sayLines([['Joulie','Juhuuu! Ersatzteil geholt! Und ganz ohne Motor.'],['Ben','Stark gerechnet! Jetzt schnell zu Frau Berger.']])}}
+ if(i===2){J.x=P.x-12;J.y=P.y;J.trail=[];sayLines([['Joulie','Juhuuu! Ersatzteil geholt! Und ganz ohne Motor.'],['Ben','Stark gerechnet! Jetzt schnell zu Frau Berger.']])}
+ if(i===3)sayLines([['','Frau Berger legt einen Hebel um. Das Turbinenrad dreht sich, das Messgerät zeigt grün.'],['Frau Berger','70 Prozent, wie auf dem Schild. Die Anlage läuft! Jetzt nur noch den Hauptschalter in der Hütte umlegen.']]);
+ if(i===4){fwT=8;sayLines([['','Klack. Erst flackert es, dann gehen in der ganzen Hütte die Lichter an!'],['Tim','JAAA! Licht! Und der Kühlschrank brummt wieder!'],['Frau Berger','54 Minuten pro Stunde Wasser, das ist knapp. Ich drehe den Heizlüfter etwas runter, dann reicht es die ganze Nacht.'],['Joulie','Wir haben es geschafft! Energieformen, Lageenergie, Energieerhaltung, Wirkungsgrad. Du warst großartig!']],()=>{F.ende=1;save();hud();showEnd()})}
+ if(i===5)sayLines([['Lena','Ah, die Energie ist also noch da, nur so verteilt, dass ich nichts mehr davon habe. Energieentwertung. Gemerkt!']]);
+ if(i===6)sayLines([['Opa Huber','589 Joule! Und ob Seilzug oder Rampe, oben ist es gleich viel. Schlaues Köpfchen!']]);
+ hud()}
+function showEnd(){const f=funken(),q=f/MAXF;const rang=q>=.85?'Energie-Meisterin / Energie-Meister':q>=.6?'Energie-Profi':'Energie-Lehrling';
+ const n=SIDE.filter(stDone).length;
+ $('#endTxt').innerHTML=`<p class="pxtitle">Licht an!</p><p>Du hast die Gipfelhütte gerettet.</p><p><b>${f} von ${MAXF} ⚡ Funken</b> · Nebenquests: ${n} von ${SIDE.length}</p><p>Dein Titel: <b>${rang}</b></p>${n<SIDE.length?'<p><small>Tipp: Lena an der Haltestelle und Opa Huber am Schuppen brauchen noch Hilfe.</small></p>':''}`;
+ $('#endov').hidden=false;endAt=performance.now()}
+let endAt=0;
+$('#endOk').onclick=()=>{if(performance.now()-endAt<600)return;$('#endov').hidden=true;cv.focus({preventScroll:true})};
 /* --- Steuerung --- */
 const KM={ArrowUp:'up',KeyW:'up',ArrowDown:'down',KeyS:'down',ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right'};
 const typing=()=>/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||'');
-addEventListener('keydown',e=>{if(!active||freeze||typing()||TD.open)return;
+addEventListener('keydown',e=>{if(!active||freeze||typing()||TD.open||!$('#endov').hidden)return;
  if(KM[e.code]){keys[KM[e.code]]=true;if(!talk)P.dir=KM[e.code];e.preventDefault();if(talk&&!e.repeat)advance();return}
  if(e.code==='Space'||e.code==='Enter'||e.code==='KeyE'){e.preventDefault();if(!e.repeat)act()}});
 addEventListener('keyup',e=>{if(KM[e.code])keys[KM[e.code]]=false});
-function act(){if(talk)advance();else interact()}
+function act(){if(!$('#endov').hidden)return;if(talk)advance();else interact()}
 function setActive(a){active=a;$('#pause').hidden=a||!started;if(!a)for(const k in keys)keys[k]=false}
 let started=false;
 $('#startBtn').onclick=()=>{started=true;$('#startov').hidden=true;setActive(true);cv.focus({preventScroll:true});
@@ -602,7 +731,7 @@ $('#startBtn').onclick=()=>{started=true;$('#startov').hidden=true;setActive(tru
 cv.addEventListener('pointerdown',()=>{if(started){setActive(true);cv.focus({preventScroll:true})}});
 $('#talkbox').addEventListener('pointerdown',e=>{e.preventDefault();if(started){setActive(true);advance()}});
 document.addEventListener('pointerdown',e=>{if(started&&!e.target.closest('#game')&&!e.target.closest('dialog'))setActive(false)});
-$$('#pad [data-d]').forEach(bt=>{const d=bt.dataset.d;const on=e=>{e.preventDefault();if(!started)return;setActive(true);keys[d]=true;P.dir=d;if(talk)advance()},off=()=>keys[d]=false;
+$$('#pad [data-d]').forEach(bt=>{const d=bt.dataset.d;const on=e=>{e.preventDefault();if(!started)return;setActive(true);keys[d]=true;if(!talk)P.dir=d},off=()=>keys[d]=false;
  bt.addEventListener('pointerdown',on);bt.addEventListener('pointerup',off);bt.addEventListener('pointerleave',off);bt.addEventListener('pointercancel',off)});
 $('#aBtn').addEventListener('pointerdown',e=>{e.preventDefault();if(started){setActive(true);act()}});
 /* --- Vollbild --- */
@@ -618,49 +747,66 @@ document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement
 addEventListener('resize',fit);
 addEventListener('keydown',e=>{if(e.key==='Escape'&&GM.classList.contains('full')&&!TD.open&&!$('#spickDlg').open)full(false)});
 /* --- Schleife --- */
-function marker(c,x,y,t){const yy=Math.round(y-4+Math.sin(t*4)*1.5);R(c,x+4,yy,8,10,'#2f393a');R(c,x+5,yy+1,6,8,'#FCBE00');R(c,x+7,yy+2,2,4,'#2f393a');R(c,x+7,yy+7,2,1,'#2f393a')}
-function pending(id){return id==='berger'?(!F.berger||(stDone(2)&&!F.ende)):id==='mia'?stDone(0)&&!stDone(1):id==='ben'?stDone(1)&&!stDone(2):false}
+function marker(c,x,y,t,side){const yy=Math.round(y-4+Math.sin(t*4)*1.5);R(c,x+4,yy,8,10,'#2f393a');R(c,x+5,yy+1,6,8,side?'#ACBDC3':'#FCBE00');
+ if(side){R(c,x+6,yy+2,4,1,'#2f393a');R(c,x+9,yy+3,1,2,'#2f393a');R(c,x+7,yy+5,2,1,'#2f393a');R(c,x+7,yy+7,2,1,'#2f393a')}else{R(c,x+7,yy+2,2,4,'#2f393a');R(c,x+7,yy+7,2,1,'#2f393a')}}
+function pending(id){return id==='berger'?(!F.berger||(stDone(2)&&!F.teil2)||(F.teil2&&!stDone(3))):id==='mia'?stDone(0)&&!stDone(1):id==='ben'?stDone(1)&&!stDone(2):false}
+const sidePend=id=>F.berger&&((id==='lena'&&!stDone(5))||(id==='opa'&&!stDone(6)));
+const FWC=['#FCBE00','#f1f4f4','#6aa5ff','#4fd27f','#ff7a5c'];
 function frame(now){const dt=Math.min(.05,(now-last)/1000),t=(now-T0)/1000;last=now;
- if(started&&active&&!talk&&!freeze&&!TD.open){let vx=(keys.right?1:0)-(keys.left?1:0),vy=(keys.down?1:0)-(keys.up?1:0);
+ if(started&&active&&!talk&&!freeze&&!TD.open&&$('#endov').hidden){let vx=(keys.right?1:0)-(keys.left?1:0),vy=(keys.down?1:0)-(keys.up?1:0);
   if(vx||vy){const l=Math.hypot(vx,vy),sp=72*dt;vx=vx/l*sp;vy=vy/l*sp;P.dir=Math.abs(vx)>Math.abs(vy)?(vx>0?'right':'left'):(vy>0?'down':'up');
-   if(!hit(P.x+vx,P.y))P.x+=vx;if(!hit(P.x,P.y+vy))P.y+=vy;P.ft+=dt;if(P.ft>.14){P.ft=0;P.fr^=1}
+   const ox=P.x,oy=P.y;if(!hit(P.x+vx,P.y))P.x+=vx;if(!hit(P.x,P.y+vy))P.y+=vy;P.ft+=dt;if(P.ft>.14){P.ft=0;P.fr^=1;
+    if(P.x!==ox||P.y!==oy){const tx=Math.floor((P.x+8)/TS),ty=Math.floor((P.y+15)/TS);if(map[ty]&&map[ty][tx]==='.')steps.push({x:P.x+(P.fr?5:9),y:P.y+15,t})}}
+   if(steps.length>40)steps.shift();
    if(stDone(0)){J.trail.push([P.x,P.y]);if(J.trail.length>16){const q=J.trail.shift();J.x=q[0]-2;J.y=q[1]+2}}
    if(Math.random()<.02){F.pos=[Math.round(P.x),Math.round(P.y)];save()}}else P.fr=0}
  if(talk&&talk.n<talk.full.length){talk.n=Math.min(talk.full.length,talk.n+dt*55);$('#tbTxt').textContent=talk.full.slice(0,Math.floor(talk.n))}
  const camX=Math.max(0,Math.min(MW*TS-VW,Math.round(P.x+8-VW/2))),camY=Math.max(0,Math.min(MH*TS-VH,Math.round(P.y+8-VH/2)));
  cx.drawImage(bg,camX,camY,VW,VH,0,0,VW,VH);
  cx.save();cx.translate(-camX,-camY);
- // Wasser glitzert, Rohr rauscht
+ steps.forEach(s=>{const a=Math.max(0,1-(t-s.t)/12);if(a>0)R(cx,Math.round(s.x),Math.round(s.y),2,1,`rgba(140,155,160,${(a*.8).toFixed(2)})`)});
  for(let y=3;y<=8;y++)for(let x=28;x<=37;x++){const h=hash(x,y);const k=Math.floor((t*2+h*10))%6;if(k<2)R(cx,x*TS+Math.floor(h*10),y*TS+6+Math.floor(hash(y,x)*7),4,1,'#6d93a0')}
  if(stDone(1))for(let y=10;y<=13;y++)R(cx,28*TS+6,y*TS+Math.floor((t*40+y*5)%16),2,3,'#cfe6f3');
+ // Turbinenrad
+ {const X=23*TS+52,Y=12*TS+42,a=stDone(3)?t*6:0;R(cx,X-6,Y-6,12,12,'#3E4B4C');cx.fillStyle='#ACBDC3';for(let k=0;k<4;k++){const w=a+k*Math.PI/2;R(cx,Math.round(X+Math.cos(w)*3)-1,Math.round(Y+Math.sin(w)*3)-1,2,2,'#ACBDC3')}R(cx,X-1,Y-1,2,2,'#FCBE00')}
  // Fenster
- BUILD.forEach(d=>d.win.forEach(wx=>{const on=d.id==='huette'?!!F.ende&&false:d.id==='schuppen'?stDone(0):false;R(cx,wx*TS+3,(d.y+d.h-2)*TS+4,10,9,'#2f393a');R(cx,wx*TS+4,(d.y+d.h-2)*TS+5,8,7,on?'#FCBE00':'#3a4547');R(cx,wx*TS+7,(d.y+d.h-2)*TS+5,1,7,'#2f393a')}));
+ BUILD.forEach(d=>d.win.forEach(wx=>{const on=d.id==='huette'?stDone(4):d.id==='schuppen'?stDone(0):d.id==='turbine'?stDone(3):false;const fy=(d.y+d.h-2)*TS+4;
+  R(cx,wx*TS+3,fy,10,9,'#2f393a');R(cx,wx*TS+4,fy+1,8,7,on?'#FCBE00':'#3a4547');R(cx,wx*TS+7,fy+1,1,7,'#2f393a');R(cx,wx*TS+4,fy+4,8,1,'#2f393a');if(!on&&d.id==='huette'&&Math.sin(t*3+wx)>.6)R(cx,wx*TS+5,fy+5,2,2,'#c98a2a')}));
+ // Rauch aus dem Kamin
+ if(Math.random()<dt*3)smoke.push({x:16*TS+9*TS-25+Math.random()*4,y:2*TS-12,t:0});
+ smoke=smoke.filter(s=>{s.t+=dt;s.y-=10*dt;s.x+=6*dt;const a=1-s.t/3;if(a<=0)return false;const r=2+Math.floor(s.t*2);R(cx,Math.round(s.x),Math.round(s.y),r,r,`rgba(201,210,211,${(a*.55).toFixed(2)})`);return true});
  // Schilder, Lampen
- SIGNS.forEach(s=>{const X=s.x*TS,Y=s.y*TS;R(cx,X+7,Y+7,2,9,'#5a4636');R(cx,X+2,Y+3,12,7,'#8a6a4a');R(cx,X+3,Y+5,10,1,'#5a4636');R(cx,X+3,Y+7,7,1,'#5a4636')});
- LAMPS.forEach(l=>{const X=l.x*TS,Y=l.y*TS,on=l.on();R(cx,X+7,Y+3,2,13,'#5F6F74');R(cx,X+5,Y,6,5,'#2f393a');R(cx,X+6,Y+1,4,3,on?'#FCBE00':'#4a5557')});
- // Schieber
- {const X=30*TS,Y=10*TS,a=stDone(1)?t*3:0;R(cx,X+7,Y+8,2,8,'#5F6F74');cx.strokeStyle='#c94a3a';cx.lineWidth=2;cx.beginPath();cx.arc(X+8,Y+7,5,a,a+Math.PI*2);cx.stroke();R(cx,X+3,Y+6,10,2,'#c94a3a');R(cx,X+7,Y+2,2,10,'#c94a3a')}
- // Schlitten
+ SIGNS.forEach(s=>{const X=s.x*TS,Y=s.y*TS;R(cx,X+7,Y+7,2,9,'#5a4636');R(cx,X+2,Y+3,12,7,'#8a6a4a');R(cx,X+2,Y+3,12,1,'#a8885f');R(cx,X+3,Y+5,10,1,'#5a4636');R(cx,X+3,Y+7,7,1,'#5a4636');R(cx,X+2,Y+2,12,1,'#f6f8f9')});
+ LAMPS.forEach(l=>{const X=l.x*TS,Y=l.y*TS,on=l.on();R(cx,X+7,Y+3,2,13,'#5F6F74');R(cx,X+5,Y,6,5,'#2f393a');R(cx,X+6,Y+1,4,3,on?'#FCBE00':'#4a5557');R(cx,X+5,Y-1,6,1,'#f6f8f9')});
+ {const X=30*TS,Y=10*TS,a=stDone(1)?t*3:0;R(cx,X+7,Y+8,2,8,'#5F6F74');cx.strokeStyle='#c94a3a';cx.lineWidth=2;cx.beginPath();cx.arc(X+8,Y+7,5,a,a+Math.PI*2);cx.stroke();R(cx,X+7,Y+6,2,2,'#c94a3a');for(let k=0;k<4;k++){const w=a+k*Math.PI/2;R(cx,Math.round(X+8+Math.cos(w)*5)-1,Math.round(Y+7+Math.sin(w)*5)-1,2,2,'#e36a55')}}
  if(!stDone(2)){R(cx,29*TS+2,23*TS+10,12,3,'#c0392b');R(cx,29*TS+1,23*TS+13,14,1,'#2f393a')}
- // Figuren nach y sortiert
- const ents=NPC.filter(n=>!n.obj).map(n=>({y:n.y*TS,d:()=>person(cx,n.x*TS,n.y*TS-2,LOOK[n.look],n.id==='berger'?'down':n.id==='mia'?'left':'right',0)}));
- const jon=stDone(0);ents.push({y:J.y,d:()=>robot(cx,jon?J.x:8*TS,jon?J.y:9*TS,jon,t)});
+ if(!stDone(5)){const X=9*TS,Y=23*TS;R(cx,X+3,Y+10,5,5,'#f1f4f4');R(cx,X+8,Y+11,2,2,'#f1f4f4');R(cx,X+4,Y+10,3,1,'#8a5a2a')}
+ // Figuren
+ const ents=NPC.filter(n=>!n.obj).map(n=>{const p=n.pos();return {y:p[1]*TS,d:()=>person(cx,p[0]*TS,p[1]*TS-2,LOOK[n.look],n.dir,n.id==='tim'&&!stDone(4)?Math.floor(t*2)%2:0)}});
+ const jon=stDone(0);ents.push({y:jon?J.y:9*TS,d:()=>robot(cx,jon?J.x:8*TS,jon?J.y:9*TS,jon,t)});
  ents.push({y:P.y,d:()=>person(cx,P.x,P.y-2,LOOK.ich,P.dir,P.fr)});
  ents.sort((a,b)=>a.y-b.y).forEach(e=>e.d());
- NPC.forEach(n=>{if(pending(n.id))marker(cx,n.x*TS,n.y*TS-8,t)});if(F.berger&&!stDone(0))marker(cx,8*TS,9*TS-6,t);
+ NPC.forEach(n=>{const p=n.pos();if(pending(n.id))marker(cx,p[0]*TS,p[1]*TS-8,t);else if(sidePend(n.id))marker(cx,p[0]*TS,p[1]*TS-8,t,1)});
+ if(F.berger&&!stDone(0))marker(cx,8*TS,9*TS-6,t);if(stDone(3)&&!stDone(4))marker(cx,20*TS,7*TS-14,t);
  cx.restore();
  // Nacht und Licht
- dx.globalCompositeOperation='source-over';dx.clearRect(0,0,VW,VH);dx.fillStyle='rgba(10,15,16,.74)';dx.fillRect(0,0,VW,VH);dx.globalCompositeOperation='destination-out';
- const light=(x,y,r)=>{const g=dx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,'rgba(0,0,0,1)');g.addColorStop(.6,'rgba(0,0,0,.7)');g.addColorStop(1,'rgba(0,0,0,0)');dx.fillStyle=g;dx.fillRect(x-r,y-r,2*r,2*r)};
+ const fin=stDone(4);
+ dx.globalCompositeOperation='source-over';dx.clearRect(0,0,VW,VH);dx.fillStyle=fin?'rgba(10,15,16,.5)':'rgba(10,15,16,.74)';dx.fillRect(0,0,VW,VH);dx.globalCompositeOperation='destination-out';
+ const light=(x,y,r)=>{if(x<-r||y<-r||x>VW+r||y>VH+r)return;const g=dx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,'rgba(0,0,0,1)');g.addColorStop(.6,'rgba(0,0,0,.7)');g.addColorStop(1,'rgba(0,0,0,0)');dx.fillStyle=g;dx.fillRect(x-r,y-r,2*r,2*r)};
  light(P.x+8-camX,P.y+8-camY,60);LAMPS.forEach(l=>{if(l.on())light(l.x*TS+8-camX,l.y*TS+3-camY,54)});if(stDone(0))light(J.x+8-camX,J.y+4-camY,22);
+ BUILD.forEach(d=>d.win.forEach(wx=>{const on=d.id==='huette'?fin:d.id==='schuppen'?stDone(0):d.id==='turbine'?stDone(3):false;if(on)light(wx*TS+8-camX,(d.y+d.h-2)*TS+12-camY,40)}));
+ if(!fin)light(20*TS+8-camX,6*TS-camY,14);
  cx.drawImage(dk,0,0);
- cx.globalCompositeOperation='lighter';LAMPS.forEach(l=>{if(l.on()){const x=l.x*TS+8-camX,y=l.y*TS+3-camY,g=cx.createRadialGradient(x,y,0,x,y,26);g.addColorStop(0,'rgba(252,190,0,.35)');g.addColorStop(1,'rgba(252,190,0,0)');cx.fillStyle=g;cx.fillRect(x-26,y-26,52,52)}});cx.globalCompositeOperation='source-over';
+ cx.globalCompositeOperation='lighter';LAMPS.forEach(l=>{if(l.on()){const x=l.x*TS+8-camX,y=l.y*TS+3-camY;if(x<-30||x>VW+30||y<-30||y>VH+30)return;const g=cx.createRadialGradient(x,y,0,x,y,26);g.addColorStop(0,'rgba(252,190,0,.35)');g.addColorStop(1,'rgba(252,190,0,0)');cx.fillStyle=g;cx.fillRect(x-26,y-26,52,52)}});cx.globalCompositeOperation='source-over';
+ // Feuerwerk im Finale
+ if(fwT>0||(fin&&Math.random()<dt*.15)){fwT=Math.max(0,fwT-dt);if(Math.random()<dt*(fwT>0?2.5:1)){const ox=40+Math.random()*(VW-80),oy=20+Math.random()*60,c=rnd(FWC);for(let k=0;k<26;k++){const w=k/26*Math.PI*2,v=25+Math.random()*25;fw.push({x:ox,y:oy,vx:Math.cos(w)*v,vy:Math.sin(w)*v,t:0,c})}}}
+ fw=fw.filter(p=>{p.t+=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=30*dt;if(p.t>1.4)return false;cx.globalAlpha=1-p.t/1.4;R(cx,Math.round(p.x),Math.round(p.y),2,2,p.c);cx.globalAlpha=1;return true});
  // Schnee
  cx.fillStyle='rgba(255,255,255,.85)';flakes.forEach(f=>{if(!reduce){f.y+=f.s*dt;f.x-=f.s*.35*dt;if(f.y>VH){f.y=-2;f.x=Math.random()*VW*1.3}if(f.x<-2)f.x+=VW}cx.fillRect(Math.round(f.x),Math.round(f.y),f.r,f.r)});
  requestAnimationFrame(frame)}
 drawBg();hud();requestAnimationFrame(frame);
 if(F.intro)$('#startBtn').textContent='▶ Weiterspielen';
-return {after,get freeze(){return freeze},set freeze(v){freeze=v},reset(){P.x=6*TS;P.y=26*TS;P.dir='up';J.trail=[];J.x=8*TS;J.y=9*TS;talk=null;$('#talkbox').hidden=true;started=false;$('#startov').hidden=false;$('#startBtn').textContent='▶ Spiel starten';setActive(false);hud()}};
+return {after,get freeze(){return freeze},set freeze(v){freeze=v},reset(){P.x=6*TS;P.y=26*TS;P.dir='up';J.trail=[];J.x=8*TS;J.y=9*TS;talk=null;steps=[];fw=[];$('#talkbox').hidden=true;$('#endov').hidden=true;started=false;$('#startov').hidden=false;$('#startBtn').textContent='▶ Spiel starten';setActive(false);hud()}};
 })();
 
 /* ---------- Passwort (nur einfacher Schutz im Browser) ---------- */
