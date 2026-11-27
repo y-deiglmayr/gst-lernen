@@ -31,6 +31,7 @@ Physik9/
   energieerhaltung.html     Energieerhaltung und Energieentwertung
   wirkungsgrad.html         Der Wirkungsgrad (Aufwand und Nutzen, η = E_Nutzen : E_Aufwand, Energieketten)
   <lernpfad>-heftaufschrieb.pdf / <lernpfad>-uebungsblatt.pdf  Druckversionen zu allen vier Energie-Lernpfaden
+  energie-spiel.html        Energie-Spiel · Stromausfall auf der Gipfelhütte (Pixel-Abenteuer zur Wiederholung, alle Energie-Themen)
 Physik11/
   kraft-grundlagen.html     1 · Kraft – Grundlagen (Wirkungen, Kraftpfeil, Gewichtskraft, Trägheit)
   kraefteaddition.html      2 · Kräfteaddition und Gleichgewicht (Parallelogramm, Kräfteplan)

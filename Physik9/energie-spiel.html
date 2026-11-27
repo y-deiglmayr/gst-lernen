@@ -72,6 +72,19 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .pxtitle{font:700 clamp(20px,4vw,40px) Lexend,sans-serif;color:#f1f4f4;text-shadow:3px 3px 0 #1b2122;margin:0 0 14px}
 .startov .keys{color:#d3dcde;font-size:14px;margin:12px 0 0}
 .pause{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:#1b2122;color:#f1f4f4;padding:4px 12px;border-radius:6px;font-size:13px;line-height:1.4}
+.fullx{display:none}
+.game.full{position:fixed;inset:0;z-index:1000;border-radius:0;border:0;display:flex;flex-direction:column;background:#0e1314;height:100vh;height:100dvh;box-shadow:none}
+.game.full .fullx{display:grid;place-items:center;position:absolute;top:6px;right:8px;z-index:6;width:36px;height:36px;padding:0;border-radius:50%;background:#2f393a;color:#f1f4f4;border:2px solid #5F6F74;font-size:16px}
+.game.full .hud{padding:6px 54px 6px 10px;font-size:13px;gap:4px 14px}
+.game.full .hud .akku i{width:70px}
+.game.full .hud .quest{font-size:13px}
+.game.full #resetBtn,.game.full #fullBtn{display:none}
+.game.full .screen{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.game.full #cv{aspect-ratio:auto}
+@media (orientation:portrait){.game.full .screen{align-items:flex-end}}
+.game.full .pad{display:flex;padding:8px 18px max(10px,env(safe-area-inset-bottom))}
+@media (orientation:landscape) and (max-height:560px){.game.full .pad{position:absolute;left:0;right:0;bottom:0;background:transparent;pointer-events:none}.game.full .pad button{pointer-events:auto;opacity:.75}.game.full .talkbox{top:4%;bottom:auto;left:12%;right:12%;min-height:0}.game.full .hud .quest{display:none}}
+body.vollbild{overflow:hidden}
 .pad{display:none;justify-content:space-between;align-items:center;padding:12px 18px;background:var(--night);touch-action:none;user-select:none;-webkit-user-select:none}
 @media (pointer:coarse),(max-width:720px){.pad{display:flex}}
 .dpad{display:grid;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(3,52px)}
@@ -188,10 +201,11 @@ dialog.spick .top button{background:transparent;color:inherit;border-color:curre
    </symbol></defs></svg>
 <section class="band" id="spiel"><div class="wrap">
 <div class="game" id="game">
+ <button type="button" class="fullx" id="fullX" aria-label="Vollbild schließen" title="Vollbild schließen">✕</button>
  <div class="hud">
   <div class="akku" title="Joulies Akku füllt sich mit jeder Aufgabe"><span>Joulies Akku</span><i><b id="akkuBar"></b></i><span id="akkuTxt">0 %</span></div>
   <div><span aria-hidden="true">⚡</span> <span id="funken">0</span> Funken</div>
-  <div class="sp"><button id="spickBtn" type="button">✎ Spickzettel</button><button id="resetBtn" type="button" title="Spielstand löschen">↺ Neu starten</button></div>
+  <div class="sp"><button id="fullBtn" type="button" title="Spiel im Vollbild">⛶ Vollbild</button><button id="spickBtn" type="button">✎ Spickzettel</button><button id="resetBtn" type="button" title="Spielstand löschen">↺ Neu starten</button></div>
   <div class="quest"><span aria-hidden="true">◆</span> <span id="quest">Steig aus dem Bus.</span></div>
  </div>
  <div class="screen" id="screen">
@@ -538,7 +552,7 @@ const FACE=$('#face').getContext('2d');
 function sayLines(lines,done){talk={lines,k:0,n:0,done};showLine()}
 function showLine(){const L=talk.lines[talk.k];$('#talkbox').hidden=false;$('#tbWho').textContent=L[0]||'';talk.n=0;talk.full=L[1];
  FACE.clearRect(0,0,16,16);const w=L[0];if(w==='Joulie')robot(FACE,0,0,stDone(0)||L[2],0);else{const n=NPC.find(n=>n.name===w);if(n)person(FACE,0,1,LOOK[n.look],'down',0);else if(w==='Du')person(FACE,0,1,LOOK.ich,'down',0)}
- $('#face').style.visibility=w&&w!=='Schild'?'visible':'hidden';$('#tbTxt').textContent=''}
+ $('#face').style.display=w&&w!=='Schild'?'':'none';$('#tbTxt').textContent=''}
 function advance(){if(!talk)return;if(talk.n<talk.full.length){talk.n=talk.full.length;$('#tbTxt').textContent=talk.full;return}
  talk.k++;if(talk.k<talk.lines.length)showLine();else{const d=talk.done;talk=null;$('#talkbox').hidden=true;d&&d()}}
 /* --- Story --- */
@@ -586,6 +600,18 @@ document.addEventListener('pointerdown',e=>{if(started&&!e.target.closest('#game
 $$('#pad [data-d]').forEach(bt=>{const d=bt.dataset.d;const on=e=>{e.preventDefault();if(!started)return;setActive(true);keys[d]=true;P.dir=d;if(talk)advance()},off=()=>keys[d]=false;
  bt.addEventListener('pointerdown',on);bt.addEventListener('pointerup',off);bt.addEventListener('pointerleave',off);bt.addEventListener('pointercancel',off)});
 $('#aBtn').addEventListener('pointerdown',e=>{e.preventDefault();if(started){setActive(true);act()}});
+/* --- Vollbild --- */
+const GM=$('#game');
+function fit(){if(!GM.classList.contains('full')){cv.style.width='';cv.style.height='';return}
+ const sc=$('#screen'),w=sc.clientWidth,h=sc.clientHeight,k=Math.min(w/VW,h/VH);cv.style.width=Math.floor(VW*k)+'px';cv.style.height=Math.floor(VH*k)+'px'}
+function full(on){GM.classList.toggle('full',on);document.body.classList.toggle('vollbild',on);
+ if(on){try{if(GM.requestFullscreen&&!document.fullscreenElement)GM.requestFullscreen().catch(()=>{})}catch(e){}}
+ else if(document.fullscreenElement){document.exitFullscreen().catch(()=>{})}
+ requestAnimationFrame(fit);setTimeout(fit,300);if(on&&started){setActive(true);cv.focus({preventScroll:true})}}
+$('#fullBtn').onclick=()=>full(true);$('#fullX').onclick=()=>full(false);
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&GM.classList.contains('full'))full(false);else fit()});
+addEventListener('resize',fit);
+addEventListener('keydown',e=>{if(e.key==='Escape'&&GM.classList.contains('full')&&!TD.open&&!$('#spickDlg').open)full(false)});
 /* --- Schleife --- */
 function marker(c,x,y,t){const yy=Math.round(y-4+Math.sin(t*4)*1.5);R(c,x+4,yy,8,10,'#2f393a');R(c,x+5,yy+1,6,8,'#FCBE00');R(c,x+7,yy+2,2,4,'#2f393a');R(c,x+7,yy+7,2,1,'#2f393a')}
 function pending(id){return id==='berger'?(!F.berger||(stDone(2)&&!F.ende)):id==='mia'?stDone(0)&&!stDone(1):id==='ben'?stDone(1)&&!stDone(2):false}
