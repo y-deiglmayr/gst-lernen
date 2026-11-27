@@ -286,6 +286,9 @@ nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
 .musterfig .kl{font:italic 5px "KaTeX_Math",serif;fill:var(--ink)}.musterfig .tx{font:4px "Atkinson Hyperlegible",system-ui,sans-serif;fill:var(--muted)}
 .musterfig figcaption{font-size:14px;color:var(--muted)}
 @media(max-width:600px){.sx-uhr{padding:6px 10px;font-size:13px}.sx-uhr ol{font-size:17px}.sx-tbl input[inputmode=decimal]{width:70px}}
+.lab-tbl .vh{background:light-dark(#eef1f2,#1f2627)}.lab-tbl .nh{background:light-dark(#e2ecee,#263234)}
+.lab-tbl th.vh,.lab-tbl th.nh{font-weight:700}.lab-tbl tr:first-child th.vh{background:light-dark(#C9D2D3,#2f393a)}.lab-tbl tr:first-child th.nh{background:light-dark(#ACBDC3,#3a4a4d)}
+.lab-tbl .n1{border-left:4px solid var(--ink)}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
 <link rel="stylesheet" href="/katex/katex.min.css">
@@ -753,10 +756,10 @@ const stoss=(m1,v1,m2,v2,el)=>{if(!el){const u=(m1*v1+m2*v2)/(m1+m2);return [u,u
   if(p.wall)pu[1]=p.m1*p.v1-p.m1*u1;
   const Ev=[E(p.m1,p.v1),p.wall?0:E(p.m2,p.v2)],Eu=[E(p.m1,u1),p.wall?0:E(p.m2,u2)];
   const c=(x)=>show?x:'?';
-  $('#labTbl').innerHTML=`<tr><th rowspan="2">Gleiter</th><th colspan="3">vorher</th><th colspan="3">nachher</th></tr><tr><th>v<br><small>m/s</small></th><th>p<br><small>kg·m/s</small></th><th>E<br><small>J</small></th><th>u<br><small>m/s</small></th><th>p<br><small>kg·m/s</small></th><th>E<br><small>J</small></th></tr>
-  <tr><td class="tc1">1</td><td>${f(p.v1)}</td><td>${fp(pv[0])}</td><td>${f(Ev[0])}</td><td>${c(f(u1))}</td><td>${c(fp(pu[0]))}</td><td>${c(f(Eu[0]))}</td></tr>
-  <tr><td class="tc2">${n2}</td><td>${f(p.v2)}</td><td>${fp(pv[1])}</td><td>${f(Ev[1])}</td><td>${c(p.wall?'0':f(u2))}</td><td>${c(fp(pu[1]))}</td><td>${c(f(Eu[1]))}</td></tr>
-  <tr><td class="tcg sum">Σ</td><td></td><td class="tcg sum">${fp(pv[0]+pv[1])}</td><td class="sum">${f(Ev[0]+Ev[1])}</td><td></td><td class="tcg sum">${c(fp(pu[0]+pu[1]))}</td><td class="sum">${c(f(Eu[0]+Eu[1]))}</td></tr>`}
+  $('#labTbl').innerHTML=`<tr><th rowspan="2">Gleiter</th><th colspan="3" class="vh">vor dem Stoß</th><th colspan="3" class="nh n1">nach dem Stoß</th></tr><tr><th class="vh">v<br><small>m/s</small></th><th class="vh">p<br><small>kg·m/s</small></th><th class="vh">E<br><small>J</small></th><th class="nh n1">u<br><small>m/s</small></th><th class="nh">p<br><small>kg·m/s</small></th><th class="nh">E<br><small>J</small></th></tr>
+  <tr><td class="tc1">1</td><td class="vh">${f(p.v1)}</td><td class="vh">${fp(pv[0])}</td><td class="vh">${f(Ev[0])}</td><td class="nh n1">${c(f(u1))}</td><td class="nh">${c(fp(pu[0]))}</td><td class="nh">${c(f(Eu[0]))}</td></tr>
+  <tr><td class="tc2">${n2}</td><td class="vh">${f(p.v2)}</td><td class="vh">${fp(pv[1])}</td><td class="vh">${f(Ev[1])}</td><td class="nh n1">${c(p.wall?'0':f(u2))}</td><td class="nh">${c(fp(pu[1]))}</td><td class="nh">${c(f(Eu[1]))}</td></tr>
+  <tr><td class="tcg sum">Σ</td><td class="vh"></td><td class="tcg sum vh">${fp(pv[0]+pv[1])}</td><td class="sum vh">${f(Ev[0]+Ev[1])}</td><td class="nh n1"></td><td class="tcg sum nh">${c(fp(pu[0]+pu[1]))}</td><td class="sum nh">${c(f(Eu[0]+Eu[1]))}</td></tr>`}
  const reset=()=>{phase=0;k=0;draw()};
  $('#lGo').onclick=()=>{if(run)return;run=true;phase=1;k=0;animate(2600,q=>{k=q;draw()},()=>{run=false})};
  $('#lRe').onclick=reset;['#lm1','#lv1','#lm2','#lv2','#lWall'].forEach(i=>$(i).addEventListener('input',reset));$$('input[name=lt]').forEach(r=>r.addEventListener('change',reset));
@@ -813,11 +816,11 @@ const stoss=(m1,v1,m2,v2,el)=>{if(!el){const u=(m1*v1+m2*v2)/(m1+m2);return [u,u
  const LBL={t1:'t vor dem Stoß, Wagen 1',v1:'v Wagen 1',p1:'p Wagen 1',t1n:'t′ nach dem Stoß, Wagen 1',u1:'u Wagen 1',p1n:'p′ Wagen 1',t2n:'t′ nach dem Stoß, Wagen 2',u2:'u Wagen 2',p2n:'p′ Wagen 2',ps:'Summe der Impulse vor dem Stoß',psn:'Summe der Impulse nach dem Stoß'};
  function table(){const c=VS[cur],I=IN[cur]||{};
   const inp=k=>`<input type="text" inputmode="decimal" data-k="${k}" value="${String(I[k]||'').replace(/["<>&]/g,'')}" aria-label="${LBL[k]}">`;
-  $('#sxTbl').innerHTML=`<tr><th rowspan="2">Wagen</th><th rowspan="2"><f-m>m</f-m><br><small>kg</small></th><th colspan="3">vor dem Stoß</th><th colspan="3">nach dem Stoß</th></tr>
-  <tr><th><f-m>t</f-m><br><small>s</small></th><th><f-m>v</f-m><br><small>m/s</small></th><th><f-m>p</f-m><br><small>kg·m/s</small></th><th><f-m>t</f-m>′<br><small>s</small></th><th><f-m>u</f-m><br><small>m/s</small></th><th><f-m>p</f-m>′<br><small>kg·m/s</small></th></tr>
-  <tr><td class="tc1">1</td><td>${fmtS(c.m1,1)}</td><td>${inp('t1')}</td><td>${inp('v1')}</td><td>${inp('p1')}</td><td>${inp('t1n')}</td><td>${inp('u1')}</td><td>${inp('p1n')}</td></tr>
-  <tr><td class="tc2">2</td><td>${fmtS(c.m2,1)}</td><td>–</td><td>0</td><td>0</td><td>${inp('t2n')}</td><td>${inp('u2')}</td><td>${inp('p2n')}</td></tr>
-  <tr><td class="tcg sum" colspan="4">Summe der Impulse</td><td>${inp('ps')}</td><td colspan="2"></td><td>${inp('psn')}</td></tr>`;
+  $('#sxTbl').innerHTML=`<tr><th rowspan="2">Wagen</th><th rowspan="2"><f-m>m</f-m><br><small>kg</small></th><th colspan="3" class="vh">vor dem Stoß</th><th colspan="3" class="nh n1">nach dem Stoß</th></tr>
+  <tr><th class="vh"><f-m>t</f-m><br><small>s</small></th><th class="vh"><f-m>v</f-m><br><small>m/s</small></th><th class="vh"><f-m>p</f-m><br><small>kg·m/s</small></th><th class="nh n1"><f-m>t</f-m>′<br><small>s</small></th><th class="nh"><f-m>u</f-m><br><small>m/s</small></th><th class="nh"><f-m>p</f-m>′<br><small>kg·m/s</small></th></tr>
+  <tr><td class="tc1">1</td><td>${fmtS(c.m1,1)}</td><td class="vh">${inp('t1')}</td><td class="vh">${inp('v1')}</td><td class="vh">${inp('p1')}</td><td class="nh n1">${inp('t1n')}</td><td class="nh">${inp('u1')}</td><td class="nh">${inp('p1n')}</td></tr>
+  <tr><td class="tc2">2</td><td>${fmtS(c.m2,1)}</td><td class="vh">–</td><td class="vh">0</td><td class="vh">0</td><td class="nh n1">${inp('t2n')}</td><td class="nh">${inp('u2')}</td><td class="nh">${inp('p2n')}</td></tr>
+  <tr><td class="tcg sum" colspan="2">Summe der Impulse</td><td colspan="2" class="vh"></td><td class="vh">${inp('ps')}</td><td colspan="2" class="nh n1"></td><td class="nh">${inp('psn')}</td></tr>`;
   $$('#sxTbl input').forEach(i=>i.addEventListener('input',()=>{(IN[cur]=IN[cur]||{})[i.dataset.k]=i.value;i.className='';saveM()}))}
  function stop(){if(anim)cancelAnimationFrame(anim);anim=null;run=false}
  function clearFb(){const fb=$('#sxFb');fb.textContent='';fb.className='fb'}

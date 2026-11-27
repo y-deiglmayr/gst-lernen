@@ -10,9 +10,10 @@
 <script defer src="/katex/katex.min.js"></script>
 <script defer src="/katex/formel.js"></script>
 <style>
-.sf3{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin:0 0 1.6mm}
-.sf3 > div{font-size:9.6pt;line-height:1.85}
-.sf3 .karo{height:36mm;margin:.6mm 0 1mm}
+.sf3{margin:0 0 1.6mm}
+.sf3 > div{display:grid;grid-template-columns:56mm 1fr;gap:3mm;font-size:9.6pt;line-height:1.85;margin:0 0 1.6mm;break-inside:avoid}
+.sf3 .fl{display:grid;gap:1.4mm}
+.sf3 .karo{height:17mm;margin:0}
 </style>
 </head>
 <body class="heftseite">
@@ -37,24 +38,24 @@
 <div class="heftblatt">
 <h2>✎ Stöße und Impulserhaltung</h2>
 
-<div class="hs">
+<div class="hs" style="break-inside:auto">
  <h3>3.1 Stoßprozesse</h3>
  <p>Ein Stoßprozess tritt auf, wenn mindestens zwei Körper mit unterschiedlichen <span class="l g"></span> aufeinandertreffen. Man unterscheidet zwei Stoßprozesse:</p>
  <p>1. Der <span class="l g"></span> Stoß: Die <span class="l xg"></span> bleibt erhalten. Die Körper „prallen“ voneinander ab.<br>
  2. Der <span class="l g"></span> Stoß: Bewegungsenergie wird in <span class="l xg"></span> bzw. Verformung umgewandelt.<br>
  Beim <span class="l xg"></span> Stoß „kleben“ beide Körper zusammen.</p>
  <p>Beim elastischen Stoß gibt es drei Sonderfälle (vorher | nachher):</p>
+ <p class="tipp">So zeichnest du: Körper als Kreise (bei 3 eine Wand), oben „vorher“, unten „nachher“. Geschwindigkeitspfeile für Körper 1 blau, für Körper 2 violett.</p>
  <div class="sf3">
-  <div>1. <f-m>m<sub>1</sub> = m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> ≠ 0</f-m>; <f-m>v<sub>2</sub> = 0</f-m><div class="karo"></div>Die Körper <span class="l m"></span> ihre Geschwindigkeiten: <f-m>u<sub>1</sub> =</f-m> <span class="l s"></span>, <f-m>u<sub>2</sub> =</f-m> <span class="l s"></span></div>
-  <div>2. <f-m>m<sub>1</sub> = m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> = −v<sub>2</sub></f-m><div class="karo"></div>Beide prallen <span class="l m"></span>: <f-m>u<sub>1</sub> =</f-m> <span class="l s"></span>, <f-m>u<sub>2</sub> =</f-m> <span class="l s"></span></div>
-  <div>3. <f-m>m<sub>1</sub> ≪ m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> ≠ 0</f-m>; <f-m>v<sub>2</sub> = 0</f-m><div class="karo"></div>Körper 1 wird <span class="l m"></span>: <f-m>u<sub>1</sub> =</f-m> <span class="l s"></span>, <f-m>u<sub>2</sub> =</f-m> <span class="l s"></span></div>
+  <div><div>1. <f-m>m<sub>1</sub> = m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> ≠ 0</f-m>; <f-m>v<sub>2</sub> = 0</f-m><br>Die Körper <span class="l m"></span> ihre Geschwindigkeiten: <span class="nw"><f-m>u<sub>1</sub> =</f-m> <span class="l s"></span></span>, <span class="nw"><f-m>u<sub>2</sub> =</f-m> <span class="l s"></span></span></div><div class="fl"><div class="karo"><span class="lab">vorher</span></div><div class="karo"><span class="lab">nachher</span></div></div></div>
+  <div><div>2. <f-m>m<sub>1</sub> = m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> = −v<sub>2</sub></f-m><br>Beide prallen <span class="l m"></span>: <span class="nw"><f-m>u<sub>1</sub> =</f-m> <span class="l s"></span></span>, <span class="nw"><f-m>u<sub>2</sub> =</f-m> <span class="l s"></span></span></div><div class="fl"><div class="karo"><span class="lab">vorher</span></div><div class="karo"><span class="lab">nachher</span></div></div></div>
+  <div><div>3. <f-m>m<sub>1</sub> ≪ m<sub>2</sub></f-m>; <f-m>v<sub>1</sub> ≠ 0</f-m>; <f-m>v<sub>2</sub> = 0</f-m><br>Körper 1 wird <span class="l m"></span>: <span class="nw"><f-m>u<sub>1</sub> =</f-m> <span class="l s"></span></span>, <span class="nw"><f-m>u<sub>2</sub> =</f-m> <span class="l s"></span></span></div><div class="fl"><div class="karo"><span class="lab">vorher</span></div><div class="karo"><span class="lab">nachher</span></div></div></div>
  </div>
- <p class="tipp">So zeichnest du: Körper als Kreise (bei 3 eine Wand), links „vorher“, rechts „nachher“, dazwischen ein senkrechter Strich. Geschwindigkeitspfeile für Körper 1 blau, für Körper 2 violett.</p>
 </div>
 
 <div class="hs">
  <h3>3.2 Impulserhaltung</h3>
- <p><b>Versuch:</b> Wagen 1 stößt auf einer Fahrbahn gegen den ruhenden Wagen 2. Die Fahne (Breite <f-m>b</f-m>) auf jedem Wagen unterbricht eine Lichtschranke für die <span class="l g"></span> <f-m>t</f-m>. Daraus folgen die Geschwindigkeit <f-m>v =</f-m> <span class="l s"></span> und der Impuls <f-m>p =</f-m> <span class="l s"></span>.</p>
+ <p><b>Versuch:</b> Wagen 1 stößt auf einer Fahrbahn gegen den ruhenden Wagen 2. Die Fahne (Breite <f-m>b</f-m>) auf jedem Wagen unterbricht eine Lichtschranke für die <span class="nw"><span class="l g"></span> <f-m>t</f-m></span>. Daraus folgen die Geschwindigkeit <span class="nw"><f-m>v =</f-m> <span class="l s"></span></span> und der Impuls <span class="nw"><f-m>p =</f-m> <span class="l s"></span></span>.</p>
  <div class="zeichnen" style="grid-template-columns:100mm 1fr">
   <div class="karo" style="height:46mm"><span class="lab">Skizze des Versuchsaufbaus</span></div>
   <ol>
