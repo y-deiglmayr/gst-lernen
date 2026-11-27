@@ -268,6 +268,7 @@ nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
 }
 
 .ell{fill:color-mix(in srgb,var(--ekin) 12%,transparent);stroke:var(--ekin);stroke-width:2.5}.iline{stroke:var(--pg);stroke-width:2.5}
+.musterfig{margin:6px 0 14px;max-width:460px}.musterfig svg{display:block;width:100%;height:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px}.musterfig .mt{font:13px "Atkinson Hyperlegible",system-ui,sans-serif;fill:var(--ink)}.musterfig .mk{font:italic 15px "KaTeX_Math",serif;fill:var(--ink)}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
 <link rel="stylesheet" href="/katex/katex.min.css">
@@ -298,6 +299,7 @@ QR groß zeigen</button></div>
 <a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ zwei Heftaufschriebe</small></a>
 <a href="#ueben"><b>4 · Üben</b><small>9 Übungen von ★ bis ★★★</small></a>
 </div>
+<div class="ablinks"><a class="arbeitsblatt" href="/Physik11/elastischer-stoss-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Skizze vorher/nachher · PDF, 2 Seiten</small></span></a><a class="arbeitsblatt" href="/Physik11/elastischer-stoss-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 9 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a></div>
 </div></header>
 
 <!-- ============ 1 EINSTIEG ============ -->
@@ -371,34 +373,39 @@ QR groß zeigen</button></div>
 <div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommen die beiden Heftaufschriebe."><div class="cloze">Beim elastischen Stoß bleiben der Gesamtimpuls und die gesamte <select data-a="Bewegungsenergie"><option value="">…</option><option>Bewegungsenergie</option><option>Geschwindigkeit</option><option>Masse</option></select> erhalten. Mit diesen <select data-a="zwei"><option value="">…</option><option>zwei</option><option>drei</option></select> Gleichungen lassen sich die beiden Geschwindigkeiten nach dem Stoß auch bei unterschiedlichen Massen berechnen. Beim unelastischen Stoß bleibt nur der <select data-a="Gesamtimpuls"><option value="">…</option><option>Gesamtimpuls</option><option>Bewegungsenergie</option></select> erhalten. Ein Teil der Bewegungsenergie wird durch Verformung in thermische Energie umgewandelt, also <select data-a="entwertet"><option value="">…</option><option>entwertet</option><option>vernichtet</option><option>erzeugt</option></select>. Die Gesamtenergie bleibt <select data-a="trotzdem erhalten"><option value="">…</option><option>trotzdem erhalten</option><option>nicht erhalten</option></select>.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
 </div>
 
-<div class="heftbox" id="heft" data-task="heft1"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB 1</b><small>Gleichungen (1) und (2) und die Endformeln ins Heft übernehmen</small></div>
+<a class="arbeitsblatt" href="/Physik11/elastischer-stoss-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Skizze vorher/nachher · PDF, 2 Seiten</small></span></a>
+<details class="reveal" id="heft"><summary>Heftaufschrieb 1 · 3.5 Elastischer Stoß quantitativ (erst selbst ausfüllen, dann aufklappen)</summary>
 <div class="heft">
 <h3>3.5 Elastischer Stoß quantitativ</h3>
-<p>Beim <b>elastischen Stoß</b> bleibt sowohl der <b>Gesamtimpuls</b> als auch die <b>Gesamtenergie</b> im System erhalten. Hierbei gelten IES und EES. Mithilfe der beiden Erhaltungssätze lassen sich die Geschwindigkeiten nach dem Stoß auch mit unterschiedlichen Massen berechnen.</p>
-<p class="calc"><f-m>½ · m<sub>1</sub> · v<sub>1</sub><sup>2</sup> + ½ · m<sub>2</sub> · v<sub>2</sub><sup>2</sup> = ½ · m<sub>1</sub> · u<sub>1</sub><sup>2</sup> + ½ · m<sub>2</sub> · u<sub>2</sub><sup>2</sup></f-m> &nbsp; (1) EES</p>
-<p class="calc"><f-m>m<sub>1</sub> · v<sub>1</sub> + m<sub>2</sub> · v<sub>2</sub> = m<sub>1</sub> · u<sub>1</sub> + m<sub>2</sub> · u<sub>2</sub></f-m> &nbsp; (2) IES</p>
+<p>Beim <b>elastischen</b> Stoß bleibt sowohl der <b>Gesamtimpuls</b> als auch die <b>Gesamtenergie</b> im System erhalten. Hierbei gelten IES und EES. Mithilfe der beiden Erhaltungssätze lassen sich die Geschwindigkeiten nach dem Stoß auch mit unterschiedlichen Massen berechnen.</p>
+<p class="calc"><f-m>½ · m<sub>1</sub> · v<sub>1</sub><sup>2</sup> + ½ · m<sub>2</sub> · v<sub>2</sub><sup>2</sup> = <b>½ · m<sub>1</sub> · u<sub>1</sub><sup>2</sup> + ½ · m<sub>2</sub> · u<sub>2</sub><sup>2</sup></b></f-m> &nbsp; (1) EES</p>
+<p class="calc"><f-m>m<sub>1</sub> · v<sub>1</sub> + m<sub>2</sub> · v<sub>2</sub> = <b>m<sub>1</sub> · u<sub>1</sub> + m<sub>2</sub> · u<sub>2</sub></b></f-m> &nbsp; (2) IES</p>
 <p>Durch Kombination ergeben sich die Endgeschwindigkeiten nach dem Stoß:</p>
 <p><span class="box"><f-m>u<sub>1</sub> = (m<sub>1</sub> · v<sub>1</sub> + m<sub>2</sub> · (2 · v<sub>2</sub> − v<sub>1</sub>)) : (m<sub>1</sub> + m<sub>2</sub>)</f-m></span></p>
 <p><span class="box"><f-m>u<sub>2</sub> = (m<sub>2</sub> · v<sub>2</sub> + m<sub>1</sub> · (2 · v<sub>1</sub> − v<sub>2</sub>)) : (m<sub>1</sub> + m<sub>2</sub>)</f-m></span></p>
-<p><b>Beispiel:</b> <f-m>m<sub>1</sub> = 0,8 kg</f-m>, <f-m>m<sub>2</sub> = 0,4 kg</f-m>, <f-m>v<sub>1</sub> = 0,5 m/s</f-m>, <f-m>v<sub>2</sub> = 0</f-m>: <f-m>u<sub>1</sub> ≈ 0,17 m/s</f-m>, <f-m>u<sub>2</sub> ≈ 0,67 m/s</f-m></p>
+<p><b>Beispiel:</b> <f-m>m<sub>1</sub> = 0,8 kg</f-m>, <f-m>m<sub>2</sub> = 0,4 kg</f-m>, <f-m>v<sub>1</sub> = 0,5 m/s</f-m>, <f-m>v<sub>2</sub> = 0</f-m>: <f-m>u<sub>1</sub> ≈ <b>0,17 m/s</b></f-m>, <f-m>u<sub>2</sub> ≈ <b>0,67 m/s</b></f-m></p>
+<figure class="musterfig"><svg viewBox="0 0 330 150" role="img" aria-label="Musterskizze: vorher rollt die große Kugel 1 mit v1 nach rechts auf die ruhende kleine Kugel 2; nachher rollt Kugel 1 langsam mit u1 und Kugel 2 schnell mit u2 nach rechts"><text x="8" y="20" class="mt" font-weight="700">vorher</text><circle cx="40" cy="48" r="16" style="fill:var(--paper);stroke:var(--ink)" stroke-width="1.5"/><text x="40" y="53" text-anchor="middle" class="mt">1</text><line x1="56" y1="48" x2="134" y2="48" style="stroke:var(--f1)" stroke-width="4"/><path d="M146 48 l-14 -7 v14z" style="fill:var(--f1)"/><text x="92" y="38" class="mk" style="fill:var(--f1)">v<tspan dy="4" font-size="70%">1</tspan></text><circle cx="190" cy="52" r="11" style="fill:var(--paper);stroke:var(--ink)" stroke-width="1.5"/><text x="190" y="57" text-anchor="middle" class="mt">2</text><text x="210" y="58" class="mk">v<tspan dy="4" font-size="70%">2</tspan><tspan dy="-4"> = 0</tspan></text><line x1="4" y1="80" x2="326" y2="80" style="stroke:var(--line)" stroke-width="1" stroke-dasharray="4 3"/><text x="8" y="100" class="mt" font-weight="700">nachher</text><circle cx="80" cy="126" r="16" style="fill:var(--paper);stroke:var(--ink)" stroke-width="1.5"/><text x="80" y="131" text-anchor="middle" class="mt">1</text><line x1="96" y1="126" x2="114" y2="126" style="stroke:var(--f1)" stroke-width="4"/><path d="M126 126 l-14 -7 v14z" style="fill:var(--f1)"/><text x="108" y="114" class="mk" style="fill:var(--f1)">u<tspan dy="4" font-size="70%">1</tspan></text><circle cx="170" cy="130" r="11" style="fill:var(--paper);stroke:var(--ink)" stroke-width="1.5"/><text x="170" y="135" text-anchor="middle" class="mt">2</text><line x1="181" y1="130" x2="289" y2="130" style="stroke:var(--f2)" stroke-width="4"/><path d="M301 130 l-14 -7 v14z" style="fill:var(--f2)"/><text x="240" y="120" class="mk" style="fill:var(--f2)">u<tspan dy="4" font-size="70%">2</tspan></text></svg></figure>
+<div class="row"><button class="hb-done" data-task="heft1">Heftaufschrieb 1 übernommen</button></div>
 </div>
-<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft1">Heftaufschrieb 1 übernommen</button></div></div>
+</details>
 
-<div class="heftbox" id="heft-b" data-task="heft2"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB 2</b><small>Energiebilanz und Tabelle ins Heft übernehmen</small></div>
+<details class="reveal" id="heft-b"><summary>Heftaufschrieb 2 · Unelastischer Stoß: Energiebilanz (erst selbst ausfüllen, dann aufklappen)</summary>
 <div class="heft">
 <h3>Unelastischer Stoß: Energiebilanz</h3>
-<p>Beim <b>unelastischen Stoß</b> wird Energie entwertet: Bewegungsenergie wird durch Verformung der Körper in thermische Energie umgewandelt. Der <b>Gesamtimpuls bleibt aber dennoch erhalten</b>. Über den Energieerhaltungssatz lässt sich die umgewandelte Energie berechnen:</p>
-<p><span class="box"><f-m>ΔE = E<sub>vorher</sub> − E<sub>nachher</sub></f-m></span></p>
+<p>Beim <b>unelastischen</b> Stoß wird Energie <b>entwertet</b>: Bewegungsenergie wird durch <b>Verformung</b> der Körper in <b>thermische Energie</b> umgewandelt. Der <b>Gesamtimpuls</b> bleibt aber dennoch erhalten. Über den Energieerhaltungssatz lässt sich die umgewandelte Energie berechnen:</p>
+<p><span class="box"><f-m>ΔE = <b>E<sub>vorher</sub> − E<sub>nachher</sub></b></f-m></span></p>
 <p><b>Zwei Erhaltungsgrößen im Vergleich:</b></p>
-<div class="scroll"><table><tr><th></th><th>Impuls <f-m>p = m · v</f-m></th><th>Bewegungsenergie <f-m>E = ½ · m · v<sup>2</sup></f-m></th></tr><tr><td>Art</td><td>Vektor (Richtung, Vorzeichen)</td><td>Skalar (immer ≥ 0)</td></tr><tr><td>elastischer Stoß</td><td>bleibt erhalten</td><td>bleibt erhalten</td></tr><tr><td>unelastischer Stoß</td><td>bleibt erhalten</td><td>nimmt ab (wird teilweise entwertet)</td></tr></table></div>
+<div class="scroll"><table><tr><th></th><th>Impuls <f-m>p = m · v</f-m></th><th>Bewegungsenergie <f-m>E = ½ · m · v<sup>2</sup></f-m></th></tr><tr><td>Art</td><td><b>Vektor</b> (Richtung, Vorzeichen)</td><td><b>Skalar</b> (immer ≥ 0)</td></tr><tr><td>elastischer Stoß</td><td><b>bleibt erhalten</b></td><td><b>bleibt erhalten</b></td></tr><tr><td>unelastischer Stoß</td><td><b>bleibt erhalten</b></td><td><b>nimmt ab</b> (wird teilweise entwertet)</td></tr></table></div>
+<div class="row"><button class="hb-done" data-task="heft2">Heftaufschrieb 2 übernommen</button></div>
 </div>
-<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft2">Heftaufschrieb 2 übernommen</button></div></div>
+</details>
 </div></section>
 
 <!-- ============ 4 ÜBEN ============ -->
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
 <p class="intro"><b>Erst im Heft rechnen (Skizze, Stoßart bestimmen, passende Erhaltungssätze, einsetzen), dann hier prüfen.</b> Ein Computer-Algebra-System wie GeoGebra CAS kann beim Umformen helfen.</p>
+<a class="arbeitsblatt" href="/Physik11/elastischer-stoss-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 9 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a>
 <div class="lvlrow"><span>★ / AFB I: Grundlagen anwenden</span><span>★★ / AFB II: Zusammenhänge herstellen</span><span>★★★ / AFB III: übertragen, beurteilen, begründen</span></div>
 
 <div class="card"><div class="tag">Übung 1 · Formeln anwenden <span class="stars">★</span> <span class="afb">AFB I</span></div>

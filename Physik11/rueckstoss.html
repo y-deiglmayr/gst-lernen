@@ -269,6 +269,7 @@ nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
 .lbl{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
 
 
+.musterfig{margin:6px 0 14px;max-width:460px}.musterfig svg{display:block;width:100%;height:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px}.musterfig .mt{font:13px "Atkinson Hyperlegible",system-ui,sans-serif;fill:var(--ink)}.musterfig .mk{font:italic 15px "KaTeX_Math",serif;fill:var(--ink)}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
 <link rel="stylesheet" href="/katex/katex.min.css">
@@ -299,6 +300,7 @@ QR groß zeigen</button></div>
 <a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ Heftaufschrieb 3.2</small></a>
 <a href="#ueben"><b>4 · Üben</b><small>9 Übungen von ★ bis ★★★</small></a>
 </div>
+<div class="ablinks"><a class="arbeitsblatt" href="/Physik11/rueckstoss-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Skizze der Impulspfeile · PDF, 1 Seite</small></span></a><a class="arbeitsblatt" href="/Physik11/rueckstoss-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 9 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a></div>
 </div></header>
 
 <!-- ============ 1 EINSTIEG ============ -->
@@ -365,26 +367,29 @@ QR groß zeigen</button></div>
 <div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommt der Heftaufschrieb."><div class="cloze">Ist der Gesamtimpuls eines Systems zu Beginn <select data-a="null"><option value="">…</option><option>null</option><option>sehr groß</option><option>negativ</option></select> und wird ein Teil mit großer Geschwindigkeit weggeschleudert, bewegt sich der Rest in die <select data-a="entgegengesetzte"><option value="">…</option><option>entgegengesetzte</option><option>gleiche</option><option>senkrechte</option></select> Richtung. Die beiden Impulse sind <select data-a="gleich groß"><option value="">…</option><option>gleich groß</option><option>unterschiedlich groß</option></select>, deshalb bleibt der Gesamtimpuls null. Je größer die Restmasse, desto <select data-a="kleiner"><option value="">…</option><option>kleiner</option><option>größer</option></select> ist ihre Geschwindigkeit. Eine Rakete braucht dafür <select data-a="keine Luft zum Abstoßen"><option value="">…</option><option>keine Luft zum Abstoßen</option><option>Luft zum Abstoßen</option><option>eine feste Unterlage</option></select>.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
 </div>
 
-<div class="heftbox" id="heft" data-task="heft1"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB</b><small>Vollständig ins Heft übernehmen, Skizze mit Impulspfeilen abzeichnen</small></div>
+<a class="arbeitsblatt" href="/Physik11/rueckstoss-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Skizze der Impulspfeile · PDF, 1 Seite</small></span></a>
+<details class="reveal" id="heft"><summary>Heftaufschrieb 3.2 · Das Rückstoßprinzip (erst selbst ausfüllen, dann aufklappen)</summary>
 <div class="heft">
 <h3>3.2 Das Rückstoßprinzip</h3>
-<p>Ist der Gesamtimpuls eines Systems zu Beginn <b>null</b> und wird eine Masse <f-m>m<sub>1</sub></f-m> mit großer Geschwindigkeit <f-m>u<sub>1</sub></f-m> weggeschleudert, bewegt sich die Restmasse <f-m>m<sub>2</sub></f-m> mit der Geschwindigkeit <f-m>u<sub>2</sub></f-m> in die entgegengesetzte Richtung und es gilt:</p>
-<p><span class="box"><f-m>p<sub>2</sub> = −p<sub>1</sub></f-m></span> &nbsp; bzw. &nbsp; <span class="box"><f-m>m<sub>2</sub> · u⃗<sub>2</sub> = −m<sub>1</sub> · u⃗<sub>1</sub></f-m></span></p>
-<div class="fig2"><svg id="hSchuss" viewBox="0 0 320 80" role="img" aria-label="Skizze: Schütze und Geschoss mit entgegengesetzten Impulspfeilen am Schwerpunkt"></svg></div>
-<p style="text-align:center"><span class="box"><f-m>p⃗<sub>S</sub> = −p⃗<sub>K</sub></f-m></span></p>
+<p>Ist der Gesamtimpuls eines Systems zu Beginn <b>null</b> und wird eine Masse <f-m>m<sub>1</sub></f-m> mit großer Geschwindigkeit <f-m>u<sub>1</sub></f-m> weggeschleudert, bewegt sich die Restmasse <f-m>m<sub>2</sub></f-m> mit der Geschwindigkeit <f-m>u<sub>2</sub></f-m> in die <b>entgegengesetzte</b> Richtung und es gilt:</p>
+<p><span class="box"><f-m>p<sub>2</sub> = <b>−p<sub>1</sub></b></f-m></span> &nbsp; bzw. &nbsp; <span class="box"><f-m>m<sub>2</sub> · u⃗<sub>2</sub> = <b>−m<sub>1</sub> · u⃗<sub>1</sub></b></f-m></span></p>
+<figure class="musterfig"><svg id="hSchuss" viewBox="0 0 320 80" role="img" aria-label="Musterskizze: Schütze und Geschoss mit entgegengesetzten Impulspfeilen am Schwerpunkt"></svg></figure>
+<p style="text-align:center"><span class="box"><f-m>p⃗<sub>S</sub> = <b>−p⃗<sub>K</sub></b></f-m></span></p>
 <p><b>Beispiel:</b> Schütze <f-m>m<sub>S</sub> = 70 kg</f-m>, Geschoss <f-m>m<sub>K</sub> = 50 g</f-m> mit <f-m>u<sub>K</sub> = 800 m/s</f-m>:</p>
-<p class="calc"><f-m>p<sub>ges</sub> = m<sub>S</sub> · u<sub>S</sub> + m<sub>K</sub> · u<sub>K</sub> = 0</f-m></p>
-<p class="calc"><f-m>u<sub>S</sub> = −m<sub>K</sub> · u<sub>K</sub> : m<sub>S</sub> = −0,05 kg · 800 m/s : 70 kg ≈ −0,57 m/s</f-m></p>
-<p><b>Ursache:</b> Kräfte treten immer paarweise auf (Wechselwirkungsprinzip). Die Kräfte auf beide Körper sind gleich groß, entgegengesetzt und wirken gleich lange. Darum ändern sich die Impulse entgegengesetzt gleich.</p>
+<p class="calc"><f-m>p<sub>ges</sub> = m<sub>S</sub> · u<sub>S</sub> + m<sub>K</sub> · u<sub>K</sub> = <b>0</b></f-m></p>
+<p class="calc"><f-m>u<sub>S</sub> = <b>−m<sub>K</sub> · u<sub>K</sub> : m<sub>S</sub></b> = −0,05 kg · 800 m/s : 70 kg ≈ <b>−0,57 m/s</b></f-m></p>
+<p><b>Ursache:</b> Kräfte treten immer <b>paarweise</b> auf (<b>Wechselwirkungsprinzip</b>). Die Kräfte auf beide Körper sind gleich groß, entgegengesetzt und wirken <b>gleich lange</b>. Darum ändern sich die Impulse entgegengesetzt gleich.</p>
 <p><b>Beispiele:</b> Rakete, Wasserrakete, Kompassqualle, Düsentriebwerk, Rückstoß einer Waffe.</p>
+<div class="row"><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div>
 </div>
-<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div></div>
+</details>
 </div></section>
 
 <!-- ============ 4 ÜBEN ============ -->
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
 <p class="intro"><b>Erst im Heft rechnen (Skizze mit Impulspfeilen vorher/nachher, positive Richtung festlegen, Impulserhaltung ansetzen), dann hier prüfen.</b></p>
+<a class="arbeitsblatt" href="/Physik11/rueckstoss-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 9 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a>
 <div class="lvlrow"><span>★ / AFB I: Grundlagen anwenden</span><span>★★ / AFB II: Zusammenhänge herstellen</span><span>★★★ / AFB III: übertragen, beurteilen, begründen</span></div>
 
 <div class="card"><div class="tag">Übung 1 · Jagdgewehr <span class="stars">★</span>/<span class="stars">★★</span> <span class="afb">AFB I/II</span></div>

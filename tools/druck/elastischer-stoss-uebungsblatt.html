@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Impuls 5 · Stöße quantitativ – Übungsblatt</title>
+<!-- Druckvorlage (Quelle für Physik11/elastischer-stoss-uebungsblatt.pdf). Gleiche Übungsnummern wie im Lernpfad (4 · Üben). -->
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<style>
+.feldbild{position:relative}
+.feldbild svg{position:absolute;left:0;top:0}
+.wl{font-size:9.4pt;color:var(--slate2);margin:0 0 1.4mm}
+.wl b{color:var(--ink)}
+
+</style>
+</head>
+<body>
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 11 · Impuls</div>
+  <h1>Impuls 5 · Stöße quantitativ</h1>
+  <div class="unter">Übungsblatt zum Lernpfad Impuls 5 · 4 · Üben</div>
+ </div>
+ <div class="qr"><!--QR:https://physik.party/Physik11/elastischer-stoss--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33"><path stroke="#3e4b4c" d="M0 0.5h7m4 0h3m3 0h1m2 0h1m2 0h1m2 0h7m-33 1h1m5 0h1m2 0h9m2 0h1m1 0h1m3 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h6m1 0h1m1 0h6m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h3m2 0h2m1 0h3m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m2 0h3m1 0h1m2 0h1m3 0h2m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h3m1 0h5m1 0h1m1 0h1m3 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m1 0h3m1 0h2m2 0h1m2 0h2m-23 1h1m1 0h5m4 0h1m1 0h5m6 0h1m1 0h5m-31 1h2m2 0h2m1 0h1m2 0h3m5 0h2m1 0h1m1 0h1m2 0h2m1 0h4m-33 1h1m5 0h4m1 0h2m2 0h2m1 0h1m1 0h1m5 0h1m1 0h1m1 0h2m-29 1h1m3 0h1m6 0h2m5 0h4m3 0h4m-32 1h1m5 0h1m2 0h4m2 0h1m2 0h2m2 0h1m2 0h1m1 0h3m-29 1h2m1 0h2m1 0h4m2 0h5m2 0h1m1 0h2m2 0h1m3 0h3m-30 1h4m2 0h3m1 0h2m3 0h2m2 0h1m2 0h2m1 0h2m1 0h1m-32 1h5m2 0h2m1 0h1m1 0h2m2 0h1m1 0h4m1 0h5m1 0h2m-31 1h5m1 0h1m4 0h1m4 0h2m1 0h2m1 0h1m2 0h1m1 0h3m2 0h1m-33 1h1m4 0h1m2 0h4m5 0h1m1 0h5m1 0h3m1 0h2m1 0h1m-33 1h1m3 0h1m1 0h3m2 0h2m1 0h4m7 0h1m1 0h2m1 0h2m-32 1h6m1 0h1m1 0h6m2 0h2m1 0h3m1 0h2m1 0h4m-30 1h2m1 0h1m1 0h4m3 0h2m1 0h1m3 0h2m1 0h1m1 0h1m1 0h3m1 0h2m-33 1h4m1 0h1m1 0h2m2 0h2m2 0h1m1 0h2m2 0h1m1 0h1m1 0h2m2 0h2m1 0h1m-33 1h1m1 0h1m3 0h1m2 0h2m2 0h4m1 0h1m1 0h2m6 0h1m1 0h2m-32 1h1m2 0h2m3 0h6m1 0h1m5 0h1m5 0h1m1 0h4m-33 1h1m2 0h2m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h1m1 0h7m2 0h2m-25 1h6m2 0h1m2 0h3m1 0h2m3 0h1m1 0h1m1 0h1m-33 1h7m2 0h4m2 0h2m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h2m3 0h4m-32 1h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m3 0h1m2 0h1m2 0h6m1 0h1m-32 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m3 0h2m2 0h2m2 0h1m3 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m3 0h1m3 0h3m1 0h1m4 0h2m1 0h2m-31 1h1m5 0h1m2 0h3m2 0h1m1 0h1m2 0h4m5 0h3m-31 1h7m1 0h1m2 0h2m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1"/></svg>Lernpfad öffnen<br>und Ergebnisse prüfen</div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Lösen:</b> Skizze, Stoßart bestimmen, passende Erhaltungssätze aufschreiben, einsetzen. Geschwindigkeiten mit Vorzeichen.</div>
+ <div><b class="n">2</b><b>Prüfen:</b> Gib dein Ergebnis im Lernpfad unter <b>„4 · Üben“</b> bei derselben Übungsnummer ein.</div>
+ <div><b class="n">3</b><b>Abhaken:</b> Kreuze <b>online geprüft</b> an. Falsch? Erst den Tipp im Lernpfad lesen, dann neu rechnen.</div>
+</div>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 1</span><span class="t">Formeln anwenden</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Eine Kugel (0,2&nbsp;kg, 3,0&nbsp;m/s) stößt elastisch auf eine ruhende Kugel (0,1&nbsp;kg). Berechne die Geschwindigkeiten beider Kugeln nach dem Stoß.</p>
+  <div class="karo" style="height:26mm"><span class="lab">Rechenweg: Gegeben – Gesucht – Rechnung – Antwort</span></div>
+  <div class="erg"><span class="feld"><f-m>u<sub>1</sub></f-m> = <i></i> m/s</span><span class="feld"><f-m>u<sub>2</sub></f-m> = <i></i> m/s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 2</span><span class="t">Auffahrunfall auf der Bahn</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Fahrzeug (4,0&nbsp;kg, 6,0&nbsp;m/s) holt auf gerader Bahn ein zweites Fahrzeug (10&nbsp;kg) ein und stößt vollkommen elastisch mit ihm zusammen. Dabei kommt das erste Fahrzeug zur Ruhe. Berechne die Geschwindigkeit des zweiten Fahrzeugs vor und nach dem Stoß.</p>
+  <div class="karo" style="height:28mm"><span class="lab">Rechenweg – setze in der Formel für <f-m>u<sub>1</sub></f-m> null ein</span></div>
+  <div class="erg"><span class="feld"><f-m>v<sub>2</sub></f-m> = <i></i> m/s</span><span class="feld"><f-m>u<sub>2</sub></f-m> = <i></i> m/s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 3</span><span class="t">Zwei Stahlkugeln</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Auf eine ruhende Stahlkugel stößt elastisch eine dreimal so schwere zweite Stahlkugel. Nach dem Stoß bewegt sich die leichtere Kugel mit 9,0&nbsp;m/s. Berechne die Geschwindigkeit der schweren Kugel vor und nach dem Stoß.</p>
+  <div class="karo" style="height:30mm"><span class="lab">Rechenweg – setze <f-m>m<sub>1</sub> = 3 · m</f-m>, <f-m>m<sub>2</sub> = m</f-m></span></div>
+  <div class="erg"><span class="feld"><f-m>v<sub>1</sub></f-m> = <i></i> m/s</span><span class="feld"><f-m>u<sub>1</sub></f-m> = <i></i> m/s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 4</span><span class="t">Der Apfelschuss</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>In Schillers „Wilhelm Tell“ schießt der Armbrustschütze einen Apfel vom Kopf seines Sohnes. Der Pfeil (110&nbsp;g) trifft den Apfel (200&nbsp;g) mit 15&nbsp;m/s und bleibt stecken. Berechne die Bewegungsenergie vor und nach dem Stoß und den Anteil, der in thermische Energie umgewandelt wird.</p>
+  <div class="karo" style="height:30mm"><span class="lab">Rechenweg: Gegeben – Gesucht – Rechnung – Antwort</span></div>
+  <div class="erg"><span class="feld"><f-m>E<sub>vorher</sub></f-m> = <i></i> J</span><span class="feld"><f-m>E<sub>nachher</sub></f-m> = <i></i> J</span><span class="feld">Anteil <i></i> %</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 5</span><span class="t">Gleitkörper</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Zwei Gleitkörper (100&nbsp;g mit 4&nbsp;m/s und 300&nbsp;g mit −2&nbsp;m/s) stoßen total unelastisch zusammen. Berechne die gemeinsame Geschwindigkeit danach (mit Vorzeichen) und den Anteil der Bewegungsenergie, der in thermische Energie umgewandelt wird.</p>
+  <div class="karo" style="height:28mm"><span class="lab">Rechenweg: Gegeben – Gesucht – Rechnung – Antwort</span></div>
+  <div class="erg"><span class="feld"><f-m>u</f-m> = <i></i> m/s</span><span class="feld">Anteil <i></i> %</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 6</span><span class="t">Stoß-Detektiv</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Zwei Kugeln (je 1&nbsp;kg): Kugel 1 rollt mit 4&nbsp;m/s auf die ruhende Kugel 2. Gemessen werden die Geschwindigkeiten danach. Was für ein Stoß ist das? Prüfe Impuls und Bewegungsenergie.</p>
+  <p class="wl">Zur Auswahl: <b>elastisch</b> · <b>unelastisch (nicht total)</b> · <b>total unelastisch</b> · <b>unmöglich</b></p>
+  <table class="rf">
+   <tr><td><b>a)</b> <f-m>u<sub>1</sub> = 0</f-m>, <f-m>u<sub>2</sub> = 4 m/s</f-m></td><td style="width:60mm"><span class="l" style="width:56mm"></span></td></tr>
+   <tr><td><b>b)</b> <f-m>u<sub>1</sub> = 1 m/s</f-m>, <f-m>u<sub>2</sub> = 3 m/s</f-m></td><td><span class="l" style="width:56mm"></span></td></tr>
+   <tr><td><b>c)</b> <f-m>u<sub>1</sub> = 2 m/s</f-m>, <f-m>u<sub>2</sub> = 2 m/s</f-m></td><td><span class="l" style="width:56mm"></span></td></tr>
+   <tr><td><b>d)</b> <f-m>u<sub>1</sub> = −1 m/s</f-m>, <f-m>u<sub>2</sub> = 5 m/s</f-m></td><td><span class="l" style="width:56mm"></span></td></tr>
+   <tr><td><b>e)</b> <f-m>u<sub>1</sub> = 0</f-m>, <f-m>u<sub>2</sub> = 3 m/s</f-m></td><td><span class="l" style="width:56mm"></span></td></tr>
+  </table>
+  <div class="karo" style="height:20mm"><span class="lab">Nebenrechnung: Impuls und Energie vorher und nachher</span></div>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 7</span><span class="t">Kugelstoßpendel</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p><span class="beg">✍ Begründe:</span> Beim Kugelstoßpendel (alle Kugeln gleich schwer) stößt eine Kugel links an, und rechts fliegt immer genau eine Kugel weg. Warum fliegen nicht zwei Kugeln mit halber Geschwindigkeit weg? Der Impulserhaltungssatz wäre dann doch auch erfüllt.</p>
+  <div class="zeilen" style="height:28mm"></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 8</span><span class="t">Reicht die Energie allein?</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p><span class="beg">✍ Nimm Stellung:</span> Paul behauptet: „Beim elastischen Stoß brauche ich den Impulserhaltungssatz gar nicht, der Energieerhaltungssatz reicht.“</p>
+  <div class="zeilen" style="height:26mm"></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 9</span><span class="t">Stimmt das?</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Kreuze an: richtig (r) oder falsch (f)?</p>
+  <table class="rf"><tr><th></th><th>r</th><th>f</th></tr>
+   <tr><td>„Beim unelastischen Stoß geht Energie verloren.“</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>„Beim total unelastischen Stoß ist der Anteil der entwerteten Energie am größten.“</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>„Stößt eine leichte Kugel elastisch gegen eine ruhende schwere, prallt sie zurück.“</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>„Stößt eine schwere Kugel elastisch gegen eine ruhende leichte, bleibt die schwere stehen.“</td><td class="x"></td><td class="x"></td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+</body>
+</html>

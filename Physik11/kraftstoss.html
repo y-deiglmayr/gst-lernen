@@ -268,6 +268,7 @@ nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
 }
 
 .ftarea{fill:color-mix(in srgb,var(--f1) 22%,transparent);stroke:var(--f1);stroke-width:2.5}
+.musterfig{margin:6px 0 14px;max-width:460px}.musterfig svg{display:block;width:100%;height:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px}.musterfig .mt{font:13px "Atkinson Hyperlegible",system-ui,sans-serif;fill:var(--ink)}.musterfig .mk{font:italic 15px "KaTeX_Math",serif;fill:var(--ink)}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
 <link rel="stylesheet" href="/katex/katex.min.css">
@@ -298,6 +299,7 @@ QR groß zeigen</button></div>
 <a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ zwei Heftaufschriebe</small></a>
 <a href="#ueben"><b>4 · Üben</b><small>9 Übungen von ★ bis ★★★</small></a>
 </div>
+<div class="ablinks"><a class="arbeitsblatt" href="/Physik11/kraftstoss-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigenem F-t-Diagramm · PDF, 2 Seiten</small></span></a><a class="arbeitsblatt" href="/Physik11/kraftstoss-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 8 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a></div>
 </div></header>
 
 <!-- ============ 1 EINSTIEG ============ -->
@@ -372,34 +374,40 @@ QR groß zeigen</button></div>
 <div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommen die beiden Heftaufschriebe."><div class="cloze">Wirkt eine Kraft <f-m>F</f-m> während der Zeitspanne <f-m>Δt</f-m> auf einen Körper, ändert sich sein <select data-a="Impuls"><option value="">…</option><option>Impuls</option><option>Masse</option><option>Gewicht</option></select>. Es gilt <f-m>Δp = F · Δt</f-m>. Das Produkt <f-m>F · Δt</f-m> heißt <select data-a="Kraftstoß"><option value="">…</option><option>Kraftstoß</option><option>Arbeit</option><option>Leistung</option></select>, seine Einheit ist <f-m>1 N·s = 1 kg·m/s</f-m>. Bei gleicher Impulsänderung ist die Kraft umso <select data-a="kleiner"><option value="">…</option><option>kleiner</option><option>größer</option></select>, je länger sie wirkt. Darum verlängern Knautschzone, Airbag und Matte die <select data-a="Bremszeit"><option value="">…</option><option>Bremszeit</option><option>Geschwindigkeit</option><option>Masse</option></select>.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
 </div>
 
-<div class="heftbox" id="heft" data-task="heft1"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB 1</b><small>Herleitung, Formel, Einheit und Beispiel ins Heft übernehmen</small></div>
+<a class="arbeitsblatt" href="/Physik11/kraftstoss-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigenem F-t-Diagramm · PDF, 2 Seiten</small></span></a>
+<details class="reveal" id="heft"><summary>Heftaufschrieb 1 · 3.3 Der Kraftstoß (erst selbst ausfüllen, dann aufklappen)</summary>
 <div class="heft">
 <h3>3.3 Der Kraftstoß</h3>
-<p>Wirkt eine Kraft <f-m>F</f-m> über eine Zeitdauer <f-m>Δt</f-m> auf einen Körper, ändert sich sein Impuls um <f-m>Δp</f-m>.</p>
-<p class="calc"><f-m>Δp = p<sub>2</sub> − p<sub>1</sub> = m · v<sub>2</sub> − m · v<sub>1</sub> = m · (v<sub>2</sub> − v<sub>1</sub>) = m · Δv</f-m></p>
-<p class="calc">mit <f-m>Δv = a · Δt</f-m>: &nbsp; <f-m>Δp = m · a · Δt</f-m> &nbsp; und mit <f-m>F = m · a</f-m>:</p>
-<p><span class="box"><f-m>Δp = F · Δt</f-m></span> &nbsp; (Kraftstoß)</p>
-<p>Maßeinheit: <f-m>[F · Δt]</f-m> = <f-m>1 N·s = 1 kg·m/s</f-m></p>
-<p><b>Folgerung:</b> Für dieselbe Impulsänderung ist die Kraft umso kleiner, je länger sie wirkt (Matte, Knautschzone, Airbag, in die Knie gehen).</p>
+<p>Wirkt eine Kraft <f-m>F</f-m> über eine Zeitdauer <f-m>Δt</f-m> auf einen Körper, ändert sich sein <b>Impuls</b> um <f-m>Δp</f-m>.</p>
+<p class="calc"><f-m>Δp = p<sub>2</sub> − p<sub>1</sub> = m · v<sub>2</sub> − m · v<sub>1</sub> = m · (v<sub>2</sub> − v<sub>1</sub>) = <b>m · Δv</b></f-m></p>
+<p class="calc">mit <f-m>Δv = a · Δt</f-m>: &nbsp; <f-m>Δp = <b>m · a · Δt</b></f-m> &nbsp; und mit <f-m>F = m · a</f-m>:</p>
+<p><span class="box"><f-m>Δp = <b>F · Δt</b></f-m></span> &nbsp; (<b>Kraftstoß</b>)</p>
+<p>Maßeinheit: <f-m>[F · Δt] = 1 N·s = <b>1 kg·m/s</b></f-m></p>
+<p><b>F-t-Diagramm:</b> Der Kraftstoß entspricht der <b>Fläche</b> unter dem Graphen im F-t-Diagramm.</p>
+<figure class="musterfig"><svg viewBox="0 0 320 150" role="img" aria-label="Musterskizze F-t-Diagramm: ein hohes schmales Rechteck (Kraftstoß) und gestrichelt ein halb so hohes, doppelt so breites Rechteck mit gleicher Fläche"><rect x="40" y="75" width="60" height="45" style="fill:none;stroke:var(--f2)" stroke-width="2" stroke-dasharray="6 4"/><rect x="40" y="30" width="30" height="90" style="fill:var(--f1);fill-opacity:.35;stroke:var(--f1)" stroke-width="2"/><line x1="40" y1="120" x2="290" y2="120" style="stroke:var(--ink)" stroke-width="1.5"/><path d="M298 120 l-10 -5 v10z" style="fill:var(--ink)"/><line x1="40" y1="120" x2="40" y2="14" style="stroke:var(--ink)" stroke-width="1.5"/><path d="M40 6 l-5 10 h10z" style="fill:var(--ink)"/><text x="290" y="140" class="mk">t</text><text x="18" y="18" class="mk">F</text><text x="78" y="50" class="mk" style="fill:var(--f1)">Δp = F · Δt</text><text x="108" y="96" class="mt" style="fill:var(--f2)">halbe Kraft, doppelte Zeit</text><text x="48" y="140" class="mk">Δt</text></svg></figure>
+<p><b>Folgerung:</b> Für dieselbe Impulsänderung ist die Kraft umso <b>kleiner</b>, je <b>länger</b> sie wirkt (Matte, Knautschzone, Airbag, in die Knie gehen).</p>
 <p><b>Beispiel:</b> Wie lange muss die Motorkraft <f-m>F = 1,8 kN</f-m> auf ein Auto (<f-m>m = 1 t</f-m>) wirken, damit es von 0 auf 100 km/h beschleunigt?</p>
-<p class="calc"><f-m>Δt = Δp : F = m · Δv : F = 1000 kg · 27,8 m/s : 1800 N ≈ 15,4 s</f-m></p>
+<p class="calc"><f-m>Δt = Δp : F = m · Δv : F = <b>1000 kg · 27,8 m/s : 1800 N ≈ 15,4 s</b></f-m></p>
+<div class="row"><button class="hb-done" data-task="heft1">Heftaufschrieb 1 übernommen</button></div>
 </div>
-<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft1">Heftaufschrieb 1 übernommen</button></div></div>
+</details>
 
-<div class="heftbox" id="heft-b" data-task="heft2"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB 2</b><small>Newtons Axiome mit Impulsformulierung ins Heft übernehmen</small></div>
+<details class="reveal" id="heft-b"><summary>Heftaufschrieb 2 · Newtons drei Axiome (erst selbst ausfüllen, dann aufklappen)</summary>
 <div class="heft">
 <h3>Newtons drei Axiome</h3>
-<p><b>Erstes Axiom (Trägheitsprinzip):</b> Körper sind träge, d. h. wenn auf einen Körper keine äußere Kraft wirkt (oder ein Kräftegleichgewicht herrscht), behält er seine Geschwindigkeit bei.<br><i>Impulsformulierung:</i> Der Impuls ändert sich nur dann, wenn eine Kraft von außen auf den Körper wirkt.</p>
-<p><b>Zweites Axiom (Grundgleichung der Mechanik):</b> Die Änderung der Bewegung ist der Einwirkung der bewegenden Kraft proportional und geschieht in Richtung der Kraft: <span class="box"><f-m>F = m · a</f-m></span><br><i>Impulsformulierung:</i> Wirkt eine konstante Kraft <f-m>F</f-m> während der Zeitspanne <f-m>Δt</f-m> auf einen Körper ein, so gilt für die bewirkte Impulsänderung: <span class="box"><f-m>Δp = F · Δt</f-m></span> bzw. <span class="box"><f-m>F = Δp : Δt</f-m></span><br>Eine Impulsänderung wird auch als „Kraftstoß“ bezeichnet.</p>
-<p><b>Drittes Axiom (Wechselwirkungsprinzip):</b> Eine Kraft tritt stets paarweise auf: Wirkt Körper A auf Körper B mit der Kraft <f-m>F⃗</f-m>, wirkt gleichzeitig Körper B auf A mit der Kraft <f-m>−F⃗</f-m>.<br><i>Impulsformulierung:</i> Eine Impulsänderung eines Körpers muss stets mit einer entgegengesetzt gleichen Impulsänderung eines anderen Körpers einhergehen. Im abgeschlossenen System folgt daraus der Impulserhaltungssatz.</p>
+<p><b>Erstes Axiom (<b>Trägheitsprinzip</b>):</b> Körper sind träge, d. h. wenn auf einen Körper keine äußere <b>Kraft</b> wirkt (oder ein Kräftegleichgewicht herrscht), behält er seine <b>Geschwindigkeit</b> bei.<br><i>Impulsformulierung:</i> Der Impuls ändert sich nur dann, wenn eine Kraft <b>von außen</b> auf den Körper wirkt.</p>
+<p><b>Zweites Axiom (<b>Grundgleichung der Mechanik</b>):</b> Die Änderung der Bewegung ist der Einwirkung der bewegenden Kraft proportional und geschieht in Richtung der Kraft: <span class="box"><f-m>F = <b>m · a</b></f-m></span><br><i>Impulsformulierung:</i> Wirkt eine konstante Kraft <f-m>F</f-m> während der Zeitspanne <f-m>Δt</f-m> auf einen Körper ein, so gilt für die bewirkte Impulsänderung: <span class="box"><f-m>Δp = <b>F · Δt</b></f-m></span> bzw. <span class="box"><f-m>F = <b>Δp : Δt</b></f-m></span><br>Eine Impulsänderung wird auch als „<b>Kraftstoß</b>“ bezeichnet.</p>
+<p><b>Drittes Axiom (<b>Wechselwirkungsprinzip</b>):</b> Eine Kraft tritt stets <b>paarweise</b> auf: Wirkt Körper A auf Körper B mit der Kraft <f-m>F⃗</f-m>, wirkt gleichzeitig Körper B auf A mit der Kraft <f-m><b>−F⃗</b></f-m>.<br><i>Impulsformulierung:</i> Eine Impulsänderung eines Körpers muss stets mit einer <b>entgegengesetzt gleichen</b> Impulsänderung eines anderen Körpers einhergehen. Im abgeschlossenen System folgt daraus der <b>Impulserhaltungssatz</b>.</p>
+<div class="row"><button class="hb-done" data-task="heft2">Heftaufschrieb 2 übernommen</button></div>
 </div>
-<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft2">Heftaufschrieb 2 übernommen</button></div></div>
+</details>
 </div></section>
 
 <!-- ============ 4 ÜBEN ============ -->
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
 <p class="intro"><b>Erst im Heft rechnen (gegeben, gesucht, <f-m>Δp = F · Δt</f-m> umstellen, einsetzen, Antwortsatz), dann hier prüfen.</b></p>
+<a class="arbeitsblatt" href="/Physik11/kraftstoss-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 8 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a>
 <div class="lvlrow"><span>★ / AFB I: Grundlagen anwenden</span><span>★★ / AFB II: Zusammenhänge herstellen</span><span>★★★ / AFB III: übertragen, beurteilen, begründen</span></div>
 
 <div class="card"><div class="tag">Übung 1 · Von 0 auf 100 <span class="stars">★</span> <span class="afb">AFB I</span></div>

@@ -43,11 +43,15 @@ Physik11/
   schiefe-ebene-uebungsblatt.pdf    Übungsblatt mit Platz für den Rechenweg (beide: Download im Lernpfad, Symbol auf der Kachel)
   newton-reibung.html       5 · Newtonsche Gesetze und Reibung
   impuls-grundlagen.html    Impuls 1 · Der Impuls – eine neue Größe (p = m · v, Einheit, Vektor, Alltag)
+  impuls-grundlagen-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   stoesse-impulserhaltung.html  Impuls 2 · Stöße und Impulserhaltung (Stoß-Labor, Sonderfälle, Stoßexperiment mit Lichtschranken)
   stoesse-impulserhaltung-heftaufschrieb.pdf / -versuch.pdf / -uebungsblatt.pdf  Druckversionen
   rueckstoss.html           Impuls 3 · Das Rückstoßprinzip
+  rueckstoss-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   kraftstoss.html           Impuls 4 · Kraftstoß und Newtons Axiome (Δp = F · Δt)
+  kraftstoss-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   elastischer-stoss.html    Impuls 5 · Stöße quantitativ (IES + EES, Energiebilanz)
+  elastischer-stoss-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
 ```
 
 Jede Klasse bzw. jedes Fach bekommt einen eigenen Ordner. Die Adresse einer Seite ist der Pfad ohne `.html`,

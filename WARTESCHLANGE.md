@@ -67,11 +67,11 @@ In Lernpfaden **keine Schülernamen** aus dem Material verwenden; Beispielperson
 | 33 | Druck Physik11 · 2 Kräfteaddition | Physik11/kraefteaddition-*.pdf | offen | offen |
 | 34 | Druck Physik11 · 3 Kräftezerlegung | Physik11/kraeftezerlegung-*.pdf | offen | offen |
 | 35 | Druck Physik11 · 5 Newtonsche Gesetze und Reibung | Physik11/newton-reibung-*.pdf | offen | offen |
-| 36 | Druck Physik11 · Impuls 1 | Physik11/impuls-grundlagen-*.pdf | offen | offen |
+| 36 | Druck Physik11 · Impuls 1 | Physik11/impuls-grundlagen-*.pdf | fertig (27.11.2026, Thread „Druckversionen Impuls“) | offen |
 | 37 | Druck Physik11 · Impuls 2 (mit Versuchsprotokoll, Lernpfad mit Stoßexperiment) | Physik11/stoesse-impulserhaltung.html + -*.pdf, index.html | fertig (26.11.2026, Thread „Stoßversuch“) | ja (26.11.2026) |
-| 38 | Druck Physik11 · Impuls 3 Rückstoß | Physik11/rueckstoss-*.pdf | offen | offen |
-| 39 | Druck Physik11 · Impuls 4 Kraftstoß | Physik11/kraftstoss-*.pdf | offen | offen |
-| 40 | Druck Physik11 · Impuls 5 Stöße quantitativ | Physik11/elastischer-stoss-*.pdf | offen | offen |
+| 38 | Druck Physik11 · Impuls 3 Rückstoß | Physik11/rueckstoss-*.pdf | fertig (27.11.2026, Thread „Druckversionen Impuls“) | offen |
+| 39 | Druck Physik11 · Impuls 4 Kraftstoß | Physik11/kraftstoss-*.pdf | fertig (27.11.2026, Thread „Druckversionen Impuls“) | offen |
+| 40 | Druck Physik11 · Impuls 5 Stöße quantitativ | Physik11/elastischer-stoss-*.pdf | fertig (27.11.2026, Thread „Druckversionen Impuls“) | offen |
 
 Schon fertig (Druck): schiefe-ebene (Physik11), energie-einfuehrung, lageenergie, energieerhaltung (Physik9).
 Startseite: neues Thema „Akustik“ und „Mechanik · Bewegungen“ in Klasse 8 (`KURSE`), jeweils mit Vorschaubild in `BILDER`.

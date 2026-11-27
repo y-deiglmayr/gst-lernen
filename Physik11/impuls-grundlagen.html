@@ -269,6 +269,7 @@ nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
 .lbl{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
 
 
+.musterfig{margin:6px 0 14px;max-width:460px}.musterfig svg{display:block;width:100%;height:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px}.musterfig .mt{font:13px "Atkinson Hyperlegible",system-ui,sans-serif;fill:var(--ink)}.musterfig .mk{font:italic 15px "KaTeX_Math",serif;fill:var(--ink)}
 </style>
 <link rel="stylesheet" href="/brand/brand.css">
 <link rel="stylesheet" href="/katex/katex.min.css">
@@ -299,6 +300,7 @@ QR groß zeigen</button></div>
 <a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ Heftaufschrieb 3.0</small></a>
 <a href="#ueben"><b>4 · Üben</b><small>9 Übungen von ★ bis ★★★</small></a>
 </div>
+<div class="ablinks"><a class="arbeitsblatt" href="/Physik11/impuls-grundlagen-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Skizze der Impulspfeile · PDF, 1 Seite</small></span></a><a class="arbeitsblatt" href="/Physik11/impuls-grundlagen-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 9 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a></div>
 </div></header>
 
 <!-- ============ 1 EINSTIEG ============ -->
@@ -383,23 +385,28 @@ QR groß zeigen</button></div>
 <div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommt der Heftaufschrieb."><div class="cloze">Der Impuls eines Körpers ist das Produkt aus seiner <select data-a="Masse"><option value="">…</option><option>Masse</option><option>Energie</option><option>Kraft</option></select> und seiner <select data-a="Geschwindigkeit"><option value="">…</option><option>Geschwindigkeit</option><option>Beschleunigung</option><option>Höhe</option></select>. Wie die Geschwindigkeit ist der Impuls eine <select data-a="Vektorgröße"><option value="">…</option><option>Vektorgröße</option><option>reine Zahl</option><option>Energieform</option></select>: Er hat einen Betrag und eine <select data-a="Richtung"><option value="">…</option><option>Richtung</option><option>Temperatur</option><option>Farbe</option></select>. Seine Einheit ist <select data-a="kg·m/s"><option value="">…</option><option>kg·m/s</option><option>N</option><option>J</option><option>kg/s</option></select>. Wirkt keine äußere Kraft auf einen Körper, bleibt sein Impuls <select data-a="konstant"><option value="">…</option><option>konstant</option><option>null</option><option>nicht erhalten</option></select>.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
 </div>
 
-<div class="heftbox" id="heft" data-task="heft1"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB</b><small>Vollständig ins Heft übernehmen: Überschrift, Text, Formeln und Merksatz</small></div>
+<a class="arbeitsblatt" href="/Physik11/impuls-grundlagen-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigener Skizze der Impulspfeile · PDF, 1 Seite</small></span></a>
+<details class="reveal" id="heft"><summary>Heftaufschrieb 3.0 · Der Impuls (erst selbst ausfüllen, dann aufklappen)</summary>
 <div class="heft">
 <h3>3.0 Der Impuls: eine neue Größe</h3>
-<p>Die Wirkung eines Körpers beim Aufprall hängt von seiner Geschwindigkeit (Betrag und Richtung) und seiner Masse ab. Je größer die Masse und je größer die Geschwindigkeit, desto größer ist die Wirkung. Daher definiert man als physikalische Größe den <b>Impuls p</b> als Produkt von Masse und Geschwindigkeit des Körpers.</p>
-<p>Eindimensional: <span class="box"><f-m>p = m · v</f-m></span> &nbsp; bzw. &nbsp; <span class="box"><f-m>p⃗ = m · v⃗</f-m></span></p>
-<p>Wie die Geschwindigkeit ist auch der Impuls eine <b>Vektorgröße</b> mit Länge und Richtung. Auf einer Geraden legt man eine positive Richtung fest; Körper, die sich entgegengesetzt bewegen, haben einen negativen Impuls.</p>
-<p>Einheit: <f-m>[p] = [m · v]</f-m> = 1 kg·m/s</p>
-<p><b>Andere Formulierung des Trägheitsprinzips:</b><br>Der Impuls eines Körpers bleibt ohne Einwirkung einer äußeren Kraft konstant.</p>
-<p><b>Beispiel:</b> Auto, <f-m>m = 1200 kg</f-m>, <f-m>v = 54 km/h = 15 m/s</f-m>: <f-m>p = 1200 kg · 15 m/s = 18 000 kg·m/s</f-m></p>
+<p>Die Wirkung eines Körpers beim Aufprall hängt von seiner <b>Geschwindigkeit</b> (Betrag und Richtung) und seiner <b>Masse</b> ab. Je größer die Masse und je größer die Geschwindigkeit, desto größer ist die Wirkung. Daher definiert man als physikalische Größe den <b>Impuls</b> <f-m>p</f-m> als <b>Produkt</b> von Masse und Geschwindigkeit des Körpers.</p>
+<p>Eindimensional: <span class="box"><f-m>p = <b>m · v</b></f-m></span> &nbsp; bzw. &nbsp; <span class="box"><f-m>p⃗ = <b>m · v⃗</b></f-m></span></p>
+<p>Wie die Geschwindigkeit ist auch der Impuls eine <b>Vektorgröße</b> mit Länge und Richtung. Auf einer Geraden legt man eine <b>positive Richtung</b> fest; Körper, die sich entgegengesetzt bewegen, haben einen <b>negativen</b> Impuls.</p>
+<figure class="musterfig"><svg viewBox="0 0 320 115" role="img" aria-label="Musterskizze: positive Richtung nach rechts, Körper A mit Impulspfeil nach rechts (positiv), Körper B mit kürzerem Impulspfeil nach links (negativ)"><line x1="20" y1="20" x2="110" y2="20" style="stroke:var(--ink)" stroke-width="1.5"/><path d="M118 20 l-10 -5 v10z" style="fill:var(--ink)"/><text x="124" y="25" class="mt" font-weight="700">+</text><text x="140" y="25" class="mt">positive Richtung</text><circle cx="60" cy="72" r="15" style="fill:var(--paper);stroke:var(--ink)" stroke-width="1.5"/><text x="60" y="77" text-anchor="middle" class="mt">A</text><line x1="75" y1="72" x2="138" y2="72" style="stroke:var(--f1)" stroke-width="4"/><path d="M150 72 l-14 -7 v14z" style="fill:var(--f1)"/><text x="96" y="62" class="mk" style="fill:var(--f1)">p<tspan dy="4" font-size="70%">A</tspan></text><text x="70" y="104" class="mt">positiv</text><circle cx="265" cy="72" r="15" style="fill:var(--paper);stroke:var(--ink)" stroke-width="1.5"/><text x="265" y="77" text-anchor="middle" class="mt">B</text><line x1="250" y1="72" x2="217" y2="72" style="stroke:var(--f2)" stroke-width="4"/><path d="M205 72 l14 -7 v14z" style="fill:var(--f2)"/><text x="214" y="62" class="mk" style="fill:var(--f2)">p<tspan dy="4" font-size="70%">B</tspan></text><text x="222" y="104" class="mt">negativ</text></svg></figure>
+<p>Einheit: <f-m>[p] = [m · v] = <b>1 kg·m/s</b></f-m></p>
+<p><b>Andere Formulierung des Trägheitsprinzips:</b><br>Der Impuls eines Körpers bleibt ohne Einwirkung einer äußeren <b>Kraft</b> <b>konstant</b>.</p>
+<p><b>Beispiel:</b> Auto, <f-m>m = 1200 kg</f-m>, <f-m>v = 54 km/h = <b>15 m/s</b></f-m>:</p>
+<p><f-m>p = <b>1200 kg · 15 m/s</b> = <b>18 000 kg·m/s</b></f-m></p>
+<div class="row"><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div>
 </div>
-<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div></div>
+</details>
 </div></section>
 
 <!-- ============ 4 ÜBEN ============ -->
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
 <p class="intro"><b>Erst im Heft rechnen, dann hier prüfen.</b></p>
+<a class="arbeitsblatt" href="/Physik11/impuls-grundlagen-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 9 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a>
 <div class="lvlrow"><span>★ / AFB I: Grundlagen anwenden</span><span>★★ / AFB II: Zusammenhänge herstellen</span><span>★★★ / AFB III: übertragen, beurteilen, begründen</span></div>
 
 <div class="card"><div class="tag">Übung 1 · Tennisaufschlag <span class="stars">★</span> <span class="afb">AFB I</span></div>

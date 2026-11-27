@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Impuls 3 · Das Rückstoßprinzip – Übungsblatt</title>
+<!-- Druckvorlage (Quelle für Physik11/rueckstoss-uebungsblatt.pdf). Gleiche Übungsnummern wie im Lernpfad (4 · Üben). -->
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<style>
+.feldbild{position:relative}
+.feldbild svg{position:absolute;left:0;top:0}
+.wl{font-size:9.4pt;color:var(--slate2);margin:0 0 1.4mm}
+.wl b{color:var(--ink)}
+
+</style>
+</head>
+<body>
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 11 · Impuls</div>
+  <h1>Impuls 3 · Das Rückstoßprinzip</h1>
+  <div class="unter">Übungsblatt zum Lernpfad Impuls 3 · 4 · Üben</div>
+ </div>
+ <div class="qr"><!--QR:https://physik.party/Physik11/rueckstoss--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29"><path stroke="#3e4b4c" d="M0 0.5h7m2 0h5m4 0h1m3 0h7m-29 1h1m5 0h1m1 0h5m1 0h1m1 0h1m1 0h1m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h5m5 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m3 0h1m4 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m2 0h2m2 0h2m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m1 0h4m1 0h1m1 0h1m1 0h1m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h1m1 0h3m1 0h2m3 0h2m-21 1h1m5 0h1m1 0h2m3 0h2m2 0h1m1 0h1m1 0h2m2 0h3m-27 1h1m1 0h1m3 0h1m2 0h3m2 0h1m3 0h2m2 0h2m1 0h2m-22 1h1m1 0h2m1 0h3m1 0h4m1 0h4m-23 1h2m1 0h1m3 0h1m2 0h2m1 0h2m5 0h1m2 0h2m-25 1h1m4 0h2m2 0h1m4 0h2m5 0h1m5 0h1m-27 1h2m3 0h3m2 0h1m1 0h7m1 0h3m2 0h2m-29 1h1m1 0h1m1 0h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m2 0h6m-26 1h1m1 0h1m4 0h1m1 0h2m9 0h1m4 0h1m1 0h1m-27 1h1m1 0h1m1 0h1m1 0h4m3 0h1m1 0h1m2 0h2m1 0h1m1 0h2m-27 1h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m2 0h6m1 0h3m1 0h3m-29 1h3m1 0h1m1 0h2m1 0h1m2 0h4m2 0h3m2 0h3m2 0h1m-29 1h1m2 0h3m6 0h1m3 0h1m2 0h1m2 0h1m-23 1h1m5 0h3m1 0h3m2 0h4m1 0h5m1 0h3m-21 1h3m2 0h3m3 0h2m3 0h2m-26 1h7m5 0h4m2 0h3m1 0h1m1 0h3m-27 1h1m5 0h1m6 0h1m1 0h1m3 0h2m3 0h1m-25 1h1m1 0h3m1 0h1m2 0h3m1 0h1m1 0h1m2 0h8m1 0h1m-28 1h1m1 0h3m1 0h1m2 0h2m2 0h1m1 0h2m2 0h1m1 0h1m3 0h2m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h6m1 0h1m3 0h6m-28 1h1m5 0h1m2 0h4m2 0h1m6 0h1m1 0h3m1 0h1m-29 1h7m1 0h1m3 0h3m2 0h3m1 0h1m2 0h3"/></svg>Lernpfad öffnen<br>und Ergebnisse prüfen</div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Lösen:</b> Skizze mit Impulspfeilen vorher/nachher, positive Richtung festlegen, Impulserhaltung ansetzen.</div>
+ <div><b class="n">2</b><b>Prüfen:</b> Gib dein Ergebnis im Lernpfad unter <b>„4 · Üben“</b> bei derselben Übungsnummer ein.</div>
+ <div><b class="n">3</b><b>Abhaken:</b> Kreuze <b>online geprüft</b> an. Falsch? Erst den Tipp im Lernpfad lesen, dann neu rechnen.</div>
+</div>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 1</span><span class="t">Jagdgewehr</span><span class="st">★/★★</span><span class="afb">AFB I/II</span></div>
+ <div class="ab">
+  <p>Aus einem Jagdgewehr (5,0&nbsp;kg) wird ein Geschoss (30&nbsp;g) mit 500&nbsp;m/s abgeschossen.</p>
+  <div class="teil"><b>a)</b><span>Berechne die Rückstoßgeschwindigkeit des Gewehrs (Betrag), wenn es nicht abgestützt würde.</span></div>
+  <div class="teil"><b>b)</b><span>Berechne die chemische Energie, die in Bewegungsenergie umgewandelt wird.</span></div>
+  <div class="karo" style="height:24mm"><span class="lab">Rechenweg: Gegeben – Gesucht – Rechnung – Antwort</span></div>
+  <div class="erg"><span class="feld">a) <f-m>u</f-m> = <i></i> m/s</span><span class="feld">b) <f-m>E</f-m> = <i></i> J</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 2</span><span class="t">Stimmt das?</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Kreuze an: richtig (r) oder falsch (f)?</p>
+  <table class="rf"><tr><th></th><th>r</th><th>f</th></tr>
+   <tr><td>„Eine Rakete stößt sich mit ihren Abgasen an der Luft ab.“</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>„Beim Rückstoß sind die Impulse beider Teile gleich groß.“</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>„Beim Rückstoß sind die Geschwindigkeiten beider Teile gleich groß.“</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>„Beim Rückstoß wird Bewegungsenergie aus einer anderen Energieform gewonnen.“</td><td class="x"></td><td class="x"></td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 3</span><span class="t">Skateboard und Medizinball</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Junge (60&nbsp;kg) steht auf einem ruhenden Skateboard und wirft einen Medizinball (3&nbsp;kg) mit 4&nbsp;m/s waagrecht nach rechts. Zeichne den Impuls des Balls und den Impuls von Junge und Brett. Berechne die Geschwindigkeit des Jungen. Maßstab: <b class="nw">1&nbsp;cm ≙ 4&nbsp;kg·m/s</b> (Skateboard und Reibung vernachlässigen). Ein Kästchen ist 5&nbsp;mm breit (Blatt in 100&nbsp;% drucken).</p>
+  <div style="display:grid;grid-template-columns:90mm 1fr;gap:3mm">
+   <div class="karo feldbild" style="height:30mm;width:90mm"><span class="lab">Zeichnung</span>
+    <svg width="90mm" height="30mm" viewBox="0 0 90 30" aria-hidden="true"><rect x="37.5" y="12.5" width="10" height="10" fill="#fff" stroke="#3E4B4C" stroke-width=".5"/><text x="42.5" y="19.3" font-size="4" text-anchor="middle" fill="#3E4B4C" font-family="sans-serif">J</text><circle cx="42.5" cy="17.5" r=".7" fill="#3E4B4C"/><circle cx="52.5" cy="17.5" r="2.2" fill="#fff" stroke="#3E4B4C" stroke-width=".5"/><circle cx="52.5" cy="17.5" r=".7" fill="#3E4B4C"/><line x1="30" y1="25" x2="60" y2="25" stroke="#3E4B4C" stroke-width=".5"/></svg>
+   </div>
+   <div class="karo" style="height:30mm"><span class="lab">Rechnung</span></div>
+  </div>
+  <div class="erg"><span class="feld">Pfeillänge Ball <i></i> cm</span><span class="feld"><f-m>u<sub>J</sub></f-m> = <i></i> m/s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 4</span><span class="t">Stein vom fahrenden Wagen</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Auf einem Wagen (50&nbsp;kg) befinden sich ein Beobachter (50&nbsp;kg) und ein Stein (2,0&nbsp;kg). Der Wagen fährt mit 0,50&nbsp;m/s. Der Beobachter wirft den Stein mit 6,0&nbsp;m/s (gegenüber der Fahrbahn) entgegen der Fahrtrichtung fort. Berechne die Geschwindigkeit des Wagens nach dem Wurf und die Energie, die dabei in Bewegungsenergie umgewandelt wird.</p>
+  <div class="karo" style="height:32mm"><span class="lab">Rechenweg – Fahrtrichtung positiv</span></div>
+  <div class="erg"><span class="feld"><f-m>u</f-m> = <i></i> m/s</span><span class="feld"><f-m>ΔE</f-m> = <i></i> J</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 5</span><span class="t">Astronaut in Not</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Astronaut (mit Raumanzug 120&nbsp;kg) driftet nach einem unglücklichen Stoß mit konstant 0,40&nbsp;m/s von der Raumstation weg. In den Händen hält er einen Werkzeugkasten (20&nbsp;kg). Im Weltraum wirkt praktisch keine Reibung.</p>
+  <p>Mit welcher Geschwindigkeit muss er den Kasten mindestens wegstoßen, damit er selbst zum Stillstand kommt? In welche Richtung? Kreuze an.</p>
+  <table class="rf">
+   <tr><td class="x"></td><td>In seine Bewegungsrichtung, also von der Station weg.</td></tr>
+   <tr><td class="x"></td><td>Zur Station hin.</td></tr>
+  </table>
+  <div class="karo" style="height:22mm"><span class="lab">Rechenweg: Gegeben – Gesucht – Rechnung – Antwort</span></div>
+  <div class="erg"><span class="feld"><f-m>u<sub>Kasten</sub></f-m> = <i></i> m/s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 6</span><span class="t">Rakete im Weltall</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p><span class="beg">✍ Erläutere:</span> Erläutere mithilfe des Impulsbegriffs, warum sich eine Rakete nach oben bewegt, obwohl keine feste Unterlage vorhanden ist. Gehe auf das Rückstoßprinzip und das Wechselwirkungsprinzip ein.</p>
+  <div class="zeilen" style="height:30mm"></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 7</span><span class="t">Stärkerer Schub</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Was passiert, wenn die Rakete pro Sekunde mehr Masse ausstößt oder die Abgasgeschwindigkeit erhöht? Kreuze <b>alle</b> richtigen Aussagen an.</p>
+  <table class="rf">
+   <tr><td class="x"></td><td>Mehr Masse pro Sekunde: Pro Sekunde wird mehr Impuls nach unten weggetragen, die Rakete wird stärker beschleunigt.</td></tr>
+   <tr><td class="x"></td><td>Höhere Abgasgeschwindigkeit: Jedes Kilogramm Gas trägt mehr Impuls, die Rakete wird stärker beschleunigt.</td></tr>
+   <tr><td class="x"></td><td>Die Abgasgeschwindigkeit spielt keine Rolle, nur die Masse zählt.</td></tr>
+   <tr><td class="x"></td><td>Mehr ausgestoßene Masse bremst die Rakete, weil sie schwerer wird.</td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 8</span><span class="t">Zurück zur Station?</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p><span class="beg">✍ Erläutere:</span> Erläutere (Übung 5 weitergedacht), ob und wie der Astronaut es durch das Wegstoßen des Werkzeugkastens schafft, zur Raumstation zurückzukehren. Beziehe dich auf den Impuls und das Rückstoßprinzip.</p>
+  <div class="zeilen" style="height:30mm"></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 9</span><span class="t">Sprung vom Boot</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Nadja (50&nbsp;kg) springt von einem ruhenden Boot (150&nbsp;kg) mit 3,0&nbsp;m/s (gegenüber dem Wasser) waagrecht ans Ufer. Wie schnell bewegt sich das Boot danach (Betrag)?</p>
+  <div class="karo" style="height:20mm"><span class="lab">Rechenweg: Gegeben – Gesucht – Rechnung – Antwort</span></div>
+  <div class="erg"><span class="feld"><f-m>u<sub>Boot</sub></f-m> = <i></i> m/s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+</body>
+</html>
