@@ -272,15 +272,15 @@ const ST=[
   tipps:['Frag dich bei jedem Gegenstand: Ist er hoch oben, bewegt, verformt, warm, ein Stoff mit Vorrat oder etwas, das leuchtet?','Brötchen und Kerze sind beides Stoffe, die beim Verdauen oder Verbrennen Energie freigeben. Trampolin und Bogen sind verformt.'],
   loesung:'Stein auf dem Regal: <f-m>E<sub>L</sub></f-m> · Fahrrad: <f-m>E<sub>B</sub></f-m> · Bogen und Trampolin: <f-m>E<sub>Sp</sub></f-m> · Tee: <f-m>E<sub>therm</sub></f-m> · Brötchen und Kerze: <f-m>E<sub>chem</sub></f-m> · Sonne: <f-m>E<sub>Str</sub></f-m>'},
  {afb:2,typ:'mc',frage:'Im Schuppen liegt eine Kurbel-Taschenlampe. Du kurbelst, ein kleiner Dynamo dreht sich, die Lampe leuchtet. Welche Energiekette stimmt?',bild:'taschenlampe',
-  opts:[['a','<f-m>E<sub>chem</sub></f-m> (Muskeln) → <f-m>E<sub>B</sub> → E<sub>el</sub> → E<sub>Str</sub> + E<sub>therm</sub></f-m>'],['b','<f-m>E<sub>el</sub> → E<sub>chem</sub> → E<sub>Str</sub></f-m>'],['c','<f-m>E<sub>B</sub> → E<sub>L</sub> → E<sub>el</sub> → E<sub>Str</sub></f-m>'],['d','<f-m>E<sub>Str</sub> → E<sub>el</sub> → E<sub>B</sub></f-m>']],ok:'a',
+  opts:[['a','<f-m>E<sub>chem</sub></f-m> (Muskeln) → <f-m>E<sub>B</sub></f-m> (Kurbel) → <f-m>E<sub>el</sub></f-m> (Dynamo) → <f-m>E<sub>Str</sub> + E<sub>therm</sub></f-m> (Lampe)'],['b','<f-m>E<sub>el</sub></f-m> (Batterie) → <f-m>E<sub>chem</sub></f-m> (Dynamo) → <f-m>E<sub>B</sub></f-m> (Kurbel) → <f-m>E<sub>Str</sub> + E<sub>therm</sub></f-m> (Lampe)'],['c','<f-m>E<sub>B</sub></f-m> (Kurbel) → <f-m>E<sub>L</sub></f-m> (Dynamo) → <f-m>E<sub>el</sub></f-m> (Lampe) → <f-m>E<sub>Str</sub> + E<sub>therm</sub></f-m> (Umgebung)'],['d','<f-m>E<sub>chem</sub></f-m> (Muskeln) → <f-m>E<sub>Sp</sub></f-m> (Kurbel) → <f-m>E<sub>L</sub></f-m> (Dynamo) → <f-m>E<sub>Str</sub> + E<sub>therm</sub></f-m> (Lampe)']],ok:'a',
   hinweis:'Fang bei dir an: Woher hat dein Arm die Energie zum Kurbeln? Und was macht ein Dynamo aus der Drehung?',
   tipps:['Deine Muskeln bekommen ihre Energie aus der Nahrung. Das ist chemische Energie.','Der Dynamo ist ein Energiewandler: aus Bewegungsenergie wird elektrische Energie. Die Lampe gibt Licht ab und wird auch warm.'],
   loesung:'<f-m>E<sub>chem</sub></f-m> in den Muskeln → <f-m>E<sub>B</sub></f-m> der Kurbel → <f-m>E<sub>el</sub></f-m> im Dynamo → <f-m>E<sub>Str</sub></f-m> (Licht) und <f-m>E<sub>therm</sub></f-m>.'},
  {afb:2,typ:'mc',frage:'Joulie meint: „Wenn die Taschenlampe leuchtet, wird Energie verbraucht. Danach ist sie einfach weg.“ Was sagst du dazu?',
-  opts:[['a','Stimmt, Licht verschwindet ja wieder.'],['b','Nein. Die Energie wird in Licht und thermische Energie umgewandelt und landet am Ende als Wärme in der Umgebung.'],['c','Nein. Die Energie bleibt in der Lampe gespeichert.'],['d','Teilweise. Die Hälfte der Energie verschwindet.']],ok:'b',
+  opts:[['a','Stimmt. Beim Leuchten wird die Energie verbraucht und ist danach nicht mehr vorhanden.'],['b','Stimmt nicht. Sie wird in Licht und thermische Energie umgewandelt und landet in der Umgebung.'],['c','Stimmt nicht. Sie wird in der Lampe gespeichert und beim nächsten Einschalten wieder genutzt.'],['d','Teilweise. Die Hälfte wird zu Licht, die andere Hälfte der Energie verschwindet einfach.']],ok:'b',
   hinweis:'Denk an das Prinzip der Energieerhaltung: Kann Energie verschwinden?',
   tipps:['Energie kann weder erzeugt noch vernichtet werden.','„Verbraucht“ sagt man im Alltag. Physikalisch wird die Energie umgewandelt, am Ende meist in thermische Energie der Umgebung.'],
-  loesung:'Antwort b: Energie geht nicht verloren. Sie wird umgewandelt und ist am Ende als thermische Energie in der Umgebung verteilt (entwertet).'}
+  loesung:'Energie geht nicht verloren. Sie wird umgewandelt und ist am Ende als thermische Energie in der Umgebung verteilt (entwertet).'}
  ]},
 {name:'Der Speichersee',thema:'Lageenergie',x:330,y:350,
  intro:'<p>Oberhalb der Hütte liegt ein kleiner Speichersee. Fließt das Wasser durch ein Rohr hinunter zur Turbine, gibt es Strom. Frau Berger will wissen: Reicht das Wasser für die Nacht?</p><p>Wir legen das Nullniveau an die Turbine, denn tiefer kann das Wasser hier nicht fallen.</p>',
@@ -291,10 +291,10 @@ const ST=[
   tipps:['Die Formel ist <f-m>E<sub>L</sub> = m · g · h</f-m>. Schreib dir zuerst auf, was gegeben ist.','<f-m>E<sub>L</sub> = 12 000 kg · 9,81 N/kg · 25 m</f-m>. Das Ergebnis ist in J, teile noch durch 1000.'],
   loesung:'<f-m>E<sub>L</sub> = m · g · h = 12 000 kg · 9,81 N/kg · 25 m = 2 943 000 J ≈ 2943 kJ</f-m>'},
  {afb:2,typ:'mc',frage:'Frau Berger misst die Höhe vom Tal aus (800 m tiefer) und bekommt eine viel größere Lageenergie. Wer hat recht?',
-  opts:[['a','Frau Berger, ihr Wert ist richtiger, weil er größer ist.'],['b','Beide Werte stimmen, sie haben nur verschiedene Nullniveaus. Für die Turbine zählt die Höhe über der Turbine.'],['c','Joulie, denn Lageenergie gibt es nur über einer Turbine.'],['d','Keiner, Wasser hat keine Lageenergie.']],ok:'b',
+  opts:[['a','Frau Berger. Je größer die Höhe, desto genauer wird der Wert für die Lageenergie.'],['b','Beide, nur das Nullniveau ist anders. Für die Turbine zählt die Höhe über der Turbine.'],['c','Joulie. Lageenergie darf man nur von der tiefsten Stelle in der Nähe aus berechnen.'],['d','Keiner. Wasser in einem See hat keine Lageenergie, weil es sich gerade nicht bewegt.']],ok:'b',
   hinweis:'Von wo aus wird die Höhe <f-m>h</f-m> gemessen? Und darf man das frei wählen?',
   tipps:['Das Nullniveau darf man frei wählen, man muss es aber angeben.','Die Turbine kann nur die Energie nutzen, die das Wasser auf dem Weg bis zur Turbine abgibt.'],
-  loesung:'Antwort b: Lageenergie hängt vom gewählten Nullniveau ab. Nutzbar für die Turbine ist nur die Energie bis zur Turbine, also ist das Nullniveau an der Turbine sinnvoll.'},
+  loesung:'Lageenergie hängt vom gewählten Nullniveau ab. Nutzbar für die Turbine ist nur die Energie bis zur Turbine, also ist das Nullniveau an der Turbine sinnvoll.'},
  {afb:3,typ:'num',frage:'Für die Nacht braucht die Hütte 1800 kJ. Eine Pumpe soll 6000 kg Wasser in ein zweites, kleines Becken pumpen. Wie hoch über der Turbine muss das Becken mindestens liegen? (Rechne ohne Verluste.)',
   einheit:'m',ziel:1800000/(6000*g),tol:.015,
   fehler:[[1800/(6000*g),'Achte auf die Einheit: <f-m>1800 kJ = 1 800 000 J</f-m>.'],[1800000/6000,'Fast! Du musst durch <f-m>m · g</f-m> teilen, nicht nur durch m.']],
@@ -305,10 +305,10 @@ const ST=[
  intro:'<p>Das Ersatzteil für die Turbine liegt in der Werkstatt hinter der Senke. Ich rodle hin! Mein Schlitten hat aber keinen Motor. Ich brauche also genug Anlauf, sonst rutsche ich zurück.</p>',
  tasks:[
  {afb:1,typ:'mc',frage:'Joulie startet oben am Hang und rodelt in die Senke. Wo hat der Schlitten die größte Bewegungsenergie?',
-  opts:[['a','ganz oben am Start'],['b','am tiefsten Punkt der Senke'],['c','oben auf dem Gegenhang'],['d','überall gleich viel']],ok:'b',
+  opts:[['a','ganz oben am Start, bevor er losfährt'],['b','am tiefsten Punkt der Senke'],['c','kurz vor der Kuppe des Gegenhangs'],['d','überall auf der Bahn gleich viel']],ok:'b',
   hinweis:'Wo ist die Lageenergie am kleinsten? Wohin ist sie dann umgewandelt worden?',
   tipps:['Beim Hinunterfahren wird Lageenergie in Bewegungsenergie umgewandelt.','Am tiefsten Punkt ist die Lageenergie am kleinsten, also ist dort am meisten umgewandelt.'],
-  loesung:'Antwort b: Am tiefsten Punkt ist am meisten Lageenergie in Bewegungsenergie umgewandelt.'},
+  loesung:'Am tiefsten Punkt ist am meisten Lageenergie in Bewegungsenergie umgewandelt.'},
  {afb:3,typ:'sim',frage:'Die Werkstatt liegt auf einem Hügel, 6,0 m über der Senke. Joulie und der Schlitten haben zusammen 50 kg. Auf dem Weg bis zur Hügelkuppe werden durch Reibung 980 J in thermische Energie umgewandelt. Berechne, wie hoch der Start mindestens liegen muss. Gib die Höhe ein und schick Joulie los!',
   tipps:['Am Start hat Joulie nur Lageenergie. Oben auf der Kuppe braucht er <f-m>E<sub>L</sub> = m · g · 6,0 m</f-m>, dazu kommen 980 J für die Reibung.','<f-m>E<sub>Start</sub> = 50 kg · 9,81 N/kg · 6,0 m + 980 J = 3923 J</f-m>. Dann <f-m>h = E<sub>Start</sub> : (m · g)</f-m>.'],
   loesung:'<f-m>E<sub>Start</sub> = m · g · 6,0 m + 980 J = 2943 J + 980 J = 3923 J</f-m>; <f-m>h = 3923 J : (50 kg · 9,81 N/kg) ≈ 8,0 m</f-m>'},
@@ -319,20 +319,20 @@ const ST=[
 {name:'Das Turbinenhaus',thema:'Wirkungsgrad',
  tasks:[
  {afb:1,typ:'mc',frage:'Frau Berger zeigt auf das Typenschild der Anlage: „Wirkungsgrad 70 %“. Was bedeutet das?',
-  opts:[['a','70 % der zugeführten Energie werden in nutzbare elektrische Energie umgewandelt.'],['b','Die Turbine läuft 70 % der Zeit.'],['c','70 % der Energie werden vernichtet.'],['d','Die Turbine dreht sich mit 70 % ihrer Höchstgeschwindigkeit.']],ok:'a',
+  opts:[['a','70 % der zugeführten Energie werden zu nutzbarer elektrischer Energie.'],['b','Die Turbine ist 70 % der Zeit in Betrieb und steht sonst still.'],['c','70 % der zugeführten Energie werden in der Anlage vernichtet.'],['d','Das Turbinenrad dreht sich mit 70 % seiner höchsten Drehzahl.']],ok:'a',
   hinweis:'Der Wirkungsgrad vergleicht zwei Energien miteinander. Welche?',
   tipps:['Der Wirkungsgrad ist das Verhältnis von nutzbarer zu aufgewendeter Energie.','<f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub></f-m>. 70 % heißt: Von 100 J zugeführter Energie werden 70 J genutzt.'],
-  loesung:'Antwort a: <f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub> = 0,70</f-m>. Von der zugeführten Energie werden 70 % zu elektrischer Energie.'},
+  loesung:'<f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub> = 0,70</f-m>. Von der zugeführten Energie werden 70 % zu elektrischer Energie.'},
  {afb:2,typ:'num',frage:'Probelauf: In einer Stunde fließt Wasser mit 2943 kJ Lageenergie durch die Turbine (das hast du am Speichersee berechnet). Der Generator gibt dabei 2060 kJ elektrische Energie ab. Berechne den Wirkungsgrad in Prozent.',bild:'kraftwerk',
   einheit:'%',ziel:2060/2943*100,tol:.015,
   fehler:[[2060/2943,'Das ist der Wirkungsgrad als Dezimalzahl. Gefragt ist er in Prozent.'],[2943/2060*100,'Umgekehrt! Der Nutzen kommt nach oben: <f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub></f-m>.'],[2943/2060,'Umgekehrt geteilt. <f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub></f-m>.']],
   tipps:['Was ist hier der Aufwand, was der Nutzen? Aufwand: die Energie des Wassers. Nutzen: die elektrische Energie.','<f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub> = 2060 kJ : 2943 kJ</f-m>. Das Ergebnis mal 100 ergibt Prozent.'],
   loesung:'<f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub> = 2060 kJ : 2943 kJ ≈ 0,70 = 70 %</f-m>'},
  {afb:2,typ:'mc',frage:'Von den 2943 kJ kommen nur 2060 kJ als elektrische Energie heraus. Wo sind die übrigen 883 kJ geblieben?',
-  opts:[['a','Sie wurden vernichtet.'],['b','Sie wurden vor allem in thermische Energie umgewandelt: Lager, Wasser und Generator werden etwas wärmer.'],['c','Sie stecken noch als Lageenergie im Wasser unten im Tal.'],['d','Sie wurden in chemische Energie umgewandelt.']],ok:'b',
+  opts:[['a','Sie wurden in der Turbine vernichtet, weil niemand sie gebraucht hat.'],['b','Sie wurden vor allem durch Reibung zu thermischer Energie der Umgebung.'],['c','Sie stecken noch als Lageenergie im Wasser unterhalb der Turbine.'],['d','Sie wurden im Generator in chemische Energie umgewandelt und gespeichert.']],ok:'b',
   hinweis:'Energieerhaltung: Verschwinden kann nichts. Was entsteht durch Reibung?',
   tipps:['Energie kann nicht vernichtet werden.','In Lagern, im Generator und im Wasser gibt es Reibung. Dabei entsteht thermische Energie.'],
-  loesung:'Antwort b: Der Rest wird durch Reibung zu thermischer Energie der Umgebung. Er ist nicht verloren, aber entwertet.'},
+  loesung:'Der Rest wird durch Reibung zu thermischer Energie der Umgebung. Er ist nicht verloren, aber entwertet.'},
  {afb:3,typ:'begr',frage:'<b>Begründe:</b> Ein Vertreter will Frau Berger eine Wunder-Turbine mit 110 % Wirkungsgrad verkaufen. Warum kann das nicht stimmen?',
   muster:'Der Wirkungsgrad ist das Verhältnis von nutzbarer zu aufgewendeter Energie. Bei 110 % käme mehr nutzbare Energie heraus, als hineingesteckt wird. Energie kann aber nicht erzeugt werden (Energieerhaltung). Mehr als 100 % sind also unmöglich. Weil durch Reibung immer auch thermische Energie entsteht, liegt der Wirkungsgrad in Wirklichkeit sogar immer unter 100 %.',
   checks:['Ich habe gesagt, dass dann mehr Energie herauskäme als hineingeht.','Ich habe die Energieerhaltung genannt (Energie kann nicht erzeugt werden).','Ich habe erklärt, dass <f-m>η</f-m> wegen der Reibung sogar immer unter 100 % liegt.']}
@@ -340,10 +340,10 @@ const ST=[
 {name:'Die Gipfelhütte',thema:'Energieketten und Leistung',
  tasks:[
  {afb:2,typ:'mc',frage:'Der Hauptschalter ist fast erreicht! Welche Energiekette führt vom Speichersee bis zum Licht in der Hütte?',
-  opts:[['a','<f-m>E<sub>L</sub></f-m> (Wasser oben) → <f-m>E<sub>B</sub></f-m> (strömendes Wasser, Turbine) → <f-m>E<sub>el</sub></f-m> (Generator) → <f-m>E<sub>Str</sub> + E<sub>therm</sub></f-m> (Lampe)'],['b','<f-m>E<sub>B</sub> → E<sub>L</sub> → E<sub>el</sub> → E<sub>Str</sub></f-m>'],['c','<f-m>E<sub>L</sub> → E<sub>el</sub> → E<sub>B</sub> → E<sub>Str</sub></f-m>'],['d','<f-m>E<sub>chem</sub> → E<sub>B</sub> → E<sub>el</sub> → E<sub>Str</sub></f-m>']],ok:'a',
+  opts:[['a','<f-m>E<sub>L</sub></f-m> (Wasser im See) → <f-m>E<sub>B</sub></f-m> (Wasser, Turbine) → <f-m>E<sub>el</sub></f-m> (Generator) → <f-m>E<sub>Str</sub> + E<sub>therm</sub></f-m> (Lampe)'],['b','<f-m>E<sub>B</sub></f-m> (Wasser im See) → <f-m>E<sub>L</sub></f-m> (Wasser, Turbine) → <f-m>E<sub>el</sub></f-m> (Generator) → <f-m>E<sub>Str</sub> + E<sub>therm</sub></f-m> (Lampe)'],['c','<f-m>E<sub>L</sub></f-m> (Wasser im See) → <f-m>E<sub>el</sub></f-m> (Wasser, Turbine) → <f-m>E<sub>B</sub></f-m> (Generator) → <f-m>E<sub>Str</sub> + E<sub>therm</sub></f-m> (Lampe)'],['d','<f-m>E<sub>chem</sub></f-m> (Wasser im See) → <f-m>E<sub>B</sub></f-m> (Wasser, Turbine) → <f-m>E<sub>el</sub></f-m> (Generator) → <f-m>E<sub>Str</sub> + E<sub>therm</sub></f-m> (Lampe)']],ok:'a',
   hinweis:'Wo ist das Wasser am Anfang? Was passiert auf dem Weg nach unten, und was macht der Generator?',
   tipps:['Am Anfang liegt das Wasser hoch oben: Lageenergie.','Fallendes Wasser bewegt sich und dreht die Turbine. Der Generator macht daraus elektrische Energie, die Lampe Licht und Wärme.'],
-  loesung:'Antwort a: <f-m>E<sub>L</sub> → E<sub>B</sub> → E<sub>el</sub> → E<sub>Str</sub> + E<sub>therm</sub></f-m>'},
+  loesung:'<f-m>E<sub>L</sub> → E<sub>B</sub> → E<sub>el</sub> → E<sub>Str</sub> + E<sub>therm</sub></f-m>'},
  {afb:3,typ:'num',frage:'Die Kette hat drei Glieder: Turbine mit Generator <f-m>η<sub>1</sub> = 0,70</f-m>, Leitung zur Hütte <f-m>η<sub>2</sub> = 0,95</f-m> und LED-Lampen <f-m>η<sub>3</sub> = 0,30</f-m> (Nutzen: Licht). Wie groß ist der Gesamtwirkungsgrad vom Wasser bis zum Licht? Gib ihn in Prozent an.',
   einheit:'%',ziel:0.7*0.95*0.3*100,tol:.03,
   fehler:[[0.7*0.95*0.3,'Das ist die Dezimalzahl. Gefragt ist der Wert in Prozent.'],[(0.7+0.95+0.3)/3*100,'Wirkungsgrade einer Kette werden multipliziert, nicht gemittelt.'],[(0.7+0.95+0.3)*100,'Wirkungsgrade einer Kette werden multipliziert, nicht addiert.']],
@@ -358,15 +358,15 @@ const ST=[
 {name:'Lenas Tee',thema:'Nebenquest · Energieentwertung',side:1,
  tasks:[
  {afb:1,typ:'mc',frage:'Lena hat ihren heißen Tee draußen stehen lassen. Nach einer Viertelstunde ist er kalt. Was ist mit der thermischen Energie des Tees passiert?',bild:'tee',
-  opts:[['a','Sie wurde an die kalte Umgebung abgegeben und ist dort verteilt.'],['b','Sie ist einfach verschwunden.'],['c','Sie hat sich in „Kälte“ umgewandelt.'],['d','Sie steckt jetzt in der Tasse und kommt gleich zurück.']],ok:'a',
+  opts:[['a','Sie wurde an die kalte Luft und den Schnee abgegeben und ist dort verteilt.'],['b','Sie ist verschwunden, weil thermische Energie nach einer Weile zerfällt.'],['c','Sie wurde in Kälteenergie umgewandelt, die jetzt im Tee steckt.'],['d','Sie steckt jetzt in der Tasse und fließt gleich in den Tee zurück.']],ok:'a',
   hinweis:'Energie verschwindet nie. In welche Richtung fließt Wärme: von warm nach kalt oder umgekehrt?',
   tipps:['Wärme fließt immer vom wärmeren zum kälteren Körper.','Die Energie ist in der kalten Luft und im Schnee verteilt.'],
-  loesung:'Antwort a: Die thermische Energie ist an die Umgebung abgegeben worden.'},
+  loesung:'Die thermische Energie ist an die Umgebung abgegeben worden.'},
  {afb:2,typ:'mc',frage:'Lena fragt: „Kann man die Energie aus der Luft nicht einfach zurückholen und den Tee damit wieder heiß machen?“',
-  opts:[['a','Ja, ganz einfach, sie ist ja noch da.'],['b','Kaum. Die Energie ist so fein in der Umgebung verteilt, dass man sie praktisch nicht mehr nutzen kann. Sie ist entwertet.'],['c','Nein, weil es sie nicht mehr gibt.'],['d','Ja, wenn man lange wartet, wird der Tee von allein wieder heiß.']],ok:'b',
+  opts:[['a','Ja. Die Energie ist ja noch da, man muss sie nur wieder einsammeln.'],['b','Kaum. Sie ist so fein verteilt, dass man sie praktisch nicht mehr nutzen kann.'],['c','Nein. Die Energie gibt es nicht mehr, sie ist beim Abkühlen verschwunden.'],['d','Ja. Wenn man lange genug wartet, wird der Tee von allein wieder heiß.']],ok:'b',
   hinweis:'Denk an das Wort „Energieentwertung“.',
   tipps:['Die Energie ist noch da, aber wo genau?','Verteilte thermische Energie in der Umgebung kann man kaum noch nutzen. Das nennt man Energieentwertung.'],
-  loesung:'Antwort b: Die Energie ist entwertet. Sie ist noch da, aber nicht mehr nutzbar.'}
+  loesung:'Die Energie ist entwertet. Sie ist noch da, aber nicht mehr nutzbar.'}
  ]},
 {name:'Opas Holzaufzug',thema:'Nebenquest · Lageenergie',side:1,
  tasks:[
@@ -376,10 +376,10 @@ const ST=[
   tipps:['Die Formel ist <f-m>E<sub>L</sub> = m · g · h</f-m>.','<f-m>E<sub>L</sub> = 15 kg · 9,81 N/kg · 4,0 m</f-m>.'],
   loesung:'<f-m>E<sub>L</sub> = m · g · h = 15 kg · 9,81 N/kg · 4,0 m ≈ 589 J</f-m>'},
  {afb:2,typ:'mc',frage:'Opa überlegt, den Korb lieber über eine lange, flache Rampe hinaufzuziehen. Wie viel Lageenergie hat das Holz dann oben?',
-  opts:[['a','Mehr, weil der Weg länger ist.'],['b','Weniger, weil die Rampe flach ist.'],['c','Genauso viel, denn nur die Höhe über dem Nullniveau zählt.'],['d','Gar keine, weil er es nicht senkrecht hebt.']],ok:'c',
+  opts:[['a','Mehr, weil er das Holz auf der Rampe einen längeren Weg ziehen muss.'],['b','Weniger, weil die Rampe flach ist und er dafür weniger Kraft braucht.'],['c','Genauso viel, weil nur die Höhe über dem Nullniveau zählt.'],['d','Gar keine, weil er das Holz nicht senkrecht nach oben hebt.']],ok:'c',
   hinweis:'Kommt in <f-m>E<sub>L</sub> = m · g · h</f-m> der Weg vor?',
   tipps:['Schau dir die Formel genau an: Welche Größen kommen darin vor?','Der Weg spielt keine Rolle, nur der Höhenunterschied.'],
-  loesung:'Antwort c: Gleich viel, <f-m>E<sub>L</sub></f-m> hängt nur von m, g und h ab.'}
+  loesung:'Gleich viel, <f-m>E<sub>L</sub></f-m> hängt nur von m, g und h ab.'}
  ]}
 ];
 const TOTAL=ST.reduce((a,s)=>a+(s.side?0:s.tasks.length),0);
@@ -736,14 +736,15 @@ $$('#pad [data-d]').forEach(bt=>{const d=bt.dataset.d;const on=e=>{e.preventDefa
 $('#aBtn').addEventListener('pointerdown',e=>{e.preventDefault();if(started){setActive(true);act()}});
 /* --- Vollbild --- */
 const GM=$('#game');
+GM.appendChild(TD);GM.appendChild($('#spickDlg'));
 function fit(){if(!GM.classList.contains('full')){cv.style.width='';cv.style.height='';return}
  const sc=$('#screen'),w=sc.clientWidth,h=sc.clientHeight,k=Math.min(w/VW,h/VH);cv.style.width=Math.floor(VW*k)+'px';cv.style.height=Math.floor(VH*k)+'px'}
 function full(on){GM.classList.toggle('full',on);document.body.classList.toggle('vollbild',on);
- if(on){try{if(GM.requestFullscreen&&!document.fullscreenElement)GM.requestFullscreen().catch(()=>{})}catch(e){}}
+ if(on){const D=document.documentElement;try{if(D.requestFullscreen&&!document.fullscreenElement)D.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch(e){}}
  else if(document.fullscreenElement){document.exitFullscreen().catch(()=>{})}
  requestAnimationFrame(fit);setTimeout(fit,300);if(on&&started){setActive(true);cv.focus({preventScroll:true})}}
 $('#fullBtn').onclick=()=>full(true);$('#fullX').onclick=()=>full(false);
-document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&GM.classList.contains('full'))full(false);else fit()});
+document.addEventListener('fullscreenchange',()=>{setTimeout(fit,100)});
 addEventListener('resize',fit);
 addEventListener('keydown',e=>{if(e.key==='Escape'&&GM.classList.contains('full')&&!TD.open&&!$('#spickDlg').open)full(false)});
 /* --- Schleife --- */
