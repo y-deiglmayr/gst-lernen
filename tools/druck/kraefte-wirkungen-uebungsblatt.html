@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Was ist eine Kraft? – Übungsblatt</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<style>
+.feldbild{position:relative}
+.feldbild svg{position:absolute;left:0;top:0}
+.wl{font-size:9.4pt;color:var(--slate2);margin:0 0 1.4mm}
+.wl b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 8 · Mechanik</div>
+  <h1>Kräfte 1 · Was ist eine Kraft?</h1>
+  <div class="unter">Übungsblatt zum Lernpfad „Was ist eine Kraft?“ · 4 · Üben</div>
+ </div>
+ <div class="qr"><!--QR:https://physik.party/Physik8/kraefte-wirkungen--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33"><path stroke="#3e4b4c" d="M0 0.5h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h1m3 0h7m-33 1h1m5 0h1m1 0h1m1 0h1m4 0h1m4 0h1m1 0h1m3 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h7m3 0h4m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m4 0h1m1 0h1m1 0h3m1 0h2m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m4 0h2m1 0h3m1 0h3m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m2 0h2m1 0h1m1 0h1m3 0h1m1 0h2m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-23 1h1m3 0h1m1 0h1m1 0h3m1 0h1m-22 1h1m4 0h5m4 0h1m1 0h1m6 0h2m5 0h2m-33 1h1m1 0h3m2 0h2m1 0h1m1 0h1m2 0h1m1 0h4m1 0h2m4 0h3m-31 1h2m1 0h1m1 0h3m1 0h2m4 0h1m1 0h1m2 0h1m1 0h1m5 0h1m1 0h2m-27 1h1m1 0h2m2 0h2m5 0h1m3 0h3m1 0h7m-31 1h2m1 0h3m1 0h3m1 0h2m1 0h3m1 0h1m2 0h2m1 0h1m4 0h2m-31 1h2m1 0h1m1 0h2m3 0h2m1 0h1m2 0h4m1 0h1m2 0h2m3 0h2m-33 1h2m3 0h8m1 0h1m1 0h3m3 0h1m1 0h3m1 0h4m-30 1h1m1 0h2m1 0h1m1 0h3m1 0h2m3 0h2m2 0h1m2 0h1m3 0h2m1 0h1m-33 1h2m2 0h1m1 0h1m2 0h1m2 0h4m1 0h4m1 0h1m2 0h1m1 0h2m3 0h1m-33 1h3m1 0h1m2 0h5m2 0h1m1 0h2m1 0h5m1 0h2m2 0h4m-33 1h4m2 0h1m2 0h4m4 0h7m1 0h3m1 0h2m1 0h1m-32 1h1m5 0h2m1 0h1m2 0h3m1 0h1m2 0h1m1 0h1m1 0h2m2 0h4m-32 1h3m2 0h2m2 0h3m1 0h1m1 0h2m1 0h1m3 0h2m1 0h1m1 0h3m2 0h1m-33 1h1m1 0h3m2 0h3m3 0h5m1 0h1m3 0h1m3 0h2m-29 1h1m1 0h2m1 0h2m2 0h1m1 0h2m4 0h1m2 0h2m2 0h1m3 0h2m1 0h1m-32 1h1m9 0h1m3 0h2m1 0h1m2 0h1m2 0h1m3 0h2m1 0h1m1 0h1m-33 1h2m1 0h2m1 0h4m4 0h1m2 0h1m1 0h1m3 0h6m-21 1h1m1 0h5m2 0h1m1 0h2m2 0h2m3 0h1m1 0h3m-33 1h7m1 0h1m1 0h2m5 0h2m4 0h2m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m2 0h3m1 0h1m1 0h2m1 0h3m1 0h3m3 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h3m2 0h4m1 0h1m1 0h1m1 0h6m2 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m1 0h4m2 0h3m3 0h2m1 0h2m3 0h1m-33 1h1m1 0h3m1 0h1m3 0h3m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m1 0h6m-33 1h1m5 0h1m1 0h1m1 0h1m3 0h2m3 0h1m2 0h1m2 0h1m1 0h2m1 0h1m-31 1h7m4 0h2m1 0h2m1 0h4m1 0h4m1 0h1m3 0h1"/></svg></div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Lösen:</b> Bearbeite die Aufgaben hier auf dem Blatt.</div>
+ <div><b class="n">2</b><b>Prüfen:</b> Gib deine Antworten im Lernpfad unter <b>„4 · Üben“</b> bei derselben Übungsnummer ein.</div>
+ <div><b class="n">3</b><b>Abhaken:</b> Kreuze <b>online geprüft</b> an. Falsch? Erst den Tipp im Lernpfad lesen, dann verbessern.</div>
+</div>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 1</span><span class="t">Welche Wirkung?</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Welche Wirkung hat die Kraft? Schreibe die passende Wirkung in die Zeile.</p>
+  <p class="wl">Zur Auswahl: <b>beschleunigen</b> · <b>abbremsen</b> · <b>Richtung ändern</b> · <b>elastisch verformen</b> · <b>unelastisch verformen</b></p>
+  <table class="rf">
+   <tr><td><b>a)</b> Ein Torwart hält einen scharf geschossenen Ball.</td><td style="width:56mm"><span class="l" style="width:52mm"></span></td></tr>
+   <tr><td><b>b)</b> Ein Magnet zieht eine ruhende Büroklammer an.</td><td><span class="l" style="width:52mm"></span></td></tr>
+   <tr><td><b>c)</b> Ein Luftballon wird zusammengedrückt und springt zurück.</td><td><span class="l" style="width:52mm"></span></td></tr>
+   <tr><td><b>d)</b> Ein Billardball wird von der Bande abgelenkt.</td><td><span class="l" style="width:52mm"></span></td></tr>
+   <tr><td><b>e)</b> Alufolie wird zerknüllt.</td><td><span class="l" style="width:52mm"></span></td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 2</span><span class="t">Einheiten umrechnen</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Rechne in die angegebene Einheit um.</p>
+  <div class="teil"><b>a)</b><span>130&nbsp;mN in N</span></div><div class="teil"><b>b)</b><span>14&nbsp;N in kN</span></div><div class="teil"><b>c)</b><span>0,25&nbsp;kN in N</span></div><div class="teil"><b>d)</b><span>2500&nbsp;mN in N</span></div>
+  <div class="karo" style="height:20mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <i></i> N</span><span class="feld">b) <i></i> kN</span><span class="feld">c) <i></i> N</span><span class="feld">d) <i></i> N</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 3</span><span class="t">Apfel am Ast</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Die Erde zieht einen Apfel mit <b>2&nbsp;N</b> nach <b>unten</b>. Zeichne die Kraft im Schwerpunkt des Apfels (Punkt). Maßstab: <b class="nw">1&nbsp;cm ≙ 1&nbsp;N</b>. Ein Kästchen ist 5&nbsp;mm breit (Blatt in 100&nbsp;% drucken).</p>
+  <div class="karo feldbild" style="height:45mm;width:70mm"><span class="lab">Zeichnung</span>
+   <svg width="70mm" height="45mm" viewBox="0 0 70 45" aria-hidden="true"><path d="M35 4.2 q1.2 -2.6 3.4 -3.4" fill="none" stroke="#5F6F74" stroke-width=".6"/><path d="M38.4 1.6 q3.2 -.8 4.6 1.4 q-2.8 1.2 -4.6 -1.4z" fill="#9fbf8a" stroke="#5F6F74" stroke-width=".3"/><path d="M35 5.6 c-3 -2 -9 -1.6 -9 4.8 c0 5.8 4.6 9.4 9 8.2 c4.4 1.2 9 -2.4 9 -8.2 c0 -6.4 -6 -6.8 -9 -4.8z" fill="#f3b5a8" stroke="#3E4B4C" stroke-width=".5"/><circle cx="35" cy="10" r=".9" fill="#3E4B4C"/></svg>
+  </div>
+  <div class="erg"><span class="feld">Pfeillänge <i></i> cm</span><span class="klein">Im Lernpfad den Pfeil nachzeichnen.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 4</span><span class="t">Die Kiste</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ben schiebt eine Kiste mit <b>40&nbsp;N</b> nach <b>links</b>. Zeichne die Kraft im Schwerpunkt der Kiste (Punkt). Maßstab: <b class="nw">1&nbsp;cm ≙ 10&nbsp;N</b>. Berechne zuerst die Pfeillänge.</p>
+  <div class="karo feldbild" style="height:40mm;width:95mm"><span class="lab">Zeichnung</span>
+   <svg width="95mm" height="40mm" viewBox="0 0 95 40" aria-hidden="true"><line x1="0" y1="35" x2="95" y2="35" stroke="#3E4B4C" stroke-width=".6"/><rect x="65" y="15" width="20" height="20" fill="#ead2b4" stroke="#3E4B4C" stroke-width=".5"/><circle cx="75" cy="25" r=".9" fill="#3E4B4C"/></svg>
+  </div>
+  <div class="karo" style="height:12mm"><span class="lab">Rechnung Pfeillänge</span></div>
+  <div class="erg"><span class="feld">Pfeillänge <i></i> cm</span><span class="klein">Im Lernpfad den Pfeil nachzeichnen.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 5</span><span class="t">Kräfte im Stadtpark</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>An einem stürmischen Herbsttag wirken auf einen Apfelbaum ganz unterschiedliche Kräfte. Wähle jeweils einen passenden Maßstab, sodass der Pfeil gut aufs Papier passt (2&nbsp;cm lang).</p>
+  <p class="wl">Zur Auswahl: <b class="nw">1&nbsp;cm ≙ 1&nbsp;N</b> · <b class="nw">1&nbsp;cm ≙ 50&nbsp;N</b> · <b class="nw">1&nbsp;cm ≙ 10&nbsp;kN</b></p>
+  <table class="rf">
+   <tr><td>Der Wind bläst mit 20&nbsp;kN gegen die Krone.</td><td style="width:56mm"><span class="l" style="width:52mm"></span></td></tr>
+   <tr><td>Ein Ball rollt mit 100&nbsp;N gegen den Stamm.</td><td><span class="l" style="width:52mm"></span></td></tr>
+   <tr><td>Ein Apfel zieht mit 2&nbsp;N am Ast.</td><td><span class="l" style="width:52mm"></span></td></tr>
+   <tr><td>Was macht der Wind mit dem Baum?</td><td><span class="l" style="width:52mm"></span></td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 6</span><span class="t">Stimmt das?</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Kreuze an: richtig (r) oder falsch (f)? Verbessere falsche Aussagen im Kopf.</p>
+  <table class="rf"><tr><th></th><th>r</th><th>f</th></tr>
+   <tr><td>„Ein rollendes Skateboard hat Kraft in sich.“</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>„Wo sich nichts bewegt, wirkt keine Kraft.“</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>„Ein Körper mit 5&nbsp;kg zieht mit 5&nbsp;N an der Hand.“</td><td class="x"></td><td class="x"></td></tr>
+   <tr><td>„Ein Magnet kann eine Kraft ausüben, ohne den anderen Körper zu berühren.“</td><td class="x"></td><td class="x"></td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 7</span><span class="t">Der geworfene Ball</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Ball hat deine Hand verlassen und fliegt durch die Luft. Welche Kraft wirkt jetzt noch auf ihn? (Luft nicht beachten) Kreuze an.</p>
+  <table class="rf">
+   <tr><td class="x"></td><td>Die Wurfkraft aus der Hand, die im Ball steckt.</td></tr>
+   <tr><td class="x"></td><td>Nur die Gewichtskraft (die Erde zieht ihn nach unten).</td></tr>
+   <tr><td class="x"></td><td>Gar keine Kraft.</td></tr>
+  </table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 8</span><span class="t">Das Trampolin</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Lena springt mit mehreren Freundinnen und Freunden gleichzeitig auf einem Trampolin. Danach ist das Sprungtuch nicht mehr so straff gespannt wie vorher. <span class="beg">✍ Erläutere</span>, was mit den Federn des Trampolins passiert sein könnte.</p>
+  <div class="zeilen" style="height:30mm"></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 9</span><span class="t">Unsichtbar, aber da</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Du sitzt still auf einem gepolsterten Stuhl. Nichts bewegt sich. <span class="beg">✍ Begründe</span>, dass trotzdem eine Kraft wirkt. Nenne die beiden beteiligten Körper.</p>
+  <div class="zeilen" style="height:30mm"></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+
+</body>
+</html>

@@ -230,6 +230,7 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
 .heft .fig2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}
 .heft .fig2 svg{width:100%;height:auto;display:block;background:var(--paper);border:1px solid var(--line);border-radius:8px}
+.musterfig{margin:6px 0 14px;max-width:420px}.musterfig svg{display:block;width:100%;height:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px}
 .heft table{border-collapse:collapse;margin:6px 0;font-size:16px}.heft td,.heft th{border:1px solid var(--line);padding:4px 10px;background:var(--paper)}
 .stepper .stepbox{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
 .stepper .stepbox p{margin:.3em 0}
@@ -313,6 +314,7 @@ QR groß zeigen</button></div>
 <div class="phases">
 <a href="#einstieg"><b>1 · Einstieg</b><small>Was ist eine Kraft?</small></a><a href="#entdecken"><b>2 · Entdecken</b><small>Ball-Labor, Verformung, zwei Körper, Kraftpfeil, Newton</small></a><a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ Heftaufschrieb</small></a><a href="#ueben"><b>4 · Üben</b><small>9 Übungen von ★ bis ★★★</small></a>
 </div>
+<div class="ablinks"><a class="arbeitsblatt" href="/Physik8/kraefte-wirkungen-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigenem Kraftpfeil · PDF, 1 Seite</small></span></a><a class="arbeitsblatt" href="/Physik8/kraefte-wirkungen-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 9 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a></div>
 </div></header>
 
 <!-- ============ 1 EINSTIEG ============ -->
@@ -407,18 +409,23 @@ QR groß zeigen</button></div>
 <div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommt der Heftaufschrieb."><div class="cloze">Kräfte kann man nicht sehen. Man erkennt sie an ihren <select data-a="Wirkungen"><option value="">…</option><option>Wirkungen</option><option>Farben</option><option>Geräuschen</option></select>. Eine Kraft kann einen Körper beschleunigen, abbremsen, seine <select data-a="Richtung"><option value="">…</option><option>Richtung</option><option>Masse</option><option>Farbe</option></select> ändern oder ihn verformen. Federt der Körper zurück, ist die Verformung <select data-a="elastisch"><option value="">…</option><option>elastisch</option><option>unelastisch</option></select>. An jeder Kraft sind <select data-a="zwei"><option value="">…</option><option>zwei</option><option>ein</option><option>drei</option></select> Körper beteiligt. Kräfte zeichnet man als <select data-a="Pfeil"><option value="">…</option><option>Pfeil</option><option>Kreis</option><option>Linie ohne Spitze</option></select> mit Angriffspunkt, Richtung und Länge. Die Einheit der Kraft ist das <select data-a="Newton"><option value="">…</option><option>Newton</option><option>Kilogramm</option><option>Meter</option></select>.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
 </div>
 
-<div class="heftbox" id="heft" data-task="heft1"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB</b><small>Vollständig ins Heft übernehmen: Überschrift, Text, Zeichnung und Merksatz</small></div>
+<a class="arbeitsblatt" href="/Physik8/kraefte-wirkungen-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigenem Kraftpfeil · PDF, 1 Seite</small></span></a>
+<details class="reveal" id="heft"><summary>✎ Heftaufschrieb anzeigen (erst selbst versuchen, dann vergleichen)</summary>
 <div class="heft">
-<h3>5.1 Kräfte und ihre Wirkungen</h3>
-<p><b>Was ist eine Kraft?</b> Kräfte sind unsichtbar. Man erkennt sie nur an ihren <b>Wirkungen</b>. An einer Kraft sind immer <b>zwei Körper</b> beteiligt (z. B. Fuß und Ball, Erde und Apfel).</p>
-<p><b>Eine Kraft kann einen Körper</b></p>
-<ul><li><b>beschleunigen</b> (schneller machen),</li><li><b>abbremsen</b> (langsamer machen),</li><li>seine <b>Bewegungsrichtung ändern</b>,</li><li><b>verformen</b>: elastisch (federt zurück) oder unelastisch (bleibt verformt).</li></ul>
-<p><b>Der Kraftpfeil:</b> Kräfte stellt man als Pfeil dar. Er zeigt <b>Angriffspunkt</b>, <b>Richtung</b> und mit seiner <b>Länge</b> die Größe der Kraft (Maßstab, z. B. 1 cm ≙ 10 N). Wirkt die Kraft auf den ganzen Körper, zeichnen wir sie im Schwerpunkt ein.</p>
-<div class="fig2"><svg style="max-width:360px" viewBox="0 0 300 110" role="img" aria-label="Kraftpfeil mit Angriffspunkt, Richtung und Länge"><rect x="20" y="40" width="70" height="50" rx="3" fill="#d9a066"/><line x1="55" y1="65" x2="220" y2="65" style="stroke:var(--f1)" stroke-width="4"/><path d="M236 65 l-18 -9 v18z" style="fill:var(--f1)"/><circle cx="55" cy="65" r="4.5" style="fill:var(--f1)"/><text x="14" y="106" class="txs">Angriffspunkt</text><text x="240" y="70" class="txs">Richtung</text><text x="110" y="34" class="txs">Länge ≙ Größe</text><text x="140" y="58" class="flab" style="fill:var(--f1)">F</text></svg></div>
-<p><b>Formelzeichen:</b> <f-m>F</f-m> &nbsp; <b>Einheit:</b> <span class="box"><f-m>[F] = 1 N</f-m> (Newton)</span> &nbsp; <f-m>1 kN = 1000 N</f-m></p>
-<p><b>Größenvorstellung:</b> Auf eine Tafel Schokolade (100 g) wirkt eine Gewichtskraft von etwa <f-m>1 N</f-m>.</p>
+<h3>Was ist eine Kraft?</h3>
+<p>Kräfte sind unsichtbar. Man erkennt sie nur an ihren <b>Wirkungen</b>. An einer Kraft sind immer <b>zwei Körper</b> beteiligt (z. B. Fuß und Ball, Erde und Apfel).</p>
+<h3>Wirkungen von Kräften</h3>
+<p>Eine Kraft kann einen Körper</p>
+<ul><li><b>beschleunigen</b> (schneller machen),</li><li><b>abbremsen</b> (langsamer machen),</li><li>seine <b>Bewegungsrichtung</b> ändern,</li><li><b>verformen</b>: <b>elastisch</b> (federt zurück) oder <b>unelastisch</b> (bleibt verformt).</li></ul>
+<h3>Der Kraftpfeil</h3>
+<p>Kräfte stellt man als <b>Pfeil</b> dar. Er zeigt <b>Angriffspunkt</b>, <b>Richtung</b> und mit seiner <b>Länge</b> die Größe der Kraft (Maßstab, z. B. 1 cm ≙ 10 N). Wirkt die Kraft auf den ganzen Körper, zeichnen wir sie im <b>Schwerpunkt</b> ein.</p>
+<figure class="musterfig"><svg viewBox="0 0 300 120" role="img" aria-label="Kiste mit Kraftpfeil: Angriffspunkt in der Mitte, Richtung nach rechts, Länge zeigt die Größe"><rect x="24" y="36" width="72" height="48" rx="3" fill="#d9a066"/><line x1="60" y1="60" x2="142" y2="60" style="stroke:var(--f1)" stroke-width="4"/><path d="M158 60 l-18 -9 v18z" style="fill:var(--f1)"/><circle cx="60" cy="60" r="4.5" style="fill:var(--f1)"/><text x="14" y="104" class="txs">Angriffspunkt</text><text x="166" y="65" class="txs">Richtung</text><text x="100" y="44" class="txs">Länge ≙ Größe</text><text x="116" y="84" class="flab" style="fill:var(--f1)">F</text></svg></figure>
+<h3>Formelzeichen und Einheit</h3>
+<p>Formelzeichen: <b><f-m>F</f-m></b> &nbsp; Einheit: <b>Newton</b>, Kurzzeichen <b><f-m>N</f-m></b> &nbsp; <f-m>1 kN = 1000 N</f-m></p>
+<p>Größenvorstellung: Auf eine Tafel Schokolade (100 g) wirkt eine Gewichtskraft von etwa <b><f-m>1 N</f-m></b>.</p>
+<div class="row"><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div>
 </div>
-<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div></div>
+</details>
 <div class="merke"><h4>Kraft erkennen in drei Fragen</h4><ol><li>Wer wirkt auf wen?</li><li>Was verändert sich (Bewegung oder Form)?</li><li>Wie zeichne ich den Kraftpfeil (Angriffspunkt, Richtung, Länge)?</li></ol></div>
 </div></section>
 
@@ -426,6 +433,7 @@ QR groß zeigen</button></div>
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
 <p class="intro"><b>Erst im Heft lösen, dann hier prüfen.</b></p>
+<a class="arbeitsblatt" href="/Physik8/kraefte-wirkungen-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 9 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a>
 <div class="lvlrow"><span>★ / AFB I: Grundlagen anwenden</span><span>★★ / AFB II: Zusammenhänge herstellen</span><span>★★★ / AFB III: übertragen, beurteilen, begründen</span></div>
 
 <div class="card"><div class="tag">Übung 1 · Welche Wirkung? <span class="stars">★</span> <span class="afb">AFB I</span></div>

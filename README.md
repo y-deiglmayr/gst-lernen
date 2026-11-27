@@ -19,6 +19,7 @@ Physik8/
   lichtbrechung-theorie.html     Lichtbrechung 2: Theorie
   lichtbrechung-uebungen.html    Lichtbrechung 3: Üben
   kraefte-wirkungen.html    Kräfte 1 · Was ist eine Kraft? (Kraftwirkungen, Kraftpfeil, Newton)
+  kraefte-wirkungen-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   gewichtskraft-masse.html  Kräfte 2 · Gewichtskraft und Masse (Gravitation, Ortsfaktor, F_G = m · g)
   hookesches-gesetz.html    Kräfte 3 · Kräfte messen: hookesches Gesetz (Feder-Labor, Federkonstante)
   kraefte-newton.html       Kräfte 4 · Mehrere Kräfte und Newtons Gesetze (Kräftegleichgewicht, Trägheit, Kraft = Gegenkraft)
