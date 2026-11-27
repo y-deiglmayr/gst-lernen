@@ -656,24 +656,25 @@ let bgSpace=null;
 MGS.sling=(()=>{const S=4,GY=166,g=1.6,m1=10,PX=6,PY=3.5,XR0=64,XR1=71,XB=78.2,VMAX=12,PULL=7,TSC=1.5;
  const RD=[{m2:10,H:2,cx:50,lim:0},{m2:10,H:2,cx:50,lim:1.5},{m2:20,H:2,cx:57,lim:1.5}];
  const X=x=>x*S,Y=y=>GY-y*S;
- let c,a=45,v0=7,ball,cart,st,trail,lastTrail=[],drag=false,hit,hmax,tEnd,hT;
+ let c,a=45,vx=5,ball,cart,st,trail,lastTrail=[],drag=false,hit,hmax,tEnd,hT;
  const back=(()=>{const k=starsCanvas(320,180,23,260),q=k.getContext('2d');disc(q,262,34,20,'#5F6F74');disc(q,260,32,18,'#76989D');q.fillStyle='#ACBDC3';q.fillRect(243,28,34,2);q.fillRect(245,37,30,1);
   q.fillStyle='#6b5a4a';for(let x=0;x<320;x++){const h=8+Math.round(4*Math.sin(x/23)+3*Math.sin(x/9+1));q.fillRect(x,GY-h,1,h)}
   q.fillStyle='#8a7a66';q.fillRect(0,GY,320,14);for(let k2=0;k2<90;k2++){q.fillStyle=hash(k2,3)<.5?'#6b5a4a':'#a08f78';q.fillRect(Math.floor(hash(k2,1)*320),GY+1+Math.floor(hash(1,k2)*12),2,1)}return k})();
  const hT_=x=>x<XR0?0:x<XR1?(x-XR0)/(XR1-XR0)*c.H:c.H;
  function setPtr(px,py){let dx=(X(PX)-px)/S,dy=(py-Y(PY))/S;if(dx<.2)dx=.2;let L=Math.hypot(dx,dy);if(L>PULL){dx*=PULL/L;dy*=PULL/L;L=PULL}
-  a=Math.max(5,Math.min(85,Math.round(Math.atan2(dy,dx)*180/Math.PI)));v0=Math.max(1,Math.round(VMAX*L/PULL*10)/10)}
- function fire(){if(st!=='aim'||!mgReady)return;const r=a*Math.PI/180;ball={x:PX,y:PY,vx:v0*Math.cos(r),vy:v0*Math.sin(r)};st='fly';trail=[];hT=0}
+  a=Math.max(5,Math.min(85,Math.round(Math.atan2(dy,dx)*180/Math.PI)));vx=Math.max(.5,Math.round(VMAX*L/PULL*Math.cos(a*Math.PI/180)*10)/10)}
+ const vxMax=()=>Math.floor(VMAX*Math.cos(a*Math.PI/180)*10)/10,v0f=()=>vx/Math.cos(a*Math.PI/180),clampVx=()=>{vx=Math.max(.5,Math.min(vxMax(),vx))},setA=n=>{a=Math.max(5,Math.min(85,n));clampVx()},addVx=d=>{vx=Math.round(vx*10+d)/10;clampVx()};
+ function fire(){if(st!=='aim'||!mgReady)return;const r=a*Math.PI/180;ball={x:PX,y:PY,vx:vx,vy:vx*Math.tan(r)};st='fly';trail=[];hT=0}
  const self={title:'Die Schleuder',
  goal(r){return [`<p>Schieß eine Haftkugel (m<sub>1</sub> = 10 kg) auf den Erzwagen (m<sub>2</sub> = 10 kg). Die Kugel klebt fest, dann rollen beide zusammen. Der Wagen muss die Rampe hinauf auf die Verladeplattform (h = 2,0 m).</p>`,
   `<p>Gleicher Wagen, aber jetzt steht oben ein Prellbock: Der Wagen darf dort <b>höchstens mit 1,5 m/s</b> ankommen. Nicht zu schwach, nicht zu stark!</p><p>Für den Stoß zählt nur die waagrechte Geschwindigkeit v<sub>x</sub> der Kugel. Du siehst sie unter dem Spielbild.</p>`,
   `<p>Ein voller Erzwagen: m<sub>2</sub> = 20 kg, und er steht weiter hinten. Wieder höchstens 1,5 m/s am Prellbock.</p><p>Überleg vorher mit der Impulserhaltung: Wie groß muss v<sub>x</sub> ungefähr sein, wenn der Wagen danach etwa 2,7 m/s braucht?</p>`][r]+
-  `<p><small>Zielen: Kugel nach hinten ziehen und loslassen (Maus oder Finger), oder ↑↓ für den Winkel, ←→ für v<sub>0</sub>, Leertaste schießt. Modell: keine Luft, Schienen ohne Reibung, g = 1,6 N/kg. Zeitraffer ×1,5.</small></p>`},
+  `<p><small>Zielen: Kugel nach hinten ziehen und loslassen (Maus oder Finger), oder ↑↓ für den Winkel, ←→ für die waagrechte Abwurfgeschwindigkeit v<sub>x</sub>, Leertaste schießt. Modell: keine Luft, Schienen ohne Reibung, g = 1,6 N/kg. Zeitraffer ×1,5.</small></p>`},
  init(r){c=RD[r];ball=null;cart={x:c.cx,v:0,m:c.m2};st='aim';trail=[];drag=false;hit=null;hmax=0;tEnd=0;
-  setBtns([{lab:'α −',click:()=>{if(st==='aim')a=Math.max(5,a-1)}},{lab:'α +',click:()=>{if(st==='aim')a=Math.min(85,a+1)}},{lab:sub('v','0')+' −',click:()=>{if(st==='aim')v0=Math.max(1,Math.round(v0*10-1)/10)}},{lab:sub('v','0')+' +',click:()=>{if(st==='aim')v0=Math.min(VMAX,Math.round(v0*10+1)/10)}},{lab:'Schießen',cls:'go',click:fire}])},
+  setBtns([{lab:'α −',click:()=>{if(st==='aim')setA(a-1)}},{lab:'α +',click:()=>{if(st==='aim')setA(a+1)}},{lab:sub('v','x')+' −',click:()=>{if(st==='aim')addVx(-1)}},{lab:sub('v','x')+' +',click:()=>{if(st==='aim')addVx(1)}},{lab:'Schießen',cls:'go',click:fire}])},
  key(code,down,e){if(!down||st!=='aim')return code==='Space'||code.startsWith('Arrow');const f=e&&e.shiftKey?5:1;
-  if(code==='ArrowUp'||code==='KeyW')a=Math.min(85,a+f);else if(code==='ArrowDown'||code==='KeyS')a=Math.max(5,a-f);
-  else if(code==='ArrowRight'||code==='KeyD')v0=Math.min(VMAX,Math.round(v0*10+f)/10);else if(code==='ArrowLeft'||code==='KeyA')v0=Math.max(1,Math.round(v0*10-f)/10);
+  if(code==='ArrowUp'||code==='KeyW')setA(a+f);else if(code==='ArrowDown'||code==='KeyS')setA(a-f);
+  else if(code==='ArrowRight'||code==='KeyD')addVx(f);else if(code==='ArrowLeft'||code==='KeyA')addVx(-f);
   else if(code==='Space'||code==='Enter'){if(!e.repeat)fire()}else return false;return true},
  ptr(type,px,py){if(st!=='aim')return;if(type==='down'){drag=true;setPtr(px,py)}else if(type==='move'&&drag)setPtr(px,py);else if(type==='up'&&drag){drag=false;fire()}},
  update(dt){dt*=TSC;
@@ -688,8 +689,8 @@ MGS.sling=(()=>{const S=4,GY=166,g=1.6,m1=10,PX=6,PY=3.5,XR0=64,XR1=71,XB=78.2,V
      if(!c.lim||vb<=c.lim)mgWin(rec+`<p>Der Wagen ist oben angekommen${c.lim?` und rollte mit ${fmt(vb,2)} m/s gegen den Prellbock (erlaubt: 1,5 m/s)`:''}.</p>`);
      else mgFail(rec+`<p>Der Wagen knallte mit ${fmt(vb,2)} m/s gegen den Prellbock, erlaubt sind 1,5 m/s. Nimm etwas weniger v<sub>x</sub>.</p>`)}
     else if(cart.v<0&&cart.x<XR0-3){st='end';mgFail(recap()+`<p>Der Wagen kam nur bis h = ${fmt(hmax,2)} m und rollte zurück. Er braucht direkt nach dem Stoß mehr Geschwindigkeit, also brauchst du mehr v<sub>x</sub>.</p>`)}}}
-  else if(st==='miss'){tEnd-=dt;if(tEnd<=0){st='end';mgFail(ball.x>c.cx?`<p>Zu weit! Die Kugel flog über den Wagen (x = ${fmt(c.cx)} m) hinweg. Die graue gestrichelte Bahn zeigt deinen letzten Schuss.</p><p>Nimm weniger v<sub>0</sub> oder einen anderen Winkel.</p>`:`<p>Zu kurz! Die Kugel landete bei x = ${fmt(ball.x)} m, der Wagen steht bei x = ${fmt(c.cx)} m. Die graue gestrichelte Bahn zeigt deinen letzten Schuss.</p><p>Mehr v<sub>0</sub> oder ein anderer Winkel schickt die Kugel weiter.</p>`)}}},
- ro(){let s=`<span>Haftkugel ${sub('m','1')} = 10 kg</span><span>Wagen ${sub('m','2')} = ${c.m2} kg</span><span><b>${sub('v','0')} = ${fmt(v0)} m/s</b></span><span><b>α = ${a}°</b></span><span class="pv">${sub('v','x')} = ${fmt(v0*Math.cos(a*Math.PI/180),2)} m/s</span>`;
+  else if(st==='miss'){tEnd-=dt;if(tEnd<=0){st='end';mgFail(ball.x>c.cx?`<p>Zu weit! Die Kugel flog über den Wagen (x = ${fmt(c.cx)} m) hinweg. Die graue gestrichelte Bahn zeigt deinen letzten Schuss.</p><p>Nimm ein kleineres v<sub>x</sub> oder einen anderen Winkel.</p>`:`<p>Zu kurz! Die Kugel landete bei x = ${fmt(ball.x)} m, der Wagen steht bei x = ${fmt(c.cx)} m. Die graue gestrichelte Bahn zeigt deinen letzten Schuss.</p><p>Ein größeres v<sub>x</sub> oder ein anderer Winkel schickt die Kugel weiter.</p>`)}}},
+ ro(){let s=`<span>Haftkugel ${sub('m','1')} = 10 kg</span><span>Wagen ${sub('m','2')} = ${c.m2} kg</span><span class="pv"><b>Abwurf: ${sub('v','x')} = ${fmt(vx)} m/s</b></span><span><b>α = ${a}°</b></span>`;
   if(hit)s+=`<span class="pv">Stoß: p = ${sub('m','1')} · ${sub('v','x')} = ${fmt(m1*hit.vx)} kg·m/s → u = ${fmt(hit.u,2)} m/s</span><span>Wagen: v = ${fmt(Math.abs(cart.v),2)} m/s, h = ${fmt(hT_(cart.x),2)} m</span>`;
   else s+=`<span>Ziel: Plattform h = 2,0 m${c.lim?', Prellbock ≤ 1,5 m/s':''}</span>`;return s},
  draw(t){cx.drawImage(back,0,0);
@@ -705,8 +706,8 @@ MGS.sling=(()=>{const S=4,GY=166,g=1.6,m1=10,PX=6,PY=3.5,XR0=64,XR1=71,XB=78.2,V
   for(let k=0;k<4;k++)disc(cx,X(1+k*.9),GY-3-(k%2)*2,2,'#c94a3a');
   // Bahnen
   lastTrail.forEach(([x,y],k)=>{if(k%2)R(X(x),Y(y),1,1,'#76989D')});trail.forEach(([x,y])=>R(X(x),Y(y),1,1,'#f1f4f4'));
-  if(st==='aim'){const r=a*Math.PI/180;let bx=PX,by=PY,vx=v0*Math.cos(r),vy=v0*Math.sin(r);for(let k=0;k<14;k++){const tt=.09;bx+=vx*tt;vy-=g*tt;by+=vy*tt;if(k%2===0)R(X(bx),Y(by),1,1,'#FCBE00')}
-   const L=v0/VMAX*PULL,qx=PX-Math.cos(r)*L,qy=PY-Math.sin(r)*L;ln(sx-4,sy-4,X(qx),Y(qy),'#c94a3a',1);ln(sx+5,sy-4,X(qx),Y(qy),'#c94a3a',1);disc(cx,X(qx),Y(qy),2,'#e36a55')}
+  if(st==='aim'){const r=a*Math.PI/180;let bx=PX,by=PY,vy=vx*Math.tan(r);for(let k=0;k<14;k++){const tt=.09;bx+=vx*tt;vy-=g*tt;by+=vy*tt;if(k%2===0)R(X(bx),Y(by),1,1,'#FCBE00')}
+   const L=v0f()/VMAX*PULL,qx=PX-Math.cos(r)*L,qy=PY-Math.sin(r)*L;ln(sx-4,sy-4,X(qx),Y(qy),'#c94a3a',1);ln(sx+5,sy-4,X(qx),Y(qy),'#c94a3a',1);disc(cx,X(qx),Y(qy),2,'#e36a55')}
   else{ln(sx-4,sy-4,sx+5,sy-4,'#c94a3a',1)}
   // Wagen
   const th=cart.x>=XR0&&cart.x<XR1?Math.atan(c.H/(XR1-XR0)):0,wx=X(cart.x),wy=Y(hT_(cart.x));
