@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impuls-Spiel · Notruf von Station Nova-7</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<script src="/brand/theme.js"></script>
+<style>
+/* VOICE: Weltraum-Abenteuer mit Augenzwinkern – Bordroboter Momo spricht dich direkt an, kurze Sätze
+   IDEA: Nach einem Sonnensturm bringst du Station Nova-7 wieder zum Laufen. Alles bewegt sich nach echten Impuls-Gesetzen:
+         Shuttle ohne Reibung, Schleuder mit Klebestoß, Rückstoß im All, Landung mit Kraftstoß, elastische Gleitbahn.
+   COLOUR: Weltraum in Schiefer-Tönen, Licht und Ziele = Akzentgelb, Impulspfeile blau
+   LAYOUT: Spielfenster oben, Messwerte darunter, Aufgaben im Dialog, Spickzettel als Hilfe */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#1b2122);--ink:light-dark(#1f2627,#e9edee);--muted:light-dark(#5b676a,#a9b6b9);
+--panel:light-dark(#f1f4f4,#232b2d);--line:light-dark(#d3dbdc,#36423f);--card:light-dark(#ffffff,#2a3335);
+--imp:light-dark(#2563c9,#6aa5ff);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2a18);--night:#1b2122;--night2:#2f393a}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(30px,5vw,48px)}h2{font-size:clamp(24px,3.2vw,34px)}h3{font-size:20px;margin:0 0 .4em}h4{font-size:17px;margin:0 0 .3em}
+p{margin:0 0 .8em}sub{font-size:.72em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(24px,4vw,56px) max(5vw,16px)}
+.alt{background:var(--panel)}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;font-size:13px;margin-right:6px}
+.hero{color:#f1f4f4}
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop,dialog.spick::backdrop{background:rgba(10,14,14,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:22px}
+.phases a{display:block;padding:12px 14px;border-radius:12px;border:1px solid;text-decoration:none}
+.phases b{display:block;font-size:16px}.phases small{font-size:14px}
+button{font:600 15px Lexend,sans-serif;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+button.primary{background:var(--gst-acc);color:var(--gst-on-acc);border-color:transparent}
+button:disabled{opacity:.5;cursor:not-allowed}
+/* ---------- Spielbereich ---------- */
+.game{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--card);box-shadow:0 10px 30px rgba(20,28,29,.12)}
+.hud{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:10px 14px;background:var(--night);color:#e9edee;font:600 15px Lexend,sans-serif}
+.hud .akku{display:flex;align-items:center;gap:8px}
+.hud .akku i{display:block;width:110px;height:16px;border:2px solid #c9d2d3;border-radius:4px;position:relative;padding:2px}
+.hud .akku i::after{content:"";position:absolute;right:-6px;top:3px;width:4px;height:6px;background:#c9d2d3;border-radius:0 2px 2px 0}
+.hud .akku b{display:block;height:100%;width:0;background:var(--gst-yellow);border-radius:2px;transition:width .6s}
+.hud .sp{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.hud button{background:#2f393a;color:#e9edee;border-color:#5F6F74;padding:7px 12px;font-size:14px}
+.hud button:hover{border-color:var(--gst-yellow)}
+.hud .quest{flex-basis:100%;font:500 14px "Atkinson Hyperlegible",sans-serif;color:#d3dcde}
+.hud .quest span:first-child{color:var(--gst-yellow)}
+.screen{position:relative;background:#0e1314;line-height:0}
+#cv{display:block;width:100%;height:auto;aspect-ratio:16/9;image-rendering:pixelated;image-rendering:crisp-edges;outline:none;touch-action:none}
+#cv:focus-visible{outline:3px solid var(--gst-yellow);outline-offset:-3px}
+.talkbox{position:absolute;left:2%;right:2%;bottom:3%;display:flex;gap:12px;align-items:flex-start;background:#1b2122;color:#f1f4f4;border:3px solid #e9edee;box-shadow:0 0 0 3px #1b2122,4px 4px 0 3px rgba(0,0,0,.4);padding:10px 14px;line-height:1.4;cursor:pointer;font-size:clamp(14px,1.8vw,18px);min-height:26%;z-index:3}
+.talkbox canvas{width:56px;height:56px;image-rendering:pixelated;flex:none;background:#2f393a;border:2px solid #5F6F74}
+.talkbox b{font:600 14px Lexend,sans-serif;color:var(--gst-yellow)}
+.talkbox p{margin:2px 0 0}
+.talkbox small{position:absolute;right:10px;bottom:4px;font-size:11px;color:#a9b6b9}
+.talkbox .ch{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.talkbox .ch button{background:#2f393a;color:#f1f4f4;border:2px solid #e9edee;font-size:14px;padding:6px 12px}
+.talkbox .ch button:first-child{background:var(--gst-yellow);color:#1b2122;border-color:#b88a00}
+.startov,.mgmsg{position:absolute;inset:0;display:grid;place-items:center;background:rgba(14,19,20,.55);text-align:center;line-height:1.4;padding:12px;z-index:4}
+.endov{position:absolute;inset:0;display:grid;place-items:center;background:rgba(14,19,20,.6);text-align:center;line-height:1.45;padding:12px;color:#f1f4f4;z-index:5}
+.endov>div,.mgmsg>div{background:#1b2122;color:#f1f4f4;border:3px solid #e9edee;box-shadow:0 0 0 3px #1b2122;padding:14px 20px;max-width:560px;max-height:100%;overflow:auto}
+.mgmsg h3{font-size:clamp(16px,2.2vw,20px);color:var(--gst-yellow);margin:0 0 6px}
+.mgmsg p{margin:0 0 8px;font-size:clamp(13px,1.7vw,16px)}
+.mgmsg .tools{justify-content:center}
+.mgmsg button.primary{background:var(--gst-yellow);color:#1b2122}
+.endov p{margin:0 0 6px}
+.endov[hidden],.startov[hidden],.pause[hidden],.talkbox[hidden],.mgmsg[hidden],.toast[hidden],.mgstrip[hidden]{display:none}
+.pxtitle{font:700 clamp(20px,4vw,40px) Lexend,sans-serif;color:#f1f4f4;text-shadow:3px 3px 0 #1b2122;margin:0 0 14px}
+.startov .keys{color:#d3dcde;font-size:14px;margin:12px 0 0}
+.pause{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:#1b2122;color:#f1f4f4;padding:4px 12px;border-radius:6px;font-size:13px;line-height:1.4;z-index:3}
+.toast{position:absolute;left:50%;top:8px;transform:translateX(-50%);background:#1b2122;color:#f1f4f4;border:2px solid var(--gst-yellow);padding:5px 12px;border-radius:8px;font-size:clamp(12px,1.6vw,15px);line-height:1.35;z-index:3;max-width:92%;text-align:center}
+/* Messwerte und Knöpfe unter dem Spielbild */
+.mgstrip{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;padding:8px 14px;background:#232b2d;color:#e9edee;font:500 14px/1.35 "Atkinson Hyperlegible",sans-serif;border-top:1px solid #3a4547;user-select:none;-webkit-user-select:none}
+.mgstrip .ro{display:flex;flex-wrap:wrap;gap:2px 14px;flex:1 1 300px}
+.mgstrip .ro span{white-space:nowrap}
+.mgstrip .ro b{color:var(--gst-yellow);font-weight:600}
+.mgstrip .ro .pv{color:#6aa5ff}
+.mgstrip .bt{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.mgstrip button{background:#2f393a;color:#e9edee;border:2px solid #5F6F74;padding:6px 11px;font-size:14px;touch-action:none}
+.mgstrip button.on{border-color:var(--gst-yellow);box-shadow:0 0 0 2px var(--gst-yellow)}
+.mgstrip button.go{background:var(--gst-yellow);color:#1b2122;border-color:#b88a00}
+.mgstrip button.big{padding:10px 18px;font-size:16px}
+.mgstrip button:disabled{opacity:.4}
+.gate{max-width:560px;margin:0 auto;border:1px solid var(--line);border-radius:16px;padding:22px;background:var(--panel)}
+body.frei .gate,body:not(.frei) #game,body:not(.frei) .legend,body:not(.frei) #spickzettel,body:not(.frei) .phases,body:not(.frei) .heftlink{display:none}
+.fullx{display:none}
+.game.full{position:fixed;inset:0;z-index:1000;border-radius:0;border:0;display:flex;flex-direction:column;background:#0e1314;height:100vh;height:100dvh;box-shadow:none}
+.game.full .fullx{display:grid;place-items:center;position:absolute;top:6px;right:8px;z-index:6;width:36px;height:36px;padding:0;border-radius:50%;background:#2f393a;color:#f1f4f4;border:2px solid #5F6F74;font-size:16px}
+.game.full .hud{padding:6px 54px 6px 10px;font-size:13px;gap:4px 14px}
+.game.full .hud .akku i{width:70px}
+.game.full .hud .quest{font-size:13px}
+.game.full #resetBtn,.game.full #fullBtn{display:none}
+.game.full .screen{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.game.full #cv{aspect-ratio:auto}
+.game.full .mgstrip{padding:5px 10px;font-size:13px}
+@media (orientation:portrait){.game.full .screen{align-items:flex-end}.game.full.inmg .screen{align-items:center}}
+.game.full .pad{display:flex;padding:8px 18px max(10px,env(safe-area-inset-bottom))}
+@media (orientation:landscape) and (max-height:560px){.game.full .pad{position:absolute;left:0;right:0;bottom:44px;background:transparent;pointer-events:none}.game.full .pad button{pointer-events:auto;opacity:.75}.game.full .talkbox{top:4%;bottom:auto;left:12%;right:12%;min-height:0}.game.full .hud .quest{display:none}.game.full .mgstrip .ro{flex-basis:200px}}
+body.vollbild{overflow:hidden}
+.pad{display:none;justify-content:space-between;align-items:center;padding:12px 18px;background:var(--night);touch-action:none;user-select:none;-webkit-user-select:none}
+@media (pointer:coarse),(max-width:720px){.pad{display:flex}}
+.game.inmg .pad{display:none!important}
+.dpad{display:grid;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(3,52px)}
+.dpad button,.abtn{background:#3E4B4C;color:#e9edee;border:2px solid #5F6F74;border-radius:10px;font-size:18px;padding:0;touch-action:none}
+.dpad button:active,.abtn:active{background:#5F6F74}
+.dpad [data-d=up]{grid-area:1/2}.dpad [data-d=left]{grid-area:2/1}.dpad [data-d=right]{grid-area:2/3}.dpad [data-d=down]{grid-area:3/2}
+.abtn{width:72px;height:72px;border-radius:50%;background:var(--gst-yellow);color:#2f393a;font:700 15px Lexend,sans-serif;border-color:#b88a00;line-height:1.1}
+dialog.taskdlg{overflow:auto;border:0;border-radius:18px;padding:0;width:min(920px,96vw);max-height:94vh;background:var(--bg);color:var(--ink)}
+dialog.taskdlg::backdrop{background:rgba(10,14,14,.75)}
+dialog.taskdlg .top{display:flex;justify-content:flex-end;padding:10px 14px 0;position:sticky;top:0;background:var(--bg);z-index:2}
+dialog.taskdlg #panel{padding:0 clamp(14px,3vw,28px) clamp(14px,3vw,28px)}
+/* Panel */
+.talk{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.talk svg.av{flex:none;width:76px;height:76px}
+.bubble{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 16px;flex:1}
+.bubble::before{content:"";position:absolute;left:-9px;top:22px;width:16px;height:16px;background:var(--panel);border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.bubble p:last-child{margin:0}
+.bubble .who{font:600 13px Lexend,sans-serif;color:var(--muted);display:block;margin-bottom:2px}
+.task{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--card)}
+.thead{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:10px}
+.afb{font:600 13px Lexend,sans-serif;padding:3px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--line);white-space:nowrap}
+.afb b{color:var(--gst-gold)}
+.dots{margin-left:auto;display:flex;gap:6px}
+.dots i{width:12px;height:12px;border-radius:3px;background:var(--line)}
+.dots i.ok{background:var(--gst-yellow)}.dots i.cur{outline:2px solid var(--gst-acc);outline-offset:1px}
+.fb{margin-top:10px;padding:10px 14px;border-radius:10px;display:none}
+.fb.ok{display:block;background:var(--okbg);color:var(--ok)}
+.fb.bad{display:block;background:var(--badbg);color:var(--bad)}
+.fb.hint{display:block;background:var(--hint);color:var(--ink)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.tools .tip{background:var(--hint)}
+.tiptxt{margin-top:10px;display:flex;gap:10px;align-items:flex-start;background:var(--hint);border-radius:12px;padding:10px 14px}
+.tiptxt svg{flex:none;width:40px;height:40px}
+.loes{margin-top:10px;border-left:4px solid var(--gst-heft);background:var(--gst-heft-bg);padding:10px 14px;border-radius:0 10px 10px 0}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font:500 16px "Atkinson Hyperlegible",sans-serif;display:flex;align-items:center;gap:10px}
+.mc button.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.mc button.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.numrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:8px}
+.numrow input{font:600 18px Lexend,sans-serif;width:150px;padding:8px 10px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.calcbox{font-size:15px;color:var(--muted);margin:6px 0 0}
+textarea{width:100%;min-height:90px;font:16px "Atkinson Hyperlegible",sans-serif;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.checks label{display:flex;gap:8px;align-items:flex-start;margin:4px 0}
+.win-box{text-align:center;padding:12px 0}
+.win-box .big{font:700 clamp(24px,4vw,34px) Lexend,sans-serif;margin:6px 0}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted);margin-top:14px}
+/* Spickzettel */
+dialog.spick{border:0;border-radius:18px;padding:0;max-width:min(760px,94vw);width:100%;background:var(--bg);color:var(--ink)}
+dialog.spick .in{padding:20px 22px;max-height:80vh;overflow:auto}
+dialog.spick .top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 22px;background:var(--gst-heft);color:var(--gst-on-heft)}
+dialog.spick .top h3{margin:0}
+dialog.spick .top button{background:transparent;color:inherit;border-color:currentColor}
+.spickgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.spickgrid section{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.spickgrid h4{color:var(--gst-heft)}
+.spickgrid ul{margin:0;padding-left:20px}
+@media (max-width:720px){.herohead{flex-direction:column}.qrbtn{display:none}.talk svg.av{width:56px;height:56px}.hud .sp{margin-left:0}.mgstrip{font-size:13px;padding:6px 10px}}
+</style>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<script defer src="/brand/feedback.js"></script>
+<script defer src="/brand/mischen.js"></script>
+</head>
+<body>
+<script>try{if(localStorage.getItem("p11-impulsspiel-frei")==="1")document.body.classList.add("frei")}catch(e){}</script>
+<nav aria-label="Bereiche"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#spiel"><span>▶</span>Spielen</a>
+<a href="#spickzettel" class="heftlink"><span>✎</span>Spickzettel</a>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Impuls-Spiel · Notruf von Station Nova-7</h1>
+<p>Ein Sonnensturm hat die Raumstation Nova-7 lahmgelegt. Steuere dein Shuttle ohne Reibung durchs All, schieß mit der Schleuder, treib nur mit Rückstoß zur Schleuse, lande sanft auf dem Mond und schieb Steuerblöcke mit elastischen Stößen in den Reaktor. Alles bewegt sich nach den Impuls-Gesetzen, die du gelernt hast. Perfekt zum Wiederholen vor der Klassenarbeit.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR-Code: https://physik.party/Physik11/impuls-spiel" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m6 0h7m2 0h7m-29 1h1m5 0h1m2 0h2m3 0h2m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h2m2 0h5m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h3m1 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m5 0h2m1 0h3m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h2m2 0h2m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h2m1 0h1m1 0h2m1 0h4m-21 1h1m2 0h1m1 0h2m1 0h1m2 0h6m2 0h1m1 0h1m1 0h1m-24 1h1m1 0h3m5 0h1m2 0h2m1 0h3m2 0h2m2 0h1m2 0h1m-27 1h1m3 0h1m1 0h4m1 0h2m1 0h4m2 0h2m1 0h3m-26 1h1m2 0h1m1 0h1m1 0h8m1 0h3m5 0h2m-27 1h1m3 0h2m1 0h1m1 0h1m1 0h2m3 0h1m1 0h1m1 0h3m1 0h1m1 0h2m-29 1h1m4 0h1m2 0h1m4 0h1m5 0h3m-21 1h1m3 0h2m1 0h1m3 0h1m3 0h3m5 0h5m-28 1h3m3 0h2m2 0h1m1 0h3m1 0h4m1 0h4m1 0h1m-26 1h1m1 0h1m1 0h1m1 0h2m6 0h2m1 0h1m3 0h1m3 0h1m-27 1h1m3 0h1m2 0h1m1 0h5m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m1 0h2m1 0h3m1 0h2m6 0h2m1 0h2m2 0h1m2 0h2m-27 1h2m5 0h1m1 0h2m1 0h2m1 0h3m1 0h1m1 0h2m2 0h2m-29 1h1m1 0h2m1 0h2m4 0h1m1 0h4m1 0h1m1 0h5m1 0h1m-19 1h4m4 0h3m1 0h1m3 0h1m1 0h3m-29 1h7m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h1m2 0h1m1 0h3m2 0h1m1 0h1m3 0h5m-29 1h1m1 0h3m1 0h1m4 0h1m2 0h5m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h3m1 0h2m3 0h3m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h4m1 0h1m2 0h2m2 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m2 0h2m1 0h2m2 0h6m1 0h1m3 0h1m-28 1h7m1 0h4m2 0h2m1 0h2m1 0h1m3 0h1m2 0h1"/></svg>QR groß zeigen</button></div>
+<div class="phases">
+<a href="#spiel"><b>▶ Spielen</b><small>Pixel-Abenteuer mit 4 Physik-Übungen und Aufgaben von ★ bis ★★★</small></a><a href="#spickzettel"><b>✎ Spickzettel</b><small>Das Wichtigste aus allen Impuls-Lernpfaden</small></a>
+</div>
+</div></header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="momo" viewBox="0 0 80 80">
+    <line x1="40" y1="16" x2="40" y2="6" stroke="#5F6F74" stroke-width="3"/>
+    <circle cx="40" cy="6" r="5" fill="#FCBE00" stroke="#2f393a" stroke-width="2"/>
+    <circle cx="40" cy="40" r="25" fill="#E4E7E9" stroke="#2f393a" stroke-width="3"/>
+    <rect x="22" y="28" width="36" height="20" rx="9" fill="#1b2122"/>
+    <circle cx="32" cy="38" r="4" fill="#FCBE00"/><circle cx="48" cy="38" r="4" fill="#FCBE00"/>
+    <path d="M34 55 q6 4 12 0" stroke="#2f393a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <rect x="9" y="34" width="7" height="12" rx="2" fill="#76989D" stroke="#2f393a" stroke-width="2"/><rect x="64" y="34" width="7" height="12" rx="2" fill="#76989D" stroke="#2f393a" stroke-width="2"/>
+    <path d="M30 66 l-4 9 M50 66 l4 9" stroke="#5F6F74" stroke-width="3" stroke-linecap="round"/>
+    <path d="M24 76 h6 M50 76 h6" stroke="#6aa5ff" stroke-width="3" stroke-linecap="round"/>
+   </symbol></defs></svg>
+<section class="band" id="spiel"><div class="wrap">
+<form class="gate" id="gate"><h2>🔒 Passwort</h2><p>Das Spiel ist mit einem Passwort geschützt. Deine Lehrerin oder dein Lehrer verrät es dir.</p>
+<div class="numrow"><label>Passwort: <input type="password" id="gatePw" autocomplete="off"></label><button class="primary" type="submit">Öffnen</button></div><p class="fb" id="gateFb" role="status"></p></form>
+<div class="game" id="game">
+ <button type="button" class="fullx" id="fullX" aria-label="Vollbild schließen" title="Vollbild schließen">✕</button>
+ <div class="hud">
+  <div class="akku" title="Mit jeder Übung und Aufgabe kommt die Station wieder ans Netz"><span>Station</span><i><b id="akkuBar"></b></i><span id="akkuTxt">0 %</span></div>
+  <div><span aria-hidden="true">◆</span> <span id="kris">0</span> Kristalle</div>
+  <div title="Datenkapseln, die im All treiben"><span aria-hidden="true">▣</span> <span id="kap">0</span>/6 Kapseln</div>
+  <div class="sp"><button id="fullBtn" type="button" title="Spiel im Vollbild">⛶ Vollbild</button><button id="spickBtn" type="button">✎ Spickzettel</button><button id="resetBtn" type="button" title="Spielstand löschen">↺ Neu starten</button></div>
+  <div class="quest"><span aria-hidden="true">◆</span> <span id="quest">Starte das Spiel.</span></div>
+ </div>
+ <div class="screen" id="screen">
+  <canvas id="cv" width="320" height="180" tabindex="0" aria-label="Spielwelt: Weltraum rund um die Raumstation Nova-7. Steuern mit Pfeiltasten oder WASD, bremsen und weiter mit der Leertaste."></canvas>
+  <div class="talkbox" id="talkbox" hidden><canvas id="face" width="16" height="16" aria-hidden="true"></canvas><div><b id="tbWho"></b><p id="tbTxt"></p><div class="ch" id="tbCh"></div><small id="tbMore">▼ Leertaste / Tippen</small></div></div>
+  <div class="startov" id="startov"><div><p class="pxtitle">Notruf von Station Nova-7</p><button class="primary" id="startBtn" type="button">▶ Spiel starten</button><p class="keys">Düsen: Pfeiltasten oder WASD · Bremsen und weiter: Leertaste</p></div></div>
+  <div class="mgmsg" id="mgMsg" hidden><div><div id="mgMsgTxt"></div><div class="tools" id="mgMsgBtns"></div></div></div>
+  <div class="endov" id="endov" hidden><div><div id="endTxt"></div><button class="primary" id="endOk" type="button">Weiter herumfliegen</button></div></div>
+  <div class="toast" id="toast" hidden></div>
+  <div class="pause" id="pause" hidden>Pausiert · klick ins Bild zum Weiterspielen</div>
+ </div>
+ <div class="mgstrip" id="strip" hidden><div class="ro" id="stripRo" aria-live="off"></div><div class="bt" id="stripBt"></div></div>
+ <div class="pad" id="pad" aria-label="Steuerkreuz">
+  <div class="dpad"><button type="button" data-d="up" aria-label="Düse: hoch">▲</button><button type="button" data-d="left" aria-label="Düse: links">◀</button><button type="button" data-d="right" aria-label="Düse: rechts">▶</button><button type="button" data-d="down" aria-label="Düse: runter">▼</button></div>
+  <button type="button" class="abtn" id="aBtn" aria-label="Bremsen / weiter">A<br><small>Bremse</small></button>
+ </div>
+</div>
+<div class="legend"><span><b style="color:var(--gst-gold)">★</b> Wissen (AFB I)</span><span><b style="color:var(--gst-gold)">★★</b> Anwenden (AFB II)</span><span><b style="color:var(--gst-gold)">★★★</b> Knobeln (AFB III)</span><span>Übungen: 3 ◆ beim ersten Versuch, 2 ◆ beim zweiten, sonst 1 ◆. Ein Tipp kostet 1 ◆, die Lösung ansehen gibt 0 ◆. Weiter kommst du immer.</span></div>
+</div></section>
+
+<section class="band alt" id="spickzettel"><div class="wrap">
+<h2>✎ Spickzettel</h2>
+<p>Hier steht das Wichtigste aus den fünf Impuls-Lernpfaden. Im Spiel öffnest du ihn mit dem Knopf „Spickzettel“.</p>
+<div class="spickgrid" id="spickInhalt">
+<section><h4>Impuls</h4><p>Der Impuls ist das Produkt aus Masse und Geschwindigkeit: <f-m>p = m · v</f-m>. Einheit: 1 kg·m/s.</p><p>Der Impuls ist ein Vektor und zeigt in Bewegungsrichtung. Lege eine Richtung als positiv fest, Impulse in Gegenrichtung sind negativ.</p></section>
+<section><h4>Stöße und Impulserhaltung</h4><p>Ohne äußere Einflüsse bleibt der Gesamtimpuls erhalten: <f-m>m<sub>1</sub> · v<sub>1</sub> + m<sub>2</sub> · v<sub>2</sub> = m<sub>1</sub> · u<sub>1</sub> + m<sub>2</sub> · u<sub>2</sub></f-m> (v vorher, u nachher).</p><p>Elastisch: Bewegungsenergie bleibt erhalten. Total unelastisch: Körper kleben zusammen, <f-m>m<sub>1</sub> · v<sub>1</sub> + m<sub>2</sub> · v<sub>2</sub> = (m<sub>1</sub> + m<sub>2</sub>) · u</f-m>, ein Teil der Bewegungsenergie wird zu thermischer Energie.</p></section>
+<section><h4>Rückstoß</h4><p>Ist der Gesamtimpuls am Anfang null, gilt nach dem Abstoßen: <f-m>m<sub>2</sub> · u<sub>2</sub> = −m<sub>1</sub> · u<sub>1</sub></f-m>. Beide Körper bewegen sich in entgegengesetzte Richtungen.</p><p>Ursache: Kräfte treten paarweise auf (Wechselwirkung), gleich groß, entgegengesetzt und gleich lang.</p></section>
+<section><h4>Kraftstoß</h4><p>Wirkt eine Kraft <f-m>F</f-m> für die Zeit <f-m>Δt</f-m>, ändert sich der Impuls: <f-m>Δp = F · Δt = m · Δv</f-m>. Einheit: <f-m>1 N·s = 1 kg·m/s</f-m>.</p><p>Im F-t-Diagramm ist der Kraftstoß die Fläche unter dem Graphen. Für dieselbe Impulsänderung ist die Kraft umso kleiner, je länger sie wirkt (Knautschzone, Airbag, Federbeine).</p></section>
+<section><h4>Elastischer Stoß quantitativ</h4><p>Impuls- und Energieerhaltung gelten beide. Daraus folgt:</p><p><f-m>u<sub>1</sub> = (m<sub>1</sub> · v<sub>1</sub> + m<sub>2</sub> · (2 · v<sub>2</sub> − v<sub>1</sub>)) : (m<sub>1</sub> + m<sub>2</sub>)</f-m></p><p><f-m>u<sub>2</sub> = (m<sub>2</sub> · v<sub>2</sub> + m<sub>1</sub> · (2 · v<sub>1</sub> − v<sub>2</sub>)) : (m<sub>1</sub> + m<sub>2</sub>)</f-m></p><p>Gleiche Massen, Körper 2 ruht: Die Geschwindigkeiten werden getauscht.</p></section>
+</div>
+</div></section>
+
+<footer class="band"><div class="wrap">
+<p>Impuls-Spiel Physik Klasse 11 · Wiederholung zu Impuls, Stößen und Impulserhaltung, Rückstoß, Kraftstoß und elastischem Stoß. Modellannahmen: keine Luftreibung, Schienen ohne Reibung, Masse des verbrannten Treibstoffs vernachlässigt. Dein Spielstand wird nur in diesem Browser gespeichert, es werden keine Daten übertragen (nur Feedback, das du selbst abschickst).</p>
+<p class="rechtl"><a href="/impressum">Impressum · Datenschutz</a></p></div></footer>
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Spiel"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR-Code: https://physik.party/Physik11/impuls-spiel" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m6 0h7m2 0h7m-29 1h1m5 0h1m2 0h2m3 0h2m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h2m2 0h5m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h3m1 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m5 0h2m1 0h3m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h2m2 0h2m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h2m1 0h1m1 0h2m1 0h4m-21 1h1m2 0h1m1 0h2m1 0h1m2 0h6m2 0h1m1 0h1m1 0h1m-24 1h1m1 0h3m5 0h1m2 0h2m1 0h3m2 0h2m2 0h1m2 0h1m-27 1h1m3 0h1m1 0h4m1 0h2m1 0h4m2 0h2m1 0h3m-26 1h1m2 0h1m1 0h1m1 0h8m1 0h3m5 0h2m-27 1h1m3 0h2m1 0h1m1 0h1m1 0h2m3 0h1m1 0h1m1 0h3m1 0h1m1 0h2m-29 1h1m4 0h1m2 0h1m4 0h1m5 0h3m-21 1h1m3 0h2m1 0h1m3 0h1m3 0h3m5 0h5m-28 1h3m3 0h2m2 0h1m1 0h3m1 0h4m1 0h4m1 0h1m-26 1h1m1 0h1m1 0h1m1 0h2m6 0h2m1 0h1m3 0h1m3 0h1m-27 1h1m3 0h1m2 0h1m1 0h5m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m1 0h2m1 0h3m1 0h2m6 0h2m1 0h2m2 0h1m2 0h2m-27 1h2m5 0h1m1 0h2m1 0h2m1 0h3m1 0h1m1 0h2m2 0h2m-29 1h1m1 0h2m1 0h2m4 0h1m1 0h4m1 0h1m1 0h5m1 0h1m-19 1h4m4 0h3m1 0h1m3 0h1m1 0h3m-29 1h7m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h1m2 0h1m1 0h3m2 0h1m1 0h1m3 0h5m-29 1h1m1 0h3m1 0h1m4 0h1m2 0h5m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h3m1 0h2m3 0h3m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h4m1 0h1m2 0h2m2 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m2 0h2m1 0h2m2 0h6m1 0h1m3 0h1m-28 1h7m1 0h4m2 0h2m1 0h2m1 0h1m3 0h1m2 0h1"/></svg><p>physik.party/Physik11/impuls-spiel</p><button id="qrClose">Schließen</button></dialog>
+<dialog class="taskdlg" id="taskDlg" aria-label="Aufgaben"><div class="top"><button type="button" id="taskClose">✕ Zurück ins Spiel</button></div><div id="panel" aria-live="polite" tabindex="-1" style="outline:none"></div></dialog>
+<dialog class="spick" id="spickDlg" aria-label="Spickzettel"><div class="top"><h3>✎ Spickzettel</h3><button type="button" id="spickClose">Schließen</button></div><div class="in" id="spickDlgIn"></div></dialog>
+<script>
+{
+const KEY='p11-impulsspiel';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const num=v=>parseFloat(String(v).replace(/[\s ]/g,'').replace(/\.(?=\d{3}(\D|$))/g,'').replace(',','.').replace('−','-').replace('–','-'));
+const fmt=(v,n=1)=>{const s=(+v).toFixed(n);return (s.replace('-','−')==='−'+(0).toFixed(n)?(0).toFixed(n):s).replace('.',',').replace('-','−')};
+const grp=v=>{const s=Math.round(Math.abs(v)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');return (v<-.5?'−':'')+s};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pk=(id,cl='')=>`<svg class="pk ${cl}" aria-hidden="true"><use href="/brand/piktos.svg#${id}"/></svg>`;
+const MOMO='<svg class="av" viewBox="0 0 80 80" aria-hidden="true"><use href="#momo"/></svg>';
+const say=(t,who='Momo')=>`<div class="talk">${MOMO}<div class="bubble"><span class="who">${who}</span>${t}</div></div>`;
+
+/* ---------- Missionen und Aufgaben ---------- */
+const ST=[
+{name:'Andockschleuse Nova-7',thema:'Impuls 1 · Der Impuls',mg:null,
+ intro:'<p>Kommandantin Sato will wissen, ob du den Impuls verstanden hast. Beim Andocken hast du ihn ja gerade selbst gesteuert.</p><p>Wenn du nicht weiterweißt, frag mich nach einem Tipp. Das kostet nur einen Kristall.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Kommandantin Sato: „Sauber angedockt!“ Auf der Anzeige stand der Impuls des Shuttles. Welche Aussage über den Impuls stimmt?',bild:'raumsonde',
+  opts:[['a','Er ist das Produkt aus Masse und Geschwindigkeit und zeigt in Bewegungsrichtung.'],['b','Er ist das Produkt aus Masse und Beschleunigung und zeigt in Kraftrichtung.'],['c','Er ist das Produkt aus Kraft und Geschwindigkeit und hat keine Richtung.'],['d','Er ist die halbe Masse mal Geschwindigkeit hoch zwei und hat keine Richtung.']],ok:'a',
+  hinweis:'Welche zwei Größen hast du beim Fliegen auf der Anzeige gesehen? Und hatte der blaue Pfeil eine Richtung?',
+  tipps:['Der Impuls hängt von der Masse und von der Geschwindigkeit ab.','<f-m>p = m · v</f-m>. Weil die Geschwindigkeit eine Richtung hat, hat auch der Impuls eine: Er ist ein Vektor.'],
+  loesung:'<f-m>p = m · v</f-m>. Der Impuls ist ein Vektor und zeigt in Bewegungsrichtung. Einheit: 1 kg·m/s.'},
+ {afb:2,typ:'num',frage:'Vor der Station treibt ein Versorgungscontainer mit der Masse 1,2 t. Er bewegt sich mit 0,45 m/s auf die Schleuse zu. Berechne den Betrag seines Impulses.',bild:'kiste',
+  einheit:'kg·m/s',ziel:540,tol:.015,
+  fehler:[[0.54,'Achte auf die Einheit der Masse: <f-m>1,2 t = 1200 kg</f-m>.'],[121.5,'Das ist die Bewegungsenergie in J. Gefragt ist der Impuls <f-m>p = m · v</f-m>.'],[2666.7,'Umgekehrt geteilt. Der Impuls ist das Produkt <f-m>p = m · v</f-m>.']],
+  tipps:['Rechne zuerst die Masse in kg um: <f-m>1,2 t = 1200 kg</f-m>.','<f-m>p = m · v = 1200 kg · 0,45 m/s</f-m>.'],
+  loesung:'<f-m>p = m · v = 1200 kg · 0,45 m/s = 540 kg·m/s</f-m>'},
+ {afb:2,typ:'mc',frage:'Sato fragt: „Welcher Körper wäre am schwersten abzubremsen?“ Welcher hat den größten Impuls?',
+  opts:[['a','ein Schraubenschlüssel: 0,5 kg mit 30 m/s'],['b','eine Astronautin: 90 kg mit 0,2 m/s'],['c','ein Mikrometeorit: 0,01 kg mit 2000 m/s'],['d','ein Satellit: 800 kg mit 0,02 m/s']],ok:'c',
+  hinweis:'Rechne für jeden Körper <f-m>p = m · v</f-m> aus und vergleiche.',
+  tipps:['Weder die größte Masse noch die größte Geschwindigkeit allein entscheidet. Es kommt auf das Produkt an.','Schlüssel 15 kg·m/s, Astronautin 18 kg·m/s, Satellit 16 kg·m/s. Und der Mikrometeorit?'],
+  loesung:'Mikrometeorit: <f-m>p = 0,01 kg · 2000 m/s = 20 kg·m/s</f-m>. Das ist der größte Impuls (Schlüssel 15, Astronautin 18, Satellit 16 kg·m/s).'},
+ {afb:3,typ:'mc',frage:'Zwei gleiche Shuttles (je 2,0 t) fliegen mit je 3,0 m/s genau aufeinander zu. Wie groß ist der Gesamtimpuls der beiden?',
+  opts:[['a','12 000 kg·m/s, weil sich die beiden Impulse einfach addieren'],['b','0 kg·m/s, weil die Impulse entgegengesetzt gleich groß sind'],['c','6000 kg·m/s, weil man nur ein Shuttle als bewegt ansieht'],['d','36 000 kg·m/s, weil man die beiden Impulse multipliziert']],ok:'b',
+  hinweis:'Der Impuls ist ein Vektor. Leg eine Richtung als positiv fest. Welches Vorzeichen hat dann der Impuls des zweiten Shuttles?',
+  tipps:['Shuttle 1 fliegt nach rechts (positiv), Shuttle 2 nach links (negativ).','<f-m>p<sub>ges</sub> = 2000 kg · 3,0 m/s + 2000 kg · (−3,0 m/s)</f-m>.'],
+  loesung:'<f-m>p<sub>ges</sub> = 6000 kg·m/s + (−6000 kg·m/s) = 0 kg·m/s</f-m>. Die Impulse sind gleich groß, aber entgegengesetzt.'}
+ ]},
+{name:'Erzmine auf Mond Ferro',thema:'Impuls 2 · Stöße und Impulserhaltung',mg:'sling',
+ intro:'<p>Starke Schüsse! Bruno hat noch ein paar Fragen zu deinen Klebestößen.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Die Haftkugel bleibt am Erzwagen kleben, beide rollen gemeinsam weiter. Was für ein Stoß ist das?',bild:'magnet',
+  opts:[['a','ein elastischer Stoß, weil dabei die Bewegungsenergie erhalten bleibt'],['b','ein total unelastischer Stoß, weil beide danach zusammen weiterrollen'],['c','ein elastischer Stoß, weil sich die Geschwindigkeiten der Körper tauschen'],['d','gar kein Stoß, weil sich die beiden Körper danach nicht mehr trennen']],ok:'b',
+  hinweis:'Was passiert beim Aufprall mit der Haftmasse? Prallt etwas ab?',
+  tipps:['Beim elastischen Stoß prallen die Körper voneinander ab.','Kleben die Körper zusammen, spricht man vom total unelastischen Stoß.'],
+  loesung:'Total unelastischer Stoß: Kugel und Wagen kleben zusammen und haben danach dieselbe Geschwindigkeit <f-m>u</f-m>.'},
+ {afb:2,typ:'num',frage:'Eine Haftkugel (10 kg) trifft mit der waagrechten Geschwindigkeit 5,6 m/s auf den ruhenden Erzwagen (10 kg) und bleibt kleben. Wie schnell rollen beide danach?',
+  einheit:'m/s',ziel:2.8,tol:.02,
+  fehler:[[5.6,'So schnell war nur die Kugel. Nach dem Stoß bewegen sich beide Massen gemeinsam.'],[11.2,'Du hast mit der Masse multipliziert statt geteilt. Teile den Impuls durch <f-m>(m<sub>1</sub> + m<sub>2</sub>)</f-m>.']],
+  tipps:['Impulserhaltung beim total unelastischen Stoß: <f-m>m<sub>1</sub> · v<sub>1</sub> + m<sub>2</sub> · v<sub>2</sub> = (m<sub>1</sub> + m<sub>2</sub>) · u</f-m>. Der Wagen ruht, also <f-m>v<sub>2</sub> = 0</f-m>.','<f-m>u = m<sub>1</sub> · v<sub>1</sub> : (m<sub>1</sub> + m<sub>2</sub>) = 10 kg · 5,6 m/s : 20 kg</f-m>.'],
+  loesung:'<f-m>u = m<sub>1</sub> · v<sub>1</sub> : (m<sub>1</sub> + m<sub>2</sub>) = 10 kg · 5,6 m/s : 20 kg = 2,8 m/s</f-m>'},
+ {afb:3,typ:'num',frage:'Ein schwerer Erzwagen (20 kg) braucht direkt nach dem Stoß 2,7 m/s, um die Rampe hochzukommen. Welche waagrechte Geschwindigkeit muss die Haftkugel (10 kg) beim Aufprall mindestens haben?',
+  einheit:'m/s',ziel:8.1,tol:.02,
+  fehler:[[5.4,'Du hast nur die Masse des Wagens genommen. Nach dem Stoß bewegen sich Kugel und Wagen gemeinsam: <f-m>(m<sub>1</sub> + m<sub>2</sub>)</f-m>.'],[0.9,'Umgekehrt: Stell nach <f-m>v<sub>1</sub></f-m> um, <f-m>v<sub>1</sub> = u · (m<sub>1</sub> + m<sub>2</sub>) : m<sub>1</sub></f-m>.'],[2.7,'Das ist die Geschwindigkeit nach dem Stoß. Gesucht ist die Geschwindigkeit der Kugel vorher.']],
+  tipps:['Setz in <f-m>m<sub>1</sub> · v<sub>1</sub> = (m<sub>1</sub> + m<sub>2</sub>) · u</f-m> ein, was du kennst, und stell nach <f-m>v<sub>1</sub></f-m> um.','<f-m>v<sub>1</sub> = (m<sub>1</sub> + m<sub>2</sub>) · u : m<sub>1</sub> = 30 kg · 2,7 m/s : 10 kg</f-m>.'],
+  loesung:'<f-m>v<sub>1</sub> = (m<sub>1</sub> + m<sub>2</sub>) · u : m<sub>1</sub> = 30 kg · 2,7 m/s : 10 kg = 8,1 m/s</f-m>'},
+ {afb:3,typ:'begr',frage:'<b>Begründe:</b> Beim Klebestoß bleibt der Impuls erhalten, die Bewegungsenergie aber nicht. Wo ist ein Teil der Bewegungsenergie geblieben?',
+  muster:'Beim total unelastischen Stoß wird die Haftmasse verformt. Dabei wird ein Teil der Bewegungsenergie in thermische Energie (und Verformung) umgewandelt, die Körper werden etwas wärmer. Dieser Teil fehlt danach als Bewegungsenergie. Der Impuls bleibt trotzdem erhalten, weil die Kräfte zwischen Kugel und Wagen gleich groß, entgegengesetzt und gleich lang wirken. Beispiel: Vorher 10 kg mit 5,6 m/s, also 157 J. Nachher 20 kg mit 2,8 m/s, also nur noch 78 J.',
+  checks:['Ich habe die Verformung der Haftmasse genannt.','Ich habe gesagt, dass thermische Energie entsteht (Energie geht nicht verloren, sie wird umgewandelt).','Ich habe erklärt, warum der Impuls trotzdem erhalten bleibt (Wechselwirkung, gleiche Kräfte, gleiche Zeit).']}
+ ]},
+{name:'Werkstattschleuse',thema:'Impuls 3 · Das Rückstoßprinzip',mg:'drift',
+ intro:'<p>Puh, du bist wieder drin! Ohne Jetpack, nur mit Werkzeug. Jetzt ein paar Fragen zum Rückstoß.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Warum treibst du in die Gegenrichtung, wenn du die Werkzeugkiste wegwirfst?',bild:'kiste',
+  opts:[['a','Weil die Kiste beim Wegwerfen Luft nach hinten drückt und du dich daran abstößt.'],['b','Weil der Gesamtimpuls null bleibt: Kiste und du bekommen entgegengesetzte Impulse.'],['c','Weil die Station dich mit ihrer Anziehung zurückholt, sobald du die Kiste loslässt.'],['d','Weil deine ganze Bewegungsenergie beim Werfen auf die Kiste übertragen wird.']],ok:'b',
+  hinweis:'Im All gibt es keine Luft. Was gilt für den Gesamtimpuls von dir und der Kiste?',
+  tipps:['Vor dem Wurf ruhst du mit der Kiste: Der Gesamtimpuls ist null.','Die Kiste bekommt einen Impuls in Wurfrichtung. Damit die Summe null bleibt, bekommst du einen gleich großen Impuls in die Gegenrichtung.'],
+  loesung:'Der Gesamtimpuls bleibt null: <f-m>p<sub>Du</sub> = −p<sub>Kiste</sub></f-m>. Ursache sind die Wechselwirkungskräfte beim Abstoßen.'},
+ {afb:2,typ:'num',frage:'Du schwebst in Ruhe und wirfst einen Schraubenschlüssel (4,0 kg) mit 6,0 m/s weg. Ohne den Schlüssel hast du mit Anzug 100 kg. Wie schnell treibst du danach (Betrag)?',
+  einheit:'m/s',ziel:0.24,tol:.03,
+  fehler:[[24,'Fast: Teile den Impuls des Schlüssels durch deine Masse (100 kg).'],[150,'Umgekehrt: <f-m>u = m<sub>Schlüssel</sub> · u<sub>Schlüssel</sub> : m<sub>Du</sub></f-m>.'],[6,'So schnell fliegt der Schlüssel. Du bist viel schwerer, also viel langsamer.']],
+  tipps:['Gesamtimpuls null: <f-m>m<sub>Du</sub> · u<sub>Du</sub> = −m<sub>S</sub> · u<sub>S</sub></f-m>.','<f-m>u<sub>Du</sub> = m<sub>S</sub> · u<sub>S</sub> : m<sub>Du</sub> = 4,0 kg · 6,0 m/s : 100 kg</f-m> (Betrag).'],
+  loesung:'<f-m>u<sub>Du</sub> = −m<sub>S</sub> · u<sub>S</sub> : m<sub>Du</sub> = −4,0 kg · 6,0 m/s : 100 kg = −0,24 m/s</f-m>. Du treibst mit 0,24 m/s in die Gegenrichtung.'},
+ {afb:3,typ:'mc',frage:'Du treibst mit 0,5 m/s nach rechts. Du willst die Bewegung nach rechts stoppen und stattdessen nach oben treiben. In welche Richtung wirfst du das Werkzeug?',
+  opts:[['a','schräg nach rechts unten'],['b','schräg nach links oben'],['c','schräg nach rechts oben'],['d','senkrecht nach unten']],ok:'a',
+  hinweis:'Du bekommst eine Impulsänderung genau entgegen der Wurfrichtung. Welche Impulsänderung brauchst du?',
+  tipps:['Um nach rechts zu stoppen, brauchst du einen Impuls nach links. Um nach oben zu treiben, einen Impuls nach oben.','Deine Impulsänderung soll also nach links oben zeigen. Das Werkzeug fliegt in die Gegenrichtung.'],
+  loesung:'Du brauchst eine Impulsänderung nach links oben. Das Werkzeug bekommt den entgegengesetzten Impuls, also wirfst du schräg nach rechts unten.'},
+ {afb:3,typ:'begr',frage:'<b>Begründe:</b> Ein Raketentriebwerk funktioniert auch im Weltall, obwohl es dort keine Luft gibt, an der sich die Rakete abstoßen könnte.',
+  muster:'Die Rakete stößt Abgase mit großer Geschwindigkeit nach hinten aus. Das Gas bekommt dabei einen Impuls nach hinten. Weil der Gesamtimpuls von Rakete und Gas erhalten bleibt, bekommt die Rakete einen gleich großen Impuls nach vorn (Rückstoßprinzip). Die Rakete stößt sich also am eigenen Gas ab und braucht keine Luft dafür.',
+  checks:['Ich habe gesagt, dass Gas mit großer Geschwindigkeit nach hinten ausgestoßen wird.','Ich habe die Impulserhaltung genannt (Gas und Rakete bekommen entgegengesetzte Impulse).','Ich habe erklärt, dass die Rakete sich am eigenen Gas abstößt und deshalb keine Luft braucht.']}
+ ]},
+{name:'Landung auf Mond Kappa',thema:'Impuls 4 · Kraftstoß',mg:'lander',
+ intro:'<p>Weich gelandet und das Ersatzteil ist an Bord! Auf dem Rückflug noch ein paar Fragen zum Kraftstoß.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Beim Landen hast du das F-t-Diagramm deines Triebwerks gesehen. Was gibt die Fläche unter dem Graphen an?',
+  opts:[['a','den Kraftstoß <f-m>F · Δt</f-m>, also die Impulsänderung durch das Triebwerk'],['b','die Arbeit <f-m>F · s</f-m>, also die vom Triebwerk übertragene Energie'],['c','die Leistung <f-m>F · v</f-m>, also die Energie des Triebwerks pro Sekunde'],['d','die Beschleunigung <f-m>F : m</f-m>, also die Geschwindigkeit pro Sekunde']],ok:'a',
+  hinweis:'Auf den Achsen stehen die Kraft <f-m>F</f-m> und die Zeit <f-m>t</f-m>. Was ergibt das Produkt der beiden?',
+  tipps:['Fläche eines Rechtecks im Diagramm = Höhe · Breite = <f-m>F · Δt</f-m>.','<f-m>F · Δt</f-m> heißt Kraftstoß. Er ist gleich der Impulsänderung <f-m>Δp</f-m>.'],
+  loesung:'Die Fläche ist der Kraftstoß <f-m>F · Δt</f-m>. Er ist gleich der Impulsänderung: <f-m>Δp = F · Δt</f-m>.'},
+ {afb:2,typ:'num',frage:'Die Kapsel (400 kg) sinkt mit 8,0 m/s. Schub minus Gewichtskraft ergibt eine resultierende Kraft von 560 N nach oben. Wie lange muss das Triebwerk brennen, bis die Kapsel schwebt <f-m>(v = 0)</f-m>?',
+  einheit:'s',ziel:3200/560,tol:.02,
+  fehler:[[3200/1200,'Du hast mit dem Schub allein gerechnet. Die Gewichtskraft wirkt dagegen. Nimm die resultierende Kraft 560 N.'],[560/3200,'Umgekehrt: <f-m>Δt = Δp : F</f-m>.'],[3200,'Das ist die Impulsänderung <f-m>Δp</f-m> in <f-m>N·s</f-m>. Teile noch durch die Kraft.']],
+  tipps:['Erst die Impulsänderung: <f-m>Δp = m · Δv = 400 kg · 8,0 m/s</f-m>.','<f-m>Δp = F · Δt</f-m>, also <f-m>Δt = Δp : F = 3200 N·s : 560 N</f-m>.'],
+  loesung:'<f-m>Δp = m · Δv = 400 kg · 8,0 m/s = 3200 N·s</f-m>; <f-m>Δt = Δp : F = 3200 N·s : 560 N ≈ 5,7 s</f-m>'},
+ {afb:2,typ:'num',frage:'Die Kapsel (400 kg) setzt mit 2,0 m/s auf. Die Federbeine bremsen sie in 0,20 s bis zum Stillstand. Berechne die mittlere Kraft der Beine auf die Kapsel (ohne Gewichtskraft).',
+  einheit:'N',ziel:4000,tol:.02,
+  fehler:[[160,'Du hast <f-m>Δp</f-m> mit <f-m>Δt</f-m> multipliziert. Richtig ist <f-m>F = Δp : Δt</f-m>.'],[400,'Fast: Rechne zuerst <f-m>Δp = m · Δv = 400 kg · 2,0 m/s = 800 N·s</f-m>, dann <f-m>F = Δp : Δt</f-m>.'],[0.0005,'Umgekehrt geteilt: <f-m>F = Δp : Δt</f-m>.']],
+  tipps:['<f-m>Δp = m · Δv = 400 kg · 2,0 m/s</f-m>.','<f-m>F = Δp : Δt = 800 N·s : 0,20 s</f-m>.'],
+  loesung:'<f-m>Δp = m · Δv = 400 kg · 2,0 m/s = 800 N·s</f-m>; <f-m>F = Δp : Δt = 800 N·s : 0,20 s = 4000 N</f-m>'},
+ {afb:3,typ:'mc',frage:'Warum hat die Kapsel Federbeine statt starrer Stelzen?',
+  opts:[['a','Sie verlängern die Bremszeit, deshalb ist die Kraft bei gleicher Impulsänderung kleiner.'],['b','Sie verkleinern die Impulsänderung, weil ein Teil des Impulses in den Federn bleibt.'],['c','Sie verkürzen die Bremszeit, deshalb wirkt die Kraft kürzer und schadet weniger.'],['d','Sie verkleinern die Masse beim Aufsetzen, deshalb ist der Impuls der Kapsel kleiner.']],ok:'a',
+  hinweis:'Die Impulsänderung beim Aufsetzen ist immer dieselbe: von 2 m/s auf 0. Was ändern die Federn an <f-m>Δp = F · Δt</f-m>?',
+  tipps:['<f-m>Δp</f-m> liegt fest. Wenn <f-m>Δt</f-m> größer wird, muss F kleiner werden.','Federbeine wirken wie eine Knautschzone: Sie verlängern die Bremszeit.'],
+  loesung:'<f-m>Δp = F · Δt</f-m> ist fest. Federn verlängern die Bremszeit <f-m>Δt</f-m>, deshalb wird die Kraft <f-m>F</f-m> auf Kapsel und Ladung kleiner.'}
+ ]},
+{name:'Habitat-Ring',thema:'Impuls 5 · Stöße quantitativ',mg:'curl',
+ intro:'<p>Der Reaktor läuft fast. Bruno will noch wissen, ob du die Stöße auch ausrechnen kannst.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Die Blöcke haben Federpuffer und stoßen elastisch. Was bleibt bei einem elastischen Stoß erhalten?',
+  opts:[['a','nur der Gesamtimpuls, die Bewegungsenergie wird zum Teil thermisch'],['b','nur die Bewegungsenergie, der Gesamtimpuls ändert sich beim Stoß'],['c','der Gesamtimpuls und auch die gesamte Bewegungsenergie der Körper'],['d','die Geschwindigkeit jedes Körpers, nur die Richtung kann sich ändern']],ok:'c',
+  hinweis:'Welche zwei Erhaltungssätze benutzt man für den elastischen Stoß?',
+  tipps:['Beim elastischen Stoß wird nichts dauerhaft verformt.','Es gelten Impulserhaltung (IES) und Energieerhaltung (EES) für die Bewegungsenergie.'],
+  loesung:'Beim elastischen Stoß bleiben Gesamtimpuls und Bewegungsenergie erhalten (IES und EES).'},
+ {afb:2,typ:'num',frage:'Ein Stoßblock <f-m>(m<sub>1</sub> = 20 kg)</f-m> trifft mit <f-m>v<sub>1</sub> = 3,0 m/s</f-m> elastisch auf einen ruhenden Steuerblock <f-m>(m<sub>2</sub> = 10 kg)</f-m>. Berechne die Geschwindigkeit <f-m>u<sub>2</sub></f-m> des Steuerblocks nach dem Stoß.',
+  einheit:'m/s',ziel:4,tol:.02,
+  fehler:[[3,'Das wäre richtig bei gleichen Massen (Geschwindigkeiten tauschen). Hier ist <f-m>m<sub>1</sub></f-m> doppelt so groß.'],[6,'Fast: Teile noch durch <f-m>(m<sub>1</sub> + m<sub>2</sub>) = 30 kg</f-m>.'],[2,'Das passt zum total unelastischen Stoß. Hier stoßen die Blöcke elastisch: nimm die Formel für <f-m>u<sub>2</sub></f-m>.']],
+  tipps:['<f-m>u<sub>2</sub> = (m<sub>2</sub> · v<sub>2</sub> + m<sub>1</sub> · (2 · v<sub>1</sub> − v<sub>2</sub>)) : (m<sub>1</sub> + m<sub>2</sub>)</f-m> mit <f-m>v<sub>2</sub> = 0</f-m>.','<f-m>u<sub>2</sub> = 20 kg · 2 · 3,0 m/s : 30 kg</f-m>.'],
+  loesung:'<f-m>u<sub>2</sub> = (m<sub>2</sub> · v<sub>2</sub> + m<sub>1</sub> · (2 · v<sub>1</sub> − v<sub>2</sub>)) : (m<sub>1</sub> + m<sub>2</sub>) = (0 + 20 kg · 6,0 m/s) : 30 kg = 4,0 m/s</f-m>'},
+ {afb:3,typ:'num',frage:'Jetzt trifft ein leichter Stoßblock <f-m>(m<sub>1</sub> = 5,0 kg)</f-m> mit <f-m>v<sub>1</sub> = 3,0 m/s</f-m> elastisch auf den ruhenden Steuerblock <f-m>(m<sub>2</sub> = 10 kg)</f-m>. Berechne <f-m>u<sub>1</sub></f-m>. Achte auf das Vorzeichen (positiv: ursprüngliche Richtung).',
+  einheit:'m/s',ziel:-1,tol:.02,
+  fehler:[[1,'Der Betrag stimmt, aber das Vorzeichen nicht. Der leichte Block prallt zurück, also ist <f-m>u<sub>1</sub></f-m> negativ.'],[2,'Das ist <f-m>u<sub>2</sub></f-m>, die Geschwindigkeit des Steuerblocks. Gesucht ist <f-m>u<sub>1</sub></f-m>.'],[-3,'So wäre es bei einer festen Wand. Der Steuerblock bewegt sich aber mit.']],
+  tipps:['<f-m>u<sub>1</sub> = (m<sub>1</sub> · v<sub>1</sub> + m<sub>2</sub> · (2 · v<sub>2</sub> − v<sub>1</sub>)) : (m<sub>1</sub> + m<sub>2</sub>)</f-m> mit <f-m>v<sub>2</sub> = 0</f-m>.','<f-m>u<sub>1</sub> = (5,0 kg · 3,0 m/s + 10 kg · (−3,0 m/s)) : 15 kg</f-m>.'],
+  loesung:'<f-m>u<sub>1</sub> = (5,0 kg · 3,0 m/s + 10 kg · (0 − 3,0 m/s)) : 15 kg = −15 kg·m/s : 15 kg = −1,0 m/s</f-m>. Der Stoßblock prallt mit 1,0 m/s zurück.'},
+ {afb:3,typ:'mc',frage:'Prüfe Aufgabe 2 mit der Energie: Vorher hat der Stoßblock <f-m>E<sub>B</sub> = ½ · 20 kg · (3,0 m/s)<sup>2</sup> = 90 J</f-m>. Nach dem Stoß ist <f-m>u<sub>1</sub> = 1,0 m/s</f-m> und <f-m>u<sub>2</sub> = 4,0 m/s</f-m>. Was stimmt?',
+  opts:[['a','zusammen 90 J: 10 J für den Stoßblock und 80 J für den Steuerblock'],['b','zusammen 90 J: 45 J für den Stoßblock und 45 J für den Steuerblock'],['c','zusammen 50 J: 10 J für den Stoßblock und 40 J für den Steuerblock'],['d','zusammen 170 J: 10 J für den Stoßblock und 160 J für den Steuerblock']],ok:'a',
+  hinweis:'Rechne für beide Blöcke <f-m>E<sub>B</sub> = ½ · m · u<sup>2</sup></f-m> aus. Achte auf das Quadrat.',
+  tipps:['Stoßblock: <f-m>½ · 20 kg · (1,0 m/s)<sup>2</sup></f-m>. Steuerblock: <f-m>½ · 10 kg · (4,0 m/s)<sup>2</sup></f-m>.','Die Summe muss beim elastischen Stoß wieder 90 J ergeben.'],
+  loesung:'<f-m>½ · 20 kg · (1,0 m/s)<sup>2</sup> = 10 J</f-m> und <f-m>½ · 10 kg · (4,0 m/s)<sup>2</sup> = 80 J</f-m>, zusammen 90 J. Die Bewegungsenergie bleibt erhalten.'}
+ ]}
+];
+const NROUND=3,MGM=ST.map((s,i)=>i).filter(i=>ST[i].mg);
+const TOTAL=ST.reduce((a,s)=>a+s.tasks.length,0)+MGM.length*NROUND;
+
+/* ---------- Aufgabentypen ---------- */
+const TYP={
+ mc(box,T,i,t){const b=box.querySelector('.body');
+  b.innerHTML=`<div class="mc">${T.opts.map(([k,txt])=>`<button type="button" data-k="${k}"><span>${txt}</span></button>`).join('')}</div>`;
+  b.querySelectorAll('button').forEach(btn=>btn.onclick=()=>{
+   if(btn.dataset.k===T.ok){btn.classList.add('ok');b.querySelectorAll('button').forEach(x=>x.disabled=true);solve(i,t)}
+   else{btn.classList.add('bad');b.querySelectorAll('button').forEach(x=>x.disabled=true);fb(box,'hint','<b>Noch nicht.</b> '+T.hinweis+' <small>(Kurz nachdenken …)</small>');
+    setTimeout(()=>{b.querySelectorAll('button:not(.bad)').forEach(x=>x.disabled=false)},3000)}})},
+ num(box,T,i,t){const b=box.querySelector('.body');
+  b.innerHTML=`<p class="calcbox">Rechne im Heft: gegeben, gesucht, Formel, Rechnung. Gib dann dein Ergebnis ein.</p><div class="numrow"><label>Ergebnis: <input type="text" inputmode="decimal" autocomplete="off"></label> <span>${T.einheit}</span><button class="primary" type="button">Prüfen</button></div>`;
+  const inp=b.querySelector('input'),go=b.querySelector('button');
+  const check=()=>{const v=num(inp.value);if(isNaN(v)){fb(box,'hint','Gib eine Zahl ein, z. B. 12,5.');return}
+   if(Math.abs(v-T.ziel)<=T.tol*Math.abs(T.ziel)){inp.disabled=go.disabled=true;solve(i,t);return}
+   const f=(T.fehler||[]).find(([w])=>Math.abs(v-w)<=.02*Math.abs(w));
+   fb(box,'bad',f?f[1]:'Das stimmt noch nicht. Prüfe Formel, Einsetzen und Einheiten. Ein Tipp hilft dir weiter.')};
+  go.onclick=check;inp.onkeydown=e=>{if(e.key==='Enter')check()}},
+ begr(box,T,i,t){const b=box.querySelector('.body');
+  b.innerHTML=`<textarea placeholder="Schreib deine Begründung in ganzen Sätzen …"></textarea><div class="tools"><button class="primary" type="button" data-ab>Abgeben und vergleichen</button></div><div class="mu"></div>`;
+  const ta=b.querySelector('textarea');b.querySelector('[data-ab]').onclick=()=>{if(ta.value.trim().split(/\s+/).length<8){fb(box,'hint','Schreib erst einen eigenen Satz (mindestens 8 Wörter). Dann zeige ich dir meine Musterbegründung.');return}
+   b.querySelector('[data-ab]').disabled=true;fb(box,'','');
+   b.querySelector('.mu').innerHTML=`<div class="loes"><b>Momos Musterbegründung:</b> ${T.muster}</div><p style="margin-top:10px"><b>Vergleiche:</b> Was steckt auch in deiner Begründung?</p><div class="checks">${T.checks.map(c=>`<label><input type="checkbox"> ${c}</label>`).join('')}</div><div class="tools"><button class="primary" type="button" data-fertig>Fertig verglichen</button></div>`;
+   b.querySelector('[data-fertig]').onclick=()=>{const n=b.querySelectorAll('.checks input:checked').length;used=3-Math.max(1,n);b.querySelector('[data-fertig]').disabled=true;solve(i,t)}}}
+};
+
+/* ---------- Spielstand ---------- */
+let state={};
+try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+state.t=state.t||{};state.r=state.r||{};state.f=state.f||{};state.kap=state.kap||[];
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+const tid=(s,t)=>s+'-'+t;
+const isDone=(s,t)=>tid(s,t) in state.t;
+const tasksDone=s=>ST[s].tasks.every((_,t)=>isDone(s,t));
+const roundDone=(s,r)=>tid(s,r) in state.r;
+const mgDone=s=>!ST[s].mg||[0,1,2].every(r=>roundDone(s,r));
+const stDone=s=>tasksDone(s)&&mgDone(s);
+const MAXK=ST.reduce((a,s)=>a+s.tasks.length*3,0)+MGM.length*NROUND*3+6;
+let used=0,solShown=false;
+function kris(){return Object.values(state.t).reduce((a,b)=>a+b,0)+Object.values(state.r).reduce((a,b)=>a+b,0)+state.kap.length}
+const nextM=()=>{const k=ST.findIndex((_,i)=>!stDone(i));return k<0?5:k};
+function hud(){const n=ST.reduce((a,s,i)=>a+s.tasks.filter((_,k)=>isDone(i,k)).length,0)+Object.keys(state.r).length,p=Math.round(100*n/TOTAL);
+ $('#akkuBar').style.width=p+'%';$('#akkuTxt').textContent=p+' %';$('#kris').textContent=kris();$('#kap').textContent=state.kap.length;$('#quest').textContent=questText()}
+function questText(){const F=state.f;
+ if(!F.intro)return 'Starte das Spiel.';
+ const m=nextM();
+ if(m===0)return 'Dock an der Andockschleuse an (rechts an der Station). Höchstens 3 m/s!';
+ if(m===1)return 'Flieg zur Erzmine auf Mond Ferro (links oben) und hilf Bruno.';
+ if(m===2)return 'Dock an der Werkstattschleuse an (links an der Station) und steig aus.';
+ if(m===3)return 'Flieg in den Landeorbit von Mond Kappa (links unten).';
+ if(m===4)return 'Bring das Ersatzteil zum Habitat-Ring (rechts unten).';
+ if(!F.ende)return 'Zurück zur Andockschleuse: Kommandantin Sato wartet.';
+ return state.kap.length<6?`Geschafft, Nova-7 läuft! Datenkapseln: ${state.kap.length} von 6.`:'Alles geschafft! Du bist ein Impuls-Ass.'}
+
+/* ---------- Aufgaben-Fenster ---------- */
+const TD=$('#taskDlg');
+function openSt(i){const s=ST[i];let t=s.tasks.findIndex((_,k)=>!isDone(i,k));if(t<0){G.after(i);return}
+ showTask(i,t,true);if(!TD.open)TD.showModal();TD.scrollTop=0;$('#panel').focus({preventScroll:true})}
+TD.addEventListener('close',()=>{G.freeze=false;hud()});
+function head(i){const s=ST[i];return `<h3>Mission ${i+1} · ${s.name}</h3><p style="color:var(--muted);margin-top:-4px">${s.thema}</p>`}
+function showTask(i,t,withIntro){const s=ST[i],T=s.tasks[t];used=0;solShown=false;
+ const P=$('#panel');
+ const dots=s.tasks.map((_,k)=>`<i class="${isDone(i,k)?'ok':''} ${k===t?'cur':''}"></i>`).join('');
+ P.innerHTML=head(i)+(withIntro?say(s.intro):'')+
+ `<div class="task" data-task="${tid(i,t)}"><div class="thead"><span class="afb"><b>${'★'.repeat(T.afb)}</b> AFB ${['I','II','III'][T.afb-1]}</span><span>Aufgabe ${t+1} von ${s.tasks.length}</span><span class="dots" aria-hidden="true">${dots}</span></div>
+ <div class="${T.bild?'mitbild':''}">${T.bild?pk(T.bild,'gross'):''}<p>${T.frage}</p></div><div class="body"></div><div class="fb" role="status"></div>
+ <div class="tools">${T.tipps?'<button class="tip" type="button" data-tip>💡 Tipp von Momo (−1 ◆)</button>':''}${T.loesung?'<button type="button" data-sol>Lösung zeigen</button>':''}</div><div class="extra"></div></div>`;
+ const box=P.querySelector('.task');
+ const tb=box.querySelector('[data-tip]');if(tb)tb.onclick=()=>{if(used>=T.tipps.length)return;
+  box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="tiptxt">${MOMO}<div><b>Tipp ${used+1}:</b> ${T.tipps[used]}</div></div>`);used++;
+  if(used>=T.tipps.length){tb.disabled=true;tb.textContent='💡 Keine Tipps mehr'}};
+ const sb=box.querySelector('[data-sol]');if(sb)sb.onclick=()=>{if(solShown)return;solShown=true;sb.disabled=true;
+  box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="loes"><b>Lösung:</b> ${T.loesung}<br><small>Schau sie dir genau an. Du bekommst keine Kristalle, kannst aber weiterspielen.</small></div><div class="tools"><button class="primary" type="button" data-weiter>Verstanden, weiter</button></div>`);
+  box.querySelector('[data-weiter]').onclick=()=>solve(i,t,true)};
+ TYP[T.typ](box,T,i,t);
+}
+function fb(box,cls,html){const f=box.querySelector('.fb');f.className='fb '+cls;f.innerHTML=html}
+function solve(i,t,viaSol){const s=ST[i];if(!isDone(i,t)){state.t[tid(i,t)]=viaSol?0:Math.max(1,3-used);save()}
+ hud();
+ const next=s.tasks.findIndex((_,k)=>!isDone(i,k));
+ const box=$('#panel .task');
+ const go=()=>{if(next>=0){showTask(i,next,false);TD.scrollTop=0}else stationWin(i)};
+ if(viaSol){go();return}
+ fb(box,'ok',`<b>Richtig!</b> +${state.t[tid(i,t)]} ◆ ${next>=0?'':'– das war die letzte Aufgabe hier.'}`);
+ box.querySelectorAll('[data-tip],[data-sol]').forEach(b=>b.disabled=true);
+ box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="tools"><button class="primary" type="button" data-weiter>${next>=0?'Nächste Aufgabe':'Mission abschließen'}</button></div>`);
+ const w=box.querySelector('[data-weiter]');w.onclick=go;w.focus({preventScroll:true});
+}
+function stationWin(i){hud();const s=ST[i];const f=s.tasks.reduce((a,_,k)=>a+(state.t[tid(i,k)]||0),0)+[0,1,2].reduce((a,r)=>a+(state.r[tid(i,r)]||0),0);
+ const mx=s.tasks.length*3+(s.mg?9:0);
+ $('#panel').innerHTML=head(i)+`<div class="win-box"><div class="big">✓ Mission geschafft</div><p>${f} von ${mx} ◆</p></div><div class="tools" style="justify-content:center"><button class="primary" type="button" id="nx">Zurück ins Spiel</button></div>`;
+ $('#nx').onclick=()=>{TD.close();G.after(i)};$('#nx').focus();
+}
+$('#taskClose').onclick=()=>TD.close();
+
+/* ==========================================================
+   Spielwelt: Pixel-Grafik (eigene Zeichnungen), 320 × 180
+   Karte: Shuttle mit vier Düsen, keine Reibung (1 px = 1 m)
+   ========================================================== */
+const G=(()=>{
+const F=state.f;
+const cv=$('#cv'),cx=cv.getContext('2d');let VW=320,VH=180;cx.imageSmoothingEnabled=false;
+const GM=$('#game');
+const R=(x,y,w,h,c)=>{cx.fillStyle=c;cx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h))};
+const hash=(x,y)=>{let h=(x*374761393+y*668265263)^0x5bf03635;h=Math.imul(h^(h>>>13),1274126177);return ((h^(h>>>16))>>>0)/4294967296};
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const disc=(c,x0,y0,r,col)=>{c.fillStyle=col;for(let y=-r;y<=r;y++){const w=Math.floor(Math.sqrt(r*r-y*y));c.fillRect(Math.round(x0-w),Math.round(y0+y),2*w+1,1)}};
+function ln(x1,y1,x2,y2,col,w=1,dash){cx.strokeStyle=col;cx.lineWidth=w;cx.setLineDash(dash||[]);cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();cx.setLineDash([])}
+function arrow(x,y,dx,dy,col,w=2,dash){const L=Math.hypot(dx,dy);if(L<3)return;const ux=dx/L,uy=dy/L,h=Math.min(5,L*.6);
+ ln(x,y,x+dx-ux*h*.6,y+dy-uy*h*.6,col,w,dash);cx.fillStyle=col;cx.beginPath();cx.moveTo(x+dx,y+dy);cx.lineTo(x+dx-ux*h-uy*h*.6,y+dy-uy*h+ux*h*.6);cx.lineTo(x+dx-ux*h+uy*h*.6,y+dy-uy*h-ux*h*.6);cx.fill()}
+function starsCanvas(w,h,seed,n){const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');g.fillStyle='#0e1314';g.fillRect(0,0,w,h);
+ for(let k=0;k<6;k++){const x=hash(seed+k,7)*w,y=hash(seed,k+3)*h,r=60+hash(k,seed)*90;const gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,'rgba(63,80,82,.35)');gr.addColorStop(1,'rgba(63,80,82,0)');g.fillStyle=gr;g.fillRect(x-r,y-r,2*r,2*r)}
+ for(let k=0;k<n;k++){const x=Math.floor(hash(k,seed)*w),y=Math.floor(hash(seed,k)*h),b=hash(k,k+seed);g.fillStyle=b<.08?'#FCBE00':b<.5?'#5F6F74':b<.85?'#ACBDC3':'#f1f4f4';g.fillRect(x,y,b>.93?2:1,b>.93?2:1)}
+ return c}
+const keys={};let talk=null,active=false,started=false,freeze=false,last=performance.now(),T0=last,scene='hub';
+let toastT=0;function toast(t,s=2.8){const el=$('#toast');el.innerHTML=t;el.hidden=false;toastT=s}
+
+/* ---------- Karte ---------- */
+const WW=720,WH=420,MS=2000,ACC=10,VDOCK=3,VKAP=4;
+const RECTS=[[352,189,56,22],[377,146,6,108],[352,140,56,22],[352,238,56,22],[408,195,8,10],[344,195,8,10]];
+const MOONS=[{x:118,y:96,r:28,c:'#8a7a66',d:'#6b5a4a'},{x:70,y:405,r:95,c:'#9aa9ad',d:'#7f9095'}],RING={x:625,y:330,r:36};
+const AST=[[250,60,9],[300,110,6],[470,80,8],[520,150,5],[240,268,7],[300,345,10],[452,300,6],[505,235,7],[680,200,8],[215,185,5],[420,388,7],[560,55,6],[30,230,8],[700,395,6],[330,28,5],[690,28,5]];
+const CIRC=[...MOONS.map(m=>[m.x,m.y,m.r]),[RING.x,RING.y,RING.r],...AST];
+const SITES=[{x:426,y:200},{x:160,y:122},{x:334,y:200},{x:196,y:318},{x:578,y:330}];
+const KAPS=[[250,150],[485,40],[700,262],[345,395],[28,28],[520,396]];
+const P={x:620,y:90,vx:0,vy:0,away:true,warn:-1,th:{}};
+if(F.pos){P.x=F.pos[0];P.y=F.pos[1];P.away=!SITES.some(s=>Math.hypot(P.x-s.x,P.y-s.y)<10)}
+const bg=document.createElement('canvas');bg.width=WW;bg.height=WH;
+(()=>{const c=bg.getContext('2d');c.drawImage(starsCanvas(WW,WH,11,900),0,0);
+ MOONS.forEach((m,k)=>{disc(c,m.x,m.y,m.r,m.d);disc(c,m.x-2,m.y-2,m.r-2,m.c);for(let j=0;j<(k?26:9);j++){const a=hash(j,k+5)*6.28,rr=hash(k,j+9)*(m.r-8),r2=2+Math.floor(hash(j+3,k)*(k?7:4));disc(c,m.x+Math.cos(a)*rr,m.y+Math.sin(a)*rr,r2,m.d);disc(c,m.x+Math.cos(a)*rr-1,m.y+Math.sin(a)*rr-1,Math.max(1,r2-2),m.c)}});
+ disc(c,RING.x,RING.y,RING.r,'#ACBDC3');disc(c,RING.x,RING.y,RING.r-3,'#C9D2D3');disc(c,RING.x,RING.y,RING.r-8,'#0e1314');
+ for(let k=0;k<4;k++){const a=k*Math.PI/4;for(let s=-RING.r+8;s<=RING.r-8;s++){c.fillStyle='#76989D';c.fillRect(Math.round(RING.x+Math.cos(a)*s),Math.round(RING.y+Math.sin(a)*s),2,2)}}
+ disc(c,RING.x,RING.y,7,'#ACBDC3');disc(c,RING.x,RING.y,5,'#5F6F74');
+ AST.forEach(([x,y,r],k)=>{disc(c,x,y,r,'#4a3f36');disc(c,x-1,y-1,r-1,'#6b5a4a');disc(c,x+r*.3,y+r*.2,Math.max(1,Math.floor(r/3)),'#4a3f36');c.fillStyle='#8a7a66';c.fillRect(x-r*.5,y-r*.5,2,2)});
+})();
+const nDone=()=>ST.filter((_,i)=>stDone(i)).length;
+function drawStation(t){const fin=!!F.ende,n=nDone();
+ [[352,140],[352,238]].forEach(([x,y])=>{R(x,y,56,22,'#ACBDC3');R(x+1,y+1,54,20,'#3E4B4C');for(let k=1;k<7;k++)R(x+k*8,y+1,1,20,'#5F6F74');R(x+1,y+11,54,1,'#5F6F74')});
+ R(377,146,6,108,'#8a9a9e');for(let y=150;y<252;y+=6)R(378,y,4,1,'#5F6F74');
+ R(344,195,72,10,'#ACBDC3');R(344,197,72,1,'#C9D2D3');
+ R(352,189,56,22,'#C9D2D3');R(352,189,56,2,'#E4E7E9');R(352,207,56,4,'#ACBDC3');R(366,189,2,22,'#ACBDC3');R(392,189,2,22,'#ACBDC3');
+ for(let k=0;k<10;k++){const on=fin||k<n*2;R(355+k*5,197,3,3,on?'#FCBE00':'#2f393a')}
+ const bl=Math.sin(t*4)>0;R(415,198,2,4,bl?'#FCBE00':'#5F6F74');R(343,198,2,4,bl?'#FCBE00':'#5F6F74');
+ R(379,143,2,3,fin&&bl?'#ff7a5c':'#5F6F74');
+ // Mine auf Ferro
+ R(136,104,10,7,'#5F6F74');R(136,103,10,1,'#ACBDC3');R(140,107,2,4,'#2f393a');R(144,101,1,3,'#ACBDC3');R(143,100,3,2,stDone(1)?'#FCBE00':'#2f393a');
+ // Depot auf Kappa
+ R(64,303,14,8,'#C9D2D3');R(64,302,14,1,'#E4E7E9');R(69,306,3,5,'#2f393a');R(74,299,2,3,stDone(3)?'#FCBE00':'#2f393a');
+ // Lichter am Habitat-Ring
+ for(let k=0;k<8;k++){const a=k*Math.PI/4+t*.15;R(RING.x+Math.cos(a)*(RING.r-1.5)-1,RING.y+Math.sin(a)*(RING.r-1.5)-1,2,2,stDone(4)?'#FCBE00':'#5F6F74')}
+}
+function ship(x,y,t){const X=Math.round(x)-5,Y=Math.round(y)-5,th=P.th,fl=3+Math.floor(Math.random()*3);
+ if(th.r){R(X-1-fl,Y+4,fl,3,'#ff7a5c');R(X-fl,Y+5,fl-1,1,'#FCBE00')}if(th.l){R(X+12,Y+4,fl,3,'#ff7a5c');R(X+12,Y+5,fl-1,1,'#FCBE00')}
+ if(th.d){R(X+4,Y-1-fl,3,fl,'#ff7a5c');R(X+5,Y-fl,1,fl-1,'#FCBE00')}if(th.u){R(X+4,Y+12,3,fl,'#ff7a5c');R(X+5,Y+12,1,fl-1,'#FCBE00')}
+ R(X+2,Y,7,11,'#E4E7E9');R(X,Y+2,11,7,'#E4E7E9');R(X+1,Y+1,9,9,'#E4E7E9');R(X+1,Y+8,9,2,'#76989D');R(X+2,Y+10,7,1,'#76989D');
+ R(X+3,Y+3,5,4,'#1b2122');R(X+4,Y+4,2,1,'#FCBE00');
+ R(X-1,Y+4,1,3,'#5F6F74');R(X+11,Y+4,1,3,'#5F6F74');R(X+4,Y-1,3,1,'#5F6F74');R(X+4,Y+11,3,1,'#5F6F74')}
+function bounce(o,nx,ny,pen,k=1){o.x+=nx*pen;o.y+=ny*pen;const vn=o.vx*nx+o.vy*ny;if(vn<0){o.vx-=(1+k)*vn*nx;o.vy-=(1+k)*vn*ny;return true}return false}
+function collideRect(o,r,[x,y,w,h],k){const qx=Math.max(x,Math.min(o.x,x+w)),qy=Math.max(y,Math.min(o.y,y+h));let dx=o.x-qx,dy=o.y-qy,d=Math.hypot(dx,dy);
+ if(d>=r)return false;if(d<1e-6){const c=[[o.x-x,-1,0],[x+w-o.x,1,0],[o.y-y,0,-1],[y+h-o.y,0,1]].sort((a,b)=>a[0]-b[0])[0];return bounce(o,c[1],c[2],c[0]+r,k)}
+ return bounce(o,dx/d,dy/d,r-d,k)}
+function collideCirc(o,r,[x,y,cr],k){const dx=o.x-x,dy=o.y-y,d=Math.hypot(dx,dy);if(d>=r+cr||d<1e-6)return false;return bounce(o,dx/d,dy/d,r+cr-d,k)}
+let hitNote=false,kapWarn=0;
+function hubUpdate(dt){
+ const th=P.th;th.l=th.r=th.u=th.d=false;
+ let ax=((keys.right?1:0)-(keys.left?1:0))*ACC,ay=((keys.down?1:0)-(keys.up?1:0))*ACC;
+ if(ax>0)th.r=1;if(ax<0)th.l=1;if(ay>0)th.d=1;if(ay<0)th.u=1;
+ if(keys.brake&&!ax&&!ay){const s=Math.hypot(P.vx,P.vy);if(s<=ACC*dt){P.vx=P.vy=0}else{ax=-P.vx/s*ACC;ay=-P.vy/s*ACC;if(ax>3)th.r=1;if(ax<-3)th.l=1;if(ay>3)th.d=1;if(ay<-3)th.u=1}}
+ P.vx+=ax*dt;P.vy+=ay*dt;P.x+=P.vx*dt;P.y+=P.vy*dt;
+ let hit=false;RECTS.forEach(r=>{if(collideRect(P,5,r,1))hit=true});CIRC.forEach(c=>{if(collideCirc(P,5,c,1))hit=true});
+ if(P.x<6)bounce(P,1,0,6-P.x);if(P.x>WW-6)bounce(P,-1,0,P.x-WW+6);if(P.y<6)bounce(P,0,1,6-P.y);if(P.y>WH-6)bounce(P,0,-1,P.y-WH+6);
+ if(hit&&!hitNote){hitNote=true;toast('<b>Momo:</b> Abgeprallt! Der Brocken ist viel schwerer als wir. Bei so einem elastischen Stoß kehrt sich unsere Geschwindigkeit einfach um.',5)}
+ const sp=Math.hypot(P.vx,P.vy);let far=true;
+ SITES.forEach((s,i)=>{const d=Math.hypot(P.x-s.x,P.y-s.y);if(d<14)far=false;
+  if(d<9&&P.away){if(sp<=VDOCK)dock(i);else if(P.warn!==i){P.warn=i;toast(`Zu schnell zum Andocken: v = ${fmt(sp)} m/s. Erlaubt sind höchstens 3 m/s. Gib Gegenschub!`,3.5)}}
+  else if(d>14&&P.warn===i)P.warn=-1});
+ if(far)P.away=true;
+ kapWarn=Math.max(0,kapWarn-dt);
+ KAPS.forEach(([x,y],k)=>{if(state.kap.includes(k))return;if(Math.hypot(P.x-x,P.y-y)<8){if(sp<=VKAP){state.kap.push(k);save();hud();toast(`Datenkapsel eingesammelt! +1 ◆ (${state.kap.length} von 6)`)}else if(!kapWarn){kapWarn=3;toast(`Zu schnell für den Greifarm: höchstens 4 m/s (du hast ${fmt(sp)} m/s).`)}}});
+ if(Math.random()<.02){F.pos=[Math.round(P.x),Math.round(P.y)];save()}
+}
+function camera(){return [Math.max(0,Math.min(WW-VW,Math.round(P.x-VW/2))),Math.max(0,Math.min(WH-VH,Math.round(P.y-VH/2)))]}
+function drawHub(t){const [camX,camY]=camera();
+ cx.drawImage(bg,camX,camY,VW,VH,0,0,VW,VH);cx.save();cx.translate(-camX,-camY);
+ drawStation(t);
+ const n=nextM(),tgt=n<5?n:(F.ende?-1:0);
+ SITES.forEach((s,i)=>{cx.globalAlpha=i===tgt?.55+.45*Math.sin(t*5):.6;cx.strokeStyle=i===tgt?'#FCBE00':'#5F6F74';cx.lineWidth=1;cx.setLineDash([2,2]);cx.beginPath();cx.arc(s.x,s.y,9,0,7);cx.stroke();cx.setLineDash([]);cx.globalAlpha=1});
+ KAPS.forEach(([x,y],k)=>{if(state.kap.includes(k))return;const b=Math.sin(t*3+k)>0;R(x-2,y-3,5,7,'#ACBDC3');R(x-1,y-2,3,5,b?'#FCBE00':'#c98a2a');R(x-2,y-4,5,1,'#f1f4f4')});
+ ship(P.x,P.y,t);
+ const vs=1.3;let ax=P.vx*vs,ay=P.vy*vs;const L=Math.hypot(ax,ay);if(L>46){ax*=46/L;ay*=46/L}arrow(P.x,P.y,ax,ay,'#6aa5ff',2);
+ cx.restore();
+ if(tgt>=0){const s=SITES[tgt],sx=s.x-camX,sy=s.y-camY;if(sx<0||sy<0||sx>VW||sy>VH){const cxm=VW/2,cym=VH/2,dx=sx-cxm,dy=sy-cym,k=Math.min((VW/2-10)/Math.abs(dx||1e-6),(VH/2-10)/Math.abs(dy||1e-6)),px=cxm+dx*k,py=cym+dy*k,a=Math.atan2(dy,dx);
+  cx.fillStyle='#FCBE00';cx.beginPath();cx.moveTo(px+Math.cos(a)*7,py+Math.sin(a)*7);cx.lineTo(px+Math.cos(a+2.4)*6,py+Math.sin(a+2.4)*6);cx.lineTo(px+Math.cos(a-2.4)*6,py+Math.sin(a-2.4)*6);cx.fill()}}
+ if(fw.length||F.ende&&Math.random()<.01)fireworks()}
+let fw=[];function fireworks(){if(F.ende&&Math.random()<.02){const ox=40+Math.random()*(VW-80),oy=20+Math.random()*60,c=rnd(['#FCBE00','#f1f4f4','#6aa5ff','#4fd27f','#ff7a5c']);for(let k=0;k<24;k++){const w=k/24*6.283,v=20+Math.random()*25;fw.push({x:ox,y:oy,vx:Math.cos(w)*v,vy:Math.sin(w)*v,t:0,c})}}
+ fw=fw.filter(p=>{p.t+=1/60;p.x+=p.vx/60;p.y+=p.vy/60;if(p.t>1.3)return false;cx.globalAlpha=1-p.t/1.3;R(p.x,p.y,2,2,p.c);cx.globalAlpha=1;return true})}
+function hubStrip(){const sp=Math.hypot(P.vx,P.vy);return `<span>Shuttle m = 2000 kg</span><span class="pv">v = ${fmt(sp)} m/s</span><span class="pv">p = m · v = ${grp(MS*Math.round(sp*10)/10)} kg·m/s</span><span>Andocken: höchstens 3 m/s</span>`}
+
+/* ---------- Gespräche ---------- */
+const INTRO=[['','Sonnensturm! Eine Welle geladener Teilchen hat die Raumstation Nova-7 lahmgelegt. Reaktor aus, Funk gestört, die Lichter flackern.'],
+ ['Momo','Hallo! Ich bin Momo, der Bordroboter deines Shuttles. Kommandantin Sato funkt: Wir sollen sofort an der Andockschleuse andocken.'],
+ ['Momo','Achtung, hier draußen gibt es keine Reibung. Mit den Pfeiltasten oder WASD zündest du die Düsen. Nur solange eine Düse feuert, ändert sich unser Impuls.'],
+ ['Momo','Lässt du los, fliegen wir einfach geradeaus weiter, wie Newton es sagt. Zum Bremsen gibst du Gegenschub oder hältst die Leertaste (Bremsautomatik).'],
+ ['Momo','Andocken klappt nur mit höchstens 3 m/s. Der blaue Pfeil zeigt unseren Impuls. Die Schleuse ist rechts an der Station: Folge dem gelben Pfeil!']];
+const IN=[
+ [['Kommandantin Sato','Willkommen auf Nova-7! Gut, dass du so sanft angedockt hast. Mit zu viel Impuls hättest du die Schleuse eingedrückt.'],['Kommandantin Sato','Bevor ich dich auf Mission schicke, will ich sehen, ob du den Impuls verstanden hast.']],
+ [['Bruno','Hey, du bist die Hilfe von der Station? Ich bin Bruno, Ingenieur hier in der Erzmine.'],['Bruno','Der Erzwagen muss die Rampe hoch zur Verladestation, aber sein Motor ist hinüber. Zum Glück haben wir eine Schleuder und Haftkugeln!'],['Bruno','Die Haftkugel klebt am Wagen fest, dann rollen beide zusammen weiter. Ein total unelastischer Stoß! Auf Ferro ist die Schwerkraft klein: g = 1,6 N/kg.']],
+ [['Momo','Raumanzug sitzt? Ich gebe dir einen Schraubenschlüssel, eine Bohrmaschine und eine Werkzeugkiste mit.'],['Du','Moment … mein Jetpack! Die Tankanzeige steht auf null!'],['Momo','Oh. Dann hilft nur das Rückstoßprinzip: Wirf ein Werkzeug weg, dann treibst du in die Gegenrichtung. An der Schleuse musst du langsam genug sein, sonst prallst du ab.']],
+ [['Momo','Wir sind im Orbit um Mond Kappa. Du steigst in die Landekapsel: 400 kg, ein Triebwerk mit 1200 N Schub.'],['Momo','Auf Kappa ist g = 1,6 N/kg. Gib Gas, dann bremst das Triebwerk. Aufsetzen darfst du mit höchstens 2 m/s.'],['Momo','Rechts oben siehst du das F-t-Diagramm deines Triebwerks. Die gelbe Fläche darunter ist der Kraftstoß.']],
+ [['Bruno','(Funk) Ich bin inzwischen im Habitat-Ring. Hier dreht sich alles, dadurch gibt es künstliche Schwerkraft wie auf der Erde.'],['Bruno','Die Steuerblöcke für den Reaktor gleiten auf einer Eisbahn in ihr Fach. Du schiebst sie an, indem du einen Stoßblock dagegen gleiten lässt.'],['Bruno','Die Blöcke haben Federpuffer, sie stoßen elastisch. Die Bahn bremst nur ein bisschen (Gleitreibung).']]];
+const OUT=[
+ [['Kommandantin Sato','Sehr gut. Erste Mission: Unser Reaktor braucht Erz. In der Mine auf Mond Ferro (links oben) steckt ein Erzwagen fest.'],['Momo','Ich setze Kurs. Und denk dran: rechtzeitig bremsen!']],
+ [['Bruno','Das Erz ist verladen. Danke! Ich schicke es gleich zur Station.'],['Kommandantin Sato','(Funk) Neues Problem: Der Sturm hat die Funkantenne an der Außenhülle verbogen. Dock an der Werkstattschleuse links an der Station an und steig aus.']],
+ [['Momo','Antenne repariert und du bist wieder drin. Werkzeug haben wir zum Glück genug.'],['Kommandantin Sato','(Funk) Für den Reaktor fehlt ein Ersatzteil. Es liegt im Depot auf Mond Kappa (links unten). Flieg in den Landeorbit.']],
+ [['Momo','Ersatzteil an Bord! Es gehört in den Reaktor im Habitat-Ring (rechts unten).']],
+ [['Bruno','Alle Steuerblöcke sitzen. Der Reaktor fährt hoch!'],['Kommandantin Sato','(Funk) Komm zurück zur Andockschleuse. Ich will dir persönlich danken.']]];
+const FIN=[['Kommandantin Sato','Nova-7 läuft wieder: Reaktor stabil, Funk an, alle Lichter leuchten. Das war großartige Arbeit!'],['Momo','Und nebenbei hast du den ganzen Impuls-Stoff wiederholt. Bereit für die Klassenarbeit!'],['Kommandantin Sato','Draußen treiben noch Datenkapseln vom Sturm herum. Wenn du Lust hast, sammel sie ein.']];
+function face(who){const fc=$('#face'),c=fc.getContext('2d');fc.hidden=!who;c.clearRect(0,0,16,16);const r=(x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(x,y,w,h)};r(0,0,16,16,'#2f393a');
+ if(who==='Momo'){r(3,3,10,10,'#E4E7E9');r(2,4,12,8,'#E4E7E9');r(4,5,8,5,'#1b2122');r(5,7,2,2,'#FCBE00');r(9,7,2,2,'#FCBE00');r(7,0,2,3,'#5F6F74');r(7,0,2,1,'#FCBE00');r(0,6,2,4,'#76989D');r(14,6,2,4,'#76989D');r(6,11,4,1,'#2f393a');r(5,14,2,2,'#5F6F74');r(9,14,2,2,'#5F6F74')}
+ else if(who.startsWith('Kommandantin')){r(4,2,8,4,'#1b1410');r(6,0,4,2,'#1b1410');r(4,5,8,7,'#c99a6e');r(4,5,8,1,'#1b1410');r(6,8,1,1,'#1b2122');r(9,8,1,1,'#1b2122');r(7,10,2,1,'#8a4f3c');r(2,12,12,4,'#76989D');r(5,13,2,1,'#FCBE00');r(7,12,2,1,'#c99a6e')}
+ else if(who==='Bruno'){r(3,1,10,4,'#FCBE00');r(2,4,12,1,'#b88a00');r(7,2,2,1,'#f1f4f4');r(4,5,8,6,'#e0b48a');r(6,7,1,1,'#1b2122');r(9,7,1,1,'#1b2122');r(4,9,8,4,'#6b4a2f');r(7,10,2,1,'#e0b48a');r(2,13,12,3,'#b07a2a')}
+ else if(who==='Du'){r(3,1,10,12,'#E4E7E9');r(2,3,12,8,'#E4E7E9');r(4,4,8,6,'#2f393a');r(5,5,3,1,'#76989D');r(10,8,1,1,'#FCBE00');r(2,13,12,3,'#ACBDC3');r(7,13,2,3,'#76989D')}}
+function sayLines(lines,done,choices){talk={lines,k:0,n:0,done,choices};showLine()}
+function showLine(){const L=talk.lines[talk.k];$('#talkbox').hidden=false;$('#tbWho').textContent=L[0]||'';face(L[0]);talk.n=0;talk.full=L[1];$('#tbTxt').textContent='';$('#tbCh').innerHTML='';$('#tbMore').hidden=false}
+function showChoices(){if(!talk||!talk.choices||talk.k<talk.lines.length-1||$('#tbCh').children.length)return;$('#tbMore').hidden=true;
+ talk.choices.forEach(([lab,fn])=>{const b=document.createElement('button');b.type='button';b.textContent=lab;b.addEventListener('pointerdown',e=>{e.stopPropagation()});b.onclick=e=>{e.stopPropagation();endTalk(fn)};$('#tbCh').appendChild(b)})}
+function endTalk(fn){$('#talkbox').hidden=true;const d=talk&&talk.done;talk=null;if(fn)fn();else if(d)d()}
+function advance(){if(!talk)return;if(talk.n<talk.full.length){talk.n=talk.full.length;$('#tbTxt').textContent=talk.full;showChoices();return}
+ if(talk.choices&&talk.k===talk.lines.length-1){endTalk(talk.choices[0][1]);return}
+ talk.k++;if(talk.k>=talk.lines.length)endTalk();else showLine()}
+function dock(i){P.vx=P.vy=0;P.x=SITES[i].x;P.y=SITES[i].y;P.away=false;P.th={};for(const k in keys)keys[k]=false;siteTalk(i)}
+function siteTalk(i){const n=nextM();
+ if(i===0&&n===5){if(!F.ende)return sayLines(FIN,()=>{F.ende=1;save();hud();showEnd()});return sayLines([['Kommandantin Sato',rnd(['Nova-7 läuft wie ein Uhrwerk. Danke dir!','Hast du schon alle Datenkapseln? Sechs Stück treiben da draußen herum.','Du darfst jederzeit wiederkommen. Momo vermisst dich sonst.'])]])}
+ if(i===n){const go=()=>{if(ST[i].mg&&!mgDone(i))mgStart(i,false);else openSt(i)};if(!F['in'+i])sayLines(IN[i],()=>{F['in'+i]=1;save();go()});else go();return}
+ if(stDone(i)){if(ST[i].mg)return sayLines([['Momo','Hier ist alles erledigt. Willst du die Übung zum Spaß nochmal spielen?']],null,[['Nochmal spielen',()=>mgStart(i,true)],['Weiterfliegen',null]]);
+  return sayLines([['Momo','Hier ist alles erledigt. Nächstes Ziel: '+questText()]])}
+ sayLines([['Momo','Hier ist noch nichts zu tun. Zuerst: '+questText()]])}
+function after(i){hud();P.away=false;if(OUT[i])sayLines(OUT[i],hud)}
+function showEnd(){const k=kris(),q=k/MAXK,rang=q>=.85?'Impuls-Ass':q>=.6?'Raumfahrt-Profi':'Raumfahrt-Kadettin / Raumfahrt-Kadett';
+ $('#endTxt').innerHTML=`<p class="pxtitle" style="margin-bottom:8px">Nova-7 ist gerettet!</p><p>Du hast <b>${k} von ${MAXK} ◆</b> gesammelt.</p><p>Rang: <b style="color:var(--gst-yellow)">${rang}</b></p><p style="font-size:14px;color:#c9d2d3">Nochmal üben? Dock an einer Station an und spiel die Übung erneut, oder sammel die Datenkapseln im All.</p>`;
+ $('#endov').hidden=false;$('#endOk').focus({preventScroll:true})}
+$('#endOk').onclick=()=>{$('#endov').hidden=true;cv.focus({preventScroll:true})};
+
+/* ---------- Rahmen für die Physik-Übungen ---------- */
+let mg=null,mgR=0,mgTries=0,mgMi=-1,mgReady=false;
+const MGS={};
+const sub=(a,b)=>`${a}<sub>${b}</sub>`;
+function msg(html,btns){$('#mgMsgTxt').innerHTML=html;const B=$('#mgMsgBtns');B.innerHTML='';
+ btns.forEach(([lab,fn],k)=>{const b=document.createElement('button');b.type='button';b.textContent=lab;if(!k)b.className='primary';b.onclick=()=>fn();B.appendChild(b)});$('#mgMsg').hidden=false;setTimeout(()=>{const f=B.querySelector('button');if(f)f.focus({preventScroll:true})},30)}
+function hideMsg(){$('#mgMsg').hidden=true}
+function setBtns(list){const B=$('#stripBt');B.innerHTML='';(list||[]).forEach(o=>{const b=document.createElement('button');b.type='button';b.innerHTML=o.lab;if(o.cls)b.className=o.cls;if(o.id)b.dataset.id=o.id;
+ if(o.hold){const on=e=>{e.preventDefault();if(!started)return;setActive(true);o.hold(true)},off=()=>o.hold(false);b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointerleave',off);b.addEventListener('pointercancel',off);b.addEventListener('contextmenu',e=>e.preventDefault())}
+ else b.onclick=()=>{setActive(true);o.click()};B.appendChild(b)})}
+function mgStart(mi,replay){mg=MGS[ST[mi].mg];mgMi=mi;scene='mg';GM.classList.add('inmg');for(const k in keys)keys[k]=false;
+ mgR=replay?0:Math.max(0,[0,1,2].findIndex(r=>!roundDone(mi,r)));mg.replay=!!replay;fit();mgRoundStart()}
+function mgRoundStart(){mgTries=0;mg.init(mgR);mgReady=false;
+ msg(`<h3>${mg.title} · Runde ${mgR+1} von 3</h3>${mg.goal(mgR)}`,[['▶ Los geht’s',mgTry],['Zurück zur Karte',mgExit]])}
+function mgTry(){hideMsg();mgTries++;mg.init(mgR);mgReady=true;cv.focus({preventScroll:true})}
+function mgWin(html){mgReady=false;const st=mgTries<=1?3:mgTries===2?2:1,k=tid(mgMi,mgR);state.r[k]=Math.max(state.r[k]||0,st);save();hud();
+ const lastR=mgR>=2;
+ msg(`<h3>✓ Geschafft! ${'◆'.repeat(st)}</h3>${html}<p><small>${st} ◆ ${mgTries>1?`(Versuch ${mgTries})`:'beim ersten Versuch'}</small></p>`,
+  [[lastR?(mg.replay||tasksDone(mgMi)?'Zurück zur Karte':'Weiter zu den Aufgaben'):'Nächste Runde',()=>{if(lastR)mgFinish();else{mgR++;mgRoundStart()}}],['Nochmal spielen',()=>{mgTry()}]])}
+function mgFail(html){mgReady=false;msg(`<h3>Noch nicht …</h3>${html}`,[['↺ Nochmal',mgTry],['Zurück zur Karte',mgExit]])}
+function mgFinish(){const i=mgMi,rp=mg.replay;hideMsg();mgLeave();if(rp)toast('Übung beendet. Gute Weiterreise!');else if(!tasksDone(i))openSt(i);else after(i)}
+function mgExit(){hideMsg();mgLeave();toast('Zurück an Bord. Du kannst jederzeit wieder andocken und weitermachen.',3.5)}
+function mgLeave(){scene='hub';mg=null;mgReady=false;GM.classList.remove('inmg');setBtns([]);for(const k in keys)keys[k]=false;fit()}
+let bgSpace=null;
+
+/* ===== 1) Schleuder: total unelastischer Stoß ===== */
+MGS.sling=(()=>{const S=4,GY=166,g=1.6,m1=10,PX=6,PY=3.5,XR0=64,XR1=71,XB=78.2,VMAX=12,PULL=7,TSC=1.5;
+ const RD=[{m2:10,H:2,cx:50,lim:0},{m2:10,H:2,cx:50,lim:1.5},{m2:20,H:2,cx:57,lim:1.5}];
+ const X=x=>x*S,Y=y=>GY-y*S;
+ let c,a=45,v0=7,ball,cart,st,trail,lastTrail=[],drag=false,hit,hmax,tEnd,hT;
+ const back=(()=>{const k=starsCanvas(320,180,23,260),q=k.getContext('2d');disc(q,262,34,20,'#5F6F74');disc(q,260,32,18,'#76989D');q.fillStyle='#ACBDC3';q.fillRect(243,28,34,2);q.fillRect(245,37,30,1);
+  q.fillStyle='#6b5a4a';for(let x=0;x<320;x++){const h=8+Math.round(4*Math.sin(x/23)+3*Math.sin(x/9+1));q.fillRect(x,GY-h,1,h)}
+  q.fillStyle='#8a7a66';q.fillRect(0,GY,320,14);for(let k2=0;k2<90;k2++){q.fillStyle=hash(k2,3)<.5?'#6b5a4a':'#a08f78';q.fillRect(Math.floor(hash(k2,1)*320),GY+1+Math.floor(hash(1,k2)*12),2,1)}return k})();
+ const hT_=x=>x<XR0?0:x<XR1?(x-XR0)/(XR1-XR0)*c.H:c.H;
+ function setPtr(px,py){let dx=(X(PX)-px)/S,dy=(py-Y(PY))/S;if(dx<.2)dx=.2;let L=Math.hypot(dx,dy);if(L>PULL){dx*=PULL/L;dy*=PULL/L;L=PULL}
+  a=Math.max(5,Math.min(85,Math.round(Math.atan2(dy,dx)*180/Math.PI)));v0=Math.max(1,Math.round(VMAX*L/PULL*10)/10)}
+ function fire(){if(st!=='aim'||!mgReady)return;const r=a*Math.PI/180;ball={x:PX,y:PY,vx:v0*Math.cos(r),vy:v0*Math.sin(r)};st='fly';trail=[];hT=0}
+ const self={title:'Die Schleuder',
+ goal(r){return [`<p>Schieß eine Haftkugel (m<sub>1</sub> = 10 kg) auf den Erzwagen (m<sub>2</sub> = 10 kg). Die Kugel klebt fest, dann rollen beide zusammen. Der Wagen muss die Rampe hinauf auf die Verladeplattform (h = 2,0 m).</p>`,
+  `<p>Gleicher Wagen, aber jetzt steht oben ein Prellbock: Der Wagen darf dort <b>höchstens mit 1,5 m/s</b> ankommen. Nicht zu schwach, nicht zu stark!</p><p>Für den Stoß zählt nur die waagrechte Geschwindigkeit v<sub>x</sub> der Kugel. Du siehst sie unter dem Spielbild.</p>`,
+  `<p>Ein voller Erzwagen: m<sub>2</sub> = 20 kg, und er steht weiter hinten. Wieder höchstens 1,5 m/s am Prellbock.</p><p>Überleg vorher mit der Impulserhaltung: Wie groß muss v<sub>x</sub> ungefähr sein, wenn der Wagen danach etwa 2,7 m/s braucht?</p>`][r]+
+  `<p><small>Zielen: Kugel nach hinten ziehen und loslassen (Maus oder Finger), oder ↑↓ für den Winkel, ←→ für v<sub>0</sub>, Leertaste schießt. Modell: keine Luft, Schienen ohne Reibung, g = 1,6 N/kg. Zeitraffer ×1,5.</small></p>`},
+ init(r){c=RD[r];ball=null;cart={x:c.cx,v:0,m:c.m2};st='aim';trail=[];drag=false;hit=null;hmax=0;tEnd=0;
+  setBtns([{lab:'α −',click:()=>{if(st==='aim')a=Math.max(5,a-1)}},{lab:'α +',click:()=>{if(st==='aim')a=Math.min(85,a+1)}},{lab:sub('v','0')+' −',click:()=>{if(st==='aim')v0=Math.max(1,Math.round(v0*10-1)/10)}},{lab:sub('v','0')+' +',click:()=>{if(st==='aim')v0=Math.min(VMAX,Math.round(v0*10+1)/10)}},{lab:'Schießen',cls:'go',click:fire}])},
+ key(code,down,e){if(!down||st!=='aim')return code==='Space'||code.startsWith('Arrow');const f=e&&e.shiftKey?5:1;
+  if(code==='ArrowUp'||code==='KeyW')a=Math.min(85,a+f);else if(code==='ArrowDown'||code==='KeyS')a=Math.max(5,a-f);
+  else if(code==='ArrowRight'||code==='KeyD')v0=Math.min(VMAX,Math.round(v0*10+f)/10);else if(code==='ArrowLeft'||code==='KeyA')v0=Math.max(1,Math.round(v0*10-f)/10);
+  else if(code==='Space'||code==='Enter'){if(!e.repeat)fire()}else return false;return true},
+ ptr(type,px,py){if(st!=='aim')return;if(type==='down'){drag=true;setPtr(px,py)}else if(type==='move'&&drag)setPtr(px,py);else if(type==='up'&&drag){drag=false;fire()}},
+ update(dt){dt*=TSC;
+  if(st==='fly'){const n=4,h=dt/n;for(let k=0;k<n&&st==='fly';k++){ball.vy-=g*h;ball.x+=ball.vx*h;ball.y+=ball.vy*h;hT+=h;
+    if(hT>.06){hT=0;trail.push([ball.x,ball.y])}
+    if(ball.y-.35<=1.5&&ball.y>0&&Math.abs(ball.x-cart.x)<=1.5+.35){const u=m1*ball.vx/(m1+c.m2);hit={vx:ball.vx,u};cart.v=u;cart.m=m1+c.m2;st='roll';lastTrail=trail.slice();trail.push([ball.x,ball.y]);break}
+    if(ball.y<=hT_(ball.x)+.35||ball.x>82){st='miss';tEnd=.9;lastTrail=trail.slice();ball.y=Math.max(ball.y,hT_(ball.x)+.35)}}}
+  else if(st==='roll'){const n=6,h=dt/n;for(let k=0;k<n&&st==='roll';k++){const onR=cart.x>=XR0&&cart.x<XR1;
+    if(onR){const th=Math.atan(c.H/(XR1-XR0));cart.v-=g*Math.sin(th)*h;cart.x+=cart.v*Math.cos(th)*h}else cart.x+=cart.v*h;
+    hmax=Math.max(hmax,hT_(cart.x));
+    if(cart.x+1.5>=XB){cart.x=XB-1.5;st='end';const vb=cart.v;const rec=recap();
+     if(!c.lim||vb<=c.lim)mgWin(rec+`<p>Der Wagen ist oben angekommen${c.lim?` und rollte mit ${fmt(vb,2)} m/s gegen den Prellbock (erlaubt: 1,5 m/s)`:''}.</p>`);
+     else mgFail(rec+`<p>Der Wagen knallte mit ${fmt(vb,2)} m/s gegen den Prellbock, erlaubt sind 1,5 m/s. Nimm etwas weniger v<sub>x</sub>.</p>`)}
+    else if(cart.v<0&&cart.x<XR0-3){st='end';mgFail(recap()+`<p>Der Wagen kam nur bis h = ${fmt(hmax,2)} m und rollte zurück. Er braucht direkt nach dem Stoß mehr Geschwindigkeit, also brauchst du mehr v<sub>x</sub>.</p>`)}}}
+  else if(st==='miss'){tEnd-=dt;if(tEnd<=0){st='end';mgFail(ball.x>c.cx?`<p>Zu weit! Die Kugel flog über den Wagen (x = ${fmt(c.cx)} m) hinweg. Die graue gestrichelte Bahn zeigt deinen letzten Schuss.</p><p>Nimm weniger v<sub>0</sub> oder einen anderen Winkel.</p>`:`<p>Zu kurz! Die Kugel landete bei x = ${fmt(ball.x)} m, der Wagen steht bei x = ${fmt(c.cx)} m. Die graue gestrichelte Bahn zeigt deinen letzten Schuss.</p><p>Mehr v<sub>0</sub> oder ein anderer Winkel schickt die Kugel weiter.</p>`)}}},
+ ro(){let s=`<span>Haftkugel ${sub('m','1')} = 10 kg</span><span>Wagen ${sub('m','2')} = ${c.m2} kg</span><span><b>${sub('v','0')} = ${fmt(v0)} m/s</b></span><span><b>α = ${a}°</b></span><span class="pv">${sub('v','x')} = ${fmt(v0*Math.cos(a*Math.PI/180),2)} m/s</span>`;
+  if(hit)s+=`<span class="pv">Stoß: p = ${sub('m','1')} · ${sub('v','x')} = ${fmt(m1*hit.vx)} kg·m/s → u = ${fmt(hit.u,2)} m/s</span><span>Wagen: v = ${fmt(Math.abs(cart.v),2)} m/s, h = ${fmt(hT_(cart.x),2)} m</span>`;
+  else s+=`<span>Ziel: Plattform h = 2,0 m${c.lim?', Prellbock ≤ 1,5 m/s':''}</span>`;return s},
+ draw(t){cx.drawImage(back,0,0);
+  // Schienen, Rampe, Plattform
+  R(X(30),GY-2,X(XR0)-X(30),1,'#C9D2D3');for(let x=30;x<XR0;x+=1.5)R(X(x),GY-1,2,1,'#5a4636');
+  const yP=Y(c.H);cx.strokeStyle='#C9D2D3';cx.lineWidth=1;cx.beginPath();cx.moveTo(X(XR0),GY-1.5);cx.lineTo(X(XR1),yP-1.5);cx.stroke();
+  for(let x=XR0+1;x<XR1;x+=2){const yy=Y(hT_(x));R(X(x),yy,1,GY-yy,'#5F6F74')}
+  R(X(XR1),yP,X(80)-X(XR1),GY-yP,'#3E4B4C');R(X(XR1),yP-2,X(80)-X(XR1),1,'#C9D2D3');R(X(XR1),yP,X(80)-X(XR1),1,'#76989D');
+  R(X(XB),yP-9,3,8,'#2f393a');for(let k=0;k<4;k++)R(X(XB),yP-9+k*2,3,1,'#FCBE00');
+  R(X(72),yP-24,14,20,'#5F6F74');R(X(72),yP-25,14,1,'#ACBDC3');R(X(72)+5,yP-12,4,8,'#2f393a');R(X(72)+2,yP-21,3,3,'#FCBE00');
+  // Schleuder
+  const sx=X(PX),sy=Y(PY);R(sx-1,sy+2,3,GY-sy-2,'#5a4636');R(sx-5,sy-4,2,7,'#8a6a4a');R(sx+4,sy-4,2,7,'#8a6a4a');R(sx-4,sy+2,9,2,'#8a6a4a');
+  for(let k=0;k<4;k++)disc(cx,X(1+k*.9),GY-3-(k%2)*2,2,'#c94a3a');
+  // Bahnen
+  lastTrail.forEach(([x,y],k)=>{if(k%2)R(X(x),Y(y),1,1,'#76989D')});trail.forEach(([x,y])=>R(X(x),Y(y),1,1,'#f1f4f4'));
+  if(st==='aim'){const r=a*Math.PI/180;let bx=PX,by=PY,vx=v0*Math.cos(r),vy=v0*Math.sin(r);for(let k=0;k<14;k++){const tt=.09;bx+=vx*tt;vy-=g*tt;by+=vy*tt;if(k%2===0)R(X(bx),Y(by),1,1,'#FCBE00')}
+   const L=v0/VMAX*PULL,qx=PX-Math.cos(r)*L,qy=PY-Math.sin(r)*L;ln(sx-4,sy-4,X(qx),Y(qy),'#c94a3a',1);ln(sx+5,sy-4,X(qx),Y(qy),'#c94a3a',1);disc(cx,X(qx),Y(qy),2,'#e36a55')}
+  else{ln(sx-4,sy-4,sx+5,sy-4,'#c94a3a',1)}
+  // Wagen
+  const th=cart.x>=XR0&&cart.x<XR1?Math.atan(c.H/(XR1-XR0)):0,wx=X(cart.x),wy=Y(hT_(cart.x));
+  cx.save();cx.translate(wx,wy-1);cx.rotate(-th);R(-6,-7,12,5,'#b07a2a');R(-6,-7,12,1,'#d39a4a');R(-5,-9,3,2,'#5F6F74');R(-1,-10,3,3,'#76989D');R(3,-9,2,2,'#5F6F74');R(-5,-2,3,2,'#2f393a');R(2,-2,3,2,'#2f393a');
+  if(hit)disc(cx,-6,-5,1.6,'#c94a3a');cx.restore();
+  if(st==='fly'||st==='miss'){disc(cx,X(ball.x),Y(ball.y),1.6,'#e36a55');if(st==='fly')arrow(X(ball.x),Y(ball.y),ball.vx*2.4,0,'#6aa5ff',1.5)}
+  if(st==='roll'&&Math.abs(cart.v)>.05)arrow(wx,wy-14,cart.v*cart.m*.25,0,'#6aa5ff',2)}};
+ function recap(){return `<p>Stoß: ${sub('m','1')} · ${sub('v','x')} = 10 kg · ${fmt(hit.vx,2)} m/s = ${fmt(m1*hit.vx)} kg·m/s. Danach: (${sub('m','1')} + ${sub('m','2')}) · u = ${m1+c.m2} kg · ${fmt(hit.u,2)} m/s = ${fmt((m1+c.m2)*hit.u)} kg·m/s. Der Impuls bleibt erhalten.</p>`}
+ return self})();
+
+/* ===== 2) Weltraumspaziergang: Rückstoß ===== */
+MGS.drift=(()=>{const S=8,W=10,M0=100,TSC=4,RA=.6;
+ const IT=[['Schraubenschlüssel',3],['Bohrmaschine',6],['Werkzeugkiste',12]];
+ const RD=[{a:[7,11],z:[33.4,11],lim:1.5,box:[[34,5,6,12]]},{a:[6,18],z:[32.4,4],lim:.6,box:[[33,0,7,9]]},{a:[5,9],z:[34.4,9],lim:1.2,box:[[35,3,5,12],[18.5,0,2,12]]}];
+ const back=starsCanvas(320,180,41,300);{const q=back.getContext('2d');disc(q,40,190,70,'#3E4B4C');disc(q,40,192,68,'#5F6F74');q.fillStyle='#76989D';for(let k=0;k<14;k++)q.fillRect(Math.floor(hash(k,2)*90),130+Math.floor(hash(2,k)*50),6,1)}
+ let c,p,have,sel,aim,fly,st,tt,bumpT,noT,lastDv;
+ const mass=()=>M0+IT.reduce((s,it,k)=>s+(have[k]?it[1]:0),0);
+ function dvOf(k){const m=IT[k][1];return m*W/(mass()-m)}
+ function nextSel(){if(have[sel])return;const k=[2,1,0].find(j=>have[j]);sel=k===undefined?sel:k}
+ function toss(){if(!mgReady||st!=='go'||!have[sel])return;const m=IT[sel][1],Mr=mass()-m,dx=Math.cos(aim),dy=Math.sin(aim);
+  fly.push({x:p.x+dx*.8,y:p.y+dy*.8,vx:p.vx+W*dx,vy:p.vy+W*dy,k:sel});const dv=m*W/Mr;p.vx-=dv*dx;p.vy-=dv*dy;lastDv=dv;have[sel]=0;nextSel();btns()}
+ function btns(){setBtns([...IT.map(([n,m],k)=>({lab:`${n} ${m} kg`,cls:(have[k]?'':'used ')+(k===sel&&have[k]?'on':''),click:()=>{if(have[k]){sel=k;btns()}}})),{lab:'Werfen',cls:'go',click:toss},{lab:'↺',click:()=>{if(st==='go'){st='end';mgFail('<p>Neuer Versuch. Überleg dir vorher, welches Werkzeug du in welche Richtung wirfst.</p>')}}}]);
+  $$('#stripBt button').forEach((b,k)=>{if(k<3&&!have[k])b.disabled=true})}
+ const self={title:'Weltraumspaziergang',
+ goal(r){return [`<p>Dein Jetpack ist leer! Treib zurück zur Schleuse (gelber Rahmen). Wirf dazu ein Werkzeug von der Schleuse weg, dann treibst du in die Gegenrichtung. Erlaubt sind höchstens 1,5 m/s an der Schleuse.</p><p>Du hast mit Anzug 100 kg (ohne Werkzeug). Jedes Werkzeug fliegt mit 10 m/s relativ zu dir weg.</p>`,
+  `<p>Diese Schleuse ist eng: Du darfst <b>höchstens mit 0,6 m/s</b> ankommen, sonst prallst du ab. Welches Werkzeug ist das richtige? Oder brauchst du einen zweiten Wurf zum Bremsen?</p>`,
+  `<p>Ein Solarpaneel versperrt den direkten Weg. Du musst unten herum! Mit dem zweiten Wurf änderst du die Richtung, denn der Impuls ist ein Vektor. Höchstens 1,2 m/s an der Schleuse.</p><p>Tipp: Ein Wurf schräg nach oben schickt dich schräg nach unten.</p>`][r]+
+  `<p><small>Zielen: ins Bild tippen oder klicken (das Werkzeug fliegt dorthin), oder ←→ drehen. Werkzeug: Knöpfe oder 1, 2, 3. Werfen: Knopf oder Leertaste. Der gestrichelte blaue Pfeil zeigt deine Geschwindigkeitsänderung Δv, die graue Punktlinie deine neue Flugrichtung. Zeitraffer ×4.</small></p>`},
+ init(r){c=RD[r];p={x:c.a[0],y:c.a[1],vx:0,vy:0};have=[1,1,1];sel=2;aim=Math.atan2(c.a[1]-c.z[1],c.a[0]-c.z[0]);fly=[];st='go';tt=0;bumpT=0;noT=0;lastDv=0;btns()},
+ key(code,down,e){if(!down)return false;if(code==='ArrowLeft'||code==='KeyA')aim-=.06;else if(code==='ArrowRight'||code==='KeyD')aim+=.06;else if(code==='ArrowUp'||code==='ArrowDown')return true;
+  else if(code==='Digit1'||code==='Digit2'||code==='Digit3'){const k=+code.slice(5)-1;if(have[k]){sel=k;btns()}}else if(code==='Space'||code==='Enter'){if(!e.repeat)toss()}else return false;return true},
+ ptr(type,px,py){if(type==='down'||type==='move'&&ptrDown){const dx=px/S-p.x,dy=py/S-p.y;if(Math.hypot(dx,dy)>.3)aim=Math.atan2(dy,dx)}},
+ update(dt){if(st!=='go')return;dt*=TSC;tt+=dt;bumpT=Math.max(0,bumpT-dt);
+  p.x+=p.vx*dt;p.y+=p.vy*dt;fly.forEach(f=>{f.x+=f.vx*dt;f.y+=f.vy*dt});fly=fly.filter(f=>f.x>-3&&f.x<43&&f.y>-3&&f.y<26);
+  const sp=Math.hypot(p.vx,p.vy),dz=Math.hypot(p.x-c.z[0],p.y-c.z[1]);
+  if(dz<1.8&&!bumpT){if(sp<=c.lim){st='end';mgWin(`<p>Angekommen mit v = ${fmt(sp,2)} m/s (erlaubt: ${fmt(c.lim)} m/s).</p><p>Rückstoß: ${sub('m','W')} · ${sub('u','W')} = −${sub('m','Du')} · Δ${sub('v','Du')}. Ein schweres Werkzeug gibt dir eine große Geschwindigkeitsänderung, ein leichtes eine kleine.</p>`);return}
+   bumpT=1.5;p.vx*=-.35;p.vy*=-.35;toast(`Zu schnell (${fmt(sp,2)} m/s)! Du prallst von der Schleuse ab.`)}
+  let hit=false;c.box.forEach(b=>{if(collideRect(p,RA,b,.3))hit=true});if(hit&&!bumpT){bumpT=.8;toast('Autsch, gegen die Station gestoßen! Ein Teil deines Impulses ist weg.')}
+  if(p.x<-1||p.x>41||p.y<-1||p.y>23.5){st='end';mgFail('<p>Du treibst hinaus ins All! Momo holt dich mit der Sicherheitsleine zurück.</p><p>Wirf das Werkzeug genau von der Schleuse weg. Du bewegst dich immer entgegen der Wurfrichtung.</p>');return}
+  if(!have.some(Boolean)){const away=(p.x-c.z[0])*p.vx+(p.y-c.z[1])*p.vy>0;noT=sp<.03||away&&dz>2?noT+dt:0;
+   if(noT>3){st='end';mgFail(sp<.03?'<p>Du hast kein Werkzeug mehr und schwebst fast still. Momo holt dich mit der Sicherheitsleine.</p>':'<p>Kein Werkzeug mehr, und du treibst an der Schleuse vorbei. Momo holt dich mit der Sicherheitsleine.</p>')}}},
+ ro(){const sp=Math.hypot(p.vx,p.vy),M=mass();let s=`<span>Masse mit Werkzeug: ${M} kg</span><span class="pv">v = ${fmt(sp,2)} m/s</span><span class="pv">p = ${fmt(M*sp)} kg·m/s</span><span>Schleuse: ≤ ${fmt(c.lim)} m/s</span>`;
+  if(have[sel])s+=`<span><b>Wurf: Δv = ${IT[sel][1]} kg · 10 m/s : ${M-IT[sel][1]} kg = ${fmt(dvOf(sel),2)} m/s</b></span>`;else s+='<span>Kein Werkzeug mehr übrig.</span>';return s},
+ draw(t){cx.drawImage(back,0,0);
+  c.box.forEach(([x,y,w,h],k)=>{if(k===0||c.box.length===1){R(x*S,y*S,w*S,h*S,'#ACBDC3');R(x*S+2,y*S+2,w*S-4,h*S-4,'#C9D2D3');for(let j=0;j<h;j+=2)R(x*S+6,y*S+j*S+5,w*S-10,1,'#ACBDC3');R(x*S+w*S-8,y*S+4,3,3,'#FCBE00')}
+   else{R(x*S,y*S,w*S,h*S,'#3E4B4C');for(let j=0;j<h*S;j+=4)R(x*S,y*S+j,w*S,1,'#76989D');R(x*S+w*S/2-1,y*S,2,h*S,'#ACBDC3');R(x*S-1,y*S+h*S-1,w*S+2,2,'#ACBDC3')}});
+  const zx=c.z[0]*S,zy=c.z[1]*S,pl=Math.sin(t*5)>0;R(zx-2,zy-13,6,26,'#2f393a');cx.strokeStyle=pl?'#FCBE00':'#b88a00';cx.lineWidth=2;cx.strokeRect(zx-3,zy-14,8,28);
+  fly.forEach(f=>{const X=f.x*S,Y=f.y*S;if(f.k===0){R(X-2,Y,5,1,'#C9D2D3');R(X-3,Y-1,2,3,'#C9D2D3')}else if(f.k===1){R(X-2,Y-1,4,3,'#FCBE00');R(X+2,Y,2,1,'#ACBDC3')}else{R(X-3,Y-2,6,4,'#c94a3a');R(X-1,Y-3,2,1,'#2f393a')}});
+  const X=p.x*S,Y=p.y*S;
+  if(st==='go'){const dx=Math.cos(aim),dy=Math.sin(aim);ln(X+dx*6,Y+dy*6,X+dx*30,Y+dy*30,'#FCBE00',1,[2,2]);if(have[sel]){const dv=dvOf(sel),d=dv*18;arrow(X,Y,-dx*d,-dy*d,'#6aa5ff',1,[2,2]);const nx=p.vx-dx*dv,ny=p.vy-dy*dv,nl=Math.hypot(nx,ny);if(nl>.01){cx.globalAlpha=.45;ln(X,Y,X+nx/nl*90,Y+ny/nl*90,'#ACBDC3',1,[1,3]);cx.globalAlpha=1}}}
+  const bob=Math.round(Math.sin(t*2));R(X-3,Y-5+bob,7,9,'#f1f4f4');R(X-4,Y-3+bob,1,5,'#ACBDC3');R(X+4,Y-3+bob,1,5,'#ACBDC3');R(X-2,Y-4+bob,5,3,'#2f393a');R(X+1,Y-4+bob,1,1,'#FCBE00');R(X-2,Y+4+bob,2,2,'#ACBDC3');R(X+1,Y+4+bob,2,2,'#ACBDC3');R(X-1,Y+bob,3,1,'#76989D');
+  arrow(X,Y,p.vx*30,p.vy*30,'#6aa5ff',2)}};
+ return self})();
+
+/* ===== 3) Landung: Kraftstoß ===== */
+MGS.lander=(()=>{const g=1.6,FT=1200,LIM=2,S=1.2,GY=162,CX=160;
+ const RD=[{m:400,h:100,v:-6,fuel:20},{m:400,h:100,v:-6,fuel:12},{m:600,h:80,v:-2,fuel:26}];
+ const back=(()=>{const k=starsCanvas(320,180,57,280),q=k.getContext('2d');disc(q,40,34,14,'#5F6F74');disc(q,39,33,13,'#ACBDC3');q.fillStyle='#E4E7E9';q.fillRect(36,30,3,1);
+  q.fillStyle='#7f9095';for(let x=0;x<320;x++){const h=14+Math.round(5*Math.sin(x/31)+3*Math.sin(x/11+2));q.fillRect(x,GY-h+12,1,h)}
+  q.fillStyle='#9aa9ad';q.fillRect(0,GY,320,20);for(let k2=0;k2<12;k2++){const x=hash(k2,5)*320,y=GY+4+hash(5,k2)*12,r=1+Math.floor(hash(k2,9)*4);disc(q,x,y,r,'#7f9095');disc(q,x-1,y-1,Math.max(1,r-1),'#9aa9ad')}
+  q.fillStyle='#5F6F74';q.fillRect(CX-22,GY-1,44,3);q.fillStyle='#C9D2D3';q.fillRect(236,GY-16,30,16);q.fillStyle='#E4E7E9';q.fillRect(236,GY-17,30,1);q.fillStyle='#2f393a';q.fillRect(247,GY-9,6,9);return k})();
+ let c,h,v,m,fuel,J,t,gas=false,st,smp,tg;
+ const self={title:'Landung auf Mond Kappa',
+ goal(r){return [`<p>Lande die Kapsel (m = 400 kg) sanft: <b>höchstens 2 m/s</b> beim Aufsetzen. Das Triebwerk hat F = 1200 N Schub, die Gewichtskraft ist ${sub('F','G')} = m · g = 640 N. Der Treibstoff reicht für 20 s.</p><p>Im F-t-Diagramm oben rechts ist die gelbe Fläche der Kraftstoß des Triebwerks. Die rote Linie zeigt zum Vergleich die Gewichtskraft.</p>`,
+  `<p>Jetzt ist der Tank fast leer: nur noch <b>12 s</b> Brennzeit. Spar Treibstoff! Lass die Kapsel erst fallen und brems dann ohne Pause bis zum Boden.</p>`,
+  `<p>Mit dem Ersatzteil wiegt die Kapsel <b>600 kg</b>, das Triebwerk hat aber nur 1200 N. Schub minus Gewichtskraft ist jetzt viel kleiner, die Kapsel bremst langsamer. Start in 80 m Höhe, Brennzeit: 26 s.</p>`][r]+
+  `<p><small>Gas geben: Leertaste oder ↑ halten, ins Bild drücken oder den Knopf „Gas“ halten. Modell: keine Luft, Masse des verbrannten Treibstoffs vernachlässigt.</small></p>`},
+ init(r){c=RD[r];h=c.h;v=c.v;m=c.m;fuel=c.fuel;J=0;t=0;tg=0;gas=false;st='fly';smp=[];
+  setBtns([{lab:'🔥 Gas (halten)',cls:'go big',hold:on=>{gas=on}}])},
+ key(code,down){if(code==='Space'||code==='ArrowUp'||code==='KeyW'){gas=down;return true}return code==='ArrowDown'},
+ ptr(type){if(type==='down')gas=true;else if(type==='up')gas=false},
+ update(dt){if(st!=='fly')return;const on=gas&&fuel>0;const a=(on?FT:0)/m-g;v+=a*dt;h+=v*dt;if(on){fuel=Math.max(0,fuel-dt);J+=FT*dt;tg+=dt}t+=dt;smp.push([t,on]);while(smp.length&&smp[0][0]<t-30)smp.shift();
+  if(h<=0){h=0;st='end';gas=false;const vi=Math.abs(v),rec=`<p>Kraftstoß des Triebwerks: F · Δt = 1200 N · ${fmt(tg)} s = ${grp(J)} N·s. Kraftstoß der Gewichtskraft: −m · g · t = −${grp(m*g*t)} N·s.</p><p>Zusammen ${grp(J-m*g*t)} N·s, und das ist genau die Impulsänderung m · Δv = ${m} kg · (${fmt(v)} m/s − (${fmt(c.v)} m/s)) = ${grp(m*(v-c.v))} kg·m/s.</p>`;
+   if(vi<=LIM)mgWin(`<p>Aufgesetzt mit ${fmt(vi,2)} m/s. Butterweich!</p>`+rec);
+   else mgFail(`<p>Aufprall mit ${fmt(vi,2)} m/s! Erlaubt sind höchstens 2 m/s. ${fuel>.5?`Du hattest noch ${fmt(fuel)} s Treibstoff übrig: Brems früher oder länger.`:'Der Treibstoff war leer. Lass die Kapsel zuerst fallen und gib dann durchgehend Gas.'}</p>`+rec)}
+  else if(h>150){st='end';gas=false;mgFail('<p>Die Kapsel steigt immer weiter: Du hast zu lange Gas gegeben. Weniger ist mehr!</p>')}},
+ ro(){return `<span>m = ${m} kg</span><span><b>h = ${fmt(h,0)} m</b></span><span class="pv">v = ${fmt(Math.abs(v),1)} m/s ${v<-.05?'↓':v>.05?'↑':''}</span><span class="pv">p = m · v = ${grp(m*Math.round(Math.abs(v)*10)/10)} kg·m/s</span><span>Treibstoff: ${fmt(fuel)} s</span><span>Kraftstoß Triebwerk: ${grp(J)} N·s</span>`},
+ draw(tt){cx.drawImage(back,0,0);
+  for(let k=0;k<4;k++){const on=Math.sin(tt*4+k)>0;R(CX-20+k*13,GY-2,2,1,on?'#FCBE00':'#5F6F74')}
+  const Y0=GY-h*S,on=gas&&fuel>0&&st==='fly';
+  if(on){const fl=6+Math.floor(Math.random()*5);R(CX-2,Y0-1,5,fl,'#ff7a5c');R(CX-1,Y0-1,3,fl-2,'#FCBE00');if(h<12)for(let k=0;k<6;k++)R(CX-14+Math.random()*28,GY-2-Math.random()*3,2,1,'#C9D2D3')}
+  R(CX-6,Y0-4,2,4,'#ACBDC3');R(CX+5,Y0-4,2,4,'#ACBDC3');R(CX-7,Y0-1,3,1,'#ACBDC3');R(CX+5,Y0-1,3,1,'#ACBDC3');
+  R(CX-4,Y0-14,9,10,'#E4E7E9');R(CX-3,Y0-16,7,2,'#E4E7E9');R(CX-1,Y0-18,3,2,'#C9D2D3');R(CX-2,Y0-12,5,3,'#1b2122');R(CX-1,Y0-11,2,1,'#FCBE00');R(CX-4,Y0-6,9,2,'#76989D');
+  arrow(CX+14,Y0-9,0,-v*2.2,'#6aa5ff',2);
+  // F-t-Diagramm
+  const gx=204,gy=8,gw=110,gh=48;cx.globalAlpha=.85;R(gx-4,gy-4,gw+10,gh+12,'#1b2122');cx.globalAlpha=1;
+  R(gx,gy+gh,gw,1,'#ACBDC3');R(gx,gy,1,gh,'#ACBDC3');const fy=gy+gh-Math.round(1200/1400*gh),gy2=gy+gh-Math.round(m*g/1400*gh);
+  const t0=Math.max(0,t-30);smp.forEach(([ts,o])=>{if(o)R(gx+1+(ts-t0)/30*(gw-2),fy,1.2,gy+gh-fy,'#FCBE00')});
+  ln(gx+1,gy2+.5,gx+gw,gy2+.5,'#ff7a5c',1,[2,2]);cx.fillStyle='#ACBDC3';cx.font='7px Lexend,sans-serif';cx.fillText('F',gx+3,gy+6);cx.fillText('t',gx+gw-4,gy+gh-3)}};
+ return self})();
+
+/* ===== 4) Gleitbahn: elastischer Stoß ===== */
+MGS.curl=(()=>{const S=12.5,X0=8,AF=.05*9.81,L=24,Z0=16,Z1=20,VM=6,RATE=1.5,YL=112;
+ const HW={5:.32,10:.4,20:.5,30:.58},RD=[{m2:10,pick:0},{m2:10,pick:1,back:1},{m2:30,pick:1}];
+ const back=(()=>{const k=document.createElement('canvas');k.width=320;k.height=180;const q=k.getContext('2d');q.fillStyle='#2f393a';q.fillRect(0,0,320,180);
+  q.drawImage(starsCanvas(320,40,77,60),0,22);q.fillStyle='#3E4B4C';for(let x=0;x<320;x+=40){q.fillRect(x,18,4,48)}q.fillRect(0,18,320,4);q.fillRect(0,62,320,4);
+  q.fillStyle='#3E4B4C';q.fillRect(0,66,320,114);for(let x=0;x<320;x+=20)q.fillRect(x,66,1,30);q.fillStyle='#5F6F74';q.fillRect(0,92,320,4);
+  q.fillStyle='#ACBDC3';q.fillRect(X0-4,YL-14,L*S+8,28);q.fillStyle='#d7e1e3';q.fillRect(X0-2,YL-12,L*S+4,24);q.fillStyle='#e9f0f1';for(let j=0;j<6;j++)q.fillRect(X0+j*50,YL-10+j%3*7,30,1);
+  q.fillStyle='#5F6F74';for(let x=0;x<=L;x+=2)q.fillRect(X0+x*S,YL+12,1,x%4?2:4);
+  q.fillStyle='#2f393a';q.fillRect(X0-6,YL-14,3,28);q.fillRect(X0+L*S+3,YL-16,10,32);q.fillStyle='#76989D';for(let j=0;j<6;j++)q.fillRect(X0+L*S+4,YL-14+j*5,8,1);
+  q.fillStyle='#5F6F74';q.fillRect(0,146,320,3);q.fillRect(0,156,320,2);q.fillStyle='#76989D';for(let x=14;x<320;x+=48){q.fillRect(x,143,6,9);q.fillRect(x+30,154,4,6)}
+  q.fillStyle='#232b2d';q.fillRect(0,166,320,14);q.fillStyle='#FCBE00';for(let x=0;x<320;x+=16)q.fillRect(x,166,8,2);
+  return k})();
+ let c,b1,b2,m1sel=10,st,chT,chg,vc,col,tEnd;
+ const X=x=>X0+x*S;
+ function launch(){if(st!=='aim'||!chg)return;chg=false;b1.v=vc;b1.v0=vc;st='run'}
+ function btns(){const l=[];if(c.pick)[5,10,20].forEach(m=>l.push({lab:`Stoßblock ${m} kg`,cls:m===m1sel?'on':'',click:()=>{if(st==='aim'){m1sel=m;b1.m=m;btns()}}}));
+  l.push({lab:'Anschieben (halten)',cls:'go big',hold:on=>{if(st!=='aim')return;if(on){chg=true;chT=0}else launch()}});setBtns(l)}
+ function recap(){if(!col)return '';const p0=b1.m*col.v1,p1=b1.m*col.u1+b2.m*col.u2,e0=.5*b1.m*col.v1**2,e1=.5*b1.m*col.u1**2+.5*b2.m*col.u2**2;
+  return `<p>Stoß bei ${sub('v','1')} = ${fmt(col.v1,2)} m/s: ${sub('u','1')} = ${fmt(col.u1,2)} m/s, ${sub('u','2')} = ${fmt(col.u2,2)} m/s.</p><p>Impuls vorher ${fmt(p0)} kg·m/s, nachher ${fmt(p1)} kg·m/s. Bewegungsenergie vorher ${fmt(e0)} J, nachher ${fmt(e1)} J: elastisch!</p>`}
+ const self={title:'Die Gleitbahn',
+ goal(r){return [`<p>Schieb den Steuerblock (${sub('m','2')} = 10 kg, gelb) ins Reaktorfach bei 16 bis 20 m. Halte gedrückt, um den Stoßblock (${sub('m','1')} = 10 kg) aufzuladen, und lass los. Die Anschubgeschwindigkeit pendelt zwischen 0 und 6 m/s.</p>`,
+  `<p>Der Stoßblock soll nach dem Stoß <b>zu dir zurückprallen</b>, und der Steuerblock (10 kg) muss trotzdem ins Fach. Wähle den passenden Stoßblock: 5 kg, 10 kg oder 20 kg.</p>`,
+  `<p>Ein schwerer Steuerblock: ${sub('m','2')} = 30 kg. Mit welchem Stoßblock schaffst du es überhaupt bis ins Fach? Mehr als 6 m/s Anschub gehen nicht.</p>`][r]+
+  `<p><small>Aufladen: Leertaste, ins Bild drücken oder Knopf „Anschieben“ halten. Modell: elastischer Stoß (Federpuffer), Gleitreibung μ = 0,05 bremst beide Blöcke mit 0,49 m/s².</small></p>`},
+ init(r){c=RD[r];const m1=c.pick?m1sel:10;b1={x:1,v:0,m:m1};b2={x:7,v:0,m:c.m2};st='aim';chT=0;chg=false;vc=0;col=null;tEnd=0;btns()},
+ key(code,down,e){if(code==='Space'||code==='ArrowUp'){if(st==='aim'){if(down&&!e.repeat){chg=true;chT=0}else if(!down)launch()}return true}
+  if(down&&c.pick&&st==='aim'&&(code==='Digit1'||code==='Digit2'||code==='Digit3')){m1sel=[5,10,20][+code.slice(5)-1];b1.m=m1sel;btns();return true}return false},
+ ptr(type){if(st!=='aim')return;if(type==='down'){chg=true;chT=0}else if(type==='up')launch()},
+ update(dt){if(st==='aim'){if(chg){chT+=dt;const ph=(chT*RATE)%(2*VM);vc=ph<=VM?ph:2*VM-ph}return}
+  if(st==='run'){const n=6,h=dt/n;for(let k=0;k<n;k++){[b1,b2].forEach(b=>{if(b.off||!b.v)return;const d=AF*h;if(Math.abs(b.v)<=d)b.v=0;else b.v-=Math.sign(b.v)*d;b.x+=b.v*h});
+    const gap=b2.x-b1.x-HW[b1.m]-HW[b2.m];if(gap<=0&&b1.v>b2.v){const m1=b1.m,m2=b2.m,v1=b1.v,v2=b2.v,u1=(m1*v1+m2*(2*v2-v1))/(m1+m2),u2=(m2*v2+m1*(2*v1-v2))/(m1+m2);if(!col)col={v1,v2,u1,u2};b1.v=u1;b2.v=u2;b1.x-=-gap/2+.001;b2.x+=-gap/2+.001}
+    if(b1.x<HW[b1.m]){b1.x=HW[b1.m];b1.v=0}[b1,b2].forEach(b=>{if(!b.off&&b.x-HW[b.m]>L){b.off=1;b.v=0}})}
+   if(!b1.v&&!b2.v){st='wait';tEnd=.6}}
+  else if(st==='wait'){tEnd-=dt;if(tEnd<=0){st='end';const rec=recap();
+   if(!col)return mgFail(`<p>Der Stoßblock kam gar nicht bis zum Steuerblock. Mehr Anschub!</p>`);
+   const inZ=!b2.off&&b2.x>=Z0&&b2.x<=Z1;
+   if(inZ&&c.back&&col.u1>=0)return mgFail(rec+`<p>Der Steuerblock ist im Fach, aber dein Stoßblock ist nicht zurückgeprallt (${sub('u','1')} = ${fmt(col.u1,2)} m/s). Welcher Stoßblock prallt bei einem elastischen Stoß zurück?</p>`);
+   if(inZ)return mgWin(rec+`<p>Der Steuerblock liegt bei ${fmt(b2.x)} m im Fach.</p>`);
+   if(b2.off)return mgFail(rec+'<p>Der Steuerblock ist über das Ende der Bahn ins Auffangnetz gerutscht. Weniger Anschub!</p>');
+   const weak=b1.v0>5.5&&b2.x<Z0;
+   mgFail(rec+`<p>Der Steuerblock blieb bei ${fmt(b2.x)} m liegen, das Fach liegt bei 16 bis 20 m. ${b2.x<Z0?'Mehr':'Weniger'} Anschub!${weak&&c.pick?' Mit diesem Stoßblock wird das aber knapp. Probier einen anderen!':''}${c.back&&col.u1>=0?` Und denk dran: Der Stoßblock soll zurückprallen.`:''}</p>`)}}},
+ ro(){let s=`<span>Stoßblock ${sub('m','1')} = ${b1.m} kg</span><span>Steuerblock ${sub('m','2')} = ${b2.m} kg</span><span><b>Anschub v = ${fmt(st==='aim'?vc:b1.v0||0,2)} m/s</b></span>`;
+  if(st!=='aim')s+=`<span class="pv">${sub('v','1')} = ${fmt(b1.v,2)} m/s, ${sub('v','2')} = ${fmt(b2.v,2)} m/s</span>`;
+  if(col)s+=`<span class="pv">Stoß: ${sub('u','1')} = ${fmt(col.u1,2)} m/s, ${sub('u','2')} = ${fmt(col.u2,2)} m/s</span>`;return s},
+ draw(t){cx.drawImage(back,0,0);
+  const pl=Math.sin(t*4)>0;cx.globalAlpha=.25;R(X(Z0),YL-12,(Z1-Z0)*S,24,'#FCBE00');cx.globalAlpha=1;R(X(Z0),YL-13,1,26,'#FCBE00');R(X(Z1),YL-13,1,26,'#FCBE00');R(X(Z0),YL-13,(Z1-Z0)*S,1,pl?'#FCBE00':'#b88a00');R(X(Z0),YL+12,(Z1-Z0)*S,1,pl?'#FCBE00':'#b88a00');
+  R(X(Z0)+8,YL-30,(Z1-Z0)*S-16,12,'#5F6F74');R(X(Z0)+10,YL-28,(Z1-Z0)*S-20,8,stDone(4)?'#FCBE00':'#1b2122');
+  const blk=(b,col1,col2)=>{if(b.off)return;const w=HW[b.m]*2*S,x=X(b.x)-w/2;R(x,YL-w/2,w,w,col2);R(x+1,YL-w/2+1,w-2,w-2,col1);R(x+2,YL-w/2+2,w-4,1,'rgba(255,255,255,.5)');R(x-1,YL-1,1,2,'#2f393a');R(x+w,YL-1,1,2,'#2f393a');
+   if(Math.abs(b.v)>.05)arrow(X(b.x),YL-w/2-6,b.m*b.v/2.2,0,'#6aa5ff',2)};
+  blk(b2,'#e0b060','#9a6a1f');blk(b1,'#ACBDC3','#3E4B4C');
+  if(st==='aim'){const hgt=Math.round(vc/VM*40);R(2,YL-44,4,42,'#1b2122');R(2,YL-2-hgt,4,hgt,'#FCBE00');}}};
+ return self})();
+
+/* ---------- Eingabe ---------- */
+const KM={ArrowUp:'up',KeyW:'up',ArrowDown:'down',KeyS:'down',ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right'};
+const typing=()=>/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||'');
+const blocked=()=>!active||freeze||typing()||TD.open||$('#spickDlg').open||!$('#endov').hidden;
+addEventListener('keydown',e=>{if(blocked())return;
+ if(scene==='mg'){if(!$('#mgMsg').hidden){if((e.code==='Space'||e.code==='Enter')&&!e.repeat&&document.activeElement&&!document.activeElement.closest('#mgMsg')){e.preventDefault();const b=$('#mgMsgBtns button');if(b)b.click()}return}
+  if(mgReady&&mg.key(e.code,true,e))e.preventDefault();return}
+ if(KM[e.code]){e.preventDefault();if(talk){if(!e.repeat)advance();return}keys[KM[e.code]]=true;return}
+ if(e.code==='Space'||e.code==='Enter'||e.code==='KeyE'){e.preventDefault();if(talk){if(!e.repeat)advance()}else if(e.code==='Space')keys.brake=true}});
+addEventListener('keyup',e=>{if(KM[e.code])keys[KM[e.code]]=false;if(e.code==='Space')keys.brake=false;if(scene==='mg'&&mg&&mgReady)mg.key(e.code,false,e)});
+function setActive(a){active=a;$('#pause').hidden=a||!started;if(!a){for(const k in keys)keys[k]=false;if(scene==='mg'&&mg&&mgReady&&mg.key){mg.key('Space',false,{});mg.ptr('up',0,0)}}}
+const cpos=e=>{const r=cv.getBoundingClientRect();return [(e.clientX-r.left)/r.width*VW,(e.clientY-r.top)/r.height*VH]};
+let ptrDown=false;
+cv.addEventListener('pointerdown',e=>{if(!started)return;setActive(true);cv.focus({preventScroll:true});if(scene==='mg'&&mgReady&&$('#mgMsg').hidden){e.preventDefault();ptrDown=true;try{cv.setPointerCapture(e.pointerId)}catch(er){}mg.ptr('down',...cpos(e))}});
+cv.addEventListener('pointermove',e=>{if(scene==='mg'&&mgReady&&ptrDown)mg.ptr('move',...cpos(e))});
+const pUp=e=>{if(!ptrDown)return;ptrDown=false;if(scene==='mg'&&mgReady)mg.ptr('up',...cpos(e))};cv.addEventListener('pointerup',pUp);cv.addEventListener('pointercancel',pUp);
+cv.addEventListener('contextmenu',e=>e.preventDefault());
+$('#talkbox').addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;e.preventDefault();if(started){setActive(true);advance()}});
+document.addEventListener('pointerdown',e=>{if(started&&!e.target.closest('#game')&&!e.target.closest('dialog'))setActive(false)});
+$$('#pad [data-d]').forEach(bt=>{const d=bt.dataset.d;const on=e=>{e.preventDefault();if(!started)return;setActive(true);if(talk){advance();return}keys[d]=true},off=()=>keys[d]=false;
+ bt.addEventListener('pointerdown',on);bt.addEventListener('pointerup',off);bt.addEventListener('pointerleave',off);bt.addEventListener('pointercancel',off);bt.addEventListener('contextmenu',e=>e.preventDefault())});
+{const a=$('#aBtn');a.addEventListener('pointerdown',e=>{e.preventDefault();if(!started)return;setActive(true);if(talk)advance();else keys.brake=true});const off=()=>keys.brake=false;a.addEventListener('pointerup',off);a.addEventListener('pointerleave',off);a.addEventListener('pointercancel',off);a.addEventListener('contextmenu',e=>e.preventDefault())}
+$('#startBtn').onclick=()=>{started=true;$('#startov').hidden=true;setActive(true);cv.focus({preventScroll:true});
+ if(!F.intro)sayLines(INTRO,()=>{F.intro=1;save();hud()})};
+
+/* ---------- Vollbild ---------- */
+GM.appendChild(TD);GM.appendChild($('#spickDlg'));
+function view(w,h){if(w===VW&&h===VH)return;VW=w;VH=h;cv.width=w;cv.height=h;cx.imageSmoothingEnabled=false}
+function fit(){if(!GM.classList.contains('full')){view(320,180);cv.style.width='';cv.style.height='';return}
+ const sc=$('#screen'),w=sc.clientWidth,h=sc.clientHeight;if(!w||!h)return;
+ if(scene==='hub'){const vw=Math.max(180,Math.min(320,Math.round(Math.sqrt(57600*w/h))));view(vw,Math.max(140,Math.min(400,Math.round(vw*h/w))))}else view(320,180);
+ const k=Math.min(w/VW,h/VH);cv.style.width=Math.floor(VW*k)+'px';cv.style.height=Math.floor(VH*k)+'px'}
+function full(on){GM.classList.toggle('full',on);document.body.classList.toggle('vollbild',on);
+ if(on){const D=document.documentElement;try{if(D.requestFullscreen&&!document.fullscreenElement)D.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch(e){}}
+ else if(document.fullscreenElement){document.exitFullscreen().catch(()=>{})}
+ requestAnimationFrame(fit);setTimeout(fit,300);if(on&&started){setActive(true);cv.focus({preventScroll:true})}}
+$('#fullBtn').onclick=()=>full(true);$('#fullX').onclick=()=>full(false);
+document.addEventListener('fullscreenchange',()=>{setTimeout(fit,100)});
+addEventListener('resize',fit);try{new ResizeObserver(()=>{if(GM.classList.contains('full'))fit()}).observe($('#screen'))}catch(e){}
+addEventListener('keydown',e=>{if(e.key==='Escape'&&GM.classList.contains('full')&&!TD.open&&!$('#spickDlg').open)full(false)});
+
+/* ---------- Schleife ---------- */
+let roT=0;
+function frame(now){const dt=Math.min(.05,(now-last)/1000),t=(now-T0)/1000;last=now;
+ const run=started&&active&&!freeze&&!TD.open&&!$('#spickDlg').open&&$('#endov').hidden;
+ if(scene==='hub'){if(run&&!talk)hubUpdate(dt);drawHub(t)}
+ else if(mg){if(run&&mgReady&&$('#mgMsg').hidden)mg.update(dt);mg.draw(t)}
+ if(talk&&talk.n<talk.full.length){talk.n=Math.min(talk.full.length,talk.n+dt*55);$('#tbTxt').textContent=talk.full.slice(0,Math.floor(talk.n));if(talk.n>=talk.full.length)showChoices()}
+ if(toastT>0){toastT-=dt;if(toastT<=0)$('#toast').hidden=true}
+ roT-=dt;if(roT<=0){roT=.1;$('#stripRo').innerHTML=scene==='hub'?hubStrip():mg?mg.ro():'';$('#strip').hidden=!started}
+ requestAnimationFrame(frame)}
+hud();requestAnimationFrame(frame);
+if(F.intro)$('#startBtn').textContent='▶ Weiterspielen';
+return {after,get freeze(){return freeze},set freeze(v){freeze=v},
+ reset(){P.x=620;P.y=90;P.vx=P.vy=0;P.away=true;talk=null;fw=[];if(scene==='mg'){hideMsg();mgLeave()}$('#talkbox').hidden=true;$('#endov').hidden=true;started=false;$('#startov').hidden=false;$('#startBtn').textContent='▶ Spiel starten';setActive(false);hud()}};
+})();
+
+/* ---------- Passwort (nur einfacher Schutz im Browser) ---------- */
+$('#gate').addEventListener('submit',async e=>{e.preventDefault();const v=$('#gatePw').value.trim().toLowerCase();let h='';
+ try{const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));h=[...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(er){}
+ if(h==='41063f87900da0c407a151dcc1891452d8c1ce71633df85e530e5af432781a14'){try{localStorage.setItem('p11-impulsspiel-frei','1')}catch(er){}document.body.classList.add('frei');$('#game').scrollIntoView({behavior:'smooth'})}
+ else{const f=$('#gateFb');f.className='fb bad';f.textContent='Das Passwort stimmt nicht.'}});
+/* ---------- Spickzettel, QR, Neustart ---------- */
+function openSpick(){const d=$('#spickDlg');$('#spickDlgIn').innerHTML='<div class="spickgrid">'+$('#spickInhalt').innerHTML+'</div>';d.showModal()}
+$('#spickBtn').onclick=openSpick;$('#spickClose').onclick=()=>$('#spickDlg').close();
+$('#spickDlg').addEventListener('click',e=>{if(e.target.id==='spickDlg')e.target.close()});
+$('#resetBtn').onclick=()=>{const b=$('#resetBtn');if(b.dataset.sure){state.t={};state.r={};state.kap=[];Object.keys(state.f).forEach(k=>delete state.f[k]);save();b.textContent='↺ Neu starten';delete b.dataset.sure;G.reset()}else{b.dataset.sure=1;b.textContent='Wirklich löschen?';setTimeout(()=>{delete b.dataset.sure;b.textContent='↺ Neu starten'},3000)}};
+{const d=$('#qrDlg');$('#qrOpen').onclick=()=>d.showModal();$('#qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
+}
+</script>
+</body>
+</html>

@@ -52,6 +52,7 @@ Physik11/
   kraftstoss-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   elastischer-stoss.html    Impuls 5 · Stöße quantitativ (IES + EES, Energiebilanz)
   elastischer-stoss-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
+  impuls-spiel.html         Impuls-Spiel · Notruf von Station Nova-7 (Pixel-Abenteuer mit Physik-Minispielen, Passwort, alle Impuls-Themen)
 ```
 
 Jede Klasse bzw. jedes Fach bekommt einen eigenen Ordner. Die Adresse einer Seite ist der Pfad ohne `.html`,
