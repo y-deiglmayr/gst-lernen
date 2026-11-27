@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Energie-Spiel · Stromausfall auf der Gipfelhütte</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<script src="/brand/theme.js"></script>
+<style>
+/* VOICE: Abenteuer mit Augenzwinkern – Roboter Joulie spricht dich direkt an, kurze Sätze
+   IDEA: nächtliche Berglandschaft im Schneesturm; jede reparierte Station lässt eine Laterne (Akzentgelb) aufleuchten
+   COLOUR: Nacht in Schiefer-Tönen, Licht = Akzentgelb, Energieformen in den Fachfarben (E_L blau, E_B grün, E_therm rot)
+   LAYOUT: Karte oben, Aufgaben-Panel darunter, Spickzettel als Hilfe */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#1b2122);--ink:light-dark(#1f2627,#e9edee);--muted:light-dark(#5b676a,#a9b6b9);
+--panel:light-dark(#f1f4f4,#232b2d);--line:light-dark(#d3dbdc,#36423f);--card:light-dark(#ffffff,#2a3335);
+--el:light-dark(#2563c9,#6aa5ff);--eb:light-dark(#1d8a4a,#4fd27f);--eth:light-dark(#d4381e,#ff7a5c);--esp:light-dark(#8a3fc4,#c08cff);
+--ech:light-dark(#9a6a1f,#e0b060);--estr:light-dark(#b88a00,#f5cf4a);--eel:light-dark(#0f7f8f,#5fd0de);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2a18);--night:#1b2122;--night2:#2f393a}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(30px,5vw,48px)}h2{font-size:clamp(24px,3.2vw,34px)}h3{font-size:20px;margin:0 0 .4em}h4{font-size:17px;margin:0 0 .3em}
+p{margin:0 0 .8em}sub{font-size:.72em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(24px,4vw,56px) max(5vw,16px)}
+.alt{background:var(--panel)}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;font-size:13px;margin-right:6px}
+.hero{color:#f1f4f4}
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop,dialog.spick::backdrop{background:rgba(10,14,14,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:22px}
+.phases a{display:block;padding:12px 14px;border-radius:12px;border:1px solid;text-decoration:none}
+.phases b{display:block;font-size:16px}.phases small{font-size:14px}
+button{font:600 15px Lexend,sans-serif;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+button.primary{background:var(--gst-acc);color:var(--gst-on-acc);border-color:transparent}
+button:disabled{opacity:.5;cursor:not-allowed}
+/* ---------- Spielbereich ---------- */
+.game{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--card);box-shadow:0 10px 30px rgba(20,28,29,.12)}
+.hud{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:10px 14px;background:var(--night);color:#e9edee;font:600 15px Lexend,sans-serif}
+.hud .akku{display:flex;align-items:center;gap:8px}
+.hud .akku i{display:block;width:110px;height:16px;border:2px solid #c9d2d3;border-radius:4px;position:relative;padding:2px}
+.hud .akku i::after{content:"";position:absolute;right:-6px;top:3px;width:4px;height:6px;background:#c9d2d3;border-radius:0 2px 2px 0}
+.hud .akku b{display:block;height:100%;width:0;background:var(--gst-yellow);border-radius:2px;transition:width .6s}
+.hud .sp{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.hud button{background:#2f393a;color:#e9edee;border-color:#5F6F74;padding:7px 12px;font-size:14px}
+.hud button:hover{border-color:var(--gst-yellow)}
+.scene{display:block;width:100%;height:auto;background:var(--night)}
+.scene .st{cursor:pointer}
+.scene .st:focus{outline:none}.scene .st:focus-visible circle.ring{stroke:var(--gst-yellow);stroke-width:5}
+.scene .st.locked{cursor:default}
+.scene .st:not(.locked):hover circle.ring{stroke:var(--gst-yellow)}
+.scene .glow{opacity:0;transition:opacity 1.2s}
+.scene .on .glow,.scene .glow.on{opacity:1}
+.scene .win{fill:#3a4547;transition:fill 1.2s}
+.scene .win.on{fill:#FCBE00}
+.scene .pathdone{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset 1.6s ease}
+.scene .pathdone.on{stroke-dashoffset:0}
+.flake{animation:fall linear infinite}
+@keyframes fall{from{transform:translate(0,-40px)}to{transform:translate(-60px,560px)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.jbob{animation:bob 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{r:30}50%{r:36}}
+.st.next circle.halo{animation:pulse 1.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.flake,.jbob,.st.next circle.halo{animation:none}}
+.stlist{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--panel)}
+.stlist button{display:flex;align-items:center;gap:8px;font-size:14px;padding:7px 12px}
+.stlist button i{font-style:normal;display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--gst-acc);color:var(--gst-on-acc);font-size:12px}
+.stlist button.done i{background:var(--gst-yellow);color:#2f393a}
+.stlist button[aria-current=true]{border-color:var(--gst-acc);box-shadow:0 0 0 2px var(--gst-acc) inset}
+/* Panel */
+.panel{padding:clamp(16px,3vw,28px)}
+.talk{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.talk svg.av{flex:none;width:76px;height:76px}
+.bubble{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 16px;flex:1}
+.bubble::before{content:"";position:absolute;left:-9px;top:22px;width:16px;height:16px;background:var(--panel);border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.bubble p:last-child{margin:0}
+.bubble .who{font:600 13px Lexend,sans-serif;color:var(--muted);display:block;margin-bottom:2px}
+.task{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--card)}
+.thead{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:10px}
+.afb{font:600 13px Lexend,sans-serif;padding:3px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--line);white-space:nowrap}
+.afb b{color:var(--gst-gold)}
+.dots{margin-left:auto;display:flex;gap:6px}
+.dots i{width:12px;height:12px;border-radius:3px;background:var(--line)}
+.dots i.ok{background:var(--gst-yellow)}.dots i.cur{outline:2px solid var(--gst-acc);outline-offset:1px}
+.fb{margin-top:10px;padding:10px 14px;border-radius:10px;display:none}
+.fb.ok{display:block;background:var(--okbg);color:var(--ok)}
+.fb.bad{display:block;background:var(--badbg);color:var(--bad)}
+.fb.hint{display:block;background:var(--hint);color:var(--ink)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.tools .tip{background:var(--hint)}
+.tiptxt{margin-top:10px;display:flex;gap:10px;align-items:flex-start;background:var(--hint);border-radius:12px;padding:10px 14px}
+.tiptxt svg{flex:none;width:40px;height:40px}
+.loes{margin-top:10px;border-left:4px solid var(--gst-heft);background:var(--gst-heft-bg);padding:10px 14px;border-radius:0 10px 10px 0}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font:500 16px "Atkinson Hyperlegible",sans-serif;display:flex;align-items:center;gap:10px}
+.mc button.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.mc button.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.numrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:8px}
+.numrow input{font:600 18px Lexend,sans-serif;width:150px;padding:8px 10px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.calcbox{font-size:15px;color:var(--muted);margin:6px 0 0}
+/* Sortieren */
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:56px;padding:8px;border:2px dashed var(--line);border-radius:12px;margin:8px 0 12px}
+.chip{display:flex;align-items:center;gap:6px;font:500 15px "Atkinson Hyperlegible",sans-serif;padding:5px 10px 5px 6px;background:var(--card)}
+.chip svg.pk{width:34px;height:34px}
+.chip.sel{border-color:var(--gst-mark);box-shadow:0 0 0 3px var(--gst-mark)}
+.chip.bad{border-color:var(--bad);background:var(--badbg)}
+.bins{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:8px}
+.bin{border:2px solid var(--line);border-radius:12px;padding:8px;min-height:84px;cursor:pointer;background:var(--panel)}
+.bin:hover{border-color:var(--gst-acc)}
+.bin h4{font-size:15px;display:flex;gap:6px;align-items:center}
+.bin h4 i{width:12px;height:12px;border-radius:3px;flex:none}
+.bin .in{display:flex;flex-wrap:wrap;gap:4px}
+.bin .in .chip{font-size:13px;padding:2px 8px 2px 4px}.bin .in .chip svg.pk{width:24px;height:24px}
+/* Rodelbahn */
+.rodel{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:14px;align-items:start;margin-top:8px}
+.rodel svg.track{width:100%;height:auto;border-radius:12px;background:var(--night)}
+.bars{display:flex;gap:10px;align-items:flex-end;height:190px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.bars div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:13px}
+.bars div i{display:block;width:100%;border-radius:4px 4px 0 0;transition:height .05s}
+.bars small{font:600 12px Lexend,sans-serif;white-space:nowrap}
+.sum{font-size:14px;color:var(--muted);text-align:center;margin-top:6px}
+textarea{width:100%;min-height:90px;font:16px "Atkinson Hyperlegible",sans-serif;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.checks label{display:flex;gap:8px;align-items:flex-start;margin:4px 0}
+.win-box{text-align:center;padding:12px 0}
+.win-box .big{font:700 clamp(24px,4vw,34px) Lexend,sans-serif;margin:6px 0}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted);margin-top:14px}
+/* Spickzettel */
+dialog.spick{border:0;border-radius:18px;padding:0;max-width:min(760px,94vw);width:100%;background:var(--bg);color:var(--ink)}
+dialog.spick .in{padding:20px 22px;max-height:80vh;overflow:auto}
+dialog.spick .top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 22px;background:var(--gst-heft);color:var(--gst-on-heft)}
+dialog.spick .top h3{margin:0}
+dialog.spick .top button{background:transparent;color:inherit;border-color:currentColor}
+.spickgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.spickgrid section{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.spickgrid h4{color:var(--gst-heft)}
+.spickgrid ul{margin:0;padding-left:20px}
+@media (max-width:720px){.herohead{flex-direction:column}.qrbtn{display:none}.rodel{grid-template-columns:1fr}.bars{height:150px}.talk svg.av{width:56px;height:56px}.hud .sp{margin-left:0}}
+</style>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<script defer src="/brand/feedback.js"></script>
+<script defer src="/brand/mischen.js"></script>
+</head>
+<body>
+<nav aria-label="Bereiche"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#spiel"><span>▶</span>Spielen</a>
+<a href="#spickzettel" class="heftlink"><span>✎</span>Spickzettel</a>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Energie-Spiel · Stromausfall auf der Gipfelhütte</h1>
+<p>Schneesturm, Stromausfall, und mittendrin du und der kleine Roboter Joulie. Repariere fünf Stationen mit allem, was du über Energie gelernt hast, und bring das Licht in die Hütte zurück. Perfekt zum Wiederholen vor der Klassenarbeit.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR-Code: https://physik.party/Physik9/energie-spiel" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h1m2 0h8m2 0h7m-29 1h1m5 0h1m2 0h4m1 0h2m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h3m2 0h1m2 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h3m2 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m5 0h2m1 0h3m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h2m2 0h3m2 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-18 1h2m1 0h7m-21 1h1m2 0h1m1 0h2m1 0h4m1 0h4m2 0h1m1 0h1m1 0h1m-24 1h2m8 0h1m1 0h3m1 0h3m2 0h2m2 0h1m2 0h1m-28 1h1m1 0h4m1 0h1m1 0h5m1 0h4m2 0h2m1 0h3m-28 1h3m2 0h1m1 0h3m3 0h2m1 0h1m1 0h3m5 0h2m-23 1h2m3 0h4m2 0h2m1 0h1m1 0h3m1 0h1m1 0h2m-29 1h1m2 0h2m3 0h1m1 0h2m1 0h1m5 0h3m-21 1h1m1 0h4m9 0h3m5 0h5m-22 1h1m3 0h4m2 0h4m1 0h4m1 0h1m-28 1h5m1 0h1m1 0h1m1 0h2m4 0h2m1 0h1m3 0h1m3 0h1m-26 1h3m3 0h1m1 0h1m2 0h2m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m5 0h1m1 0h2m7 0h2m1 0h2m2 0h1m2 0h2m-27 1h1m1 0h1m2 0h2m1 0h3m1 0h2m1 0h3m1 0h1m1 0h2m2 0h2m-29 1h1m1 0h2m1 0h2m1 0h2m3 0h2m1 0h1m1 0h1m1 0h5m1 0h1m-19 1h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m4 0h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h3m1 0h3m1 0h1m1 0h1m1 0h1m3 0h5m-29 1h1m1 0h3m1 0h1m2 0h1m4 0h5m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h2m7 0h1m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h2m3 0h1m6 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m4 0h3m1 0h7m1 0h1m3 0h1m-28 1h7m1 0h3m1 0h3m2 0h1m2 0h1m3 0h1m2 0h1"/></svg>QR groß zeigen</button></div>
+<div class="phases">
+<a href="#spiel"><b>▶ Spielen</b><small>5 Stationen von ★ bis ★★★</small></a><a href="#spickzettel"><b>✎ Spickzettel</b><small>Das Wichtigste aus allen Energie-Lernpfaden</small></a>
+</div>
+</div></header>
+
+<section class="band" id="spiel"><div class="wrap">
+<div class="game" id="game">
+ <div class="hud">
+  <div class="akku" title="Joulies Akku füllt sich mit jeder Aufgabe"><span>Joulies Akku</span><i><b id="akkuBar"></b></i><span id="akkuTxt">0 %</span></div>
+  <div><span aria-hidden="true">⚡</span> <span id="funken">0</span> Funken</div>
+  <div class="sp"><button id="spickBtn" type="button">✎ Spickzettel</button><button id="resetBtn" type="button" title="Spielstand löschen">↺ Neu starten</button></div>
+ </div>
+ <svg class="scene" id="scene" viewBox="0 40 1000 460" role="img" aria-label="Nächtliche Berglandschaft im Schneesturm mit fünf Stationen auf dem Weg zur Gipfelhütte">
+  <defs>
+   <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151a1b"/><stop offset=".7" stop-color="#2f393a"/><stop offset="1" stop-color="#3E4B4C"/></linearGradient>
+   <linearGradient id="snow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9D2D3"/><stop offset="1" stop-color="#8fa2a7"/></linearGradient>
+   <radialGradient id="lamp"><stop offset="0" stop-color="#FCBE00" stop-opacity=".95"/><stop offset=".35" stop-color="#FCBE00" stop-opacity=".45"/><stop offset="1" stop-color="#FCBE00" stop-opacity="0"/></radialGradient>
+   <symbol id="joulie" viewBox="0 0 80 80">
+    <line x1="40" y1="18" x2="40" y2="8" stroke="#5F6F74" stroke-width="3"/>
+    <circle cx="40" cy="7" r="6" fill="#FCBE00" stroke="#2f393a" stroke-width="2"/>
+    <rect x="16" y="17" width="48" height="34" rx="12" fill="#E4E7E9" stroke="#2f393a" stroke-width="3"/>
+    <rect x="23" y="24" width="34" height="20" rx="7" fill="#1b2122"/>
+    <circle cx="33" cy="33" r="4" fill="#FCBE00"/><circle cx="47" cy="33" r="4" fill="#FCBE00"/>
+    <path d="M35 39 q5 4 10 0" stroke="#FCBE00" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <rect x="22" y="51" width="36" height="18" rx="6" fill="#ACBDC3" stroke="#2f393a" stroke-width="3"/>
+    <rect x="31" y="55" width="18" height="9" rx="2" fill="#1b2122"/><rect x="33" y="57" width="9" height="5" fill="#4fd27f"/>
+    <circle cx="28" cy="72" r="5" fill="#5F6F74" stroke="#2f393a" stroke-width="2"/><circle cx="52" cy="72" r="5" fill="#5F6F74" stroke="#2f393a" stroke-width="2"/>
+    <path d="M16 56 l-8 -6 M64 56 l8 -6" stroke="#2f393a" stroke-width="3" stroke-linecap="round"/>
+   </symbol>
+  </defs>
+  <rect width="1000" height="500" fill="url(#sky)"/>
+  <circle cx="160" cy="80" r="34" fill="#e4e7e9" opacity=".85"/><circle cx="176" cy="72" r="32" fill="#1d2425"/>
+  <g fill="#e9edee" opacity=".55"><circle cx="300" cy="40" r="1.6"/><circle cx="420" cy="90" r="1.2"/><circle cx="520" cy="30" r="1.5"/><circle cx="640" cy="70" r="1.2"/><circle cx="60" cy="150" r="1.3"/><circle cx="760" cy="40" r="1.4"/></g>
+  <path d="M0 300 L120 210 L210 260 L330 150 L430 230 L560 120 L640 180 L760 70 L880 150 L1000 100 V500 H0Z" fill="#2a3335"/>
+  <path d="M310 168 L330 150 L352 170 L338 166 L330 176 Z M540 138 L560 120 L582 140 L566 136 L560 146 Z M740 88 L760 70 L784 92 L768 88 L760 98Z" fill="#C9D2D3" opacity=".7"/>
+  <path d="M0 400 C120 360 200 380 300 340 C420 290 470 330 560 300 C660 265 700 230 790 200 C860 175 900 150 1000 140 V500 H0Z" fill="url(#snow)"/>
+  <path d="M0 450 C150 420 260 450 400 430 C560 410 700 440 1000 400 V500 H0Z" fill="#E4E7E9" opacity=".9"/>
+  <!-- Wald -->
+  <g fill="#3E4B4C"><path d="M40 420 l14 -40 l14 40z"/><path d="M62 425 l12 -34 l12 34z"/><path d="M930 175 l12 -34 l12 34z"/><path d="M640 300 l11 -30 l11 30z"/><path d="M660 296 l9 -26 l9 26z"/></g>
+  <!-- Weg -->
+  <path id="weg" d="M70 470 C110 440 120 430 150 418 C220 390 280 370 330 350 C400 325 470 345 540 322 C620 298 690 262 760 236 C820 214 860 170 885 150" fill="none" stroke="#FCBE00" stroke-opacity=".28" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round"/>
+  <path id="wegDone" class="pathdone" d="M70 470 C110 440 120 430 150 418 C220 390 280 370 330 350 C400 325 470 345 540 322 C620 298 690 262 760 236 C820 214 860 170 885 150" fill="none" stroke="#FCBE00" stroke-width="4" stroke-linecap="round" stroke-opacity=".8"/>
+  <!-- Stationsbauten -->
+  <g id="bau1"><rect x="112" y="376" width="56" height="38" fill="#5F6F74" stroke="#1b2122" stroke-width="2"/><path d="M104 380 L140 352 L176 380Z" fill="#3E4B4C" stroke="#1b2122" stroke-width="2"/><path d="M106 378 L140 352 L174 378" fill="none" stroke="#e9edee" stroke-width="4"/><rect x="130" y="392" width="18" height="22" fill="#2a3335"/></g>
+  <g id="bau2"><ellipse cx="300" cy="306" rx="70" ry="16" fill="#76989D" stroke="#1b2122" stroke-width="2"/><ellipse cx="290" cy="302" rx="40" ry="6" fill="#ACBDC3" opacity=".5"/><path d="M360 312 q20 18 4 36" fill="none" stroke="#5F6F74" stroke-width="6"/></g>
+  <g id="bau3"><path d="M480 300 q30 -40 60 -10 q30 30 60 -20" fill="none" stroke="#e9edee" stroke-width="5" stroke-linecap="round"/><rect x="516" y="282" width="22" height="7" rx="3" fill="#a33" stroke="#1b2122" stroke-width="1.5"/></g>
+  <g id="bau4"><rect x="720" y="196" width="60" height="36" fill="#5F6F74" stroke="#1b2122" stroke-width="2"/><path d="M714 198 L750 176 L786 198Z" fill="#3E4B4C" stroke="#1b2122" stroke-width="2"/><circle cx="750" cy="214" r="10" fill="none" stroke="#C9D2D3" stroke-width="3"/><path d="M750 204 v20 M740 214 h20" stroke="#C9D2D3" stroke-width="2"/></g>
+  <g id="huette"><rect x="860" y="96" width="92" height="56" fill="#5F6F74" stroke="#1b2122" stroke-width="2"/><path d="M848 100 L906 60 L964 100Z" fill="#3E4B4C" stroke="#1b2122" stroke-width="2"/><path d="M850 98 L906 60 L962 98" fill="none" stroke="#e9edee" stroke-width="5"/><rect x="928" y="66" width="10" height="22" fill="#3E4B4C"/>
+   <rect class="win" x="872" y="108" width="18" height="16"/><rect class="win" x="898" y="108" width="18" height="16"/><rect class="win" x="924" y="108" width="18" height="16"/><rect x="898" y="130" width="18" height="22" fill="#2a3335"/></g>
+  <g id="stations"></g>
+  <g id="jpos" transform="translate(40 410)"><g class="jbob"><use href="#joulie" width="56" height="56"/></g></g>
+  <g id="flakes" fill="#fff"></g>
+ </svg>
+ <div class="stlist" id="stlist" aria-label="Stationen"></div>
+ <div class="panel" id="panel" aria-live="polite"></div>
+</div>
+<div class="legend"><span><b style="color:var(--gst-gold)">★</b> Wissen (AFB I)</span><span><b style="color:var(--gst-gold)">★★</b> Anwenden (AFB II)</span><span><b style="color:var(--gst-gold)">★★★</b> Knobeln (AFB III)</span><span>Tipp kostet 1 ⚡, die Lösung ansehen gibt 0 ⚡ für die Aufgabe. Weiter kommst du immer.</span></div>
+</div></section>
+
+<section class="band alt" id="spickzettel"><div class="wrap">
+<h2>✎ Spickzettel</h2>
+<p>Hier steht das Wichtigste aus den vier Energie-Lernpfaden. Im Spiel öffnest du ihn mit dem Knopf „Spickzettel“.</p>
+<div class="spickgrid" id="spickInhalt">
+<section><h4>Energie und Energieformen</h4><p>Energie ist die Fähigkeit, Körper zu bewegen, zu verformen, zu erwärmen oder Licht auszusenden. Formelzeichen E, Einheit 1 Joule (1 J), <f-m>1 kJ = 1000 J</f-m>.</p>
+<ul><li>Lageenergie <f-m>E<sub>L</sub></f-m>: Körper in der Höhe</li><li>Bewegungsenergie <f-m>E<sub>B</sub></f-m>: bewegte Körper</li><li>Spannenergie <f-m>E<sub>Sp</sub></f-m>: verformte elastische Körper</li><li>thermische Energie <f-m>E<sub>therm</sub></f-m>: warme Körper</li><li>chemische Energie <f-m>E<sub>chem</sub></f-m>: in Stoffen gespeichert</li><li>elektrische Energie <f-m>E<sub>el</sub></f-m>: mit Strom übertragen</li><li>Strahlungsenergie <f-m>E<sub>Str</sub></f-m>: Licht, Wärmestrahlung</li></ul></section>
+<section><h4>Lageenergie</h4><p><f-m>E<sub>L</sub> = m · g · h</f-m> mit <f-m>g = 9,81 N/kg</f-m>.</p><p>Umgestellt: <f-m>h = E<sub>L</sub> : (m · g)</f-m> und <f-m>m = E<sub>L</sub> : (g · h)</f-m>.</p><p>Die Höhe <f-m>h</f-m> zählt ab dem Nullniveau. Das darf man frei wählen, muss es aber angeben. Der Weg nach oben spielt keine Rolle.</p></section>
+<section><h4>Energieerhaltung und Energieentwertung</h4><p>Energie kann weder erzeugt noch vernichtet werden. Sie wird nur umgewandelt, die Gesamtenergie bleibt gleich.</p><p>Bei jeder Umwandlung entsteht durch Reibung auch thermische Energie der Umgebung. Die ist kaum noch nutzbar, also entwertet: <f-m>E<sub>L</sub> + E<sub>B</sub> + E<sub>therm</sub></f-m> = konstant.</p></section>
+<section><h4>Wirkungsgrad</h4><p><f-m>η = E<sub>Nutzen</sub> : E<sub>Aufwand</sub></f-m>, ohne Einheit, z. B. <f-m>0,30 = 30 %</f-m>. Immer gilt <f-m>η</f-m> ≤ 1.</p><p>Energiekette: <f-m>η<sub>ges</sub> = η<sub>1</sub> · η<sub>2</sub> · η<sub>3</sub></f-m>.</p><p>Leistung <f-m>P = E : t</f-m> in Watt, <f-m>1 W = 1 J : 1 s</f-m>.</p></section>
+</div>
+</div></section>
+
+<footer class="band"><div class="wrap">
+<p>Energie-Spiel Physik Klasse 9 · Wiederholung zu Energieformen, Energieumwandlung, Lageenergie, Energieerhaltung und Wirkungsgrad. Dein Spielstand wird nur in diesem Browser gespeichert, es werden keine Daten übertragen (nur Feedback, das du selbst abschickst).</p>
+<p class="rechtl"><a href="/impressum">Impressum · Datenschutz</a></p></div></footer>
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Spiel"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR-Code: https://physik.party/Physik9/energie-spiel" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h1m2 0h8m2 0h7m-29 1h1m5 0h1m2 0h4m1 0h2m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h3m2 0h1m2 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h3m2 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m5 0h2m1 0h3m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h2m2 0h3m2 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-18 1h2m1 0h7m-21 1h1m2 0h1m1 0h2m1 0h4m1 0h4m2 0h1m1 0h1m1 0h1m-24 1h2m8 0h1m1 0h3m1 0h3m2 0h2m2 0h1m2 0h1m-28 1h1m1 0h4m1 0h1m1 0h5m1 0h4m2 0h2m1 0h3m-28 1h3m2 0h1m1 0h3m3 0h2m1 0h1m1 0h3m5 0h2m-23 1h2m3 0h4m2 0h2m1 0h1m1 0h3m1 0h1m1 0h2m-29 1h1m2 0h2m3 0h1m1 0h2m1 0h1m5 0h3m-21 1h1m1 0h4m9 0h3m5 0h5m-22 1h1m3 0h4m2 0h4m1 0h4m1 0h1m-28 1h5m1 0h1m1 0h1m1 0h2m4 0h2m1 0h1m3 0h1m3 0h1m-26 1h3m3 0h1m1 0h1m2 0h2m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m5 0h1m1 0h2m7 0h2m1 0h2m2 0h1m2 0h2m-27 1h1m1 0h1m2 0h2m1 0h3m1 0h2m1 0h3m1 0h1m1 0h2m2 0h2m-29 1h1m1 0h2m1 0h2m1 0h2m3 0h2m1 0h1m1 0h1m1 0h5m1 0h1m-19 1h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m4 0h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h3m1 0h3m1 0h1m1 0h1m1 0h1m3 0h5m-29 1h1m1 0h3m1 0h1m2 0h1m4 0h5m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h2m7 0h1m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h2m3 0h1m6 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m4 0h3m1 0h7m1 0h1m3 0h1m-28 1h7m1 0h3m1 0h3m2 0h1m2 0h1m3 0h1m2 0h1"/></svg><p>physik.party/Physik9/energie-spiel</p><button id="qrClose">Schließen</button></dialog>
+<dialog class="spick" id="spickDlg" aria-label="Spickzettel"><div class="top"><h3>✎ Spickzettel</h3><button type="button" id="spickClose">Schließen</button></div><div class="in" id="spickDlgIn"></div></dialog>
+<script>
+{
+const KEY='p9-energiespiel';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const num=v=>parseFloat(String(v).replace(/[\s ]/g,'').replace(/\.(?=\d{3}(\D|$))/g,'').replace(',','.').replace('−','-'));
+const fmt=(v,n=0)=>(+v).toFixed(n).replace('.',',');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const g=9.81;
+const pk=(id,cl='')=>`<svg class="pk ${cl}" aria-hidden="true"><use href="/brand/piktos.svg#${id}"/></svg>`;
+const JOU='<svg class="av" viewBox="0 0 80 80" aria-hidden="true"><use href="#joulie"/></svg>';
+const say=(t,who='Joulie')=>`<div class="talk">${JOU}<div class="bubble"><span class="who">${who}</span>${t}</div></div>`;
+
+/* ---------- Stationen und Aufgaben ---------- */
+const FORMEN={L:['Lageenergie <f-m>E<sub>L</sub></f-m>','var(--el)'],B:['Bewegungsenergie <f-m>E<sub>B</sub></f-m>','var(--eb)'],Sp:['Spannenergie <f-m>E<sub>Sp</sub></f-m>','var(--esp)'],th:['thermische Energie <f-m>E<sub>therm</sub></f-m>','var(--eth)'],ch:['chemische Energie <f-m>E<sub>chem</sub></f-m>','var(--ech)'],Str:['Strahlungsenergie <f-m>E<sub>Str</sub></f-m>','var(--estr)']};
+const ST=[
+{name:'Der Vorratsschuppen',thema:'Energieformen und Energiewandler',x:140,y:418,
+ intro:'<p>Puh, kalt hier! Im Schuppen hat der Sturm alles durcheinandergeworfen. Frau Berger, die Hüttenwirtin, braucht einen Überblick: Welche Energie steckt in den Sachen?</p><p>Wenn du nicht weiterweißt, frag mich nach einem Tipp. Ich helfe gern, das kostet nur einen Funken.</p>',
+ tasks:[
+ {afb:1,typ:'sort',frage:'Sortiere die Gegenstände: Welche Energieform steckt <b>hauptsächlich</b> darin? Tippe erst einen Gegenstand an, dann die passende Kiste.',
+  items:[['stein','Stein oben auf dem Regal','L'],['fahrrad','rollendes Fahrrad','B'],['bogen','gespannter Bogen','Sp'],['tee','heißer Tee','th'],['broetchen','Brötchen','ch'],['sonne','Sonne','Str'],['kerze','Kerze (noch nicht angezündet)','ch'],['trampolin','eingedrücktes Trampolin','Sp']],
+  tipps:['Frag dich bei jedem Gegenstand: Ist er hoch oben, bewegt, verformt, warm, ein Stoff mit Vorrat oder etwas, das leuchtet?','Brötchen und Kerze sind beides Stoffe, die beim Verdauen oder Verbrennen Energie freigeben. Trampolin und Bogen sind verformt.'],
+  loesung:'Stein auf dem Regal: <f-m>E<sub>L</sub></f-m> · Fahrrad: <f-m>E<sub>B</sub></f-m> · Bogen und Trampolin: <f-m>E<sub>Sp</sub></f-m> · Tee: <f-m>E<sub>therm</sub></f-m> · Brötchen und Kerze: <f-m>E<sub>chem</sub></f-m> · Sonne: <f-m>E<sub>Str</sub></f-m>'},
+ {afb:2,typ:'mc',frage:'Im Schuppen liegt eine Kurbel-Taschenlampe. Du kurbelst, ein kleiner Dynamo dreht sich, die Lampe leuchtet. Welche Energiekette stimmt?',bild:'taschenlampe',
+  opts:[['a','<f-m>E<sub>chem</sub></f-m> (Muskeln) → <f-m>E<sub>B</sub> → E<sub>el</sub> → E<sub>Str</sub> + E<sub>therm</sub></f-m>'],['b','<f-m>E<sub>el</sub> → E<sub>chem</sub> → E<sub>Str</sub></f-m>'],['c','<f-m>E<sub>B</sub> → E<sub>L</sub> → E<sub>el</sub> → E<sub>Str</sub></f-m>'],['d','<f-m>E<sub>Str</sub> → E<sub>el</sub> → E<sub>B</sub></f-m>']],ok:'a',
+  hinweis:'Fang bei dir an: Woher hat dein Arm die Energie zum Kurbeln? Und was macht ein Dynamo aus der Drehung?',
+  tipps:['Deine Muskeln bekommen ihre Energie aus der Nahrung. Das ist chemische Energie.','Der Dynamo ist ein Energiewandler: aus Bewegungsenergie wird elektrische Energie. Die Lampe gibt Licht ab und wird auch warm.'],
+  loesung:'<f-m>E<sub>chem</sub></f-m> in den Muskeln → <f-m>E<sub>B</sub></f-m> der Kurbel → <f-m>E<sub>el</sub></f-m> im Dynamo → <f-m>E<sub>Str</sub></f-m> (Licht) und <f-m>E<sub>therm</sub></f-m>.'},
+ {afb:2,typ:'mc',frage:'Joulie meint: „Wenn die Taschenlampe leuchtet, wird Energie verbraucht. Danach ist sie einfach weg.“ Was sagst du dazu?',
+  opts:[['a','Stimmt, Licht verschwindet ja wieder.'],['b','Nein. Die Energie wird in Licht und thermische Energie umgewandelt und landet am Ende als Wärme in der Umgebung.'],['c','Nein. Die Energie bleibt in der Lampe gespeichert.'],['d','Teilweise. Die Hälfte der Energie verschwindet.']],ok:'b',
+  hinweis:'Denk an das Prinzip der Energieerhaltung: Kann Energie verschwinden?',
+  tipps:['Energie kann weder erzeugt noch vernichtet werden.','„Verbraucht“ sagt man im Alltag. Physikalisch wird die Energie umgewandelt, am Ende meist in thermische Energie der Umgebung.'],
+  loesung:'Antwort b: Energie geht nicht verloren. Sie wird umgewandelt und ist am Ende als thermische Energie in der Umgebung verteilt (entwertet).'}
+ ]},
+{name:'Der Speichersee',thema:'Lageenergie',x:330,y:350,
+ intro:'<p>Oberhalb der Hütte liegt ein kleiner Speichersee. Fließt das Wasser durch ein Rohr hinunter zur Turbine, gibt es Strom. Frau Berger will wissen: Reicht das Wasser für die Nacht?</p><p>Wir legen das Nullniveau an die Turbine, denn tiefer kann das Wasser hier nicht fallen.</p>',
+ tasks:[
+ {afb:2,typ:'num',frage:'Im Becken sind 12 000 kg Wasser. Die Wasseroberfläche liegt im Mittel 25 m über der Turbine. Berechne die Lageenergie des Wassers.',bild:'pumpspeicher',
+  einheit:'kJ',ziel:12000*g*25/1000,tol:.015,
+  fehler:[[12000*g*25,'Das ist der Wert in Joule. Gefragt ist kJ: <f-m>1 kJ = 1000 J</f-m>.'],[12000*25/1000,'Fast! Da fehlt der Ortsfaktor <f-m>g = 9,81 N/kg</f-m>.'],[12000*25,'Da fehlen der Ortsfaktor <f-m>g = 9,81 N/kg</f-m> und die Umrechnung in kJ.']],
+  tipps:['Die Formel ist <f-m>E<sub>L</sub> = m · g · h</f-m>. Schreib dir zuerst auf, was gegeben ist.','<f-m>E<sub>L</sub> = 12 000 kg · 9,81 N/kg · 25 m</f-m>. Das Ergebnis ist in J, teile noch durch 1000.'],
+  loesung:'<f-m>E<sub>L</sub> = m · g · h = 12 000 kg · 9,81 N/kg · 25 m = 2 943 000 J ≈ 2943 kJ</f-m>'},
+ {afb:2,typ:'mc',frage:'Frau Berger misst die Höhe vom Tal aus (800 m tiefer) und bekommt eine viel größere Lageenergie. Wer hat recht?',
+  opts:[['a','Frau Berger, ihr Wert ist richtiger, weil er größer ist.'],['b','Beide Werte stimmen, sie haben nur verschiedene Nullniveaus. Für die Turbine zählt die Höhe über der Turbine.'],['c','Joulie, denn Lageenergie gibt es nur über einer Turbine.'],['d','Keiner, Wasser hat keine Lageenergie.']],ok:'b',
+  hinweis:'Von wo aus wird die Höhe <f-m>h</f-m> gemessen? Und darf man das frei wählen?',
+  tipps:['Das Nullniveau darf man frei wählen, man muss es aber angeben.','Die Turbine kann nur die Energie nutzen, die das Wasser auf dem Weg bis zur Turbine abgibt.'],
+  loesung:'Antwort b: Lageenergie hängt vom gewählten Nullniveau ab. Nutzbar für die Turbine ist nur die Energie bis zur Turbine, also ist das Nullniveau an der Turbine sinnvoll.'},
+ {afb:3,typ:'num',frage:'Für die Nacht braucht die Hütte 1800 kJ. Eine Pumpe soll 6000 kg Wasser in ein zweites, kleines Becken pumpen. Wie hoch über der Turbine muss das Becken mindestens liegen? (Rechne ohne Verluste.)',
+  einheit:'m',ziel:1800000/(6000*g),tol:.015,
+  fehler:[[1800/(6000*g),'Achte auf die Einheit: <f-m>1800 kJ = 1 800 000 J</f-m>.'],[1800000/6000,'Fast! Du musst durch <f-m>m · g</f-m> teilen, nicht nur durch m.']],
+  tipps:['Gesucht ist die Höhe. Stelle <f-m>E<sub>L</sub> = m · g · h</f-m> nach h um.','<f-m>h = E<sub>L</sub> : (m · g)</f-m>. Vorher kJ in J umrechnen: <f-m>1800 kJ = 1 800 000 J</f-m>.'],
+  loesung:'<f-m>h = E<sub>L</sub> : (m · g) = 1 800 000 J : (6000 kg · 9,81 N/kg) ≈ 30,6 m</f-m>'}
+ ]},
+{name:'Die Rodelbahn',thema:'Energieerhaltung und Energieentwertung',x:540,y:322,
+ intro:'<p>Das Ersatzteil für die Turbine liegt in der Werkstatt hinter der Senke. Ich rodle hin! Mein Schlitten hat aber keinen Motor. Ich brauche also genug Anlauf, sonst rutsche ich zurück.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Joulie startet oben am Hang und rodelt in die Senke. Wo hat der Schlitten die größte Bewegungsenergie?',
+  opts:[['a','ganz oben am Start'],['b','am tiefsten Punkt der Senke'],['c','oben auf dem Gegenhang'],['d','überall gleich viel']],ok:'b',
+  hinweis:'Wo ist die Lageenergie am kleinsten? Wohin ist sie dann umgewandelt worden?',
+  tipps:['Beim Hinunterfahren wird Lageenergie in Bewegungsenergie umgewandelt.','Am tiefsten Punkt ist die Lageenergie am kleinsten, also ist dort am meisten umgewandelt.'],
+  loesung:'Antwort b: Am tiefsten Punkt ist am meisten Lageenergie in Bewegungsenergie umgewandelt.'},
+ {afb:3,typ:'sim',frage:'Die Werkstatt liegt auf einem Hügel, 6,0 m über der Senke. Joulie und der Schlitten haben zusammen 50 kg. Auf dem Weg bis zur Hügelkuppe werden durch Reibung 980 J in thermische Energie umgewandelt. Berechne, wie hoch der Start mindestens liegen muss. Gib die Höhe ein und schick Joulie los!',
+  tipps:['Am Start hat Joulie nur Lageenergie. Oben auf der Kuppe braucht er <f-m>E<sub>L</sub> = m · g · 6,0 m</f-m>, dazu kommen 980 J für die Reibung.','<f-m>E<sub>Start</sub> = 50 kg · 9,81 N/kg · 6,0 m + 980 J = 3923 J</f-m>. Dann <f-m>h = E<sub>Start</sub> : (m · g)</f-m>.'],
+  loesung:'<f-m>E<sub>Start</sub> = m · g · 6,0 m + 980 J = 2943 J + 980 J = 3923 J</f-m>; <f-m>h = 3923 J : (50 kg · 9,81 N/kg) ≈ 8,0 m</f-m>'},
+ {afb:3,typ:'begr',frage:'<b>Begründe:</b> Warum käme Joulie ohne Anschubsen nie wieder ganz auf seine Starthöhe zurück, wenn er auf der anderen Seite wieder hinaufrodelt?',
+  muster:'Wegen der Reibung wird auf dem Weg ein Teil der Energie in thermische Energie umgewandelt (Schlitten, Schnee und Luft werden etwas wärmer). Die Gesamtenergie bleibt zwar erhalten, aber für die Lageenergie bleibt weniger übrig als am Start. Deshalb ist die erreichbare Höhe kleiner.',
+  checks:['Ich habe die Reibung genannt.','Ich habe gesagt, dass thermische Energie entsteht.','Ich habe erklärt, dass deshalb weniger Lageenergie übrig bleibt (Energie geht nicht verloren, sie wird entwertet).']}
+ ]},
+{name:'Das Turbinenhaus',thema:'Wirkungsgrad',x:760,y:236,locked:true},
+{name:'Die Gipfelhütte',thema:'Energieketten und Finale',x:885,y:150,locked:true}
+];
+const TOTAL=ST.reduce((a,s)=>a+(s.tasks?s.tasks.length:0),0);
+
+/* ---------- Spielstand ---------- */
+let state={};
+try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+state.t=state.t||{};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+const tid=(s,t)=>s+'-'+t;
+const isDone=(s,t)=>tid(s,t) in state.t;
+const stDone=s=>ST[s].tasks&&ST[s].tasks.every((_,t)=>isDone(s,t));
+function nextSt(){for(let i=0;i<ST.length;i++)if(!ST[i].locked&&!stDone(i))return i;return -1}
+const open=i=>!ST[i].locked&&(i===0||stDone(i-1));
+let cur=null,used=0,solShown=false;
+
+/* ---------- Karte ---------- */
+function drawMap(){
+ const g=$('#stations');g.innerHTML='';const nx=nextSt();
+ ST.forEach((s,i)=>{const d=stDone(i),o=open(i);
+  const el=document.createElementNS('http://www.w3.org/2000/svg','g');
+  el.setAttribute('class','st'+(d?' on':'')+(o?'':' locked')+(i===nx?' next':''));
+  el.setAttribute('transform',`translate(${s.x} ${s.y})`);
+  if(o){el.setAttribute('tabindex','0');el.setAttribute('role','button');}
+  el.setAttribute('aria-label',`Station ${i+1}: ${s.name}${d?' (repariert)':o?'':' (noch gesperrt)'}`);
+  el.innerHTML=`<circle class="glow" r="70" fill="url(#lamp)"/><circle class="halo" r="30" fill="#FCBE00" opacity="${i===nx?.18:0}"/>
+   <circle class="ring" r="22" fill="${d?'#FCBE00':'#2f393a'}" stroke="${o?'#e9edee':'#5F6F74'}" stroke-width="3"/>
+   <text y="7" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="700" font-size="20" fill="${d?'#2f393a':o?'#e9edee':'#7d8b8e'}">${s.locked?'🔒':d?'✓':i+1}</text>`;
+  if(o){el.onclick=()=>openSt(i);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openSt(i)}}}
+  g.appendChild(el)});
+ // Weg leuchtet bis zur letzten reparierten Station
+ const p=$('#wegDone'),L=p.getTotalLength();let last=-1;ST.forEach((s,i)=>{if(stDone(i))last=i});
+ let frac=0;if(last>=0){frac=nearestLen(p,ST[last].x,ST[last].y)/L}
+ p.style.setProperty('--len',L);p.style.strokeDasharray=`${L*frac} ${L}`;p.style.strokeDashoffset=0;
+ $$('.win').forEach(w=>w.classList.toggle('on',ST.every((s,i)=>s.locked||stDone(i))&&false));
+ // Liste
+ $('#stlist').innerHTML=ST.map((s,i)=>`<button type="button" data-i="${i}" class="${stDone(i)?'done':''}" ${open(i)?'':'disabled'} aria-current="${cur===i}"><i>${stDone(i)?'✓':i+1}</i>${s.name}</button>`).join('');
+ $$('#stlist button').forEach(b=>b.onclick=()=>openSt(+b.dataset.i));
+ // Akku und Funken
+ const n=Object.keys(state.t).length,f=Object.values(state.t).reduce((a,b)=>a+b,0);
+ $('#akkuBar').style.width=Math.round(100*n/(TOTAL+6))+'%';$('#akkuTxt').textContent=Math.round(100*n/(TOTAL+6))+' %';$('#funken').textContent=f;
+}
+function nearestLen(p,x,y){const L=p.getTotalLength();let best=0,bd=1e9;for(let l=0;l<=L;l+=4){const q=p.getPointAtLength(l);const d=(q.x-x)**2+(q.y-y)**2;if(d<bd){bd=d;best=l}}return best}
+let jx=40,jy=410;
+function moveJoulie(x,y){const el=$('#jpos');const x0=jx,y0=jy;jx=x-72;jy=y-60;
+ if(reduce){el.setAttribute('transform',`translate(${jx} ${jy})`);return}
+ const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/900),e=k<.5?2*k*k:1-(-2*k+2)**2/2;
+  el.setAttribute('transform',`translate(${x0+(jx-x0)*e} ${y0+(jy-y0)*e})`);if(k<1)requestAnimationFrame(f)})(t0)}
+function flakes(){const g=$('#flakes');let h='';for(let i=0;i<70;i++){const x=Math.random()*1060,r=1+Math.random()*2.2,d=6+Math.random()*9,dl=-Math.random()*d;
+ h+=`<circle class="flake" cx="${x.toFixed(0)}" cy="0" r="${r.toFixed(1)}" opacity="${(.35+Math.random()*.5).toFixed(2)}" style="animation-duration:${d.toFixed(1)}s;animation-delay:${dl.toFixed(1)}s"/>`}
+ if(reduce)h=h.replace(/cy="0"/g,()=>`cy="${(Math.random()*480).toFixed(0)}"`);g.innerHTML=h}
+
+/* ---------- Panel ---------- */
+function home(){cur=null;drawMap();const nx=nextSt();const P=$('#panel');
+ const any=Object.keys(state.t).length>0;
+ P.innerHTML=(any?say(nx>=0?`<p>Weiter geht's! Die nächste Station ist <b>${ST[nx].name}</b>. Tippe sie auf der Karte an.</p>`:`<p>Du hast alle Stationen geschafft, die es bisher gibt. Turbinenhaus und Gipfelhütte werden gerade noch gebaut!</p>`)
+ :say(`<p><b>Klassenfahrt in die Berge.</b> Es ist Nacht, draußen tobt ein Schneesturm – und zack: Stromausfall in der Gipfelhütte! Alle sitzen im Dunkeln.</p><p>Ich bin Joulie, der Energie-Roboter der Hütte. Mein Akku ist leer, und das kleine Wasserkraftwerk von Frau Berger ist kaputt. Zusammen schaffen wir das: An fünf Stationen brauchen wir dein Energie-Wissen. Jede reparierte Station bringt ein Licht zurück und lädt meinen Akku.</p>`))+
+ `<div class="tools"><button class="primary" id="goBtn" type="button">${nx>=0?(any?'Weiter zu Station '+(nx+1):'Los geht’s: Station 1'):'Spickzettel ansehen'}</button></div>`;
+ $('#goBtn').onclick=()=>nx>=0?openSt(nx):openSpick();
+}
+function openSt(i){if(!open(i))return;cur=i;const s=ST[i];moveJoulie(s.x,s.y);drawMap();
+ let t=s.tasks.findIndex((_,k)=>!isDone(i,k));if(t<0)t=0;
+ showTask(i,t,!s.tasks.some((_,k)=>isDone(i,k)))}
+function head(i,t){const s=ST[i];return `<h3>Station ${i+1} · ${s.name}</h3><p style="color:var(--muted);margin-top:-4px">${s.thema}</p>`}
+function showTask(i,t,withIntro){const s=ST[i],T=s.tasks[t];used=0;solShown=false;
+ const P=$('#panel');
+ const dots=s.tasks.map((_,k)=>`<i class="${isDone(i,k)?'ok':''} ${k===t?'cur':''}"></i>`).join('');
+ P.innerHTML=head(i,t)+(withIntro?say(s.intro):'')+
+ `<div class="task" data-task="${tid(i,t)}"><div class="thead"><span class="afb"><b>${'★'.repeat(T.afb)}</b> AFB ${['I','II','III'][T.afb-1]}</span><span>Aufgabe ${t+1} von ${s.tasks.length}</span><span class="dots" aria-hidden="true">${dots}</span></div>
+ <div class="${T.bild?'mitbild':''}">${T.bild?pk(T.bild,'gross'):''}<p>${T.frage}</p></div><div class="body"></div><div class="fb" role="status"></div>
+ <div class="tools">${T.tipps?'<button class="tip" type="button" data-tip>💡 Tipp von Joulie (−1 ⚡)</button>':''}${T.loesung?'<button type="button" data-sol>Lösung zeigen</button>':''}<button type="button" data-map style="margin-left:auto">Zur Karte</button></div><div class="extra"></div></div>`;
+ const box=P.querySelector('.task');
+ box.querySelector('[data-map]').onclick=home;
+ const tb=box.querySelector('[data-tip]');if(tb)tb.onclick=()=>{if(used>=T.tipps.length)return;
+  box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="tiptxt">${JOU}<div><b>Tipp ${used+1}:</b> ${T.tipps[used]}</div></div>`);used++;
+  if(used>=T.tipps.length){tb.disabled=true;tb.textContent='💡 Keine Tipps mehr'}};
+ const sb=box.querySelector('[data-sol]');if(sb)sb.onclick=()=>{if(solShown)return;solShown=true;sb.disabled=true;
+  box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="loes"><b>Lösung:</b> ${T.loesung}<br><small>Schau sie dir genau an. Du bekommst keine Funken, kannst aber weiterspielen.</small></div><div class="tools"><button class="primary" type="button" data-weiter>Verstanden, weiter</button></div>`);
+  box.querySelector('[data-weiter]').onclick=()=>solve(i,t,true)};
+ TYP[T.typ](box,T,i,t);
+}
+function fb(box,cls,html){const f=box.querySelector('.fb');f.className='fb '+cls;f.innerHTML=html}
+function solve(i,t,viaSol){const s=ST[i];if(!isDone(i,t)){state.t[tid(i,t)]=viaSol?0:Math.max(1,3-used);save()}
+ drawMap();
+ const next=s.tasks.findIndex((_,k)=>!isDone(i,k));
+ const box=$('#panel .task');
+ const go=()=>{if(next>=0)showTask(i,next,false);else stationWin(i)};
+ if(viaSol){go();return}
+ fb(box,'ok',`<b>Richtig!</b> +${state.t[tid(i,t)]} ⚡ ${next>=0?'':'– das war die letzte Aufgabe hier.'}`);
+ box.querySelectorAll('[data-tip],[data-sol]').forEach(b=>b.disabled=true);
+ box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="tools"><button class="primary" type="button" data-weiter>${next>=0?'Nächste Aufgabe':'Station abschließen'}</button></div>`);
+ const w=box.querySelector('[data-weiter]');w.onclick=go;w.focus({preventScroll:true});
+}
+const LOB=['Klasse! Die Laterne am Schuppen brennt wieder.','Wasser marsch! Die Turbine bekommt wieder Wasser.','Geschafft! Ich habe das Ersatzteil aus der Werkstatt.'];
+function stationWin(i){drawMap();const s=ST[i];const f=s.tasks.reduce((a,_,k)=>a+(state.t[tid(i,k)]||0),0);
+ const nx=nextSt();
+ $('#panel').innerHTML=head(i)+`<div class="win-box"><div class="big">✓ Station repariert</div><p>${f} von ${s.tasks.length*3} ⚡ an dieser Station</p></div>`+
+  say(`<p>${LOB[i]||'Super!'}</p>${nx>=0?`<p>Weiter zu <b>${ST[nx].name}</b>.</p>`:'<p><b>Ende des Entwurfs:</b> Turbinenhaus (Wirkungsgrad) und Gipfelhütte (Energieketten, Finale) folgen.</p>'}`)+
+  `<div class="tools"><button class="primary" type="button" id="nx">${nx>=0?'Weiter zu Station '+(nx+1):'Zur Karte'}</button></div>`;
+ $('#nx').onclick=()=>nx>=0?openSt(nx):home();
+ const gl=$$('#stations .st')[i];if(gl&&!reduce){gl.querySelector('.glow').animate([{opacity:0,transform:'scale(.3)'},{opacity:1,transform:'scale(1.2)'},{opacity:1,transform:'scale(1)'}],{duration:1400})}
+}
+
+/* ---------- Aufgabentypen ---------- */
+const TYP={
+ mc(box,T,i,t){const b=box.querySelector('.body');
+  b.innerHTML=`<div class="mc">${T.opts.map(([k,txt])=>`<button type="button" data-k="${k}"><span>${txt}</span></button>`).join('')}</div>`;
+  b.querySelectorAll('button').forEach(btn=>btn.onclick=()=>{
+   if(btn.dataset.k===T.ok){btn.classList.add('ok');b.querySelectorAll('button').forEach(x=>x.disabled=true);solve(i,t)}
+   else{btn.classList.add('bad');b.querySelectorAll('button').forEach(x=>x.disabled=true);fb(box,'hint','<b>Noch nicht.</b> '+T.hinweis+' <small>(Kurz nachdenken …)</small>');
+    setTimeout(()=>{b.querySelectorAll('button:not(.bad)').forEach(x=>x.disabled=false)},3000)}})},
+ num(box,T,i,t){const b=box.querySelector('.body');
+  b.innerHTML=`<p class="calcbox">Rechne im Heft: gegeben, gesucht, Formel, Rechnung. Gib dann dein Ergebnis ein.</p><div class="numrow"><label>Ergebnis: <input type="text" inputmode="decimal" autocomplete="off"></label> <span>${T.einheit}</span><button class="primary" type="button">Prüfen</button></div>`;
+  const inp=b.querySelector('input'),go=b.querySelector('button');
+  const check=()=>{const v=num(inp.value);if(isNaN(v)){fb(box,'hint','Gib eine Zahl ein, z. B. 12,5.');return}
+   if(Math.abs(v-T.ziel)<=T.tol*T.ziel){inp.disabled=go.disabled=true;solve(i,t);return}
+   const f=(T.fehler||[]).find(([w])=>Math.abs(v-w)<=.02*Math.abs(w));
+   fb(box,'bad',f?f[1]:'Das stimmt noch nicht. Prüfe Formel, Einsetzen und Einheiten. Ein Tipp hilft dir weiter.')};
+  go.onclick=check;inp.onkeydown=e=>{if(e.key==='Enter')check()}},
+ sort(box,T,i,t){const b=box.querySelector('.body');
+  b.innerHTML=`<div class="pool" data-mischen>${T.items.map(([p,txt,k],n)=>`<button type="button" class="chip" data-n="${n}">${pk(p)}<span>${txt}</span></button>`).join('')}</div>
+  <div class="bins">${Object.entries(FORMEN).map(([k,[n,c]])=>`<div class="bin" data-k="${k}" role="button" tabindex="0"><h4><i style="background:${c}"></i>${n}</h4><div class="in"></div></div>`).join('')}</div>
+  <div class="tools"><button class="primary" type="button" data-chk>Prüfen</button></div>`;
+  let sel=null;const pool=b.querySelector('.pool');
+  b.querySelectorAll('.chip').forEach(c=>c.onclick=e=>{e.stopPropagation();const inBin=c.closest('.bin');
+   if(sel&&sel!==c&&inBin){inBin.querySelector('.in').appendChild(sel);sel.classList.remove('sel');sel=null;return}
+   b.querySelectorAll('.chip').forEach(x=>x.classList.remove('sel'));
+   if(c.parentElement.classList.contains('in')&&sel===c){pool.appendChild(c);sel=null;return}sel=c;c.classList.add('sel');c.classList.remove('bad')});
+  b.querySelectorAll('.bin').forEach(bin=>{const put=()=>{if(!sel)return;bin.querySelector('.in').appendChild(sel);sel.classList.remove('sel');sel=null};bin.onclick=put;bin.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();put()}}});
+  b.querySelector('[data-chk]').onclick=()=>{const left=pool.querySelectorAll('.chip').length;if(left){fb(box,'hint',`Es liegen noch ${left} Gegenstände ohne Kiste herum.`);return}
+   let bad=0;b.querySelectorAll('.bin').forEach(bin=>bin.querySelectorAll('.chip').forEach(c=>{if(T.items[c.dataset.n][2]!==bin.dataset.k){bad++;c.classList.add('bad');pool.appendChild(c)}}));
+   if(!bad){b.querySelector('[data-chk]').disabled=true;solve(i,t)}else fb(box,'bad',`${bad} ${bad===1?'Gegenstand lag':'Gegenstände lagen'} in der falschen Kiste und ${bad===1?'liegt':'liegen'} wieder oben. Versuch es nochmal.`)}},
+ begr(box,T,i,t){const b=box.querySelector('.body');
+  b.innerHTML=`<textarea placeholder="Schreib deine Begründung in ganzen Sätzen …"></textarea><div class="tools"><button class="primary" type="button" data-ab>Abgeben und vergleichen</button></div><div class="mu"></div>`;
+  const ta=b.querySelector('textarea');b.querySelector('[data-ab]').onclick=()=>{if(ta.value.trim().split(/\s+/).length<8){fb(box,'hint','Schreib erst einen eigenen Satz (mindestens 8 Wörter). Dann zeige ich dir meine Musterbegründung.');return}
+   b.querySelector('[data-ab]').disabled=true;fb(box,'','');
+   b.querySelector('.mu').innerHTML=`<div class="loes"><b>Joulies Musterbegründung:</b> ${T.muster}</div><p style="margin-top:10px"><b>Vergleiche:</b> Was steckt auch in deiner Begründung?</p><div class="checks">${T.checks.map(c=>`<label><input type="checkbox"> ${c}</label>`).join('')}</div><div class="tools"><button class="primary" type="button" data-fertig>Fertig verglichen</button></div>`;
+   b.querySelector('[data-fertig]').onclick=()=>{const n=b.querySelectorAll('.checks input:checked').length;used=3-Math.max(1,n);b.querySelector('[data-fertig]').disabled=true;solve(i,t)}}},
+ sim:simRodel
+};
+
+/* ---------- Rodelbahn-Simulation ----------
+   Modell: Schlitten als Punkt, Reibungsarbeit proportional zur waagrechten Strecke
+   (bis zur Kuppe insgesamt 980 J), am Ende bremst Joulie (Rest-E_B wird zu E_therm). */
+function simRodel(box,T,i,t){const b=box.querySelector('.body');
+ const m=50,W=980,HH=6,SX=20,SY=12,Y0=232;// 20 px je m waagrecht, 12 px je m Höhe
+ b.innerHTML=`<div class="numrow"><label>Starthöhe <f-m>h</f-m> = <input type="text" inputmode="decimal" autocomplete="off" placeholder="z. B. 7,5"></label> <span>m</span><button class="primary" type="button" data-go>Losrodeln!</button></div>
+ <div class="rodel"><svg class="track" viewBox="0 0 600 260" role="img" aria-label="Rodelbahn: Start links oben, Senke, Hügel mit Werkstatt rechts"><g class="bg"></g><path class="bahn" fill="none" stroke="#e9edee" stroke-width="5" stroke-linecap="round"/><g class="sled"><rect x="-14" y="-8" width="28" height="7" rx="3" fill="#c0392b" stroke="#1b2122" stroke-width="1.5"/><use href="#joulie" x="-15" y="-36" width="30" height="30"/></g></svg>
+ <div><div class="bars"><div><small>?</small><i style="background:var(--el)"></i><small><f-m>E<sub>L</sub></f-m></small></div><div><small>?</small><i style="background:var(--eb)"></i><small><f-m>E<sub>B</sub></f-m></small></div><div><small>?</small><i style="background:var(--eth)"></i><small><f-m>E<sub>therm</sub></f-m></small></div></div><div class="sum">Summe: –</div></div></div>
+ <p class="calcbox">Modell: Reibung wandelt gleichmäßig entlang der Strecke Energie in thermische Energie um, Luftwiderstand ist darin enthalten.</p>`;
+ const svg=b.querySelector('svg'),bahn=b.querySelector('.bahn'),sled=b.querySelector('.sled'),inp=b.querySelector('input'),go=b.querySelector('[data-go]');
+ const bars=[...b.querySelectorAll('.bars i')],lab=[...b.querySelectorAll('.bars div small:first-child')];
+ let h0=10;
+ const hm=x=>x<60?h0:x<250?h0*(1+Math.cos(Math.PI*(x-60)/190))/2:x<300?0:x<460?HH*(1-Math.cos(Math.PI*(x-300)/160))/2:HH;
+ const eth=x=>x<=60?0:x>=460?W:W*(x-60)/400;
+ function draw(){let d='';for(let x=10;x<=590;x+=5)d+=(x===10?'M':'L')+x+' '+(Y0-hm(x)*SY).toFixed(1);bahn.setAttribute('d',d);
+  b.querySelector('.bg').innerHTML=`<rect x="500" y="${Y0-HH*SY-34}" width="44" height="30" fill="#5F6F74" stroke="#1b2122"/><path d="M494 ${Y0-HH*SY-32} l28 -16 l28 16z" fill="#3E4B4C"/><text x="522" y="${Y0-HH*SY-40}" fill="#C9D2D3" font-size="12" text-anchor="middle" font-family="Lexend">Werkstatt</text>
+  <line x1="300" y1="${Y0}" x2="590" y2="${Y0}" stroke="#76989D" stroke-dasharray="4 4"/><text x="275" y="${Y0+18}" fill="#ACBDC3" font-size="12" font-family="Lexend">Nullniveau</text>
+  <line x1="470" y1="${Y0}" x2="470" y2="${Y0-HH*SY}" stroke="#ACBDC3"/><text x="476" y="${Y0-HH*SY/2}" fill="#ACBDC3" font-size="12" font-family="Lexend">6,0 m</text>
+  <line x1="30" y1="${Y0}" x2="30" y2="${Y0-h0*SY}" stroke="#FCBE00"/><text x="36" y="${Y0-h0*SY/2+30}" fill="#FCBE00" font-size="12" font-family="Lexend">h</text>`}
+ const E0=()=>m*g*h0,MAX=m*g*16;
+ function show(x,eB,eT){const eL=m*g*hm(x);[eL,eB,eT].forEach((v,k)=>{bars[k].style.height=(100*Math.max(0,v)/MAX*0.82)+'%';lab[k].textContent=fmt(v)+' J'});
+  b.querySelector('.sum').textContent='Summe: '+fmt(eL+eB+eT)+' J';
+  const dx=2,sl=Math.atan2(-(hm(x+dx)-hm(x-dx))*SY,2*dx);sled.setAttribute('transform',`translate(${x} ${Y0-hm(x)*SY}) rotate(${sl*180/Math.PI})`)}
+ // Stoppunkt am Gegenhang suchen
+ function stopX(){for(let x=300;x<=460;x+=.25){if(E0()-eth(x)-m*g*hm(x)<=0)return x}return null}
+ draw();show(60,0,0);
+ let anim=null;
+ go.onclick=()=>{const v=num(inp.value);if(isNaN(v)||v<2||v>16){fb(box,'hint','Gib eine Starthöhe zwischen 2 m und 16 m ein.');return}
+  h0=v;draw();cancelAnimationFrame(anim);go.disabled=true;fb(box,'','');
+  const sx=E0()-W-m*g*HH>=-5?null:stopX();// 5 J Spielraum fürs Runden
+  const xEnd=sx===null?545:sx;let x=60,eB=0,last=performance.now(),brake=false,eT=0;
+  function step(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+   if(!brake){const v=Math.max(1.2,Math.sqrt(Math.max(0,2*eB/m)));x+=v*dt*SX*1.3;if(x>=xEnd)x=xEnd;
+    eT=eth(x);eB=Math.max(0,E0()-eT-m*g*hm(x));
+    if(sx===null&&x>=500){brake=true}}
+   else{x=Math.min(545,x+Math.max(.6,Math.sqrt(2*eB/m))*dt*SX*.8);const dE=Math.min(eB,dt*E0()*0.5+20*dt);eB-=dE;eT+=dE;if(eB<=1){eT+=eB;eB=0}}
+   show(x,eB,eT);
+   const fertig=brake?eB<=0:x>=xEnd&&sx!==null;
+   if(!fertig&&!(reduce&&false)){anim=requestAnimationFrame(step);return}
+   go.disabled=false;
+   if(sx!==null){fb(box,'bad',`Oh nein, bei ${fmt(hm(x),1)} m Höhe ist meine ganze Energie umgewandelt. Gleich rutsche ich zurück in die Senke! Für den Hügel fehlen mir noch ${fmt(m*g*HH+W-E0())} J.`);
+}
+   else if(h0<=8.3){inp.disabled=true;go.disabled=true;solve(i,t)}
+   else fb(box,'hint',`Geschafft, aber mit viel Schwung: Ich musste ${fmt(E0()-W-m*g*HH)} J wegbremsen. Es geht mit weniger Starthöhe. Berechne die kleinste!`)}
+  if(reduce){x=xEnd;eT=eth(x);eB=Math.max(0,E0()-eT-m*g*hm(x));if(sx===null){eT+=eB;eB=0;brake=true}show(x,eB,eT);step(performance.now());return}
+  anim=requestAnimationFrame(step)};
+ inp.onkeydown=e=>{if(e.key==='Enter')go.click()};
+}
+
+/* ---------- Spickzettel, QR, Neustart ---------- */
+function openSpick(){const d=$('#spickDlg');$('#spickDlgIn').innerHTML='<div class="spickgrid">'+$('#spickInhalt').innerHTML+'</div>';d.showModal()}
+$('#spickBtn').onclick=openSpick;$('#spickClose').onclick=()=>$('#spickDlg').close();
+$('#spickDlg').addEventListener('click',e=>{if(e.target.id==='spickDlg')e.target.close()});
+$('#resetBtn').onclick=()=>{if(!Object.keys(state.t).length)return;const b=$('#resetBtn');if(b.dataset.sure){state={t:{}};save();b.textContent='↺ Neu starten';delete b.dataset.sure;jx=40;jy=410;$('#jpos').setAttribute('transform','translate(40 410)');home()}else{b.dataset.sure=1;b.textContent='Wirklich löschen?';setTimeout(()=>{delete b.dataset.sure;b.textContent='↺ Neu starten'},3000)}};
+{const d=$('#qrDlg');$('#qrOpen').onclick=()=>d.showModal();$('#qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
+
+flakes();
+{const n=nextSt(),last=[...ST.keys()].filter(stDone).pop();const p=last!==undefined?ST[last]:null;if(p){jx=p.x-72;jy=p.y-60;$('#jpos').setAttribute('transform',`translate(${jx} ${jy})`)}}
+home();
+}
+</script>
+</body>
+</html>
