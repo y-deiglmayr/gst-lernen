@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akustik 2 · Schwingungen beschreiben</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<script src="/brand/theme.js"></script>
+<style>
+/* Akustik 1 · Wie entsteht Schall? – Lernpfad Physik Klasse 8 (Akustik). */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#11141b);--ink:light-dark(#1b1e27,#e9ebf1);--muted:light-dark(#5a6070,#a5abba);
+--panel:light-dark(#f3f6fa,#191e28);--line:light-dark(#d6dde8,#2d3544);--grid:light-dark(#d4e2f2,#232c3b);
+--paper:light-dark(#fdfeff,#151a23);
+--acc:light-dark(#c2410c,#ff9a4d);--acc2:light-dark(#1d62c9,#64a6ff);
+--el:light-dark(#2563c9,#6aa5ff);--eb:light-dark(#1d8a4a,#4fd27f);--eth:light-dark(#d4381e,#ff7a5c);--esp:light-dark(#8a3fc4,#c08cff);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2815);--lab:#0e131d;--labink:#eef1f7}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700}
+h3{font-size:21px;font-weight:600;margin-top:1.6em}
+h4{font-size:17px;font-weight:600;margin:0 0 .3em}
+p{margin:0 0 .8em}
+sub{font-size:.72em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.alt{background:var(--panel)}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#fff;font-size:13px;margin-right:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.bar{width:140px;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .4s}
+.hero{background:var(--lab);color:var(--labink)}
+.hero p{color:#c6ccd8;max-width:64ch}
+.hero svg{width:100%;height:auto;display:block;margin:18px 0 8px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px}
+.phases a{display:block;padding:14px 16px;border-radius:12px;background:#182031;color:#eef1f7;text-decoration:none;border:1px solid #2a3448}
+.phases a:hover{border-color:#ff9a4d}
+.phases b{font-family:Lexend,system-ui,sans-serif;display:block;font-size:17px}
+.phases small{color:#a9b2c4;font-size:14px}
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+@media(min-width:901px){.stick{position:sticky;top:70px}}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:8px}
+.fig svg{display:block;width:100%;height:auto;touch-action:manipulation;user-select:none}
+.caption{font-size:14px;color:var(--muted);margin:6px 4px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card.done{border-color:var(--ok)}
+.card .tag{font:600 13px Lexend,system-ui,sans-serif;color:var(--muted);margin-bottom:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.card.done>.tag::after{content:"✓ gelöst";color:var(--ok)}
+.stars{color:var(--acc);letter-spacing:2px}
+.intro{max-width:72ch;color:var(--muted)}
+.merke{border:2px solid var(--acc);border-radius:14px;padding:16px 20px;margin:18px 0;background:var(--bg)}
+.merke h4{color:var(--acc)}
+.merke ul{margin:.3em 0;padding-left:1.2em}
+details.reveal{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:14px 0;background:var(--bg)}
+details.reveal summary{cursor:pointer;font:600 16px Lexend,system-ui,sans-serif;padding:4px 0}
+button{font:600 16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.alt button{background:var(--bg)}
+button:hover{border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+button.primary{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11141b)}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+input[type=text],select{font:16px "Atkinson Hyperlegible",sans-serif;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--acc);min-height:36px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 18px;margin-top:8px}
+.ctrl label{font-weight:700;font-size:15px}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.toggles label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;min-height:44px;font-size:15px}
+.toggles input{width:18px;height:18px;accent-color:var(--acc)}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font-weight:400}
+.mc button.ok,.tf button.ok{background:var(--okbg);border-color:var(--ok)}
+.mc button.bad,.tf button.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{min-height:1em;margin:8px 0 0;font-size:16px}
+.fb:empty{display:none}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb.hint{background:var(--hint);color:var(--ink);padding:8px 12px;border-radius:8px}
+input.ok,select.ok{border-color:var(--ok);background:var(--okbg)}
+input.bad,select.bad{border-color:var(--bad);background:var(--badbg)}
+.cloze{line-height:2.5;font-size:17px}
+.cloze select{min-height:38px;padding:2px 6px;margin:0 2px}
+.tf{display:grid;gap:4px}
+.tf .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tf .item .fb{grid-column:1/-1;margin:0}
+.tf .btns{display:flex;gap:6px}
+.numq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.numq input{width:110px;text-align:right}
+.numq .mcq{grid-column:1/-1}
+.unit{white-space:nowrap}
+.sol{background:var(--panel);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:16px}
+.sol p{margin:.3em 0}
+.calc{font-family:"Atkinson Hyperlegible",sans-serif;background:var(--bg);border-left:4px solid var(--acc);padding:6px 12px;margin:6px 0;border-radius:4px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.steps i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font:600 14px Lexend,system-ui,sans-serif}
+.steps i.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.steptext{min-height:7em}
+.heft{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;border:1px solid var(--line);border-radius:12px;padding:22px clamp(16px,3vw,34px)}
+.heft h3{margin-top:.8em;color:var(--acc)}
+.heft h3:first-child{margin-top:0}
+.heft .box{border:2px solid var(--ink);padding:8px 14px;border-radius:6px;background:var(--paper);display:inline-block}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.checks label{display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid var(--line);border-radius:10px;min-height:44px;cursor:pointer;font-size:16px;background:var(--bg)}
+.checks label.ok{border-color:var(--ok);background:var(--okbg)}.checks label.bad{border-color:var(--bad);background:var(--badbg)}
+.checks input{width:18px;height:18px;accent-color:var(--acc)}
+.chain{display:grid;grid-template-columns:minmax(0,1.3fr) auto auto auto;gap:6px 10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+@media(max-width:640px){.chain{grid-template-columns:auto auto auto}.chain>span:first-child{grid-column:1/-1}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted);margin:6px 4px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.given{background:var(--panel);border-radius:10px;padding:8px 14px;font-size:15px;margin:8px 0}
+footer{font-size:14px;color:var(--muted)}
+/* svg */
+.gl{stroke:var(--grid);stroke-width:1}
+.thin{stroke:var(--ink);stroke-width:1.4;fill:none}
+.dashl{stroke:var(--muted);stroke-width:1.4;stroke-dasharray:6 5;fill:none}
+.tx{fill:var(--ink);font:15px "Atkinson Hyperlegible",sans-serif}
+.txs{fill:var(--muted);font:13px "Atkinson Hyperlegible",sans-serif}
+.txb{fill:var(--ink);font:600 15px Lexend,sans-serif}
+.fel{fill:var(--el)}.feb{fill:var(--eb)}.feth{fill:var(--eth)}.fesp{fill:var(--esp)}
+.tel{fill:var(--el);font:600 14px Lexend,sans-serif}.teb{fill:var(--eb);font:600 14px Lexend,sans-serif}.teth{fill:var(--eth);font:600 14px Lexend,sans-serif}
+.ges{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 4}
+.ball{fill:light-dark(#f2b632,#f2b632);stroke:var(--ink);stroke-width:1.5}
+.ghost{opacity:.35}
+.ground{fill:light-dark(#e9edf3,#202736)}
+.track{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.hit{fill:transparent;cursor:pointer}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+@media(max-width:600px){body{font-size:16px}.prog .bar{width:80px}nav a{padding:6px}}
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+.qrbtn:hover{outline:3px solid #ff5c50}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop{background:rgba(8,10,16,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
+@media(max-width:640px){.qrbtn{width:96px}.qrbtn svg{width:80px;height:80px}}
+@media print{nav,.qrbtn{display:none}}
+:root{--ech:light-dark(#8a5a2b,#e0a86a);--eelk:light-dark(#0b7f96,#4fd0e8);--estr:light-dark(#a37a00,#ffd54a)}
+.fech{fill:var(--ech)}.feelk{fill:var(--eelk)}.festr{fill:var(--estr)}
+.part{border-left:4px solid var(--line);padding:4px 0 4px 14px;margin:16px 0}
+.part.done{border-color:var(--ok)}
+.part.done>h4::after{content:"  ✓";color:var(--ok)}
+.tip:empty{display:none}
+.lvl{display:inline-block;font:600 14px Lexend,system-ui,sans-serif;padding:4px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--line);margin-bottom:10px}
+.readout{font:600 18px Lexend,system-ui,sans-serif;color:var(--acc)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.tabs button{display:flex;align-items:center;gap:8px;font-size:15px;padding:8px 12px}
+.tabs button i{width:14px;height:14px;border-radius:50%;display:inline-block;flex:none}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tabs button.solved::after{content:"✓";color:var(--ok);font-weight:700}
+.tabs button[aria-pressed=true].solved::after{color:var(--bg)}
+.exp{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+.exp h4{color:var(--acc)}
+.exp ol,.exp ul{margin:.3em 0 .6em;padding-left:1.3em}
+.safe{color:var(--bad);font-weight:600}
+.badge{display:inline-block;font:600 13px Lexend,sans-serif;padding:2px 10px;border-radius:20px;color:#fff;margin-bottom:6px}
+table.mess{border-collapse:collapse;font-size:15px;width:100%}
+table.mess th,table.mess td{border:1px solid var(--line);padding:5px 8px;text-align:center}
+table.mess th{background:var(--panel)}
+.scroll{overflow-x:auto}
+.formula{font:600 clamp(22px,3vw,30px) Lexend,sans-serif;margin:.3em 0}
+.fig.narrow{max-width:760px}
+input[inputmode=decimal]{width:110px;text-align:right}
+textarea{width:100%;font:16px "Atkinson Hyperlegible",sans-serif;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.why .sol{border-left:4px solid var(--ok)}
+.why label.cbl{display:flex;gap:8px;align-items:center;font-size:15px;margin:6px 0;cursor:pointer}
+.mc button:disabled{opacity:.55;cursor:not-allowed}
+.mc button.bad:disabled{opacity:1}
+details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--acc)}
+.steprow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+#protokoll{display:none}
+@media print{body.printprot>*:not(#protokoll){display:none!important}#protokoll{display:block!important;padding:20px;color:#000;background:#fff}#protokoll h2{margin:0 0 10px}#protokoll .pr{border:1px solid #999;padding:8px 12px;margin:8px 0;min-height:70px;white-space:pre-wrap}}
+.massbtns{display:flex;gap:8px;flex-wrap:wrap}
+.two>*{min-width:0}svg.board{overflow:hidden}.card select{max-width:100%}
+:root{--f1:light-dark(#1d62c9,#6aa5ff);--f2:light-dark(#8a3fc4,#c08cff);--f3:light-dark(#0b7f96,#4fd0e8);--fr:light-dark(#d4381e,#ff7a5c);
+--fg:light-dark(#1d8a4a,#4fd27f);--fh:light-dark(#d4381e,#ff7a5c);--fnn:light-dark(#1d62c9,#6aa5ff);--grid2:light-dark(#e8eff8,#1c2330)}
+.gl2{stroke:var(--grid2);stroke-width:1}
+svg.board{display:block;width:100%;height:auto;user-select:none;-webkit-user-select:none;border-radius:8px}
+svg.board:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.hdl{fill:color-mix(in srgb,var(--paper) 55%,transparent);stroke-width:3;cursor:grab}
+.hdl.act{stroke-dasharray:5 3;stroke-width:3.5}
+.flab{font:italic 700 20px "Atkinson Hyperlegible",serif}
+.rayl{stroke:var(--muted);stroke-width:1.6;stroke-dasharray:2 5;fill:none}
+.ruler{font-size:15px;color:var(--muted);margin:6px 4px 0}
+.ruler b{color:var(--ink)}
+.afb{display:inline-block;font:600 12px Lexend,sans-serif;padding:1px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted)}
+.vt .fig{max-width:720px;position:relative}.vt-max{position:absolute;top:6px;right:6px;z-index:2;padding:4px 10px;font-size:14px;min-height:0}html.noscroll,html.noscroll body{overflow:hidden}.vt.vtmax{position:fixed;inset:0;z-index:1000;margin:0;border-radius:0;overflow:auto;overscroll-behavior:contain;background:var(--bg,var(--paper));padding:10px 10px 24px}.vt.vtmax .fig{max-width:none!important;margin:0}.vt.vtmax svg.board{max-height:calc(100dvh - 150px);margin:0 auto}
+.fig svg.board{margin:0 auto}
+.vt .numq input{width:110px}
+.vt-ask{border-top:1px dashed var(--line);margin-top:10px;padding-top:6px}
+.lvlrow{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:var(--muted);margin:4px 0 14px}
+.trig{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0}
+.trig div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;text-align:center}
+.stepbox{min-height:5.5em}
+table.mess td.l{text-align:left}
+.pill{display:inline-block;padding:1px 9px;border-radius:20px;font:600 14px Lexend,sans-serif;color:#fff}
+.multi label{max-width:100%}
+.ex{display:none}
+.sim-read{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.sim-read div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:15px}
+.sim-read b{display:block;font:600 19px Lexend,sans-serif}
+
+a.lnk{text-decoration:none;display:inline-flex;align-items:center;font:600 16px Lexend,sans-serif;padding:8px 16px;border-radius:10px;border:1px solid var(--line);color:var(--ink)}
+a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11141b)}
+
+/* ===== Impuls-Lernpfade: Ergänzungen ===== */
+:root{--acc:var(--gst-acc,#3f6267);--acc2:var(--gst-acc,#3f6267);--pg:light-dark(#b8322a,#ff8a7a);--ekin:light-dark(#1d8a4a,#4fd27f);--eth:light-dark(#d4381e,#ff7a5c)}
+/* Heftaufschrieb deutlich hervorheben */
+.heftbox{border:2px solid var(--gst-acc);border-radius:14px;margin:22px 0;background:var(--paper);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.hb-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;background:var(--gst-acc);color:var(--gst-on-acc);padding:10px 18px}
+.hb-head b{font:700 19px "Source Sans 3",Lexend,sans-serif;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.hb-head b::before{content:"";width:14px;height:14px;background:var(--gst-mark);flex:none}
+.hb-head small{font-size:14px;opacity:.92}
+.heftbox .heft{border:0;border-radius:0}
+.hb-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:10px 18px;border-top:1px dashed var(--line);background:var(--panel);font-size:15px}
+.heftbox.done{border-color:var(--ok)}
+.heftbox.done .hb-done{background:var(--okbg);border-color:var(--ok)}
+.insheft{display:inline-flex;align-items:center;gap:6px;font:600 13px "Source Sans 3",Lexend,sans-serif;padding:2px 10px;border-radius:20px;border:1px solid var(--gst-acc);color:var(--gst-acc);vertical-align:middle;margin-left:6px;white-space:nowrap}
+.insheft::before{content:"";width:8px;height:8px;background:var(--gst-mark)}
+nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
+.heft .fig2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}
+.heft .fig2 svg{width:100%;height:auto;display:block;background:var(--paper);border:1px solid var(--line);border-radius:8px}
+.heft table{border-collapse:collapse;margin:6px 0;font-size:16px}.heft td,.heft th{border:1px solid var(--line);padding:4px 10px;background:var(--paper)}
+.stepper .stepbox{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+.stepper .stepbox p{margin:.3em 0}
+.lab-tbl{border-collapse:collapse;width:100%;font-size:15px}.lab-tbl th,.lab-tbl td{border:1px solid var(--line);padding:5px 8px;text-align:center}.lab-tbl th{background:var(--panel)}
+.lab-tbl td.sum{font-weight:700}
+.seg{display:inline-flex;flex-wrap:wrap;gap:6px}
+.tc1{color:var(--f1)}.tc2{color:var(--f2)}.tcg{color:var(--pg)}
+.ctrl{grid-template-columns:repeat(2,minmax(0,1fr))}
+/* Handy: Navigation in einer Zeile, Simulation mit Reglern auf einen Bildschirm */
+@media(max-width:600px){
+ nav .wrap{flex-wrap:nowrap;gap:0 2px;padding:6px 8px}
+ nav a{font-size:0;padding:6px 3px;white-space:nowrap}
+ nav a span{font-size:13px;margin-right:0}
+ nav a[href="/"]{font-size:0;gap:0}
+ nav .prog{margin-left:auto;font-size:13px;white-space:nowrap}nav .prog .bar{width:56px}
+ .hero>.wrap>svg,.hero .phases{display:none}
+ .ctrl{grid-template-columns:1fr 1fr;gap:0 12px}
+ .ctrl label{font-size:13px}
+ .ctrl input[type=range]{min-height:30px}
+ .toggles{gap:6px;margin:6px 0}.toggles label{min-height:36px;padding:4px 10px;font-size:14px}
+ .stick .row{margin:6px 0;gap:6px}.stick .row button{padding:6px 10px;min-height:38px;font-size:14px}
+ .fig svg:not(.board) .txb{font-size:21px}.fig svg:not(.board):not(#ramp) .txs{font-size:18px}
+ .sim-read{grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}.sim-read div{font-size:13px;padding:4px 8px}.sim-read b{font-size:16px}
+}
+/* Handy: Fragen über den Eingabefeldern statt daneben, Tabellen kompakt */
+@media(max-width:600px){
+ .hero h1{font-size:clamp(24px,7.4vw,30px);hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+ .tf .item,.numq,.steprow{grid-template-columns:minmax(0,1fr);gap:6px}
+ .tf .btns{justify-content:flex-end}
+ .numq>.unit{justify-self:end}
+ .steprow select{width:100%}
+ .lab-tbl,table.mess,.heft table{font-size:13px}
+ .lab-tbl th,.lab-tbl td,table.mess th,table.mess td,.heft td,.heft th{padding:4px 5px}
+ .stick .row .caption{font-size:13px}.stick .row button.lPre{padding:6px 10px;min-width:0}
+}
+.lbl{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
+
+
+
+
+/* ===== Klasse 8 · Kräfte: Ergänzungen ===== */
+.big{font-size:18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.labbox{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:8px 0}
+.kv div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:15px}
+.kv b{display:block;font:600 19px "Source Sans 3",Lexend,sans-serif}
+.lab-tbl input{width:80px;text-align:right;min-height:36px;font:15px "Atkinson Hyperlegible",sans-serif;padding:4px 6px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.lab-tbl input.ok{border-color:var(--ok);background:var(--okbg)}.lab-tbl input.bad{border-color:var(--bad);background:var(--badbg)}
+.fehler{border-left:4px solid var(--gst-mark);background:var(--panel);border-radius:8px;padding:8px 14px;margin:10px 0;font-size:15px}
+.pic{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:10px 0}
+.pic figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px}
+.pic svg{width:100%;height:auto;display:block}
+.pic figcaption{font-size:14px;color:var(--muted);margin:4px 2px 0}
+
+#ball,#press{background:light-dark(#f4f7f2,#1f2627)}
+.musterfig{margin:6px 0 14px;max-width:460px}
+.musterfig svg{display:block;width:100%;height:auto}
+.musterfig .tx{font:5px "Atkinson Hyperlegible",system-ui,sans-serif}
+.musterfig figcaption{font-size:14px;color:var(--muted)}
+:root{--kurve:light-dark(#2f6fb3,#7fb2e6)}
+.mc.dgwahl{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.mc.dgwahl button{display:flex;flex-direction:column;align-items:stretch;gap:4px;text-align:center}
+.mc.dgwahl button svg{width:100%;height:auto;display:block}
+.fig.narrow svg{max-width:560px}
+</style>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<script defer src="/brand/feedback.js"></script>
+<script defer src="/brand/mischen.js"></script>
+</head>
+<body>
+<nav aria-label="Phasen"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#einstieg"><span>1</span>Einstieg</a>
+<a href="#entdecken"><span>2</span>Entdecken</a>
+<a href="#festhalten"><span>3</span>Festhalten</a>
+<a href="#ueben"><span>4</span>Üben</a>
+<a href="#heft" class="heftlink" title="Zum Heftaufschrieb"><span>✎</span>Heft</a>
+<div class="prog"><span id="progtxt">0 / 0 gelöst</span><div class="bar"><i id="progbar"></i></div></div>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Akustik 2 · Schwingungen beschreiben</h1>
+<p>Schallquellen schwingen. Aber wie beschreibt man eine Schwingung genau? Hier zeichnest du Schwingungen auf, liest Amplitude und Periodendauer ab und lernst, was die Frequenz in Hertz bedeutet.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://physik.party/Physik8/schwingungen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h2m1 0h1m2 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m2 0h2m3 0h2m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h2m1 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m2 0h4m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m2 0h1m3 0h1m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-19 1h2m5 0h4m-21 1h1m2 0h1m1 0h2m1 0h2m1 0h1m1 0h4m2 0h1m1 0h1m1 0h1m-24 1h1m3 0h1m2 0h1m3 0h1m1 0h1m2 0h3m2 0h2m2 0h1m2 0h1m-29 1h4m1 0h3m2 0h1m5 0h4m2 0h2m1 0h3m-27 1h1m6 0h1m1 0h1m2 0h1m1 0h1m2 0h3m5 0h2m-27 1h1m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h2m-28 1h5m1 0h1m1 0h1m1 0h2m6 0h3m-21 1h3m2 0h1m4 0h2m1 0h1m2 0h2m5 0h5m-29 1h4m4 0h2m1 0h1m1 0h2m1 0h5m1 0h4m1 0h1m-24 1h1m1 0h1m2 0h3m4 0h2m1 0h1m3 0h1m3 0h1m-27 1h2m1 0h2m2 0h2m4 0h1m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m1 0h2m2 0h2m1 0h5m2 0h3m1 0h2m2 0h1m2 0h2m-27 1h2m1 0h1m1 0h1m1 0h1m1 0h1m3 0h5m1 0h1m1 0h2m2 0h2m-29 1h1m5 0h1m2 0h2m4 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m3 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h1m3 0h3m5 0h1m3 0h3m-27 1h1m1 0h3m1 0h1m2 0h1m4 0h1m1 0h3m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1m2 0h6m-28 1h1m1 0h3m1 0h1m3 0h5m6 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m2 0h2m1 0h1m4 0h5m1 0h1m3 0h1m-28 1h7m1 0h1m1 0h2m4 0h2m2 0h1m3 0h1m2 0h1"/></svg>
+
+QR groß zeigen</button></div>
+<svg viewBox="0 0 900 150" role="img" aria-label="Ein Federpendel schwingt und zeichnet dabei ein Schwingungsdiagramm"><line x1="40" y1="12" x2="160" y2="12" stroke="#e9edee" stroke-width="5" stroke-linecap="round"/><path d="M100 12v8l-14 5 28 8-28 8 28 8-28 8 14 5v6" fill="none" stroke="#c9d2d3" stroke-width="2.5" stroke-linejoin="round"/><rect x="80" y="88" width="40" height="32" rx="4" fill="#76989D"/><line x1="120" y1="104" x2="880" y2="104" stroke="#5F6F74" stroke-width="1.5" stroke-dasharray="6 5"/><line x1="200" y1="140" x2="880" y2="140" stroke="#c9d2d3" stroke-width="2"/><line x1="200" y1="40" x2="200" y2="140" stroke="#c9d2d3" stroke-width="2"/><path d="M200 104 C225 104 230 60 255 60 S285 148 310 148 S340 60 365 60 S395 148 420 148 S450 60 475 60 S505 148 530 148 S560 60 585 60 S615 148 640 148 S670 60 695 60 S725 148 750 148 S780 60 805 60 S835 104 860 104" fill="none" stroke="#FCBE00" stroke-width="4" stroke-linecap="round" transform="translate(0,-22) scale(1,1)"/><text x="870" y="134" fill="#c9d2d3" font-size="16" text-anchor="end" font-style="italic">t</text><text x="186" y="52" fill="#c9d2d3" font-size="16" text-anchor="end" font-style="italic">s</text></svg>
+<div class="phases">
+<a href="#einstieg"><b>1 · Einstieg</b><small>Was ist eine Schwingung?</small></a><a href="#entdecken"><b>2 · Entdecken</b><small>Schreibstimmgabel, Federpendel-Labor, Frequenz, Stroboskop</small></a><a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ Heftaufschrieb</small></a><a href="#ueben"><b>4 · Üben</b><small>9 Übungen von ★ bis ★★★</small></a>
+</div>
+</div></header>
+
+<!-- ============ 1 EINSTIEG ============ -->
+<section class="band" id="einstieg"><div class="wrap">
+<h2>1 · Einstieg: Was ist eine Schwingung?</h2>
+<p class="intro">In Akustik 1 hast du gesehen: Alle Schallquellen <b>schwingen</b>. Schwingungen gibt es aber auch ganz langsam, zum Beispiel bei einer Schaukel. Hier lernst du, Schwingungen genau zu beschreiben.</p>
+<div class="two"><div>
+<div class="card"><div class="tag">Auftrag 1 · Schwingt das? <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="multi part" data-task="e1" data-fb="Richtig! Schaukel, Fadenpendel, Federpendel und Stimmgabel bewegen sich immer wieder hin und her. Der Ball, der Stein und das Auto bewegen sich nur in eine Richtung, das ist keine Schwingung." data-tipp="Eine Schwingung ist eine Hin-und-her-Bewegung, die sich immer wiederholt."><p>Welche Bewegungen sind Schwingungen? Kreuze <b>alle</b> an.</p><div class="checks">
+<label data-ok="1" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#schaukel"/></svg><span>Ein Kind schaukelt.</span></label>
+<label data-ok="1" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#pendel"/></svg><span>Ein Fadenpendel pendelt.</span></label>
+<label data-ok="0" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#fussball"/></svg><span>Ein Ball rollt über den Rasen.</span></label>
+<label data-ok="1" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#federpendel"/></svg><span>Ein Körper hüpft an einer Feder auf und ab.</span></label>
+<label data-ok="0" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#stein"/></svg><span>Ein Stein fällt ins Wasser.</span></label>
+<label data-ok="1" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#stimmgabel"/></svg><span>Eine Stimmgabel summt.</span></label>
+<label data-ok="0" class="mitpk"><input type="checkbox"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#auto"/></svg><span>Ein Auto fährt geradeaus.</span></label>
+</div><div class="row"><button class="primary multi-check">Prüfen</button></div><p class="fb"></p></div>
+</div>
+</div><div>
+<div class="card"><div class="tag">Auftrag 2 · Was alle Schwingungen gemeinsam haben <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="selbox part" data-task="e2" data-fb="Genau! Bei einer Schwingung <b>kehrt</b> sich die Bewegungsrichtung immer wieder <b>um</b>, und die Bewegung <b>wiederholt</b> sich. Vibriert etwas, dann schwingt es sehr schnell."><div class="cloze">Eine Schwingung ist eine Bewegung, deren Richtung sich immer wieder <select data-a="umkehrt" aria-label="Lücke 1"><option value="">…</option><option>umkehrt</option><option>gleich bleibt</option><option>beschleunigt</option></select> und die sich mit der Zeit <select data-a="wiederholt" aria-label="Lücke 2"><option value="">…</option><option>wiederholt</option><option>verändert</option><option>beendet</option></select>. Vibriert etwas, so schwingt es sehr <select data-a="schnell" aria-label="Lücke 3"><option value="">…</option><option>schnell</option><option>langsam</option><option>weit</option></select>.</div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+</div></div>
+</div></section>
+
+<!-- ============ 2 ENTDECKEN ============ -->
+<section class="band alt" id="entdecken"><div class="wrap">
+<h2>2 · Entdecken</h2>
+<h3>A · Eine Schwingung aufzeichnen</h3>
+<p class="intro">An einer Zinke der Stimmgabel ist ein feiner Stift befestigt. Darunter zieht man einen Papierstreifen gleichmäßig weg. Der Stift zeichnet dabei die Bewegung der Zinke auf.</p>
+<div class="two"><div class="stick">
+<div class="fig"><svg id="gabel" viewBox="0 0 640 220" role="img" aria-label="Schreibstimmgabel über einem Papierstreifen"></svg></div>
+<div class="row"><button class="primary" id="gHit">🔨 Stimmgabel anschlagen</button><button id="gPull" aria-pressed="false">Papier ziehen</button><button id="gNew">Neues Papier</button></div>
+<p class="caption">Modell: stark verlangsamt. Eine echte Stimmgabel schwingt einige hundert Mal pro Sekunde, das könnte man so nicht verfolgen.</p>
+</div><div>
+<div class="card"><div class="tag">Auftrag 3 · Was zeichnet der Stift? <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<p>Zieh das Papier erst mit ruhender Stimmgabel. Schlag sie dann an.</p>
+<div class="selbox part" data-task="a1" data-fb="Richtig! Die ruhende Stimmgabel zeichnet eine <b>gerade Linie</b>, die schwingende eine <b>Wellenlinie</b>. Weil das Papier gleichmäßig weiterläuft, liegen die Stiftpositionen, die <b>zeitlich nacheinander</b> kommen, auf dem Papier <b>räumlich nebeneinander</b>.">
+<div class="steprow"><span>Stimmgabel ruht: Der Stift zeichnet …</span><select data-a="eine gerade Linie" aria-label="Stimmgabel ruht"><option value="">…</option><option>eine gerade Linie</option><option>eine Wellenlinie</option><option>einen Punkt</option></select></div>
+<div class="steprow"><span>Stimmgabel schwingt: Der Stift zeichnet …</span><select data-a="eine Wellenlinie" aria-label="Stimmgabel schwingt"><option value="">…</option><option>eine gerade Linie</option><option>eine Wellenlinie</option><option>einen Punkt</option></select></div>
+<div class="steprow"><span>Je weiter links eine Stelle auf dem Papier ist, desto …</span><select data-a="früher wurde sie gezeichnet" aria-label="Links auf dem Papier"><option value="">…</option><option>früher wurde sie gezeichnet</option><option>später wurde sie gezeichnet</option><option>lauter war der Ton</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+<div class="card"><div class="tag">Auftrag 4 · Das Schwingungsdiagramm <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="part" data-task="a2"><h4>Die Aufzeichnung heißt <b>Schwingungsdiagramm</b>. Was trägt man auf den beiden Achsen ab?</h4><div class="mc" data-correct="b" data-task="a2" data-tipp="Das Papier läuft gleichmäßig weiter: Was zählt also die Richtung nach rechts? Und der Stift bewegt sich nach oben und unten, weg von der Mitte."><button data-k="a" data-fb="Die Länge des Papiers ist nicht gemeint: Weil das Papier gleichmäßig läuft, steht jede Stelle für einen Zeitpunkt.">x-Achse: Länge des Papiers, y-Achse: Lautstärke</button><button data-k="b" data-fb="Richtig! Nach rechts geht die <b>Zeit t</b>, nach oben und unten die <b>Auslenkung s</b> aus der Mitte. Man spricht auch vom t-s-Diagramm.">x-Achse: Zeit <f-m>t</f-m>, y-Achse: Auslenkung s</button><button data-k="c" data-fb="Die Achsen sind vertauscht: Das Papier läuft nach links weg, also geht die Zeit nach rechts.">x-Achse: Auslenkung s, y-Achse: Zeit <f-m>t</f-m></button><p class="fb"></p></div></div>
+</div>
+</div></div>
+
+<h3>B · Das Federpendel-Labor</h3>
+<p class="intro">Ein Körper hängt an einer Feder. Du ziehst ihn nach unten und lässt los. Rechts entsteht dabei das Schwingungsdiagramm. Die gestrichelte Linie zeigt die <b>Ruhelage</b>: Dort hängt der Körper, wenn er nicht schwingt.</p>
+<div class="fig"><svg id="feder" viewBox="0 0 640 300" role="img" aria-label="Federpendel mit Schwingungsdiagramm"></svg></div>
+<div class="two"><div>
+<div class="ctrl"><div><label>Masse des Körpers</label><div class="seg" id="fM"><button aria-pressed="false" data-m="25">25 g</button><button aria-pressed="true" data-m="100">100 g</button><button aria-pressed="false" data-m="400">400 g</button></div></div>
+<div><label for="fA">Nach unten ziehen um: <span id="fATxt">3 cm</span></label><input type="range" id="fA" min="1" max="4" step="0.5" value="3"></div></div>
+<div class="row"><button class="primary" id="fGo">▶ Loslassen</button><button id="fStop">⏹ Stopp</button><label class="cbl" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="fDamp">mit Reibung</label></div>
+</div><div>
+<div class="sim-read" id="fRead"></div>
+<p class="caption">Modell: Feder mit gleichbleibender Härte, ohne Reibung. Mit „mit Reibung“ werden die Ausschläge nach und nach kleiner, die Periodendauer bleibt dabei fast gleich.</p>
+</div></div>
+
+<div class="card"><div class="tag">Auftrag 5 · Die Fachbegriffe <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="fig narrow"><svg data-diag="2,1,2,mark" viewBox="0 0 320 170" role="img" aria-label="Schwingungsdiagramm mit vier markierten Stellen 1 bis 4"></svg></div>
+<div class="selbox part" data-task="b1" data-fb="Richtig! Die <b>Ruhelage</b> ist die Mittellinie. An den <b>Umkehrpunkten</b> kehrt die Bewegung um. Die <b>Amplitude</b> ist die größte Auslenkung, gemessen von der Ruhelage bis zum Umkehrpunkt. Die <b>Periodendauer T</b> ist die Zeit für eine vollständige Hin- und Herbewegung (eine <b>Periode</b>).">
+<div class="steprow"><span>① die Mittellinie</span><select data-a="Ruhelage" aria-label="Stelle 1"><option value="">…</option><option>Ruhelage</option><option>Umkehrpunkt</option><option>Amplitude</option><option>Periodendauer</option></select></div>
+<div class="steprow"><span>② höchster Punkt der Kurve</span><select data-a="Umkehrpunkt" aria-label="Stelle 2"><option value="">…</option><option>Ruhelage</option><option>Umkehrpunkt</option><option>Amplitude</option><option>Periodendauer</option></select></div>
+<div class="steprow"><span>③ Abstand von der Mittellinie bis zum höchsten Punkt</span><select data-a="Amplitude" aria-label="Stelle 3"><option value="">…</option><option>Ruhelage</option><option>Umkehrpunkt</option><option>Amplitude</option><option>Periodendauer</option></select></div>
+<div class="steprow"><span>④ Zeit für eine ganze Hin- und Herbewegung</span><select data-a="Periodendauer" aria-label="Stelle 4"><option value="">…</option><option>Ruhelage</option><option>Umkehrpunkt</option><option>Amplitude</option><option>Periodendauer</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<div class="two"><div>
+<div class="card"><div class="tag">Auftrag 6 · Ablesen <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<p>Stell im Labor <b>100 g</b> ein, zieh um <b>3 cm</b> nach unten und lass los. Lies am Diagramm ab.</p>
+<div class="numbox part" data-task="b2" data-fb="Richtig! Die Amplitude ist 3 cm, eine Periode dauert etwa 1 s. In 6 s schafft das Pendel also 6 Perioden.">
+<div class="numq"><span>Amplitude</span><span class="unit"><input type="text" inputmode="decimal" data-a="3" data-tol="0.05" aria-label="Amplitude in cm"> cm</span></div>
+<div class="numq"><span>Periodendauer T</span><span class="unit"><input type="text" inputmode="decimal" data-a="1" data-tol="0.1" aria-label="Periodendauer in s"> s</span></div>
+<div class="numq"><span>Perioden in 6 s</span><span class="unit"><input type="text" inputmode="decimal" data-a="6" data-tol="0.01" aria-label="Anzahl Perioden"></span></div>
+<div class="row"><button class="primary num-check">Prüfen</button></div><p class="fb nfb"></p></div>
+</div>
+</div><div>
+<div class="card"><div class="tag">Auftrag 7 · Was hängt wovon ab? <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<p>Probiere verschiedene Massen und verschiedene Auslenkungen aus.</p>
+<div class="selbox part" data-task="b3" data-fb="Richtig! Mit <b>mehr Masse</b> schwingt das Federpendel <b>langsamer</b>, die Periodendauer wird größer. Ziehst du weiter nach unten, wird nur die <b>Amplitude</b> größer, die <b>Periodendauer bleibt gleich</b>. Amplitude und Periodendauer hängen nicht voneinander ab.">
+<div class="steprow"><span>400 g statt 100 g: Die Periodendauer wird …</span><select data-a="größer" aria-label="Masse größer"><option value="">…</option><option>größer</option><option>kleiner</option><option>gleich bleiben</option></select></div>
+<div class="steprow"><span>4 cm statt 2 cm nach unten ziehen: Die Amplitude wird …</span><select data-a="größer" aria-label="Auslenkung größer, Amplitude"><option value="">…</option><option>größer</option><option>kleiner</option><option>gleich bleiben</option></select></div>
+<div class="steprow"><span>4 cm statt 2 cm nach unten ziehen: Die Periodendauer wird …</span><select data-a="gleich bleiben" aria-label="Auslenkung größer, Periodendauer"><option value="">…</option><option>größer</option><option>kleiner</option><option>gleich bleiben</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+</div></div>
+
+<h3>C · Die Frequenz</h3>
+<p class="intro">Wie schnell etwas schwingt, gibt die <b>Frequenz f</b> an: Das ist die Anzahl der Schwingungen (Perioden) pro Sekunde. Ihre Einheit ist <b>Hertz</b> (Hz), benannt nach dem Physiker Heinrich Hertz. <b>1 Hz</b> heißt: eine Schwingung pro Sekunde, also <f-m>1 Hz = 1 : s</f-m>.</p>
+<div class="two"><div>
+<div class="card"><div class="tag">Auftrag 8 · Frequenz messen <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="mitbild"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#federpendel"/></svg><p>Stell im Labor <b>400 g</b> ein und lass los. Zähle die Perioden in 6 s und berechne die Frequenz: Frequenz = Anzahl der Perioden : Zeit.</p></div>
+<div class="numbox part" data-task="c1" data-fb="Richtig! In 6 s macht das Pendel 3 Perioden. Also <f-m>f = 3 : 6 s = 0,5 Hz</f-m>. Eine Periode dauert <f-m>T = 2 s</f-m>.">
+<div class="numq"><span>Perioden in 6 s</span><span class="unit"><input type="text" inputmode="decimal" data-a="3" data-tol="0.01" aria-label="Anzahl Perioden"></span></div>
+<div class="numq"><span>Frequenz f</span><span class="unit"><input type="text" inputmode="decimal" data-a="0.5" data-tol="0.02" aria-label="Frequenz in Hz"> Hz</span></div>
+<div class="numq"><span>Periodendauer T</span><span class="unit"><input type="text" inputmode="decimal" data-a="2" data-tol="0.06" aria-label="Periodendauer in s"> s</span></div>
+<div class="row"><button class="primary num-check">Prüfen</button></div><p class="fb nfb"></p></div>
+</div>
+</div><div>
+<div class="card"><div class="tag">Auftrag 9 · Frequenz und Periodendauer <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="part" data-task="c2"><h4>Vergleiche deine Messungen: <f-m>100 g → T ≈ 1 s</f-m>, <f-m>f ≈ 1 Hz</f-m>. <f-m>400 g → T ≈ 2 s</f-m>, <f-m>f = 0,5 Hz</f-m>. Wie hängen f und T zusammen?</h4><div class="mc" data-correct="c" data-task="c2" data-tipp="Rechne nach: Welche Rechnung macht aus <f-m>T = 2 s</f-m> die Frequenz 0,5 Hz?"><button data-k="a" data-fb="Rechne nach: <f-m>2 s · 2</f-m> ergibt 4, nicht 0,5."><f-m>f = 2 · T</f-m></button><button data-k="b" data-fb="f und T sind nicht gleich: Bei <f-m>T = 2 s</f-m> ist <f-m>f = 0,5 Hz</f-m>."><f-m>f = T</f-m></button><button data-k="c" data-fb="Richtig! <b><f-m>f = 1 : T</f-m></b> und umgekehrt <b><f-m>T = 1 : f</f-m></b>. Je kürzer eine Periode dauert, desto mehr Perioden passen in eine Sekunde."><f-m>f = 1 : T</f-m></button><p class="fb"></p></div></div>
+</div>
+</div></div>
+
+<h3>D · Das Stroboskop</h3>
+<p class="intro">Ein <b>Stroboskop</b> ist eine Lampe, die in kurzen Abständen aufblitzt. Man sieht ein bewegtes Rad nur in den Momenten der Blitze. Das Rad hier dreht sich <b>5-mal pro Sekunde</b>, viel zu schnell für das Auge.</p>
+<div class="two"><div class="stick">
+<div class="fig"><svg id="strobo" viewBox="0 0 640 230" role="img" aria-label="Drehendes Rad unter einem Stroboskop"></svg></div>
+<div class="ctrl"><div><label>Licht</label><div class="seg" id="sL"><button aria-pressed="true" data-l="dauer">Dauerlicht</button><button aria-pressed="false" data-l="blitz">Stroboskop</button></div></div>
+<div><label for="sF">Blitze pro Sekunde: <span id="sFTxt">4</span></label><input type="range" id="sF" min="1" max="12" step="0.5" value="4"></div></div>
+<p class="caption">Modell: Die Blitze werden hier nicht als helles Flackern gezeigt (schonend für die Augen). Du siehst nur das Bild, das bei jedem Blitz zu sehen wäre.</p>
+</div><div>
+<div class="card"><div class="tag">Auftrag 10 · Was siehst du? <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="selbox part" data-task="d1" data-fb="Richtig! Bei <b>5 Blitzen pro Sekunde</b> hat sich das Rad zwischen zwei Blitzen genau einmal gedreht, das Bild <b>steht still</b>. Bei etwas mehr Blitzen ist das Rad noch nicht ganz herum, es <b>scheint rückwärts</b> zu laufen. Bei etwas weniger Blitzen scheint es langsam vorwärts zu laufen.">
+<div class="steprow"><span>5 Blitze pro Sekunde: Das Rad …</span><select data-a="scheint stillzustehen" aria-label="5 Blitze"><option value="">…</option><option>scheint stillzustehen</option><option>scheint rückwärts zu laufen</option><option>scheint langsam vorwärts zu laufen</option></select></div>
+<div class="steprow"><span>5,5 Blitze pro Sekunde: Das Rad …</span><select data-a="scheint rückwärts zu laufen" aria-label="5,5 Blitze"><option value="">…</option><option>scheint stillzustehen</option><option>scheint rückwärts zu laufen</option><option>scheint langsam vorwärts zu laufen</option></select></div>
+<div class="steprow"><span>4,5 Blitze pro Sekunde: Das Rad …</span><select data-a="scheint langsam vorwärts zu laufen" aria-label="4,5 Blitze"><option value="">…</option><option>scheint stillzustehen</option><option>scheint rückwärts zu laufen</option><option>scheint langsam vorwärts zu laufen</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+<div class="card"><div class="tag">Auftrag 11 · Frequenz messen mit Licht <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
+<div class="part" data-task="d2"><h4>Eine Stimmgabel wird mit einem Stroboskop beleuchtet. Bei 440 Blitzen pro Sekunde scheinen die Zinken stillzustehen. Was kannst du daraus schließen?</h4><div class="mc" data-correct="a" data-task="d2" data-tipp="Beim Rad stand das Bild still, wenn es sich zwischen zwei Blitzen genau einmal gedreht hat."><button data-k="a" data-fb="Richtig! Zwischen zwei Blitzen macht die Zinke genau eine Schwingung. Die Stimmgabel schwingt also mit <b>440 Hz</b>. So kann man mit Licht Frequenzen messen.">Die Stimmgabel schwingt mit 440 Hz.</button><button data-k="b" data-fb="Die Zinken schwingen weiter, nur sieht man sie bei jedem Blitz an der gleichen Stelle.">Die Stimmgabel schwingt gar nicht mehr.</button><button data-k="c" data-fb="Das Licht verändert die Schwingung nicht. Es zeigt nur einzelne Momente.">Das Licht bremst die Stimmgabel ab.</button><p class="fb"></p></div></div>
+</div>
+</div></div>
+
+<h3>E · Exkurs: Physikalische Größen</h3>
+<p class="intro">Amplitude, Periodendauer und Frequenz sind <b>physikalische Größen</b>. Eine Größe hat ein <b>Formelzeichen</b> und wird als <b>Zahlenwert · Einheit</b> angegeben. Beispiel: <f-m>T = 0,5 s</f-m> heißt: Größe Periodendauer, Formelzeichen T, Zahlenwert 0,5, Einheit s (Sekunde).</p>
+<div class="card"><div class="tag">Auftrag 12 · Formelzeichen und Einheiten <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="selbox part" data-task="e3" data-fb="Richtig! In Bewegung 1 lernst du noch mehr über Größen und Einheiten.">
+<div class="steprow"><span>Formelzeichen der Zeit</span><select data-a="t" aria-label="Formelzeichen Zeit"><option value="">…</option><option>t</option><option>T</option><option>f</option><option>s</option></select></div>
+<div class="steprow"><span>Formelzeichen der Periodendauer</span><select data-a="T" aria-label="Formelzeichen Periodendauer"><option value="">…</option><option>t</option><option>T</option><option>f</option><option>s</option></select></div>
+<div class="steprow"><span>Einheit der Frequenz</span><select data-a="Hz" aria-label="Einheit Frequenz"><option value="">…</option><option>Hz</option><option>s</option><option>cm</option><option>g</option></select></div>
+<div class="steprow"><span>Einheit der Amplitude, zum Beispiel</span><select data-a="cm" aria-label="Einheit Amplitude"><option value="">…</option><option>Hz</option><option>s</option><option>cm</option><option>g</option></select></div>
+<div class="steprow"><span>Zahlenwert bei <f-m>f = 440 Hz</f-m></span><select data-a="440" aria-label="Zahlenwert"><option value="">…</option><option>440</option><option>Hz</option><option>f</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+</div></section>
+
+<!-- ============ 3 FESTHALTEN ============ -->
+<section class="band" id="festhalten"><div class="wrap">
+<h2>3 · Festhalten</h2>
+<div class="card"><div class="tag">Lückentext · Schwingungen beschreiben <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommt der Heftaufschrieb."><div class="cloze">Die größte Auslenkung aus der Ruhelage heißt <select data-a="Amplitude" aria-label="Lücke 1"><option value="">…</option><option>Amplitude</option><option>Frequenz</option><option>Periode</option></select>. Eine vollständige Hin- und Herbewegung heißt <select data-a="Periode" aria-label="Lücke 2"><option value="">…</option><option>Periode</option><option>Amplitude</option><option>Ruhelage</option></select>, die Zeit dafür <select data-a="Periodendauer T" aria-label="Lücke 3"><option value="">…</option><option>Periodendauer T</option><option>Frequenz f</option><option>Auslenkung s</option></select>. Die Anzahl der Schwingungen pro Sekunde heißt <select data-a="Frequenz f" aria-label="Lücke 4"><option value="">…</option><option>Frequenz f</option><option>Periodendauer T</option><option>Amplitude</option></select>, ihre Einheit ist <select data-a="Hertz" aria-label="Lücke 5"><option value="">…</option><option>Hertz</option><option>Sekunde</option><option>Meter</option></select>. Je größer die Frequenz, desto <select data-a="höher" aria-label="Lücke 6"><option value="">…</option><option>höher</option><option>tiefer</option><option>lauter</option></select> ist der Ton. Je größer die Amplitude, desto <select data-a="lauter" aria-label="Lücke 7"><option value="">…</option><option>lauter</option><option>höher</option><option>tiefer</option></select> ist der Ton.</div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<details class="reveal" id="heft"><summary>✎ Heftaufschrieb anzeigen (erst selbst versuchen, dann vergleichen)</summary>
+<div class="heft">
+<h3>Was ist eine Schwingung?</h3>
+<p>Eine <b>Schwingung</b> ist eine Bewegung, deren Richtung sich immer wieder <b>umkehrt</b> und die sich mit der Zeit <b>wiederholt</b>. Beispiele: Schaukel, Fadenpendel, Federpendel, Stimmgabel.</p>
+<h3>Das Schwingungsdiagramm</h3>
+<p>Zeichnet man eine Schwingung auf, werden die zeitlich <b>nacheinander</b> kommenden Positionen räumlich <b>nebeneinander</b> dargestellt: nach rechts die <b>Zeit t</b>, nach oben die <b>Auslenkung s</b> (t-s-Diagramm).</p>
+<figure class="musterfig"><svg data-diag="2,1,2,mark2" viewBox="0 0 320 170" role="img" aria-label="Schwingungsdiagramm mit Ruhelage, Umkehrpunkt, Amplitude und Periodendauer"></svg></figure>
+<p><b>Ruhelage</b>: Mittellinie. <b>Umkehrpunkt</b>: Hier kehrt die Bewegung um. <b>Amplitude</b>: größte Auslenkung von der Ruhelage bis zum Umkehrpunkt. <b>Periode</b>: eine vollständige Hin- und Herbewegung. <b>Periodendauer T</b>: Zeit für eine Periode.</p>
+<h3>Die Frequenz</h3>
+<p>Die <b>Frequenz f</b> ist die Anzahl der Schwingungen pro Sekunde. Einheit: <b>Hertz</b>, <f-m>1 Hz = 1 : s</f-m>.</p>
+<p><f-m>f = 1 : T</f-m> und <f-m>T = 1 : f</f-m></p>
+<p>Je größer die Frequenz, desto <b>höher</b> der Ton. Je größer die Amplitude, desto <b>lauter</b> der Ton. Frequenz und Amplitude hängen nicht voneinander ab.</p>
+<div class="row"><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div>
+</div>
+</details>
+<div class="merke"><h4>Merke</h4><ul><li><b>Amplitude</b>: größte Auslenkung aus der Ruhelage → Lautstärke.</li><li><b>Periodendauer T</b>: Zeit für eine Hin- und Herbewegung.</li><li><b>Frequenz f</b>: Schwingungen pro Sekunde in Hertz → Tonhöhe. <f-m>f = 1 : T</f-m></li></ul></div>
+</div></section>
+
+<!-- ============ 4 ÜBEN ============ -->
+<section class="band alt" id="ueben"><div class="wrap">
+<h2>4 · Üben</h2>
+<p class="intro"><b>Erst im Heft lösen, dann hier prüfen.</b></p>
+<div class="lvlrow"><span>★ / AFB I: Grundlagen anwenden</span><span>★★ / AFB II: Zusammenhänge herstellen</span><span>★★★ / AFB III: übertragen, beurteilen, begründen</span></div>
+
+<div class="card"><div class="tag">Übung 1 · Diagramm ablesen <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="fig narrow"><svg data-diag="2,0.4,1.2" viewBox="0 0 320 170" role="img" aria-label="Schwingungsdiagramm einer Stimmgabel, Zeitachse stark gestreckt"></svg></div>
+<p class="caption">Die Zeitachse ist hier in Zehntelsekunden eingeteilt.</p>
+<div class="numbox part" data-task="u1" data-fb="Richtig! <f-m>A = 2 cm</f-m>, eine Periode dauert 0,4 s, gezeichnet sind 3 Perioden. <f-m>f = 1 : 0,4 s = 2,5 Hz</f-m>.">
+<div class="numq"><span>a) Amplitude</span><span class="unit"><input type="text" inputmode="decimal" data-a="2" data-tol="0.02" aria-label="Amplitude in cm"> cm</span></div>
+<div class="numq"><span>b) Periodendauer T</span><span class="unit"><input type="text" inputmode="decimal" data-a="0.4" data-tol="0.02" aria-label="Periodendauer in s"> s</span></div>
+<div class="numq"><span>c) Anzahl der Perioden</span><span class="unit"><input type="text" inputmode="decimal" data-a="3" data-tol="0.01" aria-label="Anzahl Perioden"></span></div>
+<div class="numq"><span>d) Frequenz f</span><span class="unit"><input type="text" inputmode="decimal" data-a="2.5" data-tol="0.02" aria-label="Frequenz in Hz"> Hz</span></div>
+<div class="row"><button class="primary num-check">Prüfen</button><button data-sol="u1Sol">Lösung zeigen</button></div><p class="fb nfb"></p>
+<div class="sol" id="u1Sol" hidden><p>a) Von der Ruhelage bis zum höchsten Punkt: 2 Kästchen, also 2 cm. b) Eine Periode geht von 0 bis 0,4 s. c) <f-m>1,2 s : 0,4 s = 3</f-m> Perioden. d) <f-m>f = 1 : T = 1 : 0,4 s = 2,5 Hz</f-m>.</p></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 2 · Umrechnen <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="numbox part" data-task="u2" data-fb="Richtig! Immer mit <f-m>f = 1 : T</f-m> bzw. <f-m>T = 1 : f</f-m> rechnen.">
+<div class="numq"><span>a) <f-m>f = 4 Hz → T</f-m></span><span class="unit"><input type="text" inputmode="decimal" data-a="0.25" data-tol="0.01" aria-label="Periodendauer in s"> s</span></div>
+<div class="numq"><span>b) <f-m>T = 0,5 s → f</f-m></span><span class="unit"><input type="text" inputmode="decimal" data-a="2" data-tol="0.01" aria-label="Frequenz in Hz"> Hz</span></div>
+<div class="numq"><span>c) <f-m>T = 0,02 s → f</f-m></span><span class="unit"><input type="text" inputmode="decimal" data-a="50" data-tol="0.01" aria-label="Frequenz in Hz"> Hz</span></div>
+<div class="numq"><span>d) 30 Schwingungen in 10 s → f</span><span class="unit"><input type="text" inputmode="decimal" data-a="3" data-tol="0.01" aria-label="Frequenz in Hz"> Hz</span></div>
+<div class="row"><button class="primary num-check">Prüfen</button><button data-sol="u2Sol">Lösung zeigen</button></div><p class="fb nfb"></p>
+<div class="sol" id="u2Sol" hidden><p>a) <f-m>T = 1 : 4 Hz = 0,25 s</f-m>. b) <f-m>f = 1 : 0,5 s = 2 Hz</f-m>. c) <f-m>f = 1 : 0,02 s = 50 Hz</f-m>. d) <f-m>f = 30 : 10 s = 3 Hz</f-m>.</p></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 3 · Stimmt das? <span class="stars">★</span> <span class="afb">AFB I</span></div>
+<div class="tf part" data-task="u3"><div class="item" data-v="1"><span>„1 Hz bedeutet: eine Schwingung pro Sekunde.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex"><f-m>1 Hz = 1 : s</f-m>, also eine Schwingung pro Sekunde.</span></div><div class="item" data-v="0"><span>„Die Amplitude misst man von einem Umkehrpunkt bis zum anderen.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Die Amplitude misst man von der Ruhelage bis zum Umkehrpunkt. Von Umkehrpunkt zu Umkehrpunkt ist es doppelt so weit.</span></div><div class="item" data-v="0"><span>„Je größer die Amplitude, desto höher ist der Ton.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Eine größere Amplitude macht den Ton lauter. Höher wird er bei größerer Frequenz.</span></div><div class="item" data-v="1"><span>„Eine Periode ist eine vollständige Hin- und Herbewegung.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Nach einer Periode ist der Körper wieder am gleichen Ort und bewegt sich in die gleiche Richtung.</span></div><div class="item" data-v="0"><span>„Je größer die Frequenz, desto größer ist die Periodendauer.“</span><span class="btns"><button data-v="1">richtig</button><button data-v="0">falsch</button></span><p class="fb"></p><span class="ex">Umgekehrt: Je größer f, desto kleiner T, denn <f-m>T = 1 : f</f-m>.</span></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 4 · Diagramm zeichnen <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="part" data-task="u4"><h4>Erst im Heft zeichnen, dann hier prüfen: Zeichne das Schwingungsdiagramm für <f-m>A = 3 cm</f-m> und <f-m>T = 0,5 s</f-m>, zwei Perioden lang. Welches Diagramm passt?</h4><div class="mc dgwahl" data-correct="b" data-task="u4" data-tipp="Prüfe zuerst die Amplitude von der Mittellinie aus, dann, wann die erste Periode zu Ende ist."><button data-k="a" data-fb="Hier dauert eine Periode 1 s, nicht 0,5 s."><svg data-diag="3,1,1" viewBox="0 0 320 170" aria-hidden="true"></svg><span>Diagramm A</span></button><button data-k="b" data-fb="Richtig! Höchster Punkt 3 cm über der Ruhelage, eine Periode endet bei 0,5 s, nach 1 s sind zwei Perioden gezeichnet."><svg data-diag="3,0.5,1" viewBox="0 0 320 170" aria-hidden="true"></svg><span>Diagramm B</span></button><button data-k="c" data-fb="Hier ist der Abstand von Umkehrpunkt zu Umkehrpunkt 3 cm. Die Amplitude ist aber nur die Hälfte davon."><svg data-diag="1.5,0.5,1" viewBox="0 0 320 170" aria-hidden="true"></svg><span>Diagramm C</span></button><p class="fb"></p></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 5 · Eine Sekunde lang <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<p>Ein Körper schwingt mit <f-m>f = 4 Hz</f-m>. Du zeichnest sein Schwingungsdiagramm für 1 s.</p>
+<div class="numbox part" data-task="u5" data-fb="Richtig! <f-m>T = 1 : 4 Hz = 0,25 s</f-m>. In 1 s passen 4 Perioden.">
+<div class="numq"><span>a) Periodendauer T</span><span class="unit"><input type="text" inputmode="decimal" data-a="0.25" data-tol="0.01" aria-label="Periodendauer in s"> s</span></div>
+<div class="numq"><span>b) Anzahl der Perioden im Diagramm</span><span class="unit"><input type="text" inputmode="decimal" data-a="4" data-tol="0.01" aria-label="Anzahl Perioden"></span></div>
+<div class="row"><button class="primary num-check">Prüfen</button></div><p class="fb nfb"></p></div>
+</div>
+
+<div class="card"><div class="tag">Übung 6 · Zwei Töne vergleichen <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="two"><div class="fig"><svg data-diag="2,0.5,1,,Ton A" viewBox="0 0 320 170" role="img" aria-label="Ton A: Amplitude 2 cm, Periodendauer 0,5 s"></svg></div><div class="fig"><svg data-diag="4,0.5,1,,Ton B" viewBox="0 0 320 170" role="img" aria-label="Ton B: Amplitude 4 cm, Periodendauer 0,5 s"></svg></div></div>
+<p class="caption">Modell: Die Zeitachse ist stark gestreckt. Wichtig ist nur der Vergleich.</p>
+<div class="selbox part" data-task="u6" data-fb="Richtig! Beide haben die gleiche Periodendauer, also die gleiche Frequenz: Sie sind <b>gleich hoch</b>. Ton B hat die doppelte Amplitude, er ist <b>lauter</b>.">
+<div class="steprow"><span>Frequenz: Ton A und Ton B sind …</span><select data-a="gleich" aria-label="Frequenz"><option value="">…</option><option>gleich</option><option>bei A größer</option><option>bei B größer</option></select></div>
+<div class="steprow"><span>Tonhöhe: Ton A und Ton B sind …</span><select data-a="gleich hoch" aria-label="Tonhöhe"><option value="">…</option><option>gleich hoch</option><option>A höher</option><option>B höher</option></select></div>
+<div class="steprow"><span>Lautstärke: Lauter ist …</span><select data-a="Ton B" aria-label="Lautstärke"><option value="">…</option><option>Ton A</option><option>Ton B</option><option>keiner von beiden</option></select></div>
+<div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
+</div>
+
+<div class="card"><div class="tag">Übung 7 · Pendel im Klassenzimmer <span class="stars">★★</span> <span class="afb">AFB II</span></div>
+<div class="mitbild"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#pendel"/></svg><p>Ein Fadenpendel macht in 10 s genau 12 Perioden. Die Klasse misst mit der Stoppuhr.</p></div>
+<div class="numbox part" data-task="u7" data-fb="Richtig! <f-m>f = 12 : 10 s = 1,2 Hz</f-m> und <f-m>T = 10 s : 12 ≈ 0,83 s</f-m>.">
+<div class="numq"><span>a) Frequenz f</span><span class="unit"><input type="text" inputmode="decimal" data-a="1.2" data-tol="0.01" aria-label="Frequenz in Hz"> Hz</span></div>
+<div class="numq"><span>b) Periodendauer T (auf zwei Stellen nach dem Komma)</span><span class="unit"><input type="text" inputmode="decimal" data-a="0.833" data-tol="0.01" aria-label="Periodendauer in s"> s</span></div>
+<div class="row"><button class="primary num-check">Prüfen</button><button data-sol="u7Sol">Lösung zeigen</button></div><p class="fb nfb"></p>
+<div class="sol" id="u7Sol" hidden><p>a) f = Anzahl der Perioden : Zeit = <f-m>12 : 10 s = 1,2 Hz</f-m>. b) <f-m>T = 1 : f = 1 : 1,2 Hz ≈ 0,83 s</f-m>. Tipp: Man misst die Zeit für viele Perioden, weil eine einzelne Periode zu kurz ist, um sie genau zu stoppen.</p></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 8 · Fester anschubsen <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
+<div class="part why" data-task="u8"><div class="mitbild"><svg class="pk" aria-hidden="true"><use href="/brand/piktos.svg#schaukel"/></svg><h4>✍ Mia sagt: „Wenn ich die Schaukel fester anschubse, schwingt sie schneller hin und her. Die Periodendauer wird also kleiner.“ Beurteile die Aussage. Begründe mit den Begriffen Amplitude und Periodendauer.</h4></div>
+<textarea data-store="u8" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
+<label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
+<div class="row"><button class="why-show">Mit Musterbegründung vergleichen</button></div>
+<div class="sol" hidden><p><b>Musterbegründung:</b> Die Aussage stimmt nicht. Fester anschubsen macht den Ausschlag größer, also wird die <b>Amplitude größer</b>. Die <b>Periodendauer bleibt</b> aber (fast) <b>gleich</b>: Die Schaukel legt zwar einen weiteren Weg zurück, ist dabei aber auch schneller. Amplitude und Periodendauer hängen nicht voneinander ab. Das zeigt auch das Federpendel-Labor.</p><p class="caption" style="margin:0 0 6px">Vergleiche: Hast du die fett gedruckten Begriffe verwendet? Ergänze sonst deine Begründung.</p><div class="row"><button class="why-ok">Meine Begründung enthält das Wichtigste</button></div></div></div>
+</div>
+
+<div class="card"><div class="tag">Übung 9 · Kolibri und Pendel <span class="stars">★★★</span> <span class="afb">AFB III</span></div>
+<div class="part why" data-task="u9"><h4>✍ Die Flügel eines Kolibris schlagen etwa 50-mal pro Sekunde, man hört ein Summen. Ein Fadenpendel schwingt mit etwa 1 Hz, man hört nichts. Begründe den Unterschied mit dem Begriff Frequenz. (Erinnerung aus Akustik 1: Wir hören Schwingungen ab etwa 20 pro Sekunde.)</h4>
+<textarea data-store="u9" rows="3" placeholder="Schreib deine Begründung hier (oder ins Heft) – mindestens einen ganzen Satz." aria-label="Deine Begründung"></textarea>
+<label class="cbl"><input type="checkbox">Ich habe meine Begründung ins Heft geschrieben.</label>
+<div class="row"><button class="why-show">Mit Musterbegründung vergleichen</button></div>
+<div class="sol" hidden><p><b>Musterbegründung:</b> Die Flügel des Kolibris schwingen mit einer <b>Frequenz</b> von etwa <b>50 Hz</b>. Das ist mehr als 20 Hz, deshalb entsteht ein <b>hörbarer Ton</b>. Das Fadenpendel schwingt nur mit etwa 1 Hz. Diese Frequenz liegt <b>unter 20 Hz</b>, solche langsamen Schwingungen kann unser Ohr nicht hören.</p><p class="caption" style="margin:0 0 6px">Vergleiche: Hast du die fett gedruckten Begriffe verwendet? Ergänze sonst deine Begründung.</p><div class="row"><button class="why-ok">Meine Begründung enthält das Wichtigste</button></div></div></div>
+</div>
+</div></section>
+
+<section class="band"><div class="wrap">
+<div class="row" style="margin-top:8px"><button id="resetAll">Fortschritt zurücksetzen</button></div>
+</div></section>
+<footer class="band"><div class="wrap">
+<p>Lernpfad Physik Klasse 8 · Akustik 2 (Schwingung, Schwingungsdiagramm, Ruhelage, Umkehrpunkt, Amplitude, Periode, Periodendauer, Frequenz, Hertz, Stroboskop). Dein Fortschritt wird nur in diesem Browser gespeichert, es werden keine Daten übertragen (nur Feedback, das du selbst abschickst).</p>
+<p class="rechtl"><a href="/impressum">Impressum · Datenschutz</a></p></div></footer>
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Lernpfad"><svg role="img" aria-label="QR-Code: https://physik.party/Physik8/schwingungen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m2 0h2m1 0h1m2 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m2 0h2m3 0h2m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h2m1 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m2 0h4m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m2 0h1m3 0h1m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-19 1h2m5 0h4m-21 1h1m2 0h1m1 0h2m1 0h2m1 0h1m1 0h4m2 0h1m1 0h1m1 0h1m-24 1h1m3 0h1m2 0h1m3 0h1m1 0h1m2 0h3m2 0h2m2 0h1m2 0h1m-29 1h4m1 0h3m2 0h1m5 0h4m2 0h2m1 0h3m-27 1h1m6 0h1m1 0h1m2 0h1m1 0h1m2 0h3m5 0h2m-27 1h1m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h2m-28 1h5m1 0h1m1 0h1m1 0h2m6 0h3m-21 1h3m2 0h1m4 0h2m1 0h1m2 0h2m5 0h5m-29 1h4m4 0h2m1 0h1m1 0h2m1 0h5m1 0h4m1 0h1m-24 1h1m1 0h1m2 0h3m4 0h2m1 0h1m3 0h1m3 0h1m-27 1h2m1 0h2m2 0h2m4 0h1m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m1 0h2m2 0h2m1 0h5m2 0h3m1 0h2m2 0h1m2 0h2m-27 1h2m1 0h1m1 0h1m1 0h1m1 0h1m3 0h5m1 0h1m1 0h2m2 0h2m-29 1h1m5 0h1m2 0h2m4 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m3 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h1m3 0h3m5 0h1m3 0h3m-27 1h1m1 0h3m1 0h1m2 0h1m4 0h1m1 0h3m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1m2 0h6m-28 1h1m1 0h3m1 0h1m3 0h5m6 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m2 0h2m1 0h1m4 0h5m1 0h1m3 0h1m-28 1h7m1 0h1m1 0h2m4 0h2m2 0h1m3 0h1m2 0h1"/></svg>
+
+<p>physik.party/Physik8/schwingungen</p><button id="qrClose">Schließen</button></dialog>
+<script>
+{
+const KEY='p8-schwingungen-done';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=(v,n=2)=>(+v).toFixed(n).replace('.',',').replace('-','−');
+const fmtS=(v,n=2)=>fmt(v,n).replace(/(,\d*?)0+$/,'$1').replace(/,$/,'');
+const num=v=>parseFloat(String(v).replace(/[\s ]/g,'').replace(/\.(?=\d{3}(\D|$))/g,'').replace(',','.').replace('−','-'));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const RAD=Math.PI/180,g=9.81;
+const sind=a=>Math.sin(a*RAD),cosd=a=>Math.cos(a*RAD),tand=a=>Math.tan(a*RAD);
+/* Fortschritt (nur in diesem Browser) */
+let done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}}
+function updProg(){const tasks=[...new Set($$('[data-task]').map(e=>e.dataset.task))];const n=tasks.filter(t=>done.has(t)).length;$('#progtxt').textContent=n+' / '+tasks.length+' gelöst';$('#progbar').style.width=(100*n/Math.max(1,tasks.length))+'%';
+ $$('[data-task]').forEach(e=>e.classList.toggle('done',done.has(e.dataset.task)));$$('.tabs button[data-for]').forEach(b=>b.classList.toggle('solved',done.has(b.dataset.for)))}
+function mark(id){if(!id)return;done.add(id);save();updProg()}
+function svgPt(svg,ev){const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+function animate(ms,step,end){if(reduce){step(1);end&&end();return}const t0=performance.now();function f(t){const k=Math.min(1,(t-t0)/ms);step(k);if(k<1)requestAnimationFrame(f);else end&&end()}requestAnimationFrame(f)}
+/* Formelzeichen in SVG: "F|res" -> F mit Index res */
+function lab(n){const [b,s]=String(n).split('|');return s?`${b}<tspan dy="5" font-size="75%">${s}</tspan><tspan dy="-5"> </tspan>`:b}
+function labH(n){const [b,s]=String(n).split('|');return s?`${b}<sub>${s}</sub>`:b}
+const COL={f1:'var(--f1)',f2:'var(--f2)',f3:'var(--f3)',fr:'var(--fr)',fg:'var(--fg)',fh:'var(--fh)',fn:'var(--fnn)',ink:'var(--ink)',mut:'var(--muted)',acc:'var(--acc)'};
+const col=c=>COL[c]||c;
+/* ===== Bausteine ===== */
+const hints={};
+function initCommon(){
+ $$('.hintsrc').forEach(d=>{hints[d.dataset.for]=[...d.children].map(p=>p.innerHTML)});
+ $$('[data-hint]').forEach(b=>{let h=0;b.onclick=()=>{const id=b.dataset.hint,arr=hints[id]||[],el=$('#'+id+'Tip');if(!arr.length||!el)return;el.className='fb hint tip';el.innerHTML='Tipp '+(h%arr.length+1)+' von '+arr.length+': '+arr[h%arr.length];h++}});
+ $$('[data-sol]').forEach(b=>b.onclick=()=>{const el=$('#'+b.dataset.sol);el.hidden=!el.hidden;b.textContent=el.hidden?'Lösung zeigen':'Lösung ausblenden'});
+ /* Multiple Choice: nach einem Fehlversuch Hinweis und kurze Denkpause */
+ $$('.mc[data-correct]').forEach(box=>{const fb=box.querySelector('.fb'),btns=[...box.querySelectorAll('button[data-k]')];
+  btns.forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;
+   if(ok){btns.forEach(x=>x.classList.remove('bad'));b.classList.add('ok');fb.className='fb ok';fb.innerHTML=b.dataset.fb||'Richtig!';mark(box.dataset.task);return}
+   b.classList.add('bad');b.disabled=true;fb.className='fb hint';
+   fb.innerHTML=(b.dataset.fb||'Das stimmt nicht.')+(box.dataset.tipp?' <b>Hinweis:</b> '+box.dataset.tipp:' Lies die Frage noch einmal genau und denk nach, bevor du weiterklickst.');
+   const free=btns.filter(x=>!x.classList.contains('bad'));free.forEach(x=>x.disabled=true);setTimeout(()=>free.forEach(x=>x.disabled=false),reduce?0:2500)})});
+ /* Mehrfachauswahl */
+ $$('.multi').forEach(box=>{const fb=box.querySelector('.fb');box.querySelector('.multi-check').onclick=()=>{const ls=[...box.querySelectorAll('label')];let bad=0;ls.forEach(l=>{const i=l.querySelector('input'),should=l.dataset.ok==='1';const r=i.checked===should;l.className=i.checked||!r?(r?'ok':'bad'):'';if(!r)bad++});
+  if(!bad){fb.className='fb ok';fb.innerHTML=box.dataset.fb||'Richtig!';mark(box.dataset.task)}else{fb.className='fb hint';fb.innerHTML=bad+(bad===1?' Auswahl stimmt':' Auswahlen stimmen')+' noch nicht. '+(box.dataset.tipp||'')}}});
+ /* Textfelder */
+ $$('textarea[data-store]').forEach(t=>{const k=KEY+'-txt-'+t.dataset.store;try{t.value=localStorage.getItem(k)||''}catch(e){}t.addEventListener('input',()=>{try{localStorage.setItem(k,t.value)}catch(e){}})});
+ /* Begründe-Aufträge */
+ $$('.why').forEach(w=>{const t=w.querySelector('textarea'),cb=w.querySelector('input[type=checkbox]'),show=w.querySelector('.why-show'),sol=w.querySelector('.sol'),okb=w.querySelector('.why-ok');
+  const upd=()=>{show.disabled=!((t&&t.value.trim().length>=15)||(cb&&cb.checked))};if(t)t.addEventListener('input',upd);if(cb)cb.addEventListener('change',upd);upd();
+  show.onclick=()=>{sol.hidden=false;show.hidden=true};okb.onclick=()=>{mark(w.dataset.task);okb.textContent='✓ Abgehakt'}});
+ /* Zahlen-Aufgaben */
+ $$('.numbox').forEach(box=>{const fb=box.querySelector('.nfb');box.querySelector('.num-check').onclick=()=>{const ins=[...box.querySelectorAll('input[data-a]')];let ok=0;
+  ins.forEach(i=>{const v=num(i.value),a=+i.dataset.a,tol=+(i.dataset.tol||0.01),gd=!isNaN(v)&&Math.abs(v-a)<=Math.max(Math.abs(a)*tol,1e-9);i.className=i.value===''?'':(gd?'ok':'bad');if(gd)ok++});
+  if(ok===ins.length){fb.className='fb ok nfb';fb.innerHTML=box.dataset.fb||'Alles richtig!';mark(box.dataset.task)}else{fb.className='fb bad nfb';fb.textContent=ok+' von '+ins.length+' richtig. Prüfe Rechnung, Einheiten und Rundung – oder hol dir einen Tipp.'}}});
+ /* Auswahlfelder (Lückentext, Zuordnung) */
+ $$('.selbox').forEach(box=>{const fb=box.querySelector('.sfb');box.querySelector('.sel-check').onclick=()=>{const s=[...box.querySelectorAll('select')];let ok=0;s.forEach(x=>{const gd=x.value===x.dataset.a;x.className=x.value===''?'':(gd?'ok':'bad');if(gd)ok++});
+  if(ok===s.length){fb.className='fb ok sfb';fb.innerHTML=box.dataset.fb||'Alles richtig!';mark(box.dataset.task)}else{fb.className='fb bad sfb';fb.textContent=ok+' von '+s.length+' richtig. Prüfe die rot markierten Felder.'}}});
+ /* Richtig/Falsch */
+ $$('.tf').forEach(box=>{const rows=[...box.querySelectorAll('.item')],solved=new Set();rows.forEach((row,i)=>{const ex=row.querySelector('.ex'),fb=row.querySelector('.fb');row.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ok=b.dataset.v===row.dataset.v;
+  row.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));b.classList.add(ok?'ok':'bad');fb.className='fb '+(ok?'ok':'bad');fb.innerHTML=(ok?'Stimmt. ':'Nein. ')+ex.innerHTML;if(ok)solved.add(i);if(solved.size===rows.length)mark(box.dataset.task)})})});
+ /* Reiter */
+ $$('.tabs[data-group]').forEach(tb=>{const bs=[...tb.querySelectorAll('button')];bs.forEach(b=>b.onclick=()=>{bs.forEach(x=>{x.setAttribute('aria-pressed',x===b);const p=$('#'+x.dataset.panel);if(p)p.hidden=x!==b});const p=$('#'+b.dataset.panel);p&&p.dispatchEvent(new Event('show'))})});
+ {const d=$('#qrDlg');$('#qrOpen').onclick=()=>d.showModal();$('#qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
+ $('#resetAll').onclick=()=>{done.clear();save();location.reload()};
+ updProg()}
+
+
+/* Heftaufschrieb übernommen */
+$$('.hb-done').forEach(b=>{if(done.has(b.dataset.task))b.textContent='✓ Im Heft';b.onclick=()=>{mark(b.dataset.task);b.textContent='✓ Im Heft'}});
+/* Schritt-für-Schritt */
+$$('.stepper').forEach(st=>{const boxes=[...st.querySelectorAll('.stepbox')],nx=st.querySelector('.st-next'),bk=st.querySelector('.st-back'),dots=st.querySelector('.steps');let i=0;
+ const show=()=>{boxes.forEach((b,k)=>b.hidden=k>i);if(dots)dots.innerHTML=boxes.map((b,k)=>`<i class="${k<=i?'on':''}">${k+1}</i>`).join('');nx.disabled=i>=boxes.length-1;bk.disabled=i===0;if(i>=boxes.length-1&&st.dataset.task)mark(st.dataset.task)};
+ nx.onclick=()=>{i=Math.min(boxes.length-1,i+1);show()};bk.onclick=()=>{i=Math.max(0,i-1);show()};show()});
+
+
+/* ---------- Statische Schwingungsdiagramme: data-diag="A,T,tmax[,mark][,Titel]" ---------- */
+function diagSVG(A,T,tmax,mark,title){const W=320,H=170,L=40,R=12,Y0=82,PX=14,YM=4.5*PX,w=W-L-R,sx=t=>L+t/tmax*w;let s='';
+ const dt=tmax<=1.2?0.1:0.5;
+ for(let k=-4;k<=4;k++){const y=Y0-k*PX;s+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" style="stroke:var(--grid)" stroke-width="1"/>`;if(k%2===0)s+=`<text x="${L-6}" y="${y+4}" text-anchor="end" class="txs">${k}</text>`}
+ for(let t=0;t<=tmax+1e-9;t+=dt){const x=sx(t),maj=Math.abs(t/(dt*5)-Math.round(t/(dt*5)))<1e-6||dt===0.5;s+=`<line x1="${x}" y1="${Y0-YM}" x2="${x}" y2="${Y0+YM}" style="stroke:var(--grid)" stroke-width="1"/>`;if(maj||tmax<=1.2&&Math.round(t*10)%2===0)s+=`<text x="${x}" y="${Y0+YM+16}" text-anchor="middle" class="txs">${fmtS(t,1)}</text>`}
+ s+=`<line x1="${L}" y1="${Y0+YM+2}" x2="${L}" y2="${Y0-YM-4}" style="stroke:var(--ink)" stroke-width="1.5"/><line x1="${L}" y1="${Y0}" x2="${W-R+4}" y2="${Y0}" style="stroke:var(--ink)" stroke-width="1.5"/>`;
+ s+=`<text x="${W-R}" y="${Y0-6}" text-anchor="end" class="txs" font-style="italic">t in s</text><text x="${L+6}" y="10" class="txs" font-style="italic">s in cm</text>`;
+ if(title)s+=`<text x="${W-R}" y="12" text-anchor="end" class="txs" font-weight="700">${title}</text>`;
+ let p='';for(let i=0;i<=200;i++){const t=i/200*tmax;p+=(i?'L':'M')+sx(t).toFixed(1)+' '+(Y0-A*PX*Math.sin(2*Math.PI*t/T)).toFixed(1)}
+ s+=`<path d="${p}" style="fill:none;stroke:var(--kurve)" stroke-width="2.6" stroke-linecap="round"/>`;
+ if(mark){const xp=sx(T/4),yp=Y0-A*PX,xe=sx(T),ya=Y0+A*PX+8,lb=mark==='mark2';
+  const num=(x,y,n,txt)=>lb?`<text x="${x}" y="${y}" class="txs" font-weight="700" style="fill:var(--gst-heft,var(--ink))">${txt}</text>`:`<circle cx="${x}" cy="${y}" r="8" style="fill:var(--gst-mark,#FCBE00)"/><text x="${x}" y="${y+4}" text-anchor="middle" class="txs" font-weight="700" style="fill:#1b2122">${n}</text>`;
+  s+=`<circle cx="${xp}" cy="${yp}" r="3.5" style="fill:var(--ink)"/>`;
+  s+=`<line x1="${xp+4}" y1="${Y0-2}" x2="${xp+4}" y2="${yp+4}" style="stroke:var(--ink)" stroke-width="1.4" marker-end="url(#pf${lb?2:1})" marker-start="url(#pf${lb?2:1})"/>`;
+  s+=`<line x1="${sx(0)+2}" y1="${ya}" x2="${xe-2}" y2="${ya}" style="stroke:var(--ink)" stroke-width="1.4" marker-end="url(#pf${lb?2:1})" marker-start="url(#pf${lb?2:1})"/><line x1="${xe}" y1="${Y0}" x2="${xe}" y2="${ya+4}" class="dashl"/>`;
+  s=`<defs><marker id="pf${lb?2:1}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9z" style="fill:var(--ink)"/></marker></defs>`+s;
+  s+=num(sx(0.03)+(lb?2:8),Y0+(lb?14:13),1,'Ruhelage')+num(xp+12,yp-4,2,'Umkehrpunkt')+num(xp+16,Y0-A*PX/2+4,3,'Amplitude')+num(sx(lb?T*0.2:T*0.62),lb?ya+15:ya-6,4,'Periodendauer T')}
+ return s}
+$$('svg[data-diag]').forEach(sv=>{const [A,T,tm,mk,ti]=sv.dataset.diag.split(',');sv.innerHTML=diagSVG(+A,+T,+tm,mk,ti)});
+
+/* ---------- Schreibstimmgabel (verlangsamt: 2 Schwingungen pro Sekunde im Bild) ---------- */
+{const svg=$('#gabel'),PX=500,Y0=120,F=2,TAU=5,V=70;
+ let t=0,tHit=null,pull=false,paper=0,trace=[],anim=null,last=0;
+ const amp=()=>tHit===null?0:34*Math.exp(-(t-tHit)/TAU);
+ const pen=()=>tHit===null?0:amp()*Math.sin(2*Math.PI*F*(t-tHit));
+ function draw(){const y=Y0-pen();let s=`<rect x="10" y="${Y0-60}" width="560" height="120" rx="3" style="fill:var(--paper);stroke:var(--line)"/>`;
+  s+=`<line x1="14" y1="${Y0}" x2="566" y2="${Y0}" class="dashl"/>`;
+  let p='';trace.forEach(([q,yy],i)=>{const x=PX-(paper-q);if(x>12)p+=(p?'L':'M')+x.toFixed(1)+' '+yy.toFixed(1)});
+  if(p)s+=`<path d="${p}" style="fill:none;stroke:var(--kurve)" stroke-width="2.4" stroke-linejoin="round"/>`;
+  if(pull)s+=`<path d="M90 206 h-60 m10 -6 l-10 6 10 6" style="fill:none;stroke:var(--muted)" stroke-width="2"/><text x="100" y="211" class="txs">Papier läuft nach links</text>`;
+  /* Stimmgabel von oben: untere Zinke trägt den Stift, obere schwingt gegengleich */
+  const d=pen(),yu=Y0-28;s+=`<path d="M576 ${yu} Q560 ${yu} 560 ${yu+14} Q560 ${Y0} 576 ${Y0} M560 ${yu+14} H632" style="fill:none;stroke:var(--muted)" stroke-width="6" stroke-linecap="round"/>`;
+  s+=`<path d="M576 ${yu} Q540 ${yu} ${PX+6} ${yu+d}" style="fill:none;stroke:var(--muted)" stroke-width="6" stroke-linecap="round"/><path d="M576 ${Y0} Q540 ${Y0} ${PX+6} ${y}" style="fill:none;stroke:var(--muted)" stroke-width="6" stroke-linecap="round"/>`;
+  s+=`<circle cx="${PX}" cy="${y}" r="4" style="fill:var(--ink)"/><text x="${PX+10}" y="${Y0+26}" class="txs">Stift</text>`;
+  s+=`<text x="16" y="${Y0-66}" class="txs">${tHit===null?'Stimmgabel ruht':amp()>1?'Stimmgabel schwingt':'Schwingung ist abgeklungen'}</text>`;
+  svg.innerHTML=s}
+ function step(now){const dt=Math.min(0.05,(now-last)/1000);last=now;t+=dt;if(pull){paper+=V*dt;trace.push([paper,Y0-pen()]);if(trace.length>2000)trace.shift()}draw();anim=requestAnimationFrame(step)}
+ function start(){if(!anim){last=performance.now();anim=requestAnimationFrame(step)}}
+ function stop(){if(anim){cancelAnimationFrame(anim);anim=null}}
+ function fast(){/* ohne Animation: 6 s auf einmal rechnen */for(let i=0;i<360;i++){t+=1/60;if(pull){paper+=V/60;trace.push([paper,Y0-pen()])}}draw()}
+ new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!reduce)start();else stop()})).observe(svg);
+ $('#gHit').onclick=()=>{tHit=t;if(reduce)fast()};
+ $('#gPull').onclick=()=>{pull=!pull;$('#gPull').setAttribute('aria-pressed',pull);$('#gPull').textContent=pull?'Papier anhalten':'Papier ziehen';if(reduce&&pull)fast()};
+ $('#gNew').onclick=()=>{trace=[];paper=0;draw()};
+ draw()}
+
+/* ---------- Federpendel-Labor: D = 4 N/m, T = 2π·√(m : D) ---------- */
+{const svg=$('#feder'),D=4,PX=12,Y0=160,DL=200,DR=628,TMAX=6,sx=t=>DL+t/TMAX*(DR-DL);
+ let m=100,A=3,damp=false,run=null,t=0,pts=[],t0=0;
+ const w0=()=>Math.sqrt(D/(m/1000)),del=()=>damp?0.18:0,wd=()=>Math.sqrt(w0()**2-del()**2);
+ const sAt=t=>-A*Math.exp(-del()*t)*Math.cos(wd()*t);
+ function draw(s){const ym=Y0-s*PX;let g='';
+  /* Diagramm */
+  for(let k=-5;k<=5;k++){const y=Y0-k*PX;g+=`<line x1="${DL}" y1="${y}" x2="${DR}" y2="${y}" style="stroke:var(--grid)" stroke-width="1"/>`;if(k%2===0)g+=`<text x="${DL-6}" y="${y+4}" text-anchor="end" class="txs">${k}</text>`}
+  for(let k=0;k<=TMAX*2;k++){const x=sx(k/2);g+=`<line x1="${x}" y1="${Y0-5*PX}" x2="${x}" y2="${Y0+5*PX}" style="stroke:var(--grid)" stroke-width="${k%2?1:1.6}"/>`;if(k%2===0)g+=`<text x="${x}" y="${Y0+5*PX+18}" text-anchor="middle" class="txs">${k/2}</text>`}
+  g+=`<line x1="${DL}" y1="${Y0-5*PX-8}" x2="${DL}" y2="${Y0+5*PX}" style="stroke:var(--ink)" stroke-width="1.5"/><line x1="${DL}" y1="${Y0}" x2="${DR+6}" y2="${Y0}" style="stroke:var(--ink)" stroke-width="1.5"/>`;
+  g+=`<text x="${DR}" y="${Y0+5*PX+34}" text-anchor="end" class="txs" font-style="italic">Zeit <f-m>t</f-m> in s</text><text x="${DL+6}" y="${Y0-5*PX-12}" class="txs" font-style="italic">Auslenkung s in cm</text>`;
+  if(pts.length>1)g+=`<path d="${pts.map((p,i)=>(i?'L':'M')+sx(p[0]).toFixed(1)+' '+(Y0-p[1]*PX).toFixed(1)).join('')}" style="fill:none;stroke:var(--kurve)" stroke-width="2.6" stroke-linejoin="round"/>`;
+  /* Pendel */
+  const top=18,mh=12+Math.sqrt(m)*1.6,my=ym-mh/2,n=12;let z=`M90 ${top}v6`;const len=my-top-12;for(let i=1;i<=n;i++)z+=`L${i%2?76:104} ${top+6+i*len/(n+1)}`;z+=`L90 ${my-6}V${my}`;
+  g+=`<line x1="50" y1="${top}" x2="130" y2="${top}" style="stroke:var(--ink)" stroke-width="5" stroke-linecap="round"/><path d="${z}" style="fill:none;stroke:var(--muted)" stroke-width="2.2" stroke-linejoin="round"/>`;
+  g+=`<rect x="${90-mh*0.7}" y="${my}" width="${mh*1.4}" height="${mh}" rx="4" style="fill:var(--pk-blau);stroke:var(--ink)" stroke-width="1.5"/><text x="90" y="${my+mh/2+4}" text-anchor="middle" class="txs" style="fill:#fff">${m} g</text>`;
+  g+=`<line x1="20" y1="${Y0}" x2="${DL}" y2="${Y0}" class="dashl"/><text x="18" y="${Y0-6}" class="txs">Ruhelage</text>`;
+  g+=`<line x1="${90+mh*0.7+4}" y1="${ym}" x2="${pts.length?sx(pts[pts.length-1][0]):DL}" y2="${ym}" style="stroke:var(--gst-mark,#FCBE00)" stroke-width="1.2" stroke-dasharray="3 3"/>`;
+  svg.innerHTML=g;
+  const per=Math.floor(t*wd()/(2*Math.PI)+1e-6);
+  $('#fRead').innerHTML=`<div>Zeit t<b>${fmt(t,1)} s</b></div><div>Auslenkung s<b>${fmt(s,1)} cm</b></div><div>vollständige Perioden<b>${pts.length?per:0}</b></div>`}
+ function stop(){if(run){cancelAnimationFrame(run);run=null}}
+ function idle(){stop();t=0;pts=[];draw(-A)}
+ function go(){stop();t=0;pts=[[0,sAt(0)]];
+  if(reduce){for(let i=1;i<=600;i++){t=i/600*TMAX;pts.push([t,sAt(t)])}draw(sAt(t));return}
+  t0=performance.now();const f=now=>{t=Math.min(TMAX,(now-t0)/1000);pts.push([t,sAt(t)]);draw(sAt(t));if(t<TMAX)run=requestAnimationFrame(f);else run=null};run=requestAnimationFrame(f)}
+ $$('#fM button').forEach(b=>b.onclick=()=>{m=+b.dataset.m;$$('#fM button').forEach(x=>x.setAttribute('aria-pressed',x===b));idle()});
+ $('#fA').oninput=()=>{A=+$('#fA').value;$('#fATxt').textContent=fmtS(A,1)+' cm';idle()};
+ $('#fDamp').onchange=()=>{damp=$('#fDamp').checked;idle()};
+ $('#fGo').onclick=go;$('#fStop').onclick=stop;idle()}
+
+/* ---------- Stroboskop: Rad mit 5 Umdrehungen pro Sekunde ---------- */
+{const svg=$('#strobo'),FR=5,CX=150,CY=115,R=90;let mode='dauer',fb=4,anim=null,t0=performance.now(),lastK=-1,shown=0;
+ function wheel(ang,blur){let s=`<circle cx="${CX}" cy="${CY}" r="${R}" style="fill:var(--panel);stroke:var(--ink)" stroke-width="5"/>`;
+  if(blur)s+=`<circle cx="${CX}" cy="${CY}" r="${R-18}" style="fill:none;stroke:var(--gst-mark,#FCBE00)" stroke-width="14" opacity=".35"/><circle cx="${CX}" cy="${CY}" r="${R-40}" style="fill:var(--muted)" opacity=".25"/>`;
+  else{for(let k=0;k<6;k++){const a=ang+k*60;s+=`<line x1="${CX}" y1="${CY}" x2="${CX+(R-4)*cosd(a)}" y2="${CY+(R-4)*sind(a)}" style="stroke:var(--muted)" stroke-width="4"/>`}
+   s+=`<circle cx="${CX+(R-18)*cosd(ang)}" cy="${CY+(R-18)*sind(ang)}" r="11" style="fill:var(--gst-mark,#FCBE00);stroke:var(--ink)" stroke-width="1.5"/>`}
+  return s+`<circle cx="${CX}" cy="${CY}" r="9" style="fill:var(--ink)"/>`}
+ function seen(){if(mode==='dauer')return 'ein verschwommenes Rad';let d=((360*FR/fb)%360+360)%360;if(d>359.5||d<0.5)return 'Rad steht still';if(Math.abs(d-180)<0.5)return 'Punkt springt hin und her';return d<180?(d<90?'dreht langsam vorwärts':'dreht vorwärts'):(d>270?'dreht langsam rückwärts':'dreht rückwärts')}
+ function draw(ang){let s=wheel(ang,mode==='dauer');s+=`<path d="M${CX+R+18} ${CY-40} a60 60 0 0 1 0 80" style="fill:none;stroke:var(--muted)" stroke-width="2"/><text x="${CX+R+30}" y="${CY+4}" class="txs">5 Umdrehungen pro Sekunde</text>`;
+  s+=`<text x="${CX+R+30}" y="${CY+34}" class="txs">${mode==='dauer'?'Dauerlicht':fmtS(fb,1)+' Blitze pro Sekunde'}</text><text x="${CX+R+30}" y="${CY+60}" class="txs" font-weight="700">Du siehst: ${seen()}</text>`;
+  svg.innerHTML=s}
+ function step(now){const t=(now-t0)/1000;if(mode==='blitz'){const k=Math.floor(t*fb);if(k!==lastK){lastK=k;shown=(360*FR*k/fb)%360;draw(shown-90)}}else if(lastK!==-2){lastK=-2;draw(0)}anim=requestAnimationFrame(step)}
+ new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!reduce){if(!anim)anim=requestAnimationFrame(step)}else{cancelAnimationFrame(anim);anim=null}})).observe(svg);
+ function upd(){lastK=-1;$('#sFTxt').textContent=fmtS(fb,1);if(reduce||!anim)draw(mode==='dauer'?0:-90)}
+ $('#sF').oninput=()=>{fb=+$('#sF').value;upd()};
+ $$('#sL button').forEach(b=>b.onclick=()=>{mode=b.dataset.l;$$('#sL button').forEach(x=>x.setAttribute('aria-pressed',x===b));upd()});
+ draw(0)}
+
+initCommon();
+}
+</script>
+</body>
+</html>

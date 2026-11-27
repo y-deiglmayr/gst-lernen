@@ -3,7 +3,7 @@ Formel = zusammenhängende Folge aus Zahlen (mit Einheit), Einzelbuchstaben-Vari
 Rechenzeichen und Klammern, die mindestens ein Rechenzeichen und zwei Operanden enthält."""
 import re,sys,glob,json
 LET='A-Za-zäöüÄÖÜßα-ωΔ'
-UNIT=re.compile(r'(kg·m/s|N·s|kg/m³|m/s²|km/h|m³|cm³|dm³|m²|cm²|N/kg|N/m|km/s|m/s|kWh|MWh|kJ|MJ|kN|kg|cm|mm|km|dm|J|N|W|V|A|L|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß²])')
+UNIT=re.compile(r'(kg·m/s|N·s|kg/m³|m/s²|km/h|m³|cm³|dm³|m²|cm²|N/kg|N/m|km/s|m/s|kWh|MWh|Hz|kJ|MJ|kN|kg|cm|mm|km|dm|J|N|W|V|A|L|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß²])')
 FUNCS=re.compile(r'(arcsin|arccos|arctan|sin|cos|tan)(?![A-Za-zäöüÄÖÜß])')
 NUM=re.compile(r'(\d{1,3}(?:[  ]\d{3})+|\d+)(?:,\d+)?(?:<sup>[−-]?\d+</sup>)?')
 OPCH='=≈·×+−-:/→~'

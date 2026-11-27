@@ -7,7 +7,7 @@ const GREEK={'α':'\\alpha','β':'\\beta','γ':'\\gamma','δ':'\\delta','ε':'\\
 const OPS={'=':'=','≈':'\\approx','·':'\\cdot','×':'\\cdot','+':'+','−':'-','-':'-',':':':','/':'/','→':'\\rightarrow','~':'\\sim','<':'<','>':'>','≤':'\\le','≥':'\\ge'};
 const FR={'½':'\\tfrac{1}{2}','¼':'\\tfrac{1}{4}','¾':'\\tfrac{3}{4}'};
 const REL=new Set(['=','≈','→','~','<','>','≤','≥']),ADD=new Set(['+','−','-']),MUL=new Set(['·','×']),DIV=new Set([':','/']);
-const UNIT=/^(kg·m\/s|N·s|kg\/m³|m\/s²|km\/h|m³|cm³|dm³|m²|cm²|N\/kg|N\/m|km\/s|m\/s|kWh|MWh|kJ|MJ|kN|kg|cm|mm|km|dm|J|N|W|V|A|L|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß²])/;
+const UNIT=/^(kg·m\/s|N·s|kg\/m³|m\/s²|km\/h|m³|cm³|dm³|m²|cm²|N\/kg|N\/m|km\/s|m\/s|kWh|MWh|Hz|kJ|MJ|kN|kg|cm|mm|km|dm|J|N|W|V|A|L|g|m|s|%|°)(?![A-Za-zäöüÄÖÜß²])/;
 const NUM=/^(\d{1,3}(?:[\u00a0 ]\d{3})+|\d+)(?:,\d+)?(?:<sup>[−-]?\d+<\/sup>)?/;
 const VAR=/^(Δ[A-Za-zα-ω]|[A-Za-zα-ωΔ])(\u20d7)?(?:<sub>([^<]{1,10})<\/sub>|_([A-Za-z0-9]{1,6})(?![A-Za-z0-9]))?(?:<sup>(\d)<\/sup>)?(?![A-Za-zäöüÄÖÜß])/;
 /* Winkelfunktionen und Wurzel (Physik 11) */
