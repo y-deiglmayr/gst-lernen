@@ -178,6 +178,7 @@ textarea{width:100%;font:16px "Atkinson Hyperlegible",sans-serif;padding:8px 10p
 .why .sol{border-left:4px solid var(--ok)}
 .why label.cbl{display:flex;gap:8px;align-items:center;font-size:15px;margin:6px 0;cursor:pointer}
 .mc button:disabled{opacity:.55;cursor:not-allowed}
+.row button[data-sol]:disabled{opacity:.5;cursor:not-allowed}
 .mc button.bad:disabled{opacity:1}
 details.exp summary{cursor:pointer;font:600 16px Lexend,sans-serif;color:var(--acc)}
 .steprow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
@@ -589,7 +590,11 @@ function animate(ms,step,end){if(reduce){step(1);end&&end();return}const t0=perf
 /* Tipps */
 const hints={};
 $$('[data-hint]').forEach(b=>{let h=0;b.onclick=()=>{const id=b.dataset.hint,arr=hints[id]||[],el=$('#'+id+'Tip');if(!arr.length)return;el.className='fb hint tip';el.innerHTML='Tipp '+(h%arr.length+1)+' von '+arr.length+': '+arr[h%arr.length];h++}});
-$$('[data-sol]').forEach(b=>b.onclick=()=>{const el=$('#'+b.dataset.sol);el.hidden=!el.hidden;b.textContent=el.hidden?'Lösung zeigen':'Lösung ausblenden'});
+/* Lösung erst nach eigenem Versuch: freigeben, wenn mindestens ein Feld ausgefüllt und geprüft wurde */
+$$('[data-sol]').forEach(b=>{b.onclick=()=>{const el=$('#'+b.dataset.sol);el.hidden=!el.hidden;b.textContent=el.hidden?'Lösung zeigen':'Lösung ausblenden'};
+ const chk=b.parentElement.querySelector('.primary');if(!chk)return;b.disabled=true;b.title='Erst selbst rechnen und prüfen';
+ chk.addEventListener('click',()=>{const box=b.closest('.card')||b.parentElement.parentElement;
+  if([...box.querySelectorAll('input,select')].some(f=>f.value.trim()!=='')){b.disabled=false;b.title=''}})});
 /* Multiple Choice: Nach einem Fehlversuch gibt es einen Hinweis und eine kurze Denkpause – Raten lohnt sich nicht. */
 function initMC(root=document){root.querySelectorAll('.mc[data-correct]').forEach(box=>{if(box.dataset.init)return;box.dataset.init=1;const fb=box.querySelector('.fb'),btns=[...box.querySelectorAll('button[data-k]')];
  btns.forEach(b=>b.onclick=()=>{const ok=b.dataset.k===box.dataset.correct;

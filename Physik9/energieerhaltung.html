@@ -311,6 +311,7 @@ dialog.qrdlg button{background:#f3f6fa;color:#1b1e27}
 <div class="card" data-task="f2" data-num="f2">
 <div class="tag"><span class="stars">★★</span> Auftrag 9 · Wie viel Energie wurde entwertet?</div>
 <p>Der <b>Flummi (m = 30 g = 0,030 kg)</b> fällt aus <b>1,50 m</b> Höhe und springt danach nur noch <b>1,20 m</b> hoch. Überprüfe die Höhe im Labor.</p>
+<p>Runde deine Ergebnisse auf <b>drei Nachkommastellen</b> (z. B. 0,123 J).</p>
 </div>
 <div class="card mc" data-task="f3" data-correct="c">
 <div class="tag"><span class="stars">★★</span> Auftrag 10 · Die Knetkugel</div>
@@ -717,7 +718,7 @@ $$('[data-num]').forEach(card=>{const id=card.dataset.num,spec=NUM[id];if(!spec)
  const txt=`Energie kann weder {erzeugt} noch {vernichtet} werden. Sie wird nur von einer Energieform in andere Energieformen {umgewandelt}. Die {Gesamtenergie} bleibt immer gleich.<br><br>Ein echtes Pendel bleibt irgendwann stehen. Grund ist die {Reibung} an der Aufhängung und mit der Luft. Bei jeder Energieumwandlung wird ein Teil der Energie in {thermische Energie} der Umgebung umgewandelt – die Umgebung wird minimal {wärmer}. Diese verteilte Wärme kann man kaum noch {nutzen} – die Energie ist {entwertet}. Im Alltag spricht man (physikalisch ungenau) von „{Energieverlust}“.`;
  const sorted=[...W].sort((a,b)=>a.localeCompare(b,'de'));let i=0;
  $('#cloze').innerHTML=txt.replace(/\{([^}]+)\}/g,(m,w)=>`<select data-a="${esc(w)}" aria-label="Lücke ${++i}"><option value="">…</option>${sorted.map(x=>`<option>${esc(x)}</option>`).join('')}</select>`);
- $('#clozeCheck').onclick=()=>{let ok=0,all=$$('#cloze select');all.forEach(s=>{const g=s.value===s.dataset.a;s.className=s.value===''?'':g?'ok':'bad';if(g)ok++});
+ $('#clozeCheck').onclick=()=>{let ok=0,all=$$('#cloze select');const tausch=all[0].value==='vernichtet'&&all[1].value==='erzeugt';all.forEach((s,j)=>{const g=(j<2&&tausch)||s.value===s.dataset.a;s.className=s.value===''?'':g?'ok':'bad';if(g)ok++});
   const fb=$('#clozeFb');if(ok===all.length){fb.className='fb ok';fb.textContent='Perfekt! Diese beiden Merksätze gehören in dein Heft.';mark('h1')}else{fb.className='fb bad';fb.textContent=`${ok} von ${all.length} Lücken richtig.`}}}
 
 /* ---------- Phase 3: Energieflussdiagramm ---------- */
