@@ -536,7 +536,7 @@ $('#taskClose').onclick=()=>TD.close();
    Pixel-Spielwelt (eigene Grafik, 16-px-Kacheln, 320 × 180)
    ========================================================== */
 const G=(()=>{
-const TS=16,VW=320,VH=180,MW=40,MH=30;
+const TS=16,MW=40,MH=30;let VW=320,VH=180;
 const F=state.f;
 const cv=$('#cv'),cx=cv.getContext('2d');cx.imageSmoothingEnabled=false;
 const dk=document.createElement('canvas');dk.width=VW;dk.height=VH;const dx=dk.getContext('2d');
@@ -737,8 +737,11 @@ $('#aBtn').addEventListener('pointerdown',e=>{e.preventDefault();if(started){set
 /* --- Vollbild --- */
 const GM=$('#game');
 GM.appendChild(TD);GM.appendChild($('#spickDlg'));
-function fit(){if(!GM.classList.contains('full')){cv.style.width='';cv.style.height='';return}
- const sc=$('#screen'),w=sc.clientWidth,h=sc.clientHeight,k=Math.min(w/VW,h/VH);cv.style.width=Math.floor(VW*k)+'px';cv.style.height=Math.floor(VH*k)+'px'}
+function view(w,h){if(w===VW&&h===VH)return;VW=w;VH=h;cv.width=w;cv.height=h;dk.width=w;dk.height=h;cx.imageSmoothingEnabled=false}
+function fit(){if(!GM.classList.contains('full')){view(320,180);cv.style.width='';cv.style.height='';return}
+ const sc=$('#screen'),w=sc.clientWidth,h=sc.clientHeight;
+ {const vw=Math.max(180,Math.min(320,Math.round(Math.sqrt(57600*w/h))));view(vw,Math.max(140,Math.min(420,Math.round(vw*h/w))))}
+ const k=Math.min(w/VW,h/VH);cv.style.width=Math.floor(VW*k)+'px';cv.style.height=Math.floor(VH*k)+'px'}
 function full(on){GM.classList.toggle('full',on);document.body.classList.toggle('vollbild',on);
  if(on){const D=document.documentElement;try{if(D.requestFullscreen&&!document.fullscreenElement)D.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch(e){}}
  else if(document.fullscreenElement){document.exitFullscreen().catch(()=>{})}
