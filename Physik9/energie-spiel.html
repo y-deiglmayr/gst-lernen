@@ -72,6 +72,8 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .pxtitle{font:700 clamp(20px,4vw,40px) Lexend,sans-serif;color:#f1f4f4;text-shadow:3px 3px 0 #1b2122;margin:0 0 14px}
 .startov .keys{color:#d3dcde;font-size:14px;margin:12px 0 0}
 .pause{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:#1b2122;color:#f1f4f4;padding:4px 12px;border-radius:6px;font-size:13px;line-height:1.4}
+.gate{max-width:560px;margin:0 auto;border:1px solid var(--line);border-radius:16px;padding:22px;background:var(--panel)}
+body.frei .gate,body:not(.frei) #game,body:not(.frei) .legend,body:not(.frei) #spickzettel,body:not(.frei) .phases,body:not(.frei) .heftlink{display:none}
 .fullx{display:none}
 .game.full{position:fixed;inset:0;z-index:1000;border-radius:0;border:0;display:flex;flex-direction:column;background:#0e1314;height:100vh;height:100dvh;box-shadow:none}
 .game.full .fullx{display:grid;place-items:center;position:absolute;top:6px;right:8px;z-index:6;width:36px;height:36px;padding:0;border-radius:50%;background:#2f393a;color:#f1f4f4;border:2px solid #5F6F74;font-size:16px}
@@ -173,6 +175,7 @@ dialog.spick .top button{background:transparent;color:inherit;border-color:curre
 <script defer src="/brand/mischen.js"></script>
 </head>
 <body>
+<script>try{if(localStorage.getItem("p9-energiespiel-frei")==="1")document.body.classList.add("frei")}catch(e){}</script>
 <nav aria-label="Bereiche"><div class="wrap">
 <a href="/" title="Alle Lernpfade">← Übersicht</a>
 <a href="#spiel"><span>▶</span>Spielen</a>
@@ -200,6 +203,8 @@ dialog.spick .top button{background:transparent;color:inherit;border-color:curre
     <path d="M16 56 l-8 -6 M64 56 l8 -6" stroke="#2f393a" stroke-width="3" stroke-linecap="round"/>
    </symbol></defs></svg>
 <section class="band" id="spiel"><div class="wrap">
+<form class="gate" id="gate"><h2>🔒 Passwort</h2><p>Das Spiel ist mit einem Passwort geschützt. Deine Lehrerin oder dein Lehrer verrät es dir.</p>
+<div class="numrow"><label>Passwort: <input type="password" id="gatePw" autocomplete="off"></label><button class="primary" type="submit">Öffnen</button></div><p class="fb" id="gateFb" role="status"></p></form>
 <div class="game" id="game">
  <button type="button" class="fullx" id="fullX" aria-label="Vollbild schließen" title="Vollbild schließen">✕</button>
  <div class="hud">
@@ -658,6 +663,11 @@ if(F.intro)$('#startBtn').textContent='▶ Weiterspielen';
 return {after,get freeze(){return freeze},set freeze(v){freeze=v},reset(){P.x=6*TS;P.y=26*TS;P.dir='up';J.trail=[];J.x=8*TS;J.y=9*TS;talk=null;$('#talkbox').hidden=true;started=false;$('#startov').hidden=false;$('#startBtn').textContent='▶ Spiel starten';setActive(false);hud()}};
 })();
 
+/* ---------- Passwort (nur einfacher Schutz im Browser) ---------- */
+$('#gate').addEventListener('submit',async e=>{e.preventDefault();const v=$('#gatePw').value.trim().toLowerCase();let h='';
+ try{const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));h=[...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(er){}
+ if(h==='660365acd08c0bc9538f952f5c69ebbbc1b1638ba5d5027256e3e2f32b5d84ba'){try{localStorage.setItem('p9-energiespiel-frei','1')}catch(er){}document.body.classList.add('frei');$('#game').scrollIntoView({behavior:'smooth'})}
+ else{const f=$('#gateFb');f.className='fb bad';f.textContent='Das Passwort stimmt nicht.'}});
 /* ---------- Spickzettel, QR, Neustart ---------- */
 function openSpick(){const d=$('#spickDlg');$('#spickDlgIn').innerHTML='<div class="spickgrid">'+$('#spickInhalt').innerHTML+'</div>';d.showModal()}
 $('#spickBtn').onclick=openSpick;$('#spickClose').onclick=()=>$('#spickDlg').close();
