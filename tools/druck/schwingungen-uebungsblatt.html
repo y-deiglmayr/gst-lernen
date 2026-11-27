@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Schwingungen beschreiben – Übungsblatt</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<style>
+.dg{--grid:#d5dcdd;--ink:#3E4B4C;--kurve:#2f393a;display:block;width:100%;max-width:92mm}
+.dg .txs{font:11px "Source Sans 3",sans-serif;fill:#3E4B4C}
+.dg .dashl{stroke:#5F6F74;stroke-dasharray:3 3}
+.figs .dg{max-width:60mm;margin:0 auto}
+</style>
+</head>
+<body>
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 8 · Akustik</div>
+  <h1>Akustik 2 · Schwingungen beschreiben</h1>
+  <div class="unter">Übungsblatt zum Lernpfad „Schwingungen beschreiben“ · 4 · Üben</div>
+ </div>
+ <div class="qr"><!--QR:https://physik.party/Physik8/schwingungen--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29"><path stroke="#3e4b4c" d="M0 0.5h7m2 0h2m1 0h1m2 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m2 0h2m3 0h2m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h2m1 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m2 0h4m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m2 0h1m3 0h1m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-19 1h2m5 0h4m-21 1h1m2 0h1m1 0h2m1 0h2m1 0h1m1 0h4m2 0h1m1 0h1m1 0h1m-24 1h1m3 0h1m2 0h1m3 0h1m1 0h1m2 0h3m2 0h2m2 0h1m2 0h1m-29 1h4m1 0h3m2 0h1m5 0h4m2 0h2m1 0h3m-27 1h1m6 0h1m1 0h1m2 0h1m1 0h1m2 0h3m5 0h2m-27 1h1m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h2m-28 1h5m1 0h1m1 0h1m1 0h2m6 0h3m-21 1h3m2 0h1m4 0h2m1 0h1m2 0h2m5 0h5m-29 1h4m4 0h2m1 0h1m1 0h2m1 0h5m1 0h4m1 0h1m-24 1h1m1 0h1m2 0h3m4 0h2m1 0h1m3 0h1m3 0h1m-27 1h2m1 0h2m2 0h2m4 0h1m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m1 0h2m2 0h2m1 0h5m2 0h3m1 0h2m2 0h1m2 0h2m-27 1h2m1 0h1m1 0h1m1 0h1m1 0h1m3 0h5m1 0h1m1 0h2m2 0h2m-29 1h1m5 0h1m2 0h2m4 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m3 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h1m3 0h3m5 0h1m3 0h3m-27 1h1m1 0h3m1 0h1m2 0h1m4 0h1m1 0h3m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1m2 0h6m-28 1h1m1 0h3m1 0h1m3 0h5m6 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m2 0h2m1 0h1m4 0h5m1 0h1m3 0h1m-28 1h7m1 0h1m1 0h2m4 0h2m2 0h1m3 0h1m2 0h1"/></svg>Lernpfad öffnen<br>und Ergebnisse prüfen</div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Lösen:</b> Bearbeite die Aufgaben hier auf dem Blatt.</div>
+ <div><b class="n">2</b><b>Prüfen:</b> Gib deine Antworten im Lernpfad unter <b>„4 · Üben“</b> bei derselben Übungsnummer ein.</div>
+ <div><b class="n">3</b><b>Abhaken:</b> Kreuze <b>online geprüft</b> an. Falsch? Erst den Tipp im Lernpfad lesen, dann verbessern.</div>
+</div>
+
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 1</span><span class="t">Diagramm ablesen</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <div class="zwei" style="grid-template-columns:1fr 88mm"><div><p>Das Schwingungsdiagramm zeigt eine Stimmgabel. Die Zeitachse ist hier in Zehntelsekunden eingeteilt. Lies ab und berechne.</p>
+  <div class="teil"><b>a)</b><span>Amplitude</span></div><div class="teil"><b>b)</b><span>Periodendauer T</span></div><div class="teil"><b>c)</b><span>Anzahl der Perioden im Diagramm</span></div><div class="teil"><b>d)</b><span>Frequenz f</span></div></div>
+  <svg class="dg" data-diag="2,0.4,1.2" viewBox="0 0 320 170" role="img" aria-label="Schwingungsdiagramm einer Stimmgabel"></svg></div>
+  <div class="karo" style="height:16mm"><span class="lab">Rechenweg zu d)</span></div>
+  <div class="erg"><span class="feld">a) <i></i> cm</span><span class="feld">b) <i></i> s</span><span class="feld">c) <i></i></span><span class="feld">d) <i></i> Hz</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 2</span><span class="t">Umrechnen</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Rechne mit <f-m>f = 1 : T</f-m> bzw. <f-m>T = 1 : f</f-m>.</p>
+  <div class="teil"><b>a)</b><span><f-m>f = 4 Hz</f-m>. Berechne T.</span></div><div class="teil"><b>b)</b><span><f-m>T = 0,5 s</f-m>. Berechne f.</span></div><div class="teil"><b>c)</b><span><f-m>T = 0,02 s</f-m>. Berechne f.</span></div><div class="teil"><b>d)</b><span>Ein Körper macht 30 Schwingungen in 10&nbsp;s. Berechne f.</span></div>
+  <div class="karo" style="height:24mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <i></i> s</span><span class="feld">b) <i></i> Hz</span><span class="feld">c) <i></i> Hz</span><span class="feld">d) <i></i> Hz</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 3</span><span class="t">Stimmt das?</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Kreuze an: richtig (r) oder falsch (f)? Verbessere falsche Aussagen im Kopf.</p>
+  <table class="rf"><tr><th></th><th>r</th><th>f</th></tr><tr><td>„1 Hz bedeutet: eine Schwingung pro Sekunde.“</td><td class="x"></td><td class="x"></td></tr><tr><td>„Die Amplitude misst man von einem Umkehrpunkt bis zum anderen.“</td><td class="x"></td><td class="x"></td></tr><tr><td>„Je größer die Amplitude, desto höher ist der Ton.“</td><td class="x"></td><td class="x"></td></tr><tr><td>„Eine Periode ist eine vollständige Hin- und Herbewegung.“</td><td class="x"></td><td class="x"></td></tr><tr><td>„Je größer die Frequenz, desto größer ist die Periodendauer.“</td><td class="x"></td><td class="x"></td></tr></table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 4</span><span class="t">Diagramm zeichnen</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Zeichne das Schwingungsdiagramm für <f-m>A = 3 cm</f-m> und <f-m>T = 0,5 s</f-m>, zwei Perioden lang. Wähle: 1 Kästchen = 1&nbsp;cm nach oben, 4 Kästchen = 0,5&nbsp;s nach rechts. Beschrifte die Achsen.</p>
+  <div class="karo" style="height:45mm"><span class="lab">Schwingungsdiagramm</span></div>
+  <div class="erg"><span class="klein">Im Lernpfad: Welches Diagramm passt zu deiner Zeichnung?</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 5</span><span class="t">Eine Sekunde lang</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Körper schwingt mit <f-m>f = 4 Hz</f-m>. Du zeichnest sein Schwingungsdiagramm für 1&nbsp;s.</p>
+  <div class="teil"><b>a)</b><span>Berechne die Periodendauer T.</span></div><div class="teil"><b>b)</b><span>Wie viele Perioden sind im Diagramm zu sehen?</span></div>
+  <div class="karo" style="height:20mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <i></i> s</span><span class="feld">b) <i></i></span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 6</span><span class="t">Zwei Töne vergleichen</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Die Diagramme zeigen zwei Töne. Modell: Die Zeitachse ist stark gestreckt. Wichtig ist nur der Vergleich.</p>
+  <div class="figs"><div class="fig"><svg class="dg" data-diag="2,0.5,1,,Ton A" viewBox="0 0 320 170" role="img" aria-label="Ton A"></svg></div><div class="fig"><svg class="dg" data-diag="4,0.5,1,,Ton B" viewBox="0 0 320 170" role="img" aria-label="Ton B"></svg></div></div>
+  <table class="rf"><tr><td>Frequenz: Ton A und Ton B sind …</td><td style="width:62mm"><span class="l" style="width:58mm"></span></td></tr><tr><td>Tonhöhe: Ton A und Ton B sind …</td><td style="width:62mm"><span class="l" style="width:58mm"></span></td></tr><tr><td>Lautstärke: Lauter ist …</td><td style="width:62mm"><span class="l" style="width:58mm"></span></td></tr></table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 7</span><span class="t">Pendel im Klassenzimmer</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Fadenpendel macht in 10&nbsp;s genau 12 Perioden. Die Klasse misst mit der Stoppuhr.</p>
+  <div class="teil"><b>a)</b><span>Berechne die Frequenz f.</span></div><div class="teil"><b>b)</b><span>Berechne die Periodendauer T (auf zwei Stellen nach dem Komma).</span></div>
+  <div class="karo" style="height:15mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <i></i> Hz</span><span class="feld">b) <i></i> s</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 8</span><span class="t">Fester anschubsen</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Mia sagt: „Wenn ich die Schaukel fester anschubse, schwingt sie schneller hin und her. Die Periodendauer wird also kleiner.“ Beurteile die Aussage. <span class="beg">✍ Begründe</span> mit den Begriffen Amplitude und Periodendauer.</p>
+  <div class="zeilen" style="height:20mm"></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 9</span><span class="t">Kolibri und Pendel</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Die Flügel eines Kolibris schlagen etwa 50-mal pro Sekunde, man hört ein Summen. Ein Fadenpendel schwingt mit etwa 1&nbsp;Hz, man hört nichts. <span class="beg">✍ Begründe</span> den Unterschied mit dem Begriff Frequenz. (Erinnerung aus Akustik 1: Wir hören Schwingungen ab etwa 20 pro Sekunde.)</p>
+  <div class="zeilen" style="height:20mm"></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<script>
+const fmtS=(v,n=2)=>(+v).toFixed(n).replace(".",",").replace(/(,\d*?)0+$/,"$1").replace(/,$/,"");
+function diagSVG(A,T,tmax,mark,title){const W=320,H=170,L=40,R=12,Y0=82,PX=14,YM=4.5*PX,w=W-L-R,sx=t=>L+t/tmax*w;let s='';
+ const dt=tmax<=1.2?0.1:0.5;
+ for(let k=-4;k<=4;k++){const y=Y0-k*PX;s+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" style="stroke:var(--grid)" stroke-width="1"/>`;if(k%2===0)s+=`<text x="${L-6}" y="${y+4}" text-anchor="end" class="txs">${k}</text>`}
+ for(let t=0;t<=tmax+1e-9;t+=dt){const x=sx(t),maj=Math.abs(t/(dt*5)-Math.round(t/(dt*5)))<1e-6||dt===0.5;s+=`<line x1="${x}" y1="${Y0-YM}" x2="${x}" y2="${Y0+YM}" style="stroke:var(--grid)" stroke-width="1"/>`;if(tmax<=1.2?Math.round(t*10)%2===0:maj)s+=`<text x="${x}" y="${Y0+YM+16}" text-anchor="middle" class="txs">${fmtS(t,1)}</text>`}
+ s+=`<line x1="${L}" y1="${Y0+YM+2}" x2="${L}" y2="${Y0-YM-4}" style="stroke:var(--ink)" stroke-width="1.5"/><line x1="${L}" y1="${Y0}" x2="${W-R+4}" y2="${Y0}" style="stroke:var(--ink)" stroke-width="1.5"/>`;
+ s+=`<text x="${W-R}" y="${Y0-6}" text-anchor="end" class="txs" font-style="italic">t in s</text><text x="${L+6}" y="10" class="txs" font-style="italic">s in cm</text>`;
+ if(title)s+=`<text x="${W-R}" y="12" text-anchor="end" class="txs" font-weight="700">${title}</text>`;
+ let p='';for(let i=0;i<=200;i++){const t=i/200*tmax;p+=(i?'L':'M')+sx(t).toFixed(1)+' '+(Y0-A*PX*Math.sin(2*Math.PI*t/T)).toFixed(1)}
+ s+=`<path d="${p}" style="fill:none;stroke:var(--kurve)" stroke-width="2.6" stroke-linecap="round"/>`;
+ if(mark){const xp=sx(T/4),yp=Y0-A*PX,xe=sx(T),ya=Y0+A*PX+8,lb=mark==='mark2';
+  const num=(x,y,n,txt)=>lb?`<text x="${x}" y="${y}" class="txs" font-weight="700" style="fill:var(--gst-heft,var(--ink))">${txt}</text>`:`<circle cx="${x}" cy="${y}" r="8" style="fill:var(--gst-mark,#FCBE00)"/><text x="${x}" y="${y+4}" text-anchor="middle" class="txs" font-weight="700" style="fill:#1b2122">${n}</text>`;
+  s+=`<circle cx="${xp}" cy="${yp}" r="3.5" style="fill:var(--ink)"/>`;
+  s+=`<line x1="${xp+4}" y1="${Y0-2}" x2="${xp+4}" y2="${yp+4}" style="stroke:var(--ink)" stroke-width="1.4" marker-end="url(#pf${lb?2:1})" marker-start="url(#pf${lb?2:1})"/>`;
+  s+=`<line x1="${sx(0)+2}" y1="${ya}" x2="${xe-2}" y2="${ya}" style="stroke:var(--ink)" stroke-width="1.4" marker-end="url(#pf${lb?2:1})" marker-start="url(#pf${lb?2:1})"/><line x1="${xe}" y1="${Y0}" x2="${xe}" y2="${ya+4}" class="dashl"/>`;
+  s=`<defs><marker id="pf${lb?2:1}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9z" style="fill:var(--ink)"/></marker></defs>`+s;
+  s+=num(sx(0.03)+(lb?2:8),Y0+(lb?14:13),1,'Ruhelage')+num(xp+12,yp-4,2,'Umkehrpunkt')+num(xp+16,Y0-A*PX/2+4,3,'Amplitude')+num(sx(lb?T*0.2:T*0.62),lb?ya+15:ya-6,4,'Periodendauer T')}
+ return s}
+document.querySelectorAll('svg[data-diag]').forEach(sv=>{const [A,T,tm,mk,ti]=sv.dataset.diag.split(',');sv.innerHTML=diagSVG(+A,+T,+tm,mk,ti)});
+</script>
+
+</body>
+</html>

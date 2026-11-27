@@ -25,6 +25,7 @@ Physik8/
   schall-entstehung.html    Akustik 1 · Wie entsteht Schall? (Schallquelle, -leiter, -empfänger, Vakuum, Schwingungen, Lineal-Labor)
   schall-entstehung-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   schwingungen.html         Akustik 2 · Schwingungen beschreiben (Schwingungsdiagramm, Amplitude, Periodendauer, Frequenz, Federpendel-Labor, Stroboskop)
+  schwingungen-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
 Physik9/
   energie-einfuehrung.html  Was ist Energie? (Energieformen, Stationen, Energiewandler)
   lageenergie.html          Lageenergie (Fall-Labor, E = m · g · h, Nullniveau)
