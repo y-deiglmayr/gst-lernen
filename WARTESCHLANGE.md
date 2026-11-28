@@ -41,7 +41,7 @@ In Lernpfaden **keine Schülernamen** aus dem Material verwenden; Beispielperson
 | 7 | Lernpfad Akustik 3 · Tonhöhe, Lautstärke, Schallarten | Physik8/schallarten | fertig (27.11.2026, 31e5db1) | offen |
 | 8 | Druck Akustik 3 | Physik8/schallarten-*.pdf | fertig (28.11.2026, bb26e7d) | offen |
 | 9 | Druck Kräfte 2 · Gewichtskraft und Masse | Physik8/gewichtskraft-masse-*.pdf | fertig (28.11.2026, 27b662e) | offen |
-| 10 | Lernpfad Akustik 4 · Schallausbreitung | Physik8/schallausbreitung | in Arbeit (28.11.2026 13:08 UTC) | offen |
+| 10 | Lernpfad Akustik 4 · Schallausbreitung | Physik8/schallausbreitung | fertig (28.11.2026, d12bc08) | offen |
 | 11 | Druck Akustik 4 | Physik8/schallausbreitung-*.pdf | offen | offen |
 | 12 | Druck Kräfte 3 · hookesches Gesetz | Physik8/hookesches-gesetz-*.pdf | offen | offen |
 | 13 | Lernpfad Akustik 5 · Schallgeschwindigkeit | Physik8/schallgeschwindigkeit | offen | offen |
