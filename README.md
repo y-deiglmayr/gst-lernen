@@ -21,6 +21,7 @@ Physik8/
   kraefte-wirkungen.html    Kräfte 1 · Was ist eine Kraft? (Kraftwirkungen, Kraftpfeil, Newton)
   kraefte-wirkungen-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   gewichtskraft-masse.html  Kräfte 2 · Gewichtskraft und Masse (Gravitation, Ortsfaktor, F_G = m · g)
+  gewichtskraft-masse-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   hookesches-gesetz.html    Kräfte 3 · Kräfte messen: hookesches Gesetz (Feder-Labor, Federkonstante)
   kraefte-newton.html       Kräfte 4 · Mehrere Kräfte und Newtons Gesetze (Kräftegleichgewicht, Trägheit, Kraft = Gegenkraft)
   schall-entstehung.html    Akustik 1 · Wie entsteht Schall? (Schallquelle, -leiter, -empfänger, Vakuum, Schwingungen, Lineal-Labor)

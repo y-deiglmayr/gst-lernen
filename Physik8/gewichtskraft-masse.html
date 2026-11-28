@@ -230,6 +230,7 @@ a.lnk.nx{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#11
 nav a.heftlink span{background:var(--gst-mark);color:#2f393a}
 .heft .fig2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}
 .heft .fig2 svg{width:100%;height:auto;display:block;background:var(--paper);border:1px solid var(--line);border-radius:8px}
+.musterfig{margin:6px 0 14px;max-width:420px}.musterfig svg{display:block;width:100%;height:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px}
 .heft table{border-collapse:collapse;margin:6px 0;font-size:16px}.heft td,.heft th{border:1px solid var(--line);padding:4px 10px;background:var(--paper)}
 .stepper .stepbox{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
 .stepper .stepbox p{margin:.3em 0}
@@ -314,6 +315,7 @@ QR groß zeigen</button></div>
 <div class="phases">
 <a href="#einstieg"><b>1 · Einstieg</b><small>Reise zum Mond</small></a><a href="#entdecken"><b>2 · Entdecken</b><small>Gravitation, Waage und Kraftmesser, Messreihe</small></a><a href="#festhalten"><b>3 · Festhalten</b><small>Lückentext und ✎ Heftaufschrieb</small></a><a href="#ueben"><b>4 · Üben</b><small>9 Übungen von ★ bis ★★★</small></a>
 </div>
+<div class="ablinks"><a class="arbeitsblatt" href="/Physik8/gewichtskraft-masse-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigenem Diagramm · PDF, 1 Seite</small></span></a><a class="arbeitsblatt" href="/Physik8/gewichtskraft-masse-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 9 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a></div>
 </div></header>
 
 <!-- ============ 1 EINSTIEG ============ -->
@@ -391,24 +393,32 @@ QR groß zeigen</button></div>
 <div class="selbox part" data-task="f1" data-fb="Alles richtig! Jetzt kommt der Heftaufschrieb."><div class="cloze">Alle Körper ziehen sich gegenseitig an. Diese Anziehung heißt <select data-a="Gravitation"><option value="">…</option><option>Gravitation</option><option>Reibung</option><option>Magnetismus</option></select>. Die <select data-a="Masse"><option value="">…</option><option>Masse</option><option>Gewichtskraft</option></select> eines Körpers ist überall gleich und wird in kg gemessen. Die Gewichtskraft wird in <select data-a="Newton"><option value="">…</option><option>Newton</option><option>Kilogramm</option></select> angegeben und hängt vom <select data-a="Ort"><option value="">…</option><option>Ort</option><option>Wetter</option><option>Material</option></select> ab. Gewichtskraft und Masse sind <select data-a="proportional"><option value="">…</option><option>proportional</option><option>gleich</option><option>unabhängig</option></select>. Der Ortsfaktor der Erde beträgt etwa <select data-a="9,81 N/kg"><option value="">…</option><option>9,81 N/kg</option><option>1,62 N/kg</option><option>100 N/kg</option></select>.</div><div class="row"><button class="primary sel-check">Prüfen</button></div><p class="fb sfb"></p></div>
 </div>
 
-<div class="heftbox" id="heft" data-task="heft1"><div class="hb-head"><b>✎ HEFTAUFSCHRIEB</b><small>Vollständig ins Heft übernehmen: Überschrift, Text, Tabelle und Formel</small></div>
+<a class="arbeitsblatt" href="/Physik8/gewichtskraft-masse-heftaufschrieb.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Heftaufschrieb zum Ausfüllen</b><small>Lückentext mit eigenem Diagramm · PDF, 1 Seite</small></span></a>
+<details class="reveal" id="heft"><summary>✎ Heftaufschrieb anzeigen (erst selbst versuchen, dann vergleichen)</summary>
 <div class="heft">
-<h3>5.2 Gewichtskraft, Masse und Ortsfaktor</h3>
-<p><b>Gravitation:</b> Alle Körper ziehen sich gegenseitig an. In der Nähe eines sehr großen Körpers (Erde, Mond) spüren wir diese Anziehung als <b>Gewichtskraft</b> <f-m>F<sub>G</sub></f-m>. Sie zeigt zum Mittelpunkt der Erde (bzw. des Mondes).</p>
-<p><b>Die Masse</b> <f-m>m</f-m> ist eine Eigenschaft des Körpers und überall gleich groß. Einheit: <f-m>[m] = 1 kg</f-m>. Messgerät: Balkenwaage.</p>
-<p><b>Die Gewichtskraft</b> <f-m>F<sub>G</sub></f-m> hängt vom Ort ab. Einheit: <f-m>[F<sub>G</sub>] = 1 N</f-m>. Messgerät: Kraftmesser.</p>
-<p><b>Der Ortsfaktor:</b> Gewichtskraft und Masse sind proportional (<f-m>F<sub>G</sub> ~ m</f-m>). Der Quotient ist an einem Ort konstant und heißt Ortsfaktor: <span class="box"><f-m>g = F<sub>G</sub> : m</f-m></span> &nbsp; Einheit: N/kg</p>
-<table><tr><th>Ort</th><td>Erde</td><td>Mond</td><td>Mars</td><td>Jupiter</td></tr><tr><th><f-m>g</f-m> in N/kg</th><td>9,81</td><td>1,62</td><td>3,71</td><td>24,8</td></tr></table>
-<p><b>Es gilt:</b> Gewichtskraft = Masse · Ortsfaktor &nbsp; <span class="box"><f-m>F<sub>G</sub> = m · g</f-m></span></p>
-<p><b>Beispiel:</b> Rucksack, <f-m>m = 2 kg</f-m>: <f-m>F<sub>G</sub> = 2 kg · 9,81 N/kg = 19,62 N</f-m> (Erde), auf dem Mond nur <f-m>F<sub>G</sub> = 2 kg · 1,62 N/kg = 3,24 N</f-m>.</p>
+<h3>Gravitation</h3>
+<p>Alle Körper ziehen sich gegenseitig an. Diese Anziehung heißt <b>Gravitation</b>. In der Nähe eines sehr großen Körpers (Erde, Mond) spüren wir sie als <b>Gewichtskraft</b> <f-m>F<sub>G</sub></f-m>. Sie zeigt zum <b>Mittelpunkt</b> der Erde (bzw. des Mondes).</p>
+<h3>Masse und Gewichtskraft</h3>
+<table><tr><th></th><th>Masse</th><th>Gewichtskraft</th></tr><tr><th>Formelzeichen</th><td><b><f-m>m</f-m></b></td><td><b><f-m>F<sub>G</sub></f-m></b></td></tr><tr><th>Einheit</th><td><b>Kilogramm</b> (kg)</td><td><b>Newton</b> (N)</td></tr><tr><th>Messgerät</th><td><b>Balkenwaage</b></td><td><b>Kraftmesser</b></td></tr><tr><th>Hängt sie vom Ort ab?</th><td><b>nein</b>, überall gleich</td><td><b>ja</b></td></tr></table>
+<h3>Der Ortsfaktor</h3>
+<p>Gewichtskraft und Masse sind <b>proportional</b>: doppelte Masse, doppelte Gewichtskraft. Im Diagramm ergibt sich eine <b>Ursprungsgerade</b>. Der Quotient aus Gewichtskraft und Masse ist an einem Ort konstant und heißt <b>Ortsfaktor</b>:</p>
+<p><span class="box"><f-m>g = F<sub>G</sub> : m</f-m></span> &nbsp; Einheit: <b>N/kg</b></p>
+<figure class="musterfig"><svg viewBox="0 0 320 215" role="img" aria-label="Diagramm Gewichtskraft über Masse: zwei Ursprungsgeraden, steil für die Erde, flach für den Mond"><line x1="50" y1="190" x2="50" y2="30" class="gl"/><text x="50" y="207" text-anchor="middle" class="txs">0</text><line x1="110" y1="190" x2="110" y2="30" class="gl"/><text x="110" y="207" text-anchor="middle" class="txs">1</text><line x1="170" y1="190" x2="170" y2="30" class="gl"/><text x="170" y="207" text-anchor="middle" class="txs">2</text><line x1="230" y1="190" x2="230" y2="30" class="gl"/><text x="230" y="207" text-anchor="middle" class="txs">3</text><line x1="290" y1="190" x2="290" y2="30" class="gl"/><text x="290" y="207" text-anchor="middle" class="txs">4</text><line x1="50" y1="190" x2="290" y2="190" class="gl"/><text x="44" y="194" text-anchor="end" class="txs">0</text><line x1="50" y1="150" x2="290" y2="150" class="gl"/><text x="44" y="154" text-anchor="end" class="txs">10</text><line x1="50" y1="110" x2="290" y2="110" class="gl"/><text x="44" y="114" text-anchor="end" class="txs">20</text><line x1="50" y1="70" x2="290" y2="70" class="gl"/><text x="44" y="74" text-anchor="end" class="txs">30</text><line x1="50" y1="30" x2="290" y2="30" class="gl"/><text x="44" y="34" text-anchor="end" class="txs">40</text><line x1="50" y1="190" x2="314.0" y2="190" class="thin"/><line x1="50" y1="190" x2="50" y2="14" class="thin"/><text x="314.0" y="184" text-anchor="end" class="txs">m in kg</text><text x="56" y="18" class="txs">F<tspan dy="4" font-size="75%">G</tspan><tspan dy="-4"> in N</tspan></text><line x1="50" y1="190" x2="290" y2="33.0" style="stroke:var(--fg)" stroke-width="2.5"/><circle cx="110" cy="150.8" r="4" style="fill:var(--fg)"/><circle cx="170" cy="111.5" r="4" style="fill:var(--fg)"/><circle cx="230" cy="72.3" r="4" style="fill:var(--fg)"/><circle cx="290" cy="33.0" r="4" style="fill:var(--fg)"/><text x="242.0" y="46" class="txs" style="fill:var(--fg)">Erde</text><line x1="50" y1="190" x2="290" y2="164.1" style="stroke:var(--fr)" stroke-width="2.5"/><circle cx="290" cy="164.1" r="4" style="fill:var(--fr)"/><text x="248.0" y="146" class="txs" style="fill:var(--fr)">Mond</text></svg></figure>
+<table><tr><th>Ort</th><td>Erde</td><td>Mond</td><td>Mars</td><td>Jupiter</td></tr><tr><th><f-m>g</f-m> in N/kg</th><td><b>9,81</b></td><td><b>1,62</b></td><td>3,71</td><td>24,8</td></tr></table>
+<p>Es gilt: Gewichtskraft = Masse · Ortsfaktor &nbsp; <span class="box"><f-m>F<sub>G</sub> = m · g</f-m></span></p>
+<p>Beispiel: Rucksack mit <f-m>m = 2 kg</f-m></p>
+<p>Erde: <f-m>F<sub>G</sub> = 2 kg · 9,81 N/kg</f-m> = <b><f-m>19,62 N</f-m></b> &nbsp; Mond: <f-m>F<sub>G</sub> = 2 kg · 1,62 N/kg</f-m> = <b><f-m>3,24 N</f-m></b></p>
+<p>Die Masse bleibt auf dem Mond <b>gleich</b>.</p>
+<div class="row"><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div>
 </div>
-<div class="hb-foot"><span>Fertig abgeschrieben? Dann abhaken.</span><button class="hb-done" data-task="heft1">Heftaufschrieb übernommen</button></div></div>
+</details>
 </div></section>
 
 <!-- ============ 4 ÜBEN ============ -->
 <section class="band alt" id="ueben"><div class="wrap">
 <h2>4 · Üben</h2>
 <p class="intro"><b>Erst im Heft rechnen, dann hier prüfen.</b> Rechne mit <f-m>g = 9,81 N/kg</f-m> (Erde) und <f-m>g = 1,62 N/kg</f-m> (Mond). Schreibe immer Formel, Rechnung und Ergebnis mit Einheit auf.</p>
+<a class="arbeitsblatt" href="/Physik8/gewichtskraft-masse-uebungsblatt.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.5 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10v7m-3-3 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Übungsblatt</b><small>Alle 9 Übungen zum Bearbeiten auf Papier · PDF, 3 Seiten</small></span></a>
 <div class="lvlrow"><span>★ / AFB I: Grundlagen anwenden</span><span>★★ / AFB II: Zusammenhänge herstellen</span><span>★★★ / AFB III: übertragen, beurteilen, begründen</span></div>
 
 <div class="card"><div class="tag">Übung 1 · Gewichtskraft berechnen <span class="stars">★</span> <span class="afb">AFB I</span></div>
