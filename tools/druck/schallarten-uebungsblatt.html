@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Tonhöhe, Lautstärke und Schallarten – Übungsblatt</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/tools/druck/druck.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<style>
+.os{--scr:#fff;--grid:#d5dcdd;--line:#ACBDC3;--kurve:#2f393a;--paper:#fff;--ink:#3E4B4C;display:block;width:100%;max-width:88mm;margin:0 auto}
+.figs4{display:grid;grid-template-columns:repeat(4,1fr);gap:2mm;margin:1mm 0 2mm}
+.figs4 .os{max-width:56mm}
+.mcp{list-style:none;margin:1mm 0 2mm;padding:0;font-size:9.8pt}
+.mcp li{margin:0 0 1.2mm;padding-left:6mm;position:relative}
+.mcp li::before{content:"";position:absolute;left:0;top:.5mm;width:3.6mm;height:3.6mm;border:.35mm solid #5F6F74;border-radius:.6mm}
+.mcp.quer{display:flex;gap:8mm;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="bar"></div>
+<header class="kopf">
+ <img class="logo" src="/brand/logo.svg" alt="Logo der Schule">
+ <div class="tit">
+  <div class="ober">Physik · Klasse 8 · Akustik</div>
+  <h1>Akustik 3 · Tonhöhe, Lautstärke und Schallarten</h1>
+  <div class="unter">Übungsblatt zum Lernpfad „Tonhöhe, Lautstärke und Schallarten“ · 4 · Üben</div>
+ </div>
+ <div class="qr"><!--QR:https://physik.party/Physik8/schallarten--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29"><path stroke="#3e4b4c" d="M0 0.5h7m3 0h3m2 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m6 0h1m1 0h1m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m5 0h3m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h2m1 0h1m1 0h1m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h1m1 0h2m2 0h1m1 0h4m-21 1h1m2 0h1m1 0h2m1 0h4m1 0h4m2 0h1m1 0h1m1 0h1m-24 1h1m1 0h2m1 0h1m3 0h1m1 0h3m2 0h3m2 0h2m2 0h1m2 0h1m-27 1h1m2 0h2m3 0h4m3 0h3m2 0h2m1 0h3m-27 1h1m3 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h3m5 0h2m-28 1h4m1 0h4m1 0h2m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h2m-29 1h1m2 0h3m3 0h5m5 0h3m-20 1h1m3 0h1m3 0h1m2 0h2m2 0h2m5 0h5m-26 1h1m1 0h1m6 0h2m1 0h1m1 0h4m1 0h4m1 0h1m-28 1h2m2 0h1m1 0h5m2 0h2m2 0h1m1 0h1m3 0h1m3 0h1m-26 1h1m1 0h2m5 0h1m1 0h2m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m2 0h2m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h2m2 0h1m2 0h2m-22 1h2m2 0h2m2 0h5m1 0h1m1 0h2m2 0h2m-29 1h1m1 0h2m1 0h4m2 0h1m3 0h2m1 0h1m1 0h5m1 0h1m-19 1h1m3 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h3m-29 1h7m2 0h4m3 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h2m1 0h1m2 0h1m5 0h1m3 0h4m-28 1h1m1 0h3m1 0h1m2 0h1m1 0h1m4 0h3m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m5 0h1m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m6 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m3 0h2m5 0h5m1 0h1m3 0h1m-28 1h7m1 0h1m4 0h1m2 0h2m2 0h1m3 0h1m2 0h1"/></svg>Lernpfad öffnen<br>und Ergebnisse prüfen</div>
+</header>
+
+<div class="so">
+ <div><b class="n">1</b><b>Lösen:</b> Bearbeite die Aufgaben hier auf dem Blatt.</div>
+ <div><b class="n">2</b><b>Prüfen:</b> Gib deine Antworten im Lernpfad unter <b>„4 · Üben“</b> bei derselben Übungsnummer ein.</div>
+ <div><b class="n">3</b><b>Abhaken:</b> Kreuze <b>online geprüft</b> an. Falsch? Erst den Tipp im Lernpfad lesen, dann verbessern.</div>
+</div>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 1</span><span class="t">Stimmt das?</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Kreuze an: richtig (r) oder falsch (f)?</p>
+  <table class="rf"><tr><th></th><th>r</th><th>f</th></tr><tr><td>„Ein lauter Ton ist immer auch ein hoher Ton.“</td><td class="x"></td><td class="x"></td></tr><tr><td>„Liegen die Wellenberge im Schallbild enger beieinander, ist der Ton höher.“</td><td class="x"></td><td class="x"></td></tr><tr><td>„Ultraschall ist besonders lauter Schall.“</td><td class="x"></td><td class="x"></td></tr><tr><td>„Ein Klang besteht aus mehreren Tönen.“</td><td class="x"></td><td class="x"></td></tr></table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 2</span><span class="t">Oszi-Schwingungen</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Alle vier Bilder sind mit derselben Einstellung des Oszilloskops aufgenommen. Welches Bild passt?</p>
+  <div class="figs4"><svg class="os" data-schall="ton,3,3.2,A" viewBox="0 0 320 170" role="img" aria-label="Bild A"></svg><svg class="os" data-schall="ton,8,1,B" viewBox="0 0 320 170" role="img" aria-label="Bild B"></svg><svg class="os" data-schall="ton,3,1,C" viewBox="0 0 320 170" role="img" aria-label="Bild C"></svg><svg class="os" data-schall="ton,8,3.2,D" viewBox="0 0 320 170" role="img" aria-label="Bild D"></svg></div>
+  <table class="rf"><tr><td><b>a)</b> große Frequenz und kleine Amplitude</td><td style="width:46mm">Bild <span class="l" style="width:30mm"></span></td></tr><tr><td><b>b)</b> tief und leise</td><td style="width:46mm">Bild <span class="l" style="width:30mm"></span></td></tr><tr><td><b>c)</b> hoch und laut</td><td style="width:46mm">Bild <span class="l" style="width:30mm"></span></td></tr><tr><td><b>d)</b> gleiche Tonhöhe wie Bild D, aber leiser</td><td style="width:46mm">Bild <span class="l" style="width:30mm"></span></td></tr></table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 3</span><span class="t">Schallarten im Alltag</span><span class="st">★</span><span class="afb">AFB I</span></div>
+ <div class="ab">
+  <p>Ordne zu: Ton, Klang, Geräusch oder Knall?</p>
+  <table class="rf"><tr><td><b>a)</b> Ein Luftballon platzt.</td><td style="width:46mm"><span class="l" style="width:40mm"></span></td></tr><tr><td><b>b)</b> Regen prasselt aufs Dach.</td><td style="width:46mm"><span class="l" style="width:40mm"></span></td></tr><tr><td><b>c)</b> Eine Gitarrensaite wird gezupft.</td><td style="width:46mm"><span class="l" style="width:40mm"></span></td></tr><tr><td><b>d)</b> Ein Tongenerator erzeugt eine reine Sinusschwingung mit 440&nbsp;Hz.</td><td style="width:46mm"><span class="l" style="width:40mm"></span></td></tr><tr><td><b>e)</b> Ein Staubsauger läuft.</td><td style="width:46mm"><span class="l" style="width:40mm"></span></td></tr></table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 4</span><span class="t">Hören wir das?</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Berechne aus der Periodendauer die Frequenz mit <f-m>f = 1 : T</f-m>. Entscheide dann, ob ein Mensch den Schall hören kann.</p>
+  <div class="teil"><b>a)</b><span><f-m>T = 0,1 s</f-m></span></div><div class="teil"><b>b)</b><span><f-m>T = 0,001 s</f-m></span></div><div class="teil"><b>c)</b><span><f-m>T = 0,00004 s</f-m></span></div>
+  <div class="karo" style="height:22mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <i></i> Hz</span><span class="feld">b) <i></i> Hz</span><span class="feld">c) <i></i> Hz</span></div>
+  <p style="margin-top:2.4mm">Infraschall, hörbarer Schall oder Ultraschall?</p>
+  <table class="rf"><tr><td><b>d)</b> Schall aus a)</td><td style="width:46mm"><span class="l" style="width:40mm"></span></td></tr><tr><td><b>e)</b> Schall aus b)</td><td style="width:46mm"><span class="l" style="width:40mm"></span></td></tr><tr><td><b>f)</b> Schall aus c)</td><td style="width:46mm"><span class="l" style="width:40mm"></span></td></tr></table>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 5</span><span class="t">Den Schirm auswerten</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <div class="zwei" style="grid-template-columns:1fr 74mm"><div><p>Einstellung: Ein Kästchen nach rechts entspricht 0,5&nbsp;ms. Der Schirm ist 10&nbsp;Kästchen breit.</p>
+  <div class="teil"><b>a)</b><span>Zeit, die der ganze Schirm zeigt</span></div><div class="teil"><b>b)</b><span>Periodendauer T</span></div><div class="teil"><b>c)</b><span>Frequenz f</span></div></div>
+  <svg class="os" style="max-width:72mm" data-schall="ton,4,2.5" viewBox="0 0 320 170" role="img" aria-label="Oszilloskop-Schirm mit einem Ton"></svg></div>
+  <div class="karo" style="height:22mm"><span class="lab">Rechenweg</span></div>
+  <div class="erg"><span class="feld">a) <i></i> ms</span><span class="feld">b) <i></i> ms</span><span class="feld">c) <i></i> Hz</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 6</span><span class="t">Leiser drehen</span><span class="st">★★</span><span class="afb">AFB II</span></div>
+ <div class="ab">
+  <p>Ein Tongenerator spielt einen Ton. Du drehst nur die Lautstärke herunter. Wie verändert sich das Schallbild? Kreuze an.</p>
+  <ul class="mcp"><li>Die Kurve wird flacher, die Abstände der Wellenberge bleiben gleich.</li><li>Die Wellenberge rücken enger zusammen.</li><li>Die Kurve wird flacher und die Wellenberge rücken weiter auseinander.</li><li>Das Bild wird unregelmäßig wie bei einem Geräusch.</li></ul>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 7</span><span class="t">Flöte und Geige</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Eine Blockflöte und eine Geige spielen genau denselben Ton (gleiche Tonhöhe). Trotzdem erkennst du sofort, welches Instrument spielt. <span class="beg">✍ Begründe</span> mit dem Schallbild.</p>
+  <div class="zeilen" style="height:24mm"></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 8</span><span class="t">Die Hundepfeife</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Lena bläst in eine Hundepfeife. Sie hört nichts, aber ihr Hund kommt sofort angerannt. <span class="beg">✍ Begründe</span> mit dem Hörbereich.</p>
+  <div class="zeilen" style="height:24mm"></div>
+  <div class="erg"><span class="klein">Vergleiche online mit der Musterbegründung.</span><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<section class="aufg">
+ <div class="ah"><span class="nr">Übung 9</span><span class="t">Hörtest</span><span class="st">★★★</span><span class="afb">AFB III</span></div>
+ <div class="ab">
+  <p>Bei einem Hörtest mit dem Tongenerator hört Lea (14&nbsp;Jahre) Töne von 20&nbsp;Hz bis 19&nbsp;000&nbsp;Hz, ihr Opa nur von 75&nbsp;Hz bis 9&nbsp;000&nbsp;Hz. Welche Töne hört nur Lea? Kreuze alle an.</p>
+  <ul class="mcp quer"><li>50&nbsp;Hz</li><li>5&nbsp;000&nbsp;Hz</li><li>12&nbsp;000&nbsp;Hz</li><li>25&nbsp;000&nbsp;Hz</li></ul>
+  <div class="erg"><span class="ok">online geprüft</span></div>
+ </div>
+</section>
+<script>
+function rng(seed){let s=seed>>>0||1;return()=>{s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0;return s/4294967296}}
+function schallY(kind,n,A,seed){const N=400,ys=[];
+ if(kind==='ton'){for(let i=0;i<=N;i++)ys.push(A*Math.sin(2*Math.PI*n*i/N))}
+ else if(kind==='klang'){const k=(x)=>Math.sin(x)+0.6*Math.sin(2*x+0.8)+0.35*Math.sin(3*x+1.9);let mx=0;for(let i=0;i<=200;i++)mx=Math.max(mx,Math.abs(k(2*Math.PI*i/200)));for(let i=0;i<=N;i++)ys.push(A*k(2*Math.PI*n*i/N)/mx)}
+ else{const r=rng(seed*7919+17),comp=[];for(let j=0;j<14;j++)comp.push([9+r()*70,r()*6.283,0.4+r()]);
+  const raw=[];for(let i=0;i<=N;i++){const x=i/N;let v=0;comp.forEach(([f,p,a])=>v+=a*Math.sin(2*Math.PI*f*x+p));v+=1.4*(r()-0.5);raw.push(v)}
+  const mx=Math.max(...raw.map(Math.abs));
+  if(kind==='geraeusch')raw.forEach(v=>ys.push(A*v/mx*(0.75+0.25*Math.abs(v/mx))));
+  else{const x0=0.06;raw.forEach((v,i)=>{const x=i/N;ys.push(x<x0?0:A*(v/mx)*Math.exp(-(x-x0)/0.07))})}}
+ return ys}
+function osziSVG(kind,n,A,title,seed){const L=10,T=10,W=300,H=150,cy=T+H/2,dx=W/10,dy=H/8;let s=`<rect x="${L}" y="${T}" width="${W}" height="${H}" rx="6" style="fill:var(--scr);stroke:var(--line)"/>`;
+ for(let i=1;i<10;i++)s+=`<line x1="${L+i*dx}" y1="${T}" x2="${L+i*dx}" y2="${T+H}" style="stroke:var(--grid)" stroke-width="${i===5?1.6:1}"/>`;
+ for(let j=1;j<8;j++)s+=`<line x1="${L}" y1="${T+j*dy}" x2="${L+W}" y2="${T+j*dy}" style="stroke:var(--grid)" stroke-width="${j===4?1.6:1}"/>`;
+ const ys=schallY(kind,n,A,seed);s+=`<path d="${ys.map((y,i)=>(i?'L':'M')+(L+i/(ys.length-1)*W).toFixed(1)+' '+(cy-Math.max(-3.9,Math.min(3.9,y))*dy).toFixed(1)).join('')}" style="fill:none;stroke:var(--kurve)" stroke-width="2.4" stroke-linejoin="round"/>`;
+ if(title)s+=`<rect x="${L+4}" y="${T+4}" width="${title.length*9+14}" height="24" rx="4" style="fill:var(--paper);stroke:var(--line)"/><text x="${L+11}" y="${T+21}" style="fill:var(--ink);font:700 16px Lexend,sans-serif">${title}</text>`;
+ return s}
+document.querySelectorAll('svg[data-schall]').forEach(sv=>{const [k,n,A,ti]=sv.dataset.schall.split(',');sv.innerHTML=osziSVG(k,+n,+A,ti,+n+3)});
+</script>
+
+</body>
+</html>
