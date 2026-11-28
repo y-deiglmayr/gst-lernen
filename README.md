@@ -28,6 +28,7 @@ Physik8/
   schwingungen.html         Akustik 2 · Schwingungen beschreiben (Schwingungsdiagramm, Amplitude, Periodendauer, Frequenz, Federpendel-Labor, Stroboskop)
   schwingungen-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   schallarten.html          Akustik 3 · Tonhöhe, Lautstärke und Schallarten (Oszilloskop, Tongenerator-Labor, Ton/Klang/Geräusch/Knall, Hörbereich, Infra- und Ultraschall)
+  schallarten-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
 Physik9/
   energie-einfuehrung.html  Was ist Energie? (Energieformen, Stationen, Energiewandler)
   lageenergie.html          Lageenergie (Fall-Labor, E = m · g · h, Nullniveau)
