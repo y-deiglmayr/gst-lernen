@@ -30,6 +30,7 @@ Physik8/
   schwingungen-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   schallarten.html          Akustik 3 · Tonhöhe, Lautstärke und Schallarten (Oszilloskop, Tongenerator-Labor, Ton/Klang/Geräusch/Knall, Hörbereich, Infra- und Ultraschall)
   schallarten-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
+  schallausbreitung.html    Akustik 4 · Schallausbreitung (Wasser und Spiritus, Teilchenmodell, Teilchen-Labor, Schraubenfedermodell, Schallleiter, Vakuum, Reflexion, Echoortung, Absorption)
 Physik9/
   energie-einfuehrung.html  Was ist Energie? (Energieformen, Stationen, Energiewandler)
   lageenergie.html          Lageenergie (Fall-Labor, E = m · g · h, Nullniveau)
