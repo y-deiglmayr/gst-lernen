@@ -45,6 +45,7 @@ Physik11/
   schiefe-ebene-heftaufschrieb.pdf  Heftaufschrieb zum Ausfüllen (Lückentext, eigene Zeichnung)
   schiefe-ebene-uebungsblatt.pdf    Übungsblatt mit Platz für den Rechenweg (beide: Download im Lernpfad, Symbol auf der Kachel)
   newton-reibung.html       5 · Newtonsche Gesetze und Reibung
+  kraft-spiel.html          Kraft-Spiel · Das Seifenkistenrennen von Kippelbach (Bilderbuch-Abenteuer mit Physik-Übungen, Passwort, alle Kraft-Themen)
   impuls-grundlagen.html    Impuls 1 · Der Impuls – eine neue Größe (p = m · v, Einheit, Vektor, Alltag)
   impuls-grundlagen-heftaufschrieb.pdf / -uebungsblatt.pdf  Druckversionen (Download im Lernpfad, Symbol auf der Kachel)
   stoesse-impulserhaltung.html  Impuls 2 · Stöße und Impulserhaltung (Stoß-Labor, Sonderfälle, Stoßexperiment mit Lichtschranken)

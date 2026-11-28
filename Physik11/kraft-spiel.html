@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kraft-Spiel · Das Seifenkistenrennen von Kippelbach</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<script src="/brand/theme.js"></script>
+<style>
+/* VOICE: Bilderbuch-Abenteuer im Bergdorf – Ziege Gerti spricht dich direkt an, kurze Sätze, freundlich
+   IDEA: Ein Sturm hat vor dem Seifenkistenrennen das Dorf Kippelbach durcheinandergebracht. Du hilfst den Leuten
+         (Kahn treideln, Lampionleine spannen, Rampe bauen, Paketrutsche einstellen) und sammelst Teile für deine Seifenkiste.
+   COLOUR: weiche Bilderbuch-Flächen in Schiefer- und Graugrün-Tönen, warme Dächer; Kräfte in festen Fachfarben
+   LAYOUT: Spielfenster oben, Messwerte darunter, Aufgaben im Dialog, Rucksack und Spickzettel als Hilfe */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#1b2122);--ink:light-dark(#1f2627,#e9edee);--muted:light-dark(#5b676a,#a9b6b9);
+--panel:light-dark(#f1f4f4,#232b2d);--line:light-dark(#d3dbdc,#36423f);--card:light-dark(#ffffff,#2a3335);
+--ok:light-dark(#137a3a,#4fd27f);--okbg:light-dark(#e6f5ec,#15301f);--bad:light-dark(#b8322a,#ff8075);--badbg:light-dark(#fbeceb,#3a1c1a);
+--hint:light-dark(#fff6dc,#2e2a18);--night:#2f393a;--pap:#fbf6ea;--pink:#2f393a}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:Lexend,system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(30px,5vw,48px)}h2{font-size:clamp(24px,3.2vw,34px)}h3{font-size:20px;margin:0 0 .4em}h4{font-size:17px;margin:0 0 .3em}
+p{margin:0 0 .8em}sub{font-size:.72em}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(24px,4vw,56px) max(5vw,16px)}
+.alt{background:var(--panel)}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px max(4vw,12px)}
+nav a{color:var(--ink);text-decoration:none;font:600 15px Lexend,sans-serif;padding:8px 10px;border-radius:8px}
+nav a:hover,nav a:focus-visible{background:var(--panel)}
+nav a span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;font-size:13px;margin-right:6px}
+.hero{color:#f1f4f4}
+.herohead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.qrbtn{flex:none;width:136px;background:#fff;border:0;border-radius:12px;padding:8px 8px 4px;cursor:pointer;color:#1b1e27;font:600 12px Lexend,sans-serif;text-align:center}
+.qrbtn svg{display:block;width:120px;height:120px}
+dialog.qrdlg{border:0;border-radius:18px;padding:24px;background:#fff;color:#1b1e27;text-align:center;max-width:95vw}
+dialog.qrdlg::backdrop,dialog.spick::backdrop{background:rgba(10,14,14,.8)}
+dialog.qrdlg svg{width:min(70vh,80vw);height:min(70vh,80vw);display:block;margin:0 auto}
+dialog.qrdlg p{font:600 clamp(16px,2.4vw,26px) Lexend,sans-serif;margin:12px 0;word-break:break-all}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:22px}
+.phases a{display:block;padding:12px 14px;border-radius:12px;border:1px solid;text-decoration:none}
+.phases b{display:block;font-size:16px}.phases small{font-size:14px}
+button{font:600 15px Lexend,sans-serif;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+button.primary{background:var(--gst-acc);color:var(--gst-on-acc);border-color:transparent}
+button:disabled{opacity:.5;cursor:not-allowed}
+/* ---------- Spielbereich ---------- */
+.game{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--card);box-shadow:0 10px 30px rgba(20,28,29,.12);position:relative}
+.hud{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:10px 14px;background:var(--night);color:#e9edee;font:600 15px Lexend,sans-serif}
+.hud .akku{display:flex;align-items:center;gap:8px}
+.hud .akku i{display:block;width:110px;height:14px;border-radius:99px;background:#1b2122;position:relative;padding:2px;box-shadow:inset 0 0 0 2px #5F6F74}
+.hud .akku b{display:block;height:100%;width:0;background:var(--gst-yellow);border-radius:99px;transition:width .6s}
+.hud .sp{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.hud button{background:#3E4B4C;color:#e9edee;border-color:#5F6F74;padding:7px 12px;font-size:14px;border-radius:99px}
+.hud button:hover{border-color:var(--gst-yellow)}
+.hud .quest{flex-basis:100%;font:500 14px "Atkinson Hyperlegible",sans-serif;color:#d3dcde}
+.hud .quest span:first-child{color:var(--gst-yellow)}
+.screen{position:relative;background:#dfe8e6;line-height:0;overflow:hidden}
+#cv{display:block;width:100%;height:auto;aspect-ratio:16/9;outline:none;touch-action:none}
+#cv:focus-visible{outline:3px solid var(--gst-yellow);outline-offset:-3px}
+.talkbox{position:absolute;left:2%;right:2%;bottom:3%;display:flex;gap:14px;align-items:flex-start;background:var(--pap);color:#2f393a;border-radius:22px;box-shadow:0 6px 0 rgba(47,57,58,.25),0 12px 30px rgba(20,28,29,.25);padding:12px 16px;line-height:1.4;cursor:pointer;font-size:clamp(14px,1.8vw,18px);min-height:26%;z-index:3}
+.talkbox canvas{width:64px;height:64px;flex:none;border-radius:50%;background:#dfe8e6;box-shadow:0 0 0 3px #fff,0 0 0 5px #76989D}
+.talkbox b{font:600 14px Lexend,sans-serif;color:#5b4a10;background:#FCBE00;border-radius:99px;padding:1px 10px}
+.talkbox p{margin:6px 0 0}
+.talkbox small{position:absolute;right:16px;bottom:6px;font-size:11px;color:#6b777a}
+.talkbox .ch{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.talkbox .ch button{background:#fff;color:#2f393a;border:2px solid #76989D;font-size:14px;padding:6px 14px;border-radius:99px}
+.talkbox .ch button:first-child{background:var(--gst-yellow);border-color:#b88a00}
+.startov,.mgmsg{position:absolute;inset:0;display:grid;place-items:center;background:rgba(47,57,58,.35);text-align:center;line-height:1.4;padding:12px;z-index:4}
+.endov,.inv{position:absolute;inset:0;display:grid;place-items:center;background:rgba(47,57,58,.5);text-align:center;line-height:1.45;padding:12px;z-index:5}
+.endov>div,.mgmsg>div,.inv>div,.startov>div{background:var(--pap);color:#2f393a;border-radius:22px;box-shadow:0 6px 0 rgba(47,57,58,.25),0 12px 30px rgba(20,28,29,.3);padding:16px 22px;max-width:580px;max-height:100%;overflow:auto}
+.mgmsg h3,.inv h3{font-size:clamp(16px,2.2vw,21px);color:#3E4B4C;margin:0 0 6px}
+.mgmsg p{margin:0 0 8px;font-size:clamp(13px,1.7vw,16px)}
+.mgmsg .tools{justify-content:center}
+.mgmsg button,.inv button,.endov button{background:#fff;color:#2f393a;border:2px solid #76989D;border-radius:99px}
+.mgmsg button.primary,.inv button.primary,.endov button.primary,.startov button.primary{background:var(--gst-yellow);color:#2f393a;border:2px solid #b88a00;border-radius:99px}
+.endov p{margin:0 0 6px}
+.endov[hidden],.startov[hidden],.pause[hidden],.talkbox[hidden],.mgmsg[hidden],.toast[hidden],.mgstrip[hidden],.inv[hidden]{display:none}
+.title{font:700 clamp(22px,4vw,40px) Lexend,sans-serif;color:#3E4B4C;margin:0 0 6px}
+.startov .sub{font-size:15px;color:#5b676a;margin:0 0 14px}
+.startov .keys{color:#5b676a;font-size:14px;margin:12px 0 0}
+.inv ul{list-style:none;margin:8px 0 12px;padding:0;display:grid;gap:8px;text-align:left}
+.inv li{display:flex;gap:12px;align-items:center;background:#fff;border-radius:14px;padding:8px 12px;font-size:15px}
+.inv li svg{flex:none;width:44px;height:44px}
+.inv li.leer{opacity:.45;background:transparent;border:2px dashed #ACBDC3}
+.inv li b{display:block;font:600 15px Lexend,sans-serif}
+.pause{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:var(--pap);color:#2f393a;padding:4px 12px;border-radius:99px;font-size:13px;line-height:1.4;z-index:3}
+.toast{position:absolute;left:50%;top:8px;transform:translateX(-50%);background:var(--pap);color:#2f393a;border:2px solid var(--gst-yellow);padding:6px 14px;border-radius:16px;font-size:clamp(12px,1.6vw,15px);line-height:1.35;z-index:3;max-width:92%;text-align:center;box-shadow:0 4px 14px rgba(20,28,29,.2)}
+/* Messwerte und Knöpfe unter dem Spielbild */
+.mgstrip{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;padding:8px 14px;background:#3E4B4C;color:#e9edee;font:500 14px/1.35 "Atkinson Hyperlegible",sans-serif;user-select:none;-webkit-user-select:none}
+.mgstrip .ro{display:flex;flex-wrap:wrap;gap:2px 14px;flex:1 1 300px}
+.mgstrip .ro span{white-space:nowrap}
+.mgstrip .ro b{color:var(--gst-yellow);font-weight:600}
+.mgstrip .ro .fg{color:#8fe0a8}.mgstrip .ro .fh{color:#ff9a8a}.mgstrip .ro .fn{color:#9fc0ff}.mgstrip .ro .fu{color:#d9b6ff}.mgstrip .ro .fr{color:#ffc27a}
+.mgstrip .bt{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.mgstrip button{background:#2f393a;color:#e9edee;border:2px solid #5F6F74;padding:6px 12px;font-size:14px;touch-action:none;border-radius:99px}
+.mgstrip button.on{border-color:var(--gst-yellow);box-shadow:0 0 0 2px var(--gst-yellow)}
+.mgstrip button.go{background:var(--gst-yellow);color:#2f393a;border-color:#b88a00}
+.mgstrip button.big{padding:10px 18px;font-size:16px}
+.mgstrip button:disabled{opacity:.4}
+.gate{max-width:560px;margin:0 auto;border:1px solid var(--line);border-radius:16px;padding:22px;background:var(--panel)}
+body.frei .gate,body:not(.frei) #game,body:not(.frei) .legend,body:not(.frei) #spickzettel,body:not(.frei) .phases,body:not(.frei) .heftlink{display:none}
+.fullx{display:none}
+.game.full{position:fixed;inset:0;z-index:1000;border-radius:0;border:0;display:flex;flex-direction:column;background:#2f393a;height:100vh;height:100dvh;box-shadow:none}
+.game.full .fullx{display:grid;place-items:center;position:absolute;top:6px;right:8px;z-index:6;width:36px;height:36px;padding:0;border-radius:50%;background:#3E4B4C;color:#f1f4f4;border:2px solid #5F6F74;font-size:16px}
+.game.full .hud{padding:6px 54px 6px 10px;font-size:13px;gap:4px 14px}
+.game.full .hud .akku i{width:70px}
+.game.full .hud .quest{font-size:13px}
+.game.full #resetBtn,.game.full #fullBtn{display:none}
+.game.full .screen{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;background:#2f393a}
+.game.full #cv{aspect-ratio:auto}
+.game.full .mgstrip{padding:5px 10px;font-size:13px}
+@media (orientation:portrait){.game.full .screen{align-items:flex-end}.game.full.inmg .screen{align-items:center}}
+.game.full .pad{display:flex;padding:8px 18px max(10px,env(safe-area-inset-bottom))}
+@media (orientation:landscape) and (max-height:560px){.game.full .pad{position:absolute;left:0;right:0;bottom:44px;background:transparent;pointer-events:none}.game.full .pad button{pointer-events:auto;opacity:.8}.game.full .talkbox{top:4%;bottom:auto;left:12%;right:12%;min-height:0}.game.full .hud .quest{display:none}.game.full .mgstrip .ro{flex-basis:200px}}
+body.vollbild{overflow:hidden}
+.pad{display:none;justify-content:space-between;align-items:center;padding:12px 18px;background:var(--night);touch-action:none;user-select:none;-webkit-user-select:none}
+@media (pointer:coarse),(max-width:720px){.pad{display:flex}}
+.game.inmg .pad{display:none!important}
+.lr{display:flex;gap:12px}
+.lr button,.abtn{background:#3E4B4C;color:#e9edee;border:2px solid #5F6F74;border-radius:50%;width:64px;height:64px;font-size:22px;padding:0;touch-action:none}
+.lr button:active,.abtn:active{background:#5F6F74}
+.abtn{width:72px;height:72px;background:var(--gst-yellow);color:#2f393a;font:700 15px Lexend,sans-serif;border-color:#b88a00;line-height:1.1}
+dialog.taskdlg{overflow:auto;border:0;border-radius:18px;padding:0;width:min(920px,96vw);max-height:94vh;background:var(--bg);color:var(--ink)}
+dialog.taskdlg::backdrop{background:rgba(10,14,14,.75)}
+dialog.taskdlg .top{display:flex;justify-content:flex-end;padding:10px 14px 0;position:sticky;top:0;background:var(--bg);z-index:2}
+dialog.taskdlg #panel{padding:0 clamp(14px,3vw,28px) clamp(14px,3vw,28px)}
+/* Panel */
+.talk{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.talk svg.av{flex:none;width:76px;height:76px}
+.bubble{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 16px;flex:1}
+.bubble::before{content:"";position:absolute;left:-9px;top:22px;width:16px;height:16px;background:var(--panel);border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.bubble p:last-child{margin:0}
+.bubble .who{font:600 13px Lexend,sans-serif;color:var(--muted);display:block;margin-bottom:2px}
+.task{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--card)}
+.thead{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:10px}
+.afb{font:600 13px Lexend,sans-serif;padding:3px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--line);white-space:nowrap}
+.afb b{color:var(--gst-gold)}
+.dots{margin-left:auto;display:flex;gap:6px}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dots i.ok{background:var(--gst-yellow)}.dots i.cur{outline:2px solid var(--gst-acc);outline-offset:1px}
+.fb{margin-top:10px;padding:10px 14px;border-radius:10px;display:none}
+.fb.ok{display:block;background:var(--okbg);color:var(--ok)}
+.fb.bad{display:block;background:var(--badbg);color:var(--bad)}
+.fb.hint{display:block;background:var(--hint);color:var(--ink)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.tools .tip{background:var(--hint)}
+.tiptxt{margin-top:10px;display:flex;gap:10px;align-items:flex-start;background:var(--hint);border-radius:12px;padding:10px 14px}
+.tiptxt svg{flex:none;width:40px;height:40px}
+.loes{margin-top:10px;border-left:4px solid var(--gst-heft);background:var(--gst-heft-bg);padding:10px 14px;border-radius:0 10px 10px 0}
+.mc{display:grid;gap:8px;margin-top:8px}
+.mc button{text-align:left;font:500 16px "Atkinson Hyperlegible",sans-serif;display:flex;align-items:center;gap:10px}
+.mc button.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.mc button.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.numrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:8px}
+.numrow input{font:600 18px Lexend,sans-serif;width:150px;padding:8px 10px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.calcbox{font-size:15px;color:var(--muted);margin:6px 0 0}
+textarea{width:100%;min-height:90px;font:16px "Atkinson Hyperlegible",sans-serif;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.checks label{display:flex;gap:8px;align-items:flex-start;margin:4px 0}
+.win-box{text-align:center;padding:12px 0}
+.win-box .big{font:700 clamp(24px,4vw,34px) Lexend,sans-serif;margin:6px 0}
+.win-box .item{display:inline-flex;gap:12px;align-items:center;background:var(--panel);border-radius:14px;padding:10px 16px;margin-top:6px;text-align:left}
+.win-box .item svg{width:52px;height:52px;flex:none}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted);margin-top:14px}
+/* Spickzettel */
+dialog.spick{border:0;border-radius:18px;padding:0;max-width:min(760px,94vw);width:100%;background:var(--bg);color:var(--ink)}
+dialog.spick .in{padding:20px 22px;max-height:80vh;overflow:auto}
+dialog.spick .top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 22px;background:var(--gst-heft);color:var(--gst-on-heft)}
+dialog.spick .top h3{margin:0}
+dialog.spick .top button{background:transparent;color:inherit;border-color:currentColor}
+.spickgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.spickgrid section{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.spickgrid h4{color:var(--gst-heft)}
+.spickgrid ul{margin:0;padding-left:20px}
+@media (max-width:720px){.herohead{flex-direction:column}.qrbtn{display:none}.talk svg.av{width:56px;height:56px}.hud .sp{margin-left:0}.mgstrip{font-size:13px;padding:6px 10px}.talkbox canvas{width:48px;height:48px}}
+</style>
+<link rel="stylesheet" href="/brand/brand.css">
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/formel.js"></script>
+<script defer src="/brand/feedback.js"></script>
+<script defer src="/brand/mischen.js"></script>
+</head>
+<body>
+<script>try{if(localStorage.getItem("p11-kraftspiel-frei")==="1")document.body.classList.add("frei")}catch(e){}</script>
+<nav aria-label="Bereiche"><div class="wrap">
+<a href="/" title="Alle Lernpfade">← Übersicht</a>
+<a href="#spiel"><span>▶</span>Spielen</a>
+<a href="#spickzettel" class="heftlink"><span>✎</span>Spickzettel</a>
+</div></nav>
+
+<header class="band hero"><div class="wrap">
+<div class="herohead"><div><h1>Kraft-Spiel · Das Seifenkistenrennen von Kippelbach</h1>
+<p>Morgen ist das große Seifenkistenrennen, aber der Sturm hat das Bergdorf Kippelbach durcheinandergewirbelt. Zusammen mit Ziege Gerti hilfst du den Leuten im Dorf: Du treidelst einen Kahn mit zwei Seilen, spannst eine Lampionleine, baust eine Rampe für die Bäckerei und stellst die Paketrutsche der Post ein. Als Dank bekommst du Teile für deine Seifenkiste. Alles bewegt sich nach den Kraft-Gesetzen, die du gelernt hast. Perfekt zum Wiederholen vor der Klassenarbeit.</p></div><button class="qrbtn" id="qrOpen" title="QR-Code groß anzeigen"><svg role="img" aria-label="QR-Code: https://physik.party/Physik11/kraft-spiel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m3 0h3m2 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m2 0h1m2 0h2m1 0h1m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m2 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m4 0h1m3 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m3 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m2 0h5m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h4m2 0h1m1 0h4m-21 1h1m2 0h1m1 0h2m1 0h1m4 0h2m4 0h1m1 0h1m1 0h1m-21 1h3m3 0h4m3 0h3m2 0h2m2 0h1m2 0h1m-29 1h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h2m2 0h3m2 0h2m1 0h3m-28 1h1m4 0h1m2 0h4m1 0h1m2 0h1m1 0h3m5 0h2m-28 1h1m1 0h1m1 0h1m1 0h1m3 0h2m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h2m-27 1h4m4 0h1m1 0h1m6 0h3m-21 1h3m1 0h2m4 0h2m1 0h1m2 0h2m5 0h5m-27 1h2m1 0h1m1 0h1m1 0h2m2 0h3m1 0h4m1 0h4m1 0h1m-28 1h1m1 0h1m2 0h2m2 0h2m6 0h1m1 0h1m3 0h1m3 0h1m-25 1h1m5 0h2m3 0h1m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m1 0h2m2 0h1m2 0h4m3 0h3m1 0h2m2 0h1m2 0h2m-27 1h1m1 0h1m2 0h2m1 0h1m5 0h4m1 0h1m1 0h2m2 0h2m-29 1h1m2 0h4m2 0h2m1 0h1m5 0h1m1 0h5m1 0h1m-19 1h2m1 0h3m2 0h3m1 0h1m3 0h1m1 0h3m-29 1h7m2 0h3m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h1m2 0h4m3 0h1m1 0h1m3 0h3m-27 1h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h5m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h3m1 0h1m4 0h3m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h2m2 0h2m2 0h2m2 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m6 0h6m1 0h1m3 0h1m-28 1h7m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m3 0h1m2 0h1"/></svg>
+physik.party</button></div>
+<div class="phases">
+<a href="#spiel"><b>▶ Spielen</b><small>Bilderbuch-Abenteuer mit 4 Physik-Übungen, 2 Nebenquests und Aufgaben von ★ bis ★★★</small></a><a href="#spickzettel"><b>✎ Spickzettel</b><small>Das Wichtigste aus allen Kraft-Lernpfaden</small></a>
+</div>
+</div></header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="gerti" viewBox="0 0 80 80">
+  <circle cx="40" cy="40" r="38" fill="#dfe8e6"/>
+  <path d="M27 22 q-8 -12 -16 -10 q8 2 10 14z" fill="#b9a27a" stroke="#2f393a" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M53 22 q8 -12 16 -10 q-8 2 -10 14z" fill="#b9a27a" stroke="#2f393a" stroke-width="2.2" stroke-linejoin="round"/>
+  <ellipse cx="17" cy="36" rx="9" ry="5" transform="rotate(-20 17 36)" fill="#f4efe4" stroke="#2f393a" stroke-width="2.2"/>
+  <ellipse cx="63" cy="36" rx="9" ry="5" transform="rotate(20 63 36)" fill="#f4efe4" stroke="#2f393a" stroke-width="2.2"/>
+  <path d="M24 30 q16 -14 32 0 q4 22 -6 32 q-10 8 -20 0 q-10 -10 -6 -32z" fill="#f4efe4" stroke="#2f393a" stroke-width="2.2"/>
+  <circle cx="32" cy="38" r="3.2" fill="#2f393a"/><circle cx="48" cy="38" r="3.2" fill="#2f393a"/>
+  <circle cx="33" cy="37" r="1" fill="#fff"/><circle cx="49" cy="37" r="1" fill="#fff"/>
+  <ellipse cx="40" cy="54" rx="8" ry="6" fill="#e9c9bd"/><path d="M37 54 h6" stroke="#2f393a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M36 64 q4 8 8 0" fill="#f4efe4" stroke="#2f393a" stroke-width="2"/>
+  <path d="M33 70 h14 l-2 7 h-10z" fill="#FCBE00" stroke="#2f393a" stroke-width="2" stroke-linejoin="round"/>
+ </symbol></defs></svg>
+<section class="band" id="spiel"><div class="wrap">
+<form class="gate" id="gate"><h2>🔒 Passwort</h2><p>Das Spiel ist mit einem Passwort geschützt. Deine Lehrerin oder dein Lehrer verrät es dir.</p>
+<div class="numrow"><label>Passwort: <input type="password" id="gatePw" autocomplete="off"></label><button class="primary" type="submit">Öffnen</button></div><p class="fb" id="gateFb" role="status"></p></form>
+<div class="game" id="game">
+ <button type="button" class="fullx" id="fullX" aria-label="Vollbild schließen" title="Vollbild schließen">✕</button>
+ <div class="hud">
+  <div class="akku" title="Mit jeder Übung und Aufgabe wird das Dorf fürs Rennen fertig"><span>Rennen</span><i><b id="akkuBar"></b></i><span id="akkuTxt">0 %</span></div>
+  <div title="Taler für gelöste Aufgaben"><span aria-hidden="true">●</span> <span id="kris">0</span> Taler</div>
+  <div title="Kleeblätter, die der Sturm im Dorf verteilt hat"><span aria-hidden="true">♣</span> <span id="kap">0</span>/6 Klee</div>
+  <div class="sp"><button id="invBtn" type="button" title="Rucksack mit Teilen für die Seifenkiste">🎒 Rucksack</button><button id="fullBtn" type="button" title="Spiel im Vollbild">⛶ Vollbild</button><button id="spickBtn" type="button">✎ Spickzettel</button><button id="resetBtn" type="button" title="Spielstand löschen">↺ Neu starten</button></div>
+  <div class="quest"><span aria-hidden="true">●</span> <span id="quest">Starte das Spiel.</span></div>
+ </div>
+ <div class="screen" id="screen">
+  <canvas id="cv" width="640" height="360" tabindex="0" aria-label="Spielwelt: das Bergdorf Kippelbach von der Seite. Gehen mit Pfeiltasten oder A und D, sprechen und weiter mit Leertaste oder E."></canvas>
+  <div class="talkbox" id="talkbox" hidden><canvas id="face" width="128" height="128" aria-hidden="true"></canvas><div><b id="tbWho"></b><p id="tbTxt"></p><div class="ch" id="tbCh"></div><small id="tbMore">▼ Leertaste / Tippen</small></div></div>
+  <div class="startov" id="startov"><div><p class="title">Das Seifenkistenrennen von Kippelbach</p><p class="sub">Ein Bilderbuch-Abenteuer über Kräfte und die schiefe Ebene</p><button class="primary" id="startBtn" type="button">▶ Spiel starten</button><p class="keys">Gehen: Pfeiltasten oder A/D · Sprechen und weiter: Leertaste oder E</p></div></div>
+  <div class="mgmsg" id="mgMsg" hidden><div><div id="mgMsgTxt"></div><div class="tools" id="mgMsgBtns"></div></div></div>
+  <div class="inv" id="inv" hidden><div><h3>🎒 Dein Rucksack</h3><p style="font-size:14px;margin:0">Teile für deine Seifenkiste und Fundstücke</p><ul id="invList"></ul><button class="primary" id="invClose" type="button">Schließen</button></div></div>
+  <div class="endov" id="endov" hidden><div><div id="endTxt"></div><button class="primary" id="endOk" type="button">Weiter im Dorf</button></div></div>
+  <div class="toast" id="toast" hidden></div>
+  <div class="pause" id="pause" hidden>Pausiert · tipp ins Bild zum Weiterspielen</div>
+ </div>
+ <div class="mgstrip" id="strip" hidden><div class="ro" id="stripRo" aria-live="off"></div><div class="bt" id="stripBt"></div></div>
+ <div class="pad" id="pad" aria-label="Steuerung">
+  <div class="lr"><button type="button" data-d="left" aria-label="nach links gehen">◀</button><button type="button" data-d="right" aria-label="nach rechts gehen">▶</button></div>
+  <button type="button" class="abtn" id="aBtn" aria-label="Sprechen / weiter">A<br><small>Reden</small></button>
+ </div>
+</div>
+<div class="legend"><span><b style="color:var(--gst-gold)">★</b> Wissen (AFB I)</span><span><b style="color:var(--gst-gold)">★★</b> Anwenden (AFB II)</span><span><b style="color:var(--gst-gold)">★★★</b> Knobeln (AFB III)</span><span>Aufgaben: 3 Taler ohne Tipp, ein Tipp kostet 1 Taler, die Lösung ansehen gibt 0 Taler. Übungen: 3 Taler beim ersten Versuch, 2 beim zweiten, sonst 1. Weiter kommst du immer.</span></div>
+</div></section>
+
+<section class="band alt" id="spickzettel"><div class="wrap">
+<h2>✎ Spickzettel</h2>
+<p>Hier steht das Wichtigste aus den fünf Kraft-Lernpfaden. Im Spiel öffnest du ihn mit dem Knopf „Spickzettel“.</p>
+<div class="spickgrid" id="spickInhalt">
+<section><h4>1 · Kraft – Grundlagen</h4><p>Kräfte erkennt man an ihren Wirkungen: Sie ändern Geschwindigkeit oder Richtung oder verformen einen Körper. Kräfte sind Wechselwirkungen: Wirkt A auf B, wirkt B gleich stark und entgegengesetzt auf A.</p><p>Kraftpfeil: Angriffspunkt, Richtung, Länge im Maßstab (z. B. 1 cm ≙ 50 N). Einheit 1 N.</p><p>Gewichtskraft: <f-m>F<sub>G</sub> = m · g</f-m> mit <f-m>g = 9,81 N/kg</f-m> (Erde), Mond 1,62 N/kg, Mars 3,71 N/kg.</p></section>
+<section><h4>2 · Kräfteaddition</h4><p>Zwei Kräfte im gleichen Punkt ergeben die resultierende Kraft: <f-m>F⃗<sub>res</sub> = F⃗<sub>1</sub> + F⃗<sub>2</sub></f-m> (Pfeile addieren, nicht Beträge).</p><ul><li>gleiche Richtung: Beträge addieren</li><li>Gegenrichtung: Beträge subtrahieren</li><li>Winkel: Kräfteparallelogramm, <f-m>F<sub>res</sub></f-m> ist die Diagonale; bei 90° Pythagoras</li></ul><p>Kräftegleichgewicht: <f-m>F<sub>res</sub> = 0</f-m>.</p></section>
+<section><h4>3 · Kräftezerlegung</h4><p>Eine Kraft wird in zwei Teilkräfte zerlegt, die zusammen dieselbe Wirkung haben (Umkehrung der Addition, Parallelogramm in vorgegebene Richtungen).</p><p>Rechtwinklig: <f-m>F<sub>x</sub> = F · cos α</f-m> und <f-m>F<sub>y</sub> = F · sin α</f-m>.</p><p>Leine mit Last in der Mitte: <f-m>F<sub>Seil</sub> = F<sub>G</sub> : (2 · sin α)</f-m>. Je straffer, desto größer die Seilkräfte.</p></section>
+<section><h4>4 · Schiefe Ebene</h4><p><f-m>F<sub>G</sub></f-m> wird zerlegt in die Hangabtriebskraft <f-m>F<sub>H</sub></f-m> (parallel zur Ebene, hangabwärts) und die Normalkraft <f-m>F<sub>N</sub></f-m> (senkrecht zur Ebene, in die Ebene):</p><p><f-m>F<sub>H</sub> = F<sub>G</sub> · sin α</f-m> und <f-m>F<sub>N</sub> = F<sub>G</sub> · cos α</f-m></p><p>Die Unterlagskraft <f-m>F<sub>U</sub> = F<sub>N</sub></f-m> wirkt entgegengesetzt zu <f-m>F<sub>N</sub></f-m>. Je steiler, desto größer <f-m>F<sub>H</sub></f-m> und desto kleiner <f-m>F<sub>N</sub></f-m>. Rampe: weniger Kraft, längerer Weg, keine Energie gespart.</p></section>
+<section><h4>5 · Newton und Reibung</h4><ul><li>1. Axiom: Ohne resultierende Kraft bleibt der Bewegungszustand gleich (Trägheit).</li><li>2. Axiom: <f-m>F<sub>res</sub> = m · a</f-m></li><li>3. Axiom: <f-m>F⃗<sub>BA</sub> = −F⃗<sub>AB</sub></f-m> (actio = reactio)</li></ul><p>Reibung: <f-m>F<sub>R</sub> = f · F<sub>N</sub></f-m> mit Haftreibung &gt; Gleitreibung &gt; Rollreibung. Auf der schiefen Ebene rutscht ein Körper los, wenn tan α &gt; <f-m>f<sub>H</sub></f-m>.</p></section>
+</div>
+</div></section>
+
+<footer class="band"><div class="wrap">
+<p>Kraft-Spiel Physik Klasse 11 · Wiederholung zu Kraft-Grundlagen, Kräfteaddition, Kräftezerlegung, schiefer Ebene, Newtonschen Axiomen und Reibung. Modellannahmen: Massenpunkt-Modell (alle Kräfte im Schwerpunkt), Seile ohne Masse, kein Luftwiderstand, beim Kahn nur der Wasserwiderstand, beim Rampenwagen keine Reibung. Dein Spielstand wird nur in diesem Browser gespeichert, es werden keine Daten übertragen (nur Feedback, das du selbst abschickst).</p>
+<p class="rechtl"><a href="/impressum">Impressum · Datenschutz</a></p></div></footer>
+<dialog class="qrdlg" id="qrDlg" aria-label="QR-Code zu diesem Spiel"><svg role="img" aria-label="QR-Code: https://physik.party/Physik11/kraft-spiel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m3 0h3m2 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m2 0h1m2 0h2m1 0h1m1 0h1m4 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m2 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m4 0h1m3 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m3 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m2 0h5m3 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h4m2 0h1m1 0h4m-21 1h1m2 0h1m1 0h2m1 0h1m4 0h2m4 0h1m1 0h1m1 0h1m-21 1h3m3 0h4m3 0h3m2 0h2m2 0h1m2 0h1m-29 1h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h2m2 0h3m2 0h2m1 0h3m-28 1h1m4 0h1m2 0h4m1 0h1m2 0h1m1 0h3m5 0h2m-28 1h1m1 0h1m1 0h1m1 0h1m3 0h2m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h2m-27 1h4m4 0h1m1 0h1m6 0h3m-21 1h3m1 0h2m4 0h2m1 0h1m2 0h2m5 0h5m-27 1h2m1 0h1m1 0h1m1 0h2m2 0h3m1 0h4m1 0h4m1 0h1m-28 1h1m1 0h1m2 0h2m2 0h2m6 0h1m1 0h1m3 0h1m3 0h1m-25 1h1m5 0h2m3 0h1m1 0h2m3 0h3m1 0h1m2 0h1m-29 1h1m1 0h2m2 0h1m2 0h4m3 0h3m1 0h2m2 0h1m2 0h2m-27 1h1m1 0h1m2 0h2m1 0h1m5 0h4m1 0h1m1 0h2m2 0h2m-29 1h1m2 0h4m2 0h2m1 0h1m5 0h1m1 0h5m1 0h1m-19 1h2m1 0h3m2 0h3m1 0h1m3 0h1m1 0h3m-29 1h7m2 0h3m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h1m2 0h4m3 0h1m1 0h1m3 0h3m-27 1h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h5m1 0h5m-25 1h1m1 0h3m1 0h1m1 0h3m1 0h1m4 0h3m2 0h6m-28 1h1m1 0h3m1 0h1m2 0h2m2 0h2m2 0h2m2 0h1m2 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m6 0h6m1 0h1m3 0h1m-28 1h7m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m3 0h1m2 0h1"/></svg>
+<p>physik.party/Physik11/kraft-spiel</p><button id="qrClose">Schließen</button></dialog>
+<dialog class="taskdlg" id="taskDlg" aria-label="Aufgaben"><div class="top"><button type="button" id="taskClose">✕ Zurück ins Spiel</button></div><div id="panel" aria-live="polite" tabindex="-1" style="outline:none"></div></dialog>
+<dialog class="spick" id="spickDlg" aria-label="Spickzettel"><div class="top"><h3>✎ Spickzettel</h3><button type="button" id="spickClose">Schließen</button></div><div class="in" id="spickDlgIn"></div></dialog>
+<script>
+{
+const KEY='p11-kraftspiel';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const num=v=>parseFloat(String(v).replace(/[\s ]/g,'').replace(/\.(?=\d{3}(\D|$))/g,'').replace(',','.').replace('−','-').replace('–','-').replace('°',''));
+const fmt=(v,n=1)=>{const s=(+v).toFixed(n);return (s.replace('-','−')==='−'+(0).toFixed(n)?(0).toFixed(n):s).replace('.',',').replace('-','−')};
+const grp=v=>{const s=Math.round(Math.abs(v)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');return (v<-.5?'−':'')+s};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pk=(id,cl='')=>`<svg class="pk ${cl}" aria-hidden="true"><use href="/brand/piktos.svg#${id}"/></svg>`;
+const GERTI='<svg class="av" viewBox="0 0 80 80" aria-hidden="true"><use href="#gerti"/></svg>';
+const say=(t,who='Gerti')=>`<div class="talk">${GERTI}<div class="bubble"><span class="who">${who}</span>${t}</div></div>`;
+const sub=(a,b)=>`${a}<sub>${b}</sub>`;
+const G_=9.81;
+
+/* ---------- Teile für die Seifenkiste (Rucksack) ---------- */
+const ITEMS={
+ brett:['Bodenbrett','Hildes altes Bodenbrett: das Gerüst deiner Seifenkiste.'],
+ seil:['Lenkseil','Ein festes Seil von Mira. Damit lenkst du die Vorderachse.'],
+ nummer:['Startnummer 7','Herr Kofler hat sie dir aus Lampionpapier gefaltet.'],
+ raeder:['Vier Räder','Alte Bollerwagenräder von Ole. Rollreibungszahl etwa 0,040.'],
+ bremse:['Bremsklotz','Von Ida: ein Holzklotz mit Gummi. Er bremst mit Gleitreibung.'],
+ lager:['Kugellager','Aus Noahs altem Skateboard. Damit rollen die Räder leichter: Rollreibungszahl nur noch etwa 0,020.'],
+ fett:['Schmierfett','Von Rosa aus der Schmiede. Fett in die Lager: Rollreibungszahl noch 0,010 kleiner.'],
+ klee:['Glücksklee','Gertis Dank für sechs Kleeblätter. Macht nicht schneller, aber glücklich.']};
+
+/* ---------- Missionen und Aufgaben ---------- */
+const ST=[
+{name:'Hildes Werkstatt',who:'Hilde',thema:'Kraft 1 · Grundlagen',mg:null,item:'brett',
+ intro:'<p>Hilde will erst sehen, ob du Kräfte verstehst. Sonst gibt sie dir ihr gutes Brett nicht.</p><p>Wenn du nicht weiterweißt, frag mich nach einem Tipp. Das kostet dich nur einen Taler.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Hilde hämmert eine Delle aus dem Blech der alten Kiste. Woran erkennst du, dass dabei Kräfte wirken?',
+  opts:[['a','Das Blech wird verformt und der Hammer wird beim Aufprall abgebremst.'],['b','Der Hammer ist schwer und schwere Körper tragen immer eine Kraft in sich.'],['c','Das Blech wird etwas warm und Wärme ist eine besondere Art von Kraft.'],['d','Der Hammer bewegt sich schnell und jede Bewegung braucht dauernd Kraft.']],ok:'a',
+  hinweis:'Kräfte sieht man nicht. Man erkennt sie an ihren Wirkungen. Welche Wirkungen kennst du?',
+  tipps:['Eine Kraft kann einen Körper verformen oder seine Geschwindigkeit oder Richtung ändern.','Was passiert mit dem Blech? Und was passiert mit der Geschwindigkeit des Hammers?'],
+  loesung:'Das Blech wird verformt und der Hammer wird abgebremst. Beides sind Kraftwirkungen. Übrigens wirkt auch das Blech auf den Hammer zurück (Wechselwirkung).'},
+ {afb:1,typ:'num',frage:'Hilde zeichnet die Kraft ein, mit der Gerti die Kiste anschiebt: ein Pfeil von 3,5 cm Länge im Maßstab 1 cm ≙ 50 N. Wie groß ist die Kraft?',
+  einheit:'N',ziel:175,tol:.01,
+  fehler:[[3.5,'Das ist die Länge in cm. Rechne mit dem Maßstab in Newton um.'],[14.3,'Umgekehrt: Jeder Zentimeter steht für 50 N, also <f-m>3,5 · 50 N</f-m>.']],
+  tipps:['1 cm im Bild steht für 50 N.','<f-m>F = 3,5 · 50 N</f-m>'],
+  loesung:'<f-m>F = 3,5 · 50 N = 175 N</f-m>. Der Pfeil zeigt zusätzlich Angriffspunkt und Richtung der Kraft.'},
+ {afb:2,typ:'num',frage:'Deine Seifenkiste hat mit dir zusammen die Masse 62 kg. Berechne ihre Gewichtskraft auf der Erde.',bild:'glas-waage',
+  einheit:'N',ziel:608.22,tol:.01,
+  fehler:[[62,'Das ist die Masse in kg. Gesucht ist die Gewichtskraft in N: <f-m>F<sub>G</sub> = m · g</f-m>.'],[6.32,'Umgekehrt geteilt. Es gilt <f-m>F<sub>G</sub> = m · g</f-m>.'],[100.44,'Das wäre auf dem Mond. Auf der Erde ist <f-m>g = 9,81 N/kg</f-m>.']],
+  tipps:['<f-m>F<sub>G</sub> = m · g</f-m> mit dem Ortsfaktor <f-m>g = 9,81 N/kg</f-m>.','<f-m>F<sub>G</sub> = 62 kg · 9,81 N/kg</f-m>'],
+  loesung:'<f-m>F<sub>G</sub> = m · g = 62 kg · 9,81 N/kg ≈ 608 N</f-m>'},
+ {afb:2,typ:'mc',frage:'Zum Anfahren stößt du dich mit dem Fuß vom Boden ab. Welche Aussage über die Kräfte stimmt?',
+  opts:[['a','Du drückst den Boden nach hinten, der Boden drückt dich gleich stark nach vorn.'],['b','Du drückst den Boden nach hinten, der Boden drückt dich etwas schwächer nach vorn.'],['c','Du drückst den Boden nach hinten, der Boden bleibt fest und drückt gar nicht zurück.'],['d','Du drückst den Boden nach vorn, der Boden drückt dich gleich stark nach hinten.']],ok:'a',
+  hinweis:'Kräfte sind Wechselwirkungen zwischen zwei Körpern. Wie groß ist die Gegenkraft und wohin zeigt sie?',
+  tipps:['Wirkt Körper A auf Körper B, wirkt B gleichzeitig auf A zurück.','Die beiden Kräfte sind gleich groß und entgegengesetzt gerichtet. Dein Fuß schiebt nach hinten.'],
+  loesung:'Wechselwirkung: Dein Fuß drückt den Boden nach hinten, der Boden drückt dich gleich stark nach vorn. Diese Kraft bringt die Kiste ins Rollen.'},
+ {afb:3,typ:'begr',frage:'<b>Begründe:</b> Wenn die Seifenkiste plötzlich vorn gegen einen Strohballen fährt, rutscht die Fahrerin im Sitz nach vorn.',
+  muster:'Die Fahrerin ist träge. Der Strohballen übt eine Kraft auf die Kiste aus und bremst sie ab, aber nicht direkt auf die Fahrerin. Ohne Kraft behält die Fahrerin ihre Geschwindigkeit bei (Trägheitsprinzip) und bewegt sich weiter nach vorn, während die Kiste langsamer wird. Erst der Gurt oder das Lenkrad bremst sie mit einer Kraft ab.',
+  checks:['Ich habe die Trägheit genannt (ohne Kraft bleibt die Geschwindigkeit gleich).','Ich habe gesagt, dass die Bremskraft zuerst nur auf die Kiste wirkt.','Ich habe erklärt, dass erst Gurt oder Lenkrad die Fahrerin mit einer Kraft abbremsen.']}
+ ]},
+{name:'Kanal bei Fährfrau Mira',who:'Mira',thema:'Kraft 2 · Kräfteaddition',mg:'treideln',item:'seil',
+ intro:'<p>Der Kahn ist angekommen. Mira hat noch ein paar Fragen zum Zusammenwirken von Kräften.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Zwei Seile ziehen unter einem Winkel am Kahn. Wie findest du die resultierende Kraft zeichnerisch?',
+  opts:[['a','Ich zeichne das Kräfteparallelogramm. Die Diagonale vom Angriffspunkt ist <f-m>F<sub>res</sub></f-m>.'],['b','Ich lege beide Pfeile auf eine Linie. Die Summe der Längen ist dann <f-m>F<sub>res</sub></f-m>.'],['c','Ich verbinde die beiden Pfeilspitzen. Diese Verbindungslinie ist dann <f-m>F<sub>res</sub></f-m>.'],['d','Ich ziehe den kurzen Pfeil vom langen Pfeil ab. Der Rest ist dann <f-m>F<sub>res</sub></f-m>.']],ok:'a',
+  hinweis:'Du hast es eben bei Mira gesehen: Welche Figur entstand aus den beiden Seilkräften?',
+  tipps:['Zeichne durch jede Pfeilspitze eine Parallele zur anderen Kraft.','Die Diagonale vom gemeinsamen Angriffspunkt zum Schnittpunkt der Parallelen ist die resultierende Kraft.'],
+  loesung:'Kräfteparallelogramm: Durch jede Pfeilspitze die Parallele zur anderen Kraft, die Diagonale vom Angriffspunkt ist <f-m>F<sub>res</sub></f-m>. Oder Kräfteplan: Pfeile Spitze an Schaft hängen.'},
+ {afb:2,typ:'num',frage:'Mira und ihr Pferd Bruno ziehen in dieselbe Richtung: Mira mit 320 N, Bruno mit 540 N. Der Wasserwiderstand wirkt mit 610 N entgegen. Wie groß ist die resultierende Kraft?',bild:'boot',
+  einheit:'N',ziel:250,tol:.01,
+  fehler:[[860,'Der Wasserwiderstand wirkt entgegen. Er muss abgezogen werden.'],[1470,'Der Wasserwiderstand zeigt in die Gegenrichtung, also abziehen statt addieren.'],[-250,'Der Betrag stimmt. Die resultierende Kraft zeigt aber in Zugrichtung, gib den Betrag an.']],
+  tipps:['Kräfte auf einer Wirkungslinie: gleiche Richtung addieren, Gegenrichtung subtrahieren.','<f-m>F<sub>res</sub> = 320 N + 540 N − 610 N</f-m>'],
+  loesung:'<f-m>F<sub>res</sub> = 320 N + 540 N − 610 N = 250 N</f-m> in Zugrichtung.'},
+ {afb:2,typ:'num',frage:'Zwei Seile ziehen rechtwinklig zueinander am Kahn: 360 N nach vorn und 150 N zur Seite. Berechne den Betrag der resultierenden Kraft.',
+  einheit:'N',ziel:390,tol:.01,
+  fehler:[[510,'Beträge addieren darf man nur auf einer Wirkungslinie. Bei 90° hilft der Satz des Pythagoras.'],[210,'Abziehen gilt nur für Gegenrichtungen. Bei 90°: Pythagoras.']],
+  tipps:['Das Kräfteparallelogramm ist ein Rechteck. <f-m>F<sub>res</sub></f-m> ist seine Diagonale.','<f-m>F<sub>res</sub> = √((360 N)<sup>2</sup> + (150 N)<sup>2</sup>)</f-m>'],
+  loesung:'<f-m>F<sub>res</sub> = √((360 N)<sup>2</sup> + (150 N)<sup>2</sup>) = √(152 100 N<sup>2</sup>) = 390 N</f-m>'},
+ {afb:3,typ:'mc',frage:'Am Steg liegt der Kahn ganz still, obwohl die Strömung mit 200 N an ihm zieht. Was folgt daraus für die Seile?',
+  opts:[['a','Sie ziehen zusammen genau 200 N gegen die Strömung, dann ist <f-m>F<sub>res</sub> = 0</f-m>.'],['b','Sie ziehen zusammen mehr als 200 N, sonst würde der Kahn langsam abtreiben.'],['c','Sie ziehen gar nicht, denn ein ruhender Kahn erfährt überhaupt keine Kräfte.'],['d','Sie ziehen zusammen 400 N, weil jedes Seil die ganzen 200 N halten muss.']],ok:'a',
+  hinweis:'Der Kahn bleibt in Ruhe. Was weißt du dann über die resultierende Kraft?',
+  tipps:['Ruht ein Körper (oder fährt er gleichmäßig), herrscht Kräftegleichgewicht.','Kräftegleichgewicht heißt <f-m>F<sub>res</sub> = 0</f-m>. Die Seilkräfte heben die Strömung genau auf.'],
+  loesung:'Kräftegleichgewicht: <f-m>F<sub>res</sub> = 0</f-m>. Die Seile ziehen zusammen (als Resultierende) genau 200 N gegen die Strömung.'}
+ ]},
+{name:'Marktplatz bei Herrn Kofler',who:'Herr Kofler',thema:'Kraft 3 · Kräftezerlegung',mg:'leine',item:'nummer',
+ intro:'<p>Die Lampions hängen! Herr Kofler möchte noch wissen, ob du die Kräfte in der Leine verstanden hast.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Was bedeutet es, eine Kraft zu zerlegen?',
+  opts:[['a','Man ersetzt sie durch zwei Teilkräfte, die zusammen dieselbe Wirkung haben.'],['b','Man teilt sie in zwei gleich große Hälften, die in dieselbe Richtung zeigen.'],['c','Man zieht die Gegenkraft von ihr ab, bis nur noch die Reibung übrig bleibt.'],['d','Man verkleinert sie im Maßstab, bis sie in das Kräfteparallelogramm passt.']],ok:'a',
+  hinweis:'Zerlegung ist die Umkehrung der Addition. Was ergab die Addition?',
+  tipps:['Bei der Addition ersetzt man zwei Kräfte durch eine einzige mit gleicher Wirkung.','Bei der Zerlegung ist es umgekehrt: Die Kraft ist die Diagonale, die Teilkräfte sind die Seiten des Parallelogramms.'],
+  loesung:'Man ersetzt die Kraft durch zwei Teilkräfte (Komponenten) in vorgegebenen Richtungen, die zusammen dieselbe Wirkung haben.'},
+ {afb:2,typ:'mc',frage:'Herr Kofler spannt die Lampionleine straffer, sodass sie weniger durchhängt. Was passiert?',bild:'kerze',
+  opts:[['a','Die Kräfte in der Leine werden größer, die Leine kann reißen.'],['b','Die Kräfte in der Leine werden kleiner, die Leine hält sicherer.'],['c','Die Gewichtskraft des Lampions wird kleiner, weil er höher hängt.'],['d','Die Kräfte in der Leine bleiben gleich, nur der Winkel ändert sich.']],ok:'a',
+  hinweis:'Denk an das Parallelogramm an der Aufhängung. Was passiert mit den Seiten, wenn die Leine fast waagrecht ist?',
+  tipps:['Die senkrechten Anteile der beiden Leinenkräfte müssen zusammen die Gewichtskraft tragen.','Ist die Leine fast waagrecht, ist der senkrechte Anteil winzig. Dann muss die Leinenkraft riesig sein: <f-m>F<sub>Seil</sub> = F<sub>G</sub> : (2 · sin α)</f-m>.'],
+  loesung:'Die Leinenkräfte werden größer: <f-m>F<sub>Seil</sub> = F<sub>G</sub> : (2 · sin α)</f-m>. Kleiner Winkel, großer Faktor. Teilkräfte können größer sein als die zerlegte Kraft.'},
+ {afb:2,typ:'num',frage:'Kofler zieht einen Handwagen mit 200 N an der Deichsel. Die Deichsel ist 30° gegen die Waagrechte geneigt. Wie groß ist der waagrechte Anteil <f-m>F<sub>x</sub></f-m> der Zugkraft?',
+  einheit:'N',ziel:173.2,tol:.01,
+  fehler:[[100,'Das ist der senkrechte Anteil <f-m>F<sub>y</sub> = F · sin α</f-m>. Gesucht ist <f-m>F<sub>x</sub></f-m>.'],[230.9,'Du hast durch cos α geteilt. Richtig: <f-m>F<sub>x</sub> = F · cos α</f-m>.'],[30.85,'Stell den Taschenrechner auf Grad (DEG).']],
+  tipps:['Rechtwinklige Zerlegung: <f-m>F<sub>x</sub> = F · cos α</f-m> und <f-m>F<sub>y</sub> = F · sin α</f-m>.','<f-m>F<sub>x</sub> = 200 N · cos 30°</f-m>'],
+  loesung:'<f-m>F<sub>x</sub> = F · cos α = 200 N · cos 30° ≈ 173 N</f-m>'},
+ {afb:3,typ:'num',frage:'Ein großer Lampion <f-m>(F<sub>G</sub> = 60 N)</f-m> hängt in der Mitte einer Leine. Beide Leinenhälften sind um 10° gegen die Waagrechte geneigt. Welche Kraft wirkt in jeder Leinenhälfte?',
+  einheit:'N',ziel:172.8,tol:.015,
+  fehler:[[30,'So wäre es, wenn die Leine senkrecht hängen würde. Hier ist sie fast waagrecht.'],[345.5,'Fast: Beide Leinenhälften tragen mit, teile noch durch 2.'],[30.46,'Du hast cos statt sin genommen. Der senkrechte Anteil einer Leinenkraft ist <f-m>F<sub>Seil</sub> · sin α</f-m>.']],
+  tipps:['Jede Leinenhälfte trägt mit ihrem senkrechten Anteil <f-m>F<sub>Seil</sub> · sin α</f-m> die Hälfte der Gewichtskraft.','<f-m>2 · F<sub>Seil</sub> · sin α = F<sub>G</sub></f-m>, also <f-m>F<sub>Seil</sub> = 60 N : (2 · sin 10°)</f-m>.'],
+  loesung:'<f-m>F<sub>Seil</sub> = F<sub>G</sub> : (2 · sin α) = 60 N : (2 · sin 10°) ≈ 173 N</f-m>. Fast dreimal so viel wie die Gewichtskraft!'}
+ ]},
+{name:'Bäckerei von Ole',who:'Ole',thema:'Kraft 4 · Schiefe Ebene',mg:'rampe',item:'raeder',
+ intro:'<p>Die Mehlsäcke sind oben! Ole will noch wissen, ob du die schiefe Ebene auch rechnen kannst.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'In welche Teilkräfte zerlegst du die Gewichtskraft <f-m>F<sub>G</sub></f-m> eines Mehlsacks auf der Rampe?',bild:'kiste',
+  opts:[['a','<f-m>F<sub>H</sub></f-m> parallel zur Ebene hangabwärts und <f-m>F<sub>N</sub></f-m> senkrecht zur Ebene in die Ebene'],['b','<f-m>F<sub>H</sub></f-m> senkrecht zur Ebene in die Ebene und <f-m>F<sub>N</sub></f-m> parallel zur Ebene hangabwärts'],['c','<f-m>F<sub>H</sub></f-m> waagrecht vom Hang weg und <f-m>F<sub>N</sub></f-m> senkrecht nach unten zum Erdmittelpunkt'],['d','<f-m>F<sub>H</sub></f-m> parallel zur Ebene hangaufwärts und <f-m>F<sub>N</sub></f-m> senkrecht zur Ebene aus der Ebene']],ok:'a',
+  hinweis:'Die Gewichtskraft bewirkt zweierlei: Sie zieht den Sack den Hang hinunter und presst ihn auf die Rampe.',
+  tipps:['Die Hangabtriebskraft zieht den Sack die Rampe hinunter.','Die Normalkraft presst den Sack senkrecht gegen die Rampe. Die Unterlagskraft <f-m>F<sub>U</sub></f-m> der Rampe wirkt ihr entgegen.'],
+  loesung:'Hangabtriebskraft <f-m>F<sub>H</sub></f-m>: parallel zur Ebene, hangabwärts. Normalkraft <f-m>F<sub>N</sub></f-m>: senkrecht zur Ebene, in die Ebene. Die Unterlagskraft <f-m>F<sub>U</sub> = F<sub>N</sub></f-m> wirkt entgegengesetzt zu <f-m>F<sub>N</sub></f-m>.'},
+ {afb:2,typ:'num',frage:'Ein Mehlsack (50 kg) steht auf dem Rollwagen auf einer Rampe mit <f-m>α = 20°</f-m>. Berechne die Hangabtriebskraft (ohne Reibung, Wagen vernachlässigt).',
+  einheit:'N',ziel:167.76,tol:.01,
+  fehler:[[460.9,'Das ist die Normalkraft <f-m>F<sub>N</sub> = F<sub>G</sub> · cos α</f-m>. Gesucht ist <f-m>F<sub>H</sub></f-m>.'],[17.1,'Du hast die Masse statt der Gewichtskraft genommen. Erst <f-m>F<sub>G</sub> = m · g</f-m>.'],[447.8,'Stell den Taschenrechner auf Grad (DEG).'],[490.5,'Das ist die ganze Gewichtskraft. Auf der Rampe zieht nur der Anteil <f-m>F<sub>H</sub></f-m> hangabwärts.']],
+  tipps:['Erst die Gewichtskraft: <f-m>F<sub>G</sub> = 50 kg · 9,81 N/kg = 490,5 N</f-m>.','<f-m>F<sub>H</sub> = F<sub>G</sub> · sin α = 490,5 N · sin 20°</f-m>'],
+  loesung:'<f-m>F<sub>G</sub> = 490,5 N</f-m>; <f-m>F<sub>H</sub> = F<sub>G</sub> · sin α = 490,5 N · sin 20° ≈ 168 N</f-m>'},
+ {afb:2,typ:'mc',frage:'Ole stellt die Rampe steiler. Was passiert mit der Hangabtriebskraft <f-m>F<sub>H</sub></f-m> und der Normalkraft <f-m>F<sub>N</sub></f-m>?',
+  opts:[['a','<f-m>F<sub>H</sub></f-m> wird größer, <f-m>F<sub>N</sub></f-m> wird kleiner.'],['b','<f-m>F<sub>H</sub></f-m> wird kleiner, <f-m>F<sub>N</sub></f-m> wird größer.'],['c','<f-m>F<sub>H</sub></f-m> und <f-m>F<sub>N</sub></f-m> werden beide größer.'],['d','<f-m>F<sub>H</sub></f-m> wird größer, <f-m>F<sub>N</sub></f-m> bleibt gleich.']],ok:'a',
+  hinweis:'Denk an die Grenzfälle: waagrechte Ebene (0°) und senkrechte Wand (90°).',
+  tipps:['Bei 0° ist <f-m>F<sub>H</sub> = 0</f-m> und <f-m>F<sub>N</sub> = F<sub>G</sub></f-m>. Bei 90° ist es genau umgekehrt.','sin α wächst mit dem Winkel, cos α wird kleiner.'],
+  loesung:'Je steiler, desto größer <f-m>F<sub>H</sub> = F<sub>G</sub> · sin α</f-m> und desto kleiner <f-m>F<sub>N</sub> = F<sub>G</sub> · cos α</f-m>.'},
+ {afb:3,typ:'num',frage:'Ole schiebt einen Sackkarren mit Ladung (60 kg) eine Rampe hinauf. Er kann höchstens 250 N parallel zur Rampe aufbringen (ohne Reibung). Wie groß darf der Neigungswinkel höchstens sein?',
+  einheit:'°',ziel:25.13,tol:.015,
+  fehler:[[64.87,'Das ist der Winkel aus cos. Es gilt aber <f-m>F<sub>H</sub> = F<sub>G</sub> · sin α</f-m>.'],[0.4247,'Das ist sin α. Bestimme noch den Winkel mit sin<sup>−1</sup> (DEG).'],[24.57,'Du hast mit <f-m>g = 10 N/kg</f-m> gerechnet. Nimm 9,81 N/kg.']],
+  tipps:['Der Karren kommt gerade noch hoch, wenn <f-m>F<sub>H</sub> = 250 N</f-m> ist.','<f-m>sin α = F<sub>H</sub> : F<sub>G</sub> = 250 N : (60 kg · 9,81 N/kg)</f-m>, dann sin<sup>−1</sup>.'],
+  loesung:'<f-m>F<sub>G</sub> = 588,6 N</f-m>; <f-m>sin α = 250 N : 588,6 N ≈ 0,425</f-m>; <f-m>α ≈ 25,1°</f-m>. Steiler darf die Rampe nicht sein.'},
+ {afb:3,typ:'begr',frage:'<b>Begründe:</b> Mit der Rampe spart Ole Kraft, aber keine Energie.',
+  muster:'Auf der Rampe muss Ole nur die Hangabtriebskraft <f-m>F<sub>H</sub> = F<sub>G</sub> · sin α</f-m> überwinden, die kleiner ist als die Gewichtskraft. Dafür ist der Weg länger: Statt der Höhe <f-m>h</f-m> muss er die ganze Rampenlänge <f-m>s = h : sin α</f-m> schieben. Kraft mal Weg bleibt gleich: <f-m>F<sub>H</sub> · s = F<sub>G</sub> · h</f-m>. Die Lageenergie oben ist dieselbe wie beim senkrechten Hochheben (Goldene Regel der Mechanik).',
+  checks:['Ich habe gesagt, dass auf der Rampe nur <f-m>F<sub>H</sub></f-m> statt <f-m>F<sub>G</sub></f-m> überwunden werden muss.','Ich habe gesagt, dass der Weg dafür länger ist.','Ich habe erklärt, dass die Energie (Kraft mal Weg, Lageenergie) gleich bleibt.']}
+ ]},
+{name:'Post bei Ida',who:'Ida',thema:'Kraft 5 · Newton und Reibung',mg:'rutsche',item:'bremse',
+ intro:'<p>Die Pakete rutschen! Ida hat noch ein paar Fragen zu Newton und zur Reibung.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Welche Gleichung beschreibt das 2. Newtonsche Axiom?',
+  opts:[['a','<f-m>F<sub>res</sub> = m · a</f-m>: Die resultierende Kraft bestimmt die Beschleunigung.'],['b','<f-m>F<sub>res</sub> = m · v</f-m>: Die resultierende Kraft bestimmt die Geschwindigkeit.'],['c','<f-m>F<sub>res</sub> = m · g</f-m>: Die resultierende Kraft ist immer eine Gewichtskraft.'],['d','<f-m>F<sub>res</sub> = a : m</f-m>: Je größer die Masse, desto kleiner die nötige Kraft.']],ok:'a',
+  hinweis:'Was ändert eine resultierende Kraft: die Geschwindigkeit selbst oder wie schnell sie sich ändert?',
+  tipps:['Ohne resultierende Kraft bleibt die Geschwindigkeit konstant (1. Axiom).','Eine resultierende Kraft beschleunigt den Körper. Grundgleichung der Mechanik: <f-m>1 N = 1 kg · m/s<sup>2</sup></f-m>.'],
+  loesung:'<f-m>F<sub>res</sub> = m · a</f-m>: Die Beschleunigung ist proportional zur resultierenden Kraft und hat ihre Richtung.'},
+ {afb:2,typ:'num',frage:'Ida zieht den Paketwagen (40 kg) mit 130 N über den Platz. Die Rollreibung bremst mit 30 N. Wie groß ist die Beschleunigung?',
+  einheit:'m/s²',ziel:2.5,tol:.01,
+  fehler:[[3.25,'Du hast die Reibung vergessen. Nur die resultierende Kraft beschleunigt.'],[4,'Die Reibung wirkt entgegen, sie wird abgezogen.'],[100,'Das ist <f-m>F<sub>res</sub></f-m> in N. Teile noch durch die Masse.']],
+  tipps:['Erst die resultierende Kraft: <f-m>F<sub>res</sub> = 130 N − 30 N</f-m>.','<f-m>a = F<sub>res</sub> : m = 100 N : 40 kg</f-m>'],
+  loesung:'<f-m>F<sub>res</sub> = 130 N − 30 N = 100 N</f-m>; <f-m>a = F<sub>res</sub> : m = 100 N : 40 kg = 2,5 m/s<sup>2</sup></f-m>'},
+ {afb:2,typ:'num',frage:'Ein Paket (8,0 kg) liegt auf dem waagrechten Holztisch. Haftreibungszahl <f-m>f<sub>H</sub> = 0,50</f-m>. Mit welcher Kraft muss Ida mindestens waagrecht ziehen, damit es losrutscht?',
+  einheit:'N',ziel:39.24,tol:.015,
+  fehler:[[4,'Du hast die Masse statt der Normalkraft genommen. Auf dem waagrechten Tisch ist <f-m>F<sub>N</sub> = F<sub>G</sub> = m · g</f-m>.'],[78.48,'Das ist die Normalkraft. Multipliziere noch mit <f-m>f<sub>H</sub></f-m>.'],[156.96,'Du hast durch <f-m>f<sub>H</sub></f-m> geteilt. Richtig: <f-m>F<sub>R</sub> = f<sub>H</sub> · F<sub>N</sub></f-m>.']],
+  tipps:['Auf dem waagrechten Tisch ist <f-m>F<sub>N</sub> = F<sub>G</sub> = 8,0 kg · 9,81 N/kg</f-m>.','Haftreibung: <f-m>F<sub>R</sub> = f<sub>H</sub> · F<sub>N</sub> = 0,50 · 78,48 N</f-m>'],
+  loesung:'<f-m>F<sub>N</sub> = 8,0 kg · 9,81 N/kg = 78,48 N</f-m>; <f-m>F<sub>R</sub> = f<sub>H</sub> · F<sub>N</sub> = 0,50 · 78,48 N ≈ 39 N</f-m>. Etwas mehr, dann rutscht das Paket los.'},
+ {afb:3,typ:'mc',frage:'Ab welchem Neigungswinkel rutscht ein Paket mit <f-m>f<sub>H</sub> = 0,50</f-m> auf der Rutsche von allein los?',
+  opts:[['a','ab etwa 27°, denn dann ist tan α größer als <f-m>f<sub>H</sub></f-m>'],['b','ab etwa 30°, denn dann ist sin α größer als <f-m>f<sub>H</sub></f-m>'],['c','ab etwa 60°, denn dann ist cos α kleiner als <f-m>f<sub>H</sub></f-m>'],['d','ab etwa 45°, denn dann ist <f-m>F<sub>H</sub></f-m> größer als <f-m>F<sub>G</sub></f-m>']],ok:'a',
+  hinweis:'Das Paket rutscht los, sobald die Hangabtriebskraft größer ist als die größte Haftreibungskraft. Setz beide Formeln ein.',
+  tipps:['<f-m>F<sub>H</sub> = F<sub>G</sub> · sin α</f-m> und die Haftreibung höchstens <f-m>f<sub>H</sub> · F<sub>N</sub> = f<sub>H</sub> · F<sub>G</sub> · cos α</f-m>.','Aus <f-m>F<sub>G</sub> · sin α > f<sub>H</sub> · F<sub>G</sub> · cos α</f-m> wird <f-m>tan α > f<sub>H</sub></f-m>. tan<sup>−1</sup>(0,50) = ?'],
+  loesung:'Losrutschen, wenn <f-m>F<sub>H</sub> > f<sub>H</sub> · F<sub>N</sub></f-m>, also <f-m>tan α > f<sub>H</sub> = 0,50</f-m>: <f-m>α > 26,6°</f-m>. Die Masse kürzt sich heraus.'},
+ {afb:3,typ:'begr',frage:'<b>Begründe:</b> Bei 25° bleibt ein Paket von allein liegen. Stößt Ida es aber kurz an, rutscht es bis nach unten weiter (Karton auf Holz: <f-m>f<sub>H</sub> = 0,50</f-m>, f<sub>gl</sub> = 0,30).',
+  muster:'Bei 25° ist <f-m>tan α ≈ 0,47</f-m>, also kleiner als <f-m>f<sub>H</sub> = 0,50</f-m>: Die Haftreibung kann die Hangabtriebskraft ausgleichen, das Paket bleibt liegen. Sobald es gleitet, wirkt aber nur noch die kleinere Gleitreibung <f-m>F<sub>gl</sub> = f<sub>gl</sub> · F<sub>N</sub></f-m>. Weil tan α größer als <f-m>f<sub>gl</sub> = 0,30</f-m> ist, ist <f-m>F<sub>H</sub></f-m> größer als <f-m>F<sub>gl</sub></f-m>. Es bleibt eine resultierende Kraft hangabwärts, das Paket wird sogar schneller (2. Axiom).',
+  checks:['Ich habe Haftreibung und Gleitreibung unterschieden (f<sub>gl</sub> < f<sub>H</sub>).','Ich habe begründet, warum es zuerst liegen bleibt (F<sub>H</sub> höchstens so groß wie die Haftreibung).','Ich habe begründet, warum es dann weiterrutscht (F<sub>H</sub> > <f-m>F<sub>gl</sub></f-m>, resultierende Kraft hangabwärts).']}
+ ]},
+/* ---------- Nebenquests ---------- */
+{name:'Sternwarte bei Noah',who:'Noah',thema:'Nebenquest · Gewichtskraft im Weltall',mg:null,item:'lager',side:true,
+ intro:'<p>Noah träumt vom Weltall. Hilf ihm mit seinen Fragen, dann schenkt er dir die Kugellager aus seinem alten Skateboard.</p>',
+ tasks:[
+ {afb:1,typ:'mc',frage:'Noah fragt: „Wovon hängt die Gewichtskraft eines Körpers ab?“',bild:'erde-mond',
+  opts:[['a','von der Masse des Körpers und vom Ortsfaktor <f-m>g</f-m> am jeweiligen Ort'],['b','nur von der Masse des Körpers, sie ist überall im Weltall gleich'],['c','nur vom Ortsfaktor <f-m>g</f-m>, die Masse des Körpers spielt keine Rolle'],['d','von der Masse des Körpers und von seiner Geschwindigkeit']],ok:'a',
+  hinweis:'Schau dir die Formel für die Gewichtskraft an. Welche Größen stehen darin?',
+  tipps:['<f-m>F<sub>G</sub> = m · g</f-m>','Die Masse ist überall gleich, der Ortsfaktor <f-m>g</f-m> ist auf jedem Himmelskörper anders.'],
+  loesung:'<f-m>F<sub>G</sub> = m · g</f-m>: Sie hängt von der Masse und vom Ortsfaktor ab. Auf dem Mond ist g viel kleiner, die Masse bleibt gleich.'},
+ {afb:2,typ:'num',frage:'Noahs Teleskop hat die Masse 12 kg. Wie groß wäre seine Gewichtskraft auf dem Mond <f-m>(g = 1,62 N/kg)</f-m>?',
+  einheit:'N',ziel:19.44,tol:.01,
+  fehler:[[117.72,'Das ist die Gewichtskraft auf der Erde. Nimm den Ortsfaktor des Mondes.'],[7.41,'Umgekehrt geteilt: <f-m>F<sub>G</sub> = m · g</f-m>.'],[12,'Das ist die Masse. Sie ist auf dem Mond gleich, die Gewichtskraft nicht.']],
+  tipps:['<f-m>F<sub>G</sub> = m · g<sub>Mond</sub></f-m>','<f-m>F<sub>G</sub> = 12 kg · 1,62 N/kg</f-m>'],
+  loesung:'<f-m>F<sub>G</sub> = m · g = 12 kg · 1,62 N/kg ≈ 19,4 N</f-m>, also etwa ein Sechstel der Gewichtskraft auf der Erde.'},
+ {afb:3,typ:'mc',frage:'Auf dem Mars <f-m>(g = 3,71 N/kg)</f-m> misst ein Kraftmesser an Noahs Rucksack 37,1 N. Welche Masse hat der Rucksack und welche Gewichtskraft hätte er auf der Erde?',
+  opts:[['a','<f-m>m = 10 kg</f-m> und <f-m>F<sub>G</sub> = 98,1 N</f-m>'],['b','<f-m>m = 37,1 kg</f-m> und <f-m>F<sub>G</sub> = 364 N</f-m>'],['c','<f-m>m = 10 kg</f-m> und <f-m>F<sub>G</sub> = 37,1 N</f-m>'],['d','<f-m>m = 3,8 kg</f-m> und <f-m>F<sub>G</sub> = 37,1 N</f-m>']],ok:'a',
+  hinweis:'Erst die Masse aus den Mars-Werten, dann mit dem Ortsfaktor der Erde rechnen.',
+  tipps:['<f-m>m = F<sub>G</sub> : g = 37,1 N : 3,71 N/kg</f-m>','Die Masse bleibt auf der Erde gleich. Dann <f-m>F<sub>G</sub> = m · 9,81 N/kg</f-m>.'],
+  loesung:'<f-m>m = 37,1 N : 3,71 N/kg = 10 kg</f-m>; auf der Erde <f-m>F<sub>G</sub> = 10 kg · 9,81 N/kg = 98,1 N</f-m>.'}
+ ]},
+{name:'Schmiede bei Rosa',who:'Rosa',thema:'Nebenquest · Keil und Reibung',mg:null,item:'fett',side:true,
+ intro:'<p>Rosa schmiedet gerade. Wenn du ihre Fragen beantwortest, bekommst du Schmierfett für deine Radlager.</p>',
+ tasks:[
+ {afb:2,typ:'mc',frage:'Rosa spaltet Holz mit einem schmalen Keil. Warum geht das so leicht?',
+  opts:[['a','Die Teilkräfte senkrecht zu den Keilflächen sind viel größer als die Schlagkraft.'],['b','Die Teilkräfte senkrecht zu den Keilflächen sind viel kleiner als die Schlagkraft.'],['c','Der Keil speichert die Schlagkraft und gibt sie danach auf einmal wieder ab.'],['d','Der schmale Keil verkleinert die Reibung, deshalb braucht man gar keine Kraft.']],ok:'a',
+  hinweis:'Zerlege die Schlagkraft in die beiden Richtungen senkrecht zu den Keilflächen. Wie sieht das Parallelogramm bei einem sehr schmalen Keil aus?',
+  tipps:['Bei einem schmalen Keil stehen die Keilflächen fast parallel zur Schlagrichtung.','Das Parallelogramm wird lang und schmal: Die Teilkräfte werden viel länger als die Schlagkraft.'],
+  loesung:'Die Schlagkraft wird in zwei Teilkräfte senkrecht zu den Keilflächen zerlegt. Bei einem schmalen Keil sind diese viel größer als die Schlagkraft und drücken das Holz auseinander.'},
+ {afb:2,typ:'mc',frage:'Rosa fettet die Radlager deiner Seifenkiste. Was ändert sich dadurch?',
+  opts:[['a','Die Reibungszahl f wird kleiner, damit auch die Reibungskraft <f-m>F<sub>R</sub> = f · F<sub>N</sub></f-m>.'],['b','Die Normalkraft <f-m>F<sub>N</sub></f-m> wird kleiner, damit auch die Reibungskraft <f-m>F<sub>R</sub> = f · F<sub>N</sub></f-m>.'],['c','Die Reibungszahl f wird größer, damit halten die Räder besser auf der Straße.'],['d','Die Gewichtskraft <f-m>F<sub>G</sub></f-m> wird kleiner, weil das Fett die Kiste leichter macht.']],ok:'a',
+  hinweis:'Fett ändert die Oberflächen, nicht die Kiste und nicht, wie fest sie auf die Straße drückt.',
+  tipps:['Die Reibungskraft hängt von den Oberflächen (Reibungszahl f) und von der Normalkraft ab.','Fett macht die Oberflächen glatter. Welche Größe ändert sich also?'],
+  loesung:'Fett verkleinert die Reibungszahl f. Die Normalkraft bleibt gleich, also wird <f-m>F<sub>R</sub> = f · F<sub>N</sub></f-m> kleiner.'},
+ {afb:3,typ:'num',frage:'Rosa schiebt ihren Amboss (100 kg) über den waagrechten Steinboden. Gleitreibungszahl <f-m>f<sub>gl</sub> = 0,40</f-m>. Mit welcher Kraft muss sie schieben, damit er sich mit konstanter Geschwindigkeit bewegt?',
+  einheit:'N',ziel:392.4,tol:.01,
+  fehler:[[40,'Du hast die Masse statt der Normalkraft genommen. <f-m>F<sub>N</sub> = m · g</f-m>.'],[981,'Das ist die Normalkraft. Multipliziere noch mit <f-m>f<sub>gl</sub></f-m>.'],[0,'Bei konstanter Geschwindigkeit ist <f-m>F<sub>res</sub> = 0</f-m>, die Schubkraft muss aber die Reibung ausgleichen.']],
+  tipps:['Konstante Geschwindigkeit heißt Kräftegleichgewicht: Schubkraft = Gleitreibungskraft.','<f-m>F<sub>gl</sub> = f<sub>gl</sub> · F<sub>N</sub> = 0,40 · 100 kg · 9,81 N/kg</f-m>'],
+  loesung:'Kräftegleichgewicht: <f-m>F = F<sub>gl</sub> = f<sub>gl</sub> · m · g = 0,40 · 100 kg · 9,81 N/kg ≈ 392 N</f-m>'}
+ ]}
+];
+const NMAIN=5,NROUND=3,MGM=ST.map((s,i)=>i).filter(i=>ST[i].mg);
+const TOTAL=ST.reduce((a,s)=>a+s.tasks.length,0)+MGM.length*NROUND;
+
+/* ---------- Symbole für den Rucksack ---------- */
+const S0='<svg viewBox="0 0 48 48" aria-hidden="true">',S1='</svg>',OL='stroke="#2f393a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"';
+const ICON={
+ brett:S0+`<rect x="5" y="19" width="38" height="11" rx="3" fill="#c99a5b" ${OL}/><path d="M11 24h8M25 26h10" stroke="#8a6436" stroke-width="2" stroke-linecap="round"/>`+S1,
+ seil:S0+`<ellipse cx="24" cy="25" rx="15" ry="11" fill="none" stroke="#b07a2a" stroke-width="5"/><ellipse cx="24" cy="25" rx="15" ry="11" fill="none" stroke="#e0b46a" stroke-width="2" stroke-dasharray="3 4"/><path d="M36 31 q6 6 4 12" fill="none" stroke="#b07a2a" stroke-width="4" stroke-linecap="round"/>`+S1,
+ nummer:S0+`<circle cx="24" cy="24" r="17" fill="#fff" ${OL}/><circle cx="24" cy="24" r="12" fill="#FCBE00" ${OL}/><text x="24" y="30" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="700" font-size="16" fill="#2f393a">7</text>`+S1,
+ raeder:S0+`<circle cx="15" cy="27" r="10" fill="#3E4B4C" ${OL}/><circle cx="15" cy="27" r="4" fill="#C9D2D3" ${OL}/><circle cx="34" cy="27" r="10" fill="#3E4B4C" ${OL}/><circle cx="34" cy="27" r="4" fill="#C9D2D3" ${OL}/>`+S1,
+ bremse:S0+`<rect x="9" y="13" width="30" height="16" rx="3" fill="#c99a5b" ${OL}/><rect x="9" y="29" width="30" height="7" rx="2" fill="#3E4B4C" ${OL}/>`+S1,
+ lager:S0+`<circle cx="24" cy="24" r="16" fill="#C9D2D3" ${OL}/><circle cx="24" cy="24" r="7" fill="#fff" ${OL}/>${[0,1,2,3,4,5,6,7].map(k=>`<circle cx="${(24+11.5*Math.cos(k*.785)).toFixed(1)}" cy="${(24+11.5*Math.sin(k*.785)).toFixed(1)}" r="2.4" fill="#5F6F74"/>`).join('')}`+S1,
+ fett:S0+`<path d="M14 16h20v24a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3z" fill="#76989D" ${OL}/><rect x="12" y="10" width="24" height="7" rx="2" fill="#3E4B4C" ${OL}/><path d="M19 27h10" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`+S1,
+ klee:S0+`<g fill="#5fae6b" ${OL}><circle cx="24" cy="15" r="7"/><circle cx="15" cy="24" r="7"/><circle cx="33" cy="24" r="7"/><circle cx="24" cy="31" r="7"/></g><path d="M24 31 q2 8 8 12" fill="none" ${OL}/>`+S1};
+
+/* ---------- Aufgabentypen ---------- */
+const TYP={
+ mc(box,T,i,t){const b=box.querySelector('.body');
+  b.innerHTML=`<div class="mc">${T.opts.map(([k,txt])=>`<button type="button" data-k="${k}"><span>${txt}</span></button>`).join('')}</div>`;
+  b.querySelectorAll('button').forEach(btn=>btn.onclick=()=>{
+   if(btn.dataset.k===T.ok){btn.classList.add('ok');b.querySelectorAll('button').forEach(x=>x.disabled=true);solve(i,t)}
+   else{btn.classList.add('bad');b.querySelectorAll('button').forEach(x=>x.disabled=true);fb(box,'hint','<b>Noch nicht.</b> '+T.hinweis+' <small>(Kurz nachdenken …)</small>');
+    setTimeout(()=>{b.querySelectorAll('button:not(.bad)').forEach(x=>x.disabled=false)},3000)}})},
+ num(box,T,i,t){const b=box.querySelector('.body');
+  b.innerHTML=`<p class="calcbox">Rechne im Heft: gegeben, gesucht, Formel, Rechnung. Gib dann dein Ergebnis ein.</p><div class="numrow"><label>Ergebnis: <input type="text" inputmode="decimal" autocomplete="off"></label> <span>${T.einheit}</span><button class="primary" type="button">Prüfen</button></div>`;
+  const inp=b.querySelector('input'),go=b.querySelector('button');
+  const check=()=>{const v=num(inp.value);if(isNaN(v)){fb(box,'hint','Gib eine Zahl ein, z. B. 12,5.');return}
+   if(Math.abs(v-T.ziel)<=T.tol*Math.abs(T.ziel)){inp.disabled=go.disabled=true;solve(i,t);return}
+   const f=(T.fehler||[]).find(([w])=>w===0?Math.abs(v)<1e-9:Math.abs(v-w)<=.02*Math.abs(w));
+   fb(box,'bad',f?f[1]:'Das stimmt noch nicht. Prüfe Formel, Einsetzen und Einheiten. Ein Tipp hilft dir weiter.')};
+  go.onclick=check;inp.onkeydown=e=>{if(e.key==='Enter')check()}},
+ begr(box,T,i,t){const b=box.querySelector('.body');
+  b.innerHTML=`<textarea placeholder="Schreib deine Begründung in ganzen Sätzen …"></textarea><div class="tools"><button class="primary" type="button" data-ab>Abgeben und vergleichen</button></div><div class="mu"></div>`;
+  const ta=b.querySelector('textarea');b.querySelector('[data-ab]').onclick=()=>{if(ta.value.trim().split(/\s+/).length<8){fb(box,'hint','Schreib erst einen eigenen Satz (mindestens 8 Wörter). Dann zeige ich dir meine Musterbegründung.');return}
+   b.querySelector('[data-ab]').disabled=true;fb(box,'','');
+   b.querySelector('.mu').innerHTML=`<div class="loes"><b>Gertis Musterbegründung:</b> ${T.muster}</div><p style="margin-top:10px"><b>Vergleiche:</b> Was steckt auch in deiner Begründung?</p><div class="checks">${T.checks.map(c=>`<label><input type="checkbox"> ${c}</label>`).join('')}</div><div class="tools"><button class="primary" type="button" data-fertig>Fertig verglichen</button></div>`;
+   b.querySelector('[data-fertig]').onclick=()=>{const n=b.querySelectorAll('.checks input:checked').length;used=3-Math.max(1,n);b.querySelector('[data-fertig]').disabled=true;solve(i,t)}}}
+};
+
+/* ---------- Spielstand ---------- */
+let state={};
+try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+state.t=state.t||{};state.r=state.r||{};state.f=state.f||{};state.kap=state.kap||[];state.inv=state.inv||[];
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+const tid=(s,t)=>s+'-'+t;
+const isDone=(s,t)=>tid(s,t) in state.t;
+const tasksDone=s=>ST[s].tasks.every((_,t)=>isDone(s,t));
+const roundDone=(s,r)=>tid(s,r) in state.r;
+const mgDone=s=>!ST[s].mg||[0,1,2].every(r=>roundDone(s,r));
+const stDone=s=>tasksDone(s)&&mgDone(s);
+const has=k=>state.inv.includes(k);
+function give(k){if(!has(k)){state.inv.push(k);save()}}
+const MAXK=ST.reduce((a,s)=>a+s.tasks.length*3,0)+MGM.length*NROUND*3+6;
+let used=0,solShown=false;
+function kris(){return Object.values(state.t).reduce((a,b)=>a+b,0)+Object.values(state.r).reduce((a,b)=>a+b,0)+state.kap.length}
+const nextM=()=>{for(let i=0;i<NMAIN;i++)if(!stDone(i))return i;return NMAIN};
+function hud(){const n=ST.reduce((a,s,i)=>a+s.tasks.filter((_,k)=>isDone(i,k)).length,0)+Object.keys(state.r).length,p=Math.round(100*n/TOTAL);
+ $('#akkuBar').style.width=p+'%';$('#akkuTxt').textContent=p+' %';$('#kris').textContent=kris();$('#kap').textContent=state.kap.length;$('#quest').textContent=questText();
+ $('#invBtn').textContent='🎒 Rucksack ('+state.inv.length+')'}
+function questText(){const F=state.f;
+ if(!F.intro)return 'Starte das Spiel.';
+ const m=nextM();
+ if(m===0)return 'Sprich mit Hilde in ihrer Werkstatt (gleich rechts von dir).';
+ if(m===1)return 'Geh nach rechts zum Kanal: Fährfrau Mira braucht Hilfe mit dem Kahn.';
+ if(m===2)return 'Weiter zum Marktplatz: Herr Kofler will die Lampionleine spannen.';
+ if(m===3)return 'Den Hang hinauf zur Bäckerei: Ole muss Mehlsäcke nach oben bringen.';
+ if(m===4)return 'Ganz nach oben zur Post: Idas Paketrutsche klemmt.';
+ if(!F.ende)return 'Auf zum Start oben auf dem Kippelberg: Bürgermeisterin Brandl wartet mit dem Rennen!';
+ const s=[5,6].filter(i=>!stDone(i)).length;
+ return s||state.kap.length<6?`Rennen gefahren! Noch offen: ${s?s+' Nebenquest'+(s>1?'s':'')+' (Noah, Rosa)':''}${s&&state.kap.length<6?' und ':''}${state.kap.length<6?`${6-state.kap.length} Kleeblätter`:''}. Mit Kugellager und Fett wirst du schneller.`:'Alles geschafft! Fahr das Rennen nochmal für eine Bestzeit.'}
+
+/* ---------- Aufgaben-Fenster ---------- */
+const TD=$('#taskDlg');
+function openSt(i){const s=ST[i];let t=s.tasks.findIndex((_,k)=>!isDone(i,k));if(t<0){G.after(i);return}
+ showTask(i,t,true);if(!TD.open)TD.showModal();TD.scrollTop=0;$('#panel').focus({preventScroll:true})}
+TD.addEventListener('close',()=>{G.freeze=false;hud()});
+function head(i){const s=ST[i];return `<h3>${s.side?'Nebenquest':'Auftrag '+(i+1)} · ${s.name}</h3><p style="color:var(--muted);margin-top:-4px">${s.thema}</p>`}
+function showTask(i,t,withIntro){const s=ST[i],T=s.tasks[t];used=0;solShown=false;
+ const P=$('#panel');
+ const dots=s.tasks.map((_,k)=>`<i class="${isDone(i,k)?'ok':''} ${k===t?'cur':''}"></i>`).join('');
+ P.innerHTML=head(i)+(withIntro?say(s.intro):'')+
+ `<div class="task" data-task="${tid(i,t)}"><div class="thead"><span class="afb"><b>${'★'.repeat(T.afb)}</b> AFB ${['I','II','III'][T.afb-1]}</span><span>Aufgabe ${t+1} von ${s.tasks.length}</span><span class="dots" aria-hidden="true">${dots}</span></div>
+ <div class="${T.bild?'mitbild':''}">${T.bild?pk(T.bild,'gross'):''}<p>${T.frage}</p></div><div class="body"></div><div class="fb" role="status"></div>
+ <div class="tools">${T.tipps?'<button class="tip" type="button" data-tip>💡 Tipp von Gerti (−1 Taler)</button>':''}${T.loesung?'<button type="button" data-sol>Lösung zeigen</button>':''}</div><div class="extra"></div></div>`;
+ const box=P.querySelector('.task');
+ const tb=box.querySelector('[data-tip]');if(tb)tb.onclick=()=>{if(used>=T.tipps.length)return;
+  box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="tiptxt">${GERTI}<div><b>Tipp ${used+1}:</b> ${T.tipps[used]}</div></div>`);used++;
+  if(used>=T.tipps.length){tb.disabled=true;tb.textContent='💡 Keine Tipps mehr'}};
+ const sb=box.querySelector('[data-sol]');if(sb)sb.onclick=()=>{if(solShown)return;solShown=true;sb.disabled=true;
+  box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="loes"><b>Lösung:</b> ${T.loesung}<br><small>Schau sie dir genau an. Du bekommst keine Taler, kannst aber weiterspielen.</small></div><div class="tools"><button class="primary" type="button" data-weiter>Verstanden, weiter</button></div>`);
+  box.querySelector('[data-weiter]').onclick=()=>solve(i,t,true)};
+ TYP[T.typ](box,T,i,t);
+}
+function fb(box,cls,html){const f=box.querySelector('.fb');f.className='fb '+cls;f.innerHTML=html}
+function solve(i,t,viaSol){const s=ST[i];if(!isDone(i,t)){state.t[tid(i,t)]=viaSol?0:Math.max(1,3-used);save()}
+ hud();
+ const next=s.tasks.findIndex((_,k)=>!isDone(i,k));
+ const box=$('#panel .task');
+ const go=()=>{if(next>=0){showTask(i,next,false);TD.scrollTop=0}else stationWin(i)};
+ if(viaSol){go();return}
+ fb(box,'ok',`<b>Richtig!</b> +${state.t[tid(i,t)]} Taler ${next>=0?'':'– das war die letzte Aufgabe hier.'}`);
+ box.querySelectorAll('[data-tip],[data-sol]').forEach(b=>b.disabled=true);
+ box.querySelector('.extra').insertAdjacentHTML('beforeend',`<div class="tools"><button class="primary" type="button" data-weiter>${next>=0?'Nächste Aufgabe':'Auftrag abschließen'}</button></div>`);
+ const w=box.querySelector('[data-weiter]');w.onclick=go;w.focus({preventScroll:true});
+}
+function stationWin(i){const s=ST[i],neu=!has(s.item);give(s.item);hud();
+ const f=s.tasks.reduce((a,_,k)=>a+(state.t[tid(i,k)]||0),0)+[0,1,2].reduce((a,r)=>a+(state.r[tid(i,r)]||0),0);
+ const mx=s.tasks.length*3+(s.mg?9:0),[nm,ds]=ITEMS[s.item];
+ $('#panel').innerHTML=head(i)+`<div class="win-box"><div class="big">✓ ${s.side?'Nebenquest':'Auftrag'} geschafft</div><p>${f} von ${mx} Taler</p><div class="item">${ICON[s.item]}<div><b>${neu?'Neu im Rucksack':'Im Rucksack'}: ${nm}</b><br><small>${ds}</small></div></div></div><div class="tools" style="justify-content:center"><button class="primary" type="button" id="nx">Zurück ins Dorf</button></div>`;
+ $('#nx').onclick=()=>{TD.close();G.after(i)};$('#nx').focus();
+}
+$('#taskClose').onclick=()=>TD.close();
+
+/* ---------- Rucksack ---------- */
+function openInv(){const L=$('#invList'),ord=['brett','seil','nummer','raeder','bremse','lager','fett','klee'];
+ L.innerHTML=ord.map(k=>has(k)?`<li>${ICON[k]}<div><b>${ITEMS[k][0]}</b>${ITEMS[k][1]}</div></li>`:`<li class="leer">${ICON[k]}<div><b>???</b>${k==='lager'||k==='fett'?'Gibt es bei einer Nebenquest.':k==='klee'?'Sammle sechs Kleeblätter für Gerti.':'Bekommst du bei einem Auftrag im Dorf.'}</div></li>`).join('');
+ $('#inv').hidden=false;$('#invClose').focus({preventScroll:true})}
+$('#invBtn').onclick=openInv;$('#invClose').onclick=()=>{$('#inv').hidden=true;$('#cv').focus({preventScroll:true})};
+
+/* ==========================================================
+   Spielwelt: Bilderbuch-Grafik (eigene Vektor-Zeichnungen)
+   Dorf von der Seite, 1 m ≙ 20 px
+   ========================================================== */
+const G=(()=>{
+const F=state.f;
+const cv=$('#cv');let cx=cv.getContext('2d'),VW=640,VH=360,SC=1;
+const GM=$('#game');
+const INK='#2f393a';
+const C={fg:'#1d8a4a',fh:'#d4381e',fn:'#1d62c9',fu:'#7a4fc0',fr:'#c76a12',fz:'#2f393a',fres:'#d4381e'};
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const rad=d=>d*Math.PI/180,deg=r=>r*180/Math.PI;
+/* --- Zeichenhilfen --- */
+function path(pts,close){cx.beginPath();pts.forEach(([x,y],k)=>k?cx.lineTo(x,y):cx.moveTo(x,y));if(close)cx.closePath()}
+function fillP(pts,col,st,lw=2){path(pts,true);cx.fillStyle=col;cx.fill();if(st){cx.strokeStyle=st;cx.lineWidth=lw;cx.lineJoin='round';cx.stroke()}}
+function rr(x,y,w,h,r,col,st,lw=2){cx.beginPath();cx.roundRect(x,y,w,h,r);if(col){cx.fillStyle=col;cx.fill()}if(st){cx.strokeStyle=st;cx.lineWidth=lw;cx.stroke()}}
+function circ(x,y,r,col,st,lw=2){cx.beginPath();cx.arc(x,y,r,0,7);if(col){cx.fillStyle=col;cx.fill()}if(st){cx.strokeStyle=st;cx.lineWidth=lw;cx.stroke()}}
+function ell(x,y,rx,ry,col,st,lw=2,rot=0){cx.beginPath();cx.ellipse(x,y,rx,ry,rot,0,7);if(col){cx.fillStyle=col;cx.fill()}if(st){cx.strokeStyle=st;cx.lineWidth=lw;cx.stroke()}}
+function ln(x1,y1,x2,y2,col,w=2,dash){cx.strokeStyle=col;cx.lineWidth=w;cx.lineCap='round';cx.setLineDash(dash||[]);cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();cx.setLineDash([])}
+function txt(s,x,y,col=INK,size=13,al='center',wt=600){cx.font=`${wt} ${size}px Lexend,system-ui,sans-serif`;cx.textAlign=al;cx.textBaseline='middle';cx.fillStyle=col;cx.fillText(s,x,y)}
+/* Formelzeichen mit Index, z. B. lab('F','H',…) */
+function lab(a,b,x,y,col,size=13){cx.font=`italic 600 ${size}px "Atkinson Hyperlegible",system-ui,sans-serif`;const w1=cx.measureText(a).width;cx.font=`600 ${size*.72}px "Atkinson Hyperlegible",system-ui,sans-serif`;const w2=b?cx.measureText(b).width:0;
+ let X=x-(w1+w2)/2;cx.textBaseline='middle';cx.textAlign='left';cx.lineWidth=3.5;cx.strokeStyle='rgba(255,255,255,.85)';cx.lineJoin='round';
+ cx.font=`italic 600 ${size}px "Atkinson Hyperlegible",system-ui,sans-serif`;cx.strokeText(a,X,y);cx.fillStyle=col;cx.fillText(a,X,y);
+ if(b){cx.font=`600 ${size*.72}px "Atkinson Hyperlegible",system-ui,sans-serif`;cx.strokeText(b,X+w1,y+size*.3);cx.fillText(b,X+w1,y+size*.3)}}
+/* Kraftpfeil mit Beschriftung */
+function arrow(x,y,dx,dy,col,w=3,L,dash){const l=Math.hypot(dx,dy);if(l<4)return;const ux=dx/l,uy=dy/l,h=Math.min(11,l*.45);
+ ln(x,y,x+dx-ux*h*.7,y+dy-uy*h*.7,col,w,dash);cx.fillStyle=col;cx.beginPath();cx.moveTo(x+dx,y+dy);cx.lineTo(x+dx-ux*h-uy*h*.5,y+dy-uy*h+ux*h*.5);cx.lineTo(x+dx-ux*h+uy*h*.5,y+dy-uy*h-ux*h*.5);cx.closePath();cx.fill();
+ if(L){const o=L[2]||16;lab(L[0],L[1],x+dx+ux*o*.8-uy*(L[3]||0),y+dy+uy*o*.8+ux*(L[3]||0),col)}}
+/* --- Figuren --- */
+const PPL={
+ Du:{coat:'#76989D',skin:'#f1c9a5',hair:'#6b4a2f',hat:'cap'},
+ Hilde:{coat:'#5F6F74',skin:'#efc6a6',hair:'#e9e9e9',hat:'bun',apron:'#c99a5b',glasses:1},
+ Mira:{coat:'#2f6f8a',skin:'#c99a6e',hair:'#2a1c14',hat:'kopftuch',scarf:'#FCBE00'},
+ 'Herr Kofler':{coat:'#8a5a44',skin:'#f0c4a0',hair:'#8a8a8a',hat:'hut',beard:'#8a8a8a'},
+ Ole:{coat:'#f4f1ea',skin:'#f2cba8',hair:'#d8a24a',hat:'baecker',apron:'#fff'},
+ Ida:{coat:'#FCBE00',skin:'#a8714d',hair:'#1b1410',hat:'post'},
+ Noah:{coat:'#3E4B4C',skin:'#f3d0b0',hair:'#c46a2f',hat:'none',small:1},
+ Rosa:{coat:'#6b3a2f',skin:'#e9b996',hair:'#b5402a',hat:'zopf',apron:'#3E4B4C'},
+ 'Frau Brandl':{coat:'#76989D',skin:'#f0c9aa',hair:'#4a3020',hat:'none',sash:'#FCBE00'},
+ Max:{coat:'#c94a3a',skin:'#f1c9a5',hair:'#e0c070',hat:'helm',small:1}};
+function head(x,y,r,o,dir=1){
+ if(o.hat==='bun'){circ(x,y-r*1.05,r*.45,o.hair,INK)}
+ if(o.hat==='zopf'){ln(x-dir*r*.8,y,x-dir*r*1.4,y+r*1.1,o.hair,r*.45)}
+ circ(x,y,r,o.skin,INK);
+ if(o.hat!=='kopftuch'&&o.hat!=='helm'){cx.beginPath();cx.arc(x,y,r,Math.PI*1.05,Math.PI*1.95);cx.closePath();cx.fillStyle=o.hair;cx.fill();cx.strokeStyle=INK;cx.lineWidth=2;cx.stroke()}
+ if(o.hat==='cap'){cx.beginPath();cx.arc(x,y-1,r*1.02,Math.PI,0);cx.closePath();cx.fillStyle='#FCBE00';cx.fill();cx.strokeStyle=INK;cx.stroke();rr(dir>0?x:x-r*1.5,y-2,r*1.5,r*.35,2,'#e0a800',INK)}
+ if(o.hat==='kopftuch'){cx.beginPath();cx.arc(x,y,r*1.08,Math.PI*.95,Math.PI*2.05);cx.closePath();cx.fillStyle=o.scarf;cx.fill();cx.strokeStyle=INK;cx.stroke()}
+ if(o.hat==='hut'){rr(x-r*1.3,y-r*.75,r*2.6,r*.32,2,'#3E4B4C',INK);rr(x-r*.8,y-r*1.6,r*1.6,r*.95,3,'#3E4B4C',INK)}
+ if(o.hat==='baecker'){rr(x-r*.95,y-r*1.9,r*1.9,r*1.2,r*.5,'#fff',INK);rr(x-r,y-r*.95,r*2,r*.4,2,'#fff',INK)}
+ if(o.hat==='post'){cx.beginPath();cx.arc(x,y-1,r*1.02,Math.PI,0);cx.closePath();cx.fillStyle='#3E4B4C';cx.fill();cx.strokeStyle=INK;cx.stroke();rr(x-r*1.1,y-3,r*2.2,r*.3,2,'#FCBE00',INK)}
+ if(o.hat==='helm'){cx.beginPath();cx.arc(x,y-1,r*1.1,Math.PI*.9,Math.PI*2.1);cx.closePath();cx.fillStyle='#e9edee';cx.fill();cx.strokeStyle=INK;cx.stroke();ln(x-r*.2,y-r*1.05,x+r*.3,y-r*.2,'#c94a3a',2)}
+ const ex=x+dir*r*.32;circ(ex-r*.28,y+r*.05,r*.13,INK);circ(ex+r*.28,y+r*.05,r*.13,INK);
+ if(o.glasses){circ(ex-r*.28,y+r*.05,r*.25,null,INK,1.5);circ(ex+r*.28,y+r*.05,r*.25,null,INK,1.5)}
+ circ(ex-r*.45,y+r*.42,r*.14,'rgba(230,120,110,.45)');circ(ex+r*.45,y+r*.42,r*.14,'rgba(230,120,110,.45)');
+ cx.beginPath();cx.arc(ex,y+r*.35,r*.25,.2,Math.PI-.2);cx.strokeStyle=INK;cx.lineWidth=1.8;cx.stroke();
+ if(o.beard){cx.beginPath();cx.arc(x+dir*r*.1,y+r*.55,r*.55,0,Math.PI);cx.fillStyle=o.beard;cx.fill();cx.strokeStyle=INK;cx.stroke()}}
+function person(x,y,o,dir=1,walk=0,t=0){const s=o.small?.82:1,H=y;cx.save();cx.translate(x,H);cx.scale(s,s);
+ const sw=Math.sin(walk)*6,bob=walk?Math.abs(Math.cos(walk))*1.5:Math.sin(t*2)*.6;
+ ell(0,0,13,3.5,'rgba(47,57,58,.18)');
+ ln(-4,-16,-4+sw,-1,INK,5);ln(4,-16,4-sw,-1,INK,5);
+ rr(-12,-42-bob,24,28,10,o.coat,INK);
+ if(o.apron)rr(-9,-32-bob,18,18,5,o.apron,INK,1.6);
+ if(o.sash)ln(-10,-40-bob,10,-20-bob,o.sash,4);
+ ln(-11,-36-bob,-14-sw*.4,-22-bob,INK,4);ln(11,-36-bob,14+sw*.4,-22-bob,INK,4);
+ head(0,-54-bob,11,o,dir);cx.restore()}
+function goat(x,y,dir=1,t=0,hop=0){cx.save();cx.translate(x,y-hop);cx.scale(dir,1);
+ ell(0,hop,15,3.5,'rgba(47,57,58,.18)');
+ const k=Math.sin(t*10)*(hop?3:0);
+ [[-9,0],[-4,1],[6,0],[10,1]].forEach(([lx,p])=>ln(lx,-12,lx+(p?k:-k),-1,INK,3.2));
+ ell(0,-17,15,9,'#f4efe4',INK);
+ cx.beginPath();cx.moveTo(-14,-20);cx.lineTo(-19,-25);cx.strokeStyle=INK;cx.lineWidth=3;cx.stroke();
+ path([[8,-22],[14,-36],[21,-34],[22,-26],[16,-18]],true);cx.fillStyle='#f4efe4';cx.fill();cx.strokeStyle=INK;cx.lineWidth=2;cx.stroke();
+ cx.beginPath();cx.moveTo(14,-35);cx.quadraticCurveTo(10,-46,4,-44);cx.strokeStyle='#8a7350';cx.lineWidth=3;cx.stroke();
+ ell(12,-33,5,2.5,'#f4efe4',INK,1.6,-.5);circ(18,-31,1.8,INK);
+ path([[19,-24],[20,-18],[23,-22]],true);cx.fillStyle='#f4efe4';cx.fill();
+ circ(13,-16,3.2,'#FCBE00',INK,1.6);cx.restore()}
+function face(who){const fc=$('#face');fc.hidden=!who;const g=fc.getContext('2d');g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,128,128);if(!who)return;
+ g.fillStyle='#dfe8e6';g.fillRect(0,0,128,128);
+ if(who==='Gerti'){const img=new Image();img.onload=()=>g.drawImage(img,0,0,128,128);img.src='data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">${$('#gerti').innerHTML}</svg>`);return}
+ const o=PPL[who]||PPL.Du;
+ const keep=cx;cx=g;g.save();g.translate(64,74);
+ rr(-34,22,68,50,22,o.coat,INK,3);if(o.sash)ln(-26,26,24,60,o.sash,8);
+ g.scale(2.7,2.7);head(0,0,11,o,0);g.restore();cx=keep}
+
+/* --- Welt --- */
+const WW=2900,PXM=20,MP=60;
+const TER=[[0,300],[560,300],[700,300],[860,300],[950,266],[1080,266],[1170,300],[1560,300],[1680,256],[1880,256],[2010,206],[2140,206],[2270,150],[2460,150],[2580,112],[2900,112]];
+function gy(x){x=clamp(x,0,WW);for(let k=1;k<TER.length;k++){const [x0,y0]=TER[k-1],[x1,y1]=TER[k];if(x<=x1){return y0+(y1-y0)*(x-x0)/(x1-x0)}}return TER[TER.length-1][1]}
+function slope(x){for(let k=1;k<TER.length;k++){const [x0,y0]=TER[k-1],[x1,y1]=TER[k];if(x<=x1)return Math.atan2(y0-y1,x1-x0)}return 0}
+const NPC=[
+ {who:'Hilde',x:262,st:0,dir:-1},{who:'Mira',x:780,st:1,dir:-1},{who:'Noah',x:1040,st:5,dir:-1},{who:'Herr Kofler',x:1395,st:2,dir:-1},
+ {who:'Ole',x:1820,st:3,dir:-1},{who:'Rosa',x:2100,st:6,dir:-1},{who:'Ida',x:2390,st:4,dir:-1},{who:'Frau Brandl',x:2690,st:'race',dir:-1}];
+const KLEE=[[430,0],[635,-34],[1128,0],[1622,0],[1948,0],[2522,0]];
+const P={x:90,dir:1,walk:0,moving:false};
+if(F.pos)P.x=clamp(F.pos,30,WW-30);
+const GT={x:P.x-40,y:gy(P.x-40),dir:1,hop:0};
+let showF=F.showF!==0;
+/* Hintergrund-Ebenen (einmal vorgezeichnet) */
+function layer(w,h,fn){const k=document.createElement('canvas');k.width=w;k.height=h;fn(k.getContext('2d'));return k}
+const farL=layer(1600,200,g=>{g.fillStyle='#b9cacc';g.beginPath();g.moveTo(0,200);for(let x=0;x<=1600;x+=20){g.lineTo(x,92-48*Math.sin(x/170)-26*Math.sin(x/53+1)-14*Math.cos(x/31))}g.lineTo(1600,200);g.fill();
+});
+const midL=layer(2000,220,g=>{g.fillStyle='#a6c0b6';g.beginPath();g.moveTo(0,220);for(let x=0;x<=2000;x+=20)g.lineTo(x,120-30*Math.sin(x/230+2)-16*Math.sin(x/90));g.lineTo(2000,220);g.fill();
+ for(let x=30;x<2000;x+=57){const y=120-30*Math.sin(x/230+2)-16*Math.sin(x/90);g.fillStyle='#8aab9e';g.beginPath();g.moveTo(x,y-34-(x%3)*6);g.lineTo(x-11,y+2);g.lineTo(x+11,y+2);g.fill();g.fillStyle='#7a9a8c';g.fillRect(x-1.5,y,3,6)}});
+function drawSky(camX){const gr=cx.createLinearGradient(0,0,0,VH);const ev=F.ende;gr.addColorStop(0,ev?'#c9d3e0':'#cfe1e3');gr.addColorStop(1,ev?'#f6dcc0':'#f6f1e3');cx.fillStyle=gr;cx.fillRect(0,0,VW,VH);
+ circ(VW*.82,VH*.16,26,ev?'#ffd27a':'#fff3c4');
+ const cl=(T0p*6-camX*.1);[[80,50,1],[340,80,.8],[620,40,1.1],[900,70,.9]].forEach(([x,y,s])=>{const X=((x+cl)%1100+1100)%1100-150;ell(X,y,34*s,13*s,'#fff');ell(X+22*s,y-8*s,22*s,13*s,'#fff');ell(X-20*s,y-4*s,18*s,10*s,'#fff')})}
+let T0p=0;
+function drawLayer(img,f,camX,camY,yb){const ox=-((camX*f)%img.width);const y=yb-camY*f;for(let x=ox;x<VW;x+=img.width)cx.drawImage(img,x,y)}
+/* Häuser */
+function house(x,y,w,h,o){const roof=o.roof||'#b8634a',wall=o.wall||'#f1e6cf';
+ rr(x,y-h,w,h,3,wall,INK);
+ fillP([[x-10,y-h+2],[x+w/2,y-h-o.rh],[x+w+10,y-h+2]],roof,INK);
+ if(o.chim){rr(x+w*.7,y-h-o.rh*.85,12,o.rh*.6,2,'#a6574a',INK)}
+ (o.win||[]).forEach(([wx,wy])=>{rr(x+wx,y-h+wy,18,20,3,F.ende?'#ffe39a':'#cfe1e3',INK);ln(x+wx+9,y-h+wy,x+wx+9,y-h+wy+20,INK,1.5);ln(x+wx,y-h+wy+10,x+wx+18,y-h+wy+10,INK,1.5)});
+ if(o.door)rr(x+o.door,y-34,20,34,[9,9,0,0],'#8a5a44',INK);
+ if(o.sign){rr(x+w/2-o.sign.length*4.2-8,y-h+6,o.sign.length*8.4+16,20,10,'#fff',INK);txt(o.sign,x+w/2,y-h+16,INK,11)}}
+function tree(x,y,s=1,c='#7fa874'){ln(x,y,x,y-26*s,'#8a6a4a',5*s);circ(x,y-38*s,17*s,c,INK);circ(x-12*s,y-28*s,11*s,c,INK);circ(x+12*s,y-29*s,12*s,c,INK)}
+function bush(x,y,s=1){circ(x-10*s,y-6*s,9*s,'#86ab7a',INK);circ(x+8*s,y-7*s,10*s,'#86ab7a',INK);circ(x,y-12*s,10*s,'#93b886',INK)}
+function lantern(x,y,col,on){ln(x,y-6,x,y,INK,1.5);rr(x-6,y,12,14,6,col,INK,1.6);if(on){circ(x,y+7,10,'rgba(255,214,110,.28)')}}
+function flagLine(x1,y1,x2,y2,n,t){const sag=12;ln(x1,y1,x2,y2,INK,1.2);for(let k=1;k<n;k++){const u=k/n,x=x1+(x2-x1)*u,y=y1+(y2-y1)*u+sag*4*u*(1-u),sw=Math.sin(t*3+k)*1.5;fillP([[x-5,y],[x+5,y],[x+sw,y+11]],['#FCBE00','#76989D','#e9edee','#c94a3a'][k%4],INK,1)}}
+const nDone=()=>[0,1,2,3,4].filter(stDone).length;
+function drawWorld(t,camX,camY){
+ cx.save();cx.translate(-Math.round(camX),-Math.round(camY));const B=camY+VH+60;
+ /* Gebäude hinten */
+ house(150,300,170,92,{roof:'#5F6F74',wall:'#e8d9bb',win:[[16,22]],sign:'WERKSTATT',rh:34});rr(240,236,64,64,4,'#8a5a44',INK);ln(272,236,272,300,INK,2);
+ tree(430,300,1.1);tree(860,300,.9,'#93b886');
+ house(1200,300,110,120,{roof:'#b8634a',wall:'#f1e6cf',win:[[18,22],[70,22],[18,64]],door:70,rh:38,chim:1});
+ house(1480,300,120,110,{roof:'#8a5a44',wall:'#dfe5e3',win:[[16,22],[78,22],[78,62]],door:22,rh:36});
+ house(1690,256,170,104,{roof:'#b8634a',wall:'#f1e6cf',win:[[22,58],[120,58]],door:70,sign:'BÄCKEREI',rh:40,chim:1});rr(1806,170,26,30,3,'#5F6F74',INK);
+ house(2015,206,120,80,{roof:'#3E4B4C',wall:'#d8cfc4',win:[[16,22]],sign:'SCHMIEDE',rh:30,chim:1});
+ house(2285,150,165,108,{roof:'#5F6F74',wall:'#fbf1c9',win:[[20,22],[124,22]],door:70,sign:'POST',rh:38});
+ /* Rauch */
+ [[1830,150],[2110,170]].forEach(([x,y],k)=>{for(let j=0;j<3;j++){const u=((t*.35+j/3+k*.2)%1);circ(x+Math.sin(u*6+k)*6,y-u*60,6+u*10,`rgba(240,240,240,${.7*(1-u)})`)}});
+ /* Sternwarte */
+ rr(985,232,52,34,3,'#dfe5e3',INK);cx.beginPath();cx.arc(1011,232,26,Math.PI,0);cx.fillStyle='#ACBDC3';cx.fill();cx.strokeStyle=INK;cx.lineWidth=2;cx.stroke();ln(1015,220,1040,196,'#3E4B4C',7);
+ /* Boden */
+ path([[0,B],...TER,[WW,B]],true);cx.fillStyle='#d6c9a8';cx.fill();
+ cx.beginPath();TER.forEach(([x,y],k)=>k?cx.lineTo(x,y):cx.moveTo(x,y));cx.strokeStyle='#9dbb8a';cx.lineWidth=10;cx.lineJoin='round';cx.stroke();cx.strokeStyle=INK;cx.lineWidth=2;cx.stroke();
+ for(let x=20;x<WW;x+=46){const y=gy(x);ell(x,y+16+(x%3)*6,7,3,'#c6b893')}
+ for(let x=37;x<WW;x+=83){if(x>556&&x<704)continue;const y=gy(x);ln(x,y-1,x,y-9,'#6f9a62',1.6);circ(x,y-10,3,['#FCBE00','#f4efe4','#e8836e'][x%3],INK,1)}
+ /* Kanal und Brücke */
+ rr(565,304,130,B-304,0,'#7fa9b3');for(let k=0;k<4;k++){const y=318+k*12;ln(580+(t*20+k*30)%90,y,600+(t*20+k*30)%90,y,'#b9d5da',2)}
+ const ok1=stDone(1);cx.save();cx.translate(ok1?620:590,330+Math.sin(t*1.5)*1.5);fillP([[-40,-10],[44,-10],[34,8],[-32,8]],'#8a5a44',INK);rr(-20,-24,26,14,2,'#c99a5b',INK);if(ok1){rr(10,-22,18,12,2,'#c94a3a',INK)}cx.restore();
+ rr(556,294,148,10,3,'#a87a4a',INK);for(let x=566;x<700;x+=22)ln(x,294,x,276,'#8a5a44',3);ln(556,276,704,276,'#8a5a44',4);
+ ln(740,300,740,276,'#8a5a44',5);circ(740,276,4,'#8a5a44',INK);
+ /* Marktplatz: Brunnen und Lampionleine */
+ rr(1340,280,60,20,6,'#ACBDC3',INK);ln(1370,280,1370,258,'#5F6F74',4);circ(1370,256,5,'#76989D',INK);
+ for(let j=0;j<4;j++){const u=(t*1.2+j/4)%1;circ(1370+(j%2?1:-1)*u*18,256+u*u*22-u*8,2,'#b9d5da')}
+ if(stDone(2)){const x1=1310,x2=1480,y1=196,sag=26;cx.beginPath();cx.moveTo(x1,y1);cx.quadraticCurveTo((x1+x2)/2,y1+sag*2,x2,y1);cx.strokeStyle=INK;cx.lineWidth=1.5;cx.stroke();
+  for(let k=1;k<8;k++){const u=k/8,x=x1+(x2-x1)*u,y=y1+sag*4*u*(1-u);lantern(x,y+4,['#FCBE00','#e8836e','#76989D','#f4efe4'][k%4],F.ende)}}
+ else{ln(1318,300,1318,216,'#a87a4a',3);ln(1334,300,1334,216,'#a87a4a',3);for(let y=226;y<300;y+=14)ln(1318,y,1334,y,'#a87a4a',2.5)}
+ /* Bäckerei-Rampe und Säcke */
+ if(stDone(3)){ln(1720,256,1800,206,'#a87a4a',6);rr(1768,190,24,16,6,'#f4efe4',INK)}else{rr(1720,240,24,16,6,'#f4efe4',INK);rr(1746,242,22,14,6,'#f4efe4',INK)}
+ /* Schmiede: Amboss */
+ fillP([[2052,206],[2058,192],[2046,186],[2080,186],[2072,192],[2076,206]],'#3E4B4C',INK);
+ /* Post: Rutsche */
+ const rs=stDone(4);ln(2300,96,rs?2250:2262,rs?150:140,'#ACBDC3',7);ln(2300,96,rs?2250:2262,rs?150:140,INK,1.4);rr(2226,136,30,14,3,'#8a5a44',INK);
+ rr(2300,124,16,12,2,'#c99a5b',INK);
+ /* Start oben */
+ ln(2640,112,2640,44,'#8a5a44',5);ln(2760,112,2760,44,'#8a5a44',5);rr(2630,36,140,22,6,'#fff',INK);txt('START',2700,47,INK,13,'center',700);
+ fillP([[2780,112],[2900,112],[2900,130],[2780,130]],'#d6c9a8');
+ /* Wimpel: je mehr Aufträge, desto mehr */
+ const nd=nDone();if(nd>=1)flagLine(320,210,430,226,7,t);if(nd>=2)flagLine(1100,240,1200,210,7,t);if(nd>=3)flagLine(1600,230,1690,170,7,t);if(nd>=4)flagLine(2140,170,2285,100,8,t);if(nd>=5)flagLine(2560,80,2640,50,6,t);
+ /* Seifenkisten-Teile vor der Werkstatt */
+ drawKiste(200,300,0,t,true);
+ /* Kleeblätter */
+ KLEE.forEach(([x,dy],k)=>{if(state.kap.includes(k))return;const y=gy(x)+dy-14+Math.sin(t*3+k)*2;cx.save();cx.translate(x,y);[[0,-5],[-5,0],[5,0],[0,5]].forEach(([a,b])=>circ(a,b,4.4,'#5fae6b',INK,1.4));ln(0,5,3,12,INK,1.6);cx.restore()});
+ /* Leute */
+ NPC.forEach(n=>{const y=n.who==='Noah'?266:gy(n.x);person(n.x,y,PPL[n.who],n.dir,0,t);
+  const act=marker(n)&&!(near()===n&&!talk);if(act){const by=y-90+Math.sin(t*4)*2;circ(n.x,by,10,'#FCBE00',INK);txt('!',n.x,by+1,INK,14,'center',700)}});
+ if(F.ende)person(2790,112,PPL.Max,-1,0,t);
+ goat(GT.x,GT.y,GT.dir,t,GT.hop);
+ person(P.x,gy(P.x),PPL.Du,P.dir,P.moving?P.walk:0,t);
+ if(showF)forcesOnPlayer();
+ /* Vordergrund */
+ bush(500,300,1.1);bush(1180,300);bush(1530,300,.9);bush(2000,212,.9);bush(2470,150);
+ const nn=near();if(nn&&!talk){const y=(nn.who==='Noah'?266:gy(nn.x))-112,lb=touchUI?'A: sprechen':'Leertaste: sprechen',w=touchUI?88:132;rr(nn.x-w/2,y-11,w,22,11,'rgba(251,246,234,.95)',INK,1.5);txt(lb,nn.x,y,INK,12)}
+ cx.restore()}
+function forcesOnPlayer(){const a=slope(P.x);if(Math.abs(a)<.02)return;const x=P.x,y=gy(P.x)-30,S=.075,FG=MP*G_;
+ const ux=Math.cos(a),uy=-Math.sin(a);/* Richtung hangaufwärts */
+ const dH=-Math.sign(a);/* hangabwärts */
+ arrow(x,y,0,FG*S,C.fg,2.5,['F','G',14]);
+ const fh=FG*Math.sin(Math.abs(a))*S;arrow(x,y,(a>0?-ux:ux)*fh,(a>0?-uy:uy)*fh,C.fh,2.5,['F','H',16]);
+ const fn=FG*Math.cos(a)*S;const nx=Math.sin(a),ny=Math.cos(a);arrow(x,y,nx*fn,ny*fn,C.fn,2.5,['F','N',16,-12]);}
+function marker(n){if(n.st==='race')return nextM()===NMAIN&&!F.ende;if(ST[n.st].side)return F.intro&&!stDone(n.st);return nextM()===n.st}
+function near(){let b=null,bd=44;NPC.forEach(n=>{const d=Math.abs(n.x-P.x);if(d<bd){bd=d;b=n}});return b}
+/* Seifenkiste (auch fürs Rennen) */
+function drawKiste(x,y,ang,t,parts,o={}){cx.save();cx.translate(x,y);cx.rotate(-ang);
+ const hb=has('brett'),hr=has('raeder');
+ if(parts){if(!hb&&!hr){fillP([[-24,-4],[10,-8],[22,0],[-20,2]],'#a87a4a',INK);circ(28,-4,5,'#3E4B4C',INK);cx.restore();return}}
+ const wc=o.col||'#3E4B4C';
+ if(hr||o.race){[[-22,-9],[22,-9]].forEach(([wx,wy])=>{circ(wx,wy,9,wc,INK);circ(wx,wy,3.5,has('lager')||o.race?'#C9D2D3':'#a87a4a',INK,1.5);const r=(o.rot||0);ln(wx,wy,wx+Math.cos(r)*7,wy+Math.sin(r)*7,'#e9edee',1.5)})}
+ rr(-34,-26,68,12,4,o.body||'#c99a5b',INK);fillP([[24,-26],[38,-22],[34,-14],[24,-14]],o.body||'#c99a5b',INK);
+ if(has('nummer')||o.race){circ(-6,-20,6,'#fff',INK,1.5);txt(o.nr||'7',-6,-20,INK,8,'center',700)}
+ if(has('seil')||o.race){ln(22,-26,10,-40,'#b07a2a',2.5)}
+ if(has('klee')&&!o.race){ln(-30,-26,-30,-46,INK,1.5);fillP([[-30,-46],[-18,-42],[-30,-38]],'#5fae6b',INK,1)}
+ cx.restore()}
+/* --- Bewegung im Dorf --- */
+let talk=null,active=false,started=false,freeze=false,last=performance.now(),T0=last,scene='hub',touchUI=matchMedia('(pointer:coarse)').matches;
+const keys={};let toastT=0;function toast(t,s=2.8){const el=$('#toast');el.innerHTML=t;el.hidden=false;toastT=s}
+let saveT=0;
+function hubUpdate(dt){const d=(keys.right?1:0)-(keys.left?1:0);P.moving=!!d;
+ if(d){P.dir=d;const a=slope(P.x)*d;/* a>0: bergauf */const f=a>0?1-.9*Math.sin(a):1+.5*Math.sin(-a);P.x=clamp(P.x+d*120*f*dt,24,WW-24);P.walk+=dt*11*f}
+ /* Gerti folgt */
+ const tx=P.x-P.dir*38,dx=tx-GT.x;if(Math.abs(dx)>4){GT.x+=Math.sign(dx)*Math.min(Math.abs(dx),dt*(Math.abs(dx)>60?220:130));GT.dir=Math.sign(dx);GT.hop=Math.abs(Math.sin(T0p*9))*5}else{GT.hop=Math.max(0,GT.hop-dt*30);GT.dir=P.x>GT.x?1:-1}
+ GT.y=gy(GT.x);
+ KLEE.forEach(([x,dy],k)=>{if(!state.kap.includes(k)&&Math.abs(P.x-x)<16){state.kap.push(k);save();hud();
+  if(state.kap.length>=6){give('klee');hud();sayLines([['Gerti','Sechs Kleeblätter! Mäh, du bist die Beste, der Beste! Hier, ein Glücksklee für deine Seifenkiste. Schau mal in den Rucksack.']])}
+  else toast(`<b>Gerti:</b> Ein Kleeblatt! ${state.kap.length} von 6. Lecker … äh, schön gesammelt.`,3)}});
+ saveT-=dt;if(saveT<=0){saveT=2;F.pos=Math.round(P.x);save()}}
+function camera(){const cxp=clamp(P.x-VW*.42,0,WW-VW),cyp=Math.min(gy(P.x)-VH*.72,400-VH);return [cxp,cyp]}
+function drawHub(t){const [camX,camY]=camera();drawSky(camX);drawLayer(farL,.15,camX,camY,VH*.5-60);drawLayer(midL,.4,camX,camY,VH*.66-100);drawWorld(t,camX,camY)}
+function hubStrip(){const a=Math.abs(slope(P.x)),FG=MP*G_;
+ return `<span>Du: <i>m</i> = 60 kg</span><span class="fg">${sub('F','G')} = ${fmt(FG,0)} N</span><span>Hang: α = ${fmt(deg(a),0)}°</span>${a>.02?`<span class="fh">${sub('F','H')} = ${fmt(FG*Math.sin(a),0)} N</span><span class="fn">${sub('F','N')} = ${fmt(FG*Math.cos(a),0)} N</span>`:`<span>eben: ${sub('F','N')} = ${sub('F','G')}</span>`}`}
+
+/* --- Gespräche --- */
+const INTRO=[['Gerti','Mäh! Da bist du ja endlich. Ich bin Gerti, die schlauste Ziege von Kippelbach.'],
+ ['Gerti','Morgen ist das große Seifenkistenrennen. Aber der Sturm heute Nacht hat deine Kiste zerlegt und das halbe Dorf durcheinandergebracht.'],
+ ['Gerti','Wenn wir den Leuten helfen, bekommen wir bestimmt Teile für eine neue Kiste. Komm, wir fragen zuerst Hilde in der Werkstatt.'],
+ ['Gerti','Gehen kannst du mit den Pfeiltasten oder mit ◀ ▶. Sprechen mit der Leertaste oder mit A. Unter dem Bild siehst du, welche Kräfte am Hang auf dich wirken.']];
+const IN=[
+ [['Hilde','Na, da ist ja unser Rennprofi! Deine Kiste ist hinüber. Aber ich hab noch ein altes Bodenbrett.'],['Hilde','Das bekommst du, wenn du mir zeigst, dass du Kräfte verstehst. Wer Seifenkisten baut, muss Kräfte kennen!']],
+ [['Mira','Gut, dass du kommst! Mein Kahn mit den Sachen fürs Dorffest kommt gegen die Strömung nicht voran.'],['Mira','Mein Pferd Bruno zieht vom einen Ufer, du ziehst vom anderen. Der Kahn muss genau geradeaus fahren, sonst rammt er die Ufermauer.']],
+ [['Herr Kofler','Ah, die Lampions sind da! Die Leine muss quer über den Platz, von Haus zu Haus.'],['Herr Kofler','Aber Vorsicht: Spannen wir sie zu straff, reißt sie. Hängt sie zu tief, bleibt der Festwagen hängen.']],
+ [['Ole','Der Sturm hat meinen Mehlaufzug kaputtgemacht. Die Mehlsäcke müssen hoch auf den Speicher!'],['Ole','Wir bauen eine Rampe. Aber ich kann nicht beliebig stark schieben, und unser Hof ist klein.']],
+ [['Ida','Meine Paketrutsche ist verbogen! Mal bleiben die Pakete liegen, mal knallen sie unten in den Wagen.'],['Ida','Hilf mir, sie richtig einzustellen. Und dann muss noch ein schweres Paket die Rutsche hinauf.']],
+ [['Noah','Hallo! Ich will Astronaut werden. Weißt du, wie viel ich auf dem Mond wiegen würde?'],['Noah','Wenn du meine Fragen beantwortest, schenke ich dir die Kugellager aus meinem alten Skateboard.']],
+ [['Rosa','Ich bin Rosa. Ich schmiede die Pokale fürs Rennen. Hast du kurz Zeit für ein paar Fragen?'],['Rosa','Wer alles richtig hat, bekommt mein bestes Schmierfett für die Radlager.']]];
+const OUT=[
+ [['Hilde','Das Brett gehört dir. Für eine Kiste brauchst du noch ein Lenkseil, Räder und eine Bremse.'],['Gerti','Fährfrau Mira hat Seile ohne Ende. Sie steht hinter der Brücke am Kanal.']],
+ [['Mira','Der Kahn ist da! Die Lampions fürs Fest sind auch an Bord. Bring sie zu Herrn Kofler auf den Marktplatz.'],['Gerti','Und ein Lenkseil hast du jetzt auch. Mäh!']],
+ [['Herr Kofler','Wunderbar, heute Abend leuchtet der Platz! Hier, deine Startnummer: die 7.'],['Gerti','Ole aus der Bäckerei, den Hang hinauf, hat bestimmt alte Räder.']],
+ [['Ole','Das Mehl ist oben. Morgen gibt es Rennbrezeln! Nimm die Räder von meinem alten Bollerwagen.'],['Gerti','Jetzt fehlt nur noch eine Bremse. Ida von der Post hat sicher eine. Ganz oben am Hang!']],
+ [['Ida','Die Post läuft wieder. Hier ist ein Bremsklotz mit Gummi. Ohne Reibung kann man nicht bremsen!'],['Gerti','Die Kiste ist komplett! Frau Brandl wartet oben am Start.'],['Gerti','Noah an der Sternwarte und Rosa in der Schmiede haben noch Teile, die die Kiste schneller machen. Musst du nicht, aber es lohnt sich.']],
+ [['Noah','Danke! Mit Kugellagern rollen die Räder viel leichter: Die Rollreibungszahl wird kleiner.']],
+ [['Rosa','Danke dir! Mit dem Fett drehen sich die Räder fast wie von selbst. Viel Glück beim Rennen!']]];
+const FIN=[['Frau Brandl','Was für ein Rennen! Ganz Kippelbach hat gejubelt.'],['Gerti','Und nebenbei hast du den ganzen Kraft-Stoff wiederholt. Bereit für die Klassenarbeit!'],['Frau Brandl','Du kannst jederzeit nochmal fahren und deine Bestzeit verbessern.']];
+function sayLines(lines,done,choices){talk={lines,k:0,n:0,done,choices};showLine()}
+function showLine(){const L=talk.lines[talk.k];$('#talkbox').hidden=false;$('#tbWho').textContent=L[0]||'';face(L[0]);talk.n=0;talk.full=L[1];$('#tbTxt').textContent='';$('#tbCh').innerHTML='';$('#tbMore').hidden=false}
+function showChoices(){if(!talk||!talk.choices||talk.k<talk.lines.length-1||$('#tbCh').children.length)return;$('#tbMore').hidden=true;
+ talk.choices.forEach(([lab,fn])=>{const b=document.createElement('button');b.type='button';b.textContent=lab;b.addEventListener('pointerdown',e=>{e.stopPropagation()});b.onclick=e=>{e.stopPropagation();endTalk(fn)};$('#tbCh').appendChild(b)})}
+function endTalk(fn){$('#talkbox').hidden=true;const d=talk&&talk.done;talk=null;if(fn)fn();else if(d)d()}
+function advance(){if(!talk)return;if(talk.n<talk.full.length){talk.n=talk.full.length;$('#tbTxt').textContent=talk.full;showChoices();return}
+ if(talk.choices&&talk.k===talk.lines.length-1){endTalk(talk.choices[0][1]);return}
+ talk.k++;if(talk.k>=talk.lines.length)endTalk();else showLine()}
+function interact(){const n=near();if(!n)return;for(const k in keys)keys[k]=false;P.moving=false;
+ if(n.st==='race')return raceTalk();
+ const i=n.st,s=ST[i],m=nextM();
+ const go=()=>{if(s.mg&&!mgDone(i))mgStart(i,false);else openSt(i)};
+ if(s.side){if(stDone(i))return sayLines([[n.who,rnd(['Danke nochmal! Viel Glück beim Rennen.','Schau ruhig wieder vorbei.'])]]);
+  if(!F['in'+i])return sayLines(IN[i],()=>{F['in'+i]=1;save();go()});return go()}
+ if(i===m){if(!F['in'+i])sayLines(IN[i],()=>{F['in'+i]=1;save();go()});else go();return}
+ if(stDone(i)){if(s.mg)return sayLines([[n.who,'Danke für deine Hilfe! Willst du die Übung zum Spaß nochmal machen?']],null,[['Nochmal üben',()=>mgStart(i,true)],['Nein, danke',null]]);
+  return sayLines([[n.who,'Danke nochmal für deine Hilfe!']])}
+ sayLines([[n.who,'Ich hab gerade alle Hände voll zu tun. Komm später wieder!'],['Gerti','Zuerst: '+questText()]])}
+function raceTalk(){const m=nextM();
+ if(m<NMAIN){const fehlt=['brett','seil','nummer','raeder','bremse'].filter(k=>!has(k)).map(k=>ITEMS[k][0]);
+  return sayLines([['Frau Brandl','Hier oben ist der Start. Fahren darfst du, sobald deine Seifenkiste fertig ist.'],['Gerti','Uns fehlen noch: '+fehlt.join(', ')+'.']])}
+ const up=has('lager')||has('fett');
+ sayLines([['Frau Brandl',F.ende?'Noch eine Runde? Die Strecke ist frei!':'Willkommen am Start! Deine Kiste ist fertig. Gegen dich fährt mein Sohn Max, der Sieger vom letzten Jahr.'],
+  ['Gerti',(F.ende?'':'Ich schiebe dich an. ')+'Nach dem Ziel musst du bremsen, sonst landest du im Stroh.'+(up?'':' Übrigens: Mit Kugellagern und Fett wärst du schneller.')]],null,[['Los geht’s!',()=>raceStart()],['Noch nicht',null]])}
+function after(i){hud();if(OUT[i])sayLines(OUT[i],hud)}
+function showEnd(){const k=kris(),q=k/MAXK,rang=q>=.85?'Kraftpaket':q>=.6?'Rampen-Profi':'Seifenkisten-Lehrling';const n=[5,6].filter(stDone).length;
+ $('#endTxt').innerHTML=`<p class="title" style="margin-bottom:8px">Kippelbach feiert!</p><p>Du hast <b>${k} von ${MAXK} Talern</b> gesammelt.</p><p>Nebenquests: ${n} von 2 · Kleeblätter: ${state.kap.length} von 6</p><p>Dein Titel: <b>${rang}</b></p><p style="font-size:14px;color:#5b676a">Nochmal üben? Sprich die Leute im Dorf an und mach ihre Übungen erneut, oder fahr das Rennen nochmal.</p>`;
+ $('#endov').hidden=false;$('#endOk').focus({preventScroll:true})}
+$('#endOk').onclick=()=>{$('#endov').hidden=true;cv.focus({preventScroll:true})};
+
+/* ---------- Rahmen für die Physik-Übungen ---------- */
+let mg=null,mgR=0,mgTries=0,mgMi=-1,mgReady=false;
+const MGS={};
+function msg(html,btns){$('#mgMsgTxt').innerHTML=html;const B=$('#mgMsgBtns');B.innerHTML='';
+ btns.forEach(([lab,fn],k)=>{const b=document.createElement('button');b.type='button';b.textContent=lab;if(!k)b.className='primary';b.onclick=()=>fn();B.appendChild(b)});$('#mgMsg').hidden=false;setTimeout(()=>{const f=B.querySelector('button');if(f)f.focus({preventScroll:true})},30)}
+function hideMsg(){$('#mgMsg').hidden=true}
+function setBtns(list){const B=$('#stripBt');B.innerHTML='';(list||[]).forEach(o=>{const b=document.createElement('button');b.type='button';b.innerHTML=o.lab;if(o.cls)b.className=o.cls;if(o.title)b.title=o.title;
+ if(o.hold){const on=e=>{e.preventDefault();if(!started)return;setActive(true);o.hold(true)},off=()=>o.hold(false);b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointerleave',off);b.addEventListener('pointercancel',off);b.addEventListener('contextmenu',e=>e.preventDefault())}
+ else if(o.rep){let iv=0,to=0;const stop=()=>{clearTimeout(to);clearInterval(iv)};b.addEventListener('pointerdown',e=>{e.preventDefault();if(!started)return;setActive(true);o.rep();stop();to=setTimeout(()=>{iv=setInterval(o.rep,70)},380)});b.addEventListener('pointerup',stop);b.addEventListener('pointerleave',stop);b.addEventListener('pointercancel',stop);b.addEventListener('contextmenu',e=>e.preventDefault())}
+ else b.onclick=()=>{setActive(true);o.click()};B.appendChild(b)})}
+function mgStart(mi,replay){mg=MGS[ST[mi].mg];mgMi=mi;scene='mg';GM.classList.add('inmg');for(const k in keys)keys[k]=false;
+ mgR=replay?0:Math.max(0,[0,1,2].findIndex(r=>!roundDone(mi,r)));mg.replay=!!replay;fit();mgRoundStart()}
+function mgRoundStart(){mgTries=0;mg.init(mgR);mgReady=false;
+ msg(`<h3>${mg.title} · Runde ${mgR+1} von 3</h3>${mg.goal(mgR)}`,[['▶ Los geht’s',mgTry],['Zurück ins Dorf',mgExit]])}
+function mgTry(){hideMsg();mgTries++;mg.init(mgR);mgReady=true;cv.focus({preventScroll:true})}
+function mgWin(html){mgReady=false;const st=mgTries<=1?3:mgTries===2?2:1,k=tid(mgMi,mgR);state.r[k]=Math.max(state.r[k]||0,st);save();hud();
+ const lastR=mgR>=2;
+ msg(`<h3>✓ Geschafft! ${'●'.repeat(st)}</h3>${html}<p><small>${st} Taler ${mgTries>1?`(Versuch ${mgTries})`:'beim ersten Versuch'}</small></p>`,
+  [[lastR?(mg.replay||tasksDone(mgMi)?'Zurück ins Dorf':'Weiter zu den Aufgaben'):'Nächste Runde',()=>{if(lastR)mgFinish();else{mgR++;mgRoundStart()}}],['Nochmal spielen',()=>{mgTry()}]])}
+function mgFail(html){mgReady=false;msg(`<h3>Noch nicht …</h3>${html}`,[['↺ Nochmal',mgTry],['Zurück ins Dorf',mgExit]])}
+function mgFinish(){const i=mgMi,rp=mg.replay;hideMsg();mgLeave();if(rp)toast('Übung beendet. Schön, dass du nochmal geübt hast!');else if(!tasksDone(i))openSt(i);else after(i)}
+function mgExit(){hideMsg();mgLeave();toast('Zurück im Dorf. Sprich die Person nochmal an, um weiterzumachen.',3.5)}
+function mgLeave(){scene='hub';mg=null;mgReady=false;GM.classList.remove('inmg');setBtns([]);for(const k in keys)keys[k]=false;fit()}
+/* Hintergründe der Übungen */
+function sky2(top='#cfe1e3',bot='#f6f1e3'){const gr=cx.createLinearGradient(0,0,0,360);gr.addColorStop(0,top);gr.addColorStop(1,bot);cx.fillStyle=gr;cx.fillRect(0,0,640,360)}
+function gauge(x,y,w,val,max,lbl,hide){rr(x,y,w,12,6,'#fff',INK,1.5);const u=clamp(val/max,0,1.15);rr(x+2,y+2,Math.max(0,Math.min(1,u)*(w-4)),8,4,u>1?'#d4381e':u>.85?'#e0a800':'#5fae6b');
+ ln(x+w,y-3,x+w,y+15,'#d4381e',2);txt(lbl,x,y-9,INK,11,'left');if(hide){rr(x+2,y+2,w-4,8,4,'#C9D2D3');txt('?',x+w/2,y+6,INK,11)}}
+
+/* ===== 1) Kahn treideln: Kräfteaddition (Draufsicht) ===== */
+MGS.treideln=(()=>{const A={x:300,y:180},K=.22,RD=[{F1:400,a1:30,b:30,fixB:1,S:550,F2:250},{F1:500,a1:20,b:45,fixB:1,S:600,F2:150},{F1:300,a1:40,b:20,fixB:0,S:500,F2:200,eq:1}];
+ let c,F2,b,st,tR,off,res;
+ const v1=()=>[c.F1*Math.cos(rad(c.a1)),-c.F1*Math.sin(rad(c.a1))],v2=()=>[F2*Math.cos(rad(b)),F2*Math.sin(rad(b))];
+ const sum=()=>{const [a,b1]=v1(),[d,e]=v2();return [a+d-c.S,b1+e]};
+ function chg(dF,dB){if(st!=='aim')return;F2=clamp(F2+dF,0,700);if(!c.fixB)b=clamp(b+dB,5,80)}
+ function btns(){const l=[{lab:'Kraft −',rep:()=>chg(-5,0)},{lab:'Kraft +',rep:()=>chg(5,0)}];if(!c.fixB)l.push({lab:'Winkel −',rep:()=>chg(0,-1)},{lab:'Winkel +',rep:()=>chg(0,1)});l.push({lab:c.eq?'Festhalten!':'Losziehen!',cls:'go big',click:go});setBtns(l)}
+ function go(){if(st!=='aim')return;st='run';tR=0;off={x:0,y:0};res=sum()}
+ function recap(){const [a,b1]=v1(),[d,e]=v2();return `<p>Dein Seil: ${sub('F','2')} = ${fmt(F2,0)} N unter ${fmt(b,0)}°. Quer zum Kanal: ${sub('F','1y')} = ${fmt(-b1,0)} N und ${sub('F','2y')} = ${fmt(e,0)} N. Längs: ${sub('F','1x')} + ${sub('F','2x')} = ${fmt(a+d,0)} N gegen ${sub('F','S')} = ${c.S} N.</p>`}
+ const self={title:'Kahn treideln',
+ goal(r){return [`<p>Bruno zieht mit ${sub('F','1')} = 400 N unter 30° zum Kanal. Du ziehst vom anderen Ufer, ebenfalls unter 30°. Die Strömung drückt den Kahn mit ${sub('F','S')} = 550 N zurück.</p><p><b>Wie stark musst du ziehen, damit der Kahn genau geradeaus fährt?</b></p>`,
+  `<p>Jetzt zieht Bruno mit 500 N unter 20°, dein Seil läuft unter 45°. Strömung: 600 N.</p><p><b>Der Kahn soll wieder genau geradeaus fahren.</b> Achte auf die Diagonale im Kräfteparallelogramm.</p>`,
+  `<p>Der Kahn soll am Steg <b>stillstehen</b>: Kräftegleichgewicht! Strömung 500 N, Bruno zieht mit 300 N unter 40°. Wähle Kraft <b>und</b> Winkel deines Seils so, dass ${sub('F','res')} = 0 ist.</p>`][r]+
+  `<p><small>Zieh die Spitze deines Kraftpfeils oder nutze die Knöpfe (Tasten ← → für die Kraft${r===2?', ↑ ↓ für den Winkel':''}). Modell: Alle Kräfte greifen am Bug an.</small></p>`},
+ init(r){c=RD[r];F2=c.F2;b=c.b;st='aim';tR=0;off={x:0,y:0};btns()},
+ key(code,down){if(!down)return code==='Space';if(code==='ArrowLeft'){chg(-5,0);return true}if(code==='ArrowRight'){chg(5,0);return true}
+  if(code==='ArrowUp'){chg(0,1);return true}if(code==='ArrowDown'){chg(0,-1);return true}if(code==='Space'||code==='Enter'){go();return true}return false},
+ ptr(type,x,y){if(st!=='aim'||type==='up')return;const dx=x-A.x,dy=y-A.y;if(dy<4||dx<2)return;const L=Math.hypot(dx,dy)/K;F2=clamp(Math.round(L/5)*5,0,700);if(!c.fixB)b=clamp(Math.round(deg(Math.atan2(dy,dx))),5,80)},
+ update(dt){if(st!=='run')return;tR+=dt;const [fx,fy]=res;const m=Math.hypot(fx,fy);
+  if(c.eq){if(m<=25){if(tR>2.2){st='end';mgWin(recap()+`<p>${sub('F','res')} ≈ ${fmt(m,0)} N: Kräftegleichgewicht, der Kahn liegt still am Steg.</p>`)}return}}
+  off.x+=fx*.12*dt;off.y+=fy*.12*dt;
+  if(Math.abs(off.y)>48||tR>3){st='end';
+   if(!c.eq&&Math.abs(fy)<=15&&fx>0)return mgWin(recap()+'<p>Die Querkräfte heben sich auf, die Resultierende zeigt genau in Kanalrichtung. Der Kahn fährt geradeaus!</p>');
+   if(c.eq)return mgFail(recap()+`<p>${sub('F','res')} = ${fmt(m,0)} N, der Kahn treibt ab. Beide Anteile müssen null werden: quer und längs.</p>`);
+   if(fx<=0)return mgFail(recap()+'<p>Längs zum Kanal reicht es nicht gegen die Strömung. Der Kahn treibt zurück.</p>');
+   mgFail(recap()+`<p>Die Querkräfte heben sich nicht auf: Der Kahn treibt zum ${fy>0?'unteren':'oberen'} Ufer. ${fy>0?'Zieh schwächer.':'Zieh stärker.'}</p>`)}},
+ draw(t){cx.fillStyle='#a9c79a';cx.fillRect(0,0,640,360);rr(-10,92,660,14,0,'#e3d6b4');rr(-10,254,660,14,0,'#e3d6b4');
+  rr(-10,108,660,144,0,'#7fa9b3');ln(-10,108,650,108,INK,2);ln(-10,252,650,252,INK,2);
+  for(let k=0;k<14;k++){const x=((k*53-t*30)%700+700)%700-30,y=122+(k*37)%118;ln(x,y,x+22,y,'#b9d5da',2)}
+  for(let x=20;x<640;x+=70){circ(x,80,12,'#86ab7a',INK);circ(x+35,284,12,'#86ab7a',INK)}
+  const X=A.x+off.x,Y=A.y+off.y;
+  /* Seile zu den Ufern */
+  const p1=[X+Math.cos(rad(c.a1))*(Y-98)/Math.sin(rad(c.a1)),98],p2=[X+Math.cos(rad(b))*(262-Y)/Math.sin(rad(b)),262];
+  ln(X,Y,p1[0],p1[1],'#b07a2a',2.5);ln(X,Y,p2[0],p2[1],'#b07a2a',2.5);
+  /* Pferd Bruno (von oben) */
+  cx.save();cx.translate(p1[0]+14,p1[1]-4);ell(0,0,18,8,'#8a5a44',INK);ell(20,0,8,5,'#8a5a44',INK);ln(-18,0,-26,0,'#3a2a20',3);cx.restore();
+  cx.save();cx.translate(p2[0]+10,p2[1]+6);circ(0,0,8,'#76989D',INK);circ(0,-2,5,'#FCBE00',INK,1.5);cx.restore();
+  /* Kahn */
+  cx.save();cx.translate(X-70,Y);fillP([[-60,-22],[40,-22],[72,0],[40,22],[-60,22]],'#8a5a44',INK);fillP([[-52,-16],[36,-16],[60,0],[36,16],[-52,16]],'#a87a4a');
+  rr(-40,-12,22,24,3,'#c99a5b',INK);rr(-12,-12,22,24,3,'#c94a3a',INK);rr(16,-10,18,20,3,'#FCBE00',INK);cx.restore();
+  /* Kräfte */
+  const [a1x,a1y]=v1(),[a2x,a2y]=v2(),sx=a1x+a2x,sy=a1y+a2y;
+  ln(X+a1x*K,Y+a1y*K,X+sx*K,Y+sy*K,'#5F6F74',1.5,[5,4]);ln(X+a2x*K,Y+a2y*K,X+sx*K,Y+sy*K,'#5F6F74',1.5,[5,4]);
+  arrow(X,Y,a1x*K,a1y*K,'#3E4B4C',3,['F','1',16]);arrow(X,Y,a2x*K,a2y*K,'#3E4B4C',3,['F','2',16]);
+  arrow(X,Y,sx*K,sy*K,'#5F6F74',2.5,['F','1+2',22],[7,4]);
+  arrow(X,Y,-c.S*K,0,C.fn,3,['F','S',18]);
+  if(st!=='aim'){const [fx,fy]=res;arrow(X,Y,fx*K*2,fy*K*2,C.fres,3,['F','res',20,-12])}
+  if(st==='aim'){circ(X+a2x*K,Y+a2y*K,9,'rgba(252,190,0,.35)',INK,1.5)}},
+ ro(){const [a1x,a1y]=v1(),[a2x,a2y]=v2(),r0=mgR===0;return `<span>${sub('F','1')} = ${c.F1} N (${c.a1}°)</span><span><b>${sub('F','2')} = ${fmt(F2,0)} N (${fmt(b,0)}°)</b></span><span class="fn">${sub('F','S')} = ${c.S} N</span>${r0?`<span>quer: ${fmt(-a1y,0)} N | ${fmt(a2y,0)} N</span><span>längs: ${fmt(a1x+a2x,0)} N</span>`:''}`}};
+ return self})();
+
+/* ===== 2) Lampionleine: Kräftezerlegung ===== */
+MGS.leine=(()=>{const HL=[80,96],HR=[560,96],PM=48,RD=[{FG:40,Fmax:250,hmax:1.0,obj:'lampion',LH:26},{FG:120,Fmax:450,hmax:.9,obj:'girlande',LH:30},{FG:343,Fmax:1500,hmax:.75,obj:'gerti',LH:0,hide:1}];
+ let c,h,st,tR,wx,snap;
+ const al=()=>Math.atan(h*PM/240),FS=()=>c.FG/(2*Math.sin(al()));
+ function chg(d){if(st==='aim')h=clamp(Math.round((h+d)*100)/100,.06,2)}
+ function btns(){setBtns([{lab:'▲ straffer',rep:()=>chg(-.02)},{lab:'▼ lockerer',rep:()=>chg(.02)},{lab:'Loslassen!',cls:'go big',click:go}])}
+ function go(){if(st!=='aim')return;tR=0;if(FS()>c.Fmax){st='snap';snap={y:0,v:0}}else{st='hang';wx=-160}}
+ function recap(){return `<p>Durchhang h = ${fmt(h,2)} m, also α = ${fmt(deg(al()),1)}°. ${sub('F','Seil')} = ${sub('F','G')} : (2 · sin α) = ${c.FG} N : (2 · sin ${fmt(deg(al()),1)}°) ≈ ${fmt(FS(),0)} N.</p>`}
+ const self={title:'Die Lampionleine',
+ goal(r){return [`<p>Ein Lampion (${sub('F','G')} = 40 N) kommt in die Mitte der Leine. Die Leine hält höchstens <b>250 N</b>. Darunter fährt der Festwagen durch: Höchstens <b>1,0 m</b> Durchhang.</p><p>Stell den Durchhang ein und lass los.</p>`,
+  `<p>Jetzt die große Girlande: ${sub('F','G')} = 120 N. Leine: höchstens <b>450 N</b>. Durchhang höchstens <b>0,90 m</b>. Das Fenster ist schmal!</p>`,
+  `<p>Gerti will auf die Slackline über dem Brunnen (35 kg, also ${sub('F','G')} = 343 N). Die Slackline hält <b>1500 N</b>. Höchstens <b>0,75 m</b> Durchhang, sonst wird Gerti nass.</p><p><b>Der Kraftmesser ist kaputt:</b> Rechne selbst mit ${sub('F','Seil')} = ${sub('F','G')} : (2 · sin α).</p>`][r]+
+  `<p><small>Zieh die Last nach oben oder unten oder nutze die Knöpfe (Tasten ↑ ↓). Abstand der Haken: 10 m, die Last hängt in der Mitte.</small></p>`},
+ init(r){c=RD[r];h=r===2?.3:.4;st='aim';tR=0;wx=-160;snap=null;btns()},
+ key(code,down){if(!down)return code==='Space';if(code==='ArrowUp'){chg(-.02);return true}if(code==='ArrowDown'){chg(.02);return true}if(code==='Space'||code==='Enter'){go();return true}return false},
+ ptr(type,x,y){if(st!=='aim'||type==='up')return;h=clamp(Math.round((y-HL[1])/PM*50)/50,.06,2)},
+ update(dt){tR+=dt;if(st==='snap'){snap.v+=500*dt;snap.y+=snap.v*dt;if(tR>1.4){st='end';mgFail(recap()+`<p>Das ist mehr als die ${c.Fmax} N, die die Leine aushält. Sie ist gerissen! Mehr Durchhang (größerer Winkel) macht die Seilkraft kleiner.</p>`)}return}
+  if(st==='hang'){wx+=150*dt;const hit=h>c.hmax+1e-9;
+   if(hit&&wx>150){st='end';return mgFail(recap()+`<p>Die Leine hält, aber ${c.obj==='gerti'?'Gerti taucht in den Brunnen ein':'der Festwagen bleibt hängen'}: ${fmt(h,2)} m Durchhang sind mehr als ${fmt(c.hmax,2)} m. Spann die Leine etwas straffer.</p>`)}
+   if(!hit&&tR>3.4){st='end';mgWin(recap()+`<p>Das ist weniger als ${c.Fmax} N, und der Durchhang passt. ${c.obj==='gerti'?'Gerti balanciert stolz über den Brunnen. Mäh!':'Der Festwagen rollt sicher unten durch.'}</p>`)}}},
+ draw(t){sky2();
+  rr(0,300,640,60,0,'#d6c9a8');ln(0,300,640,300,INK,2);
+  house(-40,300,120,240,{roof:'#b8634a',wall:'#f1e6cf',win:[[30,40],[30,110]],rh:30});house(560,300,120,240,{roof:'#8a5a44',wall:'#dfe5e3',win:[[30,40],[30,110]],rh:30});
+  circ(HL[0],HL[1],4,'#5F6F74',INK);circ(HR[0],HR[1],4,'#5F6F74',INK);
+  const P=[320,HL[1]+h*PM],lim=HL[1]+c.hmax*PM+c.LH;
+  /* Hindernis */
+  if(c.obj==='gerti'){rr(250,lim+6,140,300-lim-6,10,'#ACBDC3',INK);rr(258,lim+6,124,10,5,'#7fa9b3');for(let j=0;j<5;j++){const u=(t+j/5)%1;circ(320+(j-2)*22,lim+6-u*8,2,'#b9d5da')}}
+  else{const X=st==='hang'?wx:-160;cx.save();cx.translate(X,0);rr(-70,lim+4,150,300-lim-18,8,'#c94a3a',INK);rr(-70,lim+4,150,10,5,'#FCBE00',INK);circ(-40,292,12,'#3E4B4C',INK);circ(50,292,12,'#3E4B4C',INK);txt('FEST',5,lim+40,'#fff',16,'center',700);cx.restore()}
+  ln(0,lim,640,lim,'#d4381e',1.2,[6,5]);txt(`höchstens ${fmt(c.hmax,2)} m Durchhang`,630,lim-10,'#d4381e',11,'right');
+  /* Leine */
+  if(st==='snap'){ln(HL[0],HL[1],HL[0]+60,HL[1]+90,INK,2);ln(HR[0],HR[1],HR[0]-60,HR[1]+90,INK,2);P[1]+=snap.y}
+  else{ln(HL[0],HL[1],P[0],P[1],INK,2.2);ln(HR[0],HR[1],P[0],P[1],INK,2.2)}
+  if(c.obj==='lampion')lantern(P[0],P[1]+6,'#FCBE00',false);
+  else if(c.obj==='girlande'){lantern(P[0],P[1]+6,'#e8836e',false);[-1,1].forEach(s=>{for(let k=1;k<3;k++){const x=P[0]+s*k*50,y=P[1]+(HL[1]-P[1])*k*50/240;lantern(x,y+6,k%2?'#76989D':'#FCBE00',false)}})}
+  else goat(P[0],P[1],1,t,0);
+  if(st==='aim'&&c.obj!=='gerti'){person(250,300,PPL['Herr Kofler'],1,0,t);ln(262,264,P[0]-6,P[1]+10,INK,3)}
+  /* Kräftezerlegung im Aufhängepunkt */
+  if(st!=='snap'){const k=150/c.Fmax,a=al(),fs=Math.min(FS(),2.2*c.Fmax),dl=[Math.cos(a),Math.sin(a)],dr=[-Math.cos(a),Math.sin(a)];
+   const g=c.FG*k,e1=[dl[0]*fs*k,dl[1]*fs*k],e2=[dr[0]*fs*k,dr[1]*fs*k];
+   ln(P[0]+e1[0],P[1]+e1[1],P[0],P[1]+g,'#5F6F74',1.3,[4,4]);ln(P[0]+e2[0],P[1]+e2[1],P[0],P[1]+g,'#5F6F74',1.3,[4,4]);
+   arrow(P[0],P[1],0,g,C.fg,3,['F','G',16,14]);arrow(P[0],P[1],e1[0],e1[1],C.fn,2.6,['F','1',16]);arrow(P[0],P[1],e2[0],e2[1],C.fn,2.6,['F','2',16])}
+  gauge(400,20,200,FS(),c.Fmax,'Seilkraft (Grenze rot)',c.hide)},
+ ro(){return `<span class="fg">${sub('F','G')} = ${c.FG} N</span><span><b>h = ${fmt(h,2)} m</b></span><span>α = ${fmt(deg(al()),1)}°</span><span class="fn">${sub('F','Seil')} = ${c.hide?'?':fmt(FS(),0)+' N'}</span><span>Grenze: ${c.Fmax} N</span>`}};
+ return self})();
+
+/* ===== 3) Rampe in der Bäckerei: schiefe Ebene ===== */
+MGS.rampe=(()=>{const XS=540,GY=300,PM=60,RD=[{m:50,Fp:200,h:1.2,D:3.6,show:'all'},{m:80,Fp:280,h:1.0,D:2.9,show:'noH'},{m:75,Fp:400,h:1.5,D:3.2,Nmax:640,show:'noN'}];
+ let c,a,st,s,v,push,tP,brk;
+ const FG=()=>c.m*G_,L=()=>c.h/Math.sin(rad(a)),foot=()=>XS-c.h/Math.tan(rad(a))*PM,fence=()=>XS-c.D*PM,FH=()=>FG()*Math.sin(rad(a)),FN=()=>FG()*Math.cos(rad(a));
+ function chg(d){if(st==='aim')a=clamp(Math.round((a+d)*2)/2,8,50)}
+ function btns(){setBtns([{lab:'◀ flacher',rep:()=>chg(-.5)},{lab:'steiler ▶',rep:()=>chg(.5)},{lab:'Schieben (halten)',cls:'go big',hold:on=>setPush(on)}])}
+ function setPush(on){if(st==='end'||st==='broke')return;if(on&&st==='aim'){if(foot()<fence()-.5){toast('<b>Ole:</b> So flach passt die Rampe nicht in den Hof. Der Zaun ist im Weg!',3);return}st='go';tP=0}push=on}
+ function recap(){return `<p>α = ${fmt(a,1)}°, Rampe ${fmt(L(),2)} m lang. ${sub('F','H')} = ${sub('F','G')} · sin α = ${fmt(FG(),1)} N · sin ${fmt(a,1)}° ≈ ${fmt(FH(),0)} N, ${sub('F','N')} = ${sub('F','G')} · cos α ≈ ${fmt(FN(),0)} N.</p>`}
+ const self={title:'Die Mehlrampe',
+ goal(r){return [`<p>Ein Mehlsack auf dem Rollwagen (zusammen 50 kg) muss 1,20 m hoch auf den Speicher. Du schiebst höchstens mit <b>200 N</b>. Der Hof ist nur 3,60 m tief (Zaun).</p><p>Stell den Neigungswinkel ein und schieb den Wagen hoch.</p>`,
+  `<p>Zwei Säcke: 80 kg auf 1,00 m Höhe. Du schaffst höchstens <b>280 N</b>, der Hof ist 2,90 m tief. Die Hangabtriebskraft zeigt die Anzeige diesmal nicht: <b>Rechne selbst!</b></p>`,
+  `<p>Das alte Brett ist morsch: Es trägt senkrecht höchstens <b>${sub('F','N')} = 640 N</b>. Ladung 75 kg auf 1,50 m, Ole hilft, zusammen schiebt ihr <b>400 N</b>.</p><p>Welcher Winkel passt? Die Normalkraft zeigt die Anzeige nicht.</p>`][r]+
+  `<p><small>Winkel mit ◀ ▶ (Tasten ← →), Schieben: Knopf oder Leertaste halten. Lässt du los, rollt der Wagen zurück. Modell: Rollwagen ohne Reibung.</small></p>`},
+ init(r){c=RD[r];a=r===2?24:30;st='aim';s=0;v=0;push=false;tP=0;brk=0;btns()},
+ key(code,down,e){if(code==='Space'){if(!e.repeat||!down)setPush(down);return true}if(!down)return false;if(code==='ArrowLeft'){chg(-.5);return true}if(code==='ArrowRight'){chg(.5);return true}return false},
+ ptr(type){if(type==='down')setPush(true);else if(type==='up')setPush(false)},
+ update(dt){if(st==='broke'){brk+=dt;if(brk>1.2){st='end';mgFail(recap()+`<p>${sub('F','N')} ≈ ${fmt(FN(),0)} N ist mehr als 640 N: Das Brett bricht! Je steiler die Rampe, desto kleiner die Normalkraft.</p>`)}return}
+  if(st!=='go')return;tP+=dt;const Fp=push?c.Fp:0,acc=(Fp-FH())/c.m;v+=acc*dt;s+=v*dt;if(s<=0){s=0;v=Math.max(0,v)}
+  if(c.Nmax&&s>.05&&FN()>c.Nmax){st='broke';brk=0;return}
+  if(s>=L()){s=L();st='end';return mgWin(recap()+`<p>Deine ${c.Fp} N reichen gegen ${sub('F','H')} ≈ ${fmt(FH(),0)} N${c.Nmax?`, und das Brett hält (${fmt(FN(),0)} N ≤ 640 N)`:''}. Der Sack ist oben!</p>`)}
+  if(push&&tP>1.6&&s<.02){st='end';mgFail(recap()+`<p>${sub('F','H')} ≈ ${fmt(FH(),0)} N ist größer als deine ${c.Fp} N. Der Wagen bewegt sich nicht. Stell die Rampe flacher.</p>`)}},
+ draw(t){sky2();rr(0,GY,640,60,0,'#d6c9a8');ln(0,GY,640,GY,INK,2);
+  const sy=GY-c.h*PM;rr(XS,sy-140,160,140+(GY-sy),4,'#f1e6cf',INK);rr(XS,sy-6,120,6,2,'#8a5a44',INK);rr(XS+14,sy-90,60,84,[8,8,0,0],'#5F6F74',INK);rr(XS+24,sy-40,40,30,8,'#f4efe4',INK);txt('MEHL',XS+44,sy-25,INK,10);
+  /* Zaun */
+  const fx=fence();for(let y=GY-46;y<GY;y+=14)ln(fx-14,y,fx+4,y,'#8a5a44',3);ln(fx-10,GY,fx-10,GY-52,'#8a5a44',4);ln(fx,GY,fx,GY-52,'#8a5a44',4);txt(`Zaun: ${fmt(c.D,2)} m`,fx-6,GY-62,INK,11);
+  /* Rampe */
+  const ft=foot(),bad=ft<fx-.5,brokeNow=st==='broke';
+  if(brokeNow){ln(ft,GY,(ft+XS)/2,GY-5,'#a87a4a',7);ln((ft+XS)/2+8,GY-8,XS,sy,'#a87a4a',7)}else{ln(ft,GY,XS,sy,bad?'#d4381e':'#a87a4a',8);ln(ft,GY,XS,sy,INK,1.2)}
+  /* Wagen auf der Rampe */
+  const ux=Math.cos(rad(a)),uy=-Math.sin(rad(a)),px=ft+ux*s*PM,py=GY+uy*s*PM,nx=-Math.sin(rad(a)),ny=-Math.cos(rad(a));
+  const cxp=px+nx*20+ux*6,cyp=py+ny*20+uy*6;
+  if(c.Nmax)person(px-ux*66,Math.min(GY,py-uy*66+2),PPL.Ole,1,push&&st==='go'?t*10+1:0,t);
+  person(px-ux*40,Math.min(GY,py-uy*40+2),PPL.Du,1,push&&st==='go'?t*10:0,t);
+  cx.save();cx.translate(px+nx*4,py+ny*4);cx.rotate(-rad(a));circ(-8,0,5,'#3E4B4C',INK);circ(22,0,5,'#3E4B4C',INK);rr(-18,-10,50,8,3,'#8a5a44',INK);rr(-12,-34,22,24,8,'#f4efe4',INK);if(c.m>60)rr(10,-32,20,22,8,'#f4efe4',INK);cx.restore();
+  /* Kräfte im Schwerpunkt */
+  const k=.1,fg=FG()*k,fh=FH()*k,fn=FN()*k;
+  arrow(cxp,cyp,0,fg,C.fg,3,['F','G',16,16]);
+  arrow(cxp,cyp,-ux*fh,-uy*fh,C.fh,3,['F','H',16]);
+  arrow(cxp,cyp,-nx*fn,-ny*fn,C.fn,3,['F','N',16,-14]);
+  arrow(cxp,cyp,nx*fn,ny*fn,C.fu,2.4,['F','U',16],[6,4]);
+  if(push&&st==='go')arrow(cxp,cyp,ux*c.Fp*k,uy*c.Fp*k,C.fz,3,['F','Schub',22,-12]);
+  /* Winkel */
+  cx.beginPath();cx.arc(ft,GY,40,-rad(a),0);cx.strokeStyle=INK;cx.lineWidth=1.5;cx.stroke();txt('α',ft+48,GY-10,INK,13);
+  if(bad)txt('Passt nicht in den Hof!',ft+60,GY+24,'#d4381e',13)},
+ ro(){return `<span><b>α = ${fmt(a,1)}°</b></span><span>Rampe: ${fmt(L(),2)} m</span><span class="fg">${sub('F','G')} = ${fmt(FG(),1)} N</span><span class="fh">${sub('F','H')} = ${c.show==='noH'?'?':fmt(FH(),0)+' N'}</span><span class="fn">${sub('F','N')} = ${c.show==='noN'?'?':fmt(FN(),0)+' N'}</span><span>Schub: ${c.Fp} N</span>${c.Nmax?'<span>Brett: ≤ 640 N</span>':''}`}};
+ return self})();
+
+/* ===== 4) Paketrutsche: Reibung und Newton ===== */
+MGS.rutsche=(()=>{const T=[520,130],PM=70,MAT={holz:['Holz',.5,.3],blech:['Blech',.3,.22],wachs:['gewachstes Holz',.15,.1],gummi:['Gummimatte',.8,.6]};
+ const RD=[{L:2,vmax:3,a:20,mat:'holz',adj:'a',m:5},{L:2.5,vmax:3,a:22,mat:'holz',adj:'mat',m:5},{L:3,vmax:1,a:25,mat:'holz',adj:'F',m:20,tmax:20}];
+ let c,a,mat,st,s,v,tR,F,moving;
+ const fH=()=>MAT[mat][1],fgl=()=>MAT[mat][2],FGv=()=>c.m*G_,FHv=()=>FGv()*Math.sin(rad(a)),FNv=()=>FGv()*Math.cos(rad(a));
+ function chgA(d){if(st==='aim'&&c.adj==='a')a=clamp(Math.round((a+d)*2)/2,10,50)}
+ function chgF(d){if(st==='go'||st==='aim')F=clamp(F+d,0,300)}
+ function btns(){const l=[];if(c.adj==='a')l.push({lab:'◀ flacher',rep:()=>chgA(-.5)},{lab:'steiler ▶',rep:()=>chgA(.5)},{lab:'Paket loslassen',cls:'go big',click:go});
+  if(c.adj==='mat'){Object.keys(MAT).forEach(k=>l.push({lab:MAT[k][0],cls:k===mat?'on':'',click:()=>{if(st==='aim'){mat=k;btns()}}}));l.push({lab:'Paket loslassen',cls:'go big',click:go})}
+  if(c.adj==='F')l.push({lab:'Zugkraft −',rep:()=>chgF(-5)},{lab:'Zugkraft +',rep:()=>chgF(5)});setBtns(l)}
+ function go(){if(st!=='aim')return;st='go';tR=0;s=0;v=0;moving=Math.tan(rad(a))>fH()}
+ function recap(){const acc=G_*(Math.sin(rad(a))-fgl()*Math.cos(rad(a)));return `<p>${MAT[mat][0]}: ${sub('f','H')} = ${fmt(fH(),2)}, ${sub('f','gl')} = ${fmt(fgl(),2)}. tan ${fmt(a,1)}° = ${fmt(Math.tan(rad(a)),3)}.${Math.tan(rad(a))>fH()?` Beim Rutschen: a = g · (sin α − ${sub('f','gl')} · cos α) ≈ ${fmt(acc,2)} m/s².`:''}</p>`}
+ const self={title:'Die Paketrutsche',
+ goal(r){return [`<p>Pakete aus Karton auf Holz: ${sub('f','H')} = 0,50, ${sub('f','gl')} = 0,30. Die Rutsche ist 2,0 m lang.</p><p>Stell den Winkel so ein, dass das Paket <b>von allein losrutscht</b>, aber unten mit <b>höchstens 3,0 m/s</b> ankommt.</p>`,
+  `<p>Jetzt ist der Winkel fest: 22°, die Rutsche 2,5 m lang. Ida kann die Rutsche neu belegen. <b>Welcher Belag passt?</b> Das Paket soll losrutschen und mit höchstens 3,0 m/s ankommen.</p>`,
+  `<p>Ein schweres Paket (20 kg) muss die Rutsche <b>hinauf</b> (25°, 3,0 m, ${sub('f','H')} = 0,50, ${sub('f','gl')} = 0,30). Du ziehst oben am Seil und stellst die Zugkraft ein.</p><p>Es soll oben mit <b>höchstens 1,0 m/s</b> ankommen, und du hast 20 s Zeit. Denk an Newton: Nur eine resultierende Kraft ändert die Geschwindigkeit!</p>`][r]+
+  `<p><small>${r===0?'Winkel mit ◀ ▶ (Tasten ← →), loslassen mit der Leertaste.':r===1?'Belag mit den Knöpfen wählen, loslassen mit der Leertaste.':'Zugkraft mit − und + (Tasten ↓ ↑ oder ← →), Knöpfe gedrückt halten geht schneller.'} Modell: kein Luftwiderstand.</small></p>`},
+ init(r){c=RD[r];a=c.a;mat=c.mat;st=r===2?'go':'aim';s=0;v=0;tR=0;F=0;moving=false;btns()},
+ key(code,down){if(!down)return code==='Space';if(c.adj==='F'){if(code==='ArrowUp'||code==='ArrowRight'){chgF(5);return true}if(code==='ArrowDown'||code==='ArrowLeft'){chgF(-5);return true}return false}
+  if(code==='ArrowLeft'){chgA(-.5);return true}if(code==='ArrowRight'){chgA(.5);return true}
+  if(c.adj==='mat'&&/^Digit[1-4]$/.test(code)){mat=Object.keys(MAT)[+code.slice(5)-1];btns();return true}
+  if(code==='Space'||code==='Enter'){go();return true}return false},
+ ptr(){},
+ update(dt){if(st!=='go')return;tR+=dt;const fh=FHv(),fn=FNv();
+  if(c.adj!=='F'){if(!moving){if(tR>1.5){st='end';mgFail(recap()+`<p>tan α ist nicht größer als ${sub('f','H')}: Die Haftreibung hält das Paket fest. ${c.adj==='a'?'Mach die Rutsche steiler.':'Nimm einen glatteren Belag.'}</p>`)}return}
+   const acc=G_*(Math.sin(rad(a))-fgl()*Math.cos(rad(a)));v+=acc*dt;s+=v*dt;
+   if(s>=c.L){s=c.L;st='end';const ve=Math.sqrt(2*acc*c.L);
+    if(ve>c.vmax)return mgFail(recap()+`<p>Endgeschwindigkeit v = √(2 · a · s) ≈ ${fmt(ve,2)} m/s, mehr als ${fmt(c.vmax,1)} m/s. Rums! ${c.adj==='a'?'Etwas flacher, aber steiler als die Haftgrenze.':'Dieser Belag ist zu glatt.'}</p>`);
+    return mgWin(recap()+`<p>Das Paket rutscht los und kommt mit v ≈ ${fmt(ve,2)} m/s sanft an.</p>`)}return}
+  /* hochziehen */
+  if(v<=1e-6){v=0;if(F>fh+fH()*fn){moving=true}else moving=false}
+  if(moving){const acc=(F-fh-fgl()*fn)/c.m;v+=acc*dt;if(v<=0){v=0;moving=false}s+=v*dt}
+  if(s>=c.L){s=c.L;st='end';if(v>c.vmax)return mgFail(`<p>Das Paket kommt mit ${fmt(v,2)} m/s oben an und rammt Idas Schreibtisch. Sobald es rutscht, brauchst du weniger Kraft: Gleitreibung ist kleiner als Haftreibung. Bei ${sub('F','res')} = 0 bleibt die Geschwindigkeit konstant.</p>`);
+   return mgWin(`<p>Oben mit ${fmt(v,2)} m/s. Zum Losreißen brauchst du mehr als ${sub('F','H')} + ${sub('f','H')} · ${sub('F','N')} ≈ ${fmt(fh+fH()*fn,0)} N. Danach reichen ${sub('F','H')} + ${sub('f','gl')} · ${sub('F','N')} ≈ ${fmt(fh+fgl()*fn,0)} N für konstante Geschwindigkeit (1. Axiom).</p>`)}
+  if(tR>c.tmax){st='end';mgFail(`<p>Die Zeit ist um, das Paket ist erst bei ${fmt(s,1)} m. Zum Losreißen brauchst du mehr Kraft als die Haftreibung zulässt. Danach kannst du wieder etwas nachlassen.</p>`)}},
+ draw(t){sky2();rr(0,300,640,60,0,'#d6c9a8');ln(0,300,640,300,INK,2);
+  house(520,300,170,215,{roof:'#5F6F74',wall:'#fbf1c9',win:[[90,110]],rh:36,sign:'POST'});rr(522,T[1]-62,66,62,[8,8,0,0],'#3E4B4C',INK);
+  const ux=-Math.cos(rad(a)),uy=Math.sin(rad(a)),Lp=c.L*PM,B=[T[0]+ux*Lp,T[1]+uy*Lp];
+  ln(T[0],T[1],B[0],B[1],mat==='gummi'?'#3E4B4C':mat==='blech'?'#C9D2D3':mat==='wachs'?'#e0c27a':'#a87a4a',9);ln(T[0],T[1],B[0],B[1],INK,1.3);ln(B[0],B[1],B[0],300,'#8a5a44',4);
+  rr(B[0]-56,B[1]+6,56,26,4,'#8a5a44',INK);circ(B[0]-44,B[1]+34,7,'#3E4B4C',INK);circ(B[0]-12,B[1]+34,7,'#3E4B4C',INK);
+  cx.beginPath();cx.arc(T[0],T[1],36,Math.PI-rad(a),Math.PI);cx.strokeStyle=INK;cx.lineWidth=1.5;cx.stroke();txt('α',T[0]-46,T[1]+10,INK,13);ln(T[0],T[1],T[0]-60,T[1],INK,1,[4,4]);
+  /* Paket: s läuft beim Rutschen von oben, beim Hochziehen von unten */
+  const pos=c.adj==='F'?c.L-s:s,px=T[0]+ux*pos*PM,py=T[1]+uy*pos*PM,nx=-Math.sin(rad(a)),ny=-Math.cos(rad(a));
+  cx.save();cx.translate(px,py);cx.rotate(-rad(a));rr(-14,-26,28,26,3,'#c99a5b',INK);ln(-14,-13,14,-13,'#8a6436',2);cx.restore();
+  const cpx=px+nx*13,cpy=py+ny*13,k=c.m>10?.18:.7;
+  arrow(cpx,cpy,0,FGv()*k,C.fg,2.6,['F','G',15,16]);arrow(cpx,cpy,ux*FHv()*k,uy*FHv()*k,C.fh,2.6,['F','H',16]);
+  arrow(cpx,cpy,-nx*FNv()*k,-ny*FNv()*k,C.fn,2.6,['F','N',15,14]);
+  if(c.adj==='F'){person(T[0]+36,T[1],PPL.Ida,-1,0,t);ln(cpx,cpy,T[0]+24,T[1]-26,'#b07a2a',2);
+   const fr=fRv();if(Math.abs(fr)>.5)arrow(cpx,cpy,ux*fr*k,uy*fr*k,C.fr,2.6,['F','R',16,14]);if(F>0)arrow(cpx,cpy,-ux*F*k,-uy*F*k,C.fz,2.6,['F','',16,-12]);
+   txt(`t = ${fmt(tR,1)} s`,90,30,INK,14)}
+  else if(st==='go'&&moving){arrow(cpx,cpy,-ux*fgl()*FNv()*k,-uy*fgl()*FNv()*k,C.fr,2.6,['F','gl',16,14])}
+  else{const fr=Math.min(FHv(),fH()*FNv());arrow(cpx,cpy,-ux*fr*k,-uy*fr*k,C.fr,2.6,['F','R',16,14])}
+  if(c.adj!=='F')person(T[0]+36,T[1],PPL.Ida,-1,0,t)},
+ ro(){if(c.adj==='F'){const fr=fRv(),Fr=F-FHv()-fr;return `<span><b>F = ${fmt(F,0)} N</b></span><span class="fh">${sub('F','H')} = ${fmt(FHv(),0)} N</span><span class="fr">${sub('F','R')} = ${fmt(Math.abs(fr),0)} N (${moving?'Gleit':'Haft'})</span><span>${sub('F','res')} = ${fmt(Math.max(0,Fr),0)} N</span><span>v = ${fmt(v,2)} m/s</span><span>s = ${fmt(s,2)} m</span>`}
+  return `<span><b>α = ${fmt(a,1)}°</b></span><span>tan α = ${fmt(Math.tan(rad(a)),3)}</span><span>Belag: ${MAT[mat][0]}</span><span>${sub('f','H')} = ${fmt(fH(),2)}</span><span>${sub('f','gl')} = ${fmt(fgl(),2)}</span>${st==='go'?`<span>v = ${fmt(v,2)} m/s</span>`:''}`}};
+ /* Reibungskraft beim Hochziehen (positiv = hangabwärts) */
+ function fRv(){const fh=FHv(),fn=FNv();if(moving)return fgl()*fn;const need=F-fh;return clamp(need,-fH()*fn,fH()*fn)}
+ return self})();
+
+/* ===== Finale: Seifenkistenrennen ===== */
+const RACE=(()=>{const SEG=[[6,15],[40,7],[12,-2],[30,6],[8,0],[34,0]],ZIEL=96,BALE=128,PX=12,MK=62,FMAX=.024,PUSH=120,FB=.6;
+ const PTS=[[0,0]];let L0=0;const SL=[];SEG.forEach(([l,a])=>{const [x,y]=PTS[PTS.length-1];SL.push([L0,l,rad(a)]);PTS.push([x+l*Math.cos(rad(a)),y+l*Math.sin(rad(a))]);L0+=l});
+ const at=s=>{s=clamp(s,0,L0-.001);for(let k=0;k<SL.length;k++){const [s0,l,a]=SL[k];if(s<=s0+l){const [x,y]=PTS[k];return [x+(s-s0)*Math.cos(a),y+(s-s0)*Math.sin(a),a]}}return [...PTS[PTS.length-1],0]};
+ let st,cd,me,mx,brake,first,spect=[];
+ for(let k=0;k<16;k++)spect.push([10+k*7+(k%3)*2,k%5,k%7]);
+ const fMe=()=>{let f=has('lager')?.02:.04;if(has('fett'))f-=.01;return Math.max(.01,f)};
+ function step(o,dt,f,br){const [, ,a]=at(o.s);o.help=!o.fin&&o.s>=2&&o.v<.4&&!br;let acc=G_*(Math.sin(a)-f*Math.cos(a))+((o.s<2||o.help)&&!o.fin?PUSH/MK:0);if(br)acc-=G_*FB*Math.cos(a);o.a=acc;o.v=Math.max(0,o.v+acc*dt);o.s+=o.v*dt;o.rot+=o.v*dt/.35;
+  if(!o.fin&&o.s>=ZIEL){o.fin=1;o.t=o.time}if(o.s>=BALE){o.s=BALE;o.crash=o.v;o.v=0}}
+ function btns(){setBtns([{lab:'Bremse (halten)',cls:'go big',hold:on=>{brake=on}}])}
+ const self={
+ init(){me={s:0,v:0,a:0,rot:0,time:0,fin:0};mx={s:0,v:0,a:0,rot:0,time:0,fin:0};st='cd';cd=3.2;brake=false;btns()},
+ key(code,down){if(code==='Space'||code==='ArrowDown'||code==='ArrowLeft'){brake=down;return true}return false},
+ ptr(type){if(type==='down')brake=true;else if(type==='up')brake=false},
+ update(dt){if(st==='cd'){cd-=dt;if(cd<=0)st='run';return}if(st!=='run')return;
+  const n=4,h=dt/n;for(let k=0;k<n;k++){if(!me.fin||me.v>0){me.time+=h;step(me,h,fMe(),brake)}
+   const mb=mx.fin&&mx.s>BALE-14;if(!mx.fin||mx.v>0){mx.time+=h;step(mx,h,FMAX,mb)}}
+  if(me.fin&&me.v<=0&&(mx.fin&&mx.v<=0||mx.time>me.time+6)){st='end';self.done()}},
+ done(){const win=me.t<mx.t,crash=me.crash>0.8,best=F.best||0,nb=!best||me.t<best;if(nb)F.best=Math.round(me.t*100)/100;const firstTime=!F.ende;save();
+  const f=fMe();
+  msg(`<h3>${win?'🏆 Gewonnen!':'Knapp verloren …'}</h3><p>Deine Zeit: <b>${fmt(me.t,2)} s</b> · Max: ${fmt(mx.t,2)} s${nb&&best?' · neue Bestzeit!':''}</p>
+  <p>${crash?'Ups, ab ins Stroh! Nächstes Mal etwas früher bremsen (aber erst nach dem Ziel).':'Sauber gebremst, vor den Strohballen zum Stehen gekommen.'}</p>
+  <p>Deine Rollreibungszahl: f = ${fmt(f,3)}, Max: f = 0,024. Ohne Luftwiderstand gilt auf jedem Stück a = g · (sin α − f · cos α): Die Masse kürzt sich heraus! Schneller wirst du nur mit kleinerer Rollreibung.${win?'':has('lager')&&has('fett')?' Bremst du vielleicht schon vor dem Ziel?':' Tipp: Noah (Kugellager) und Rosa (Schmierfett) helfen dir.'}</p>`,
+   [['Zurück ins Dorf',()=>{hideMsg();mgLeave();if(firstTime)sayLines(FIN,()=>{F.ende=1;save();hud();showEnd()});else hud()}],['Nochmal fahren',()=>{hideMsg();self.init();mgReady=true}]])},
+ draw(t){const [mxp,myp]=at(me.s),camX=mxp*PX-200,camY=myp*PX-200;
+  const gr=cx.createLinearGradient(0,0,0,360);gr.addColorStop(0,'#cfe1e3');gr.addColorStop(1,'#f6f1e3');cx.fillStyle=gr;cx.fillRect(0,0,640,360);
+  drawLayer(farL,.1,camX,camY*.2,60);drawLayer(midL,.3,camX,camY*.3,140);
+  cx.save();cx.translate(-camX,-camY);
+  const pts=PTS.map(([x,y])=>[x*PX,y*PX]);path([[pts[0][0]-400,pts[0][1]],...pts,[pts[pts.length-1][0]+400,pts[pts.length-1][1]],[pts[pts.length-1][0]+400,pts[pts.length-1][1]+400],[pts[0][0]-400,pts[0][1]+800]],true);cx.fillStyle='#d6c9a8';cx.fill();
+  cx.beginPath();pts.forEach(([x,y],k)=>k?cx.lineTo(x,y):cx.moveTo(x,y));cx.lineTo(pts[pts.length-1][0]+400,pts[pts.length-1][1]);cx.strokeStyle='#9dbb8a';cx.lineWidth=10;cx.stroke();cx.strokeStyle=INK;cx.lineWidth=2;cx.stroke();
+  spect.forEach(([s,c1,c2],k)=>{const [x,y]=at(s);const o={...PPL[['Hilde','Mira','Herr Kofler','Ole','Ida','Noah','Rosa'][k%7]]};const hop=st==='run'&&Math.abs(me.s-s)<12?Math.abs(Math.sin(t*8+k))*5:0;person(x*PX+(k%2)*14,y*PX+34+(k%3)*8-hop,o,-1,0,t)});
+  const [fx,fy]=at(ZIEL);ln(fx*PX,fy*PX,fx*PX,fy*PX-90,'#8a5a44',4);ln(fx*PX+50,fy*PX,fx*PX+50,fy*PX-90,'#8a5a44',4);rr(fx*PX-6,fy*PX-104,62,22,6,'#fff',INK);txt('ZIEL',fx*PX+25,fy*PX-93,INK,12,'center',700);
+  for(let k=0;k<6;k++)rr(fx*PX+k*8,fy*PX-82,8,6,0,k%2?'#2f393a':'#fff');
+  const [bx,by]=at(BALE);for(let k=0;k<3;k++){rr(bx*PX+4,by*PX-20-k*18,40,18,6,'#e0c27a',INK)}
+  const [sx,sy]=at(0);rr(sx*PX-60,sy*PX-90,80,22,6,'#fff',INK);txt('START',sx*PX-20,sy*PX-79,INK,12,'center',700);
+  /* Max (hinten) und du */
+  const kiste=(o,col,nr,who,dz)=>{const [x,y,a]=at(o.s);cx.save();cx.translate(x*PX,y*PX-dz);drawKiste(0,0,-a,t,false,{race:1,body:col,nr,rot:o.rot});cx.rotate(a);head(-4,-36,8,PPL[who],1);cx.restore();
+   if((o.s<2||o.help)&&st!=='cd'&&who==='Du')goat(x*PX-44,y*PX,1,t,2)};
+  kiste(mx,'#c94a3a','1','Max',-6);kiste(me,'#c99a5b','7','Du',0);
+  if(st==='cd'){const [x,y]=at(0);goat(x*PX-44,y*PX,1,t,0)}
+  if(me.crash>.8){for(let k=0;k<10;k++){const [x,y]=at(BALE);circ(x*PX+Math.sin(k*3+t)*30,y*PX-30-Math.abs(Math.cos(k+t*2))*30,3,'#e0c27a')}}
+  cx.restore();
+  if(st==='cd'){const n=Math.ceil(cd);rr(270,120,100,80,20,'rgba(251,246,234,.92)',INK);txt(n>0?String(n):'Los!',320,160,INK,40,'center',700)}
+  if(brake&&st==='run')txt('BREMSE',320,30,'#d4381e',16,'center',700)},
+ ro(){const [, ,a]=at(me.s);return `<span><b>v = ${fmt(me.v,1)} m/s</b> (${fmt(me.v*3.6,0)} km/h)</span><span>α = ${fmt(deg(a),0)}°</span><span>f = ${fmt(fMe(),3)}</span><span>a = ${fmt(me.a,2)} m/s²</span><span>t = ${fmt(me.fin?me.t:me.time,2)} s</span><span>noch ${fmt(Math.max(0,ZIEL-me.s),0)} m bis zum Ziel</span>`}};
+ return self})();
+function raceStart(){mg=RACE;mgMi=-1;scene='mg';GM.classList.add('inmg');for(const k in keys)keys[k]=false;fit();RACE.init();mgReady=false;
+ const f=Math.max(.01,(has('lager')?.02:.04)-(has('fett')?.01:0));
+ msg(`<h3>Das Seifenkistenrennen</h3><p>Gerti schiebt dich an, dann rollst du den Kippelberg hinunter. Deine Rollreibungszahl: <b>f = ${fmt(f,3)}</b>${has('lager')?'':' (mit Kugellager kleiner)'}. Max hat f = 0,024.</p><p>Nach dem Ziel musst du <b>bremsen</b> (Knopf, Leertaste oder ins Bild drücken), damit du vor den Strohballen stehen bleibst. Bremst du vor dem Ziel, verlierst du Zeit.</p><p><small>Modell: kein Luftwiderstand. Die Bremse wirkt mit Gleitreibung (f = 0,6).</small></p>`,[['▶ Start',()=>{hideMsg();RACE.init();mgReady=true;cv.focus({preventScroll:true})}],['Zurück ins Dorf',mgExit]])}
+
+/* ---------- Eingabe ---------- */
+const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right'};
+const typing=()=>/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||'');
+const blocked=()=>!active||freeze||typing()||TD.open||$('#spickDlg').open||!$('#endov').hidden||!$('#inv').hidden;
+addEventListener('keydown',e=>{if(blocked())return;
+ if(scene==='mg'){if(!$('#mgMsg').hidden){if((e.code==='Space'||e.code==='Enter')&&!e.repeat&&document.activeElement&&!document.activeElement.closest('#mgMsg')){e.preventDefault();const b=$('#mgMsgBtns button');if(b)b.click()}return}
+  if(mgReady&&mg.key(e.code,true,e))e.preventDefault();return}
+ if(KM[e.code]){e.preventDefault();if(talk){if(!e.repeat)advance();return}keys[KM[e.code]]=true;return}
+ if(e.code==='ArrowUp'||e.code==='ArrowDown'){e.preventDefault();return}
+ if(e.code==='Space'||e.code==='Enter'||e.code==='KeyE'){e.preventDefault();if(e.repeat)return;if(talk)advance();else interact()}});
+addEventListener('keyup',e=>{if(KM[e.code])keys[KM[e.code]]=false;if(scene==='mg'&&mg&&mgReady)mg.key(e.code,false,e)});
+function setActive(a){active=a;$('#pause').hidden=a||!started;if(!a){for(const k in keys)keys[k]=false;if(scene==='mg'&&mg&&mgReady&&mg.key){mg.key('Space',false,{});mg.ptr('up',0,0)}}}
+const cpos=e=>{const r=cv.getBoundingClientRect();return [(e.clientX-r.left)/r.width*VW,(e.clientY-r.top)/r.height*VH]};
+let ptrDown=false;
+cv.addEventListener('pointerdown',e=>{if(!started)return;setActive(true);cv.focus({preventScroll:true});
+ if(scene==='mg'&&mgReady&&$('#mgMsg').hidden){e.preventDefault();ptrDown=true;try{cv.setPointerCapture(e.pointerId)}catch(er){}mg.ptr('down',...cpos(e));return}
+ if(scene==='hub'&&!talk){const [x]=cpos(e),[camX]=camera(),wx=x+camX,n=NPC.find(n=>Math.abs(n.x-wx)<26);if(n&&Math.abs(n.x-P.x)<60){if(Math.abs(n.x-P.x)>=44)P.x+=Math.sign(n.x-P.x)*(Math.abs(n.x-P.x)-40);interact()}}});
+cv.addEventListener('pointermove',e=>{if(scene==='mg'&&mgReady&&ptrDown)mg.ptr('move',...cpos(e))});
+const pUp=e=>{if(!ptrDown)return;ptrDown=false;if(scene==='mg'&&mgReady)mg.ptr('up',...cpos(e))};cv.addEventListener('pointerup',pUp);cv.addEventListener('pointercancel',pUp);
+cv.addEventListener('contextmenu',e=>e.preventDefault());
+$('#talkbox').addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;e.preventDefault();if(started){setActive(true);advance()}});
+document.addEventListener('pointerdown',e=>{if(started&&!e.target.closest('#game')&&!e.target.closest('dialog'))setActive(false)});
+$$('#pad [data-d]').forEach(bt=>{const d=bt.dataset.d;const on=e=>{e.preventDefault();if(!started)return;setActive(true);touchUI=true;if(talk){advance();return}keys[d]=true},off=()=>keys[d]=false;
+ bt.addEventListener('pointerdown',on);bt.addEventListener('pointerup',off);bt.addEventListener('pointerleave',off);bt.addEventListener('pointercancel',off);bt.addEventListener('contextmenu',e=>e.preventDefault())});
+{const a=$('#aBtn');a.addEventListener('pointerdown',e=>{e.preventDefault();if(!started)return;setActive(true);touchUI=true;if(talk)advance();else interact()});a.addEventListener('contextmenu',e=>e.preventDefault())}
+$('#startBtn').onclick=()=>{started=true;$('#startov').hidden=true;setActive(true);cv.focus({preventScroll:true});
+ if(!F.intro)sayLines(INTRO,()=>{F.intro=1;save();hud()})};
+
+/* ---------- Bildgröße und Vollbild ---------- */
+GM.appendChild(TD);GM.appendChild($('#spickDlg'));
+function fit(){const full=GM.classList.contains('full'),sc=$('#screen');let cw,ch;
+ if(!full){VW=640;VH=360;cv.style.width='';cv.style.height='';cw=sc.clientWidth||640;ch=cw*9/16}
+ else{const w=sc.clientWidth,h=sc.clientHeight;if(!w||!h)return;
+  if(scene==='hub'){VW=clamp(Math.round(Math.sqrt(230400*w/h)),380,760);VH=clamp(Math.round(VW*h/w),300,680)}else{VW=640;VH=360}
+  const k=Math.min(w/VW,h/VH);cw=Math.floor(VW*k);ch=Math.floor(VH*k);cv.style.width=cw+'px';cv.style.height=ch+'px'}
+ const dpr=Math.min(2,window.devicePixelRatio||1);cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);SC=cv.width/VW}
+function full(on){GM.classList.toggle('full',on);document.body.classList.toggle('vollbild',on);
+ if(on){const D=document.documentElement;try{if(D.requestFullscreen&&!document.fullscreenElement)D.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch(e){}}
+ else if(document.fullscreenElement){document.exitFullscreen().catch(()=>{})}
+ requestAnimationFrame(fit);setTimeout(fit,300);if(on&&started){setActive(true);cv.focus({preventScroll:true})}}
+$('#fullBtn').onclick=()=>full(true);$('#fullX').onclick=()=>full(false);
+document.addEventListener('fullscreenchange',()=>{setTimeout(fit,100)});
+addEventListener('resize',fit);try{new ResizeObserver(()=>fit()).observe($('#screen'))}catch(e){}
+addEventListener('keydown',e=>{if(e.key==='Escape'&&GM.classList.contains('full')&&!TD.open&&!$('#spickDlg').open)full(false)});
+
+/* ---------- Schleife ---------- */
+let roT=0;
+function frame(now){const dt=Math.min(.05,(now-last)/1000),t=(now-T0)/1000;last=now;T0p=t;
+ const run=started&&active&&!freeze&&!TD.open&&!$('#spickDlg').open&&$('#endov').hidden&&$('#inv').hidden;
+ cx.setTransform(SC,0,0,SC,0,0);
+ if(scene==='hub'){if(run&&!talk)hubUpdate(dt);drawHub(t)}
+ else if(mg){if(run&&mgReady&&$('#mgMsg').hidden)mg.update(dt);mg.draw(t)}
+ if(talk&&talk.n<talk.full.length){talk.n=Math.min(talk.full.length,talk.n+dt*55);$('#tbTxt').textContent=talk.full.slice(0,Math.floor(talk.n));if(talk.n>=talk.full.length)showChoices()}
+ if(toastT>0){toastT-=dt;if(toastT<=0)$('#toast').hidden=true}
+ roT-=dt;if(roT<=0){roT=.1;$('#stripRo').innerHTML=scene==='hub'?hubStrip():mg?mg.ro():'';$('#strip').hidden=!started;
+  if(scene==='hub'&&started&&!$('#stripBt').children.length)setBtns([{lab:'Kräfte zeigen',cls:showF?'on':'',click:()=>{showF=!showF;F.showF=showF?1:0;save();$('#stripBt').innerHTML=''}}])}
+ requestAnimationFrame(frame)}
+fit();hud();requestAnimationFrame(frame);
+if(F.intro)$('#startBtn').textContent='▶ Weiterspielen';
+return {after,get freeze(){return freeze},set freeze(v){freeze=v},
+ reset(){P.x=90;GT.x=50;talk=null;if(scene==='mg'){hideMsg();mgLeave()}$('#talkbox').hidden=true;$('#endov').hidden=true;$('#inv').hidden=true;started=false;$('#startov').hidden=false;$('#startBtn').textContent='▶ Spiel starten';setActive(false);hud()}};
+})();
+
+/* ---------- Passwort (nur einfacher Schutz im Browser) ---------- */
+$('#gate').addEventListener('submit',async e=>{e.preventDefault();const v=$('#gatePw').value.trim().toLowerCase();let h='';
+ try{const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));h=[...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(er){}
+ if(h==='9686e554a5877f076b89c0a2062d9c8ec50b98ab902a0b962ddb695ee7a13684'){try{localStorage.setItem('p11-kraftspiel-frei','1')}catch(er){}document.body.classList.add('frei');$('#game').scrollIntoView({behavior:'smooth'});setTimeout(()=>dispatchEvent(new Event('resize')),50)}
+ else{const f=$('#gateFb');f.className='fb bad';f.textContent='Das Passwort stimmt nicht.'}});
+/* ---------- Spickzettel, QR, Neustart ---------- */
+function openSpick(){const d=$('#spickDlg');$('#spickDlgIn').innerHTML='<div class="spickgrid">'+$('#spickInhalt').innerHTML+'</div>';d.showModal()}
+$('#spickBtn').onclick=openSpick;$('#spickClose').onclick=()=>$('#spickDlg').close();
+$('#spickDlg').addEventListener('click',e=>{if(e.target.id==='spickDlg')e.target.close()});
+$('#resetBtn').onclick=()=>{const b=$('#resetBtn');if(b.dataset.sure){state.t={};state.r={};state.kap=[];state.inv=[];Object.keys(state.f).forEach(k=>delete state.f[k]);save();b.textContent='↺ Neu starten';delete b.dataset.sure;G.reset()}else{b.dataset.sure=1;b.textContent='Wirklich löschen?';setTimeout(()=>{delete b.dataset.sure;b.textContent='↺ Neu starten'},3000)}};
+{const d=$('#qrDlg');$('#qrOpen').onclick=()=>d.showModal();$('#qrClose').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()})}
+}
+</script>
+</body>
+</html>
